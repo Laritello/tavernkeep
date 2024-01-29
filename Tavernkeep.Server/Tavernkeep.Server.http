@@ -1,0 +1,6 @@
+@Tavernkeep.Server_HostAddress = http://localhost:5207
+
+GET {{Tavernkeep.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
