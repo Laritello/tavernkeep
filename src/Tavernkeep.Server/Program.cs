@@ -1,8 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using Tavernkeep.Core.EntityFramework.Context;
+
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("ApplicationDB");
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlite(connectionString));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
