@@ -8,9 +8,9 @@ namespace Tavernkeep.Core.EntityFramework.Configuration
     {
         public void Configure(EntityTypeBuilder<Character> builder)
         {
-            builder.HasKey(x => x.Id);
+            builder.HasKey(c => c.Id);
 
-            builder.Property(x => x.Owner).IsRequired();
+            builder.HasOne(c => c.Owner).WithMany(u => u.Characters).IsRequired();
         }
     }
 }

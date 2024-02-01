@@ -6,21 +6,16 @@ namespace Tavernkeep.Core.Entities
     {
         #region Constructors
 
-        public Character(Character owner, Session session, string data)
+        public Character(string data)
         {
-            Owner = owner;
-            Session = session;
             Data = data;
         }
-
-        public Character(Character owner, Session session) : this(owner, session, string.Empty) { }
 
         #endregion
 
         #region Properties
 
-        public Character Owner { get; set; }
-        public Session Session { get; set; }
+        public User Owner { get; set; } = default!;
         public string Data { get; set; }
 
         #endregion

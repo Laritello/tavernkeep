@@ -9,9 +9,9 @@ namespace Tavernkeep.Core.EntityFramework.Repositories
 {
     public class EntityFrameworkRepository<T> : IRepositoryBase<T, Guid> where T : Entity
     {
-        protected readonly ApplicationContext Context;
+        protected readonly SessionContext Context;
 
-        protected EntityFrameworkRepository(ApplicationContext context)
+        protected EntityFrameworkRepository(SessionContext context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
         }

@@ -5,7 +5,7 @@ using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Core.EntityFramework.Repositories
 {
-    public class UserEFRepository(ApplicationContext context) : EntityFrameworkRepository<User>(context), IUserRepository
+    public class UserEFRepository(SessionContext context) : EntityFrameworkRepository<User>(context), IUserRepository
     {
         public Task<User?> GetUserByLogin(string login, CancellationToken cancellationToken = default)
         {

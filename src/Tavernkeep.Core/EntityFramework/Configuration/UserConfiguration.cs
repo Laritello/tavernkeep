@@ -8,12 +8,12 @@ namespace Tavernkeep.Core.EntityFramework.Configuration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(x => x.Id);
+            builder.HasKey(u => u.Id);
 
-            builder.HasIndex(x => x.Login).IsUnique();
-            builder.Property(x => x.Login).IsRequired();
+            builder.HasIndex(u => u.Login).IsUnique();
 
-            builder.Property(x => x.Password).IsRequired();
+            builder.Property(u => u.Login).IsRequired();
+            builder.Property(u => u.Password).IsRequired();
         }
     }
 }

@@ -12,12 +12,11 @@ namespace Tavernkeep.Core.Entities
 
         #region Constructors
 
-        public User(Session session, string login, string password) 
+        public User(string login, string password) 
         {
-            Session = session;
             Login = login;
             Password = password;
-        }
+        }       
 
         #endregion
 
@@ -25,7 +24,6 @@ namespace Tavernkeep.Core.Entities
 
         public string Login { get; set; }
         public string Password { get; set; }
-        public Session Session { get; set; }
         public IReadOnlyList<Character> Characters => _characters.AsReadOnly();
 
         #endregion
