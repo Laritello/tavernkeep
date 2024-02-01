@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>8.*-*</Version>
     </PackageReference>
@@ -27,6 +28,7 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\Tavernkeep.Core\Tavernkeep.Core.csproj" />
+    <ProjectReference Include="..\Tavernkeep.Shared\Tavernkeep.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,13 +1,13 @@
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-using Tavernkeep.Core.EntityFramework.Context;
+using CommandLine;
 using Tavernkeep.Core.Extensions;
+using Tavernkeep.Shared.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+var options = Parser.Default.ParseArguments<LaunchOptions>(args).Value;
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddDatabaseContext(args);
+builder.Services.AddDatabaseContext(options);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

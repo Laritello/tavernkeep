@@ -1,16 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 using Tavernkeep.Core.EntityFramework.Context;
+using Tavernkeep.Shared.Options;
 
 namespace Tavernkeep.Core.Extensions
 {
     public static class DatabaseContextExtensions
     {
-        public static IServiceCollection AddDatabaseContext(this IServiceCollection services, string[] args)
+        public static IServiceCollection AddDatabaseContext(this IServiceCollection services, LaunchOptions options)
         {
             var sessionsDirectory = GetSessionsDirectory();
-            var databasePath = Path.Combine(sessionsDirectory, $"{args[0]}.db");
+            var databasePath = Path.Combine(sessionsDirectory, $"{options.CampaignName}.db");
             var connectionString = $"Data Source={databasePath};";
 
             services.AddDbContext<SessionContext>(options => options.UseSqlite(connectionString));

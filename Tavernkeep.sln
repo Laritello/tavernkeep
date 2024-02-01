@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Server", "src\Ta
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "tavernkeep.client", "src\tavernkeep.client\tavernkeep.client.esproj", "{2A192FE0-95CE-4B5C-A8A4-31421A625C9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tavernkeep.Core", "src\Tavernkeep.Core\Tavernkeep.Core.csproj", "{CC9C9F69-E6E3-4367-86E0-B59CA8781074}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Core", "src\Tavernkeep.Core\Tavernkeep.Core.csproj", "{CC9C9F69-E6E3-4367-86E0-B59CA8781074}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tavernkeep.Shared", "src\Tavernkeep.Shared\Tavernkeep.Shared.csproj", "{478B80A1-665E-4E6C-B1F7-C47E6C285743}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{CC9C9F69-E6E3-4367-86E0-B59CA8781074}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC9C9F69-E6E3-4367-86E0-B59CA8781074}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC9C9F69-E6E3-4367-86E0-B59CA8781074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{478B80A1-665E-4E6C-B1F7-C47E6C285743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{478B80A1-665E-4E6C-B1F7-C47E6C285743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{478B80A1-665E-4E6C-B1F7-C47E6C285743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{478B80A1-665E-4E6C-B1F7-C47E6C285743}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
