@@ -1,6 +1,6 @@
 @Tavernkeep.Server_HostAddress = http://localhost:5207
 
-GET {{Tavernkeep.Server_HostAddress}}/weatherforecast/
+POST {{Tavernkeep.Server_HostAddress}}/users/create
 Accept: application/json
 
 ###

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Context;
+using Tavernkeep.Infrastructure.Repositories;
 using Tavernkeep.Infrastructure.Utility;
 using Tavernkeep.Shared.Options;
 
@@ -12,6 +14,9 @@ namespace Tavernkeep.Infrastructure.Extensions
         {
             var connectionString = DatabaseContextUtility.GetConnectionString(options.CampaignName);
             services.AddDbContext<SessionContext>(options => options.UseSqlite(connectionString));
+
+            services.AddScoped<IUserRepository, UserEFRepository>();
+            services.AddScoped<ICharacterRepository, CharacterEFRepository>();
 
             return services;
         }
