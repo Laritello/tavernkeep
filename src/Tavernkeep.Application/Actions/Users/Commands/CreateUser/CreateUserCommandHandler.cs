@@ -8,7 +8,7 @@ namespace Tavernkeep.Application.Actions.Users.Commands.CreateUser
     {
         public async Task<User> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            User user = new(request.Login, request.Password);
+            User user = new(request.Login, request.Password, request.Role);
             
             repository.Save(user);
             await repository.CommitAsync(cancellationToken);

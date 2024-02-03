@@ -3,12 +3,14 @@ using Tavernkeep.Shared.Options;
 using Tavernkeep.Infrastructure.Extensions;
 using Tavernkeep.Application.Actions.Users.Commands.CreateUser;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var options = Parser.Default.ParseArguments<LaunchOptions>(args).Value;
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddDatabaseContext(options);
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<CreateUserCommand>());
 builder.Services.AddRouting(o => o.LowercaseUrls = true);

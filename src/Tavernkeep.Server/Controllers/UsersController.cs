@@ -9,11 +9,10 @@ namespace Tavernkeep.Server.Controllers
     /// <summary>
     /// Controller for managing user operations.
     /// </summary>
-    /// <param name="logger">The logger instance.</param>
     /// <param name="mediator">The mediator instance.</param>
     [ApiController]
     [Route("[controller]")]
-    public class UsersController(ILogger<UsersController> logger, IMediator mediator) : ControllerBase
+    public class UsersController(IMediator mediator) : ControllerBase
     {
         /// <summary>
         /// Create a new user.
@@ -23,7 +22,7 @@ namespace Tavernkeep.Server.Controllers
         [HttpPost("create")]
         public async Task<User> CreateUser([FromBody] CreateUserRequest request)
         {
-            var user = await mediator.Send(new CreateUserCommand(request.Login, request.Password));
+            var user = await mediator.Send(new CreateUserCommand(request.Login, request.Password, request.Role));
             return user;
         }
     }

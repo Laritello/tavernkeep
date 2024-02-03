@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Tavernkeep.Core.Entities;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Tavernkeep.Core.Contracts.Enums;
 
 namespace Tavernkeep.Infrastructure.Configuration
 {
@@ -14,6 +16,10 @@ namespace Tavernkeep.Infrastructure.Configuration
 
             builder.Property(u => u.Login).IsRequired();
             builder.Property(u => u.Password).IsRequired();
+
+            builder.Property(d => d.Role)
+                .IsRequired()
+                .HasConversion(new EnumToStringConverter<UserRole>());
         }
     }
 }

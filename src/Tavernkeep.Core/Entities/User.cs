@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Base;
 
 namespace Tavernkeep.Core.Entities
@@ -14,10 +15,11 @@ namespace Tavernkeep.Core.Entities
 
         #region Constructors
 
-        public User(string login, string password) 
+        public User(string login, string password, UserRole role) 
         {
             Login = login;
             Password = password;
+            Role = role;
         }       
 
         #endregion
@@ -26,6 +28,7 @@ namespace Tavernkeep.Core.Entities
 
         public string Login { get; set; }
         public string Password { get; set; }
+        public UserRole Role { get; set; }
         public IReadOnlyList<Character> Characters => _characters.AsReadOnly();
 
         #endregion
