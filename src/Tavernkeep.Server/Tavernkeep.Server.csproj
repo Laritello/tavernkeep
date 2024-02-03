@@ -28,11 +28,8 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\Tavernkeep.Core\Tavernkeep.Core.csproj" />
+    <ProjectReference Include="..\Tavernkeep.Infrastructure\Tavernkeep.Infrastructure.csproj" />
     <ProjectReference Include="..\Tavernkeep.Shared\Tavernkeep.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

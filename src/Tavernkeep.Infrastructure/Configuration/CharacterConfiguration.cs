@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tavernkeep.Core.Entities;
 
-namespace Tavernkeep.Core.EntityFramework.Configuration
+namespace Tavernkeep.Infrastructure.Configuration
 {
     public class CharacterConfiguration : IEntityTypeConfiguration<Character>
     {

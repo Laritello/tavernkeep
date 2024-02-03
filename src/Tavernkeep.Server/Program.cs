@@ -1,6 +1,6 @@
 using CommandLine;
-using Tavernkeep.Core.Extensions;
 using Tavernkeep.Shared.Options;
+using Tavernkeep.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var options = Parser.Default.ParseArguments<LaunchOptions>(args).Value;

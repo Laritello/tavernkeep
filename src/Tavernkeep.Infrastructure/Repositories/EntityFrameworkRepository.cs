@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tavernkeep.Core.Entities.Base;
-using Tavernkeep.Core.EntityFramework.Context;
-using Tavernkeep.Core.EntityFramework.Extensions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Specifications;
+using Tavernkeep.Infrastructure.Context;
+using Tavernkeep.Infrastructure.Extensions;
 
-namespace Tavernkeep.Core.EntityFramework.Repositories
+namespace Tavernkeep.Infrastructure.Repositories
 {
     public class EntityFrameworkRepository<T> : IRepositoryBase<T, Guid> where T : Entity
     {

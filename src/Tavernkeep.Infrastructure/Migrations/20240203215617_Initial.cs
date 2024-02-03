@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Tavernkeep.Server.Migrations
+namespace Tavernkeep.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

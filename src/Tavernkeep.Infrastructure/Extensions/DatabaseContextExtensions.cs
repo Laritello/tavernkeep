@@ -1,18 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Tavernkeep.Core.EntityFramework.Context;
+using Tavernkeep.Infrastructure.Context;
+using Tavernkeep.Infrastructure.Utility;
 using Tavernkeep.Shared.Options;
 
-namespace Tavernkeep.Core.Extensions
+namespace Tavernkeep.Infrastructure.Extensions
 {
     public static class DatabaseContextExtensions
     {
         public static IServiceCollection AddDatabaseContext(this IServiceCollection services, LaunchOptions options)
         {
-            var sessionsDirectory = GetSessionsDirectory();
-            var databasePath = Path.Combine(sessionsDirectory, $"{options.CampaignName}.db");
-            var connectionString = $"Data Source={databasePath};";
-
+            var connectionString = DatabaseContextUtility.GetConnectionString(options.CampaignName);
             services.AddDbContext<SessionContext>(options => options.UseSqlite(connectionString));
 
             return services;
@@ -23,17 +21,6 @@ namespace Tavernkeep.Core.Extensions
             var scope = services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<SessionContext>();
             context.Database.Migrate();
-        }
-
-        private static string GetSessionsDirectory()
-        {
-            var workingDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            var sessionDirectory = Path.Combine(workingDirectory, "Sessions");
-
-            // Ensure directory exists
-            Directory.CreateDirectory(sessionDirectory);
-
-            return sessionDirectory;
         }
     }
 }
