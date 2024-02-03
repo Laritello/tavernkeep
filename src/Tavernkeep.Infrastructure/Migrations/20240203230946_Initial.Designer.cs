@@ -11,7 +11,7 @@ using Tavernkeep.Infrastructure.Context;
 namespace Tavernkeep.Infrastructure.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    [Migration("20240203215617_Initial")]
+    [Migration("20240203230946_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -37,7 +37,7 @@ namespace Tavernkeep.Infrastructure.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Character");
+                    b.ToTable("Characters");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
@@ -59,7 +59,7 @@ namespace Tavernkeep.Infrastructure.Migrations
                     b.HasIndex("Login")
                         .IsUnique();
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Character", b =>

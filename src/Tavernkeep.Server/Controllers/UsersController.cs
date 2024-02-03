@@ -6,16 +6,21 @@ using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Server.Controllers
 {
+    /// <summary>
+    /// Controller for managing user operations.
+    /// </summary>
+    /// <param name="logger">The logger instance.</param>
+    /// <param name="mediator">The mediator instance.</param>
     [ApiController]
     [Route("[controller]")]
     public class UsersController(ILogger<UsersController> logger, IMediator mediator) : ControllerBase
     {
         /// <summary>
-        /// Creates new user.
+        /// Create a new user.
         /// </summary>
         /// <param name="request">Request with user's parameters.</param>
         /// <returns>Created user.</returns>
-        [HttpPost("create", Name = "Create User")]
+        [HttpPost("create")]
         public async Task<User> CreateUser([FromBody] CreateUserRequest request)
         {
             var user = await mediator.Send(new CreateUserCommand(request.Login, request.Password));

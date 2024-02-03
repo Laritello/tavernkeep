@@ -12,7 +12,7 @@ namespace Tavernkeep.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -21,11 +21,11 @@ namespace Tavernkeep.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Character",
+                name: "Characters",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -34,23 +34,23 @@ namespace Tavernkeep.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Character", x => x.Id);
+                    table.PrimaryKey("PK_Characters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Character_User_OwnerId",
+                        name: "FK_Characters_Users_OwnerId",
                         column: x => x.OwnerId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Character_OwnerId",
-                table: "Character",
+                name: "IX_Characters_OwnerId",
+                table: "Characters",
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_Login",
-                table: "User",
+                name: "IX_Users_Login",
+                table: "Users",
                 column: "Login",
                 unique: true);
         }
@@ -59,10 +59,10 @@ namespace Tavernkeep.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Character");
+                name: "Characters");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
         }
     }
 }

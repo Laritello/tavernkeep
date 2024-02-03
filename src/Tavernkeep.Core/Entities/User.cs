@@ -1,7 +1,9 @@
-﻿using Tavernkeep.Core.Entities.Base;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Tavernkeep.Core.Entities.Base;
 
 namespace Tavernkeep.Core.Entities
 {
+    [Table("Users")]
     public class User : Entity
     {
         #region Backing fields

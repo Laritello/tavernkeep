@@ -34,7 +34,7 @@ namespace Tavernkeep.Infrastructure.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Character");
+                    b.ToTable("Characters");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
@@ -56,7 +56,7 @@ namespace Tavernkeep.Infrastructure.Migrations
                     b.HasIndex("Login")
                         .IsUnique();
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Character", b =>
