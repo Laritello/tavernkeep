@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Users.Commands.CreateUser;
+using Tavernkeep.Application.Actions.Users.Commands.DeleteUser;
 using Tavernkeep.Application.Actions.Users.Queries.GetUsers;
 using Tavernkeep.Core.Contracts.Authentication;
 using Tavernkeep.Core.Contracts.Enums;
@@ -32,6 +33,19 @@ namespace Tavernkeep.Server.Controllers
         {
             var user = await mediator.Send(new CreateUserCommand(request.Login, request.Password, request.Role));
             return user;
+        }
+
+        /// <summary>
+        /// Delete existing user.
+        /// </summary>
+        /// <param name="userId">The user ID for deletion.</param>
+        /// <returns></returns>
+        [Authorize]
+        [RequiresRole(UserRole.Master)]
+        [HttpDelete("delete/{userId}")]
+        public async Task DeleteUser([FromRoute] Guid userId)
+        {
+            await mediator.Send(new DeleteUserCommand(userId));
         }
 
         /// <summary>
