@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Shared", "src\Ta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Infrastructure", "src\Tavernkeep.Infrastructure\Tavernkeep.Infrastructure.csproj", "{BAA42B02-88FA-4A8B-A18A-E5320DE382C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tavernkeep.Application", "src\Tavernkeep.Application\Tavernkeep.Application.csproj", "{87EA772B-B7CA-4C88-8CDC-AEAAF19E7D45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Application", "src\Tavernkeep.Application\Tavernkeep.Application.csproj", "{87EA772B-B7CA-4C88-8CDC-AEAAF19E7D45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{6D460CE0-1DD6-48D5-AC8A-98A3D4B62F6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{72EE961E-7343-401F-AAE9-2F42F8CE1E3C} = {6D460CE0-1DD6-48D5-AC8A-98A3D4B62F6E}
+		{CC9C9F69-E6E3-4367-86E0-B59CA8781074} = {6D460CE0-1DD6-48D5-AC8A-98A3D4B62F6E}
+		{478B80A1-665E-4E6C-B1F7-C47E6C285743} = {6D460CE0-1DD6-48D5-AC8A-98A3D4B62F6E}
+		{BAA42B02-88FA-4A8B-A18A-E5320DE382C2} = {6D460CE0-1DD6-48D5-AC8A-98A3D4B62F6E}
+		{87EA772B-B7CA-4C88-8CDC-AEAAF19E7D45} = {6D460CE0-1DD6-48D5-AC8A-98A3D4B62F6E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E0FB7A50-13CD-48D5-B46E-A8BC9294D7C0}
