@@ -34,7 +34,7 @@ namespace Tavernkeep.Application.Actions.Authentication.Commands.CreateAuthentic
                     new Claim(JwtCustomClaimNames.UserLogin, user.Login),
                     new Claim(JwtCustomClaimNames.UserRole, user.Role.ToString()),
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(5),
+                Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
             };
 
