@@ -7,7 +7,11 @@ namespace Tavernkeep.Infrastructure.Repositories
 {
     public class UserEFRepository(SessionContext context) : EntityFrameworkRepository<User>(context), IUserRepository
     {
-        public Task<User?> GetUserByLogin(string login, CancellationToken cancellationToken = default)
+        public Task<List<User>> GetAllUsersAsync(CancellationToken cancellationToken = default)
+        {
+            return AsQueryable().ToListAsync(cancellationToken);
+        }
+        public Task<User?> GetUserByLoginAsync(string login, CancellationToken cancellationToken = default)
         {
             return AsQueryable().Where(x => x.Login == login).FirstOrDefaultAsync(cancellationToken);
         }

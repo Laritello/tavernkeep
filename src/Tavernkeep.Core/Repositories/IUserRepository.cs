@@ -4,6 +4,7 @@ namespace Tavernkeep.Core.Repositories
 {
     public interface IUserRepository : IRepositoryBase<User, Guid>
     {
-        Task<User?> GetUserByLogin(string login, CancellationToken cancellationToken = default);
+        Task<List<User>> GetAllUsersAsync(CancellationToken cancellationToken = default);
+        Task<User?> GetUserByLoginAsync(string login, CancellationToken cancellationToken = default);
     }
 }

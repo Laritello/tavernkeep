@@ -1,17 +1,23 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Users.Commands.CreateUser;
+using Tavernkeep.Application.Actions.Users.Queries.GetUsers;
+using Tavernkeep.Core.Contracts.Authentication;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Users;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Server.Middleware;
 
 namespace Tavernkeep.Server.Controllers
 {
     /// <summary>
-    /// Controller for managing user operations.
+    /// The <see cref="UsersController"/> class handles user operations within the application.
     /// </summary>
     /// <param name="mediator">The mediator instance.</param>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UsersController(IMediator mediator) : ControllerBase
     {
         /// <summary>
@@ -19,11 +25,25 @@ namespace Tavernkeep.Server.Controllers
         /// </summary>
         /// <param name="request">Request with user's parameters.</param>
         /// <returns>Created user.</returns>
+        [Authorize]
+        [RequiresRole(UserRole.Master)]
         [HttpPost("create")]
         public async Task<User> CreateUser([FromBody] CreateUserRequest request)
         {
             var user = await mediator.Send(new CreateUserCommand(request.Login, request.Password, request.Role));
             return user;
+        }
+
+        /// <summary>
+        /// Get all users.
+        /// </summary>
+        /// <returns>List of all registered users.</returns>
+        [Authorize]
+        [HttpGet]
+        public async Task<List<User>> GetAllUsers()
+        {
+            var users = await mediator.Send(new GetAllUsersQuery());
+            return users;
         }
     }
 }
