@@ -1,6 +1,6 @@
 <template>
     <div class="weather-component">
-        <h1>Weather forecast</h1>
+        <h1>Users</h1>
         <p>This component demonstrates fetching data from the server.</p>
 
         <div v-if="loading" class="loading">
@@ -11,18 +11,14 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Temp. (C)</th>
-                        <th>Temp. (F)</th>
-                        <th>Summary</th>
+                        <th>Login</th>
+                        <th>Role</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="forecast in post" :key="forecast.date">
-                        <td>{{ forecast.date }}</td>
-                        <td>{{ forecast.temperatureC }}</td>
-                        <td>{{ forecast.temperatureF }}</td>
-                        <td>{{ forecast.summary }}</td>
+                    <tr v-for="user in post" :key="user.id">
+                        <td>{{ user.login }}</td>
+                        <td>{{ user.role }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -33,16 +29,21 @@
 <script lang="ts">
     import { defineComponent } from 'vue';
 
-    type Forecasts = {
-        date: string,
-        temperatureC: string,
-        temperatureF: string,
-        summary: string
+    type Users = {
+        id: string,
+        login: string,
+        role: UserRole
     }[];
+
+    enum UserRole {
+        Player,
+        Moderator,
+        Master
+    }
 
     interface Data {
         loading: boolean,
-        post: null | Forecasts
+        post: null | Users
     }
 
     export default defineComponent({
@@ -66,10 +67,10 @@
                 this.post = null;
                 this.loading = true;
 
-                fetch('weatherforecast')
+                fetch('api/users')
                     .then(r => r.json())
                     .then(json => {
-                        this.post = json as Forecasts;
+                        this.post = json as Users;
                         this.loading = false;
                         return;
                     });

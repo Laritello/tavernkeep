@@ -1,11 +1,9 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Users.Commands.CreateUser;
 using Tavernkeep.Application.Actions.Users.Commands.DeleteUser;
 using Tavernkeep.Application.Actions.Users.Queries.GetUsers;
-using Tavernkeep.Core.Contracts.Authentication;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Users;
 using Tavernkeep.Core.Entities;
@@ -36,7 +34,7 @@ namespace Tavernkeep.Server.Controllers
         }
 
         /// <summary>
-        /// Delete existing user.
+        /// Delete an existing user.
         /// </summary>
         /// <param name="userId">The user ID for deletion.</param>
         /// <returns></returns>
@@ -52,7 +50,6 @@ namespace Tavernkeep.Server.Controllers
         /// Get all users.
         /// </summary>
         /// <returns>List of all registered users.</returns>
-        [Authorize]
         [HttpGet]
         public async Task<List<User>> GetAllUsers()
         {
