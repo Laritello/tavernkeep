@@ -28,32 +28,24 @@
 
 <script lang="ts">
     import { defineComponent } from 'vue';
+    import { ApiClientFactory } from '@/api/factories/ApiClientFactory';
 
-    type Users = {
-        id: string,
-        login: string,
-        role: UserRole
-    }[];
-
-    enum UserRole {
-        Player,
-        Moderator,
-        Master
-    }
+    let api = ApiClientFactory.createApiClient();
 
     interface Data {
         loading: boolean,
-        post: null | Users
+        post: null | User[],
     }
 
     export default defineComponent({
         data(): Data {
             return {
                 loading: false,
-                post: null
+                post: null,
             };
         },
-        created() {
+        mounted() {
+
             // fetch the data when the view is created and the data is
             // already being observed
             this.fetchData();
@@ -67,14 +59,13 @@
                 this.post = null;
                 this.loading = true;
 
-                fetch('api/users')
-                    .then(r => r.json())
-                    .then(json => {
-                        this.post = json as Users;
-                        this.loading = false;
-                        return;
-                    });
-            }
+                api.getUsers()
+                .then(r => {
+                    this.post = r.data;
+                    this.loading = false;
+                    return;
+                });
+            },
         },
     });
 </script>
@@ -104,4 +95,4 @@ table {
     margin-left: auto;
     margin-right: auto;
 }
-</style>
+</style>@/api/factories/ApiClientFactory

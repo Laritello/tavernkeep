@@ -62,6 +62,8 @@ app.Services.ApplyDatabaseMigrations();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
+app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
