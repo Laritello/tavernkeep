@@ -8,7 +8,6 @@
             <label>Password</label>
             <input v-model="form.password" class="form-control" placeholder="Login" required>
         </div>
-        <div class="text-danger my-2"> {{ userStore.state.error }} </div>
         <button type="submit">Login</button>
     </form>
 </template>

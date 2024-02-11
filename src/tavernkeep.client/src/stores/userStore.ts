@@ -10,7 +10,7 @@ interface UserData {
 
 // Constants initializations
 const client : ApiClient = ApiClientFactory.createApiClient();
-const cookieName : string = 'taverkeep.auth.jwt'; // https://www.npmjs.com/package/typescript-cookie used
+const cookieName : string = 'taverkeep.auth.jwt';
 
 const state : UserData = reactive({ 
     isLoggedIn: false

@@ -1,4 +1,6 @@
-class User {
+import type { UserRole } from "@/contracts/enums/UserRole";
+
+export class User {
     id:number;
     login:string;
     role:UserRole;

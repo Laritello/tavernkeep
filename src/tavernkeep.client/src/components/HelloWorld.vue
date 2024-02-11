@@ -30,6 +30,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
+import type { User } from '@/entities/User';
 
 let api = ApiClientFactory.createApiClient();
 
