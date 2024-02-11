@@ -1,35 +1,43 @@
 <template>
-    <form @submit.prevent="onSubmit">
-        <div class="form-group my-2">
-            <label>Login</label>
-            <input v-model="form.login" class="form-control" placeholder="Login" required>
-        </div>
-        <div class="form-group my-2">
-            <label>Password</label>
-            <input v-model="form.password" class="form-control" placeholder="Login" required>
-        </div>
-        <button type="submit">Login</button>
-    </form>
+    <div class="d-flex align-center justify-center" style="height: 100vh">
+        <v-sheet width="400" class="mx-auto">
+            <v-form fast-fail @submit.prevent="authorize">
+                <v-text-field v-model="login" label="User Name"></v-text-field>
+
+                <v-text-field v-model="password" label="password"></v-text-field>
+                <a href="#" class="text-body-2 font-weight-regular">Forgot Password?</a>
+
+                <v-btn type="submit" color="primary" block class="mt-2">Sign in</v-btn>
+
+            </v-form>
+            <div class="mt-2">
+                <p class="text-body-2">Don't have an account? <a href="#">Sign Up</a></p>
+            </div>
+        </v-sheet>
+    </div>
 </template>
   
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
 import userStore from '@/stores/userStore'
 
-export default defineComponent({
-    setup() {
-        const form = reactive({
-            login: '',
-            password: '',
-        })
+interface UserCredentials {
+    login: string,
+    password: string
+}
 
-        const onSubmit = () => {
-            userStore.login(form.login, form.password)
-            form.login = ''
-            form.password = ''
-        }
+export default {
 
-        return { form, userStore, onSubmit }
-    }
-});
+    data: (): UserCredentials => ({
+        login: '',
+        password: '',
+    }),
+    methods: {
+        authorize() {
+            userStore.login(this.login, this.password)
+            this.login = ''
+            this.password = ''
+        },
+    },
+}
 </script>
+

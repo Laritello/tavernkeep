@@ -1,6 +1,6 @@
 <template>
     <v-sheet class="mx-auto">
-        <v-form fast-fail @submit.prevent class="pa-2">
+        <v-form fast-fail @submit.prevent="createUser" class="pa-2">
             <div class="text-h6">Create</div>
             <v-text-field v-model="login" label="Login" :rules="loginRules"></v-text-field>
 
@@ -15,7 +15,11 @@
 </template>
 
 <script lang="ts">
+import type { ApiClient } from '@/api/base/ApiClient';
 import { UserRole } from '@/contracts/enums/UserRole';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
+
+const client: ApiClient = ApiClientFactory.createApiClient();
 
 interface UserData {
     login: string,
@@ -34,17 +38,22 @@ export default {
         password: '',
         role: UserRole.Player,
         loginRules: [
-            (value : string) => {
+            (value: string) => {
                 if (value) return true
                 return 'You must enter a login.'
             },
         ],
         passwordRules: [
-            (value : string) => {
+            (value: string) => {
                 if (value) return true
                 return 'You must enter a password.'
             },
         ],
     }),
+    methods: {
+        async createUser() {
+            await client.createUser(this.login, this.password, this.role)
+        },
+    }
 }
 </script>

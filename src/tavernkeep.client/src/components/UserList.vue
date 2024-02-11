@@ -2,14 +2,17 @@
   <v-sheet class="mx-auto pa-2">
     <div class="text-h6">Users</div>
     <v-list>
-      <v-list-item v-for="user in users" :key="user.id" v-bind:title="user.login" />
+      <v-list-item v-for="user in users" :key="user.id" v-bind:title="user.login">
+        <template v-slot:append>
+          <v-btn size="small" variant="text" icon="mdi-delete" @click="deleteUser(user)"></v-btn>
+        </template>
+      </v-list-item>
     </v-list>
   </v-sheet>
 </template>
 
 <script lang="ts">
 import type { ApiClient } from '@/api/base/ApiClient';
-import { UserRole } from '@/contracts/enums/UserRole';
 import { User } from '@/entities/User';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import { reactive, defineComponent, type PropType } from 'vue'
@@ -34,10 +37,16 @@ export default defineComponent({
   },
 
   methods: {
-    async createUser() {
-      const response = await client.createUser(form.login, form.password, UserRole.Player)
+    async deleteUser(user: User) {
+      console.log("Deleting user with id: " + user.id)
+      const response = await client.deleteUser(user.id)
+
       if (response.isSuccess()) {
-        this.$props.users.push(response.data)
+        const index = this.$props.users.indexOf(user, 0);
+
+        if (index > -1) {
+          this.$props.users.splice(index, 1);
+        }
       }
     }
   }
