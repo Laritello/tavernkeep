@@ -1,46 +1,55 @@
 import { ApiClientFactory } from '@/factories/ApiClientFactory'
 import { computed, reactive } from 'vue'
+import { getCookie, setCookie, removeCookie } from 'typescript-cookie'
+import type { ApiClient } from '@/api/base/ApiClient';
 
+// Interface declarations
 interface UserData {
-    jwt: string | undefined,
-    error: string | undefined
+    isLoggedIn: boolean,
 }
 
+// Constants initializations
+const client : ApiClient = ApiClientFactory.createApiClient();
+const cookieName : string = 'taverkeep.auth.jwt'; // https://www.npmjs.com/package/typescript-cookie used
+
 const state : UserData = reactive({ 
-    jwt: undefined,
-    error: undefined
+    isLoggedIn: false
 })
 
 const getters = reactive({
-    isLoggedIn : computed(() => state.jwt != undefined)
+    isLoggedIn : computed(() => checkLoginStatus(cookieName))
 })
 
 const actions = {
     async login(login: string, password: string) {
-        // Reset previous saved state
-        state.jwt = undefined;
-        state.error = undefined;
+        if (state.isLoggedIn)
+            this.logout()
 
         // Call API for JWT
-        const client = ApiClientFactory.createApiClient();
         const response = await client.auth(login, password);
 
-        // If something went wrong - show error
+        // TODO: Error handling
         if (!response.isSuccess()) {
-            state.error = response.statusText;
             return;
         }
 
-        state.jwt = response.data;
+        setCookie(cookieName, response.data, { expires: 7 })
+        state.isLoggedIn = true;
     },
 
     async logout() {
-        state.jwt = undefined;
+        state.isLoggedIn = false;
+        removeCookie(cookieName)
     },
 
     checkAuthState() : boolean {
-        return state.jwt != undefined;
+        return checkLoginStatus(cookieName)
     }
+}
+
+function checkLoginStatus(name: string) : boolean {
+    state.isLoggedIn = getCookie(name) != undefined
+    return state.isLoggedIn 
 }
 
 export { type UserData }

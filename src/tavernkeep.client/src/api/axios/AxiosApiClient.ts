@@ -6,7 +6,7 @@ import { AxiosApiResponse } from './AxiosApiResponse';
 // TODO: Error handling and interceptors
 export class AxiosApiClient implements ApiClient {
     client: AxiosInstance;
-    private baseURL = 'https://192.168.0.103:7231/api/';
+    private baseURL = 'https://localhost:7231/api/';
 
     constructor() {
         this.client = axios.create({
