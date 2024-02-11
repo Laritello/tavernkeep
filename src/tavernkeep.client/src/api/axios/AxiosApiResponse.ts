@@ -10,4 +10,8 @@ export class AxiosApiResponse implements ApiResponse {
         this.status = status;
         this.statusText = statusText;
     }
+
+    isSuccess(): boolean {
+        return this.status >= 200 && this.status < 300;
+    }
 }

@@ -3,7 +3,8 @@ import type { ApiClient } from '../base/ApiClient';
 import type { ApiResponse } from '../base/ApiResponse';
 import { AxiosApiResponse } from './AxiosApiResponse';
 
-export class AxiosApiClient implements ApiClient{
+// TODO: Error handling and interceptors
+export class AxiosApiClient implements ApiClient {
     client: AxiosInstance;
     private baseURL = 'https://192.168.0.103:7231/api/';
 
@@ -18,10 +19,16 @@ export class AxiosApiClient implements ApiClient{
     }
 
     async getUsers() : Promise<ApiResponse<User[]>> {
-        await this.client.get<User[]>('users').then(r => {
-            console.log(r.status);
-        });
         const response = await this.client.get<User[]>('users');
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
+    }
+
+    async auth(login: string, password: string) : Promise<ApiResponse<string>> {
+        const response = await this.client.post<string>('authentication/auth', {
+            login: login,
+            password: password
+        });
+
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 }
