@@ -1,23 +1,28 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm" style="background-color: darkgoldenrod;">
-        <UserList :users="users"></UserList>
-      </div>
-      <div>
-        <h2>Chat Window</h2>
-        <div class="messages">
-          <div v-for="message in messages" :key="message.id">
-            <strong>{{ message.sender }}:</strong> {{ message.text }}
-          </div>
-        </div>
-        <div class="input-box">
-          <input v-model="newMessage" type="text" placeholder="Type your message..." />
-          <button @click="sendMessage">Send</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <v-layout class="rounded rounded-md">
+    <v-app-bar color="surface-variant" title="Tavernkeep"></v-app-bar>
+
+    <v-navigation-drawer>
+      <v-col>
+        <v-card>
+          <UserForm />
+        </v-card>
+        <v-card class="mt-3">
+          <UserList :users="users"/>
+        </v-card>
+      </v-col>
+    </v-navigation-drawer>
+
+    <v-navigation-drawer location="right">
+      <v-list>
+        <v-list-item title="Drawer right"></v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+      Main Content
+    </v-main>
+  </v-layout>
 </template>
   
 <script lang="ts">
@@ -26,6 +31,7 @@ import UserList from './UserList.vue';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { ApiClient } from '@/api/base/ApiClient';
 import userStore from '@/stores/userStore';
+import UserForm from './UserForm.vue';
 
 const client: ApiClient = ApiClientFactory.createApiClient();
 
@@ -42,7 +48,7 @@ interface RoomModel {
 }
 
 export default {
-  components: { UserList },
+  components: { UserList, UserForm },
   data(): RoomModel {
     return {
       users: [],

@@ -1,27 +1,10 @@
 <template>
-  <div>
-    <h2>Create user</h2>
-    <div>
-      <form @submit.prevent="createUser">
-        <div class="form-group my-2">
-          <label>Login</label>
-          <input v-model="form.login" class="form-control" placeholder="Login" required>
-        </div>
-        <div class="form-group my-2">
-          <label>Password</label>
-          <input v-model="form.password" class="form-control" placeholder="Login" required>
-        </div>
-        <button type="submit">Create</button>
-      </form>
-    </div>
-    <h2>Existing users</h2>
-    <ul>
-      <li v-for="user in users" :key="user.id">
-        {{ user.login }}
-        <button>delete</button>
-      </li>
-    </ul>
-  </div>
+  <v-sheet class="mx-auto pa-2">
+    <div class="text-h6">Users</div>
+    <v-list>
+      <v-list-item v-for="user in users" :key="user.id" v-bind:title="user.login" />
+    </v-list>
+  </v-sheet>
 </template>
 
 <script lang="ts">
