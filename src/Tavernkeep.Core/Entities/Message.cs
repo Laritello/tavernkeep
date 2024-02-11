@@ -10,6 +10,8 @@ namespace Tavernkeep.Core.Entities
 
         #region Constructors
 
+        public Message() : this(MessageType.Text, string.Empty) { }
+
         public Message(MessageType type, string content)
         {
             Type = type;
@@ -22,6 +24,7 @@ namespace Tavernkeep.Core.Entities
 
         public User Sender { get; set; } = default!;
         public MessageType Type { get; set; }
+        public DateTime Created { get; set; }
         public string Content { get; set; }
 
         #endregion
