@@ -55,6 +55,7 @@ namespace Tavernkeep.Server.Extensions
 
             services.AddScoped<IUserRepository, UserEFRepository>();
             services.AddScoped<ICharacterRepository, CharacterEFRepository>();
+            services.AddScoped<IMessageRepository, MessageEFRepository>();
 
             return services;
         }
@@ -68,6 +69,7 @@ namespace Tavernkeep.Server.Extensions
         {
             var scope = provider.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<SessionContext>();
+            var migrations = context.Database.GetMigrations();
             context.Database.Migrate();
 
             return provider;
