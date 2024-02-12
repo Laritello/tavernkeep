@@ -37,7 +37,6 @@ namespace Tavernkeep.Server.Controllers
         /// Delete an existing user.
         /// </summary>
         /// <param name="userId">The user ID for deletion.</param>
-        /// <returns></returns>
         [Authorize]
         [RequiresRole(UserRole.Master)]
         [HttpDelete("delete/{userId}")]

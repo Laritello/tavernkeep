@@ -12,6 +12,7 @@ namespace Tavernkeep.Infrastructure.Configuration
         {
             builder.HasKey(m => m.Id);
 
+            builder.Property(m => m.Created).IsRequired();
             builder.Property(m => m.Content).IsRequired();
             builder.Property(m => m.Type)
                 .IsRequired()
