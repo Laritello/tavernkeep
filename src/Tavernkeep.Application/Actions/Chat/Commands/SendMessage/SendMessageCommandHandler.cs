@@ -1,11 +1,19 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.SignalR;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Infrastructure.Notifications.Hubs;
 
 namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
 {
-    public class SendMessageCommandHandler(IMessageRepository messageRepository, IUserRepository userRepository) : IRequestHandler<SendMessageCommand, Message>
+    public class SendMessageCommandHandler
+        (
+        IMessageRepository messageRepository, 
+        IUserRepository userRepository,
+        IHubContext<ChatHub, IChatHub> context
+        ) 
+        : IRequestHandler<SendMessageCommand, Message>
     {
         public async Task<Message> Handle(SendMessageCommand request, CancellationToken cancellationToken)
         {
@@ -22,6 +30,9 @@ namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
 
             messageRepository.Save(message);
             await messageRepository.CommitAsync(cancellationToken);
+
+            // Notify connected users about new message
+            await context.Clients.All.ReceiveMessage(message);
 
             return message;
         }

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using Tavernkeep.Server.Extensions;
 using Microsoft.OpenApi.Models;
+using Tavernkeep.Infrastructure.Notifications.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 var options = Parser.Default.ParseArguments<LaunchOptions>(args).Value;
@@ -13,6 +14,8 @@ var options = Parser.Default.ParseArguments<LaunchOptions>(args).Value;
 builder.Services
     .AddControllers()
     .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
+builder.Services.AddSignalR();
 
 builder.Services
     .AddDatabaseContext(options)
@@ -76,6 +79,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ChatHub>("/hubs/chat");
 
 app.MapFallbackToFile("/index.html");
 
