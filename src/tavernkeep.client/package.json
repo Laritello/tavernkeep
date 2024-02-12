@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
+    "@microsoft/signalr": "^8.0.0",
     "axios": "^1.6.7",
     "typescript-cookie": "^1.0.6",
     "vue": "^3.4.17",

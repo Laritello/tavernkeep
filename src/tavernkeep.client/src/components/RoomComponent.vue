@@ -32,6 +32,7 @@ import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { ApiClient } from '@/api/base/ApiClient';
 import userStore from '@/stores/userStore';
 import UserForm from './UserForm.vue';
+import ChatHub from '@/api/hubs/ChatHub';
 
 const client: ApiClient = ApiClientFactory.createApiClient();
 
@@ -64,6 +65,11 @@ export default {
   async mounted() {
     const response = await client.getUsers();
     this.users = response.data;
+
+    ChatHub.connection.on("ReceiveMessage", (data)=> {
+        console.log("Message Received: " + data)
+    })
+    ChatHub.start();
   },
 
   methods: {

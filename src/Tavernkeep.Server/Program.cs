@@ -80,7 +80,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapHub<ChatHub>("/hubs/chat");
+app.MapHub<ChatHub>("/api/hubs/chat");
 
 app.MapFallbackToFile("/index.html");
 
