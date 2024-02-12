@@ -6,8 +6,7 @@
 
             <v-text-field v-model="password" label="Password" :rules="passwordRules"></v-text-field>
 
-            <v-combobox v-model="role" label="Role"
-                :items="[UserRole.Master, UserRole.Moderator, UserRole.Player]"></v-combobox>
+            <v-combobox v-model="role" label="Role" :items="[UserRole.Master, UserRole.Moderator, UserRole.Player]"></v-combobox>
 
             <v-btn type="submit" block>Create</v-btn>
         </v-form>

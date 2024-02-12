@@ -1,6 +1,6 @@
 <template>
   <v-layout class="rounded rounded-md">
-    <v-app-bar color="surface-variant" title="Tavernkeep"></v-app-bar>
+    <v-app-bar color="primary" title="Tavernkeep"></v-app-bar>
 
     <v-navigation-drawer>
       <v-col>
@@ -13,10 +13,10 @@
       </v-col>
     </v-navigation-drawer>
 
-    <v-navigation-drawer location="right">
-      <v-list>
-        <v-list-item title="Drawer right"></v-list-item>
-      </v-list>
+    <v-navigation-drawer location="right" width="300" permanent>
+      <ChatComponent style="max-height: 100%;">
+
+      </ChatComponent>
     </v-navigation-drawer>
 
     <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
@@ -32,7 +32,7 @@ import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { ApiClient } from '@/api/base/ApiClient';
 import userStore from '@/stores/userStore';
 import UserForm from './UserForm.vue';
-import ChatHub from '@/api/hubs/ChatHub';
+import ChatComponent from './ChatComponent.vue';
 
 const client: ApiClient = ApiClientFactory.createApiClient();
 
@@ -49,7 +49,7 @@ interface RoomModel {
 }
 
 export default {
-  components: { UserList, UserForm },
+  components: { UserList, UserForm, ChatComponent },
   data(): RoomModel {
     return {
       users: [],
@@ -65,25 +65,6 @@ export default {
   async mounted() {
     const response = await client.getUsers();
     this.users = response.data;
-
-    ChatHub.connection.on("ReceiveMessage", (data)=> {
-        console.log("Message Received: " + data)
-    })
-    ChatHub.start();
-  },
-
-  methods: {
-    sendMessage() {
-      if (this.newMessage.trim() !== '') {
-        const newMessage = {
-          id: this.messages.length + 1,
-          sender: 'User 1', // Assuming the sender is always User 1 for simplicity
-          text: this.newMessage,
-        };
-        this.messages.push(newMessage);
-        this.newMessage = '';
-      }
-    },
   },
 };
 </script>
