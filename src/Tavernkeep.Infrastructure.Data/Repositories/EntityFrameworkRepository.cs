@@ -2,10 +2,10 @@
 using Tavernkeep.Core.Entities.Base;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Specifications;
-using Tavernkeep.Infrastructure.Context;
-using Tavernkeep.Infrastructure.Extensions;
+using Tavernkeep.Infrastructure.Data.Context;
+using Tavernkeep.Infrastructure.Data.Extensions;
 
-namespace Tavernkeep.Infrastructure.Repositories
+namespace Tavernkeep.Infrastructure.Data.Repositories
 {
     public class EntityFrameworkRepository<T> : IRepositoryBase<T, Guid> where T : Entity
     {

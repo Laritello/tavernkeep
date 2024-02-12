@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Tavernkeep.Infrastructure.Utility;
+using Tavernkeep.Infrastructure.Data.Utility;
 
-namespace Tavernkeep.Infrastructure.Context
+namespace Tavernkeep.Infrastructure.Data.Context
 {
     public class SessionContextFactory : IDesignTimeDbContextFactory<SessionContext>
     {

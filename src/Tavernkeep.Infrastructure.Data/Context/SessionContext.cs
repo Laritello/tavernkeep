@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace Tavernkeep.Infrastructure.Context
+namespace Tavernkeep.Infrastructure.Data.Context
 {
     public sealed class SessionContext(DbContextOptions<SessionContext> options) : DbContext(options)
     {

@@ -1,4 +1,4 @@
-﻿namespace Tavernkeep.Infrastructure.Utility
+﻿namespace Tavernkeep.Infrastructure.Data.Utility
 {
     public static class DatabaseContextUtility
     {

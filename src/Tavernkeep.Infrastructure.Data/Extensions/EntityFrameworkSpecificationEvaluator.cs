@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tavernkeep.Core.Specifications;
 
-namespace Tavernkeep.Infrastructure.Extensions
+namespace Tavernkeep.Infrastructure.Data.Extensions
 {
     public static class EntityFrameworkSpecificationEvaluator<TEntity> where TEntity : class
     {

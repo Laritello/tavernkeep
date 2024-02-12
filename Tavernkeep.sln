@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Core", "src\Tave
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Shared", "src\Tavernkeep.Shared\Tavernkeep.Shared.csproj", "{478B80A1-665E-4E6C-B1F7-C47E6C285743}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Infrastructure", "src\Tavernkeep.Infrastructure\Tavernkeep.Infrastructure.csproj", "{BAA42B02-88FA-4A8B-A18A-E5320DE382C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Infrastructure.Data", "src\Tavernkeep.Infrastructure.Data\Tavernkeep.Infrastructure.Data.csproj", "{BAA42B02-88FA-4A8B-A18A-E5320DE382C2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Application", "src\Tavernkeep.Application\Tavernkeep.Application.csproj", "{87EA772B-B7CA-4C88-8CDC-AEAAF19E7D45}"
 EndProject

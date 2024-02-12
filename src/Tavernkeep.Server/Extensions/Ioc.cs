@@ -4,9 +4,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Repositories;
-using Tavernkeep.Infrastructure.Context;
-using Tavernkeep.Infrastructure.Repositories;
-using Tavernkeep.Infrastructure.Utility;
+using Tavernkeep.Infrastructure.Data.Context;
+using Tavernkeep.Infrastructure.Data.Repositories;
+using Tavernkeep.Infrastructure.Data.Utility;
 using Tavernkeep.Shared.Options;
 
 namespace Tavernkeep.Server.Extensions
@@ -72,7 +72,7 @@ namespace Tavernkeep.Server.Extensions
             var context = scope.ServiceProvider.GetRequiredService<SessionContext>();
             context.Database.Migrate();
 
-            if (context.Set<User>().Count() == 0)
+            if (!context.Set<User>().Any())
             {
                 User admin = new("admin", "admin", Core.Contracts.Enums.UserRole.Master);
                 context.Set<User>().Add(admin);

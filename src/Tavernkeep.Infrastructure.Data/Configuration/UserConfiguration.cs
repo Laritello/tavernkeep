@@ -4,7 +4,7 @@ using Tavernkeep.Core.Entities;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tavernkeep.Core.Contracts.Enums;
 
-namespace Tavernkeep.Infrastructure.Configuration
+namespace Tavernkeep.Infrastructure.Data.Configuration
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 
-namespace Tavernkeep.Infrastructure.Configuration
+namespace Tavernkeep.Infrastructure.Data.Configuration
 {
     public class MessageConfiguration : IEntityTypeConfiguration<Message>
     {
