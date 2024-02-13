@@ -28,7 +28,7 @@ namespace Tavernkeep.Server.Controllers
         public async Task<Message> SendMessageAsync([FromBody] SendMessageRequest request)
         {
             var senderId = HttpContext.User.FindFirst(JwtCustomClaimNames.UserId) 
-                ?? throw new BusinessLogicException("No sender ID provided for the message");
+                ?? throw new BusinessLogicException("You must be authorized to send messages.");
 
             var message = await mediator.Send(new SendMessageCommand(Guid.Parse(senderId.Value), request.Type, request.Content));
             return message;

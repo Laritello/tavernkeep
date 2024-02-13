@@ -2,7 +2,6 @@
 {
     public class CreateCharacterRequest
     {
-        public Guid OwnerId { get; set; }
-        public string CharacterName { get; set; } = default!;
+        public string Name { get; set; } = default!;
     }
 }

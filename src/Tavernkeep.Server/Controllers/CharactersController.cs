@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Characters.Commands.CreateCharacter;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacter;
+using Tavernkeep.Core.Contracts.Authentication;
 using Tavernkeep.Core.Contracts.Character.Requests;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Exceptions;
 
 namespace Tavernkeep.Server.Controllers
 {
@@ -25,7 +27,10 @@ namespace Tavernkeep.Server.Controllers
         [HttpPost("create")]
         public async Task<Character> CreateCharacter(CreateCharacterRequest request)
         {
-            return await mediator.Send(new CreateCharacterCommand(request.OwnerId, request.CharacterName));
+            var ownerId = HttpContext.User.FindFirst(JwtCustomClaimNames.UserId)
+                ?? throw new BusinessLogicException("You must be authorized to create characters.");
+
+            return await mediator.Send(new CreateCharacterCommand(Guid.Parse(ownerId.Value), request.Name));
         }
 
         /// <summary>
