@@ -11,9 +11,9 @@ using Tavernkeep.Core.Exceptions;
 namespace Tavernkeep.Server.Controllers
 {
     /// <summary>
-    /// 
+    /// The <see cref="ChatController"/> class handles chat operations within the application.
     /// </summary>
-    /// <param name="mediator"></param>
+    /// <param name="mediator">The mediator instance.</param>
     [ApiController]
     [Route("api/[controller]")]
     public class ChatController(IMediator mediator) : ControllerBase

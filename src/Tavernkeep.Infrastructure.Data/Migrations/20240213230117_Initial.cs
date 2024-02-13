@@ -31,7 +31,29 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Data = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Acrobatics = table.Column<string>(type: "TEXT", nullable: false),
+                    Arcana = table.Column<string>(type: "TEXT", nullable: false),
+                    Athletics = table.Column<string>(type: "TEXT", nullable: false),
+                    Charisma = table.Column<string>(type: "TEXT", nullable: false),
+                    Constitution = table.Column<string>(type: "TEXT", nullable: false),
+                    Crafting = table.Column<string>(type: "TEXT", nullable: false),
+                    Deception = table.Column<string>(type: "TEXT", nullable: false),
+                    Dexterity = table.Column<string>(type: "TEXT", nullable: false),
+                    Diplomacy = table.Column<string>(type: "TEXT", nullable: false),
+                    Intelligence = table.Column<string>(type: "TEXT", nullable: false),
+                    Intimidation = table.Column<string>(type: "TEXT", nullable: false),
+                    Medicine = table.Column<string>(type: "TEXT", nullable: false),
+                    Nature = table.Column<string>(type: "TEXT", nullable: false),
+                    Occultism = table.Column<string>(type: "TEXT", nullable: false),
+                    Performance = table.Column<string>(type: "TEXT", nullable: false),
+                    Religion = table.Column<string>(type: "TEXT", nullable: false),
+                    Society = table.Column<string>(type: "TEXT", nullable: false),
+                    Stealth = table.Column<string>(type: "TEXT", nullable: false),
+                    Strength = table.Column<string>(type: "TEXT", nullable: false),
+                    Survival = table.Column<string>(type: "TEXT", nullable: false),
+                    Thievery = table.Column<string>(type: "TEXT", nullable: false),
+                    Wisdom = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

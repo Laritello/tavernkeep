@@ -6,14 +6,22 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 {
     public static class EntityFrameworkConfigurationExtensions
     {
-        public static EntityTypeBuilder<T> OwnsJson<T, U>(this EntityTypeBuilder<T> builder, Expression<Func<T, U?>> navigationExpression)
+        public static EntityTypeBuilder<T> OwnsJson<T, U>(this EntityTypeBuilder<T> builder, Expression<Func<T, U?>> navigationExpression, Action<OwnedNavigationBuilder<T, U>>? buildAction = null)
             where T : class, new()
             where U : class, new()
         {
-            builder.OwnsOne(navigationExpression, ownedNavigationBuilder =>
+            if (buildAction == null)
             {
-                ownedNavigationBuilder.ToJson();
-            });
+                builder.OwnsOne(navigationExpression, ownedNavigationBuilder =>
+                {
+                    ownedNavigationBuilder.ToJson();
+                });
+            }
+            else
+            {
+                builder.OwnsOne(navigationExpression, buildAction);
+            }
+
 
             return builder;
         }

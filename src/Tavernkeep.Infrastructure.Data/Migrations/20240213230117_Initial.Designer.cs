@@ -11,8 +11,8 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    [Migration("20240213190530_CharacterStat")]
-    partial class CharacterStat
+    [Migration("20240213230117_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("OwnerId")
@@ -160,48 +164,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasForeignKey("CharacterId");
                         });
 
-                    b.OwnsOne("Tavernkeep.Core.Contracts.Character.Ability", "Charisma", b1 =>
-                        {
-                            b1.Property<Guid>("CharacterId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("CharacterId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Charisma");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CharacterId");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Contracts.Character.Ability", "Constitution", b1 =>
-                        {
-                            b1.Property<Guid>("CharacterId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("CharacterId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Constitution");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CharacterId");
-                        });
-
                     b.OwnsOne("Tavernkeep.Core.Contracts.Character.Skill", "Crafting", b1 =>
                         {
                             b1.Property<Guid>("CharacterId")
@@ -244,27 +206,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasForeignKey("CharacterId");
                         });
 
-                    b.OwnsOne("Tavernkeep.Core.Contracts.Character.Ability", "Dexterity", b1 =>
-                        {
-                            b1.Property<Guid>("CharacterId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("CharacterId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Dexterity");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CharacterId");
-                        });
-
                     b.OwnsOne("Tavernkeep.Core.Contracts.Character.Skill", "Diplomacy", b1 =>
                         {
                             b1.Property<Guid>("CharacterId")
@@ -281,27 +222,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.ToTable("Characters");
 
                             b1.ToJson("Diplomacy");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CharacterId");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Contracts.Character.Ability", "Intelligence", b1 =>
-                        {
-                            b1.Property<Guid>("CharacterId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("CharacterId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Intelligence");
 
                             b1.WithOwner()
                                 .HasForeignKey("CharacterId");
@@ -475,27 +395,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasForeignKey("CharacterId");
                         });
 
-                    b.OwnsOne("Tavernkeep.Core.Contracts.Character.Ability", "Strength", b1 =>
-                        {
-                            b1.Property<Guid>("CharacterId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("CharacterId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Strength");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CharacterId");
-                        });
-
                     b.OwnsOne("Tavernkeep.Core.Contracts.Character.Skill", "Survival", b1 =>
                         {
                             b1.Property<Guid>("CharacterId")
@@ -538,9 +437,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasForeignKey("CharacterId");
                         });
 
-                    b.OwnsOne("Tavernkeep.Core.Contracts.Character.Ability", "Wisdom", b1 =>
+                    b.OwnsOne("Tavernkeep.Core.Contracts.Character.Ability", "Charisma", b1 =>
                         {
-                            b1.Property<Guid>("CharacterId")
+                            b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("Score")
@@ -549,14 +448,131 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
-                            b1.HasKey("CharacterId");
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Charisma");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Contracts.Character.Ability", "Constitution", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Score")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Constitution");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Contracts.Character.Ability", "Dexterity", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Score")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Dexterity");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Contracts.Character.Ability", "Intelligence", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Score")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Intelligence");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Contracts.Character.Ability", "Strength", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Score")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Strength");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Contracts.Character.Ability", "Wisdom", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Score")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
 
                             b1.ToTable("Characters");
 
                             b1.ToJson("Wisdom");
 
-                            b1.WithOwner()
-                                .HasForeignKey("CharacterId");
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
                         });
 
                     b.Navigation("Acrobatics")

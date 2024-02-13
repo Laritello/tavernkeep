@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Authentication.Commands.CreateAuthenticationnToken;
-using Tavernkeep.Core.Contracts.Authentication;
+using Tavernkeep.Core.Contracts.Authentication.Requests;
 
 namespace Tavernkeep.Server.Controllers
 {

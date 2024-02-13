@@ -11,6 +11,8 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
         {
             builder.HasKey(c => c.Id);
 
+            builder.Property(c => c.Name).IsRequired();
+
             builder.HasOne(c => c.Owner).WithMany(u => u.Characters).IsRequired();
 
             builder.OwnsJson(c => c.Strength);
