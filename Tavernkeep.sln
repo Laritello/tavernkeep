@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Application", "s
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{6D460CE0-1DD6-48D5-AC8A-98A3D4B62F6E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Infrastructure.Notifications", "src\Tavernkeep.Infrastructure.Notifications\Tavernkeep.Infrastructure.Notifications.csproj", "{26886077-D0EE-44C2-B129-FE2CEB67E31D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tavernkeep.Infrastructure.Notifications", "src\Tavernkeep.Infrastructure.Notifications\Tavernkeep.Infrastructure.Notifications.csproj", "{26886077-D0EE-44C2-B129-FE2CEB67E31D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +31,7 @@ Global
 		{72EE961E-7343-401F-AAE9-2F42F8CE1E3C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2A192FE0-95CE-4B5C-A8A4-31421A625C9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2A192FE0-95CE-4B5C-A8A4-31421A625C9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A192FE0-95CE-4B5C-A8A4-31421A625C9C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{2A192FE0-95CE-4B5C-A8A4-31421A625C9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A192FE0-95CE-4B5C-A8A4-31421A625C9C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2A192FE0-95CE-4B5C-A8A4-31421A625C9C}.Release|Any CPU.Deploy.0 = Release|Any CPU
