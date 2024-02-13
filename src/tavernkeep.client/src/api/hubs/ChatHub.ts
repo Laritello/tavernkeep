@@ -1,7 +1,7 @@
 import { HttpTransportType, HubConnection, HubConnectionBuilder } from "@microsoft/signalr"
 
 class ChatHub {
-    private baseURL = 'https://192.168.0.101:7231/api/';
+    private baseURL = 'https://192.168.0.102:7231/api/';
 
     connection: HubConnection
 
