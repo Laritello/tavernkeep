@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Tavernkeep.Core.Contracts.Character;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Base;
 
 namespace Tavernkeep.Core.Entities
@@ -11,29 +12,29 @@ namespace Tavernkeep.Core.Entities
 
         public Character()
         {
-            Strength = new(this);
-            Dexterity = new(this);
-            Intelligence = new(this);
-            Constitution = new(this);
-            Wisdom = new(this);
-            Charisma = new(this);
+            Strength = new(this, AbilityType.Strength);
+            Dexterity = new(this, AbilityType.Dexterity);
+            Constitution = new(this, AbilityType.Constitution);
+            Intelligence = new(this, AbilityType.Intelligence);
+            Wisdom = new(this, AbilityType.Wisdom);
+            Charisma = new(this, AbilityType.Charisma);
 
-            Acrobatics = new();
-            Arcana = new();
-            Athletics = new();
-            Crafting = new();
-            Deception = new();
-            Diplomacy = new();
-            Intimidation = new();
-            Medicine = new();
-            Nature = new();
-            Occultism = new();
-            Performance = new();
-            Religion = new();
-            Society = new();
-            Stealth = new();
-            Survival = new();
-            Thievery = new();
+            Acrobatics = new(this, SkillType.Acrobatics);
+            Arcana = new(this, SkillType.Arcana);
+            Athletics = new(this, SkillType.Athletics);
+            Crafting = new(this, SkillType.Crafting);
+            Deception = new(this, SkillType.Deception);
+            Diplomacy = new(this, SkillType.Diplomacy);
+            Intimidation = new(this, SkillType.Intimidation);
+            Medicine = new(this, SkillType.Medicine);
+            Nature = new(this, SkillType.Nature);
+            Occultism = new(this, SkillType.Occultism);
+            Performance = new(this, SkillType.Performance);
+            Religion = new(this, SkillType.Religion);
+            Society = new(this, SkillType.Society);
+            Stealth = new(this, SkillType.Stealth);
+            Survival = new(this, SkillType.Survival);
+            Thievery = new(this, SkillType.Thievery);
         }
 
         #endregion
