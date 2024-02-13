@@ -6,15 +6,30 @@
             </v-sheet>
         </div>
         <div class="row fill">
-            <v-infinite-scroll :items="messages" side="start" mode="manual" :onLoad="infiniteLoad">
-                <template v-for="item in messages" :key="item">
-                    <v-card class="ma-2">
-                        <v-card-title>{{ item.sender.login }}</v-card-title>
-                        <v-card-subtitle>{{ item.created }}</v-card-subtitle>
-                        <v-card-text>{{ item.content }}</v-card-text>
-                    </v-card>
-                </template>
-            </v-infinite-scroll>
+            <v-container>
+                <v-infinite-scroll id="message-list" :items="messages" side="end" mode="manual" :onLoad="infiniteLoad">
+                    <template v-for="item in messages" :key="item">
+                        <v-card class="mx-1 my-3">
+                            <v-card-title>
+                                <div>
+                                    <v-row align="center">
+                                        <v-col cols="3">
+                                            <v-avatar color="primary"> {{ item.sender.login.slice(0, 2).toUpperCase() }}</v-avatar>
+                                        </v-col>
+                                        <v-col cols="5">
+                                            <div class="text-caption">{{ item.sender.login }}</div>
+                                        </v-col>
+                                        <v-col cols="4">
+                                            <div class="text-caption">{{ item.created }}</div>
+                                        </v-col>
+                                    </v-row>
+                                </div>
+                            </v-card-title>
+                            <v-card-text class="text-body-1"> {{ item.content }}</v-card-text>
+                        </v-card>
+                    </template>
+                </v-infinite-scroll>
+            </v-container>
         </div>
         <div class="row fixed">
             <v-sheet class="pa-1">
@@ -47,7 +62,6 @@ interface LoadEvent {
 
 export default {
     setup() {
-
         return { MessageType }
     },
 
@@ -59,13 +73,12 @@ export default {
     },
 
     async mounted() {
-        // TODO: Fix order of messages
-        const response = await client.getMessages(0, 10);
-        this.messages = response.data;
+        const response = await client.getMessages(0, 20);
+        this.messages.push(...response.data)
 
         ChatHub.connection.on("ReceiveMessage", (msg: Message) => {
             console.log("Message Received: " + msg.content)
-            this.messages.push(msg)
+            this.messages.unshift(msg)
         })
     },
 
@@ -74,12 +87,13 @@ export default {
             await client.sendMessage(this.message, MessageType.Text);
         },
         async loadMessages(): Promise<ApiResponse<Message[]>> {
-            return await client.getMessages(this.messages.length, 10);
+            return await client.getMessages(this.messages.length, 20);
         },
         async infiniteLoad(event: LoadEvent) {
+            event.side = 'start'
             const response = await this.loadMessages()
-            event.done(response.data.length >= 10 ? 'ok' : 'empty');
-            this.messages.unshift(...response.data)
+            event.done(response.data.length >= 20 ? 'ok' : 'empty');
+            this.messages.push(...response.data)
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
     {
         public async Task<List<Message>> GetMessagesChunkAsync(int skip, int take, CancellationToken cancellationToken = default!)
         {
-            var query = AsQueryable().OrderByDescending(x => x.Created).Skip(skip).Take(take).Include(x =>x.Sender).OrderBy(x => x.Created);
+            var query = AsQueryable().OrderByDescending(x => x.Created).Skip(skip).Take(take).Include(x =>x.Sender);
             return await query.ToListAsync(cancellationToken);
         }
     }
