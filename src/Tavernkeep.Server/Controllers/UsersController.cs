@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Users.Commands.CreateUser;
 using Tavernkeep.Application.Actions.Users.Commands.DeleteUser;
+using Tavernkeep.Application.Actions.Users.Commands.SelectActiveCharacter;
 using Tavernkeep.Application.Actions.Users.Queries.GetUsers;
+using Tavernkeep.Core.Contracts.Authentication;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Users;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Server.Middleware;
 
 namespace Tavernkeep.Server.Controllers
@@ -54,6 +57,21 @@ namespace Tavernkeep.Server.Controllers
         {
             var users = await mediator.Send(new GetAllUsersQuery());
             return users;
+        }
+
+        /// <summary>
+        /// Set active character for the user.
+        /// </summary>
+        /// <param name="characterId">The GUID of the active character.</param>
+        /// <returns>Status code of the operation.</returns>
+        [Authorize]
+        [HttpPut("characters/active/{characterId}")]
+        public async Task SelectActiveCharacterForUser([FromRoute] Guid characterId)
+        {
+            var senderId = HttpContext.User.FindFirst(JwtCustomClaimNames.UserId)
+                ?? throw new BusinessLogicException("You must be authorized to send messages.");
+
+            await mediator.Send(new SelectActiveCharacterCommand(Guid.Parse(senderId.Value), characterId));
         }
     }
 }
