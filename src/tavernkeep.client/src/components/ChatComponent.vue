@@ -34,8 +34,12 @@
         </div>
         <div class="row fixed">
             <v-sheet class="pa-1">
-                <v-textarea density="compact" variant="outlined" append-inner-icon="mdi-send" v-model="message" rows="3"
-                    row-height="15" no-resize @click:append-inner="sendMessage"></v-textarea>
+                <v-form @submit.prevent="sendMessage">
+                    <v-row class="px-4">
+                        <v-text-field v-model="message" variant="outlined" />
+                        <v-btn type="submit" icon="mdi-send" variant="text" rounded="0" size="large"></v-btn>
+                    </v-row>
+                </v-form>
             </v-sheet>
         </div>
     </div>
@@ -86,6 +90,7 @@ export default {
     methods: {
         async sendMessage() {
             await client.sendMessage(this.message, MessageType.Text);
+            this.message = '';
         },
         async loadMessages(): Promise<ApiResponse<Message[]>> {
             return await client.getMessages(this.messages.length, 20);

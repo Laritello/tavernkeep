@@ -14,7 +14,7 @@ import { Character } from '@/entities/Character';
 // TODO: Move cookie name somewhere where it will be set globally.
 export class AxiosApiClient implements ApiClient {
     client: AxiosInstance;
-    private baseURL = 'https://192.168.0.103:7231/api/';
+    private baseURL = 'https://localhost:7231/api/';
     private cookieName: string = 'taverkeep.auth.jwt';
 
     constructor() {
