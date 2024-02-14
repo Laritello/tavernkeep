@@ -14,7 +14,8 @@
                                 <div>
                                     <v-row align="center">
                                         <v-col cols="3">
-                                            <v-avatar color="primary"> {{ item.sender.login.slice(0, 2).toUpperCase() }}</v-avatar>
+                                            <v-avatar color="primary"> {{ item.sender.login.slice(0, 2).toUpperCase()
+                                            }}</v-avatar>
                                         </v-col>
                                         <v-col cols="5">
                                             <div class="text-caption">{{ item.sender.login }}</div>
@@ -75,7 +76,7 @@ export default {
     async mounted() {
         const response = await client.getMessages(0, 20);
         this.messages.push(...response.data)
-
+        
         ChatHub.connection.on("ReceiveMessage", (msg: Message) => {
             console.log("Message Received: " + msg.content)
             this.messages.unshift(msg)

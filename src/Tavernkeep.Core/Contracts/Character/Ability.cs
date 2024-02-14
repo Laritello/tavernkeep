@@ -1,4 +1,5 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
+﻿using System.Text.Json.Serialization;
+using Tavernkeep.Core.Contracts.Enums;
 
 namespace Tavernkeep.Core.Contracts.Character
 {
@@ -21,6 +22,7 @@ namespace Tavernkeep.Core.Contracts.Character
 
         #region Properties
 
+        [JsonIgnore]
         public Entities.Character Owner { get; set; } = default!;
         public AbilityType Type { get; set; }
         public int Score { get; set; }

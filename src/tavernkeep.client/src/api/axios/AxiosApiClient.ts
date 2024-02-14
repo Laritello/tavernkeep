@@ -7,13 +7,14 @@ import { UserRole } from '@/contracts/enums/UserRole';
 import { getCookie } from 'typescript-cookie'
 import { Message } from '@/entities/Message';
 import { MessageType } from '@/contracts/enums/MessageType';
+import { Character } from '@/entities/Character';
 
 // TODO: Error handling and interceptors
 // TODO: Decorators might be usefull here as I do similar logic every time.
 // TODO: Move cookie name somewhere where it will be set globally.
 export class AxiosApiClient implements ApiClient {
     client: AxiosInstance;
-    private baseURL = 'https://192.168.0.102:7231/api/';
+    private baseURL = 'https://192.168.0.103:7231/api/';
     private cookieName: string = 'taverkeep.auth.jwt';
 
     constructor() {
@@ -57,6 +58,21 @@ export class AxiosApiClient implements ApiClient {
             { headers: { "Authorization": "Bearer " + getCookie(this.cookieName) } });
 
         return new AxiosApiResponse(null, response.status, response.statusText);
+    }
+
+    async createCharacter(name: string): Promise<ApiResponse<Character>> {
+        const response = await this.client.post<Character>('characters/create',
+            { name: name },
+            { headers: { "Authorization": "Bearer " + getCookie(this.cookieName) } });
+
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
+    }
+
+    async getCharacter(id: string): Promise<ApiResponse<Character>> {
+        const response = await this.client.get<Character>('characters/' + id,
+            { headers: { "Authorization": "Bearer " + getCookie(this.cookieName) } })
+
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async sendMessage(content: string, type: MessageType): Promise<ApiResponse<Message>> {
