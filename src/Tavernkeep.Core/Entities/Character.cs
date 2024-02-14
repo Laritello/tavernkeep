@@ -6,7 +6,6 @@ using Tavernkeep.Core.Entities.Base;
 namespace Tavernkeep.Core.Entities
 {
     [Table("Characters")]
-    
     public class Character : Entity
     {
         #region Constructors
