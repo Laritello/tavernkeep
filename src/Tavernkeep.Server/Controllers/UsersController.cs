@@ -10,6 +10,7 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Users;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
+using Tavernkeep.Server.Extensions;
 using Tavernkeep.Server.Middleware;
 
 namespace Tavernkeep.Server.Controllers
@@ -68,10 +69,7 @@ namespace Tavernkeep.Server.Controllers
         [HttpPut("characters/active/{characterId}")]
         public async Task SelectActiveCharacterForUser([FromRoute] Guid characterId)
         {
-            var senderId = HttpContext.User.FindFirst(JwtCustomClaimNames.UserId)
-                ?? throw new BusinessLogicException("You must be authorized to send messages.");
-
-            await mediator.Send(new SelectActiveCharacterCommand(Guid.Parse(senderId.Value), characterId));
+            await mediator.Send(new SelectActiveCharacterCommand(HttpContext.GetUserId(), characterId));
         }
     }
 }

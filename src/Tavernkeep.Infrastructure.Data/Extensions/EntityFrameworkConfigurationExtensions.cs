@@ -12,16 +12,12 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
         {
             if (buildAction == null)
             {
-                builder.OwnsOne(navigationExpression, ownedNavigationBuilder =>
-                {
-                    ownedNavigationBuilder.ToJson();
-                });
+                builder.OwnsOne(navigationExpression, b => b.ToJson());
             }
             else
             {
                 builder.OwnsOne(navigationExpression, buildAction);
             }
-
 
             return builder;
         }
