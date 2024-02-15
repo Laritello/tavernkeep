@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Characters.Commands.CreateCharacter;
+using Tavernkeep.Application.Actions.Characters.Commands.EditAbility;
 using Tavernkeep.Application.Actions.Characters.Commands.EditSkill;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacter;
 using Tavernkeep.Core.Contracts.Character;
@@ -44,10 +45,22 @@ namespace Tavernkeep.Server.Controllers
         }
 
         /// <summary>
+        /// Change ability of the character.
+        /// </summary>
+        /// <param name="request">The ability edit request.</param>
+        /// <returns>Changed ability.</returns>
+        [Authorize]
+        [HttpPatch("edit/ability")]
+        public async Task<Ability> EditCharacterAbility([FromBody] EditAbilityRequest request)
+        {
+            return await mediator.Send(new EditAbilityCommand(HttpContext.GetUserId(), request.CharacterId, request.Type, request.Score));
+        }
+
+        /// <summary>
         /// Change skill of the character.
         /// </summary>
         /// <param name="request">The skill edit request.</param>
-        /// <returns>Edited skill.</returns>
+        /// <returns>Changed skill.</returns>
         [Authorize]
         [HttpPatch("edit/skill")]
         public async Task<Skill> EditCharacterSkill([FromBody] EditSkillRequest request)
