@@ -8,7 +8,7 @@
           <UserForm />
         </v-card>
         <v-card class="mt-3">
-          <UserList :users="users"/>
+          <UserList :users="users" />
         </v-card>
       </v-col>
     </v-navigation-drawer>
@@ -20,7 +20,7 @@
     </v-navigation-drawer>
 
     <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-      Main Content
+      <CharacterComponent :users="users"></CharacterComponent>
     </v-main>
   </v-layout>
 </template>
@@ -33,6 +33,7 @@ import type { ApiClient } from '@/api/base/ApiClient';
 import userStore from '@/stores/userStore';
 import UserForm from './UserForm.vue';
 import ChatComponent from './ChatComponent.vue';
+import CharacterComponent from './CharacterComponent.vue';
 
 const client: ApiClient = ApiClientFactory.createApiClient();
 
@@ -49,7 +50,7 @@ interface RoomModel {
 }
 
 export default {
-  components: { UserList, UserForm, ChatComponent },
+  components: { UserList, UserForm, ChatComponent, CharacterComponent },
   data(): RoomModel {
     return {
       users: [],
@@ -65,6 +66,7 @@ export default {
   async mounted() {
     const response = await client.getUsers();
     this.users = response.data;
+    console.log(this.users[0]);
   },
 };
 </script>

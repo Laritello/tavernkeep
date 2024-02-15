@@ -38,7 +38,7 @@ export class AxiosApiClient implements ApiClient {
 
     async getUsers(): Promise<ApiResponse<User[]>> {
         const response = await this.client.get<User[]>('users');
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return new AxiosApiResponse<User[]>(response.data, response.status, response.statusText);
     }
 
     // TODO: User request types instead of separate parameters

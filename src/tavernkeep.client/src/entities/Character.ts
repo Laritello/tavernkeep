@@ -8,7 +8,7 @@ export class Character {
 
     strength: Ability
     dexterity: Ability
-    consitution: Ability
+    constitution: Ability
     intelligence: Ability
     wisdom: Ability
     charisma: Ability
@@ -35,7 +35,7 @@ export class Character {
 
         this.strength = new Ability(AbilityType.Strength)
         this.dexterity = new Ability(AbilityType.Dexterity)
-        this.consitution = new Ability(AbilityType.Constitution)
+        this.constitution = new Ability(AbilityType.Constitution)
         this.intelligence = new Ability(AbilityType.Intelligence)
         this.wisdom = new Ability(AbilityType.Wisdom)
         this.charisma = new Ability(AbilityType.Charisma)
@@ -56,5 +56,14 @@ export class Character {
         this.stealth = new Skill(SkillType.Stealth)
         this.survival = new Skill(SkillType.Survival)
         this.thievery = new Skill(SkillType.Thievery)
+    }
+
+    getAllAbilities() : Ability[] {
+        return [this.strength, this.dexterity, this.constitution, this.intelligence, this.wisdom, this.charisma]
+    }
+
+    getSkills() : Skill[] {
+        return [this.acrobatics, this.arcana, this.athletics, this.crafting, this.deception, this.diplomacy, this.intimidation, 
+            this.medicine, this.nature, this.occultism, this.performance, this.religion, this.society, this.stealth, this.survival, this.thievery]
     }
 }
