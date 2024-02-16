@@ -66,7 +66,6 @@ export default {
   async mounted() {
     const response = await client.getUsers();
     this.users = response.data;
-    console.log(this.users[0]);
   },
 };
 </script>
