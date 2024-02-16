@@ -38,7 +38,6 @@ export default defineComponent({
 
   methods: {
     async deleteUser(user: User) {
-      console.log("Deleting user with id: " + user.id)
       const response = await client.deleteUser(user.id)
 
       if (response.isSuccess()) {

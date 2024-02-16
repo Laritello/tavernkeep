@@ -1,11 +1,15 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
+﻿using System.Text.Json.Serialization;
+using Tavernkeep.Core.Contracts.Enums;
 
 namespace Tavernkeep.Infrastructure.Notifications.Notifications
 {
     public class AbilityEditedNotification
     {
         public Guid CharacterId { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public AbilityType Type { get; set; }
+
         public int Score { get; set; }
 
         public AbilityEditedNotification()
