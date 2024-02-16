@@ -20,7 +20,7 @@
     </v-navigation-drawer>
 
     <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-      <CharacterComponent :users="users"></CharacterComponent>
+      <PartyComponent :users="users"></PartyComponent>
     </v-main>
   </v-layout>
 </template>
@@ -33,7 +33,7 @@ import type { ApiClient } from '@/api/base/ApiClient';
 import userStore from '@/stores/userStore';
 import UserForm from './UserForm.vue';
 import ChatComponent from './ChatComponent.vue';
-import CharacterComponent from './CharacterComponent.vue';
+import PartyComponent from './PartyComponent.vue';
 
 const client: ApiClient = ApiClientFactory.createApiClient();
 
@@ -50,7 +50,7 @@ interface RoomModel {
 }
 
 export default {
-  components: { UserList, UserForm, ChatComponent, CharacterComponent },
+  components: { UserList, UserForm, ChatComponent, PartyComponent },
   data(): RoomModel {
     return {
       users: [],

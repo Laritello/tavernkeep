@@ -37,8 +37,10 @@
                                     <template v-slot:default="{ isActive }">
                                         <v-card title="Edit skill">
                                             <v-card-text>
-                                                Enter the new proficiency for {{ skill.type }}.
-                                                <v-combobox label="{{ skill.type }}" :v-model="dialogSkillProficiency"
+                                                <div class="mb-1">
+                                                    Enter the new proficiency for {{ skill.type }}.
+                                                </div>
+                                                <v-combobox :label="skill.type.toString()" :v-model="dialogSkillProficiency"
                                                     :items="[Proficiency.Untrained, Proficiency.Trained, Proficiency.Expert, Proficiency.Master, Proficiency.Legendary]">
                                                 </v-combobox>
                                             </v-card-text>
