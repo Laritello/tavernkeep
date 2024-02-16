@@ -2,23 +2,25 @@
     <v-sheet class="mx-auto">
         <v-form fast-fail @submit.prevent="createUser" class="pa-2">
             <div class="text-h6">Create</div>
-            <v-text-field v-model="login" label="Login" :rules="loginRules"></v-text-field>
+            <v-text-field v-model="model.login" label="Login" :rules="model.loginRules"></v-text-field>
 
-            <v-text-field v-model="password" label="Password" :rules="passwordRules"></v-text-field>
+            <v-text-field v-model="model.password" label="Password" :rules="model.passwordRules"></v-text-field>
 
-            <v-combobox v-model="role" label="Role" :items="[UserRole.Master, UserRole.Moderator, UserRole.Player]"></v-combobox>
+            <v-combobox v-model="model.role" label="Role"
+                :items="[UserRole.Master, UserRole.Moderator, UserRole.Player]"></v-combobox>
 
             <v-btn type="submit" block>Create</v-btn>
         </v-form>
     </v-sheet>
 </template>
 
-<script lang="ts">
-import type { ApiClient } from '@/api/base/ApiClient';
+<script setup lang="ts">
+import { reactive } from 'vue';
 import { UserRole } from '@/contracts/enums/UserRole';
-import { ApiClientFactory } from '@/factories/ApiClientFactory';
 
-const client: ApiClient = ApiClientFactory.createApiClient();
+import { useRoomUsersStore } from '@/stores/roomUsersStore';
+
+const roomUsersStore = useRoomUsersStore();
 
 interface UserData {
     login: string,
@@ -28,31 +30,25 @@ interface UserData {
     passwordRules: any[] | undefined
 }
 
-export default {
-    setup() {
-        return { UserRole }
-    },
-    data: (): UserData => ({
-        login: '',
-        password: '',
-        role: UserRole.Player,
-        loginRules: [
-            (value: string) => {
-                if (value) return true
-                return 'You must enter a login.'
-            },
-        ],
-        passwordRules: [
-            (value: string) => {
-                if (value) return true
-                return 'You must enter a password.'
-            },
-        ],
-    }),
-    methods: {
-        async createUser() {
-            await client.createUser(this.login, this.password, this.role)
+const model = reactive<UserData>({
+    login: '',
+    password: '',
+    role: UserRole.Player,
+    loginRules: [
+        (value: string) => {
+            if (value) return true
+            return 'You must enter a login.'
         },
-    }
+    ],
+    passwordRules: [
+        (value: string) => {
+            if (value) return true
+            return 'You must enter a password.'
+        },
+    ],
+})
+
+async function createUser() {
+    roomUsersStore.createUser(model.login, model.password, model.role);
 }
 </script>

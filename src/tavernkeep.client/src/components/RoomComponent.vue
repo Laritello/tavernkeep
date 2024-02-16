@@ -8,7 +8,7 @@
           <UserForm />
         </v-card>
         <v-card class="mt-3">
-          <UserList :users="roomUsersStore.users" />
+          <UserList />
         </v-card>
       </v-col>
     </v-navigation-drawer>
@@ -26,12 +26,12 @@
 </template>
   
 <script setup lang="ts">
-import UserList from './UserList.vue';
-import UserForm from './UserForm.vue';
-import ChatComponent from './ChatComponent.vue';
+import { onMounted } from 'vue';
+import UserForm from '@/components/UserForm.vue'
+import UserList from '@/components/UserList.vue'
+import ChatComponent from '@/components/ChatComponent.vue'
 import { useRoomUsersStore } from '@/stores/roomUsersStore';
-// import { onMounted } from 'vue';
 
 const roomUsersStore = useRoomUsersStore();
-roomUsersStore.fetchUsers();
-</script>@/stores/roomUserStore
+onMounted(async () => await roomUsersStore.fetchUsers());
+</script>
