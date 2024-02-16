@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!userStore.getters.isLoggedIn" class="d-grid gap-2 col-6 mx-auto">
+  <div v-if="!authStore.isLoggedIn" class="d-grid gap-2 col-6 mx-auto">
     <LoginForm />
   </div>
   <div v-else>
@@ -7,19 +7,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+<script setup lang="ts">
+// import { defineComponent, onMounted } from 'vue';
 import RoomComponent from './components/RoomComponent.vue';
 import LoginForm from './components/LoginForm.vue';
-import userStore from './stores/userStore';
+import { useAuthStore } from './stores/authStore';
 
-export default defineComponent({
-  components: { RoomComponent, LoginForm },
-  setup() {
-    onMounted(userStore.checkAuthState)
-    return { userStore }
-  },
-})
+const authStore = useAuthStore();
 </script>
 
 <style scoped></style>

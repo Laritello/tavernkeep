@@ -7,33 +7,31 @@
         </div>
         <div class="row fill">
             <v-container>
-                <v-infinite-scroll id="message-list" :items="messages" side="end" mode="manual" :onLoad="infiniteLoad">
-                    <template v-for="item in messages" :key="item">
-                        <v-card class="mx-1 my-3">
-                            <v-card-title>
-                                <div>
-                                    <v-row align="center">
-                                        <v-col cols="3">
-                                            <v-avatar color="primary"> {{ item.sender.login.slice(0, 2).toUpperCase()
-                                            }}</v-avatar>
-                                        </v-col>
-                                        <v-col cols="5">
-                                            <div class="text-caption">{{ item.sender.login }}</div>
-                                        </v-col>
-                                        <v-col cols="4">
-                                            <div class="text-caption">{{ item.created }}</div>
-                                        </v-col>
-                                    </v-row>
-                                </div>
-                            </v-card-title>
-                            <v-card-text class="text-body-1"> {{ item.content }}</v-card-text>
-                        </v-card>
-                    </template>
-                </v-infinite-scroll>
+                <template v-for="item in roomMessagesStore.messages" :key="item">
+                    <v-card class="mx-1 my-3">
+                        <v-card-title>
+                            <div>
+                                <v-row align="center">
+                                    <v-col cols="3">
+                                        <v-avatar color="primary"> {{ item.sender.login.slice(0, 2).toUpperCase()
+                                        }}</v-avatar>
+                                    </v-col>
+                                    <v-col cols="5">
+                                        <div class="text-caption">{{ item.sender.login }}</div>
+                                    </v-col>
+                                    <v-col cols="4">
+                                        <div class="text-caption">{{ item.created }}</div>
+                                    </v-col>
+                                </v-row>
+                            </div>
+                        </v-card-title>
+                        <v-card-text class="text-body-1"> {{ item.content }}</v-card-text>
+                    </v-card>
+                </template>
             </v-container>
         </div>
         <div class="row fixed">
-            <v-sheet class="pa-1">
+            <v-sheet class="py-4">
                 <v-form @submit.prevent="sendMessage">
                     <v-row class="px-4">
                         <v-text-field v-model="message" variant="outlined" />
@@ -45,63 +43,29 @@
     </div>
 </template>
 
-<script lang="ts">
-import type { ApiClient } from '@/api/base/ApiClient';
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import ChatHub from "@/api/hubs/ChatHub";
+import { useRoomMessagesStore } from '@/stores/roomMessagesStore';
 import { MessageType } from '@/contracts/enums/MessageType';
 import type { Message } from '@/entities/Message';
-import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import ChatHub from '@/api/hubs/ChatHub';
-import type { ApiResponse } from '@/api/base/ApiResponse';
 
-const client: ApiClient = ApiClientFactory.createApiClient();
 
-interface ChatModel {
-    message: string,
-    messages: Message[]
-}
+const roomMessagesStore = useRoomMessagesStore();
 
-interface LoadEvent {
-    side: 'start' | 'end' | 'both'
-    done: (status: 'loading' | 'error' | 'empty' | 'ok') => void
-}
+const message = ref('');
 
-export default {
-    setup() {
-        return { MessageType }
-    },
+onMounted(async () => {
+    await roomMessagesStore.fetchMessages(0, 20);
+    ChatHub.connection.on("ReceiveMessage", (msg: Message) => {
+        console.log("Message Received: " + msg.content);
+        roomMessagesStore.messages.unshift(msg);
+    });
+})
 
-    data(): ChatModel {
-        return {
-            message: '',
-            messages: []
-        }
-    },
-
-    async mounted() {
-        const response = await client.getMessages(0, 20);
-        this.messages.push(...response.data)
-        
-        ChatHub.connection.on("ReceiveMessage", (msg: Message) => {
-            console.log("Message Received: " + msg.content)
-            this.messages.unshift(msg)
-        })
-    },
-
-    methods: {
-        async sendMessage() {
-            await client.sendMessage(this.message, MessageType.Text);
-            this.message = '';
-        },
-        async loadMessages(): Promise<ApiResponse<Message[]>> {
-            return await client.getMessages(this.messages.length, 20);
-        },
-        async infiniteLoad(event: LoadEvent) {
-            event.side = 'start'
-            const response = await this.loadMessages()
-            event.done(response.data.length >= 20 ? 'ok' : 'empty');
-            this.messages.push(...response.data)
-        }
-    }
+async function sendMessage() {
+    await roomMessagesStore.createMessage(message.value, MessageType.Text);
+    message.value = '';
 }
 </script>
 

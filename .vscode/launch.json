@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C#: Tavernkeep.Server [https]",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}\\src\\Tavernkeep.Server\\Tavernkeep.Server.csproj",
+      "launchConfigurationId": "TargetFramework=;https"
+    }
+  ]
+}
