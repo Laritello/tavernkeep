@@ -1,7 +1,7 @@
 export enum Proficiency {
-    Untrained,
-    Trained,
-    Expert,
-    Master,
-    Legendary
+    Untrained = "Untrained",
+    Trained = "Trained",
+    Expert = "Expert",
+    Master = "Master",
+    Legendary = "Legendary"
 }

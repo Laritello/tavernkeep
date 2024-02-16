@@ -4,11 +4,12 @@ import { AbilityType } from "@/contracts/enums/AbilityType";
 import { SkillType } from "@/contracts/enums/SkillType";
 
 export class Character {
+    id: string
     name: string
 
     strength: Ability
     dexterity: Ability
-    consitution: Ability
+    constitution: Ability
     intelligence: Ability
     wisdom: Ability
     charisma: Ability
@@ -30,12 +31,13 @@ export class Character {
     survival: Skill
     thievery: Skill
 
-    constructor(name: string) {
+    constructor(id: string, name: string) {
+        this.id = id;
         this.name = name;
 
         this.strength = new Ability(AbilityType.Strength)
         this.dexterity = new Ability(AbilityType.Dexterity)
-        this.consitution = new Ability(AbilityType.Constitution)
+        this.constitution = new Ability(AbilityType.Constitution)
         this.intelligence = new Ability(AbilityType.Intelligence)
         this.wisdom = new Ability(AbilityType.Wisdom)
         this.charisma = new Ability(AbilityType.Charisma)
@@ -56,5 +58,14 @@ export class Character {
         this.stealth = new Skill(SkillType.Stealth)
         this.survival = new Skill(SkillType.Survival)
         this.thievery = new Skill(SkillType.Thievery)
+    }
+
+    getAllAbilities() : Ability[] {
+        return [this.strength, this.dexterity, this.constitution, this.intelligence, this.wisdom, this.charisma]
+    }
+
+    getSkills() : Skill[] {
+        return [this.acrobatics, this.arcana, this.athletics, this.crafting, this.deception, this.diplomacy, this.intimidation, 
+            this.medicine, this.nature, this.occultism, this.performance, this.religion, this.society, this.stealth, this.survival, this.thievery]
     }
 }

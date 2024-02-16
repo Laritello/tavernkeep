@@ -69,5 +69,47 @@ namespace Tavernkeep.Core.Entities
         public Skill Thievery { get; set; }
 
         #endregion
+
+        #region Methods
+
+        public Ability GetAbility(AbilityType type)
+        {
+            return type switch
+            {
+                AbilityType.Strength => Strength,
+                AbilityType.Dexterity => Dexterity,
+                AbilityType.Constitution => Constitution,
+                AbilityType.Intelligence => Intelligence,
+                AbilityType.Wisdom => Wisdom,
+                AbilityType.Charisma => Charisma,
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        public Skill GetSkill(SkillType type)
+        {
+            return type switch
+            {
+                SkillType.Acrobatics => Acrobatics,
+                SkillType.Deception => Deception,
+                SkillType.Arcana => Arcana,
+                SkillType.Athletics => Athletics,
+                SkillType.Crafting => Crafting,
+                SkillType.Diplomacy => Diplomacy,
+                SkillType.Intimidation => Intimidation,
+                SkillType.Medicine => Medicine,
+                SkillType.Nature => Nature,
+                SkillType.Occultism => Occultism,
+                SkillType.Performance => Performance,
+                SkillType.Religion => Religion,
+                SkillType.Society => Society,
+                SkillType.Stealth => Stealth,
+                SkillType.Survival => Survival,
+                SkillType.Thievery => Thievery,
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        #endregion
     }
 }

@@ -20,7 +20,7 @@
     </v-navigation-drawer>
 
     <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-      Main Content
+      <PartyComponent :users="users"></PartyComponent>
     </v-main>
   </v-layout>
 </template>

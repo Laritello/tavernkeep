@@ -16,6 +16,7 @@ builder.Services
     .AddJsonOptions(o =>
     {
         o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     });
 
 builder.Services.AddSignalR();
@@ -84,6 +85,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapHub<ChatHub>("/api/hubs/chat");
+app.MapHub<CharacterHub>("/api/hubs/character");
 
 app.MapFallbackToFile("/index.html");
 
