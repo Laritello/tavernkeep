@@ -1,16 +1,23 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.SignalR;
 using Tavernkeep.Core.Contracts.Character;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Infrastructure.Notifications.Hubs;
+using Tavernkeep.Infrastructure.Notifications.Notifications;
 
 namespace Tavernkeep.Application.Actions.Characters.Commands.EditSkill
 {
-    public class EditSkillCommandHandler(IUserRepository userRepository, ICharacterRepository characterRepository) : IRequestHandler<EditSkillCommand, Skill>
+    public class EditSkillCommandHandler(
+        IUserRepository userRepository,
+        ICharacterRepository characterRepository,
+        IHubContext<CharacterHub, ICharacterHub> context
+        ) : IRequestHandler<EditSkillCommand, Skill>
     {
         public async Task<Skill> Handle(EditSkillCommand request, CancellationToken cancellationToken)
         {
-            var initiator = await userRepository.FindAsync(request.InitiatorId) 
+            var initiator = await userRepository.FindAsync(request.InitiatorId)
                 ?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
             var character = await characterRepository.GetFullCharacter(request.CharacterId)
@@ -25,6 +32,13 @@ namespace Tavernkeep.Application.Actions.Characters.Commands.EditSkill
 
             characterRepository.Save(character);
             await characterRepository.CommitAsync(cancellationToken);
+
+            await context.Clients.All.OnSkillEdited(new SkillEditedNotification()
+            {
+                CharacterId = character.Id,
+                Type = skill.Type,
+                Proficiency = skill.Proficiency
+            });
 
             return skill;
         }
