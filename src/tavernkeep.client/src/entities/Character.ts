@@ -4,6 +4,7 @@ import { AbilityType } from "@/contracts/enums/AbilityType";
 import { SkillType } from "@/contracts/enums/SkillType";
 
 export class Character {
+    id: string
     name: string
 
     strength: Ability
@@ -30,7 +31,8 @@ export class Character {
     survival: Skill
     thievery: Skill
 
-    constructor(name: string) {
+    constructor(id: string, name: string) {
+        this.id = id;
         this.name = name;
 
         this.strength = new Ability(AbilityType.Strength)
