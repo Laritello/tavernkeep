@@ -1,22 +1,14 @@
 <template>
     <v-sheet class="mx-auto pa-2">
-        <CharacterComponent v-for="character in users.filter(u => u.activeCharacter != undefined).map(u => u.activeCharacter)" :key="character.id" :character="character">   
+        <CharacterComponent v-for="character in roomUsersStore.users.filter(u => u.activeCharacter != undefined).map(u => u.activeCharacter)" :key="character.id" :character="character">   
         </CharacterComponent>
     </v-sheet>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type { User } from '@/entities/User';
-import { defineComponent, type PropType } from 'vue'
 import CharacterComponent from './CharacterComponent.vue';
+import { useRoomUsersStore } from '@/stores/roomUsersStore';
 
-export default defineComponent({
-    props: {
-        users: {
-            type: Object as PropType<User[]>,
-            required: true
-        }
-    },
-    components: { CharacterComponent }
-})
+const roomUsersStore = useRoomUsersStore();
 </script>

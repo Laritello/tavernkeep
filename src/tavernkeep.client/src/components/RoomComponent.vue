@@ -20,7 +20,7 @@
     </v-navigation-drawer>
 
     <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-      <PartyComponent :users="users"></PartyComponent>
+      <PartyComponent />
     </v-main>
   </v-layout>
 </template>
@@ -31,6 +31,7 @@ import UserForm from '@/components/UserForm.vue'
 import UserList from '@/components/UserList.vue'
 import ChatComponent from '@/components/ChatComponent.vue'
 import { useRoomUsersStore } from '@/stores/roomUsersStore';
+import PartyComponent from './PartyComponent.vue';
 
 const roomUsersStore = useRoomUsersStore();
 onMounted(async () => await roomUsersStore.fetchUsers());

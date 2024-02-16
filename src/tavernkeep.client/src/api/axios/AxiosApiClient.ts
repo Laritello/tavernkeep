@@ -8,6 +8,11 @@ import { getCookie } from "typescript-cookie";
 import { Message } from "@/entities/Message";
 import { MessageType } from "@/contracts/enums/MessageType";
 import { Character } from "@/entities/Character";
+import type { Ability } from "@/contracts/character/Ability";
+import type { Skill } from "@/contracts/character/Skill";
+import type { AbilityType } from "@/contracts/enums/AbilityType";
+import type { Proficiency } from "@/contracts/enums/Proficiency";
+import type { SkillType } from "@/contracts/enums/SkillType";
 
 // TODO: Error handling and interceptors
 // TODO: Decorators might be usefull here as I do similar logic every time.
@@ -99,6 +104,30 @@ export class AxiosApiClient implements ApiClient {
     const response = await this.client.get<Character>("characters/" + id, {
       headers: { Authorization: "Bearer " + getCookie(this.cookieName) },
     });
+
+    return new AxiosApiResponse(
+      response.data,
+      response.status,
+      response.statusText
+    );
+  }
+
+  async editAbility(characterId: string, type: AbilityType, score: number): Promise<ApiResponse<Ability>> {
+    const response = await this.client.patch<Ability>("characters/edit/ability",
+      { characterId: characterId, type: type, score: score },
+      { headers: { Authorization: "Bearer " + getCookie(this.cookieName) }, });
+
+    return new AxiosApiResponse(
+      response.data,
+      response.status,
+      response.statusText
+    );
+  }
+
+  async editSkill(characterId: string, type: SkillType, proficiency: Proficiency): Promise<ApiResponse<Skill>> {
+    const response = await this.client.patch<Skill>("characters/edit/skill",
+      { characterId: characterId, type: type, proficiency: proficiency },
+      { headers: { Authorization: "Bearer " + getCookie(this.cookieName) }, });
 
     return new AxiosApiResponse(
       response.data,
