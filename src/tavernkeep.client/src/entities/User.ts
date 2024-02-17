@@ -6,19 +6,16 @@ export class User {
     login: string;
     role: UserRole;
     characters: Character[];
-    activeCharacter: Character;
 
     constructor(
         id: string,
         login: string,
         role: UserRole,
-        characters: Character[],
-        acitveCharacter: Character
+        characters: Character[]
     ) {
         this.id = id;
         this.login = login;
         this.role = role;
         this.characters = characters;
-        this.activeCharacter = acitveCharacter;
     }
 }
