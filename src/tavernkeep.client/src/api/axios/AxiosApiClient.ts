@@ -82,7 +82,7 @@ export class AxiosApiClient implements ApiClient {
     }
 
     // TODO: ApiResponse for empty responses
-    async deleteUser(id: number): Promise<ApiResponse<null>> {
+    async deleteUser(id: string): Promise<ApiResponse<null>> {
         const response = await this.client.delete('users/delete/' + id, {
             headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
         });

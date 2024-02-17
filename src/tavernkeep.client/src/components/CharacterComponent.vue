@@ -145,7 +145,7 @@
 <script lang="ts">
 import type { Ability } from '@/contracts/character/Ability';
 import type { Skill } from '@/contracts/character/Skill';
-import type { Character } from '@/entities/Character';
+import { Character } from '@/entities/Character';
 import { defineComponent, type PropType, type Ref } from 'vue';
 import { Proficiency } from '@/contracts/enums/Proficiency';
 import type { ApiClient } from '@/api/base/ApiClient';

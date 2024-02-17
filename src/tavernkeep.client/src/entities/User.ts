@@ -2,14 +2,14 @@ import type { UserRole } from '@/contracts/enums/UserRole';
 import type { Character } from './Character';
 
 export class User {
-    id: number;
+    id: string;
     login: string;
     role: UserRole;
     characters: Character[];
     activeCharacter: Character;
 
     constructor(
-        id: number,
+        id: string,
         login: string,
         role: UserRole,
         characters: Character[],

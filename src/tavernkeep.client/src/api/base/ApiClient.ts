@@ -19,7 +19,7 @@ export interface ApiClient {
         password: string,
         role: UserRole
     ): Promise<ApiResponse<User>>;
-    deleteUser(id: number): Promise<ApiResponse<null>>;
+    deleteUser(id: string): Promise<ApiResponse<null>>;
 
     createCharacter(name: string): Promise<ApiResponse<Character>>;
     getCharacter(id: string): Promise<ApiResponse<Character>>;

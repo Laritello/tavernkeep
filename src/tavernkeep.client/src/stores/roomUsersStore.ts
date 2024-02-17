@@ -25,7 +25,7 @@ export const useRoomUsersStore = defineStore('roomUsers', () => {
         }
     }
 
-    async function deleteUser(id: number) {
+    async function deleteUser(id: string) {
         const response = await api.deleteUser(id);
         if (response.isSuccess()) {
             const index = users.value.findIndex((user) => user.id === id);
