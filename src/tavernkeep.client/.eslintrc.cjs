@@ -12,6 +12,6 @@ module.exports = {
         ecmaVersion: 'latest',
     },
     rules: {
-        indent: ['warn', 4],
+        indent: 'off',
     },
 };
