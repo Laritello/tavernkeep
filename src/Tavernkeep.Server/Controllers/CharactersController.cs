@@ -2,14 +2,18 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Characters.Commands.CreateCharacter;
+using Tavernkeep.Application.Actions.Characters.Commands.DeleteCharacter;
 using Tavernkeep.Application.Actions.Characters.Commands.EditAbility;
 using Tavernkeep.Application.Actions.Characters.Commands.EditSkill;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacters;
+using Tavernkeep.Application.Actions.Users.Commands.DeleteUser;
 using Tavernkeep.Core.Contracts.Character;
 using Tavernkeep.Core.Contracts.Character.Requests;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Server.Extensions;
+using Tavernkeep.Server.Middleware;
 
 namespace Tavernkeep.Server.Controllers
 {
@@ -42,6 +46,18 @@ namespace Tavernkeep.Server.Controllers
         public async Task<Character> CreateCharacter(CreateCharacterRequest request)
         {
             return await mediator.Send(new CreateCharacterCommand(HttpContext.GetUserId(), request.Name));
+        }
+
+        /// <summary>
+        /// Delete an existing character.
+        /// </summary>
+        /// <param name="characterId">The character ID for deletion.</param>
+        [Authorize]
+        [RequiresRole(UserRole.Master)]
+        [HttpDelete("delete/{characterId}")]
+        public async Task DeleteCharacter([FromRoute] Guid characterId)
+        {
+            await mediator.Send(new DeleteCharacterCommand(characterId));
         }
 
         /// <summary>
