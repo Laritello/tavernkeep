@@ -29,9 +29,9 @@
 import { reactive } from 'vue';
 import { UserRole } from '@/contracts/enums/UserRole';
 
-import { useRoomUsersStore } from '@/stores/roomUsersStore';
+import { useUsersStore } from '@/stores/users.store';
 
-const roomUsersStore = useRoomUsersStore();
+const usersStore = useUsersStore();
 
 interface UserData {
     login: string;
@@ -60,6 +60,7 @@ const model = reactive<UserData>({
 });
 
 async function createUser() {
-    roomUsersStore.createUser(model.login, model.password, model.role);
+    usersStore.createUser(model.login, model.password, model.role);
 }
 </script>
+@/stores/users.store

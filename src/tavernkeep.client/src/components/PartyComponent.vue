@@ -14,7 +14,8 @@
 <script setup lang="ts">
 import type { User } from '@/entities/User';
 import CharacterComponent from './CharacterComponent.vue';
-import { useRoomUsersStore } from '@/stores/roomUsersStore';
+import { useUsersStore } from '@/stores/users.store';
 
-const roomUsersStore = useRoomUsersStore();
+const usersStore = useUsersStore();
 </script>
+@/stores/users.store

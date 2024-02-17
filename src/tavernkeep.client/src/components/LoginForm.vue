@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore, type UserCredentials } from '@/stores/authStore';
+import { useAuthStore, type UserCredentials } from '@/stores/auth.store';
 import { reactive } from 'vue';
 
 const authStore = useAuthStore();
@@ -44,3 +44,4 @@ async function authorize() {
 </script>
 
 @/stores/authStore
+@/stores/auth.store

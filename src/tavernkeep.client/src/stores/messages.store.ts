@@ -7,7 +7,7 @@ import type { Message } from '@/entities/Message';
 import type { MessageType } from '@/contracts/enums/MessageType';
 
 const api: ApiClient = ApiClientFactory.createApiClient();
-export const useRoomMessagesStore = defineStore('roomMessages', () => {
+export const useMessagesStore = defineStore('messages.store', () => {
     const messages = ref<Message[]>([]);
 
     async function fetchMessages(skip: number, take: number) {

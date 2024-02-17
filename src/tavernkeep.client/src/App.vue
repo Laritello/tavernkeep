@@ -11,9 +11,10 @@
 // import { defineComponent, onMounted } from 'vue';
 import RoomComponent from './components/RoomComponent.vue';
 import LoginForm from './components/LoginForm.vue';
-import { useAuthStore } from './stores/authStore';
+import { useAuthStore } from './stores/auth.store';
 
 const authStore = useAuthStore();
 </script>
 
 <style scoped></style>
+./stores/auth.store

@@ -8,7 +8,7 @@
         <div class="row fill">
             <v-container>
                 <template
-                    v-for="item in roomMessagesStore.messages"
+                    v-for="item in messagesStore.messages"
                     :key="item"
                 >
                     <v-card class="mx-1 my-3">
@@ -66,24 +66,24 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import ChatHub from '@/api/hubs/ChatHub';
-import { useRoomMessagesStore } from '@/stores/roomMessagesStore';
+import { useMessagesStore } from '@/stores/messages.store';
 import { MessageType } from '@/contracts/enums/MessageType';
 import type { Message } from '@/entities/Message';
 
-const roomMessagesStore = useRoomMessagesStore();
+const messagesStore = useMessagesStore();
 
 const message = ref('');
 
 onMounted(async () => {
-    await roomMessagesStore.fetchMessages(0, 20);
+    await messagesStore.fetchMessages(0, 20);
     ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
         console.log('Message Received: ' + msg.content);
-        roomMessagesStore.messages.unshift(msg);
+        messagesStore.messages.unshift(msg);
     });
 });
 
 async function sendMessage() {
-    await roomMessagesStore.createMessage(message.value, MessageType.Text);
+    await messagesStore.createMessage(message.value, MessageType.Text);
     message.value = '';
 }
 </script>
@@ -109,3 +109,4 @@ async function sendMessage() {
     flex: 0 1 40px;
 }
 </style>
+@/stores/room.messages.store@/stores/messages.store

@@ -15,7 +15,7 @@ export interface UserCredentials {
 const client: ApiClient = ApiClientFactory.createApiClient();
 const cookieName: string = 'taverkeep.auth.jwt';
 
-export const useAuthStore = defineStore('auth', () => {
+export const useAuthStore = defineStore('auth.store', () => {
     const name = ref<string | undefined>(undefined);
     const isLoggedIn = computed(() => getCookie(cookieName) != undefined);
 

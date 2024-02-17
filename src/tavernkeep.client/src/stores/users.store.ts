@@ -1,14 +1,13 @@
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { ApiClient } from '@/api/base/ApiClient';
 import type { User } from '@/entities/User';
-import type { Message } from '@/entities/Message';
 import type { UserRole } from '@/contracts/enums/UserRole';
 
 const api: ApiClient = ApiClientFactory.createApiClient();
-export const useRoomUsersStore = defineStore('roomUsers', () => {
+export const useUsersStore = defineStore('users.store', () => {
     const users = ref<User[]>([]);
 
     async function fetchUsers() {

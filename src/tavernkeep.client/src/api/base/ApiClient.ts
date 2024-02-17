@@ -21,7 +21,9 @@ export interface ApiClient {
     ): Promise<ApiResponse<User>>;
     deleteUser(id: string): Promise<ApiResponse<null>>;
 
+    getCharacters(): Promise<ApiResponse<Character[]>>;
     createCharacter(name: string): Promise<ApiResponse<Character>>;
+    deleteCharacter(id: string): Promise<ApiResponse<null>>;
     getCharacter(id: string): Promise<ApiResponse<Character>>;
 
     editAbility(

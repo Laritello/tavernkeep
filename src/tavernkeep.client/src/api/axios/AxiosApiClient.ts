@@ -46,7 +46,10 @@ export class AxiosApiClient implements ApiClient {
     }
 
     async getUsers(): Promise<ApiResponse<User[]>> {
-        const response = await this.client.get<User[]>('users');
+        const response = await this.client.get<User[]>('users', {
+            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
+        });
+
         return new AxiosApiResponse(
             response.data,
             response.status,
@@ -90,6 +93,18 @@ export class AxiosApiClient implements ApiClient {
         return new AxiosApiResponse(null, response.status, response.statusText);
     }
 
+    async getCharacters(): Promise<ApiResponse<Character[]>> {
+        const response = await this.client.get<Character[]>('characters', {
+            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
+        });
+        
+        return new AxiosApiResponse(
+            response.data,
+            response.status,
+            response.statusText
+        );
+    }
+
     async createCharacter(name: string): Promise<ApiResponse<Character>> {
         const response = await this.client.post<Character>(
             'characters/create',
@@ -106,6 +121,14 @@ export class AxiosApiClient implements ApiClient {
             response.status,
             response.statusText
         );
+    }
+
+    async deleteCharacter(id: string): Promise<ApiResponse<null>> {
+        const response = await this.client.delete('characters/delete/' + id, {
+            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
+        });
+
+        return new AxiosApiResponse(null, response.status, response.statusText);
     }
 
     async getCharacter(id: string): Promise<ApiResponse<Character>> {

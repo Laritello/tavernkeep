@@ -31,9 +31,10 @@ import { onMounted } from 'vue';
 import UserForm from '@/components/UserForm.vue';
 import UserList from '@/components/UserList.vue';
 import ChatComponent from '@/components/ChatComponent.vue';
-import { useRoomUsersStore } from '@/stores/roomUsersStore';
+import { useUsersStore } from '@/stores/users.store';
 import PartyComponent from './PartyComponent.vue';
 
-const roomUsersStore = useRoomUsersStore();
-onMounted(async () => await roomUsersStore.fetchUsers());
+const usersStore = useUsersStore();
+onMounted(async () => await usersStore.fetchUsers());
 </script>
+@/stores/users.store
