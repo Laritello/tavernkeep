@@ -32,5 +32,5 @@ export const useCharactersStore = defineStore('characters.store', () => {
         }
     }
 
-    return { users: characters, fetchCharacters, createCharacter, deleteCharacter };
+    return { characters, fetchCharacters, createCharacter, deleteCharacter };
 });

@@ -33,8 +33,14 @@ import UserList from '@/components/UserList.vue';
 import ChatComponent from '@/components/ChatComponent.vue';
 import { useUsersStore } from '@/stores/users.store';
 import PartyComponent from './PartyComponent.vue';
+import { useCharactersStore } from '@/stores/characters.store';
 
 const usersStore = useUsersStore();
-onMounted(async () => await usersStore.fetchUsers());
+const charactersStore = useCharactersStore();
+
+onMounted(async () => {
+    await usersStore.fetchUsers()
+    await charactersStore.fetchCharacters()
+});
 </script>
 @/stores/users.store

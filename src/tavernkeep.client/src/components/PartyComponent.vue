@@ -1,21 +1,17 @@
 <template>
     <v-sheet class="mx-auto pa-2">
-        <!-- <CharacterComponent
-            v-for="character in roomUsersStore.users
-                .filter((u) => u.activeCharacter != undefined)
-                .map((u) => u.activeCharacter)"
+        <CharacterComponent
+            v-for="character in charactersStore.characters"
             :key="character.id"
             :character="character"
         >
-        </CharacterComponent> -->
+        </CharacterComponent>
     </v-sheet>
 </template>
 
 <script setup lang="ts">
-import type { User } from '@/entities/User';
 import CharacterComponent from './CharacterComponent.vue';
-import { useUsersStore } from '@/stores/users.store';
+import { useCharactersStore } from '@/stores/characters.store';
 
-const usersStore = useUsersStore();
+const charactersStore = useCharactersStore();
 </script>
-@/stores/users.store
