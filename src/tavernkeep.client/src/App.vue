@@ -1,10 +1,10 @@
 <template>
-  <div v-if="!authStore.isLoggedIn" class="d-grid gap-2 col-6 mx-auto">
-    <LoginForm />
-  </div>
-  <div v-else>
-    <RoomComponent />
-  </div>
+    <div v-if="!authStore.isLoggedIn" class="d-grid gap-2 col-6 mx-auto">
+        <LoginForm />
+    </div>
+    <div v-else>
+        <RoomComponent />
+    </div>
 </template>
 
 <script setup lang="ts">

@@ -1,8 +1,8 @@
-import type { AbilityType } from "../enums/AbilityType";
+import type { AbilityType } from '../enums/AbilityType';
 
 export class Ability {
-    type: AbilityType
-    score: number
+    type: AbilityType;
+    score: number;
 
     constructor(type: AbilityType) {
         this.type = type;

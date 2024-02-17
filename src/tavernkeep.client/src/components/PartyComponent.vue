@@ -1,6 +1,12 @@
 <template>
     <v-sheet class="mx-auto pa-2">
-        <CharacterComponent v-for="character in roomUsersStore.users.filter(u => u.activeCharacter != undefined).map(u => u.activeCharacter)" :key="character.id" :character="character">   
+        <CharacterComponent
+            v-for="character in roomUsersStore.users
+                .filter((u) => u.activeCharacter != undefined)
+                .map((u) => u.activeCharacter)"
+            :key="character.id"
+            :character="character"
+        >
         </CharacterComponent>
     </v-sheet>
 </template>

@@ -3,5 +3,5 @@ export interface ApiResponse<T = any> {
     status: number;
     statusText: string;
 
-    isSuccess() : boolean
+    isSuccess(): boolean;
 }

@@ -4,6 +4,6 @@ export enum AbilityType {
     Constitution = 'Constitution',
     Intelligence = 'Intelligence',
     Wisdom = 'Wisdom',
-    Charisma = 'Charisma'
+    Charisma = 'Charisma',
 }
 // TODO: Easier ways to define enum as it's name?

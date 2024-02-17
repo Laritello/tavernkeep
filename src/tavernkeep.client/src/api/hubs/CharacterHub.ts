@@ -1,18 +1,22 @@
-import { HttpTransportType, HubConnection, HubConnectionBuilder } from "@microsoft/signalr"
+import {
+    HttpTransportType,
+    HubConnection,
+    HubConnectionBuilder,
+} from '@microsoft/signalr';
 
 class CharacterHub {
     private baseURL = 'https://localhost:7231/api/';
 
-    connection: HubConnection
+    connection: HubConnection;
 
     constructor() {
         this.connection = new HubConnectionBuilder()
-            .withUrl(this.baseURL + "hubs/character", {
+            .withUrl(this.baseURL + 'hubs/character', {
                 skipNegotiation: true,
-                transport: HttpTransportType.WebSockets
+                transport: HttpTransportType.WebSockets,
             })
             .build();
-        this.start()
+        this.start();
     }
 
     start() {

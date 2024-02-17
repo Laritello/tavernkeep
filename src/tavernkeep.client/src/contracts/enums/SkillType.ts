@@ -14,5 +14,5 @@ export enum SkillType {
     Society = 'Society',
     Stealth = 'Stealth',
     Survival = 'Survival',
-    Thievery = 'Thievery'
+    Thievery = 'Thievery',
 }
