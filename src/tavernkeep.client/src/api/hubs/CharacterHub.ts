@@ -5,7 +5,7 @@ import {
 } from '@microsoft/signalr';
 
 class CharacterHub {
-    private baseURL = 'https://localhost:7231/api/';
+    private baseURL = 'https://' + window.location.hostname + ':7231/api/';
 
     connection: HubConnection;
 
