@@ -20,7 +20,7 @@ namespace Tavernkeep.Application.Actions.Characters.Commands.EditSkill
             var initiator = await userRepository.FindAsync(request.InitiatorId)
                 ?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
-            var character = await characterRepository.GetFullCharacter(request.CharacterId)
+            var character = await characterRepository.GetFullCharacterAsync(request.CharacterId)
                 ?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
 
             // TODO: Throw 403 - forbidden

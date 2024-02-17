@@ -7,7 +7,11 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 {
     public class CharacterEFRepository(SessionContext context) : EntityFrameworkRepository<Character>(context), ICharacterRepository
     {
-        public async Task<Character?> GetFullCharacter(Guid id, CancellationToken cancellationToken = default)
+        public async Task<List<Character>> GetAllCharactersAsync(CancellationToken cancellationToken = default)
+        {
+            return await AsQueryable().ToListAsync(cancellationToken);
+        }
+        public async Task<Character?> GetFullCharacterAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return await AsQueryable().Where(x => x.Id == id).Include(x => x.Owner).FirstOrDefaultAsync(cancellationToken);
         }

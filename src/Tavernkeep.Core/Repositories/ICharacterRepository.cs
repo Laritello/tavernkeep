@@ -4,6 +4,7 @@ namespace Tavernkeep.Core.Repositories
 {
     public interface ICharacterRepository : IRepositoryBase<Character, Guid> 
     {
-        public Task<Character?> GetFullCharacter(Guid id, CancellationToken cancellationToken = default);
+        public Task<List<Character>> GetAllCharactersAsync(CancellationToken cancellationToken = default);
+        public Task<Character?> GetFullCharacterAsync(Guid id, CancellationToken cancellationToken = default);
     }
 }

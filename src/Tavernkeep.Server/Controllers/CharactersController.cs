@@ -5,6 +5,7 @@ using Tavernkeep.Application.Actions.Characters.Commands.CreateCharacter;
 using Tavernkeep.Application.Actions.Characters.Commands.EditAbility;
 using Tavernkeep.Application.Actions.Characters.Commands.EditSkill;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacter;
+using Tavernkeep.Application.Actions.Characters.Queries.GetCharacters;
 using Tavernkeep.Core.Contracts.Character;
 using Tavernkeep.Core.Contracts.Character.Requests;
 using Tavernkeep.Core.Entities;
@@ -20,6 +21,17 @@ namespace Tavernkeep.Server.Controllers
     [Route("/api/[controller]")]
     public class CharactersController(IMediator mediator) : ControllerBase
     {
+        /// <summary>
+        /// Get all characters.
+        /// </summary>
+        /// <returns>List containing all characters.</returns>
+        [Authorize]
+        [HttpGet]
+        public async Task<List<Character>> GetCharacters()
+        {
+            return await mediator.Send(new GetAllCharactersQuery());
+        }
+
         /// <summary>
         /// Create a new character.
         /// </summary>

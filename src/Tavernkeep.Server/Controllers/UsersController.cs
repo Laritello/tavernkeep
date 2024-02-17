@@ -20,6 +20,18 @@ namespace Tavernkeep.Server.Controllers
     public class UsersController(IMediator mediator) : ControllerBase
     {
         /// <summary>
+        /// Get all users.
+        /// </summary>
+        /// <returns>List of all registered users.</returns>
+        [Authorize]
+        [HttpGet]
+        public async Task<List<User>> GetAllUsers()
+        {
+            var users = await mediator.Send(new GetAllUsersQuery());
+            return users;
+        }
+
+        /// <summary>
         /// Create a new user.
         /// </summary>
         /// <param name="request">Request with user's parameters.</param>
@@ -43,17 +55,6 @@ namespace Tavernkeep.Server.Controllers
         public async Task DeleteUser([FromRoute] Guid userId)
         {
             await mediator.Send(new DeleteUserCommand(userId));
-        }
-
-        /// <summary>
-        /// Get all users.
-        /// </summary>
-        /// <returns>List of all registered users.</returns>
-        [HttpGet]
-        public async Task<List<User>> GetAllUsers()
-        {
-            var users = await mediator.Send(new GetAllUsersQuery());
-            return users;
         }
     }
 }
