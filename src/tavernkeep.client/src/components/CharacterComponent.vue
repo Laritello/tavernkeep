@@ -155,7 +155,7 @@ import type { SkillEditedNotification } from '@/contracts/notifications/SkillEdi
 import { AbilityType } from '@/contracts/enums/AbilityType';
 import { SkillType } from '@/contracts/enums/SkillType';
 
-import { defineProps, onMounted, ref, type Ref } from 'vue';
+import { onMounted, ref, type Ref } from 'vue';
 
 const client: ApiClient = ApiClientFactory.createApiClient();
 
