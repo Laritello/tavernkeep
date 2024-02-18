@@ -1,12 +1,14 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Tavernkeep.Application.Actions.Chat.Commands.DeleteChat;
 using Tavernkeep.Application.Actions.Chat.Commands.SendMessage;
 using Tavernkeep.Application.Actions.Chat.Queries.GetMessages;
-using Tavernkeep.Core.Contracts.Authentication;
 using Tavernkeep.Core.Contracts.Chat;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Exceptions;
+using Tavernkeep.Server.Extensions;
+using Tavernkeep.Server.Middleware;
 
 namespace Tavernkeep.Server.Controllers
 {
@@ -27,11 +29,7 @@ namespace Tavernkeep.Server.Controllers
         [HttpPost]
         public async Task<Message> SendMessageAsync([FromBody] SendMessageRequest request)
         {
-            var senderId = HttpContext.User.FindFirst(JwtCustomClaimNames.UserId) 
-                ?? throw new BusinessLogicException("You must be authorized to send messages.");
-
-            var message = await mediator.Send(new SendMessageCommand(Guid.Parse(senderId.Value), request.Type, request.Content));
-            return message;
+            return await mediator.Send(new SendMessageCommand(HttpContext.GetUserId(), request.Content, request.RecipientId));
         }
 
         /// <summary>
@@ -44,8 +42,19 @@ namespace Tavernkeep.Server.Controllers
         [HttpGet]
         public async Task<IEnumerable<Message>> GetMessagesAsync([FromQuery] int skip, [FromQuery] int take)
         {
-            var messages = await mediator.Send(new GetMessagesQuery(skip, take));
-            return messages;
+            return await mediator.Send(new GetMessagesQuery(skip, take));
+        }
+
+        /// <summary>
+        /// Delete all messages from the chat.
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [RequiresRole(UserRole.Moderator)]
+        [HttpDelete]
+        public async Task DeleteChatAsync()
+        {
+            await mediator.Send(new DeleteChatCommand());
         }
     }
 }

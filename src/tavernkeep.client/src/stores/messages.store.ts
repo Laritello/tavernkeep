@@ -15,8 +15,8 @@ export const useMessagesStore = defineStore('messages.store', () => {
         messages.value.push(...messagesResponse.data);
     }
 
-    async function createMessage(message: string, type: MessageType) {
-        const response = await api.sendMessage(message, type);
+    async function createMessage(message: string, recipientId?: string) {
+        const response = await api.sendMessage(message, recipientId);
         if (!response.isSuccess()) {
             console.error(response.statusText);
         }

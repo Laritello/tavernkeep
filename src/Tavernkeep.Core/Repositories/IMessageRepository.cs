@@ -4,6 +4,7 @@ namespace Tavernkeep.Core.Repositories
 {
     public interface IMessageRepository : IRepositoryBase<Message, Guid> 
     {
-        Task<List<Message>> GetMessagesChunkAsync(int skip, int take, CancellationToken cancellationToken = default!);
+        Task PurgeMessagesAsync(CancellationToken cancellationToken = default);
+        Task<List<Message>> GetMessagesChunkAsync(int skip, int take, CancellationToken cancellationToken = default);
     }
 }

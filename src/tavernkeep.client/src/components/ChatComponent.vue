@@ -83,7 +83,7 @@ onMounted(async () => {
 });
 
 async function sendMessage() {
-    await messagesStore.createMessage(message.value, MessageType.Text);
+    await messagesStore.createMessage(message.value);
     message.value = '';
 }
 </script>

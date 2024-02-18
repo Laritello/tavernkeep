@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tavernkeep.Infrastructure.Data.Context;
 
@@ -10,9 +11,11 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    partial class SessionContextModelSnapshot : ModelSnapshot
+    [Migration("20240218131300_CharacterHealth")]
+    partial class CharacterHealth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
@@ -50,9 +53,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("RecipientId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("SenderId")
                         .HasColumnType("TEXT");
 
@@ -61,8 +61,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RecipientId");
 
                     b.HasIndex("SenderId");
 
@@ -707,17 +705,11 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Message", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.User", "Recipient")
-                        .WithMany()
-                        .HasForeignKey("RecipientId");
-
                     b.HasOne("Tavernkeep.Core.Entities.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Recipient");
 
                     b.Navigation("Sender");
                 });

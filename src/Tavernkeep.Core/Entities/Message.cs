@@ -23,6 +23,7 @@ namespace Tavernkeep.Core.Entities
         #region Properties
 
         public User Sender { get; set; } = default!;
+        public User? Recipient { get; set; }
         public MessageType Type { get; set; }
         public DateTime Created { get; set; }
         public string Content { get; set; }

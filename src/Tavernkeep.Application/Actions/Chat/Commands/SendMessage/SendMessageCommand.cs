@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
@@ -7,14 +6,14 @@ namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
     public class SendMessageCommand : IRequest<Message>
     {
         public Guid SenderId { get; set; }
-        public MessageType Type { get; set; }
         public string Content { get; set; }
+        public Guid? RecipientId { get; set; }
 
-        public SendMessageCommand(Guid senderId, MessageType type, string content)
+        public SendMessageCommand(Guid senderId, string content, Guid? recipientId = null)
         {
             SenderId = senderId;
-            Type = type;
             Content = content;
+            RecipientId = recipientId;
         }
     }
 }
