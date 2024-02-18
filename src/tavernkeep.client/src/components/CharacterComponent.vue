@@ -142,11 +142,10 @@
     </v-card>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type { Ability } from '@/contracts/character/Ability';
 import type { Skill } from '@/contracts/character/Skill';
-import { Character } from '@/entities/Character';
-import { defineComponent, type PropType, type Ref } from 'vue';
+import { type Character } from '@/entities/Character';
 import { Proficiency } from '@/contracts/enums/Proficiency';
 import type { ApiClient } from '@/api/base/ApiClient';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
@@ -156,196 +155,177 @@ import type { SkillEditedNotification } from '@/contracts/notifications/SkillEdi
 import { AbilityType } from '@/contracts/enums/AbilityType';
 import { SkillType } from '@/contracts/enums/SkillType';
 
+import { defineProps, onMounted, ref, type Ref } from 'vue';
+
 const client: ApiClient = ApiClientFactory.createApiClient();
 
-interface CharacterComponentData {
-    dialog: boolean;
-    dialogAbilityScore: number;
-    dialogSkillProficiency: Proficiency;
-}
+const props = defineProps<{
+    character: Character;
+}>();
 
-export default defineComponent({
-    props: {
-        character: {
-            type: Object as PropType<Character>,
-            required: true,
-        },
-    },
+const dialogAbilityScore = ref(0);
+const dialogSkillProficiency = ref(Proficiency.Untrained);
 
-    setup() {
-        return { Proficiency };
-    },
+onMounted(() => {
+    CharacterHub.connection.on(
+        'OnAbilityEdited',
+        (notification: AbilityEditedNotification) => {
+            updateAbilityFromNotification(notification);
+        }
+    );
 
-    async mounted() {
-        CharacterHub.connection.on(
-            'OnAbilityEdited',
-            (notification: AbilityEditedNotification) => {
-                this.updateAbilityFromNotification(notification);
-            }
-        );
-
-        CharacterHub.connection.on(
-            'OnSkillEdited',
-            (notification: SkillEditedNotification) => {
-                this.updateSkillFromNotification(notification);
-            }
-        );
-    },
-
-    data(): CharacterComponentData {
-        return {
-            dialog: false,
-            dialogAbilityScore: 0,
-            dialogSkillProficiency: Proficiency.Untrained,
-        };
-    },
-
-    methods: {
-        updateAbilityFromNotification(notification: AbilityEditedNotification) {
-            const char = this.character;
-
-            // Move to class, use filter in array instead of switch
-            if (char.id == notification.characterId) {
-                switch (notification.type) {
-                    case AbilityType.Strength:
-                        char.strength.score = notification.score;
-                        break;
-                    case AbilityType.Dexterity:
-                        char.dexterity.score = notification.score;
-                        break;
-                    case AbilityType.Constitution:
-                        char.constitution.score = notification.score;
-                        break;
-                    case AbilityType.Intelligence:
-                        char.intelligence.score = notification.score;
-                        break;
-                    case AbilityType.Wisdom:
-                        char.wisdom.score = notification.score;
-                        break;
-                    case AbilityType.Charisma:
-                        char.charisma.score = notification.score;
-                        break;
-                }
-            }
-        },
-        updateSkillFromNotification(notification: SkillEditedNotification) {
-            const char = this.character;
-
-            // Move to class, use filter in array instead of switch
-            if (char.id == notification.characterId) {
-                switch (notification.type) {
-                    case SkillType.Acrobatics:
-                        char.acrobatics.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Arcana:
-                        char.arcana.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Athletics:
-                        char.athletics.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Crafting:
-                        char.crafting.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Deception:
-                        char.deception.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Diplomacy:
-                        char.diplomacy.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Intimidation:
-                        char.intimidation.proficiency =
-                            notification.proficiency;
-                        break;
-                    case SkillType.Medicine:
-                        char.medicine.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Nature:
-                        char.nature.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Occultism:
-                        char.occultism.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Performance:
-                        char.performance.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Religion:
-                        char.religion.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Society:
-                        char.society.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Stealth:
-                        char.stealth.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Survival:
-                        char.survival.proficiency = notification.proficiency;
-                        break;
-                    case SkillType.Thievery:
-                        char.thievery.proficiency = notification.proficiency;
-                        break;
-                }
-            }
-        },
-        getAbilities(character: Character): Ability[] {
-            return [
-                character.strength,
-                character.dexterity,
-                character.constitution,
-                character.intelligence,
-                character.wisdom,
-                character.charisma,
-            ];
-        },
-        getSkills(character: Character): Skill[] {
-            return [
-                character.acrobatics,
-                character.arcana,
-                character.athletics,
-                character.crafting,
-                character.deception,
-                character.diplomacy,
-                character.intimidation,
-                character.medicine,
-                character.nature,
-                character.occultism,
-                character.performance,
-                character.religion,
-                character.society,
-                character.stealth,
-                character.survival,
-                character.thievery,
-            ];
-        },
-        async editAbility(
-            isActive: Ref<boolean>,
-            ability: Ability,
-            score: number
-        ) {
-            var response = await client.editAbility(
-                this.character.id,
-                ability.type,
-                score
-            );
-
-            ability.score = response.data.score;
-            this.dialogAbilityScore = 0;
-            isActive.value = false;
-        },
-        async updateSkill(
-            isActive: Ref<boolean>,
-            skill: Skill,
-            proficiency: Proficiency
-        ) {
-            var response = await client.editSkill(
-                this.character.id,
-                skill.type,
-                proficiency
-            );
-
-            skill.proficiency = response.data.proficiency;
-            this.dialogSkillProficiency = Proficiency.Untrained; // TODO: On show set selected skill current value
-            isActive.value = false;
-        },
-    },
+    CharacterHub.connection.on(
+        'OnSkillEdited',
+        (notification: SkillEditedNotification) => {
+            updateSkillFromNotification(notification);
+        }
+    );
 });
+
+function updateAbilityFromNotification(
+    notification: AbilityEditedNotification
+) {
+    const char = props.character;
+
+    // Move to class, use filter in array instead of switch
+    if (char.id == notification.characterId) {
+        switch (notification.type) {
+            case AbilityType.Strength:
+                char.strength.score = notification.score;
+                break;
+            case AbilityType.Dexterity:
+                char.dexterity.score = notification.score;
+                break;
+            case AbilityType.Constitution:
+                char.constitution.score = notification.score;
+                break;
+            case AbilityType.Intelligence:
+                char.intelligence.score = notification.score;
+                break;
+            case AbilityType.Wisdom:
+                char.wisdom.score = notification.score;
+                break;
+            case AbilityType.Charisma:
+                char.charisma.score = notification.score;
+                break;
+        }
+    }
+}
+function updateSkillFromNotification(notification: SkillEditedNotification) {
+    const char = props.character;
+
+    // Move to class, use filter in array instead of switch
+    if (char.id == notification.characterId) {
+        switch (notification.type) {
+            case SkillType.Acrobatics:
+                char.acrobatics.proficiency = notification.proficiency;
+                break;
+            case SkillType.Arcana:
+                char.arcana.proficiency = notification.proficiency;
+                break;
+            case SkillType.Athletics:
+                char.athletics.proficiency = notification.proficiency;
+                break;
+            case SkillType.Crafting:
+                char.crafting.proficiency = notification.proficiency;
+                break;
+            case SkillType.Deception:
+                char.deception.proficiency = notification.proficiency;
+                break;
+            case SkillType.Diplomacy:
+                char.diplomacy.proficiency = notification.proficiency;
+                break;
+            case SkillType.Intimidation:
+                char.intimidation.proficiency = notification.proficiency;
+                break;
+            case SkillType.Medicine:
+                char.medicine.proficiency = notification.proficiency;
+                break;
+            case SkillType.Nature:
+                char.nature.proficiency = notification.proficiency;
+                break;
+            case SkillType.Occultism:
+                char.occultism.proficiency = notification.proficiency;
+                break;
+            case SkillType.Performance:
+                char.performance.proficiency = notification.proficiency;
+                break;
+            case SkillType.Religion:
+                char.religion.proficiency = notification.proficiency;
+                break;
+            case SkillType.Society:
+                char.society.proficiency = notification.proficiency;
+                break;
+            case SkillType.Stealth:
+                char.stealth.proficiency = notification.proficiency;
+                break;
+            case SkillType.Survival:
+                char.survival.proficiency = notification.proficiency;
+                break;
+            case SkillType.Thievery:
+                char.thievery.proficiency = notification.proficiency;
+                break;
+        }
+    }
+}
+function getAbilities(character: Character): Ability[] {
+    return [
+        character.strength,
+        character.dexterity,
+        character.constitution,
+        character.intelligence,
+        character.wisdom,
+        character.charisma,
+    ];
+}
+function getSkills(character: Character): Skill[] {
+    return [
+        character.acrobatics,
+        character.arcana,
+        character.athletics,
+        character.crafting,
+        character.deception,
+        character.diplomacy,
+        character.intimidation,
+        character.medicine,
+        character.nature,
+        character.occultism,
+        character.performance,
+        character.religion,
+        character.society,
+        character.stealth,
+        character.survival,
+        character.thievery,
+    ];
+}
+async function editAbility(
+    isActive: Ref<boolean>,
+    ability: Ability,
+    score: number
+) {
+    var response = await client.editAbility(
+        props.character.id,
+        ability.type,
+        score
+    );
+
+    ability.score = response.data.score;
+    dialogAbilityScore.value = 0;
+    isActive.value = false;
+}
+async function updateSkill(
+    isActive: Ref<boolean>,
+    skill: Skill,
+    proficiency: Proficiency
+) {
+    var response = await client.editSkill(
+        props.character.id,
+        skill.type,
+        proficiency
+    );
+
+    skill.proficiency = response.data.proficiency;
+    dialogSkillProficiency.value = Proficiency.Untrained; // TODO: On show set selected skill current value
+    isActive.value = false;
+}
 </script>
