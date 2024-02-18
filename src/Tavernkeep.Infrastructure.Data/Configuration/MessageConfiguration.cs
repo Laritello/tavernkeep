@@ -19,6 +19,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
                 .HasConversion(new EnumToStringConverter<MessageType>());
 
             builder.HasOne(m => m.Sender).WithMany().IsRequired();
+            builder.HasOne(m => m.Recipient).WithMany();
         }
     }
 }

@@ -189,12 +189,12 @@ export class AxiosApiClient implements ApiClient {
 
     async sendMessage(
         content: string,
-        type: MessageType
+        recipientId?: string
     ): Promise<ApiResponse<Message>> {
         const response = await this.client.post<Message>(
             'chat',
             {
-                type: type,
+                recipientId: recipientId,
                 content: content,
             },
             {

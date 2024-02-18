@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.SignalR;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
@@ -20,11 +21,14 @@ namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
             var sender = await userRepository.FindAsync(request.SenderId)
                 ?? throw new BusinessLogicException("Sender with specified id not found");
 
+            var recipient = request.RecipientId != null ? await userRepository.FindAsync(request.RecipientId.Value) : null;
+
             Message message = new()
             {
                 Sender = sender,
+                Recipient = recipient,
                 Created = DateTime.UtcNow,
-                Type = request.Type,
+                Type = MessageType.Text,
                 Content = request.Content,
             };
 

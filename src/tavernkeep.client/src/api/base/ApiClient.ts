@@ -39,7 +39,7 @@ export interface ApiClient {
 
     sendMessage(
         message: string,
-        type: MessageType
+        recipientId?: string
     ): Promise<ApiResponse<Message>>;
     getMessages(skip: number, take: number): Promise<ApiResponse<Message[]>>;
 }

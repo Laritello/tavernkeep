@@ -29,7 +29,7 @@ namespace Tavernkeep.Server.Controllers
         [HttpPost]
         public async Task<Message> SendMessageAsync([FromBody] SendMessageRequest request)
         {
-            return await mediator.Send(new SendMessageCommand(HttpContext.GetUserId(), request.Type, request.Content));
+            return await mediator.Send(new SendMessageCommand(HttpContext.GetUserId(), request.Content, request.RecipientId));
         }
 
         /// <summary>
