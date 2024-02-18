@@ -5,7 +5,7 @@ using Tavernkeep.Application.Actions.Users.Commands.CreateUser;
 using Tavernkeep.Application.Actions.Users.Commands.DeleteUser;
 using Tavernkeep.Application.Actions.Users.Queries.GetUsers;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Contracts.Users;
+using Tavernkeep.Core.Contracts.Users.Requests;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Server.Middleware;
 

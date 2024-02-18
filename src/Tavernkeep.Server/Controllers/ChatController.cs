@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Chat.Commands.DeleteChat;
 using Tavernkeep.Application.Actions.Chat.Commands.SendMessage;
 using Tavernkeep.Application.Actions.Chat.Queries.GetMessages;
-using Tavernkeep.Core.Contracts.Chat;
+using Tavernkeep.Core.Contracts.Chat.Requests;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Server.Extensions;

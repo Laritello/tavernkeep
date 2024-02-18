@@ -1,8 +1,18 @@
 ﻿namespace Tavernkeep.Core.Contracts.Authentication.Requests
 {
-    public class AuthenticationRequest(string login, string password)
+    /// <summary>
+    /// Represents an authentication request.
+    /// </summary>
+    public class AuthenticationRequest
     {
-        public string Login { get; set; } = login;
-        public string Password { get; set; } = password;
+        /// <summary>
+        /// The user's login.
+        /// </summary>
+        public string Login { get; set; } = default!;
+
+        /// <summary>
+        /// The user's password.
+        /// </summary>
+        public string Password { get; set; } = default!;
     }
 }
