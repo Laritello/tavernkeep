@@ -21,12 +21,15 @@ namespace Tavernkeep.Core.Entities
         #endregion
 
         #region Properties
+        public Guid SenderId { get; set; }
+        public Guid? RecipientId { get; set; }
 
         public User Sender { get; set; } = default!;
         public User? Recipient { get; set; }
         public MessageType Type { get; set; }
         public DateTime Created { get; set; }
         public string Content { get; set; }
+        public bool IsPrivate => RecipientId.HasValue;
 
         #endregion
     }

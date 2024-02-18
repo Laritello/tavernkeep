@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Infrastructure.Notifications.Hubs
@@ -8,7 +9,7 @@ namespace Tavernkeep.Infrastructure.Notifications.Hubs
         Task ReceiveMessage(Message message);
     }
 
-    public class ChatHub : Hub<IChatHub>
+    public class ChatHub(ILogger<ChatHub> logger) : Hub<IChatHub>
     {
         public async Task SendMessageNotification(Message message) => await Clients.All.ReceiveMessage(message);
     }

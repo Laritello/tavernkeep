@@ -8,6 +8,7 @@ export class Message {
     type: MessageType;
     created: Date;
     content: string;
+    isPrivate: boolean;
 
     constructor(
         id: number,
@@ -15,6 +16,7 @@ export class Message {
         type: MessageType,
         created: Date,
         content: string,
+        isPrivate: boolean,
         recipient?: User,
     ) {
         this.id = id;
@@ -22,6 +24,7 @@ export class Message {
         this.type = type;
         this.created = created;
         this.content = content;
+        this.isPrivate = isPrivate;
         this.recipient = recipient;
     }
 }

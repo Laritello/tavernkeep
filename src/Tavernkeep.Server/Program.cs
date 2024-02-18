@@ -6,6 +6,8 @@ using System.Text.Json.Serialization;
 using Tavernkeep.Server.Extensions;
 using Microsoft.OpenApi.Models;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using Tavernkeep.Infrastructure.Notifications.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
 var options = Parser.Default.ParseArguments<LaunchOptions>(args).Value;
@@ -20,6 +22,7 @@ builder.Services
     });
 
 builder.Services.AddSignalR();
+builder.Services.AddSingleton<IUserIdProvider, NotificationsUserProvider>();
 
 builder.Services
     .AddDatabaseContext(options)
@@ -61,6 +64,8 @@ builder.Services.AddSwaggerGen(o =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     o.IncludeXmlComments(xmlPath);
 });
+
+builder.Logging.ClearProviders().AddConsole();
 
 var app = builder.Build();
 

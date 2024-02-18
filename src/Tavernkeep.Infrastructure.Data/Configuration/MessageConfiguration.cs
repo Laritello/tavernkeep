@@ -18,8 +18,8 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
                 .IsRequired()
                 .HasConversion(new EnumToStringConverter<MessageType>());
 
-            builder.HasOne(m => m.Sender).WithMany().IsRequired();
-            builder.HasOne(m => m.Recipient).WithMany();
+            builder.HasOne(m => m.Sender).WithMany().HasForeignKey(x => x.SenderId).IsRequired();
+            builder.HasOne(m => m.Recipient).WithMany().HasForeignKey(x => x.RecipientId);
         }
     }
 }

@@ -15,9 +15,11 @@
         "@mdi/font": "^7.4.47",
         "@microsoft/signalr": "^8.0.0",
         "axios": "^1.6.7",
+        "jwt-decode": "^4.0.0",
         "pinia": "^2.1.7",
         "typescript-cookie": "^1.0.6",
         "vue": "^3.4.17",
+        "vue-router": "^4.2.5",
         "vuetify": "^3.5.3"
     },
     "devDependencies": {

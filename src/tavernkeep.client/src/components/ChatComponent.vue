@@ -14,6 +14,10 @@
                     <v-card class="mx-1 my-3">
                         <v-card-title>
                             <div>
+                                <v-row v-if="item.isPrivate">
+                                    <div class="text-caption">Private from: </div>
+                                    <div class="text-caption font-weight-bold ml-1"> {{ item.sender.login }}</div>
+                                </v-row>
                                 <v-row align="center">
                                     <v-col cols="3">
                                         <v-avatar color="primary">
@@ -67,7 +71,6 @@
 import { ref, onMounted } from 'vue';
 import ChatHub from '@/api/hubs/ChatHub';
 import { useMessagesStore } from '@/stores/messages.store';
-import { MessageType } from '@/contracts/enums/MessageType';
 import type { Message } from '@/entities/Message';
 
 const messagesStore = useMessagesStore();

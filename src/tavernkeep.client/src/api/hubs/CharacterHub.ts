@@ -3,6 +3,7 @@ import {
     HubConnection,
     HubConnectionBuilder,
 } from '@microsoft/signalr';
+import { getCookie } from 'typescript-cookie';
 
 class CharacterHub {
     private baseURL = 'https://' + window.location.hostname + ':7231/api/';
@@ -14,6 +15,10 @@ class CharacterHub {
             .withUrl(this.baseURL + 'hubs/character', {
                 skipNegotiation: true,
                 transport: HttpTransportType.WebSockets,
+                accessTokenFactory() {
+                    const jwt = getCookie('taverkeep.auth.jwt');
+                    return jwt != undefined ? jwt : '';
+                },
             })
             .build();
         this.start();

@@ -35,8 +35,17 @@ namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
             messageRepository.Save(message);
             await messageRepository.CommitAsync(cancellationToken);
 
-            // Notify connected users about new message
-            await context.Clients.All.ReceiveMessage(message);
+            if (message.Recipient == null)
+            {
+                // Notify all connected users about the new message
+                await context.Clients.All.ReceiveMessage(message);
+            }
+            else
+            {
+                var id = message.Recipient.Id.ToString();
+                // Notify recipient about the new message
+                await context.Clients.User(id).ReceiveMessage(message);
+            }
 
             return message;
         }
