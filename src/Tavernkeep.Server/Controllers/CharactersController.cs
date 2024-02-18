@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Characters.Commands.CreateCharacter;
 using Tavernkeep.Application.Actions.Characters.Commands.DeleteCharacter;
 using Tavernkeep.Application.Actions.Characters.Commands.EditAbility;
+using Tavernkeep.Application.Actions.Characters.Commands.EditHealth;
 using Tavernkeep.Application.Actions.Characters.Commands.EditSkill;
+using Tavernkeep.Application.Actions.Characters.Commands.ModifyHealth;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacters;
 using Tavernkeep.Application.Actions.Users.Commands.DeleteUser;
@@ -94,6 +96,30 @@ namespace Tavernkeep.Server.Controllers
         public async Task<Skill> EditCharacterSkill([FromBody] EditSkillRequest request)
         {
             return await mediator.Send(new EditSkillCommand(HttpContext.GetUserId(), request.CharacterId, request.Type, request.Proficiency));
+        }
+
+        /// <summary>
+        /// Change health of the character.
+        /// </summary>
+        /// <param name="request">The health edit request.</param>
+        /// <returns>Changed health.</returns>
+        [Authorize]
+        [HttpPatch("edit/health")]
+        public async Task<Health> EditCharacterHealth([FromBody] EditHealthRequest request)
+        {
+            return await mediator.Send(new EditHealthCommand(HttpContext.GetUserId(), request.CharacterId, request.Current, request.Max, request.Temporary));
+        }
+
+        /// <summary>
+        /// Apply heal or damage to the character.
+        /// </summary>
+        /// <param name="request">The health modify request.</param>
+        /// <returns>Modified health.</returns>
+        [Authorize]
+        [HttpPatch("modify/health")]
+        public async Task<Health> ModifyCharacterHealth([FromBody] ModifyHealthRequest request)
+        {
+            return await mediator.Send(new ModifyHealthCommand(HttpContext.GetUserId(), request.CharacterId, request.Change));
         }
     }
 }
