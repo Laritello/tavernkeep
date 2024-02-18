@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Specifications;
 using Tavernkeep.Infrastructure.Data.Context;
+using Tavernkeep.Infrastructure.Data.Extensions;
 
 namespace Tavernkeep.Infrastructure.Data.Repositories
 {
@@ -12,9 +14,14 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
             await AsQueryable().ExecuteDeleteAsync(cancellationToken);
         }
 
-        public async Task<List<Message>> GetMessagesChunkAsync(int skip, int take, CancellationToken cancellationToken = default!)
+        public async Task<List<Message>> GetMessagesChunkAsync(int skip, int take, ISpecification<Message> specification = default!, CancellationToken cancellationToken = default!)
         {
-            var query = AsQueryable().OrderByDescending(x => x.Created).Skip(skip).Take(take).Include(x =>x.Sender);
+            var query = AsQueryable();
+
+            if (specification != null)
+                query = EntityFrameworkSpecificationEvaluator<Message>.GetQuery(query, specification);
+
+            query = query.OrderByDescending(x => x.Created).Skip(skip).Take(take).Include(x =>x.Sender);
             return await query.ToListAsync(cancellationToken);
         }
     }
