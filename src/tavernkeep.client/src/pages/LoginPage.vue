@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex align-center justify-center" style="height: 100vh">
         <v-sheet width="400" class="mx-auto">
-            <v-form fast-fail @submit="authorize">
+            <v-form fast-fail @submit.prevent="authorize">
                 <v-text-field
                     v-model="credentials.login"
                     label="User Name"
@@ -30,8 +30,10 @@
 <script setup lang="ts">
 import { useAuthStore, type UserCredentials } from '@/stores/auth.store';
 import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
+const router = useRouter();
 
 const credentials = reactive<UserCredentials>({
     login: '',
@@ -40,8 +42,6 @@ const credentials = reactive<UserCredentials>({
 
 async function authorize() {
     await authStore.login(credentials);
+    router.push('/');
 }
 </script>
-
-@/stores/authStore
-@/stores/auth.store

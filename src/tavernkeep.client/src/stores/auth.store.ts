@@ -1,8 +1,11 @@
-import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import { ref, computed } from 'vue';
-import { defineStore } from 'pinia';
 import { getCookie, setCookie, removeCookie } from 'typescript-cookie';
+import { jwtDecode } from 'jwt-decode';
+import { ref, computed, watch } from 'vue';
+import { defineStore } from 'pinia';
+
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { ApiClient } from '@/api/base/ApiClient';
+import type { UserRole } from '@/contracts/enums/UserRole';
 
 // Interface declarations
 
@@ -15,9 +18,27 @@ export interface UserCredentials {
 const client: ApiClient = ApiClientFactory.createApiClient();
 const cookieName: string = 'taverkeep.auth.jwt';
 
+interface JwtToken {
+    ['user-login']: string;
+    ['user-role']: UserRole;
+}
+
 export const useAuthStore = defineStore('auth.store', () => {
-    const name = ref<string | undefined>(undefined);
-    const isLoggedIn = computed(() => getCookie(cookieName) != undefined);
+    const cookie = ref<string | undefined>(getCookie(cookieName));
+    const token = computed(() =>
+        cookie.value ? jwtDecode<JwtToken>(cookie.value) : undefined
+    );
+    const userName = computed(() => token.value?.['user-login']);
+    const role = computed(() => token.value?.['user-role']);
+    const isLoggedIn = computed(() => token.value !== undefined);
+
+    watch(cookie, (value) => {
+        if (value) {
+            setCookie(cookieName, value, { expires: 7 });
+        } else {
+            removeCookie(cookieName);
+        }
+    });
 
     async function login(credentials: UserCredentials) {
         if (isLoggedIn.value) logout();
@@ -33,13 +54,19 @@ export const useAuthStore = defineStore('auth.store', () => {
             return;
         }
 
-        setCookie(cookieName, response.data, { expires: 7 });
-        name.value = credentials.login;
+        cookie.value = response.data;
     }
 
     async function logout() {
-        removeCookie(cookieName);
+        cookie.value = undefined;
     }
 
-    return { isLoggedIn, name, login, logout };
+    function havePermissions(requiredRoles?: UserRole[]): Boolean {
+        if (requiredRoles === undefined) return true;
+        if (role.value === undefined) return false;
+
+        return requiredRoles.includes(role.value);
+    }
+
+    return { userName, role, isLoggedIn, login, logout, havePermissions };
 });

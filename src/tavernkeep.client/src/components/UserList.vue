@@ -25,4 +25,3 @@ import { useUsersStore } from '@/stores/users.store';
 
 const usersStore = useUsersStore();
 </script>
-@/stores/users.store
