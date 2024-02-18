@@ -12,6 +12,8 @@ namespace Tavernkeep.Core.Entities
 
         public Character()
         {
+            Health = new();
+
             Strength = new(this, AbilityType.Strength);
             Dexterity = new(this, AbilityType.Dexterity);
             Constitution = new(this, AbilityType.Constitution);
@@ -43,6 +45,8 @@ namespace Tavernkeep.Core.Entities
         public User Owner { get; set; } = default!;
 
         public string Name { get; set; } = default!;
+
+        public Health Health { get; set; }
 
         public Ability Strength { get; set; }
         public Ability Dexterity { get; set; }

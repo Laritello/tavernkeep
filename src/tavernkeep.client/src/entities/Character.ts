@@ -1,4 +1,5 @@
 import { Ability } from '@/contracts/character/Ability';
+import { Health } from '@/contracts/character/Health';
 import { Skill } from '@/contracts/character/Skill';
 import { AbilityType } from '@/contracts/enums/AbilityType';
 import { SkillType } from '@/contracts/enums/SkillType';
@@ -6,6 +7,8 @@ import { SkillType } from '@/contracts/enums/SkillType';
 export class Character {
     id: string;
     name: string;
+
+    health: Health
 
     strength: Ability;
     dexterity: Ability;
@@ -34,6 +37,8 @@ export class Character {
     constructor(id: string, name: string) {
         this.id = id;
         this.name = name;
+
+        this.health = new Health(0,0,0);
 
         this.strength = new Ability(AbilityType.Strength);
         this.dexterity = new Ability(AbilityType.Dexterity);
