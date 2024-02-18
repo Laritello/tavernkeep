@@ -9,7 +9,6 @@ using Tavernkeep.Application.Actions.Characters.Commands.EditSkill;
 using Tavernkeep.Application.Actions.Characters.Commands.ModifyHealth;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacters;
-using Tavernkeep.Application.Actions.Users.Commands.DeleteUser;
 using Tavernkeep.Core.Contracts.Character;
 using Tavernkeep.Core.Contracts.Character.Requests;
 using Tavernkeep.Core.Contracts.Enums;
