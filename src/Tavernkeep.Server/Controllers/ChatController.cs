@@ -26,7 +26,7 @@ namespace Tavernkeep.Server.Controllers
         /// <param name="request">Specification for the message.</param>
         /// <returns>Sent message.</returns>
         [Authorize]
-        [HttpPost]
+        [HttpPost("message")]
         public async Task<Message> SendMessageAsync([FromBody] SendMessageRequest request)
         {
             return await mediator.Send(new SendMessageCommand(HttpContext.GetUserId(), request.Content, request.RecipientId));

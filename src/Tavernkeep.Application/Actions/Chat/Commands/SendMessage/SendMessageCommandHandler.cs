@@ -42,9 +42,9 @@ namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
             }
             else
             {
-                var id = message.Recipient.Id.ToString();
-                // Notify recipient about the new message
-                await context.Clients.User(id).ReceiveMessage(message);
+                // Notify participants about the new message
+                List<string> recipients = [message.SenderId.ToString(), message.RecipientId!.Value.ToString()];
+                await context.Clients.Users(recipients).ReceiveMessage(message);
             }
 
             return message;

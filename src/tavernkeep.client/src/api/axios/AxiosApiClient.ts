@@ -192,7 +192,7 @@ export class AxiosApiClient implements ApiClient {
         recipientId?: string
     ): Promise<ApiResponse<Message>> {
         const response = await this.client.post<Message>(
-            'chat',
+            'chat/message',
             {
                 recipientId: recipientId,
                 content: content,
