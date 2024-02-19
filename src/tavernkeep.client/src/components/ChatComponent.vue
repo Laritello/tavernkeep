@@ -7,25 +7,18 @@
         </div>
         <div class="row fill">
             <v-container>
-                <template
-                    v-for="item in messagesStore.messages"
-                    :key="item"
-                >
+                <template v-for="item in messagesStore.messages" :key="item">
                     <v-card class="mx-1 my-3">
                         <v-card-title>
                             <div>
                                 <v-row v-if="item.isPrivate">
-                                    <div class="text-caption">Private from: </div>
-                                    <div class="text-caption font-weight-bold ml-1"> {{ item.sender.login }}</div>
+                                    <div class="text-caption">Private from:</div>
+                                    <div class="text-caption font-weight-bold ml-1">{{ item.sender.login }}</div>
                                 </v-row>
                                 <v-row align="center">
                                     <v-col cols="3">
                                         <v-avatar color="primary">
-                                            {{
-                                                item.sender.login
-                                                    .slice(0, 2)
-                                                    .toUpperCase()
-                                            }}</v-avatar
+                                            {{ item.sender.login.slice(0, 2).toUpperCase() }}</v-avatar
                                         >
                                     </v-col>
                                     <v-col cols="5">
@@ -42,27 +35,24 @@
                             </div>
                         </v-card-title>
                         <v-card-text class="text-body-1">
-                            {{ item.content }}</v-card-text
-                        >
+                            {{ item.content }}
+                        </v-card-text>
                     </v-card>
                 </template>
             </v-container>
         </div>
-        <div class="row fixed">
-            <v-sheet class="py-4">
-                <v-form @submit.prevent="sendMessage">
-                    <v-row class="px-4">
-                        <v-text-field v-model="message" variant="outlined" />
-                        <v-btn
-                            type="submit"
-                            icon="mdi-send"
-                            variant="text"
-                            rounded="0"
-                            size="large"
-                        ></v-btn>
-                    </v-row>
-                </v-form>
-            </v-sheet>
+        <div>
+            <UserSelector v-model="selectedUser" :users="usersStore.users.filter((u) => u.login != auth.userName)" />
+            <div class="row fixed">
+                <v-sheet class="py-4">
+                    <v-form @submit.prevent="sendMessage">
+                        <v-row class="px-4">
+                            <v-text-field v-model="message" variant="outlined" />
+                            <v-btn type="submit" icon="mdi-send" variant="text" rounded="0" size="large"></v-btn>
+                        </v-row>
+                    </v-form>
+                </v-sheet>
+            </div>
         </div>
     </div>
 </template>
@@ -72,10 +62,17 @@ import { ref, onMounted } from 'vue';
 import ChatHub from '@/api/hubs/ChatHub';
 import { useMessagesStore } from '@/stores/messages.store';
 import type { Message } from '@/entities/Message';
+import UserSelector from './UserSelector.vue';
+import { useUsersStore } from '@/stores/users.store';
+import type { User } from '@/entities/User';
+import { useAuthStore } from '@/stores/auth.store';
 
+const auth = useAuthStore();
 const messagesStore = useMessagesStore();
+const usersStore = useUsersStore();
 
 const message = ref('');
+const selectedUser = ref<User>();
 
 onMounted(async () => {
     await messagesStore.fetchMessages(0, 20);
@@ -86,7 +83,8 @@ onMounted(async () => {
 });
 
 async function sendMessage() {
-    await messagesStore.createMessage(message.value);
+    const privateMessageRecipient = selectedUser.value?.id || undefined;
+    await messagesStore.createMessage(message.value, privateMessageRecipient);
     message.value = '';
 }
 </script>
@@ -112,4 +110,3 @@ async function sendMessage() {
     flex: 0 1 40px;
 }
 </style>
-@/stores/room.messages.store@/stores/messages.store
