@@ -4,7 +4,6 @@ import { defineStore } from 'pinia';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { ApiClient } from '@/api/base/ApiClient';
 import type { Message } from '@/entities/Message';
-import type { MessageType } from '@/contracts/enums/MessageType';
 
 const api: ApiClient = ApiClientFactory.createApiClient();
 export const useMessagesStore = defineStore('messages.store', () => {
