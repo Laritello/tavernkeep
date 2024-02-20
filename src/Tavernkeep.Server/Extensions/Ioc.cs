@@ -7,6 +7,7 @@ using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Repositories;
 using Tavernkeep.Infrastructure.Data.Utility;
+using Tavernkeep.Server.Exceptions.Handlers;
 using Tavernkeep.Shared.Options;
 
 namespace Tavernkeep.Server.Extensions
@@ -74,6 +75,20 @@ namespace Tavernkeep.Server.Extensions
             services.AddScoped<IUserRepository, UserEFRepository>();
             services.AddScoped<ICharacterRepository, CharacterEFRepository>();
             services.AddScoped<IMessageRepository, MessageEFRepository>();
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds excpetion handlers to the service collection.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/> to add the error middleware to.</param>
+        /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+        public static IServiceCollection AddExceptionHandling(this IServiceCollection services)
+        {
+            services.AddExceptionHandler<BusinessLogicExceptionHandler>();
+            services.AddExceptionHandler<AuthorizationExceptionHandler>();
+            services.AddExceptionHandler<GenericExceptionHandler>();
 
             return services;
         }

@@ -25,6 +25,7 @@ builder.Services.AddSignalR();
 builder.Services.AddSingleton<IUserIdProvider, NotificationsUserProvider>();
 
 builder.Services
+    .AddExceptionHandling()
     .AddDatabaseContext(options)
     .AddMediatR(c => c.RegisterServicesFromAssemblyContaining<CreateUserCommand>())
     .AddRouting(o => o.LowercaseUrls = true)
@@ -84,8 +85,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
+app.UseExceptionHandler("/Error");
 
 app.MapControllers();
 
@@ -93,5 +94,4 @@ app.MapHub<ChatHub>("/api/hubs/chat");
 app.MapHub<CharacterHub>("/api/hubs/character");
 
 app.MapFallbackToFile("/index.html");
-
 app.Run();

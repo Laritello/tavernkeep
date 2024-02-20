@@ -11,9 +11,9 @@ namespace Tavernkeep.Application.Extensions
 
             return role;
         }
-        public static bool IsSufficient(this UserRole role, UserRole requiredRole)
-        {
-            return role >= requiredRole;
-        }
+
+        public static bool IsSufficient(this UserRole role, UserRole requiredRole) => role >= requiredRole;
+
+        public static bool IsInsufficient(this UserRole role, UserRole requiredRole) => role < requiredRole;
     }
 }

@@ -21,18 +21,9 @@ namespace Tavernkeep.Server.Middleware
         {
             var roleClaim = context.HttpContext.User?.FindFirst(JwtCustomClaimNames.UserRole);
 
-            if (roleClaim == null)
+            if (roleClaim == null || roleClaim.Value.ToUserRole().IsInsufficient(requiredRole))
             {
                 context.Result = new ForbidResult();
-            }
-            else
-            {
-                UserRole userRole = roleClaim.Value.ToUserRole();
-
-                if (!userRole.IsSufficient(requiredRole))
-                {
-                    context.Result = new ForbidResult();
-                }
             }
         }
     }
