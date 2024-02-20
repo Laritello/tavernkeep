@@ -8,36 +8,7 @@
         <div class="row fill">
             <v-container>
                 <template v-for="item in messagesStore.messages" :key="item">
-                    <v-card class="mx-1 my-3">
-                        <v-card-title>
-                            <div>
-                                <v-row v-if="item.isPrivate">
-                                    <div class="text-caption">Private from:</div>
-                                    <div class="text-caption font-weight-bold ml-1">{{ item.sender.login }}</div>
-                                </v-row>
-                                <v-row align="center">
-                                    <v-col cols="3">
-                                        <v-avatar color="primary">
-                                            {{ item.sender.login.slice(0, 2).toUpperCase() }}</v-avatar
-                                        >
-                                    </v-col>
-                                    <v-col cols="5">
-                                        <div class="text-caption">
-                                            {{ item.sender.login }}
-                                        </div>
-                                    </v-col>
-                                    <v-col cols="4">
-                                        <div class="text-caption">
-                                            {{ item.created }}
-                                        </div>
-                                    </v-col>
-                                </v-row>
-                            </div>
-                        </v-card-title>
-                        <v-card-text class="text-body-1">
-                            {{ item.content }}
-                        </v-card-text>
-                    </v-card>
+                    <MessageComponent :message="item" />
                 </template>
             </v-container>
         </div>
@@ -66,6 +37,7 @@ import UserSelector from './UserSelector.vue';
 import { useUsersStore } from '@/stores/users.store';
 import type { User } from '@/entities/User';
 import { useAuthStore } from '@/stores/auth.store';
+import MessageComponent from './MessageComponent.vue';
 
 const auth = useAuthStore();
 const messagesStore = useMessagesStore();
