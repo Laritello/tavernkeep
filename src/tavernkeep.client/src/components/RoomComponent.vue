@@ -13,14 +13,11 @@
             </v-col>
         </v-navigation-drawer>
 
-        <v-navigation-drawer location="right" width="300" permanent>
+        <v-navigation-drawer location="right" width="400" permanent>
             <ChatComponent style="max-height: 100%"> </ChatComponent>
         </v-navigation-drawer>
 
-        <v-main
-            class="d-flex align-center justify-center"
-            style="min-height: 300px"
-        >
+        <v-main class="d-flex align-center justify-center" style="min-height: 300px">
             <PartyComponent />
         </v-main>
     </v-layout>
@@ -39,8 +36,8 @@ const usersStore = useUsersStore();
 const charactersStore = useCharactersStore();
 
 onMounted(async () => {
-    await usersStore.fetchUsers()
-    await charactersStore.fetchCharacters()
+    await usersStore.fetchUsers();
+    await charactersStore.fetchCharacters();
 });
 </script>
 @/stores/users.store
