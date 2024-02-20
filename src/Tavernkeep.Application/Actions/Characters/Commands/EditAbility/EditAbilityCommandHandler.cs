@@ -20,12 +20,11 @@ namespace Tavernkeep.Application.Actions.Characters.Commands.EditAbility
             var initiator = await userRepository.FindAsync(request.InitiatorId)
                 ?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
-            var character = await characterRepository.GetFullCharacterAsync(request.CharacterId)
+            var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
                 ?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
 
-            // TODO: Throw 403 - forbidden
             if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)
-                throw new BusinessLogicException("User doesn't have the rights to change other's characters");
+                throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
 
             var ability = character.GetAbility(request.Type);
             ability.Score = request.Score;

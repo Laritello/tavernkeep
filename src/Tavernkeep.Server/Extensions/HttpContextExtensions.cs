@@ -1,4 +1,5 @@
 ﻿using Tavernkeep.Core.Contracts.Authentication;
+using Tavernkeep.Core.Exceptions;
 
 namespace Tavernkeep.Server.Extensions
 {
@@ -12,11 +13,11 @@ namespace Tavernkeep.Server.Extensions
         /// </summary>
         /// <param name="context">Represents the current HTTP context, containing information about the current request and its associated user.</param>
         /// <returns>The user ID associated with the current HTTP request.</returns>
-        /// <exception cref="UnauthorizedAccessException">Thrown when the user is not authorized.</exception>
+        /// <exception cref="NotAuthorizedException">Thrown when the user is not authorized.</exception>
         public static Guid GetUserId(this HttpContext context)
         {
             var claim = context.User.FindFirst(JwtCustomClaimNames.UserId)
-                ?? throw new UnauthorizedAccessException("User is not authorized.");
+                ?? throw new NotAuthorizedException("Access denied. Please provide valid credentials.");
 
             return Guid.Parse(claim.Value);
         }
