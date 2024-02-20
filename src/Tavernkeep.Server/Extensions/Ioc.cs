@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Application.Services;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
@@ -89,6 +91,18 @@ namespace Tavernkeep.Server.Extensions
             services.AddExceptionHandler<BusinessLogicExceptionHandler>();
             services.AddExceptionHandler<AuthorizationExceptionHandler>();
             services.AddExceptionHandler<GenericExceptionHandler>();
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds application services to the service collection.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+        /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {
+            services.AddScoped<IDiceService, DiceService>();
 
             return services;
         }

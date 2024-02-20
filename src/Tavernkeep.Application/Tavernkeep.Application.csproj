@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="d20tek-dicenotation" Version="4.0.1" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
   </ItemGroup>
@@ -14,6 +15,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Tavernkeep.Core\Tavernkeep.Core.csproj" />
     <ProjectReference Include="..\Tavernkeep.Infrastructure.Notifications\Tavernkeep.Infrastructure.Notifications.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UseCases\Dice\Commands\" />
   </ItemGroup>
 
 </Project>
