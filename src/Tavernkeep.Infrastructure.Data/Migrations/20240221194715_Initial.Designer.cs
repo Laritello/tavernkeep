@@ -11,8 +11,8 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    [Migration("20240217221804_RemovedActiveCharacter")]
-    partial class RemovedActiveCharacter
+    [Migration("20240221194715_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,17 +40,21 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Characters");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Message", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.Message", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Content")
-                        .IsRequired()
+                    b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("RecipientId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("SenderId")
@@ -62,9 +66,15 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RecipientId");
+
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Message");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
@@ -93,6 +103,35 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.RollMessage", b =>
+                {
+                    b.HasBaseType("Tavernkeep.Core.Entities.Messages.Message");
+
+                    b.Property<int>("Result")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("RollType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.ToTable("Messages");
+
+                    b.HasDiscriminator().HasValue("RollMessage");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.TextMessage", b =>
+                {
+                    b.HasBaseType("Tavernkeep.Core.Entities.Messages.Message");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.ToTable("Messages");
+
+                    b.HasDiscriminator().HasValue("TextMessage");
+                });
+
             modelBuilder.Entity("Tavernkeep.Core.Entities.Character", b =>
                 {
                     b.HasOne("Tavernkeep.Core.Entities.User", "Owner")
@@ -100,6 +139,30 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.OwnsOne("Tavernkeep.Core.Contracts.Character.Health", "Health", b1 =>
+                        {
+                            b1.Property<Guid>("CharacterId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Current")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Max")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Temporary")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("CharacterId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Health");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CharacterId");
+                        });
 
                     b.OwnsOne("Tavernkeep.Core.Contracts.Character.Skill", "Acrobatics", b1 =>
                         {
@@ -634,6 +697,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Diplomacy")
                         .IsRequired();
 
+                    b.Navigation("Health")
+                        .IsRequired();
+
                     b.Navigation("Intelligence")
                         .IsRequired();
 
@@ -676,13 +742,19 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Message", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.Message", b =>
                 {
+                    b.HasOne("Tavernkeep.Core.Entities.User", "Recipient")
+                        .WithMany()
+                        .HasForeignKey("RecipientId");
+
                     b.HasOne("Tavernkeep.Core.Entities.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Recipient");
 
                     b.Navigation("Sender");
                 });

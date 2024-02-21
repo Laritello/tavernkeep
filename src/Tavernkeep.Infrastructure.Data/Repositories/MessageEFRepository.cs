@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Specifications;
 using Tavernkeep.Infrastructure.Data.Context;

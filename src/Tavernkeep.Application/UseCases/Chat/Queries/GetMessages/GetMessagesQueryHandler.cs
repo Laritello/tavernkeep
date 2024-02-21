@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Specifications;

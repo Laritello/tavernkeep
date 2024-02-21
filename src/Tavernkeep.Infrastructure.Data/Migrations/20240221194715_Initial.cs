@@ -41,6 +41,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Deception = table.Column<string>(type: "TEXT", nullable: false),
                     Dexterity = table.Column<string>(type: "TEXT", nullable: false),
                     Diplomacy = table.Column<string>(type: "TEXT", nullable: false),
+                    Health = table.Column<string>(type: "TEXT", nullable: false),
                     Intelligence = table.Column<string>(type: "TEXT", nullable: false),
                     Intimidation = table.Column<string>(type: "TEXT", nullable: false),
                     Medicine = table.Column<string>(type: "TEXT", nullable: false),
@@ -72,13 +73,22 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     SenderId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    RecipientId = table.Column<Guid>(type: "TEXT", nullable: true),
                     Type = table.Column<string>(type: "TEXT", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Content = table.Column<string>(type: "TEXT", nullable: false)
+                    Discriminator = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false),
+                    Result = table.Column<int>(type: "INTEGER", nullable: true),
+                    RollType = table.Column<string>(type: "TEXT", nullable: true),
+                    Text = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_Users_RecipientId",
+                        column: x => x.RecipientId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Messages_Users_SenderId",
                         column: x => x.SenderId,
@@ -91,6 +101,11 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 name: "IX_Characters_OwnerId",
                 table: "Characters",
                 column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_RecipientId",
+                table: "Messages",
+                column: "RecipientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_SenderId",

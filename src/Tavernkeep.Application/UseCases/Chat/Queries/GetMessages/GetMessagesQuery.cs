@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Messages;
 
 namespace Tavernkeep.Application.Actions.Chat.Queries.GetMessages
 {

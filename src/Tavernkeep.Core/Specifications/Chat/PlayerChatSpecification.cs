@@ -1,5 +1,5 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Messages;
 
 namespace Tavernkeep.Core.Specifications.Chat
 {

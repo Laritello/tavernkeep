@@ -1,5 +1,5 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Messages;
 
 namespace Tavernkeep.Core.Specifications.Chat
 {
@@ -8,7 +8,7 @@ namespace Tavernkeep.Core.Specifications.Chat
     /// </summary>
     /// <param name="initiatorId"><see cref="Guid"/> of the request initiator.</param>
     public class MasterChatSpecification(Guid initiatorId)
-        : Specification<Message>(x => x.RecipientId == null || x.Type == MessageType.Roll || x.RecipientId == initiatorId || x.SenderId == initiatorId)
+        : Specification<Message>(x => x.RecipientId == null || x is RollMessage || x.RecipientId == initiatorId || x.SenderId == initiatorId)
     {
     }
 }

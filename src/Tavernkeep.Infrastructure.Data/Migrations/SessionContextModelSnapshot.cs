@@ -37,27 +37,24 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Characters");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Message", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.Message", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Content")
-                        .IsRequired()
+                    b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("RecipientId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("SenderId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -67,6 +64,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Message");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
@@ -93,6 +94,35 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.RollMessage", b =>
+                {
+                    b.HasBaseType("Tavernkeep.Core.Entities.Messages.Message");
+
+                    b.Property<int>("Result")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("RollType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.ToTable("Messages");
+
+                    b.HasDiscriminator().HasValue("RollMessage");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.TextMessage", b =>
+                {
+                    b.HasBaseType("Tavernkeep.Core.Entities.Messages.Message");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.ToTable("Messages");
+
+                    b.HasDiscriminator().HasValue("TextMessage");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Character", b =>
@@ -705,7 +735,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Message", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.Message", b =>
                 {
                     b.HasOne("Tavernkeep.Core.Entities.User", "Recipient")
                         .WithMany()

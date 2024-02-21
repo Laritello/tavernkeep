@@ -6,7 +6,7 @@ using Tavernkeep.Application.Actions.Chat.Commands.SendMessage;
 using Tavernkeep.Application.Actions.Chat.Queries.GetMessages;
 using Tavernkeep.Core.Contracts.Chat.Requests;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Server.Extensions;
 using Tavernkeep.Server.Middleware;
 

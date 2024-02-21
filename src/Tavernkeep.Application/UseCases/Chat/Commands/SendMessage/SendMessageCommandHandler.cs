@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
@@ -23,13 +23,12 @@ namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
 
             var recipient = request.RecipientId != null ? await userRepository.FindAsync(request.RecipientId.Value) : null;
 
-            Message message = new()
+            TextMessage message = new()
             {
                 Sender = sender,
                 Recipient = recipient,
                 Created = DateTime.UtcNow,
-                Type = MessageType.Text,
-                Content = request.Content,
+                Text = request.Text,
             };
 
             messageRepository.Save(message);
