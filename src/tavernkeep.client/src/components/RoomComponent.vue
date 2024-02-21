@@ -14,10 +14,10 @@
         </v-navigation-drawer>
 
         <v-navigation-drawer location="right" width="400" permanent>
-            <ChatComponent style="max-height: 100%"> </ChatComponent>
+            <ChatComponent class="max-h-full"> </ChatComponent>
         </v-navigation-drawer>
 
-        <v-main class="d-flex align-center justify-center" style="min-height: 300px">
+        <v-main class="flex align-center justify-center min-h-80">
             <PartyComponent />
         </v-main>
     </v-layout>
