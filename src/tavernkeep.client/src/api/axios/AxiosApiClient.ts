@@ -6,7 +6,6 @@ import { User } from '@/entities/User';
 import { UserRole } from '@/contracts/enums/UserRole';
 import { getCookie } from 'typescript-cookie';
 import { Message } from '@/entities/Message';
-import { MessageType } from '@/contracts/enums/MessageType';
 import { Character } from '@/entities/Character';
 import type { Ability } from '@/contracts/character/Ability';
 import type { Skill } from '@/contracts/character/Skill';

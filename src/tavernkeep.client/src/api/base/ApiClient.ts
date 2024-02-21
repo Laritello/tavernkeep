@@ -2,7 +2,6 @@ import type { User } from '@/entities/User';
 import type { ApiResponse } from './ApiResponse';
 import type { UserRole } from '@/contracts/enums/UserRole';
 import type { Message } from '@/entities/Message';
-import type { MessageType } from '@/contracts/enums/MessageType';
 import type { Character } from '@/entities/Character';
 import type { SkillType } from '@/contracts/enums/SkillType';
 import type { Proficiency } from '@/contracts/enums/Proficiency';

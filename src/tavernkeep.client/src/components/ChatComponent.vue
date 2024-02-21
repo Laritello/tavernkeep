@@ -49,7 +49,6 @@ const selectedUser = ref<User>();
 onMounted(async () => {
     await messagesStore.fetchMessages(0, 20);
     ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
-        console.log('Message Received: ' + msg.content);
         messagesStore.messages.unshift(msg);
     });
 });

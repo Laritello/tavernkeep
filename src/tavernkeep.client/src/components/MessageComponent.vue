@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div>
-                        <div class="body-1 pl-1">{{ message.content }}</div>
+                        <div class="body-1 pl-1">{{ message.text }}</div>
                     </div>
                 </div>
             </v-sheet>
@@ -28,11 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ApiClient } from '@/api/base/ApiClient';
 import type { Message } from '@/entities/Message';
-import { ApiClientFactory } from '@/factories/ApiClientFactory';
-
-const client: ApiClient = ApiClientFactory.createApiClient();
 
 defineProps<{
     message: Message;
