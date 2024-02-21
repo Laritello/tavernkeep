@@ -21,7 +21,14 @@ builder.Services
         o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     });
 
-builder.Services.AddSignalR();
+builder.Services
+    .AddSignalR()
+    .AddJsonProtocol(o => 
+    {
+        o.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        o.PayloadSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
+
 builder.Services.AddSingleton<IUserIdProvider, NotificationsUserProvider>();
 
 builder.Services
