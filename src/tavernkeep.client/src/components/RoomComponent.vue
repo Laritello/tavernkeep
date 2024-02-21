@@ -1,5 +1,5 @@
 <template>
-    <v-layout class="rounded rounded-md">
+    <v-layout class="rounded-md">
         <v-app-bar color="primary" title="Tavernkeep"></v-app-bar>
 
         <v-navigation-drawer>
