@@ -42,7 +42,7 @@
                         tabindex="0"
                         class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-md w-52"
                     >
-                        <li><a>Settings</a></li>
+                        <li v-if="auth.role == UserRole.Master"><router-link to="/admin">Settings</router-link></li>
                         <li><a @click.prevent="logout">Logout</a></li>
                     </ul>
                 </div>
@@ -83,6 +83,7 @@ import PartyComponent from './PartyComponent.vue';
 import { useCharactersStore } from '@/stores/characters.store';
 import { useAuthStore } from '@/stores/auth.store';
 import { useRouter } from 'vue-router';
+import { UserRole } from '@/contracts/enums/UserRole';
 
 const usersStore = useUsersStore();
 const charactersStore = useCharactersStore();
