@@ -1,5 +1,13 @@
 <template>
-    <v-combobox v-model="selected" :items="users" item-title="login" label="private message recipient..." clearable />
+    <v-select
+        v-model="selected"
+        :items="users"
+        item-title="login"
+        label="private message recipient..."
+        density="compact"
+        clearable
+        class="-mb-5"
+    />
 </template>
 
 <script setup lang="ts">
