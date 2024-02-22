@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="">
-            <UserSelector v-model="selectedUser" :users="usersStore.users.filter((u) => u.login != auth.userName)" />
+            <UserSelector v-model="selectedUserId" :users="usersStore.users.filter((u) => u.login != auth.userName)" />
             <form @submit.prevent="sendMessage" class="m-2">
                 <div class="join w-full">
                     <input
@@ -18,7 +18,7 @@
                         placeholder="Type here..."
                         class="input input-bordered input-md w-full max-w-xl"
                     />
-                    <button type="submit" icon="mdi-send" variant="text" rounded="0" size="large" class="btn btn-ghost">
+                    <button type="submit" class="btn btn-ghost">
                         <v-icon icon="mdi-send" />
                     </button>
                 </div>
@@ -34,7 +34,6 @@ import { useMessagesStore } from '@/stores/messages.store';
 import type { Message } from '@/entities/Message';
 import UserSelector from './UserSelector.vue';
 import { useUsersStore } from '@/stores/users.store';
-import type { User } from '@/entities/User';
 import { useAuthStore } from '@/stores/auth.store';
 import MessageComponent from './MessageComponent.vue';
 
@@ -43,7 +42,7 @@ const messagesStore = useMessagesStore();
 const usersStore = useUsersStore();
 
 const message = ref('');
-const selectedUser = ref<User>();
+const selectedUserId = ref<string>();
 
 onMounted(async () => {
     await messagesStore.fetchMessages(0, 20);
@@ -53,7 +52,8 @@ onMounted(async () => {
 });
 
 async function sendMessage() {
-    const privateMessageRecipient = selectedUser.value?.id || undefined;
+    const privateMessageRecipient = selectedUserId.value || undefined;
+    console.log(selectedUserId);
     await messagesStore.createMessage(message.value, privateMessageRecipient);
     message.value = '';
 }
