@@ -18,7 +18,7 @@
                         placeholder="Type here..."
                         class="input input-bordered input-md w-full max-w-xl"
                     />
-                    <button type="submit" icon="mdi-send" variant="text" rounded="0" size="large" class="btn btn-ghost">
+                    <button type="submit" class="btn btn-ghost">
                         <v-icon icon="mdi-send" />
                     </button>
                 </div>
