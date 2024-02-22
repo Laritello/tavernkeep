@@ -6,13 +6,13 @@
             </v-avatar>
         </div>
         <div>
-            <v-sheet color="primary" rounded>
+            <v-sheet :color="messageColor()" rounded>
                 <div class="text-container px-2 pb-1">
                     <div class="header px-1 pt-1">
                         <div class="body-1 font-weight-medium">{{ message.sender.login }}</div>
                         <div class="body-1 font-weight-light">{{ formatDate(message.created) }}</div>
                     </div>
-                    <div class="pb-1" style="align-self: flex-end;">
+                    <div class="pb-1" style="align-self: flex-end">
                         <div v-if="message.isPrivate" class="private">
                             <div class="body-1 font-weight-light mr-1">Private</div>
                             <v-icon size="x-small" icon="mdi-eye"></v-icon>
@@ -30,9 +30,13 @@
 <script setup lang="ts">
 import type { Message } from '@/entities/Message';
 
-defineProps<{
+const { message } = defineProps<{
     message: Message;
 }>();
+
+function messageColor() {
+    return message.isPrivate ? 'deep-purple' : 'primary';
+}
 
 function formatDate(dateString: Date): string {
     const date = new Date(dateString.toString());

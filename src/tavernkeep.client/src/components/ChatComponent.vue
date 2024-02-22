@@ -1,29 +1,28 @@
 <template>
-    <div class="box">
-        <div class="row auto">
-            <v-sheet class="pa-1">
-                <div class="text-h6">Chat</div>
-            </v-sheet>
-        </div>
-        <div class="row fill">
-            <v-container>
+    <div class="flex flex-col h-full">
+        <h1 class="text-xl p-2">Chat</h1>
+        <div class="flex grow overflow-auto">
+            <div class="container px-4">
                 <template v-for="item in messagesStore.messages" :key="item">
                     <MessageComponent :message="item" />
                 </template>
-            </v-container>
-        </div>
-        <div>
-            <UserSelector v-model="selectedUser" :users="usersStore.users.filter((u) => u.login != auth.userName)" />
-            <div class="row fixed">
-                <v-sheet class="py-4">
-                    <v-form @submit.prevent="sendMessage">
-                        <v-row class="px-4">
-                            <v-text-field v-model="message" variant="outlined" />
-                            <v-btn type="submit" icon="mdi-send" variant="text" rounded="0" size="large"></v-btn>
-                        </v-row>
-                    </v-form>
-                </v-sheet>
             </div>
+        </div>
+        <div class="">
+            <UserSelector v-model="selectedUser" :users="usersStore.users.filter((u) => u.login != auth.userName)" />
+            <form @submit.prevent="sendMessage" class="m-2">
+                <div class="join w-full">
+                    <input
+                        type="text"
+                        v-model="message"
+                        placeholder="Type here..."
+                        class="input input-bordered input-md w-full max-w-xl"
+                    />
+                    <button type="submit" icon="mdi-send" variant="text" rounded="0" size="large" class="btn btn-ghost">
+                        <v-icon icon="mdi-send" />
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </template>
@@ -62,9 +61,7 @@ async function sendMessage() {
 
 <style scoped>
 .box {
-    display: flex;
-    flex-flow: column;
-    height: 100%;
+    @apply flex flex-col;
 }
 
 .box .row.auto {
