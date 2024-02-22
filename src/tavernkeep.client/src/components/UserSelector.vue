@@ -3,6 +3,7 @@
         v-model="selected"
         :items="users"
         item-title="login"
+        item-value="id"
         label="private message recipient..."
         density="compact"
         clearable
@@ -13,6 +14,6 @@
 <script setup lang="ts">
 import type { User } from '@/entities/User';
 
-const selected = defineModel<User>();
+const selected = defineModel<string>();
 const { users } = defineProps<{ users: User[] }>();
 </script>
