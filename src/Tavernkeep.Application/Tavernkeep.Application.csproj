@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Dice\Commands\" />
+    <Folder Include="UseCases\Roll\Queries\" />
   </ItemGroup>
 
 </Project>

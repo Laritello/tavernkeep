@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Tavernkeep.Application.UseCases.Dice.Queries.RollCustomDice;
+using Tavernkeep.Application.UseCases.Roll.Queries.RollCustomDice;
 
 namespace Tavernkeep.Server.Controllers
 {
