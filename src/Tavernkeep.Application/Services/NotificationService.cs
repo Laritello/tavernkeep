@@ -27,6 +27,8 @@ namespace Tavernkeep.Application.Services
                     var notification = await _queue.Reader.ReadAsync(cancellationToken);
                     using var scope = serviceProvider.CreateScope();
 
+                    // TODO: Implement handlers that encapsulate each specific notification logic
+                    // TODO: Switch to singular notification hub structure
                     switch (notification)
                     {
                         case TextMessage textMessage:
