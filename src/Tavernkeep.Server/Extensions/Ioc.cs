@@ -102,7 +102,10 @@ namespace Tavernkeep.Server.Extensions
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped<IDiceService, DiceService>();
+            services.AddSingleton<IDiceService, DiceService>();
+            services.AddSingleton<INotificationService, NotificationService>();
+
+            services.AddHostedService(sp => (NotificationService)sp.GetRequiredService<INotificationService>());
 
             return services;
         }

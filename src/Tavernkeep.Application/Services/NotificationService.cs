@@ -12,19 +12,19 @@ namespace Tavernkeep.Application.Services
 {
     public class NotificationService(IServiceProvider serviceProvider, ILogger<NotificationService> logger) : BackgroundService, INotificationService
     {
-        private readonly Channel<object> _channel = Channel.CreateUnbounded<object>();
+        private readonly Channel<object> _queue = Channel.CreateUnbounded<object>();
 
-        public ValueTask PushMessage(Message message) =>_channel.Writer.WriteAsync(message);
-        public ValueTask PushAbilityNotification(AbilityEditedNotification notification) =>_channel.Writer.WriteAsync(notification);
-        public ValueTask PushSkillNotification(SkillEditedNotification notification) =>_channel.Writer.WriteAsync(notification);
+        public ValueTask QueueMessage(Message message) =>_queue.Writer.WriteAsync(message);
+        public ValueTask QueueAbilityNotification(AbilityEditedNotification notification) =>_queue.Writer.WriteAsync(notification);
+        public ValueTask QueueSkillNotification(SkillEditedNotification notification) =>_queue.Writer.WriteAsync(notification);
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    var notification = await _channel.Reader.ReadAsync(stoppingToken);
+                    var notification = await _queue.Reader.ReadAsync(cancellationToken);
                     using var scope = serviceProvider.CreateScope();
 
                     switch (notification)
@@ -49,6 +49,17 @@ namespace Tavernkeep.Application.Services
                     logger.LogError(e, "Error in notification service");
                 }
             }
+        }
+
+        public override async Task StartAsync(CancellationToken cancellationToken)
+        {
+            logger.LogInformation("Notification Service Hosted Service is launching.");
+            await base.StartAsync(cancellationToken);
+        }
+        public override async Task StopAsync(CancellationToken cancellationToken)
+        {
+            logger.LogInformation("Notification Service Hosted Service is stopping.");
+            await base.StopAsync(cancellationToken);
         }
 
         private async Task SendTextMessageNotification(IServiceScope scope, TextMessage message)

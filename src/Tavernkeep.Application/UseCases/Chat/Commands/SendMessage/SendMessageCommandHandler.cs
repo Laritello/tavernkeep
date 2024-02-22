@@ -1,10 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.SignalR;
-using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
-using Tavernkeep.Infrastructure.Notifications.Hubs;
 
 namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
 {
@@ -12,7 +11,7 @@ namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
         (
         IMessageRepository messageRepository, 
         IUserRepository userRepository,
-        IHubContext<ChatHub, IChatHub> context
+        INotificationService notificationService
         ) 
         : IRequestHandler<SendMessageCommand, Message>
     {
@@ -33,18 +32,7 @@ namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
 
             messageRepository.Save(message);
             await messageRepository.CommitAsync(cancellationToken);
-
-            if (message.Recipient == null)
-            {
-                // Notify all connected users about the new message
-                await context.Clients.All.ReceiveMessage(message);
-            }
-            else
-            {
-                // Notify participants about the new message
-                List<string> recipients = [message.SenderId.ToString(), message.RecipientId!.Value.ToString()];
-                await context.Clients.Users(recipients).ReceiveMessage(message);
-            }
+            await notificationService.QueueMessage(message);
 
             return message;
         }

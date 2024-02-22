@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.SignalR;
+using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Character;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
-using Tavernkeep.Infrastructure.Notifications.Hubs;
 using Tavernkeep.Infrastructure.Notifications.Notifications;
 
 namespace Tavernkeep.Application.Actions.Characters.Commands.EditSkill
@@ -12,7 +12,7 @@ namespace Tavernkeep.Application.Actions.Characters.Commands.EditSkill
     public class EditSkillCommandHandler(
         IUserRepository userRepository,
         ICharacterRepository characterRepository,
-        IHubContext<CharacterHub, ICharacterHub> context
+        INotificationService notificationService
         ) : IRequestHandler<EditSkillCommand, Skill>
     {
         public async Task<Skill> Handle(EditSkillCommand request, CancellationToken cancellationToken)
@@ -20,7 +20,7 @@ namespace Tavernkeep.Application.Actions.Characters.Commands.EditSkill
             var initiator = await userRepository.FindAsync(request.InitiatorId)
                 ?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
-            var character = await characterRepository.GetFullCharacterAsync(request.CharacterId)
+            var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
                 ?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
 
             if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)
@@ -31,8 +31,7 @@ namespace Tavernkeep.Application.Actions.Characters.Commands.EditSkill
 
             characterRepository.Save(character);
             await characterRepository.CommitAsync(cancellationToken);
-
-            await context.Clients.All.OnSkillEdited(new SkillEditedNotification()
+            await notificationService.QueueSkillNotification(new SkillEditedNotification()
             {
                 CharacterId = character.Id,
                 Type = skill.Type,
