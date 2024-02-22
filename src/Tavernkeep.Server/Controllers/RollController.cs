@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Tavernkeep.Application.UseCases.Roll.Queries.RollCustomDice;
+using Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice;
 
 namespace Tavernkeep.Server.Controllers
 {
@@ -20,7 +20,7 @@ namespace Tavernkeep.Server.Controllers
         [HttpGet("custom")]
         public async Task<int> RollCustomDice([FromQuery] string expression)
         {
-            return await mediator.Send(new RollCustomDiceQuery(expression));
+            return await mediator.Send(new RollCustomDiceCommand(expression));
         }
     }
 }
