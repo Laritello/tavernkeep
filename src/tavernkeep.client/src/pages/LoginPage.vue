@@ -19,7 +19,9 @@
                             required
                         />
                     </label>
-                    <input type="submit" value="Sign in" class="btn btn-primary grow" />
+                    <button type="submit" class="btn btn-primary grow">
+                        <span class="text-primary-content">Sign in</span>
+                    </button>
                 </div>
             </form>
         </v-sheet>
