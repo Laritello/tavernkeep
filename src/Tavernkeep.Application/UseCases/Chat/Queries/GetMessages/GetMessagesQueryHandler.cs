@@ -16,8 +16,8 @@ namespace Tavernkeep.Application.Actions.Chat.Queries.GetMessages
                 ?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
             Specification<Message> specification = initiator.Role == UserRole.Master
-                ? new MasterChatSpecification(initiator.Id)
-                : new PlayerChatSpecification(initiator.Id);
+                ? new MasterChatSpecification(initiator)
+                : new PlayerChatSpecification(initiator);
 
             var messages = await repository.GetMessagesChunkAsync(request.Skip, request.Take, specification, cancellationToken);
             return messages;

@@ -11,7 +11,7 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    [Migration("20240221194715_Initial")]
+    [Migration("20240222174835_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -54,19 +54,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("RecipientId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("SenderId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RecipientId");
 
                     b.HasIndex("SenderId");
 
@@ -123,9 +114,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     b.HasBaseType("Tavernkeep.Core.Entities.Messages.Message");
 
+                    b.Property<Guid?>("RecipientId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.HasIndex("RecipientId");
 
                     b.ToTable("Messages");
 
@@ -744,19 +740,22 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.Message", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.User", "Recipient")
-                        .WithMany()
-                        .HasForeignKey("RecipientId");
-
                     b.HasOne("Tavernkeep.Core.Entities.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Recipient");
-
                     b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.TextMessage", b =>
+                {
+                    b.HasOne("Tavernkeep.Core.Entities.User", "Recipient")
+                        .WithMany()
+                        .HasForeignKey("RecipientId");
+
+                    b.Navigation("Recipient");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
