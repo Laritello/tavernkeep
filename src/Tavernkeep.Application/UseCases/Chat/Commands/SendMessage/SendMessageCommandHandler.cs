@@ -31,6 +31,7 @@ namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
             };
 
             messageRepository.Save(message);
+
             await messageRepository.CommitAsync(cancellationToken);
             await notificationService.QueueMessage(message);
 

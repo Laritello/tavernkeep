@@ -1,6 +1,11 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice;
+using Tavernkeep.Application.UseCases.Roll.Commands.RollSkill;
+using Tavernkeep.Core.Contracts.Roll;
+using Tavernkeep.Core.Entities.Messages;
+using Tavernkeep.Server.Extensions;
 
 namespace Tavernkeep.Server.Controllers
 {
@@ -21,6 +26,18 @@ namespace Tavernkeep.Server.Controllers
         public async Task<int> RollCustomDice([FromQuery] string expression)
         {
             return await mediator.Send(new RollCustomDiceCommand(expression));
+        }
+
+        /// <summary>
+        /// Roll a skill check for the character.
+        /// </summary>
+        /// <param name="request">The request with roll parameters.</param>
+        /// <returns><see cref="RollMessage"/> containing the result of the roll.</returns>
+        [Authorize]
+        [HttpPost("skill")]
+        public async Task<RollMessage> RollSkill([FromBody] RollSkillRequest request)
+        {
+            return await mediator.Send(new RollSkillCommand(HttpContext.GetUserId(), request.CharacterId, request.SkillType, request.RollType));
         }
     }
 }

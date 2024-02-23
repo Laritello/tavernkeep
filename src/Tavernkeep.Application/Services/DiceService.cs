@@ -10,7 +10,14 @@ namespace Tavernkeep.Application.Services
 
         public int Roll(string expression)
         {
-            var result = _dice.Roll(expression, new CryptoDieRoller());
+            var result = _dice.Roll(expression);
+            return result.Value;
+        }
+
+        public int Roll(int bonus = 0, bool advantage = false)
+        {
+            var request = new DiceRequest(advantage ? 2 : 1, 20, bonus: bonus, choose: 1);
+            var result = _dice.Roll(request);
             return result.Value;
         }
 
