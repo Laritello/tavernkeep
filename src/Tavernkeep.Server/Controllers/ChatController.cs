@@ -40,7 +40,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public async Task<IEnumerable<Message>> GetMessagesAsync([FromQuery] int skip, [FromQuery] int take)
+        public async Task<IEnumerable<Message>> GetMessagesAsync([FromQuery] int skip = 0, [FromQuery] int take = 20)
         {
             return await mediator.Send(new GetMessagesQuery(HttpContext.GetUserId(), skip, take));
         }
