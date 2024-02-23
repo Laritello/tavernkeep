@@ -26,7 +26,7 @@ namespace Tavernkeep.Core.Contracts.Character
         public Entities.Character Owner { get; set; } = default!;
         public SkillType Type { get; set; }
         public Proficiency Proficiency { get; set; }
-
+        public int Bonus => 5; // Testing
         #endregion
     }
 }

@@ -5,15 +5,14 @@ import { AxiosApiResponse } from './AxiosApiResponse';
 import { User } from '@/entities/User';
 import { UserRole } from '@/contracts/enums/UserRole';
 import { getCookie } from 'typescript-cookie';
-import { Message } from '@/entities/Message';
-import { MessageType } from '@/contracts/enums/MessageType';
+import { Message, RollMessage, TextMessage } from '@/entities/Message';
 import { Character } from '@/entities/Character';
 import type { Ability } from '@/contracts/character/Ability';
 import type { Skill } from '@/contracts/character/Skill';
 import type { AbilityType } from '@/contracts/enums/AbilityType';
 import type { Proficiency } from '@/contracts/enums/Proficiency';
 import type { SkillType } from '@/contracts/enums/SkillType';
-
+import { plainToInstance, Type } from "class-transformer";
 // TODO: Error handling and interceptors
 // TODO: Decorators might be usefull here as I do similar logic every time.
 // TODO: Move cookie name somewhere where it will be set globally.
@@ -97,7 +96,7 @@ export class AxiosApiClient implements ApiClient {
         const response = await this.client.get<Character[]>('characters', {
             headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
         });
-        
+
         return new AxiosApiResponse(
             response.data,
             response.status,
@@ -220,8 +219,19 @@ export class AxiosApiClient implements ApiClient {
             headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
         });
 
+        const data = response.data.map((item) => {
+            switch (item.$type) {
+                case "TextMessage":
+                    return plainToInstance(TextMessage, item);
+                case "RollMessage":
+                    return plainToInstance(RollMessage, item);
+                default:
+                    return plainToInstance(Message, item);
+            }
+        });
+
         return new AxiosApiResponse(
-            response.data,
+            data,
             response.status,
             response.statusText
         );

@@ -47,14 +47,12 @@ const selectedUserId = ref<string>();
 onMounted(async () => {
     await messagesStore.fetchMessages(0, 20);
     ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
-        console.log('Message Received: ' + msg.content);
         messagesStore.messages.unshift(msg);
     });
 });
 
 async function sendMessage() {
     const privateMessageRecipient = selectedUserId.value || undefined;
-    console.log(selectedUserId);
     await messagesStore.createMessage(message.value, privateMessageRecipient);
     message.value = '';
 }

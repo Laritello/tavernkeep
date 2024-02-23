@@ -6,7 +6,7 @@
             </v-avatar>
         </div>
         <div>
-            <v-sheet :color="messageColor()" rounded>
+            <v-sheet v-if="(message instanceof TextMessage)" :color="messageColor(message)" rounded>
                 <div class="text-container px-2 pb-1">
                     <div class="header px-1 pt-1">
                         <div class="body-1 font-weight-medium">{{ message.sender.login }}</div>
@@ -19,7 +19,18 @@
                         </div>
                     </div>
                     <div>
-                        <div class="body-1 pl-1">{{ message.content }}</div>
+                        <div class="body-1 pl-1">{{ message.text }}</div>
+                    </div>
+                </div>
+            </v-sheet>
+            <v-sheet v-if="(message instanceof RollMessage)" :color="rollColor(message)" rounded>
+                <div class="text-container px-2 pb-1">
+                    <div class="header px-1 pt-1">
+                        <div class="body-1 font-weight-medium">{{ message.sender.login }}</div>
+                        <div class="body-1 font-weight-light">{{ formatDate(message.created) }}</div>
+                    </div>
+                    <div>
+                        <div class="body-1 pl-1">Roll type: {{ message.rollType.toString() }}; Roll result: {{ message.result }}</div>
                     </div>
                 </div>
             </v-sheet>
@@ -28,14 +39,21 @@
 </template>
 
 <script setup lang="ts">
-import type { Message } from '@/entities/Message';
+import { type Message } from '@/entities/Message';
+import { TextMessage } from '@/entities/Message';
+import { RollMessage } from '@/entities/Message';
+import { RollType } from '@/contracts/enums/RollType';
 
 const { message } = defineProps<{
     message: Message;
 }>();
 
-function messageColor() {
+function messageColor(message: TextMessage) {
     return message.isPrivate ? 'deep-purple' : 'primary';
+}
+
+function rollColor(message: RollMessage) {
+    return message.rollType == RollType.Open ? 'green' : 'coral';
 }
 
 function formatDate(dateString: Date): string {

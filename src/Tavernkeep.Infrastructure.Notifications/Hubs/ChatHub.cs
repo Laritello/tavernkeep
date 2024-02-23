@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Messages;
 
 namespace Tavernkeep.Infrastructure.Notifications.Hubs
 {

@@ -1,4 +1,4 @@
 export enum MessageType {
-    Text = 'Text',
-    Roll = 'Roll',
+    TextMessage = 'TextMessage',
+    RollMessage = 'RollMessage',
 }

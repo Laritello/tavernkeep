@@ -6,7 +6,7 @@ using Tavernkeep.Application.Actions.Chat.Commands.SendMessage;
 using Tavernkeep.Application.Actions.Chat.Queries.GetMessages;
 using Tavernkeep.Core.Contracts.Chat.Requests;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Server.Extensions;
 using Tavernkeep.Server.Middleware;
 
@@ -40,7 +40,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public async Task<IEnumerable<Message>> GetMessagesAsync([FromQuery] int skip, [FromQuery] int take)
+        public async Task<IEnumerable<Message>> GetMessagesAsync([FromQuery] int skip = 0, [FromQuery] int take = 20)
         {
             return await mediator.Send(new GetMessagesQuery(HttpContext.GetUserId(), skip, take));
         }

@@ -15,6 +15,7 @@
         "@mdi/font": "^7.4.47",
         "@microsoft/signalr": "^8.0.0",
         "axios": "^1.6.7",
+        "class-transformer": "^0.5.1",
         "jwt-decode": "^4.0.0",
         "pinia": "^2.1.7",
         "typescript-cookie": "^1.0.6",

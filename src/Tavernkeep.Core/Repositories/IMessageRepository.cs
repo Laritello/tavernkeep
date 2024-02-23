@@ -1,4 +1,4 @@
-﻿using Tavernkeep.Core.Entities;
+﻿using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Specifications;
 
 namespace Tavernkeep.Core.Repositories
