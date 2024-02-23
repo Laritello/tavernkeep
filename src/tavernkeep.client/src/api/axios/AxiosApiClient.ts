@@ -12,7 +12,8 @@ import type { Skill } from '@/contracts/character/Skill';
 import type { AbilityType } from '@/contracts/enums/AbilityType';
 import type { Proficiency } from '@/contracts/enums/Proficiency';
 import type { SkillType } from '@/contracts/enums/SkillType';
-import { plainToInstance, Type } from "class-transformer";
+import { plainToInstance } from 'class-transformer';
+
 // TODO: Error handling and interceptors
 // TODO: Decorators might be usefull here as I do similar logic every time.
 // TODO: Move cookie name somewhere where it will be set globally.
