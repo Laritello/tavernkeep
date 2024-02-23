@@ -53,7 +53,6 @@ onMounted(async () => {
 
 async function sendMessage() {
     const privateMessageRecipient = selectedUserId.value || undefined;
-    console.log(selectedUserId);
     await messagesStore.createMessage(message.value, privateMessageRecipient);
     message.value = '';
 }

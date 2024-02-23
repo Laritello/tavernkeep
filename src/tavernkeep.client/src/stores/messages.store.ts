@@ -11,6 +11,8 @@ export const useMessagesStore = defineStore('messages.store', () => {
 
     async function fetchMessages(skip: number, take: number) {
         const messagesResponse = await api.getMessages(skip, take);
+        console.log(messagesResponse.data)
+        
         messages.value.push(...messagesResponse.data);
     }
 
