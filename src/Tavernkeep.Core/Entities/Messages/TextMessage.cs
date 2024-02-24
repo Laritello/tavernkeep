@@ -15,6 +15,7 @@ namespace Tavernkeep.Core.Entities.Messages
         public string Text { get; set; } = default!;
         public Guid? RecipientId { get; set; }
         public User? Recipient { get; set; }
+        public bool IsPrivate => RecipientId.HasValue;
 
         #endregion
 
