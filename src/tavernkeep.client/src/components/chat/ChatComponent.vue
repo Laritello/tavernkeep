@@ -49,7 +49,6 @@ const message = ref('');
 const selectedUserId = ref<string>();
 const chatView = ref<HTMLElement>();
 
-messagesStore.fetchMessages(0, 20);
 ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
     messagesStore.appendMessage(msg);
 });

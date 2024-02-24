@@ -13,6 +13,4 @@ import CharacterComponent from './CharacterComponent.vue';
 import { useCharactersStore } from '@/stores/characters.store';
 
 const charactersStore = useCharactersStore();
-
-charactersStore.fetchCharacters();
 </script>
