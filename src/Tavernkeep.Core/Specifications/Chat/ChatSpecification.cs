@@ -7,7 +7,7 @@ namespace Tavernkeep.Core.Specifications.Chat
     public class ChatSpecification(User initiator) : Specification<Message>
         (x => x.SenderId == initiator.Id ||
         (x is TextMessage && ((TextMessage)x).RecipientId == null || (((TextMessage)x).RecipientId == initiator.Id)) || 
-        (x is RollMessage && ((RollMessage)x).RollType == RollType.Open)
+        (x is RollMessage && ((RollMessage)x).RollType == RollType.Public)
         )
     {
     }

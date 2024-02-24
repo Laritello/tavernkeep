@@ -21,7 +21,7 @@ namespace Tavernkeep.Core.Entities.Messages
 
         public override bool CheckVisbility(User user)
         {
-            return RollType == RollType.Open || user.Role == UserRole.Master || SenderId == user.Id;
+            return RollType == RollType.Public || user.Role == UserRole.Master || SenderId == user.Id;
         }
 
         #endregion
