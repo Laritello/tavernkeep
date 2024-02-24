@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Users.Commands.CreateUser;
 using Tavernkeep.Application.Actions.Users.Commands.DeleteUser;
 using Tavernkeep.Application.Actions.Users.Queries.GetUsers;
+using Tavernkeep.Application.UseCases.Users.Queries.GetCurrentUser;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Users.Requests;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Server.Extensions;
 using Tavernkeep.Server.Middleware;
 
 namespace Tavernkeep.Server.Controllers
@@ -55,6 +57,17 @@ namespace Tavernkeep.Server.Controllers
         public async Task DeleteUser([FromRoute] Guid userId)
         {
             await mediator.Send(new DeleteUserCommand(userId));
+        }
+
+        /// <summary>
+        /// Get an authorized user.
+        /// </summary>
+        /// <returns>The user that was specified in the authorization token.</returns>
+        [Authorize]
+        [HttpGet("current")]
+        public async Task<User> GetCurrentUser()
+        {
+            return await mediator.Send(new GetUserQuery(HttpContext.GetUserId()));
         }
     }
 }
