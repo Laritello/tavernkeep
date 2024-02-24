@@ -4,7 +4,6 @@ import type { ApiResponse } from '../base/ApiResponse';
 import { AxiosApiResponse } from './AxiosApiResponse';
 import { User } from '@/entities/User';
 import { UserRole } from '@/contracts/enums/UserRole';
-import { getCookie } from 'typescript-cookie';
 import { Message, RollMessage, TextMessage } from '@/entities/Message';
 import { Character } from '@/entities/Character';
 import type { Ability } from '@/contracts/character/Ability';
@@ -14,13 +13,14 @@ import type { Proficiency } from '@/contracts/enums/Proficiency';
 import type { SkillType } from '@/contracts/enums/SkillType';
 import { plainToInstance } from 'class-transformer';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
+import { useAuthStore } from '@/stores/auth.store';
+
 // TODO: Error handling and interceptors
 // TODO: Decorators might be usefull here as I do similar logic every time.
 // TODO: Move cookie name somewhere where it will be set globally.
 export class AxiosApiClient implements ApiClient {
     client: AxiosInstance;
     private baseURL = 'https://' + window.location.hostname + ':7231/api/';
-    private cookieName: string = 'tavernkeep.auth.jwt';
 
     constructor() {
         this.client = axios.create({
@@ -29,6 +29,18 @@ export class AxiosApiClient implements ApiClient {
             headers: {
                 'Content-Type': 'application/json',
             },
+        });
+
+        this.client.interceptors.request.use(function (config) {
+            const authStore = useAuthStore();
+            const token = authStore.getToken();
+
+            if (token)
+                config.headers.Authorization = 'Bearer ' + token;
+            else
+                config.headers.Authorization = null;
+
+            return config;
         });
     }
 
@@ -51,9 +63,7 @@ export class AxiosApiClient implements ApiClient {
     }
 
     async getUsers(): Promise<ApiResponse<User[]>> {
-        const response = await this.client.get<User[]>('users', {
-            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
-        });
+        const response = await this.client.get<User[]>('users');
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
@@ -66,11 +76,6 @@ export class AxiosApiClient implements ApiClient {
                 login: login,
                 password: password,
                 role: role,
-            },
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getCookie(this.cookieName),
-                },
             }
         );
 
@@ -79,17 +84,13 @@ export class AxiosApiClient implements ApiClient {
 
     // TODO: ApiResponse for empty responses
     async deleteUser(id: string): Promise<ApiResponse<null>> {
-        const response = await this.client.delete('users/delete/' + id, {
-            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
-        });
+        const response = await this.client.delete('users/delete/' + id);
 
         return new AxiosApiResponse(null, response.status, response.statusText);
     }
 
     async getCharacters(): Promise<ApiResponse<Character[]>> {
-        const response = await this.client.get<Character[]>('characters', {
-            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
-        });
+        const response = await this.client.get<Character[]>('characters');
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
@@ -97,29 +98,20 @@ export class AxiosApiClient implements ApiClient {
     async createCharacter(name: string): Promise<ApiResponse<Character>> {
         const response = await this.client.post<Character>(
             'characters/create',
-            { name: name },
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getCookie(this.cookieName),
-                },
-            }
+            { name: name }
         );
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async deleteCharacter(id: string): Promise<ApiResponse<null>> {
-        const response = await this.client.delete('characters/delete/' + id, {
-            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
-        });
+        const response = await this.client.delete('characters/delete/' + id);
 
         return new AxiosApiResponse(null, response.status, response.statusText);
     }
 
     async getCharacter(id: string): Promise<ApiResponse<Character>> {
-        const response = await this.client.get<Character>('characters/' + id, {
-            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
-        });
+        const response = await this.client.get<Character>('characters/' + id);
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
@@ -127,12 +119,7 @@ export class AxiosApiClient implements ApiClient {
     async editAbility(characterId: string, type: AbilityType, score: number): Promise<ApiResponse<Ability>> {
         const response = await this.client.patch<Ability>(
             'characters/edit/ability',
-            { characterId: characterId, type: type, score: score },
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getCookie(this.cookieName),
-                },
-            }
+            { characterId: characterId, type: type, score: score }
         );
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
@@ -141,12 +128,7 @@ export class AxiosApiClient implements ApiClient {
     async editSkill(characterId: string, type: SkillType, proficiency: Proficiency): Promise<ApiResponse<Skill>> {
         const response = await this.client.patch<Skill>(
             'characters/edit/skill',
-            { characterId: characterId, type: type, proficiency: proficiency },
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getCookie(this.cookieName),
-                },
-            }
+            { characterId: characterId, type: type, proficiency: proficiency }
         );
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
@@ -158,11 +140,6 @@ export class AxiosApiClient implements ApiClient {
             {
                 recipientId: recipientId,
                 content: content,
-            },
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getCookie(this.cookieName),
-                },
             }
         );
 
@@ -184,8 +161,7 @@ export class AxiosApiClient implements ApiClient {
 
     async getMessages(skip: number, take: number): Promise<ApiResponse<Message[]>> {
         const response = await this.client.get<Message[]>('chat', {
-            params: { skip: skip, take: take },
-            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
+            params: { skip: skip, take: take }
         });
 
         const data = response.data.map((item) => {

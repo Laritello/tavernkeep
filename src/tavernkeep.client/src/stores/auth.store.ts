@@ -81,5 +81,9 @@ export const useAuthStore = defineStore('auth.store', () => {
         return requiredRoles.includes(role.value);
     }
 
-    return { userName, role, isLoggedIn, login, logout, havePermissions };
+    function getToken() : string | undefined {
+        return cookie.value;
+    }
+
+    return { userName, role, isLoggedIn, login, logout, havePermissions, getToken };
 });
