@@ -1,9 +1,10 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
+import { plainToInstance } from 'class-transformer';
 
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { ApiClient } from '@/api/base/ApiClient';
-import type { Message } from '@/entities/Message';
+import { Message, RollMessage, TextMessage } from '@/entities/Message';
 
 const api: ApiClient = ApiClientFactory.createApiClient();
 export const useMessagesStore = defineStore('messages.store', () => {
@@ -11,8 +12,7 @@ export const useMessagesStore = defineStore('messages.store', () => {
 
     async function fetchMessages(skip: number, take: number) {
         const messagesResponse = await api.getMessages(skip, take);
-        console.log(messagesResponse.data)
-        
+
         messages.value.push(...messagesResponse.data);
     }
 
@@ -21,7 +21,24 @@ export const useMessagesStore = defineStore('messages.store', () => {
         if (!response.isSuccess()) {
             console.error(response.statusText);
         }
+        messages.value.unshift(response.data);
     }
 
-    return { messages, fetchMessages, createMessage };
+    function appendMessage(message: Message) {
+        let typedMessage = message;
+
+        switch (message.$type) {
+            case 'TextMessage':
+                typedMessage = plainToInstance(TextMessage, message);
+                break;
+            case 'RollMessage':
+                typedMessage = plainToInstance(RollMessage, message);
+                break;
+            default:
+                typedMessage = plainToInstance(Message, message);
+        }
+        messages.value.unshift(typedMessage);
+    }
+
+    return { messages, fetchMessages, createMessage, appendMessage };
 });
