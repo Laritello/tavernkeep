@@ -12,7 +12,7 @@ import type { Skill } from '@/contracts/character/Skill';
 import type { AbilityType } from '@/contracts/enums/AbilityType';
 import type { Proficiency } from '@/contracts/enums/Proficiency';
 import type { SkillType } from '@/contracts/enums/SkillType';
-import { plainToInstance, Type } from "class-transformer";
+import { plainToInstance } from 'class-transformer';
 // TODO: Error handling and interceptors
 // TODO: Decorators might be usefull here as I do similar logic every time.
 // TODO: Move cookie name somewhere where it will be set globally.
@@ -37,11 +37,7 @@ export class AxiosApiClient implements ApiClient {
             password: password,
         });
 
-        return new AxiosApiResponse(
-            response.data,
-            response.status,
-            response.statusText
-        );
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async getUsers(): Promise<ApiResponse<User[]>> {
@@ -49,19 +45,11 @@ export class AxiosApiClient implements ApiClient {
             headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
         });
 
-        return new AxiosApiResponse(
-            response.data,
-            response.status,
-            response.statusText
-        );
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     // TODO: User request types instead of separate parameters
-    async createUser(
-        login: string,
-        password: string,
-        role: UserRole
-    ): Promise<ApiResponse<User>> {
+    async createUser(login: string, password: string, role: UserRole): Promise<ApiResponse<User>> {
         const response = await this.client.post<User>(
             'users/create',
             {
@@ -76,11 +64,7 @@ export class AxiosApiClient implements ApiClient {
             }
         );
 
-        return new AxiosApiResponse(
-            response.data,
-            response.status,
-            response.statusText
-        );
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     // TODO: ApiResponse for empty responses
@@ -97,11 +81,7 @@ export class AxiosApiClient implements ApiClient {
             headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
         });
 
-        return new AxiosApiResponse(
-            response.data,
-            response.status,
-            response.statusText
-        );
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async createCharacter(name: string): Promise<ApiResponse<Character>> {
@@ -115,11 +95,7 @@ export class AxiosApiClient implements ApiClient {
             }
         );
 
-        return new AxiosApiResponse(
-            response.data,
-            response.status,
-            response.statusText
-        );
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async deleteCharacter(id: string): Promise<ApiResponse<null>> {
@@ -135,18 +111,10 @@ export class AxiosApiClient implements ApiClient {
             headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
         });
 
-        return new AxiosApiResponse(
-            response.data,
-            response.status,
-            response.statusText
-        );
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
-    async editAbility(
-        characterId: string,
-        type: AbilityType,
-        score: number
-    ): Promise<ApiResponse<Ability>> {
+    async editAbility(characterId: string, type: AbilityType, score: number): Promise<ApiResponse<Ability>> {
         const response = await this.client.patch<Ability>(
             'characters/edit/ability',
             { characterId: characterId, type: type, score: score },
@@ -157,18 +125,10 @@ export class AxiosApiClient implements ApiClient {
             }
         );
 
-        return new AxiosApiResponse(
-            response.data,
-            response.status,
-            response.statusText
-        );
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
-    async editSkill(
-        characterId: string,
-        type: SkillType,
-        proficiency: Proficiency
-    ): Promise<ApiResponse<Skill>> {
+    async editSkill(characterId: string, type: SkillType, proficiency: Proficiency): Promise<ApiResponse<Skill>> {
         const response = await this.client.patch<Skill>(
             'characters/edit/skill',
             { characterId: characterId, type: type, proficiency: proficiency },
@@ -179,17 +139,10 @@ export class AxiosApiClient implements ApiClient {
             }
         );
 
-        return new AxiosApiResponse(
-            response.data,
-            response.status,
-            response.statusText
-        );
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
-    async sendMessage(
-        content: string,
-        recipientId?: string
-    ): Promise<ApiResponse<Message>> {
+    async sendMessage(content: string, recipientId?: string): Promise<ApiResponse<Message>> {
         const response = await this.client.post<Message>(
             'chat/message',
             {
@@ -203,17 +156,23 @@ export class AxiosApiClient implements ApiClient {
             }
         );
 
-        return new AxiosApiResponse(
-            response.data,
-            response.status,
-            response.statusText
-        );
+        let data = response.data;
+
+        switch (data.$type) {
+            case 'TextMessage':
+                data = plainToInstance(TextMessage, data);
+                break;
+            case 'RollMessage':
+                data = plainToInstance(RollMessage, data);
+                break;
+            default:
+                data = plainToInstance(Message, data);
+        }
+
+        return new AxiosApiResponse(data, response.status, response.statusText);
     }
 
-    async getMessages(
-        skip: number,
-        take: number
-    ): Promise<ApiResponse<Message[]>> {
+    async getMessages(skip: number, take: number): Promise<ApiResponse<Message[]>> {
         const response = await this.client.get<Message[]>('chat', {
             params: { skip: skip, take: take },
             headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
@@ -221,19 +180,15 @@ export class AxiosApiClient implements ApiClient {
 
         const data = response.data.map((item) => {
             switch (item.$type) {
-                case "TextMessage":
+                case 'TextMessage':
                     return plainToInstance(TextMessage, item);
-                case "RollMessage":
+                case 'RollMessage':
                     return plainToInstance(RollMessage, item);
                 default:
                     return plainToInstance(Message, item);
             }
         });
 
-        return new AxiosApiResponse(
-            data,
-            response.status,
-            response.statusText
-        );
+        return new AxiosApiResponse(data, response.status, response.statusText);
     }
 }
