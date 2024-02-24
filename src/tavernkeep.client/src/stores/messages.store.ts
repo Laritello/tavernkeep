@@ -12,8 +12,7 @@ export const useMessagesStore = defineStore('messages.store', () => {
 
     async function fetchMessages(skip: number, take: number) {
         const messagesResponse = await api.getMessages(skip, take);
-
-        messages.value.push(...messagesResponse.data);
+        messages.value = messagesResponse.data;
     }
 
     async function createMessage(message: string, recipientId?: string) {

@@ -4,8 +4,7 @@
             v-for="character in charactersStore.characters"
             :key="character.id"
             :character="character"
-        >
-        </CharacterComponent>
+        />
     </v-sheet>
 </template>
 

@@ -20,8 +20,9 @@
                         tabindex="0"
                         class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-md w-52"
                     >
-                        <li v-if="auth.role == UserRole.Master"><router-link to="/admin">Settings</router-link></li>
-                        <li><a @click.prevent="logout">Logout</a></li>
+                        <li>
+                            <a @click.prevent="logout">Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -30,17 +31,19 @@
             <!-- Left panel -->
             <div class="flex flex-col gap-4 w-72 shadow-md shadow-neutral-950 bg-base-200 p-4">
                 <h1 class="text-xl">Sidebar</h1>
-                <v-card>
-                    <UserForm />
-                </v-card>
-                <v-card>
-                    <UserList />
-                </v-card>
+                <ul class="menu menu-sm">
+                    <li>
+                        <RouterLink to="/">Home</RouterLink>
+                    </li>
+                    <li v-if="auth.role == UserRole.Master">
+                        <RouterLink to="/admin">Admin Panel</RouterLink>
+                    </li>
+                </ul>
             </div>
             <!-- Content -->
             <main class="flex grow bg-base">
                 <div class="container m-4">
-                    <PartyComponent />
+                    <slot />
                 </div>
             </main>
             <!-- Chat panel -->
@@ -52,31 +55,25 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import ChatComponent from '@/components/chat/ChatComponent.vue';
-import { useUsersStore } from '@/stores/users.store';
-import PartyComponent from './PartyComponent.vue';
-import { useCharactersStore } from '@/stores/characters.store';
+//Stores
 import { useAuthStore } from '@/stores/auth.store';
-import { useRouter } from 'vue-router';
+
+//Types
 import { UserRole } from '@/contracts/enums/UserRole';
 
-const usersStore = useUsersStore();
-const charactersStore = useCharactersStore();
-const auth = useAuthStore();
+// Components
+import ChatComponent from '@/components/chat/ChatComponent.vue';
+
 const router = useRouter();
+const auth = useAuthStore();
+
+import { useRouter } from 'vue-router';
 
 async function logout() {
     auth.logout();
     router.push('/login');
 }
-
-onMounted(async () => {
-    await usersStore.fetchUsers();
-    await charactersStore.fetchCharacters();
-});
 </script>
-
 <style scoped>
 .content-height {
     height: calc(100% - 4rem);

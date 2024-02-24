@@ -30,12 +30,16 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue';
 import ChatHub from '@/api/hubs/ChatHub';
-import { useMessagesStore } from '@/stores/messages.store';
 import type { Message } from '@/entities/Message';
+
+// Components
 import UserSelector from './UserSelector.vue';
+import ChatBubble from './messages/ChatBubble.vue';
+
+// Stores
+import { useMessagesStore } from '@/stores/messages.store';
 import { useUsersStore } from '@/stores/users.store';
 import { useAuthStore } from '@/stores/auth.store';
-import ChatBubble from './messages/ChatBubble.vue';
 
 const auth = useAuthStore();
 const messagesStore = useMessagesStore();
@@ -45,13 +49,13 @@ const message = ref('');
 const selectedUserId = ref<string>();
 const chatView = ref<HTMLElement>();
 
-onMounted(async () => {
-    await messagesStore.fetchMessages(0, 20);
-    await scrollToBottom();
+messagesStore.fetchMessages(0, 20);
+ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
+    messagesStore.appendMessage(msg);
+});
 
-    ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
-        messagesStore.appendMessage(msg);
-    });
+onMounted(async () => {
+    await scrollToBottom();
 });
 
 async function sendMessage() {

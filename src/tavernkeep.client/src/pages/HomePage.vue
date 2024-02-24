@@ -1,7 +1,7 @@
 <template>
-    <RoomComponent />
+    <PartyComponent />
 </template>
 
 <script setup lang="ts">
-import RoomComponent from '@/components/RoomComponent.vue';
+import PartyComponent from '@/components/PartyComponent.vue';
 </script>
