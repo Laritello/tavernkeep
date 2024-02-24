@@ -79,6 +79,7 @@ namespace Tavernkeep.Server.Extensions
             services.AddScoped<IUserRepository, UserEFRepository>();
             services.AddScoped<ICharacterRepository, CharacterEFRepository>();
             services.AddScoped<IMessageRepository, MessageEFRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenEFRepository>();
 
             return services;
         }
