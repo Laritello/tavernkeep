@@ -16,7 +16,7 @@ class CharacterHub {
                 skipNegotiation: true,
                 transport: HttpTransportType.WebSockets,
                 accessTokenFactory() {
-                    const jwt = getCookie('taverkeep.auth.jwt');
+                    const jwt = getCookie('tavernkeep.auth.jwt');
                     return jwt != undefined ? jwt : '';
                 },
             })

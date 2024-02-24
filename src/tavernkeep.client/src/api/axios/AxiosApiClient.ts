@@ -20,7 +20,7 @@ import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResp
 export class AxiosApiClient implements ApiClient {
     client: AxiosInstance;
     private baseURL = 'https://' + window.location.hostname + ':7231/api/';
-    private cookieName: string = 'taverkeep.auth.jwt';
+    private cookieName: string = 'tavernkeep.auth.jwt';
 
     constructor() {
         this.client = axios.create({
