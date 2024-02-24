@@ -44,24 +44,26 @@ namespace Tavernkeep.Application.Services
             return Convert.ToBase64String(randomNumber);
         }
 
-        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        public async Task<ClaimsIdentity> GetUserIdentityFromExpiredToken(string token)
         {
+            var key = Encoding.ASCII.GetBytes(configuration["Jwt:Key"] ?? string.Empty);
+
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = false,
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345")),
+                IssuerSigningKey = new SymmetricSecurityKey(key),
                 ValidateLifetime = false
             };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+            var tokenHandler = new JsonWebTokenHandler();
+            var validationResult = await tokenHandler.ValidateTokenAsync(token, tokenValidationParameters);
 
-            if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            if (!validationResult.IsValid)
                 throw new SecurityTokenException("Invalid token");
 
-            return principal;
+            return validationResult.ClaimsIdentity;
         }
     }
 }
