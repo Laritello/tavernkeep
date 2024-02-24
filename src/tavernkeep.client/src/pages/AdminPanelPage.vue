@@ -15,12 +15,4 @@
 <script setup lang="ts">
 import UserForm from '@/components/UserForm.vue';
 import UserList from '@/components/UserList.vue';
-import { useUsersStore } from '@/stores/users.store';
-import { useCharactersStore } from '@/stores/characters.store';
-
-const usersStore = useUsersStore();
-const charactersStore = useCharactersStore();
-
-usersStore.fetchUsers();
-charactersStore.fetchCharacters();
 </script>
