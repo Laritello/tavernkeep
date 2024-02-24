@@ -62,17 +62,22 @@ import { UserRole } from '@/contracts/enums/UserRole';
 import ChatComponent from '@/components/chat/ChatComponent.vue';
 
 // Stores
-import { useAuthStore } from '@/stores/auth.store';
+import { useCharactersStore } from '@/stores/characters.store';
 import { useMessagesStore } from '@/stores/messages.store';
 import { useUsersStore } from '@/stores/users.store';
+import { useAuthStore } from '@/stores/auth.store';
 
-const router = useRouter();
-const auth = useAuthStore();
+const charactersStore = useCharactersStore();
 const messagesStore = useMessagesStore();
 const usersStore = useUsersStore();
+const auth = useAuthStore();
 
+// Fetch data from server
+charactersStore.fetchCharacters();
 messagesStore.fetchMessages(0, 20);
 usersStore.fetchUsers();
+
+const router = useRouter();
 
 async function logout() {
     auth.logout();
