@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Authentication.Commands.CreateAuthenticationnToken;
 using Tavernkeep.Core.Contracts.Authentication.Requests;
+using Tavernkeep.Core.Contracts.Authentication.Responses;
 
 namespace Tavernkeep.Server.Controllers
 {
@@ -19,10 +20,9 @@ namespace Tavernkeep.Server.Controllers
         /// <param name="request">The authentication request.</param>
         /// <returns>The authentication JWT.</returns>
         [HttpPost("auth")]
-        public async Task<string> CreateAuthenticationToken(AuthenticationRequest request)
+        public async Task<AuthenticationResponse> CreateAuthenticationToken(AuthenticationRequest request)
         {
-            var token = await mediator.Send(new CreateAuthenticationTokenCommand(request.Login, request.Password));
-            return token;
+            return await mediator.Send(new CreateAuthenticationTokenCommand(request.Login, request.Password));
         }
     }
 }

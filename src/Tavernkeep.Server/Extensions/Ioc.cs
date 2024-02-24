@@ -27,6 +27,8 @@ namespace Tavernkeep.Server.Extensions
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection AddSecurity(this IServiceCollection services, string? key)
         {
+            services.AddTransient<IAuthTokenService, AuthTokenService>();
+
             services.AddAuthentication(o =>
             {
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
