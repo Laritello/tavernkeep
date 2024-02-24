@@ -75,7 +75,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import ChatComponent from '@/components/ChatComponent.vue';
+import ChatComponent from '@/components/chat/ChatComponent.vue';
 import { useUsersStore } from '@/stores/users.store';
 import PartyComponent from './PartyComponent.vue';
 import { useCharactersStore } from '@/stores/characters.store';

@@ -4,7 +4,7 @@
         <div class="flex grow overflow-auto">
             <div class="container px-4">
                 <template v-for="item in messagesStore.messages" :key="item">
-                    <MessageComponent :message="item" />
+                    <ChatBubble :message="item" />
                 </template>
             </div>
         </div>
@@ -35,7 +35,7 @@ import type { Message } from '@/entities/Message';
 import UserSelector from './UserSelector.vue';
 import { useUsersStore } from '@/stores/users.store';
 import { useAuthStore } from '@/stores/auth.store';
-import MessageComponent from './MessageComponent.vue';
+import ChatBubble from './messages/ChatBubble.vue';
 
 const auth = useAuthStore();
 const messagesStore = useMessagesStore();
@@ -47,7 +47,7 @@ const selectedUserId = ref<string>();
 onMounted(async () => {
     await messagesStore.fetchMessages(0, 20);
     ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
-        messagesStore.messages.unshift(msg);
+        messagesStore.appendMessage(msg);
     });
 });
 
