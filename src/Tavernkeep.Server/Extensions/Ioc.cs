@@ -109,6 +109,7 @@ namespace Tavernkeep.Server.Extensions
             services.AddSingleton<INotificationService, NotificationService>();
 
             services.AddHostedService(sp => (NotificationService)sp.GetRequiredService<INotificationService>());
+            services.AddHostedService<RefreshTokenService>();
 
             return services;
         }

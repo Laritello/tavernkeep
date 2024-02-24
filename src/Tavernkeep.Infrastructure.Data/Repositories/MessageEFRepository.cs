@@ -14,7 +14,7 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
             await AsQueryable().ExecuteDeleteAsync(cancellationToken);
         }
 
-        public async Task<List<Message>> GetMessagesChunkAsync(int skip, int take, ISpecification<Message> specification = default!, CancellationToken cancellationToken = default!)
+        public async Task<List<Message>> GetMessagesChunkAsync(int skip, int take, ISpecification<Message> specification = default!, CancellationToken cancellationToken = default)
         {
             var query = AsQueryable();
 

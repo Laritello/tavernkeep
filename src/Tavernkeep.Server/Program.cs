@@ -37,8 +37,8 @@ builder.Services.AddSingleton<IUserIdProvider, NotificationsUserProvider>();
 
 builder.Services
     .AddExceptionHandling()
-    .AddApplicationServices()
     .AddDatabaseContext(options)
+    .AddApplicationServices()
     .AddMediatR(c => c.RegisterServicesFromAssemblyContaining<CreateUserCommand>())
     .AddRouting(o => o.LowercaseUrls = true)
     .AddSecurity(builder.Configuration["Jwt:Key"]);

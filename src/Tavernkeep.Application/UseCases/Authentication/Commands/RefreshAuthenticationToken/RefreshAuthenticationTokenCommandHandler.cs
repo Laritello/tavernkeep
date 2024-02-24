@@ -20,7 +20,7 @@ namespace Tavernkeep.Application.UseCases.Authentication.Commands.RefreshAuthent
             var user = await userRepository.FindAsync(new Guid(id))
                 ?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
-            var tokens = await tokenRepository.GetTokensForUser(user.Id, cancellationToken);
+            var tokens = await tokenRepository.GetTokensForUserAsync(user.Id, cancellationToken);
 
             if (!tokens.Any(x => x.Token == refreshToken))
                 throw new BusinessLogicException("Specified refresh token isn't registered.");
