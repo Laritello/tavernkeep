@@ -2,10 +2,10 @@
 {
     public enum Proficiency
     {
-        Untrained,
-        Trained,
-        Expert,
-        Master,
-        Legendary
+        Untrained = 0,
+        Trained = 2,
+        Expert = 4,
+        Master = 6,
+        Legendary = 8
     }
 }

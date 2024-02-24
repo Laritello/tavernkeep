@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Extensions;
 
 namespace Tavernkeep.Core.Contracts.Character
 {
@@ -26,7 +27,8 @@ namespace Tavernkeep.Core.Contracts.Character
         public Entities.Character Owner { get; set; } = default!;
         public SkillType Type { get; set; }
         public Proficiency Proficiency { get; set; }
-        public int Bonus => 5; // Testing
+        public int Bonus => Owner.GetSkillAbility(Type).Modifier + Proficiency.GetProficiencyBonus(Owner);
+
         #endregion
     }
 }

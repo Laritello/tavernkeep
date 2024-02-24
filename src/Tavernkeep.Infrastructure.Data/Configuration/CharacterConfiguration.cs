@@ -12,6 +12,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
             builder.HasKey(c => c.Id);
 
             builder.Property(c => c.Name).IsRequired();
+            builder.Property(c => c.Level).IsRequired().HasDefaultValue(1);
 
             builder.HasOne(c => c.Owner).WithMany(u => u.Characters).IsRequired();
 

@@ -26,6 +26,7 @@ namespace Tavernkeep.Core.Contracts.Character
         public Entities.Character Owner { get; set; } = default!;
         public AbilityType Type { get; set; }
         public int Score { get; set; }
+        public int Modifier => (Score - 10) / 2;
 
         #endregion
     }
