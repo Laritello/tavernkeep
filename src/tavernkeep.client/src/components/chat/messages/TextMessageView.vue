@@ -1,5 +1,5 @@
 <template>
-    <v-sheet :color="color || 'primary'" rounded>
+    <!-- <v-sheet :color="color || 'primary'" rounded>
         <div class="text-container px-2 pb-1">
             <div class="header px-1 pt-1">
                 <div class="body-1 font-weight-medium">{{ message.sender.login }}</div>
@@ -15,10 +15,39 @@
                 <div class="body-1 pl-1">{{ message.text }}</div>
             </div>
         </div>
-    </v-sheet>
+    </v-sheet> -->
+
+    <div
+        class="chat"
+        :class="{
+            'chat-end': message.sender.login === auth.userName,
+            'chat-start': message.sender.login !== auth.userName,
+        }"
+    >
+        <div class="chat-image">
+            <v-avatar size="small" color="primary">
+                {{ message.sender.login.slice(0, 2) }}
+            </v-avatar>
+        </div>
+        <div class="chat-header">
+            {{ message.sender.login }}
+            <time class="text-xs opacity-50">{{ formatDate(message.created) }}</time>
+        </div>
+        <div class="chat-bubble">{{ message.text }}</div>
+        <div class="chat-footer opacity-50">
+            <div v-if="message.isPrivate" class="private">
+                <span class="body-1 font-weight-light mr-1">Private for {{ message.recipient?.login }}</span>
+                <v-icon size="x-small" icon="mdi-eye"></v-icon>
+            </div>
+        </div>
+    </div>
 </template>
 <script setup lang="ts">
 import { TextMessage } from '@/entities/Message';
+import { useAuthStore } from '@/stores/auth.store';
+
+const auth = useAuthStore();
+
 const { message } = defineProps<{
     message: TextMessage;
     color?: string;
