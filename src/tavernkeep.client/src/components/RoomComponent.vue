@@ -1,26 +1,4 @@
 <template>
-    <!-- <v-layout class="rounded-md">
-        <v-app-bar color="primary" title="Tavernkeep"></v-app-bar>
-
-        <v-navigation-drawer>
-            <v-col>
-                <v-card>
-                    <UserForm />
-                </v-card>
-                <v-card class="mt-3">
-                    <UserList />
-                </v-card>
-            </v-col>
-        </v-navigation-drawer>
-
-        <v-navigation-drawer location="right" width="400" permanent>
-            <ChatComponent class="max-h-full"> </ChatComponent>
-        </v-navigation-drawer>
-
-        <v-main class="flex align-center justify-center min-h-80">
-            <PartyComponent />
-        </v-main>
-    </v-layout> -->
     <div class="flex flex-col h-screen">
         <!-- Navbar -->
         <div class="relative navbar bg-primary text-primary-content z-[1] shadow-sm shadow-neutral-950">
