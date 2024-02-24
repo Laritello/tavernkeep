@@ -24,7 +24,7 @@ namespace Tavernkeep.Application.Actions.Authentication.Commands.CreateAuthentic
 
             return new AuthenticationResponse() 
             {
-                Token = token,
+                AccessToken = token,
                 RefreshToken = refreshToken,
             };
         }
