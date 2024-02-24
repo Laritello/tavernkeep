@@ -13,6 +13,7 @@ import type { AbilityType } from '@/contracts/enums/AbilityType';
 import type { Proficiency } from '@/contracts/enums/Proficiency';
 import type { SkillType } from '@/contracts/enums/SkillType';
 import { plainToInstance } from 'class-transformer';
+import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 // TODO: Error handling and interceptors
 // TODO: Decorators might be usefull here as I do similar logic every time.
 // TODO: Move cookie name somewhere where it will be set globally.
@@ -31,10 +32,19 @@ export class AxiosApiClient implements ApiClient {
         });
     }
 
-    async auth(login: string, password: string): Promise<ApiResponse<string>> {
-        const response = await this.client.post<string>('authentication/auth', {
+    async auth(login: string, password: string): Promise<ApiResponse<AuthenticationResponse>> {
+        const response = await this.client.post<AuthenticationResponse>('authentication/auth', {
             login: login,
             password: password,
+        });
+
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
+    }
+
+    async refresh(accessToken: string, refreshToken: string): Promise<ApiResponse<AuthenticationResponse>> {
+        const response = await this.client.post<AuthenticationResponse>('authentication/refresh', {
+            accessToken: accessToken,
+            refreshToken: refreshToken,
         });
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
