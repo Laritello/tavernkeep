@@ -11,6 +11,7 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
         {
             return AsQueryable().ToListAsync(cancellationToken);
         }
+
         public Task<User?> GetUserByLoginAsync(string login, CancellationToken cancellationToken = default)
         {
             return AsQueryable().Where(x => x.Login == login).FirstOrDefaultAsync(cancellationToken);
