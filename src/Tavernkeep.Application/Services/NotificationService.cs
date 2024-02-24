@@ -64,20 +64,22 @@ namespace Tavernkeep.Application.Services
             await base.StopAsync(cancellationToken);
         }
 
-        private async Task SendTextMessageNotification(IServiceScope scope, TextMessage message)
+        private async Task SendTextMessageNotification(IServiceScope scope, Message message)
         {
             var context = scope.ServiceProvider.GetRequiredService<IHubContext<ChatHub, IChatHub>>();
 
-            if (message.Recipient == null)
+            if (message is TextMessage textMessage)
             {
-                // Notify all connected users about the new message
-                await context.Clients.All.ReceiveMessage(message);
-            }
-            else
-            {
-                // Notify participants about the new message
-                List<string> recipients = [message.SenderId.ToString(), message.RecipientId!.Value.ToString()];
-                await context.Clients.Users(recipients).ReceiveMessage(message);
+                if (textMessage.Recipient == null)
+                {
+                    // Notify all connected recipients about the new message
+                    await context.Clients.AllExcept([textMessage.SenderId.ToString()]).ReceiveMessage(textMessage);
+                }
+                else
+                {
+                    // Notify recipient about the new message
+                    await context.Clients.User(textMessage.RecipientId!.Value.ToString()).ReceiveMessage(textMessage);
+                }
             }
         }
 

@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using Tavernkeep.Infrastructure.Notifications.Providers;
+using Tavernkeep.Infrastructure.Notifications.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var options = Parser.Default.ParseArguments<LaunchOptions>(args).Value;
@@ -27,6 +28,9 @@ builder.Services
     {
         o.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         o.PayloadSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+
+        // Until the fix for the https://github.com/dotnet/aspnetcore/issues/52342 comes out.
+        o.PayloadSerializerOptions.TypeInfoResolver = new InheritedPolymorphismResolver();
     });
 
 builder.Services.AddSingleton<IUserIdProvider, NotificationsUserProvider>();
