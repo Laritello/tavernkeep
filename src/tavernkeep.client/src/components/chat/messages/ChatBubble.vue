@@ -35,7 +35,7 @@ function messageColor(message: TextMessage) {
 }
 
 function rollColor(message: RollMessage) {
-    return message.rollType == RollType.Open ? 'green' : 'coral';
+    return message.rollType == RollType.Public ? 'green' : 'coral';
 }
 </script>
 

@@ -55,19 +55,24 @@
 </template>
 
 <script setup lang="ts">
-//Stores
-import { useAuthStore } from '@/stores/auth.store';
-
-//Types
+import { useRouter } from 'vue-router';
 import { UserRole } from '@/contracts/enums/UserRole';
 
 // Components
 import ChatComponent from '@/components/chat/ChatComponent.vue';
 
+// Stores
+import { useAuthStore } from '@/stores/auth.store';
+import { useMessagesStore } from '@/stores/messages.store';
+import { useUsersStore } from '@/stores/users.store';
+
 const router = useRouter();
 const auth = useAuthStore();
+const messagesStore = useMessagesStore();
+const usersStore = useUsersStore();
 
-import { useRouter } from 'vue-router';
+messagesStore.fetchMessages(0, 20);
+usersStore.fetchUsers();
 
 async function logout() {
     auth.logout();
