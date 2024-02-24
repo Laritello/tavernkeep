@@ -21,7 +21,7 @@ export const useMessagesStore = defineStore('messages.store', () => {
         if (!response.isSuccess()) {
             console.error(response.statusText);
         }
-        messages.value.unshift(response.data);
+        messages.value.push(response.data);
     }
 
     function appendMessage(message: Message) {
@@ -37,7 +37,7 @@ export const useMessagesStore = defineStore('messages.store', () => {
             default:
                 typedMessage = plainToInstance(Message, message);
         }
-        messages.value.unshift(typedMessage);
+        messages.value.push(typedMessage);
     }
 
     return { messages, fetchMessages, createMessage, appendMessage };

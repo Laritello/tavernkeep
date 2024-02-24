@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col h-full">
         <h1 class="text-xl p-2">Chat</h1>
-        <div class="flex grow overflow-auto">
+        <div ref="chatView" class="flex grow overflow-auto">
             <div class="container px-4">
                 <template v-for="item in messagesStore.messages" :key="item">
                     <ChatBubble :message="item" />
@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 import ChatHub from '@/api/hubs/ChatHub';
 import { useMessagesStore } from '@/stores/messages.store';
 import type { Message } from '@/entities/Message';
@@ -43,9 +43,12 @@ const usersStore = useUsersStore();
 
 const message = ref('');
 const selectedUserId = ref<string>();
+const chatView = ref<HTMLElement>();
 
 onMounted(async () => {
     await messagesStore.fetchMessages(0, 20);
+    await scrollToBottom();
+
     ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
         messagesStore.appendMessage(msg);
     });
@@ -55,25 +58,16 @@ async function sendMessage() {
     const privateMessageRecipient = selectedUserId.value || undefined;
     await messagesStore.createMessage(message.value, privateMessageRecipient);
     message.value = '';
+    await scrollToBottom();
+}
+
+async function scrollToBottom() {
+    await nextTick(() => {
+        if (chatView.value) {
+            chatView.value.scrollTop = chatView.value.scrollHeight;
+        }
+    });
 }
 </script>
 
-<style scoped>
-.box {
-    @apply flex flex-col;
-}
-
-.box .row.auto {
-    flex: 0 1 auto;
-}
-
-.box .row.fill {
-    flex-flow: column;
-    flex: 1 1 auto;
-    overflow-y: auto;
-}
-
-.box .row.fixed {
-    flex: 0 1 40px;
-}
-</style>
+<style scoped></style>
