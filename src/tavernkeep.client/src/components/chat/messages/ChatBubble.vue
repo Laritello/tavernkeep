@@ -1,11 +1,6 @@
 <template>
-    <div class="message-container pb-4">
-        <div>
-            <v-avatar size="small" color="primary">
-                {{ message.sender.login.slice(0, 2) }}
-            </v-avatar>
-        </div>
-        <div>
+    <div class="pb-2">
+        <div class="w-full">
             <TextMessageView v-if="message instanceof TextMessage" :message="message" :color="messageColor(message)" />
             <RollMessageView
                 v-else-if="message instanceof RollMessage"
@@ -35,7 +30,7 @@ function messageColor(message: TextMessage) {
 }
 
 function rollColor(message: RollMessage) {
-    return message.rollType == RollType.Open ? 'green' : 'coral';
+    return message.rollType == RollType.Public ? 'green' : 'coral';
 }
 </script>
 

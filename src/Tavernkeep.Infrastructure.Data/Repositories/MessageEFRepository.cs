@@ -21,7 +21,7 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
             if (specification != null)
                 query = EntityFrameworkSpecificationEvaluator<Message>.GetQuery(query, specification);
 
-            query = query.OrderByDescending(x => x.Created).Skip(skip).Take(take).Include(x =>x.Sender).Reverse();
+            query = query.OrderByDescending(x => x.Created).Skip(skip).Take(take).Include(x =>x.Sender).Include(x=> ((TextMessage)x).Recipient).Reverse();
             return await query.ToListAsync(cancellationToken);
         }
     }

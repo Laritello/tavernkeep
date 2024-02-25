@@ -1,5 +1,5 @@
 export enum RollType {
-    Open = 'Open',
-    Hidden = 'Hidden',
-    Private = 'Private'
+    Public = 'Public',
+    Private = 'Private',
+    Secret = 'Secret',
 }

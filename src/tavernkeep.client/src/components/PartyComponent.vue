@@ -1,11 +1,10 @@
 <template>
-    <v-sheet class="mx-auto pa-2">
+    <v-sheet class="mx-auto pa-2 h-full overflow-auto">
         <CharacterComponent
             v-for="character in charactersStore.characters"
             :key="character.id"
             :character="character"
-        >
-        </CharacterComponent>
+        />
     </v-sheet>
 </template>
 

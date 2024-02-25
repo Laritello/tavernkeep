@@ -1,19 +1,38 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 import { useAuthStore } from './stores/auth.store';
-
-//Pages
-import HomePage from './pages/HomePage.vue';
-import LoginPage from './pages/LoginPage.vue';
-import LogoutPage from './pages/LogoutPage.vue';
-import ErrorPage from './pages/ErrorPage.vue';
-import AdminPanelPage from './pages/AdminPanelPage.vue';
 import { UserRole } from './contracts/enums/UserRole';
 
+//Pages
+import LoginPage from './pages/LoginPage.vue';
+import HomePage from './pages/HomePage.vue';
+import ErrorPage from './pages/ErrorPage.vue';
+import AdminPanelPage from './pages/AdminPanelPage.vue';
+
 const routes: RouteRecordRaw[] = [
-    { path: '/', component: HomePage, meta: { protected: true } },
-    { path: '/login', component: LoginPage, meta: { protected: false } },
-    { path: '/logout', component: LogoutPage, meta: { protected: true } },
-    { path: '/admin', component: AdminPanelPage, meta: { protected: true, allowedRoles: [UserRole.Master] } },
+    {
+        path: '/',
+        component: HomePage,
+        meta: {
+            layout: 'AppLayout',
+            protected: true,
+        },
+    },
+    {
+        path: '/login',
+        component: LoginPage,
+        meta: {
+            protected: false,
+        },
+    },
+    {
+        path: '/admin',
+        component: AdminPanelPage,
+        meta: {
+            layout: 'AppLayout',
+            protected: true,
+            allowedRoles: [UserRole.Master],
+        },
+    },
     {
         path: '/not-allowed',
         component: ErrorPage,
@@ -25,7 +44,10 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/:pathMatch(.*)*',
         component: ErrorPage,
-        meta: { protected: false, errorMessage: 'Page not found' },
+        meta: {
+            protected: false,
+            errorMessage: 'Page not found',
+        },
     },
 ];
 export const router = createRouter({

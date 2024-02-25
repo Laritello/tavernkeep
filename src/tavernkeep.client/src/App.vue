@@ -1,20 +1,21 @@
 <template>
-    <!-- <div v-if="!authStore.isLoggedIn" class="d-grid gap-2 col-6 mx-auto">
-        <LoginForm />
-    </div>
-    <div v-else>
-        <RoomComponent />
-    </div> -->
-    <router-view />
+    <component :is="layout">
+        <router-view />
+    </component>
 </template>
 
 <script setup lang="ts">
-// import { defineComponent, onMounted } from 'vue';
-// import RoomComponent from './components/RoomComponent.vue';
-// import LoginForm from './components/LoginForm.vue';
-// import { useAuthStore } from './stores/auth.store';
+import { useRouter } from 'vue-router';
+import { shallowRef, provide, type Component } from 'vue';
+import layouts from '@/layouts';
 
-// const auth = useAuthStore();
+const layout = shallowRef<Component>();
+const router = useRouter();
+provide('app:layout', layout);
+
+router.afterEach((to) => {
+    layout.value = layouts[to.meta.layout || 'BlankLayout'];
+});
 </script>
 
 <style scoped></style>
