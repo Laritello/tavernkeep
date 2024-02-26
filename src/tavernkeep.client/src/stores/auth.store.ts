@@ -21,22 +21,21 @@ export interface TokenRefreshResult {
 }
 
 // Constants initializations
-const client: ApiClient = ApiClientFactory.createApiClient();
 const cookieName: string = 'tavernkeep.auth.jwt';
 const refreshName: string = 'tavernkeep.auth.refresh';
 
 interface JwtToken {
+    ['user-id']: string;
     ['user-login']: string;
     ['user-role']: UserRole;
 }
 
 export const useAuthStore = defineStore('auth.store', () => {
+    const client: ApiClient = ApiClientFactory.createApiClient();
     const cookie = ref<string | undefined>(getCookie(cookieName));
     const refreshCookie = ref<string | undefined>(getCookie(refreshName));
 
     const token = computed(() => (cookie.value ? jwtDecode<JwtToken>(cookie.value) : undefined));
-    const userName = computed(() => token.value?.['user-login']);
-    const role = computed(() => token.value?.['user-role']);
     const isLoggedIn = computed(() => token.value !== undefined);
 
     watch(cookie, (value) => {
@@ -95,15 +94,16 @@ export const useAuthStore = defineStore('auth.store', () => {
     }
 
     function havePermissions(requiredRoles?: UserRole[]): Boolean {
+        const role = token.value?.['user-role'];
+        if (role === undefined) return false;
         if (requiredRoles === undefined) return true;
-        if (role.value === undefined) return false;
 
-        return requiredRoles.includes(role.value);
+        return requiredRoles.includes(role);
     }
 
     function getAccessToken(): string | undefined {
         return cookie.value;
     }
 
-    return { userName, role, isLoggedIn, login, logout, havePermissions, getAccessToken, refresh };
+    return { isLoggedIn, login, logout, havePermissions, getAccessToken, refresh };
 });
