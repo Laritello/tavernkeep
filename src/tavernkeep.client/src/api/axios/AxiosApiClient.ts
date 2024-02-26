@@ -177,6 +177,15 @@ export class AxiosApiClient implements ApiClient {
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
+    async assignUserToCharacter(characterId: string, userId: string): Promise<ApiResponse<Character>> {
+        const response = await this.client.patch<Character>('characters/assign', {
+            characterId: characterId,
+            userId: userId
+        });
+
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
+    }
+
     async editAbility(characterId: string, type: AbilityType, score: number): Promise<ApiResponse<Ability>> {
         const response = await this.client.patch<Ability>('characters/edit/ability', {
             characterId: characterId,

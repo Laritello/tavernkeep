@@ -48,7 +48,7 @@ namespace Tavernkeep.Server.Controllers
         }
 
         /// <summary>
-        /// Create an existing user.
+        /// Edit an existing user.
         /// </summary>
         /// <param name="userId">The edited user ID.</param>
         /// <param name="request">Request with updated properties.</param>

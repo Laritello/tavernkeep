@@ -9,6 +9,7 @@ using Tavernkeep.Application.Actions.Characters.Commands.EditSkill;
 using Tavernkeep.Application.Actions.Characters.Commands.ModifyHealth;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacters;
+using Tavernkeep.Application.UseCases.Characters.Commands.AssignUser;
 using Tavernkeep.Core.Contracts.Character;
 using Tavernkeep.Core.Contracts.Character.Requests;
 using Tavernkeep.Core.Contracts.Enums;
@@ -59,6 +60,19 @@ namespace Tavernkeep.Server.Controllers
         public async Task DeleteCharacter([FromRoute] Guid characterId)
         {
             await mediator.Send(new DeleteCharacterCommand(characterId));
+        }
+
+        /// <summary>
+        /// Assign user to the character.
+        /// </summary>
+        /// <param name="request">Request for assigning user to the character.</param>
+        /// <returns>Updated character.</returns>
+        [Authorize]
+        [RequiresRole(UserRole.Master)]
+        [HttpPatch("assign")]
+        public async Task<Character> AssignUserToCharacter([FromBody] AssignUserRequest request)
+        {
+            return await mediator.Send(new AssignUserCommand(request.CharacterId, request.UserId));
         }
 
         /// <summary>

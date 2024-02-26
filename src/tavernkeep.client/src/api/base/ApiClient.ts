@@ -24,6 +24,7 @@ export interface ApiClient {
     createCharacter(name: string): Promise<ApiResponse<Character>>;
     deleteCharacter(id: string): Promise<ApiResponse<null>>;
     getCharacter(id: string): Promise<ApiResponse<Character>>;
+    assignUserToCharacter(characterId: string, userId: string): Promise<ApiResponse<Character>>;
 
     editAbility(characterId: string, type: AbilityType, score: number): Promise<ApiResponse<Ability>>;
     editSkill(characterId: string, type: SkillType, proficiency: Proficiency): Promise<ApiResponse<Skill>>;
