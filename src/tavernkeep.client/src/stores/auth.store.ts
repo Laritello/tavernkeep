@@ -14,6 +14,12 @@ export interface UserCredentials {
     password: string;
 }
 
+export interface TokenRefreshResult {
+    isSuccess: boolean;
+    accessToken: string;
+    refreshToken: string;
+}
+
 // Constants initializations
 const client: ApiClient = ApiClientFactory.createApiClient();
 const cookieName: string = 'tavernkeep.auth.jwt';
@@ -69,6 +75,26 @@ export const useAuthStore = defineStore('auth.store', () => {
         refreshCookie.value = response.data.refreshToken;
     }
 
+    // If anything wrong - throw exception
+    async function refresh(): Promise<TokenRefreshResult> {
+        const accessToken = cookie.value;
+        const refreshToken = refreshCookie.value;
+
+        const response = await client.refresh(accessToken!, refreshToken!);
+
+        if (!response.isSuccess)
+            throw new Error('Unable to refresh tokein');
+
+        cookie.value = response.data.accessToken;
+        refreshCookie.value = response.data.refreshToken;
+
+        return {
+            isSuccess: true,
+            accessToken: response.data.accessToken,
+            refreshToken: response.data.refreshToken
+        };
+    }
+
     async function logout() {
         cookie.value = undefined;
         refreshCookie.value = undefined;
@@ -81,9 +107,9 @@ export const useAuthStore = defineStore('auth.store', () => {
         return requiredRoles.includes(role.value);
     }
 
-    function getToken() : string | undefined {
+    function getAccessToken(): string | undefined {
         return cookie.value;
     }
 
-    return { userName, role, isLoggedIn, login, logout, havePermissions, getToken };
+    return { userName, role, isLoggedIn, login, logout, havePermissions, getAccessToken, refresh };
 });

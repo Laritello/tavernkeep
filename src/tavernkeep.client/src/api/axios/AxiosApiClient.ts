@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance } from 'axios';
+import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import type { ApiClient } from '../base/ApiClient';
 import type { ApiResponse } from '../base/ApiResponse';
 import { AxiosApiResponse } from './AxiosApiResponse';
@@ -16,11 +16,13 @@ import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResp
 import { useAuthStore } from '@/stores/auth.store';
 
 // TODO: Error handling and interceptors
-// TODO: Decorators might be usefull here as I do similar logic every time.
-// TODO: Move cookie name somewhere where it will be set globally.
 export class AxiosApiClient implements ApiClient {
     client: AxiosInstance;
     private baseURL = 'https://' + window.location.hostname + ':7231/api/';
+
+    // Axios request interceptor to refresh the token on 401 Unauthorized errors
+    private isRefreshing: boolean = false; // Flag to track token refresh status
+    private refreshSubscribers: ((token: string) => void)[] = []; // Array to hold pending requests while token is refreshing
 
     constructor() {
         this.client = axios.create({
@@ -33,15 +35,62 @@ export class AxiosApiClient implements ApiClient {
 
         this.client.interceptors.request.use(function (config) {
             const authStore = useAuthStore();
-            const token = authStore.getToken();
+            const token = authStore.getAccessToken();
 
             if (token)
-                config.headers.Authorization = 'Bearer ' + token;
+                config.headers.Authorization = `Bearer ${token}`;
             else
                 config.headers.Authorization = null;
 
             return config;
         });
+
+        this.client.interceptors.response.use(
+            (response) => response,
+            async (error) => {
+                if (error.response && error.response.status === 401) {
+                    const originalRequest: AxiosRequestConfig = error.config;
+
+                    if (!this.isRefreshing) {
+                        this.isRefreshing = true;
+
+                        try {
+                            const authStore = useAuthStore();
+                            const result = await authStore.refresh();
+
+                            this.onTokenRefreshed(result.accessToken);
+                            this.client.defaults.headers.common.Authorization = `Bearer ${result.accessToken}`;
+                            originalRequest.headers!.Authorization = `Bearer ${result.accessToken}`;
+                            console.log(`Token updated. New token: ${this.client.defaults.headers.common.Authorization}`)
+
+                            return this.client(originalRequest);
+                        } catch (refreshError) {
+                            // Handle the refresh error, e.g., redirect to the login page
+                            console.error('Failed to refresh auth token:', refreshError);
+
+                            const authStore = useAuthStore();
+                            authStore.logout();
+
+                            throw refreshError;
+                        } finally {
+                            this.isRefreshing = false;
+                        }
+                    } else {
+                        // If token refresh is already in progress, wait for the new token
+                        return new Promise((resolve) => {
+                            this.subscribeTokenRefresh((token) => {
+                                originalRequest.headers!.Authorization = `Bearer ${token}`;
+                                console.log(`Updated token without additional calls: ${originalRequest.headers!.Authorization}`)
+                                resolve(this.client(originalRequest));
+                            });
+                        });
+                    }
+                }
+
+                // For other errors, just pass them through
+                throw error;
+            }
+        );
     }
 
     async auth(login: string, password: string): Promise<ApiResponse<AuthenticationResponse>> {
@@ -176,5 +225,15 @@ export class AxiosApiClient implements ApiClient {
         });
 
         return new AxiosApiResponse(data, response.status, response.statusText);
+    }
+
+    // Handling refresh token
+    subscribeTokenRefresh(onRefresh: (token: string) => void): void {
+        this.refreshSubscribers.push(onRefresh);
+    }
+
+    onTokenRefreshed(token: string): void {
+        this.refreshSubscribers.forEach((onRefresh) => onRefresh(token));
+        this.refreshSubscribers = [];
     }
 }
