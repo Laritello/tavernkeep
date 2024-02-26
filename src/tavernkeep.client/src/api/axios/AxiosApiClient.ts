@@ -127,7 +127,17 @@ export class AxiosApiClient implements ApiClient {
 
     // TODO: User request types instead of separate parameters
     async createUser(login: string, password: string, role: UserRole): Promise<ApiResponse<User>> {
-        const response = await this.client.post<User>('users/create', {
+        const response = await this.client.post<User>('users', {
+            login: login,
+            password: password,
+            role: role,
+        });
+
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
+    }
+
+    async editUser(id:string, login: string, password: string, role: UserRole): Promise<ApiResponse<User>> {
+        const response = await this.client.patch<User>('users/' + id, {
             login: login,
             password: password,
             role: role,
@@ -138,7 +148,7 @@ export class AxiosApiClient implements ApiClient {
 
     // TODO: ApiResponse for empty responses
     async deleteUser(id: string): Promise<ApiResponse<null>> {
-        const response = await this.client.delete('users/delete/' + id);
+        const response = await this.client.delete('users/' + id);
 
         return new AxiosApiResponse(null, response.status, response.statusText);
     }

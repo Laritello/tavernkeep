@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Users.Commands.CreateUser;
 using Tavernkeep.Application.Actions.Users.Commands.DeleteUser;
 using Tavernkeep.Application.Actions.Users.Queries.GetUsers;
+using Tavernkeep.Application.UseCases.Users.Commands.EditUser;
 using Tavernkeep.Application.UseCases.Users.Queries.GetCurrentUser;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Users.Requests;
@@ -36,15 +37,28 @@ namespace Tavernkeep.Server.Controllers
         /// <summary>
         /// Create a new user.
         /// </summary>
-        /// <param name="request">Request with user's parameters.</param>
+        /// <param name="request">Request with user's properties.</param>
         /// <returns>Created user.</returns>
         [Authorize]
         [RequiresRole(UserRole.Master)]
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<User> CreateUser([FromBody] CreateUserRequest request)
         {
-            var user = await mediator.Send(new CreateUserCommand(request.Login, request.Password, request.Role));
-            return user;
+            return await mediator.Send(new CreateUserCommand(request.Login, request.Password, request.Role));
+        }
+
+        /// <summary>
+        /// Create an existing user.
+        /// </summary>
+        /// <param name="userId">The edited user ID.</param>
+        /// <param name="request">Request with updated properties.</param>
+        /// <returns></returns>
+        [Authorize]
+        [RequiresRole(UserRole.Master)]
+        [HttpPatch("{userId}")]
+        public async Task<User> EditUser([FromRoute] Guid userId, [FromBody] EditUserRequest request)
+        {
+            return await mediator.Send(new EditUserCommand(userId, request.Login, request.Password, request.Role));
         }
 
         /// <summary>
@@ -53,7 +67,7 @@ namespace Tavernkeep.Server.Controllers
         /// <param name="userId">The user ID for deletion.</param>
         [Authorize]
         [RequiresRole(UserRole.Master)]
-        [HttpDelete("delete/{userId}")]
+        [HttpDelete("{userId}")]
         public async Task DeleteUser([FromRoute] Guid userId)
         {
             await mediator.Send(new DeleteUserCommand(userId));
