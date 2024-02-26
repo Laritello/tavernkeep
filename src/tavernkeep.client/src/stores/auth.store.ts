@@ -34,9 +34,7 @@ export const useAuthStore = defineStore('auth.store', () => {
     const cookie = ref<string | undefined>(getCookie(cookieName));
     const refreshCookie = ref<string | undefined>(getCookie(refreshName));
 
-    const token = computed(() =>
-        cookie.value ? jwtDecode<JwtToken>(cookie.value) : undefined
-    );
+    const token = computed(() => (cookie.value ? jwtDecode<JwtToken>(cookie.value) : undefined));
     const userName = computed(() => token.value?.['user-login']);
     const role = computed(() => token.value?.['user-role']);
     const isLoggedIn = computed(() => token.value !== undefined);
@@ -61,10 +59,7 @@ export const useAuthStore = defineStore('auth.store', () => {
         if (isLoggedIn.value) logout();
 
         // Call API for JWT
-        const response = await client.auth(
-            credentials.login,
-            credentials.password
-        );
+        const response = await client.auth(credentials.login, credentials.password);
 
         // TODO: Error handling
         if (!response.isSuccess()) {
@@ -82,8 +77,7 @@ export const useAuthStore = defineStore('auth.store', () => {
 
         const response = await client.refresh(accessToken!, refreshToken!);
 
-        if (!response.isSuccess)
-            throw new Error('Unable to refresh tokein');
+        if (!response.isSuccess()) throw new Error('Unable to refresh tokein');
 
         cookie.value = response.data.accessToken;
         refreshCookie.value = response.data.refreshToken;
@@ -91,7 +85,7 @@ export const useAuthStore = defineStore('auth.store', () => {
         return {
             isSuccess: true,
             accessToken: response.data.accessToken,
-            refreshToken: response.data.refreshToken
+            refreshToken: response.data.refreshToken,
         };
     }
 
