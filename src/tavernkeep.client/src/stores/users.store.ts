@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
@@ -8,11 +8,15 @@ import type { UserRole } from '@/contracts/enums/UserRole';
 
 const api: ApiClient = ApiClientFactory.createApiClient();
 export const useUsersStore = defineStore('users.store', () => {
+    const currentUser = ref<User | null>(null);
     const users = ref<User[]>([]);
+    const otherUsers = computed(() => users.value.filter((user) => user.id !== currentUser.value?.id));
 
     async function fetchUsers() {
         const usersResponse = await api.getUsers();
         users.value = usersResponse.data;
+        const userResponse = await api.getCurrentUser();
+        currentUser.value = userResponse.data;
     }
 
     async function createUser(login: string, password: string, role: UserRole) {
@@ -34,5 +38,5 @@ export const useUsersStore = defineStore('users.store', () => {
         }
     }
 
-    return { users, fetchUsers, createUser, deleteUser };
+    return { users, otherUsers, currentUser, fetchUsers, createUser, deleteUser };
 });

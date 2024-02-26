@@ -11,7 +11,7 @@
                 <span class="label-text text-primary-content">Dark</span>
             </label>
             <div class="flex-none text-base-content">
-                <span class="text-primary-content">{{ auth.userName }}</span>
+                <span class="text-primary-content">{{ usersStore.currentUser?.login }}</span>
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                         <div class="avatar w-10 rounded-full bg-orange-400"></div>
@@ -35,7 +35,7 @@
                     <li>
                         <RouterLink to="/">Home</RouterLink>
                     </li>
-                    <li v-if="auth.role == UserRole.Master">
+                    <li v-if="usersStore.currentUser?.role == UserRole.Master">
                         <RouterLink to="/admin">Admin Panel</RouterLink>
                     </li>
                 </ul>

@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="">
-            <UserSelector v-model="selectedUserId" :users="usersStore.users.filter((u) => u.login != auth.userName)" />
+            <UserSelector v-model="selectedUserId" :users="usersStore.otherUsers" />
             <form @submit.prevent="sendMessage" class="m-2">
                 <div class="join w-full">
                     <input
@@ -29,8 +29,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue';
-import ChatHub from '@/api/hubs/ChatHub';
-import type { Message } from '@/entities/Message';
 
 // Components
 import UserSelector from './UserSelector.vue';
@@ -39,19 +37,13 @@ import ChatBubble from './messages/ChatBubble.vue';
 // Stores
 import { useMessagesStore } from '@/stores/messages.store';
 import { useUsersStore } from '@/stores/users.store';
-import { useAuthStore } from '@/stores/auth.store';
 
-const auth = useAuthStore();
 const messagesStore = useMessagesStore();
 const usersStore = useUsersStore();
 
 const message = ref('');
 const selectedUserId = ref<string>();
 const chatView = ref<HTMLElement>();
-
-ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
-    messagesStore.appendMessage(msg);
-});
 
 onMounted(async () => {
     await scrollToBottom();

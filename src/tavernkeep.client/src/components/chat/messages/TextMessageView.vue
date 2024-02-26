@@ -20,8 +20,8 @@
     <div
         class="chat"
         :class="{
-            'chat-end': message.sender.login === auth.userName,
-            'chat-start': message.sender.login !== auth.userName,
+            'chat-end': message.sender.login === usersStore.currentUser?.login,
+            'chat-start': message.sender.login !== usersStore.currentUser?.login,
         }"
     >
         <div class="chat-image">
@@ -44,9 +44,9 @@
 </template>
 <script setup lang="ts">
 import { TextMessage } from '@/entities/Message';
-import { useAuthStore } from '@/stores/auth.store';
+import { useUsersStore } from '@/stores/users.store';
 
-const auth = useAuthStore();
+const usersStore = useUsersStore();
 
 const { message } = defineProps<{
     message: TextMessage;
