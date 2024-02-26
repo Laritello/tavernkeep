@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Authentication.Commands.CreateAuthenticationnToken;
+using Tavernkeep.Application.UseCases.Authentication.Commands.RefreshAuthenticationToken;
 using Tavernkeep.Core.Contracts.Authentication.Requests;
+using Tavernkeep.Core.Contracts.Authentication.Responses;
 
 namespace Tavernkeep.Server.Controllers
 {
@@ -14,15 +16,25 @@ namespace Tavernkeep.Server.Controllers
     public class AuthenticationController(IMediator mediator) : ControllerBase
     {
         /// <summary>
-        /// Generate authentication JWT for the user.
+        /// Generate authentication tokens for the user.
         /// </summary>
         /// <param name="request">The authentication request.</param>
-        /// <returns>The authentication JWT.</returns>
+        /// <returns>The authentication JWT and refresh token.</returns>
         [HttpPost("auth")]
-        public async Task<string> CreateAuthenticationToken(AuthenticationRequest request)
+        public async Task<AuthenticationResponse> CreateAuthenticationToken(AuthenticationRequest request)
         {
-            var token = await mediator.Send(new CreateAuthenticationTokenCommand(request.Login, request.Password));
-            return token;
+            return await mediator.Send(new CreateAuthenticationTokenCommand(request.Login, request.Password));
+        }
+
+        /// <summary>
+        /// Refresh existing tokens for the user.
+        /// </summary>
+        /// <param name="request">The refresh token request.</param>
+        /// <returns>The authentication JWT and refresh token.</returns>
+        [HttpPost("refresh")]
+        public async Task<AuthenticationResponse> RefreshToken(RefreshTokenRequest request)
+        {
+            return await mediator.Send(new RefreshAuthenticationTokenCommand(request.AccessToken, request.RefreshToken));
         }
     }
 }

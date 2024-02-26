@@ -8,9 +8,11 @@ import type { Proficiency } from '@/contracts/enums/Proficiency';
 import type { Skill } from '@/contracts/character/Skill';
 import type { AbilityType } from '@/contracts/enums/AbilityType';
 import type { Ability } from '@/contracts/character/Ability';
+import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 
 export interface ApiClient {
-    auth(login: string, password: string): Promise<ApiResponse<string>>;
+    auth(login: string, password: string): Promise<ApiResponse<AuthenticationResponse>>;
+    refresh(accessToken: string, refreshToken: string) : Promise<ApiResponse<AuthenticationResponse>>;
 
     getUsers(): Promise<ApiResponse<User[]>>;
     createUser(

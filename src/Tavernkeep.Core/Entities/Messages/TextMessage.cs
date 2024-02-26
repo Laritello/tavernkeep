@@ -1,6 +1,4 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
-
-namespace Tavernkeep.Core.Entities.Messages
+﻿namespace Tavernkeep.Core.Entities.Messages
 {
     public class TextMessage : Message
     {

@@ -10,6 +10,11 @@ using Tavernkeep.Infrastructure.Notifications.Notifications;
 
 namespace Tavernkeep.Application.Services
 {
+    /// <summary>
+    /// Handles the notification's distribution to the clients.
+    /// </summary>
+    /// <param name="serviceProvider">The <see cref="IServiceProvider"/> instance.</param>
+    /// <param name="logger">The <see cref="ILogger"/> instance.</param>
     public class NotificationService(IServiceProvider serviceProvider, ILogger<NotificationService> logger) : BackgroundService, INotificationService
     {
         private readonly Channel<object> _queue = Channel.CreateUnbounded<object>();
@@ -55,12 +60,12 @@ namespace Tavernkeep.Application.Services
 
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
-            logger.LogInformation("Notification Service Hosted Service is launching.");
+            logger.LogInformation("Notification Hosted Service is launching.");
             await base.StartAsync(cancellationToken);
         }
         public override async Task StopAsync(CancellationToken cancellationToken)
         {
-            logger.LogInformation("Notification Service Hosted Service is stopping.");
+            logger.LogInformation("Notification Hosted Service is stopping.");
             await base.StopAsync(cancellationToken);
         }
 

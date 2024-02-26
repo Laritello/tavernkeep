@@ -75,6 +75,8 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 
         public virtual void Remove(T entity) => Context.Remove(entity);
 
+        public void Remove(IEnumerable<T> entities) => Context.RemoveRange(entities);
+
         public async Task CommitAsync(CancellationToken ct = default) => await Context.SaveChangesAsync(ct);
     }
 }

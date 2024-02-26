@@ -14,9 +14,16 @@ export interface UserCredentials {
     password: string;
 }
 
+export interface TokenRefreshResult {
+    isSuccess: boolean;
+    accessToken: string;
+    refreshToken: string;
+}
+
 // Constants initializations
 const client: ApiClient = ApiClientFactory.createApiClient();
-const cookieName: string = 'taverkeep.auth.jwt';
+const cookieName: string = 'tavernkeep.auth.jwt';
+const refreshName: string = 'tavernkeep.auth.refresh';
 
 interface JwtToken {
     ['user-login']: string;
@@ -25,6 +32,8 @@ interface JwtToken {
 
 export const useAuthStore = defineStore('auth.store', () => {
     const cookie = ref<string | undefined>(getCookie(cookieName));
+    const refreshCookie = ref<string | undefined>(getCookie(refreshName));
+
     const token = computed(() =>
         cookie.value ? jwtDecode<JwtToken>(cookie.value) : undefined
     );
@@ -34,9 +43,17 @@ export const useAuthStore = defineStore('auth.store', () => {
 
     watch(cookie, (value) => {
         if (value) {
-            setCookie(cookieName, value, { expires: 7 });
+            setCookie(cookieName, value);
         } else {
             removeCookie(cookieName);
+        }
+    });
+
+    watch(refreshCookie, (value) => {
+        if (value) {
+            setCookie(refreshName, value, { expires: 5 });
+        } else {
+            removeCookie(refreshName);
         }
     });
 
@@ -54,11 +71,33 @@ export const useAuthStore = defineStore('auth.store', () => {
             return;
         }
 
-        cookie.value = response.data;
+        cookie.value = response.data.accessToken;
+        refreshCookie.value = response.data.refreshToken;
+    }
+
+    // If anything wrong - throw exception
+    async function refresh(): Promise<TokenRefreshResult> {
+        const accessToken = cookie.value;
+        const refreshToken = refreshCookie.value;
+
+        const response = await client.refresh(accessToken!, refreshToken!);
+
+        if (!response.isSuccess)
+            throw new Error('Unable to refresh tokein');
+
+        cookie.value = response.data.accessToken;
+        refreshCookie.value = response.data.refreshToken;
+
+        return {
+            isSuccess: true,
+            accessToken: response.data.accessToken,
+            refreshToken: response.data.refreshToken
+        };
     }
 
     async function logout() {
         cookie.value = undefined;
+        refreshCookie.value = undefined;
     }
 
     function havePermissions(requiredRoles?: UserRole[]): Boolean {
@@ -68,5 +107,9 @@ export const useAuthStore = defineStore('auth.store', () => {
         return requiredRoles.includes(role.value);
     }
 
-    return { userName, role, isLoggedIn, login, logout, havePermissions };
+    function getAccessToken(): string | undefined {
+        return cookie.value;
+    }
+
+    return { userName, role, isLoggedIn, login, logout, havePermissions, getAccessToken, refresh };
 });

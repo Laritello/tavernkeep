@@ -1,10 +1,9 @@
-import axios, { type AxiosInstance } from 'axios';
+import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import type { ApiClient } from '../base/ApiClient';
 import type { ApiResponse } from '../base/ApiResponse';
 import { AxiosApiResponse } from './AxiosApiResponse';
 import { User } from '@/entities/User';
 import { UserRole } from '@/contracts/enums/UserRole';
-import { getCookie } from 'typescript-cookie';
 import { Message, RollMessage, TextMessage } from '@/entities/Message';
 import { Character } from '@/entities/Character';
 import type { Ability } from '@/contracts/character/Ability';
@@ -13,13 +12,17 @@ import type { AbilityType } from '@/contracts/enums/AbilityType';
 import type { Proficiency } from '@/contracts/enums/Proficiency';
 import type { SkillType } from '@/contracts/enums/SkillType';
 import { plainToInstance } from 'class-transformer';
+import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
+import { useAuthStore } from '@/stores/auth.store';
+
 // TODO: Error handling and interceptors
-// TODO: Decorators might be usefull here as I do similar logic every time.
-// TODO: Move cookie name somewhere where it will be set globally.
 export class AxiosApiClient implements ApiClient {
     client: AxiosInstance;
     private baseURL = 'https://' + window.location.hostname + ':7231/api/';
-    private cookieName: string = 'taverkeep.auth.jwt';
+
+    // Axios request interceptor to refresh the token on 401 Unauthorized errors
+    private isRefreshing: boolean = false; // Flag to track token refresh status
+    private refreshSubscribers: ((token: string) => void)[] = []; // Array to hold pending requests while token is refreshing
 
     constructor() {
         this.client = axios.create({
@@ -29,10 +32,69 @@ export class AxiosApiClient implements ApiClient {
                 'Content-Type': 'application/json',
             },
         });
+
+        this.client.interceptors.request.use(function (config) {
+            const authStore = useAuthStore();
+            const token = authStore.getAccessToken();
+
+            if (token)
+                config.headers.Authorization = `Bearer ${token}`;
+            else
+                config.headers.Authorization = null;
+
+            return config;
+        });
+
+        this.client.interceptors.response.use(
+            (response) => response,
+            async (error) => {
+                if (error.response && error.response.status === 401) {
+                    const originalRequest: AxiosRequestConfig = error.config;
+
+                    if (!this.isRefreshing) {
+                        this.isRefreshing = true;
+
+                        try {
+                            const authStore = useAuthStore();
+                            const result = await authStore.refresh();
+
+                            this.onTokenRefreshed(result.accessToken);
+                            this.client.defaults.headers.common.Authorization = `Bearer ${result.accessToken}`;
+                            originalRequest.headers!.Authorization = `Bearer ${result.accessToken}`;
+                            console.log(`Token updated. New token: ${this.client.defaults.headers.common.Authorization}`)
+
+                            return this.client(originalRequest);
+                        } catch (refreshError) {
+                            // Handle the refresh error, e.g., redirect to the login page
+                            console.error('Failed to refresh auth token:', refreshError);
+
+                            const authStore = useAuthStore();
+                            authStore.logout();
+
+                            throw refreshError;
+                        } finally {
+                            this.isRefreshing = false;
+                        }
+                    } else {
+                        // If token refresh is already in progress, wait for the new token
+                        return new Promise((resolve) => {
+                            this.subscribeTokenRefresh((token) => {
+                                originalRequest.headers!.Authorization = `Bearer ${token}`;
+                                console.log(`Updated token without additional calls: ${originalRequest.headers!.Authorization}`)
+                                resolve(this.client(originalRequest));
+                            });
+                        });
+                    }
+                }
+
+                // For other errors, just pass them through
+                throw error;
+            }
+        );
     }
 
-    async auth(login: string, password: string): Promise<ApiResponse<string>> {
-        const response = await this.client.post<string>('authentication/auth', {
+    async auth(login: string, password: string): Promise<ApiResponse<AuthenticationResponse>> {
+        const response = await this.client.post<AuthenticationResponse>('authentication/auth', {
             login: login,
             password: password,
         });
@@ -40,10 +102,17 @@ export class AxiosApiClient implements ApiClient {
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
-    async getUsers(): Promise<ApiResponse<User[]>> {
-        const response = await this.client.get<User[]>('users', {
-            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
+    async refresh(accessToken: string, refreshToken: string): Promise<ApiResponse<AuthenticationResponse>> {
+        const response = await this.client.post<AuthenticationResponse>('authentication/refresh', {
+            accessToken: accessToken,
+            refreshToken: refreshToken,
         });
+
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
+    }
+
+    async getUsers(): Promise<ApiResponse<User[]>> {
+        const response = await this.client.get<User[]>('users');
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
@@ -56,11 +125,6 @@ export class AxiosApiClient implements ApiClient {
                 login: login,
                 password: password,
                 role: role,
-            },
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getCookie(this.cookieName),
-                },
             }
         );
 
@@ -69,17 +133,13 @@ export class AxiosApiClient implements ApiClient {
 
     // TODO: ApiResponse for empty responses
     async deleteUser(id: string): Promise<ApiResponse<null>> {
-        const response = await this.client.delete('users/delete/' + id, {
-            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
-        });
+        const response = await this.client.delete('users/delete/' + id);
 
         return new AxiosApiResponse(null, response.status, response.statusText);
     }
 
     async getCharacters(): Promise<ApiResponse<Character[]>> {
-        const response = await this.client.get<Character[]>('characters', {
-            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
-        });
+        const response = await this.client.get<Character[]>('characters');
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
@@ -87,29 +147,20 @@ export class AxiosApiClient implements ApiClient {
     async createCharacter(name: string): Promise<ApiResponse<Character>> {
         const response = await this.client.post<Character>(
             'characters/create',
-            { name: name },
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getCookie(this.cookieName),
-                },
-            }
+            { name: name }
         );
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async deleteCharacter(id: string): Promise<ApiResponse<null>> {
-        const response = await this.client.delete('characters/delete/' + id, {
-            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
-        });
+        const response = await this.client.delete('characters/delete/' + id);
 
         return new AxiosApiResponse(null, response.status, response.statusText);
     }
 
     async getCharacter(id: string): Promise<ApiResponse<Character>> {
-        const response = await this.client.get<Character>('characters/' + id, {
-            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
-        });
+        const response = await this.client.get<Character>('characters/' + id);
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
@@ -117,12 +168,7 @@ export class AxiosApiClient implements ApiClient {
     async editAbility(characterId: string, type: AbilityType, score: number): Promise<ApiResponse<Ability>> {
         const response = await this.client.patch<Ability>(
             'characters/edit/ability',
-            { characterId: characterId, type: type, score: score },
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getCookie(this.cookieName),
-                },
-            }
+            { characterId: characterId, type: type, score: score }
         );
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
@@ -131,12 +177,7 @@ export class AxiosApiClient implements ApiClient {
     async editSkill(characterId: string, type: SkillType, proficiency: Proficiency): Promise<ApiResponse<Skill>> {
         const response = await this.client.patch<Skill>(
             'characters/edit/skill',
-            { characterId: characterId, type: type, proficiency: proficiency },
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getCookie(this.cookieName),
-                },
-            }
+            { characterId: characterId, type: type, proficiency: proficiency }
         );
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
@@ -148,11 +189,6 @@ export class AxiosApiClient implements ApiClient {
             {
                 recipientId: recipientId,
                 content: content,
-            },
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getCookie(this.cookieName),
-                },
             }
         );
 
@@ -174,8 +210,7 @@ export class AxiosApiClient implements ApiClient {
 
     async getMessages(skip: number, take: number): Promise<ApiResponse<Message[]>> {
         const response = await this.client.get<Message[]>('chat', {
-            params: { skip: skip, take: take },
-            headers: { Authorization: 'Bearer ' + getCookie(this.cookieName) },
+            params: { skip: skip, take: take }
         });
 
         const data = response.data.map((item) => {
@@ -190,5 +225,15 @@ export class AxiosApiClient implements ApiClient {
         });
 
         return new AxiosApiResponse(data, response.status, response.statusText);
+    }
+
+    // Handling refresh token
+    subscribeTokenRefresh(onRefresh: (token: string) => void): void {
+        this.refreshSubscribers.push(onRefresh);
+    }
+
+    onTokenRefreshed(token: string): void {
+        this.refreshSubscribers.forEach((onRefresh) => onRefresh(token));
+        this.refreshSubscribers = [];
     }
 }

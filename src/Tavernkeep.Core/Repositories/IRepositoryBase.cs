@@ -14,6 +14,7 @@ namespace Tavernkeep.Core.Repositories
         void Save(IEnumerable<T> entities);
 
         void Remove(T entity);
+        void Remove(IEnumerable<T> entities);
 
         Task CommitAsync(CancellationToken ct = default);
     }
