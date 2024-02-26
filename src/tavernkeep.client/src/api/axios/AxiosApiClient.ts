@@ -37,10 +37,8 @@ export class AxiosApiClient implements ApiClient {
             const authStore = useAuthStore();
             const token = authStore.getAccessToken();
 
-            if (token)
-                config.headers.Authorization = `Bearer ${token}`;
-            else
-                config.headers.Authorization = null;
+            if (token) config.headers.Authorization = `Bearer ${token}`;
+            else config.headers.Authorization = null;
 
             return config;
         });
@@ -61,7 +59,9 @@ export class AxiosApiClient implements ApiClient {
                             this.onTokenRefreshed(result.accessToken);
                             this.client.defaults.headers.common.Authorization = `Bearer ${result.accessToken}`;
                             originalRequest.headers!.Authorization = `Bearer ${result.accessToken}`;
-                            console.log(`Token updated. New token: ${this.client.defaults.headers.common.Authorization}`)
+                            console.log(
+                                `Token updated. New token: ${this.client.defaults.headers.common.Authorization}`
+                            );
 
                             return this.client(originalRequest);
                         } catch (refreshError) {
@@ -80,7 +80,9 @@ export class AxiosApiClient implements ApiClient {
                         return new Promise((resolve) => {
                             this.subscribeTokenRefresh((token) => {
                                 originalRequest.headers!.Authorization = `Bearer ${token}`;
-                                console.log(`Updated token without additional calls: ${originalRequest.headers!.Authorization}`)
+                                console.log(
+                                    `Updated token without additional calls: ${originalRequest.headers!.Authorization}`
+                                );
                                 resolve(this.client(originalRequest));
                             });
                         });
@@ -117,16 +119,19 @@ export class AxiosApiClient implements ApiClient {
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
+    async getCurrentUser(): Promise<ApiResponse<User>> {
+        const response = await this.client.get<User>('users/current');
+
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
+    }
+
     // TODO: User request types instead of separate parameters
     async createUser(login: string, password: string, role: UserRole): Promise<ApiResponse<User>> {
-        const response = await this.client.post<User>(
-            'users/create',
-            {
-                login: login,
-                password: password,
-                role: role,
-            }
-        );
+        const response = await this.client.post<User>('users/create', {
+            login: login,
+            password: password,
+            role: role,
+        });
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
@@ -145,10 +150,7 @@ export class AxiosApiClient implements ApiClient {
     }
 
     async createCharacter(name: string): Promise<ApiResponse<Character>> {
-        const response = await this.client.post<Character>(
-            'characters/create',
-            { name: name }
-        );
+        const response = await this.client.post<Character>('characters/create', { name: name });
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
@@ -166,31 +168,30 @@ export class AxiosApiClient implements ApiClient {
     }
 
     async editAbility(characterId: string, type: AbilityType, score: number): Promise<ApiResponse<Ability>> {
-        const response = await this.client.patch<Ability>(
-            'characters/edit/ability',
-            { characterId: characterId, type: type, score: score }
-        );
+        const response = await this.client.patch<Ability>('characters/edit/ability', {
+            characterId: characterId,
+            type: type,
+            score: score,
+        });
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async editSkill(characterId: string, type: SkillType, proficiency: Proficiency): Promise<ApiResponse<Skill>> {
-        const response = await this.client.patch<Skill>(
-            'characters/edit/skill',
-            { characterId: characterId, type: type, proficiency: proficiency }
-        );
+        const response = await this.client.patch<Skill>('characters/edit/skill', {
+            characterId: characterId,
+            type: type,
+            proficiency: proficiency,
+        });
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async sendMessage(content: string, recipientId?: string): Promise<ApiResponse<Message>> {
-        const response = await this.client.post<Message>(
-            'chat/message',
-            {
-                recipientId: recipientId,
-                content: content,
-            }
-        );
+        const response = await this.client.post<Message>('chat/message', {
+            recipientId: recipientId,
+            content: content,
+        });
 
         let data = response.data;
 
@@ -210,7 +211,7 @@ export class AxiosApiClient implements ApiClient {
 
     async getMessages(skip: number, take: number): Promise<ApiResponse<Message[]>> {
         const response = await this.client.get<Message[]>('chat', {
-            params: { skip: skip, take: take }
+            params: { skip: skip, take: take },
         });
 
         const data = response.data.map((item) => {
