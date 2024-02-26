@@ -12,14 +12,11 @@ import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResp
 
 export interface ApiClient {
     auth(login: string, password: string): Promise<ApiResponse<AuthenticationResponse>>;
-    refresh(accessToken: string, refreshToken: string) : Promise<ApiResponse<AuthenticationResponse>>;
+    refresh(accessToken: string, refreshToken: string): Promise<ApiResponse<AuthenticationResponse>>;
 
     getUsers(): Promise<ApiResponse<User[]>>;
-    createUser(
-        login: string,
-        password: string,
-        role: UserRole
-    ): Promise<ApiResponse<User>>;
+    getCurrentUser(): Promise<ApiResponse<User>>;
+    createUser(login: string, password: string, role: UserRole): Promise<ApiResponse<User>>;
     deleteUser(id: string): Promise<ApiResponse<null>>;
 
     getCharacters(): Promise<ApiResponse<Character[]>>;
@@ -27,20 +24,9 @@ export interface ApiClient {
     deleteCharacter(id: string): Promise<ApiResponse<null>>;
     getCharacter(id: string): Promise<ApiResponse<Character>>;
 
-    editAbility(
-        characterId: string,
-        type: AbilityType,
-        score: number
-    ): Promise<ApiResponse<Ability>>;
-    editSkill(
-        characterId: string,
-        type: SkillType,
-        proficiency: Proficiency
-    ): Promise<ApiResponse<Skill>>;
+    editAbility(characterId: string, type: AbilityType, score: number): Promise<ApiResponse<Ability>>;
+    editSkill(characterId: string, type: SkillType, proficiency: Proficiency): Promise<ApiResponse<Skill>>;
 
-    sendMessage(
-        message: string,
-        recipientId?: string
-    ): Promise<ApiResponse<Message>>;
+    sendMessage(message: string, recipientId?: string): Promise<ApiResponse<Message>>;
     getMessages(skip: number, take: number): Promise<ApiResponse<Message[]>>;
 }
