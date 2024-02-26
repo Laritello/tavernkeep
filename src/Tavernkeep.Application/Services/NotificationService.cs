@@ -95,7 +95,7 @@ namespace Tavernkeep.Application.Services
         {
             var context = scope.ServiceProvider.GetRequiredService<IHubContext<ChatHub, IChatHub>>();
 
-            if (message.RollType == RollType.Public || message.RollType == RollType.Private)
+            if (message.RollType == RollType.Public || message.RollType == RollType.Secret)
             {
                 // Notify all connected recipients about the new message
                 await context.Clients.AllExcept([message.SenderId.ToString()]).ReceiveMessage(message);
