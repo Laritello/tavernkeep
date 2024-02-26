@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice;
 using Tavernkeep.Application.UseCases.Roll.Commands.RollSkill;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Roll;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Server.Extensions;
@@ -21,11 +22,12 @@ namespace Tavernkeep.Server.Controllers
         /// Roll custom dice.
         /// </summary>
         /// <param name="expression">Dice expression written in the dice notation.</param>
-        /// <returns>The result of the roll.</returns>
+        /// <param name="rollType">Type of the roll.</param>
+        /// <returns><see cref="RollMessage"/> with the result of the roll.</returns>
         [HttpGet("custom")]
-        public async Task<int> RollCustomDice([FromQuery] string expression)
+        public async Task<RollMessage> RollCustomDice([FromQuery] string expression, [FromQuery] RollType rollType)
         {
-            return await mediator.Send(new RollCustomDiceCommand(expression));
+            return await mediator.Send(new RollCustomDiceCommand(HttpContext.GetUserId(), rollType, expression));
         }
 
         /// <summary>

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Channels;
 using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
 using Tavernkeep.Infrastructure.Notifications.Notifications;
@@ -40,6 +41,10 @@ namespace Tavernkeep.Application.Services
                             await SendTextMessageNotification(scope, textMessage);
                             break;
 
+                        case RollMessage rollMessage:
+                            await SendRollMessageNotification(scope, rollMessage);
+                            break;
+
                         case AbilityEditedNotification abilityNotification:
                             await SendAbilityNotification(scope, abilityNotification);
                             break;
@@ -47,6 +52,7 @@ namespace Tavernkeep.Application.Services
                         case SkillEditedNotification skillEditedNotification:
                             await SendSkillNotification(scope, skillEditedNotification);
                             break;
+
                         default:
                             throw new NotImplementedException($"Notification implementation for {nameof(notification)} doesn't exist.");
                     };
@@ -69,22 +75,30 @@ namespace Tavernkeep.Application.Services
             await base.StopAsync(cancellationToken);
         }
 
-        private async Task SendTextMessageNotification(IServiceScope scope, Message message)
+        private async Task SendTextMessageNotification(IServiceScope scope, TextMessage message)
         {
             var context = scope.ServiceProvider.GetRequiredService<IHubContext<ChatHub, IChatHub>>();
 
-            if (message is TextMessage textMessage)
+            if (message.Recipient == null)
             {
-                if (textMessage.Recipient == null)
-                {
-                    // Notify all connected recipients about the new message
-                    await context.Clients.AllExcept([textMessage.SenderId.ToString()]).ReceiveMessage(textMessage);
-                }
-                else
-                {
-                    // Notify recipient about the new message
-                    await context.Clients.User(textMessage.RecipientId!.Value.ToString()).ReceiveMessage(textMessage);
-                }
+                // Notify all connected recipients about the new message
+                await context.Clients.AllExcept([message.SenderId.ToString()]).ReceiveMessage(message);
+            }
+            else
+            {
+                // Notify recipient about the new message
+                await context.Clients.User(message.RecipientId!.Value.ToString()).ReceiveMessage(message);
+            }
+        }
+
+        private async Task SendRollMessageNotification(IServiceScope scope, RollMessage message)
+        {
+            var context = scope.ServiceProvider.GetRequiredService<IHubContext<ChatHub, IChatHub>>();
+
+            if (message.RollType == RollType.Public || message.RollType == RollType.Private)
+            {
+                // Notify all connected recipients about the new message
+                await context.Clients.AllExcept([message.SenderId.ToString()]).ReceiveMessage(message);
             }
         }
 
