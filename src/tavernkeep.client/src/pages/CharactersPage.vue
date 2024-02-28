@@ -10,7 +10,8 @@
         <div class="w-full p-4 rounded shadow">
             <template v-for="character in charactersStore.characters" :key="character.id">
                 <div class="flex gap-2">
-                    <span>{{ character.name }}</span>
+                    <span class="w-20">{{ character.name }}</span>
+                    <span class="w-20">{{ character.owner?.login || 'Unknown' }}</span>
                     <UserSelector v-model="character.ownerId" :users="usersStore.users" />
                     <v-btn @click="assign(character.id, character.ownerId)"> Assign </v-btn>
                 </div>
@@ -31,7 +32,8 @@ const charactersStore = useCharactersStore();
 
 const characterName = ref('');
 
-function assign(characterId: string, userId: string) {
-    console.log(characterId, userId);
+async function assign(characterId: string, userId: string) {
+    const newCharacter = await charactersStore.assingUserToCharacter(userId, characterId);
+    console.log(newCharacter);
 }
 </script>

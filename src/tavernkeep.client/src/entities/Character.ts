@@ -3,12 +3,14 @@ import { Health } from '@/contracts/character/Health';
 import { Skill } from '@/contracts/character/Skill';
 import { AbilityType } from '@/contracts/enums/AbilityType';
 import { SkillType } from '@/contracts/enums/SkillType';
+import { User } from '@/entities/User';
 
 export class Character {
     id: string;
     name: string;
+    owner: User;
 
-    health: Health
+    health: Health;
 
     strength: Ability;
     dexterity: Ability;
@@ -34,11 +36,12 @@ export class Character {
     survival: Skill;
     thievery: Skill;
 
-    constructor(id: string, name: string) {
+    constructor(id: string, name: string, owner: User) {
         this.id = id;
         this.name = name;
+        this.owner = owner;
 
-        this.health = new Health(0,0,0);
+        this.health = new Health(0, 0, 0);
 
         this.strength = new Ability(AbilityType.Strength);
         this.dexterity = new Ability(AbilityType.Dexterity);
@@ -66,14 +69,7 @@ export class Character {
     }
 
     getAllAbilities(): Ability[] {
-        return [
-            this.strength,
-            this.dexterity,
-            this.constitution,
-            this.intelligence,
-            this.wisdom,
-            this.charisma,
-        ];
+        return [this.strength, this.dexterity, this.constitution, this.intelligence, this.wisdom, this.charisma];
     }
 
     getSkills(): Skill[] {
