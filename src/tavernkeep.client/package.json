@@ -21,6 +21,7 @@
         "typescript-cookie": "^1.0.6",
         "vue": "^3.4.17",
         "vue-router": "^4.2.5",
+        "vue3-chat-scroll": "^0.2.0",
         "vuetify": "^3.5.3"
     },
     "devDependencies": {

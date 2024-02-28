@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col h-full">
         <h1 class="text-xl p-2">Chat</h1>
-        <div ref="chatView" class="flex grow overflow-auto">
-            <div class="container px-4">
+        <div class="flex grow overflow-auto" v-chat-scroll="{ always: false, smooth: true }">
+            <div class="w-full px-4">
                 <template v-for="item in messagesStore.messages" :key="item">
                     <ChatBubble :message="item" />
                 </template>
@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue';
+import { ref } from 'vue';
 
 // Components
 import UserSelector from './UserSelector.vue';
@@ -43,25 +43,11 @@ const usersStore = useUsersStore();
 
 const message = ref('');
 const selectedUserId = ref<string>();
-const chatView = ref<HTMLElement>();
-
-onMounted(async () => {
-    await scrollToBottom();
-});
 
 async function sendMessage() {
     const privateMessageRecipient = selectedUserId.value || undefined;
     await messagesStore.createMessage(message.value, privateMessageRecipient);
     message.value = '';
-    await scrollToBottom();
-}
-
-async function scrollToBottom() {
-    await nextTick(() => {
-        if (chatView.value) {
-            chatView.value.scrollTop = chatView.value.scrollHeight;
-        }
-    });
 }
 </script>
 

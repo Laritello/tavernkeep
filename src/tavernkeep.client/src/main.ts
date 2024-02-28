@@ -5,6 +5,8 @@ import { createApp } from 'vue';
 import App from './App.vue';
 
 import { createPinia } from 'pinia';
+// eslint-ignore
+import VueChatScroll from 'vue3-chat-scroll';
 
 // Vuetify
 import 'vuetify/styles';
@@ -28,4 +30,5 @@ const pinia = createPinia();
 app.use(vuetify);
 app.use(pinia);
 app.use(router);
+app.use(VueChatScroll);
 app.mount('#app');
