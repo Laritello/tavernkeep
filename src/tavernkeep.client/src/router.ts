@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage.vue';
 import HomePage from './pages/HomePage.vue';
 import ErrorPage from './pages/ErrorPage.vue';
 import AdminPanelPage from './pages/AdminPanelPage.vue';
+import CharactersPage from './pages/CharactersPage.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -22,6 +23,15 @@ const routes: RouteRecordRaw[] = [
         component: LoginPage,
         meta: {
             protected: false,
+        },
+    },
+    {
+        path: '/characters',
+        component: CharactersPage,
+        meta: {
+            layout: 'AppLayout',
+            protected: true,
+            allowedRoles: [UserRole.Master],
         },
     },
     {
