@@ -1,8 +1,8 @@
-import type { ApiClient } from "@/api/base/ApiClient";
-import type { Character } from "@/entities/Character";
-import { ApiClientFactory } from "@/factories/ApiClientFactory";
-import { defineStore } from "pinia";
-import { ref } from "vue";
+import type { ApiClient } from '@/api/base/ApiClient';
+import type { Character } from '@/entities/Character';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
 const api: ApiClient = ApiClientFactory.createApiClient();
 export const useCharactersStore = defineStore('characters.store', () => {
@@ -13,13 +13,14 @@ export const useCharactersStore = defineStore('characters.store', () => {
         characters.value = usersResponse.data;
     }
 
-    async function createCharacter(name: string) {
+    async function createCharacter(name: string): Promise<Character | undefined> {
         const response = await api.createCharacter(name);
         if (response.isSuccess()) {
-            characters.value.push(response.data);
-        } else {
             console.error(response.statusText);
+            return;
         }
+        characters.value.push(response.data);
+        return response.data;
     }
 
     async function deleteCharacter(id: string) {
@@ -32,5 +33,15 @@ export const useCharactersStore = defineStore('characters.store', () => {
         }
     }
 
-    return { characters, fetchCharacters, createCharacter, deleteCharacter };
+    async function assingUserToCharacter(userId: string, characterId: string): Promise<Character | undefined> {
+        const response = await api.assignUserToCharacter(characterId, userId);
+        if (!response.isSuccess()) {
+            console.error(response.statusText);
+            return;
+        }
+
+        return response.data;
+    }
+
+    return { characters, fetchCharacters, createCharacter, deleteCharacter, assingUserToCharacter };
 });

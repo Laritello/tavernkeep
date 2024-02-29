@@ -5,7 +5,6 @@ import { createApp } from 'vue';
 import App from './App.vue';
 
 import { createPinia } from 'pinia';
-// eslint-ignore
 import VueChatScroll from 'vue3-chat-scroll';
 
 // Vuetify

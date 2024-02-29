@@ -38,6 +38,9 @@
                     <li v-if="usersStore.currentUser?.role == UserRole.Master">
                         <RouterLink to="/admin">Admin Panel</RouterLink>
                     </li>
+                    <li v-if="usersStore.currentUser?.role == UserRole.Master">
+                        <RouterLink to="/characters">Characters</RouterLink>
+                    </li>
                 </ul>
             </div>
             <!-- Content -->
