@@ -1,6 +1,8 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
@@ -11,11 +13,12 @@ namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
         (
         IMessageRepository messageRepository, 
         IUserRepository userRepository,
-        INotificationService notificationService
+        INotificationService notificationService,
+        IMapper mapper
         ) 
-        : IRequestHandler<SendMessageCommand, Message>
+        : IRequestHandler<SendMessageCommand, MessageDto>
     {
-        public async Task<Message> Handle(SendMessageCommand request, CancellationToken cancellationToken)
+        public async Task<MessageDto> Handle(SendMessageCommand request, CancellationToken cancellationToken)
         {
             var sender = await userRepository.FindAsync(request.SenderId)
                 ?? throw new BusinessLogicException("Sender with specified id not found");
@@ -35,7 +38,7 @@ namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
             await messageRepository.CommitAsync(cancellationToken);
             await notificationService.QueueMessage(message);
 
-            return message;
+            return mapper.Map<MessageDto>(message);
         }
     }
 }

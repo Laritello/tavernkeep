@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Chat.Commands.DeleteChat;
 using Tavernkeep.Application.Actions.Chat.Commands.SendMessage;
 using Tavernkeep.Application.Actions.Chat.Queries.GetMessages;
+using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Contracts.Chat.Requests;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Server.Extensions;
 using Tavernkeep.Server.Middleware;
 
@@ -27,7 +27,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>Sent message.</returns>
         [Authorize]
         [HttpPost("message")]
-        public async Task<Message> SendMessageAsync([FromBody] SendMessageRequest request)
+        public async Task<MessageDto> SendMessageAsync([FromBody] SendMessageRequest request)
         {
             return await mediator.Send(new SendMessageCommand(HttpContext.GetUserId(), request.Content, request.RecipientId));
         }
@@ -40,7 +40,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public async Task<IEnumerable<Message>> GetMessagesAsync([FromQuery] int skip = 0, [FromQuery] int take = 20)
+        public async Task<IEnumerable<MessageDto>> GetMessagesAsync([FromQuery] int skip = 0, [FromQuery] int take = 20)
         {
             return await mediator.Send(new GetMessagesQuery(HttpContext.GetUserId(), skip, take));
         }

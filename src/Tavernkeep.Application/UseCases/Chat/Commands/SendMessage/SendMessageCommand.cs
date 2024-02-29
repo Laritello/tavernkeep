@@ -1,9 +1,10 @@
 ﻿using MediatR;
+using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Entities.Messages;
 
 namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
 {
-    public class SendMessageCommand : IRequest<Message>
+    public class SendMessageCommand : IRequest<MessageDto>
     {
         public Guid SenderId { get; set; }
         public string Text { get; set; }
