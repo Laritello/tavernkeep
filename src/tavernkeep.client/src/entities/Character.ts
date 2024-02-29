@@ -4,6 +4,7 @@ import { Skill } from '@/contracts/character/Skill';
 import { AbilityType } from '@/contracts/enums/AbilityType';
 import { SkillType } from '@/contracts/enums/SkillType';
 import { User } from '@/entities/User';
+import { Type } from 'class-transformer';
 
 export class Character {
     id: string;
@@ -12,29 +13,11 @@ export class Character {
 
     health: Health;
 
-    strength: Ability;
-    dexterity: Ability;
-    constitution: Ability;
-    intelligence: Ability;
-    wisdom: Ability;
-    charisma: Ability;
+    @Type(() => Ability)
+    abilities: Map<AbilityType, Ability>;
 
-    acrobatics: Skill;
-    arcana: Skill;
-    athletics: Skill;
-    crafting: Skill;
-    deception: Skill;
-    diplomacy: Skill;
-    intimidation: Skill;
-    medicine: Skill;
-    nature: Skill;
-    occultism: Skill;
-    performance: Skill;
-    religion: Skill;
-    society: Skill;
-    stealth: Skill;
-    survival: Skill;
-    thievery: Skill;
+    @Type(() => Skill)
+    skills: Map<SkillType, Skill>;
 
     constructor(id: string, name: string, owner: User) {
         this.id = id;
@@ -43,53 +26,32 @@ export class Character {
 
         this.health = new Health(0, 0, 0);
 
-        this.strength = new Ability(AbilityType.Strength);
-        this.dexterity = new Ability(AbilityType.Dexterity);
-        this.constitution = new Ability(AbilityType.Constitution);
-        this.intelligence = new Ability(AbilityType.Intelligence);
-        this.wisdom = new Ability(AbilityType.Wisdom);
-        this.charisma = new Ability(AbilityType.Charisma);
+        this.abilities = new Map([
+            [AbilityType.Strength, new Ability(AbilityType.Strength)],
+            [AbilityType.Dexterity, new Ability(AbilityType.Dexterity)],
+            [AbilityType.Constitution, new Ability(AbilityType.Constitution)],
+            [AbilityType.Intelligence, new Ability(AbilityType.Intelligence)],
+            [AbilityType.Wisdom, new Ability(AbilityType.Wisdom)],
+            [AbilityType.Charisma, new Ability(AbilityType.Charisma)],
+        ]);
 
-        this.acrobatics = new Skill(SkillType.Acrobatics);
-        this.arcana = new Skill(SkillType.Arcana);
-        this.athletics = new Skill(SkillType.Athletics);
-        this.crafting = new Skill(SkillType.Crafting);
-        this.deception = new Skill(SkillType.Deception);
-        this.diplomacy = new Skill(SkillType.Diplomacy);
-        this.intimidation = new Skill(SkillType.Intimidation);
-        this.medicine = new Skill(SkillType.Medicine);
-        this.nature = new Skill(SkillType.Nature);
-        this.occultism = new Skill(SkillType.Occultism);
-        this.performance = new Skill(SkillType.Performance);
-        this.religion = new Skill(SkillType.Religion);
-        this.society = new Skill(SkillType.Society);
-        this.stealth = new Skill(SkillType.Stealth);
-        this.survival = new Skill(SkillType.Survival);
-        this.thievery = new Skill(SkillType.Thievery);
-    }
-
-    getAllAbilities(): Ability[] {
-        return [this.strength, this.dexterity, this.constitution, this.intelligence, this.wisdom, this.charisma];
-    }
-
-    getSkills(): Skill[] {
-        return [
-            this.acrobatics,
-            this.arcana,
-            this.athletics,
-            this.crafting,
-            this.deception,
-            this.diplomacy,
-            this.intimidation,
-            this.medicine,
-            this.nature,
-            this.occultism,
-            this.performance,
-            this.religion,
-            this.society,
-            this.stealth,
-            this.survival,
-            this.thievery,
-        ];
+        this.skills = new Map([
+            [SkillType.Acrobatics, new Skill(SkillType.Acrobatics)],
+            [SkillType.Arcana, new Skill(SkillType.Arcana)],
+            [SkillType.Athletics, new Skill(SkillType.Athletics)],
+            [SkillType.Crafting, new Skill(SkillType.Crafting)],
+            [SkillType.Deception, new Skill(SkillType.Deception)],
+            [SkillType.Diplomacy, new Skill(SkillType.Diplomacy)],
+            [SkillType.Intimidation, new Skill(SkillType.Intimidation)],
+            [SkillType.Medicine, new Skill(SkillType.Medicine)],
+            [SkillType.Nature, new Skill(SkillType.Nature)],
+            [SkillType.Occultism, new Skill(SkillType.Occultism)],
+            [SkillType.Performance, new Skill(SkillType.Performance)],
+            [SkillType.Religion, new Skill(SkillType.Religion)],
+            [SkillType.Society, new Skill(SkillType.Society)],
+            [SkillType.Stealth, new Skill(SkillType.Stealth)],
+            [SkillType.Survival, new Skill(SkillType.Survival)],
+            [SkillType.Thievery, new Skill(SkillType.Thievery)],
+        ]);
     }
 }
