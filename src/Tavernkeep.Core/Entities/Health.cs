@@ -1,4 +1,4 @@
-﻿namespace Tavernkeep.Core.Contracts.Character
+﻿namespace Tavernkeep.Core.Entities
 {
     public class Health
     {

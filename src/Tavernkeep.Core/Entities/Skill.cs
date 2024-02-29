@@ -2,7 +2,7 @@
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Extensions;
 
-namespace Tavernkeep.Core.Contracts.Character
+namespace Tavernkeep.Core.Entities
 {
     public class Skill
     {
@@ -13,7 +13,7 @@ namespace Tavernkeep.Core.Contracts.Character
 
         }
 
-        public Skill(Entities.Character owner, SkillType type)
+        public Skill(Character owner, SkillType type)
         {
             Owner = owner;
             Type = type;
@@ -24,7 +24,7 @@ namespace Tavernkeep.Core.Contracts.Character
         #region Properties
 
         [JsonIgnore]
-        public Entities.Character Owner { get; set; } = default!;
+        public Character Owner { get; set; } = default!;
         public SkillType Type { get; set; }
         public Proficiency Proficiency { get; set; }
         public int Bonus => Owner.GetSkillAbility(Type).Modifier + Proficiency.GetProficiencyBonus(Owner);

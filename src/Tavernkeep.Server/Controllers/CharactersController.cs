@@ -10,7 +10,6 @@ using Tavernkeep.Application.Actions.Characters.Commands.ModifyHealth;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacters;
 using Tavernkeep.Application.UseCases.Characters.Commands.AssignUser;
-using Tavernkeep.Core.Contracts.Character;
 using Tavernkeep.Core.Contracts.Character.Requests;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
