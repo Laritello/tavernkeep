@@ -1,13 +1,15 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using Tavernkeep.Core.Contracts.Users.Dtos;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Users.Commands.EditUser
 {
-    public class EditUserCommandHandler(IUserRepository userRepository) : IRequestHandler<EditUserCommand, User>
+    public class EditUserCommandHandler(IUserRepository userRepository, IMapper mapper) : IRequestHandler<EditUserCommand, UserDto>
     {
-        public async Task<User> Handle(EditUserCommand request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(EditUserCommand request, CancellationToken cancellationToken)
         {
             var user = await userRepository.FindAsync(request.UserId)
                 ?? throw new BusinessLogicException("User with specified ID doesn't exist.");
@@ -20,7 +22,7 @@ namespace Tavernkeep.Application.UseCases.Users.Commands.EditUser
             await userRepository.CommitAsync(cancellationToken);
             // TODO: Send notification
 
-            return user;
+            return mapper.Map<UserDto>(user);
         }
     }
 }

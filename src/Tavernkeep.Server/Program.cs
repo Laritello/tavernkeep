@@ -9,6 +9,7 @@ using Tavernkeep.Infrastructure.Notifications.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using Tavernkeep.Infrastructure.Notifications.Providers;
 using Tavernkeep.Infrastructure.Notifications.Serialization;
+using Tavernkeep.Application.Mapping.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 var options = Parser.Default.ParseArguments<LaunchOptions>(args).Value;
@@ -38,6 +39,7 @@ builder.Services.AddSingleton<IUserIdProvider, NotificationsUserProvider>();
 builder.Services
     .AddExceptionHandling()
     .AddDatabaseContext(options)
+    .AddAutoMapper(typeof(UserProfile))
     .AddApplicationServices()
     .AddMediatR(c => c.RegisterServicesFromAssemblyContaining<CreateUserCommand>())
     .AddRouting(o => o.LowercaseUrls = true)
