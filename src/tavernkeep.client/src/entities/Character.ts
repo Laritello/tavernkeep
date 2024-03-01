@@ -4,7 +4,6 @@ import { Skill } from '@/contracts/character/Skill';
 import { AbilityType } from '@/contracts/enums/AbilityType';
 import { SkillType } from '@/contracts/enums/SkillType';
 import { User } from '@/entities/User';
-import { Type } from 'class-transformer';
 
 export class Character {
     id: string;
@@ -13,10 +12,7 @@ export class Character {
 
     health: Health;
 
-    @Type(() => Ability)
     abilities: Map<AbilityType, Ability>;
-
-    @Type(() => Skill)
     skills: Map<SkillType, Skill>;
 
     constructor(id: string, name: string, owner: User) {

@@ -8,12 +8,15 @@
                         Thus, methods for classes (getAbilities, getSkills) are not accessible. 
                     -->
                 <v-col cols="5">
-                    <v-row v-for="ability in character.abilities.values()" v-bind:key="ability.type" align="center" no-gutters
-                        class="pr-1">
+                    <v-row
+                        v-for="[key, value] in Object.entries(character.abilities)"
+                        v-bind:key="key"
+                        align="center"
+                        no-gutters
+                        class="pr-1"
+                    >
                         <v-col>
-                            <div class="text-body">
-                                {{ ability.type }}: {{ ability.score }}
-                            </div>
+                            <div class="text-body">{{ value.type }}: {{ value.score }}</div>
                         </v-col>
                         <v-col cols="auto">
                             <v-dialog width="500">
@@ -26,22 +29,18 @@
                                         <v-card-text>
                                             <div class="mb-1">
                                                 Enter the new proficiency for
-                                                {{ ability.type }}.
+                                                {{ value.type }}.
                                             </div>
-                                            <v-text-field label="Score" v-model="dialogAbilityScore">
-                                            </v-text-field>
+                                            <v-text-field label="Score" v-model="dialogAbilityScore"> </v-text-field>
                                         </v-card-text>
 
                                         <v-card-actions>
                                             <v-spacer></v-spacer>
                                             <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-                                            <v-btn text="Confirm" @click="
-                                                editAbility(
-                                                    isActive,
-                                                    ability,
-                                                    dialogAbilityScore
-                                                )
-                                                "></v-btn>
+                                            <v-btn
+                                                text="Confirm"
+                                                @click="editAbility(isActive, value, dialogAbilityScore)"
+                                            ></v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </template>
@@ -51,12 +50,15 @@
                 </v-col>
                 <v-divider vertical> </v-divider>
                 <v-col cols="7">
-                    <v-row v-for="skill in character.skills.values()" v-bind:key="skill.type" align="center" no-gutters
-                        class="pl-3">
+                    <v-row
+                        v-for="[key, value] in Object.entries(character.skills)"
+                        v-bind:key="key"
+                        align="center"
+                        no-gutters
+                        class="pl-3"
+                    >
                         <v-col>
-                            <div class="text-body">
-                                {{ skill.type }}: {{ skill.proficiency }}
-                            </div>
+                            <div class="text-body">{{ value.type }}: {{ value.proficiency }}</div>
                         </v-col>
                         <v-col cols="auto">
                             <v-dialog width="500">
@@ -69,28 +71,29 @@
                                         <v-card-text>
                                             <div class="mb-1">
                                                 Enter the new proficiency for
-                                                {{ skill.type }}.
+                                                {{ value.type }}.
                                             </div>
-                                            <v-combobox label="Proficiency" v-model="dialogSkillProficiency" :items="[
-                                                Proficiency.Untrained,
-                                                Proficiency.Trained,
-                                                Proficiency.Expert,
-                                                Proficiency.Master,
-                                                Proficiency.Legendary,
-                                            ]">
+                                            <v-combobox
+                                                label="Proficiency"
+                                                v-model="dialogSkillProficiency"
+                                                :items="[
+                                                    Proficiency.Untrained,
+                                                    Proficiency.Trained,
+                                                    Proficiency.Expert,
+                                                    Proficiency.Master,
+                                                    Proficiency.Legendary,
+                                                ]"
+                                            >
                                             </v-combobox>
                                         </v-card-text>
 
                                         <v-card-actions>
                                             <v-spacer></v-spacer>
                                             <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-                                            <v-btn text="Confirm" @click="
-                                                updateSkill(
-                                                    isActive,
-                                                    skill,
-                                                    dialogSkillProficiency
-                                                )
-                                                "></v-btn>
+                                            <v-btn
+                                                text="Confirm"
+                                                @click="updateSkill(isActive, value, dialogSkillProficiency)"
+                                            ></v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </template>
@@ -126,24 +129,16 @@ const dialogAbilityScore = ref(0);
 const dialogSkillProficiency = ref(Proficiency.Untrained);
 
 onMounted(() => {
-    CharacterHub.connection.on(
-        'OnAbilityEdited',
-        (notification: AbilityEditedNotification) => {
-            updateAbilityFromNotification(notification);
-        }
-    );
+    CharacterHub.connection.on('OnAbilityEdited', (notification: AbilityEditedNotification) => {
+        updateAbilityFromNotification(notification);
+    });
 
-    CharacterHub.connection.on(
-        'OnSkillEdited',
-        (notification: SkillEditedNotification) => {
-            updateSkillFromNotification(notification);
-        }
-    );
+    CharacterHub.connection.on('OnSkillEdited', (notification: SkillEditedNotification) => {
+        updateSkillFromNotification(notification);
+    });
 });
 
-function updateAbilityFromNotification(
-    notification: AbilityEditedNotification
-) {
+function updateAbilityFromNotification(notification: AbilityEditedNotification) {
     const char = props.character;
     // TODO: If we decide to keep calculcations off client - also should update modifier
     if (char.id == notification.characterId) {
@@ -162,31 +157,15 @@ function updateSkillFromNotification(notification: SkillEditedNotification) {
     }
 }
 
-async function editAbility(
-    isActive: Ref<boolean>,
-    ability: Ability,
-    score: number
-) {
-    var response = await client.editAbility(
-        props.character.id,
-        ability.type,
-        score
-    );
+async function editAbility(isActive: Ref<boolean>, ability: Ability, score: number) {
+    var response = await client.editAbility(props.character.id, ability.type, score);
 
     ability.score = response.data.score;
     dialogAbilityScore.value = 0;
     isActive.value = false;
 }
-async function updateSkill(
-    isActive: Ref<boolean>,
-    skill: Skill,
-    proficiency: Proficiency
-) {
-    var response = await client.editSkill(
-        props.character.id,
-        skill.type,
-        proficiency
-    );
+async function updateSkill(isActive: Ref<boolean>, skill: Skill, proficiency: Proficiency) {
+    var response = await client.editSkill(props.character.id, skill.type, proficiency);
 
     skill.proficiency = response.data.proficiency;
     dialogSkillProficiency.value = Proficiency.Untrained; // TODO: On show set selected skill current value
