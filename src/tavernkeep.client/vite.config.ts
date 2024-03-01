@@ -1,7 +1,6 @@
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import vueJsx from '@vitejs/plugin-vue-jsx';
 import fs from 'fs';
 import path from 'path';
 import child_process from 'child_process';
@@ -44,10 +43,10 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
-        vue(),
-        vueJsx({
-            include: ['./src/*.ts'],
-            babelPlugins: [['@babel/proposal-decorators', { version: '2023-11' }]],
+        vue({
+            script: {
+                babelParserPlugins: ['decorators'],
+            },
         }),
     ],
     resolve: {
