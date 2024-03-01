@@ -9,7 +9,7 @@
                     -->
                 <v-col cols="5">
                     <v-row
-                        v-for="[key, value] in Object.entries(character.abilities)"
+                        v-for="[key, value] in character.abilities.entries()"
                         v-bind:key="key"
                         align="center"
                         no-gutters
@@ -51,7 +51,7 @@
                 <v-divider vertical> </v-divider>
                 <v-col cols="7">
                     <v-row
-                        v-for="[key, value] in Object.entries(character.skills)"
+                        v-for="[key, value] in character.skills.entries()"
                         v-bind:key="key"
                         align="center"
                         no-gutters
