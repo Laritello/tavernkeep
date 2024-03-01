@@ -1,7 +1,7 @@
 import { fileURLToPath, URL } from 'node:url';
-
 import { defineConfig } from 'vite';
-import plugin from '@vitejs/plugin-vue';
+import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import fs from 'fs';
 import path from 'path';
 import child_process from 'child_process';
@@ -34,25 +34,22 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
         0 !==
         child_process.spawnSync(
             'dotnet',
-            [
-                'dev-certs',
-                'https',
-                '--export-path',
-                certFilePath,
-                '--format',
-                'Pem',
-                '--no-password',
-            ],
+            ['dev-certs', 'https', '--export-path', certFilePath, '--format', 'Pem', '--no-password'],
             { stdio: 'inherit' }
         ).status
     ) {
         throw new Error('Could not create certificate.');
     }
 }
-
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [plugin()],
+    plugins: [
+        vue(),
+        vueJsx({
+            include: ['./src/*.ts'],
+            babelPlugins: [['@babel/proposal-decorators', { version: '2023-11' }]],
+        }),
+    ],
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url)),
