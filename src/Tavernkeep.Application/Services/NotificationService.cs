@@ -4,10 +4,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Channels;
 using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
 using Tavernkeep.Infrastructure.Notifications.Notifications;
+using Tavernkeep.Infrastructure.Notifications.Storage;
 
 namespace Tavernkeep.Application.Services
 {
@@ -16,11 +18,16 @@ namespace Tavernkeep.Application.Services
     /// </summary>
     /// <param name="serviceProvider">The <see cref="IServiceProvider"/> instance.</param>
     /// <param name="logger">The <see cref="ILogger"/> instance.</param>
-    public class NotificationService(IServiceProvider serviceProvider, ILogger<NotificationService> logger) : BackgroundService, INotificationService
+    public class NotificationService
+        (
+        IServiceProvider serviceProvider, 
+        ILogger<NotificationService> logger,
+        IUserConnectionStorage<Guid> userStorage
+        ) : BackgroundService, INotificationService
     {
         private readonly Channel<object> _queue = Channel.CreateUnbounded<object>();
 
-        public ValueTask QueueMessage(Message message) =>_queue.Writer.WriteAsync(message);
+        public ValueTask QueueMessage(MessageDto message) =>_queue.Writer.WriteAsync(message);
         public ValueTask QueueAbilityNotification(AbilityEditedNotification notification) =>_queue.Writer.WriteAsync(notification);
         public ValueTask QueueSkillNotification(SkillEditedNotification notification) =>_queue.Writer.WriteAsync(notification);
 
@@ -37,11 +44,11 @@ namespace Tavernkeep.Application.Services
                     // TODO: Switch to singular notification hub structure
                     switch (notification)
                     {
-                        case TextMessage textMessage:
+                        case TextMessageDto textMessage:
                             await SendTextMessageNotification(scope, textMessage);
                             break;
 
-                        case RollMessage rollMessage:
+                        case RollMessageDto rollMessage:
                             await SendRollMessageNotification(scope, rollMessage);
                             break;
 
@@ -75,30 +82,40 @@ namespace Tavernkeep.Application.Services
             await base.StopAsync(cancellationToken);
         }
 
-        private async Task SendTextMessageNotification(IServiceScope scope, TextMessage message)
+        private async Task SendTextMessageNotification(IServiceScope scope, TextMessageDto message)
         {
             var context = scope.ServiceProvider.GetRequiredService<IHubContext<ChatHub, IChatHub>>();
 
             if (message.Recipient == null)
             {
                 // Notify all connected recipients about the new message
-                await context.Clients.AllExcept([message.SenderId.ToString()]).ReceiveMessage(message);
+                var senderConnections = userStorage.GetConnections(message.Sender.Id);
+                await context.Clients.AllExcept(senderConnections).ReceiveMessage(message);
             }
             else
             {
                 // Notify recipient about the new message
-                await context.Clients.User(message.RecipientId!.Value.ToString()).ReceiveMessage(message);
+                await context.Clients.User(message.Recipient!.Id.ToString()).ReceiveMessage(message);
             }
         }
 
-        private async Task SendRollMessageNotification(IServiceScope scope, RollMessage message)
+        private async Task SendRollMessageNotification(IServiceScope scope, RollMessageDto message)
         {
             var context = scope.ServiceProvider.GetRequiredService<IHubContext<ChatHub, IChatHub>>();
 
-            if (message.RollType == RollType.Public || message.RollType == RollType.Secret)
+            switch(message.RollType)
             {
-                // Notify all connected recipients about the new message
-                await context.Clients.AllExcept([message.SenderId.ToString()]).ReceiveMessage(message);
+                case RollType.Public:
+                case RollType.Secret:
+                    // Notify all connected recipients about the new message
+                    await context.Clients.AllExcept([message.Sender.Id.ToString()]).ReceiveMessage(message);
+                    break;
+
+                case RollType.Private:
+                    // Notify sender about the new message
+                    var senderConnections = userStorage.GetConnections(message.Sender.Id);
+                    await context.Clients.Clients(senderConnections).ReceiveMessage(message);
+                    break;
             }
         }
 

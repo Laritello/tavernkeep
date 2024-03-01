@@ -22,22 +22,24 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice
             var initiator = await userRepository.FindAsync(request.InitiatorId)
                 ?? throw new BusinessLogicException("Initiator with specified ID doesn't exist.");
 
-            var result = diceService.Roll(request.Expression);
+            var roll = diceService.Roll(request.Expression);
 
             RollMessage message = new()
             {
                 Sender = initiator,
                 Created = DateTime.UtcNow,
                 RollType = request.RollType,
-                Result = result,
+                Result = roll,
             };
 
             messageRepository.Save(message);
 
             await messageRepository.CommitAsync(cancellationToken);
-            await notificationService.QueueMessage(message);
 
-            return mapper.Map<RollMessageDto>(message);
+            var result = mapper.Map<RollMessageDto>(message);
+            await notificationService.QueueMessage(result);
+
+            return result;
         }
     }
 }

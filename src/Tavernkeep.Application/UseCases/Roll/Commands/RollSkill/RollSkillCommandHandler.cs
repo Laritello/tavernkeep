@@ -26,23 +26,24 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
             var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
                 ?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
 
-            var result = diceService.Roll(bonus: character.GetSkill(request.SkillType).Bonus);
-
+            var roll = diceService.Roll(bonus: character.GetSkill(request.SkillType).Bonus);
 
             RollMessage message = new()
             {
                 Sender = initiator,
                 Created = DateTime.UtcNow,
                 RollType = request.RollType,
-                Result = result,
+                Result = roll,
             };
 
             messageRepository.Save(message);
 
             await messageRepository.CommitAsync(cancellationToken);
-            await notificationService.QueueMessage(message);
+            
+            var result = mapper.Map<RollMessageDto>(message);
+            await notificationService.QueueMessage(result);
 
-            return mapper.Map<RollMessageDto>(message);
+            return result;
         }
     }
 }

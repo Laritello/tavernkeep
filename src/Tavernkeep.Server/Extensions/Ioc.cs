@@ -9,6 +9,7 @@ using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Repositories;
 using Tavernkeep.Infrastructure.Data.Utility;
+using Tavernkeep.Infrastructure.Notifications.Storage;
 using Tavernkeep.Server.Exceptions.Handlers;
 using Tavernkeep.Shared.Options;
 
@@ -107,6 +108,8 @@ namespace Tavernkeep.Server.Extensions
         {
             services.AddSingleton<IDiceService, DiceService>();
             services.AddSingleton<INotificationService, NotificationService>();
+
+            services.AddSingleton<IUserConnectionStorage<Guid>, UserConnectionStorage<Guid>>();
 
             services.AddHostedService(sp => (NotificationService)sp.GetRequiredService<INotificationService>());
             services.AddHostedService<RefreshTokenService>();

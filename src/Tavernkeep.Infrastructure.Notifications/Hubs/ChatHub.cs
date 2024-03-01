@@ -1,15 +1,18 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using Tavernkeep.Core.Entities.Messages;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Tavernkeep.Core.Contracts.Chat.Dtos;
+using Tavernkeep.Infrastructure.Notifications.Storage;
 
 namespace Tavernkeep.Infrastructure.Notifications.Hubs
 {
     public interface IChatHub
     {
-        Task ReceiveMessage(Message message);
+        Task ReceiveMessage(MessageDto message);
     }
 
-    public class ChatHub : Hub<IChatHub>
+    [Authorize]
+    public class ChatHub([FromServices] IUserConnectionStorage<Guid> userStorage) : BaseHub<IChatHub>(userStorage)
     {
-        public async Task SendMessageNotification(Message message) => await Clients.All.ReceiveMessage(message);
+        public async Task SendMessageNotification(MessageDto message) => await Clients.All.ReceiveMessage(message);
     }
 }
