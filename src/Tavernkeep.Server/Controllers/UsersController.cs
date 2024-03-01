@@ -9,7 +9,6 @@ using Tavernkeep.Application.UseCases.Users.Queries.GetCurrentUser;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Users.Dtos;
 using Tavernkeep.Core.Contracts.Users.Requests;
-using Tavernkeep.Core.Entities;
 using Tavernkeep.Server.Extensions;
 using Tavernkeep.Server.Middleware;
 
@@ -29,7 +28,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>List of all registered users.</returns>
         [Authorize]
         [HttpGet]
-        public async Task<List<UserDto>> GetAllUsers()
+        public async Task<List<UserDto>> GetUsersAsync()
         {
             var users = await mediator.Send(new GetAllUsersQuery());
             return users;
@@ -43,7 +42,7 @@ namespace Tavernkeep.Server.Controllers
         [Authorize]
         [RequiresRole(UserRole.Master)]
         [HttpPost]
-        public async Task<UserDto> CreateUser([FromBody] CreateUserRequest request)
+        public async Task<UserDto> CreateUserAsync([FromBody] CreateUserRequest request)
         {
             return await mediator.Send(new CreateUserCommand(request.Login, request.Password, request.Role));
         }
@@ -57,7 +56,7 @@ namespace Tavernkeep.Server.Controllers
         [Authorize]
         [RequiresRole(UserRole.Master)]
         [HttpPatch("{userId}")]
-        public async Task<UserDto> EditUser([FromRoute] Guid userId, [FromBody] EditUserRequest request)
+        public async Task<UserDto> EditUserAsync([FromRoute] Guid userId, [FromBody] EditUserRequest request)
         {
             return await mediator.Send(new EditUserCommand(userId, request.Login, request.Password, request.Role));
         }
@@ -69,7 +68,7 @@ namespace Tavernkeep.Server.Controllers
         [Authorize]
         [RequiresRole(UserRole.Master)]
         [HttpDelete("{userId}")]
-        public async Task DeleteUser([FromRoute] Guid userId)
+        public async Task DeleteUserAsync([FromRoute] Guid userId)
         {
             await mediator.Send(new DeleteUserCommand(userId));
         }
@@ -80,7 +79,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>The user that was specified in the authorization token.</returns>
         [Authorize]
         [HttpGet("current")]
-        public async Task<UserDto> GetCurrentUser()
+        public async Task<UserDto> GetCurrentUserAsync()
         {
             return await mediator.Send(new GetUserQuery(HttpContext.GetUserId()));
         }

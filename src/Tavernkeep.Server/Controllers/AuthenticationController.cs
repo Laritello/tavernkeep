@@ -21,7 +21,7 @@ namespace Tavernkeep.Server.Controllers
         /// <param name="request">The authentication request.</param>
         /// <returns>The authentication JWT and refresh token.</returns>
         [HttpPost("auth")]
-        public async Task<AuthenticationResponse> CreateAuthenticationToken(AuthenticationRequest request)
+        public async Task<AuthenticationResponse> CreateAuthenticationTokenAsync(AuthenticationRequest request)
         {
             return await mediator.Send(new CreateAuthenticationTokenCommand(request.Login, request.Password));
         }
@@ -32,7 +32,7 @@ namespace Tavernkeep.Server.Controllers
         /// <param name="request">The refresh token request.</param>
         /// <returns>The authentication JWT and refresh token.</returns>
         [HttpPost("refresh")]
-        public async Task<AuthenticationResponse> RefreshToken(RefreshTokenRequest request)
+        public async Task<AuthenticationResponse> RefreshTokenAsync(RefreshTokenRequest request)
         {
             return await mediator.Send(new RefreshAuthenticationTokenCommand(request.AccessToken, request.RefreshToken));
         }
