@@ -39,7 +39,7 @@ const charactersStore = useCharactersStore();
 const characterName = ref('');
 
 async function assign(characterId: string, userId: string) {
-    const newCharacter = await charactersStore.assingUserToCharacter(userId, characterId);
+    const newCharacter = await charactersStore.assignUserToCharacter(userId, characterId);
     console.log(newCharacter);
 }
 </script>

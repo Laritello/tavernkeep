@@ -33,7 +33,7 @@ export const useCharactersStore = defineStore('characters.store', () => {
         characters.value.splice(index, 1);
     }
 
-    async function assingUserToCharacter(userId: string, characterId: string): Promise<Character | undefined> {
+    async function assignUserToCharacter(userId: string, characterId: string): Promise<Character | undefined> {
         const response = await api.assignUserToCharacter(characterId, userId);
         if (!response.isSuccess()) {
             console.error(response.statusText);
@@ -42,5 +42,5 @@ export const useCharactersStore = defineStore('characters.store', () => {
         return response.data;
     }
 
-    return { characters, fetchCharacters, createCharacter, deleteCharacter, assingUserToCharacter };
+    return { characters, fetchCharacters, createCharacter, deleteCharacter, assignUserToCharacter };
 });
