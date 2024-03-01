@@ -136,7 +136,7 @@ export class AxiosApiClient implements ApiClient {
         return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
-    async editUser(id:string, login: string, password: string, role: UserRole): Promise<ApiResponse<User>> {
+    async editUser(id: string, login: string, password: string, role: UserRole): Promise<ApiResponse<User>> {
         const response = await this.client.patch<User>('users/' + id, {
             login: login,
             password: password,
@@ -180,7 +180,7 @@ export class AxiosApiClient implements ApiClient {
     async assignUserToCharacter(characterId: string, userId: string): Promise<ApiResponse<Character>> {
         const response = await this.client.patch<Character>('characters/assign', {
             characterId: characterId,
-            userId: userId
+            userId: userId,
         });
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
@@ -245,6 +245,14 @@ export class AxiosApiClient implements ApiClient {
         });
 
         return new AxiosApiResponse(data, response.status, response.statusText);
+    }
+
+    async sendRollMessage(expression: string): Promise<ApiResponse<Message>> {
+        const response = await this.client.get<Message>('roll/custom', {
+            params: { expression: expression },
+        });
+
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     // Handling refresh token

@@ -31,4 +31,5 @@ export interface ApiClient {
 
     sendMessage(message: string, recipientId?: string): Promise<ApiResponse<Message>>;
     getMessages(skip: number, take: number): Promise<ApiResponse<Message[]>>;
+    sendRollMessage(message: string): Promise<ApiResponse<Message>>;
 }

@@ -28,6 +28,13 @@ export const useMessagesStore = defineStore('messages.store', () => {
         messages.value.push(response.data);
     }
 
+    async function createRollMessage(expression: string) {
+        const response = await api.sendRollMessage(expression);
+        if (!response.isSuccess()) {
+            console.error(response.statusText);
+        }
+    }
+
     function appendMessage(message: Message) {
         let typedMessage = message;
 
@@ -44,5 +51,5 @@ export const useMessagesStore = defineStore('messages.store', () => {
         messages.value.push(typedMessage);
     }
 
-    return { messages, fetchMessages, createMessage };
+    return { messages, fetchMessages, createMessage, createRollMessage };
 });

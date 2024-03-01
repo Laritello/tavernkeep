@@ -45,8 +45,14 @@ const message = ref('');
 const selectedUserId = ref<string>();
 
 async function sendMessage() {
-    const privateMessageRecipient = selectedUserId.value || undefined;
-    await messagesStore.createMessage(message.value, privateMessageRecipient);
+    if (message.value.startsWith('/roll')) {
+        const rollExpression = message.value.replace('/roll', '').trim();
+        await messagesStore.createRollMessage(rollExpression);
+    } else {
+        const privateMessageRecipient = selectedUserId.value || undefined;
+        await messagesStore.createMessage(message.value, privateMessageRecipient);
+    }
+
     message.value = '';
 }
 </script>
