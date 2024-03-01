@@ -15,7 +15,7 @@ export const useCharactersStore = defineStore('characters.store', () => {
 
     async function createCharacter(name: string): Promise<Character | undefined> {
         const response = await api.createCharacter(name);
-        if (response.isSuccess()) {
+        if (!response.isSuccess()) {
             console.error(response.statusText);
             return;
         }
@@ -25,12 +25,12 @@ export const useCharactersStore = defineStore('characters.store', () => {
 
     async function deleteCharacter(id: string) {
         const response = await api.deleteCharacter(id);
-        if (response.isSuccess()) {
-            const index = characters.value.findIndex((user) => user.id === id);
-            characters.value.splice(index, 1);
-        } else {
+        if (!response.isSuccess()) {
             console.error(response.statusText);
+            return;
         }
+        const index = characters.value.findIndex((user) => user.id === id);
+        characters.value.splice(index, 1);
     }
 
     async function assingUserToCharacter(userId: string, characterId: string): Promise<Character | undefined> {
@@ -39,7 +39,6 @@ export const useCharactersStore = defineStore('characters.store', () => {
             console.error(response.statusText);
             return;
         }
-
         return response.data;
     }
 

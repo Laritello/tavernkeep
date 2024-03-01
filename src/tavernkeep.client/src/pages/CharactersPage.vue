@@ -11,9 +11,9 @@
             <template v-for="character in charactersStore.characters" :key="character.id">
                 <div class="flex gap-2">
                     <span class="w-20">{{ character.name }}</span>
-                    <span class="w-20">{{ character.owner?.login || 'Unknown' }}</span>
-                    <UserSelector v-model="character.ownerId" :users="usersStore.users" />
-                    <v-btn @click="assign(character.id, character.ownerId)"> Assign </v-btn>
+                    <span class="w-20">{{ character.owner.login || 'Unknown' }}</span>
+                    <UserSelector v-model="character.owner.id" :users="usersStore.users" />
+                    <v-btn @click="assign(character.id, character.owner.id)"> Assign </v-btn>
                 </div>
             </template>
         </div>
