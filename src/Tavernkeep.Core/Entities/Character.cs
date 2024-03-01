@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using Tavernkeep.Core.Contracts.Character;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Base;
 

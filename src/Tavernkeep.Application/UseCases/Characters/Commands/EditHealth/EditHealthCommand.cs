@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Character;
+using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Application.Actions.Characters.Commands.EditHealth
 {

@@ -7,6 +7,7 @@ using Tavernkeep.Application.Actions.Users.Queries.GetUsers;
 using Tavernkeep.Application.UseCases.Users.Commands.EditUser;
 using Tavernkeep.Application.UseCases.Users.Queries.GetCurrentUser;
 using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Contracts.Users.Dtos;
 using Tavernkeep.Core.Contracts.Users.Requests;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Server.Extensions;
@@ -28,7 +29,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>List of all registered users.</returns>
         [Authorize]
         [HttpGet]
-        public async Task<List<User>> GetAllUsers()
+        public async Task<List<UserDto>> GetAllUsers()
         {
             var users = await mediator.Send(new GetAllUsersQuery());
             return users;
@@ -42,7 +43,7 @@ namespace Tavernkeep.Server.Controllers
         [Authorize]
         [RequiresRole(UserRole.Master)]
         [HttpPost]
-        public async Task<User> CreateUser([FromBody] CreateUserRequest request)
+        public async Task<UserDto> CreateUser([FromBody] CreateUserRequest request)
         {
             return await mediator.Send(new CreateUserCommand(request.Login, request.Password, request.Role));
         }
@@ -56,7 +57,7 @@ namespace Tavernkeep.Server.Controllers
         [Authorize]
         [RequiresRole(UserRole.Master)]
         [HttpPatch("{userId}")]
-        public async Task<User> EditUser([FromRoute] Guid userId, [FromBody] EditUserRequest request)
+        public async Task<UserDto> EditUser([FromRoute] Guid userId, [FromBody] EditUserRequest request)
         {
             return await mediator.Send(new EditUserCommand(userId, request.Login, request.Password, request.Role));
         }
@@ -79,7 +80,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>The user that was specified in the authorization token.</returns>
         [Authorize]
         [HttpGet("current")]
-        public async Task<User> GetCurrentUser()
+        public async Task<UserDto> GetCurrentUser()
         {
             return await mediator.Send(new GetUserQuery(HttpContext.GetUserId()));
         }

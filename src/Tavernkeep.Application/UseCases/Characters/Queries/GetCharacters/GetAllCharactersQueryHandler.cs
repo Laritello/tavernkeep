@@ -1,14 +1,19 @@
-﻿using MediatR;
-using Tavernkeep.Core.Entities;
+﻿using AutoMapper;
+using MediatR;
+using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.Actions.Characters.Queries.GetCharacters
 {
-    public class GetAllCharactersQueryHandler(ICharacterRepository characterRepository) : IRequestHandler<GetAllCharactersQuery, List<Character>>
+    public class GetAllCharactersQueryHandler(
+        ICharacterRepository characterRepository, 
+        IMapper mapper
+        ) : IRequestHandler<GetAllCharactersQuery, List<CharacterDto>>
     {
-        public async Task<List<Character>> Handle(GetAllCharactersQuery request, CancellationToken cancellationToken)
+        public async Task<List<CharacterDto>> Handle(GetAllCharactersQuery request, CancellationToken cancellationToken)
         {
-            return await characterRepository.GetAllCharactersAsync(cancellationToken);
+            var characters = await characterRepository.GetAllCharactersAsync(cancellationToken);
+            return mapper.Map<List<CharacterDto>>(characters);
         }
     }
 }

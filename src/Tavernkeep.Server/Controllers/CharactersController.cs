@@ -10,7 +10,7 @@ using Tavernkeep.Application.Actions.Characters.Commands.ModifyHealth;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.Actions.Characters.Queries.GetCharacters;
 using Tavernkeep.Application.UseCases.Characters.Commands.AssignUser;
-using Tavernkeep.Core.Contracts.Character;
+using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Character.Requests;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
@@ -33,7 +33,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>List containing all characters.</returns>
         [Authorize]
         [HttpGet]
-        public async Task<List<Character>> GetCharacters()
+        public async Task<List<CharacterDto>> GetCharacters()
         {
             return await mediator.Send(new GetAllCharactersQuery());
         }
@@ -45,7 +45,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>Created character.</returns>
         [Authorize]
         [HttpPost("create")]
-        public async Task<Character> CreateCharacter(CreateCharacterRequest request)
+        public async Task<CharacterDto> CreateCharacter(CreateCharacterRequest request)
         {
             return await mediator.Send(new CreateCharacterCommand(HttpContext.GetUserId(), request.Name));
         }
@@ -70,7 +70,7 @@ namespace Tavernkeep.Server.Controllers
         [Authorize]
         [RequiresRole(UserRole.Master)]
         [HttpPatch("assign")]
-        public async Task<Character> AssignUserToCharacter([FromBody] AssignUserRequest request)
+        public async Task<CharacterDto> AssignUserToCharacter([FromBody] AssignUserRequest request)
         {
             return await mediator.Send(new AssignUserCommand(request.CharacterId, request.UserId));
         }
@@ -82,7 +82,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>Specified character.</returns>
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<Character> GetCharacter([FromRoute] Guid id)
+        public async Task<CharacterDto> GetCharacter([FromRoute] Guid id)
         {
             return await mediator.Send(new GetCharacterQuery(id));
         }

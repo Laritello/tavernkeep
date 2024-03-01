@@ -5,8 +5,6 @@ using Tavernkeep.Core.Entities.Base;
 namespace Tavernkeep.Core.Entities.Messages
 {
     [Table("Messages")]
-    [JsonDerivedType(typeof(TextMessage), typeDiscriminator: nameof(TextMessage))]
-    [JsonDerivedType(typeof(RollMessage), typeDiscriminator: nameof(RollMessage))]
     public abstract class Message : Entity
     {
         #region Constructors

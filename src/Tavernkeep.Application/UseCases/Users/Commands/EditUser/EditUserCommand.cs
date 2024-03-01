@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Contracts.Users.Dtos;
 using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Application.UseCases.Users.Commands.EditUser
 {
-    public class EditUserCommand : IRequest<User>
+    public class EditUserCommand : IRequest<UserDto>
     {
         public Guid UserId { get; set; } = default;
         public string Login { get; set; } = default!;

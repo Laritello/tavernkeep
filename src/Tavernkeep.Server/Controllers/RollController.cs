@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice;
 using Tavernkeep.Application.UseCases.Roll.Commands.RollSkill;
+using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Roll;
 using Tavernkeep.Core.Entities.Messages;
@@ -23,9 +24,9 @@ namespace Tavernkeep.Server.Controllers
         /// </summary>
         /// <param name="expression">Dice expression written in the dice notation.</param>
         /// <param name="rollType">Type of the roll.</param>
-        /// <returns><see cref="RollMessage"/> with the result of the roll.</returns>
+        /// <returns><see cref="RollMessageDto"/> with the result of the roll.</returns>
         [HttpGet("custom")]
-        public async Task<RollMessage> RollCustomDice([FromQuery] string expression, [FromQuery] RollType rollType)
+        public async Task<RollMessageDto> RollCustomDice([FromQuery] string expression, [FromQuery] RollType rollType)
         {
             return await mediator.Send(new RollCustomDiceCommand(HttpContext.GetUserId(), rollType, expression));
         }
@@ -34,10 +35,10 @@ namespace Tavernkeep.Server.Controllers
         /// Roll a skill check for the character.
         /// </summary>
         /// <param name="request">The request with roll parameters.</param>
-        /// <returns><see cref="RollMessage"/> containing the result of the roll.</returns>
+        /// <returns><see cref="RollMessageDto"/> containing the result of the roll.</returns>
         [Authorize]
         [HttpPost("skill")]
-        public async Task<RollMessage> RollSkill([FromBody] RollSkillRequest request)
+        public async Task<RollMessageDto> RollSkill([FromBody] RollSkillRequest request)
         {
             return await mediator.Send(new RollSkillCommand(HttpContext.GetUserId(), request.CharacterId, request.SkillType, request.RollType));
         }

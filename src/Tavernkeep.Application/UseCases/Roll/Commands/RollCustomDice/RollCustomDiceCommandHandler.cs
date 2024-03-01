@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
@@ -11,10 +13,11 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice
         IDiceService diceService,
         IUserRepository userRepository,
         IMessageRepository messageRepository, 
-        INotificationService notificationService
-        ) : IRequestHandler<RollCustomDiceCommand, RollMessage>
+        INotificationService notificationService,
+        IMapper mapper
+        ) : IRequestHandler<RollCustomDiceCommand, RollMessageDto>
     {
-        public async Task<RollMessage> Handle(RollCustomDiceCommand request, CancellationToken cancellationToken)
+        public async Task<RollMessageDto> Handle(RollCustomDiceCommand request, CancellationToken cancellationToken)
         {
             var initiator = await userRepository.FindAsync(request.InitiatorId)
                 ?? throw new BusinessLogicException("Initiator with specified ID doesn't exist.");
@@ -34,7 +37,7 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice
             await messageRepository.CommitAsync(cancellationToken);
             await notificationService.QueueMessage(message);
 
-            return message;
+            return mapper.Map<RollMessageDto>(message);
         }
     }
 }

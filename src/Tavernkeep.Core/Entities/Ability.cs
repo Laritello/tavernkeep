@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Enums;
 
-namespace Tavernkeep.Core.Contracts.Character
+namespace Tavernkeep.Core.Entities
 {
     public class Ability
     {
@@ -12,7 +12,7 @@ namespace Tavernkeep.Core.Contracts.Character
 
         }
 
-        public Ability(Entities.Character owner, AbilityType type)
+        public Ability(Character owner, AbilityType type)
         {
             Owner = owner;
             Type = type;
@@ -23,7 +23,7 @@ namespace Tavernkeep.Core.Contracts.Character
         #region Properties
 
         [JsonIgnore]
-        public Entities.Character Owner { get; set; } = default!;
+        public Character Owner { get; set; } = default!;
         public AbilityType Type { get; set; }
         public int Score { get; set; }
         public int Modifier => (Score - 10) / 2;

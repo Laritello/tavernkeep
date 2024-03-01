@@ -9,7 +9,7 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
     {
         public async Task<List<Character>> GetAllCharactersAsync(CancellationToken cancellationToken = default)
         {
-            return await AsQueryable().ToListAsync(cancellationToken);
+            return await AsQueryable().Include(x => x.Owner).ToListAsync(cancellationToken);
         }
         public async Task<Character?> GetFullCharacterAsync(Guid id, CancellationToken cancellationToken = default)
         {
