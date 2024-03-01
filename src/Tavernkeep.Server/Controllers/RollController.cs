@@ -6,7 +6,6 @@ using Tavernkeep.Application.UseCases.Roll.Commands.RollSkill;
 using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Roll;
-using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Server.Extensions;
 
 namespace Tavernkeep.Server.Controllers
@@ -26,7 +25,7 @@ namespace Tavernkeep.Server.Controllers
         /// <param name="rollType">Type of the roll.</param>
         /// <returns><see cref="RollMessageDto"/> with the result of the roll.</returns>
         [HttpGet("custom")]
-        public async Task<RollMessageDto> RollCustomDice([FromQuery] string expression, [FromQuery] RollType rollType)
+        public async Task<RollMessageDto> RollCustomDiceAsync([FromQuery] string expression, [FromQuery] RollType rollType)
         {
             return await mediator.Send(new RollCustomDiceCommand(HttpContext.GetUserId(), rollType, expression));
         }
@@ -38,7 +37,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns><see cref="RollMessageDto"/> containing the result of the roll.</returns>
         [Authorize]
         [HttpPost("skill")]
-        public async Task<RollMessageDto> RollSkill([FromBody] RollSkillRequest request)
+        public async Task<RollMessageDto> RollSkillAsync([FromBody] RollSkillRequest request)
         {
             return await mediator.Send(new RollSkillCommand(HttpContext.GetUserId(), request.CharacterId, request.SkillType, request.RollType));
         }

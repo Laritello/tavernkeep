@@ -33,7 +33,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>List containing all characters.</returns>
         [Authorize]
         [HttpGet]
-        public async Task<List<CharacterDto>> GetCharacters()
+        public async Task<List<CharacterDto>> GetCharactersAsync()
         {
             return await mediator.Send(new GetAllCharactersQuery());
         }
@@ -45,7 +45,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>Created character.</returns>
         [Authorize]
         [HttpPost("create")]
-        public async Task<CharacterDto> CreateCharacter(CreateCharacterRequest request)
+        public async Task<CharacterDto> CreateCharacterAsync(CreateCharacterRequest request)
         {
             return await mediator.Send(new CreateCharacterCommand(HttpContext.GetUserId(), request.Name));
         }
@@ -57,7 +57,7 @@ namespace Tavernkeep.Server.Controllers
         [Authorize]
         [RequiresRole(UserRole.Master)]
         [HttpDelete("delete/{characterId}")]
-        public async Task DeleteCharacter([FromRoute] Guid characterId)
+        public async Task DeleteCharacterAsync([FromRoute] Guid characterId)
         {
             await mediator.Send(new DeleteCharacterCommand(characterId));
         }
@@ -70,7 +70,7 @@ namespace Tavernkeep.Server.Controllers
         [Authorize]
         [RequiresRole(UserRole.Master)]
         [HttpPatch("assign")]
-        public async Task<CharacterDto> AssignUserToCharacter([FromBody] AssignUserRequest request)
+        public async Task<CharacterDto> AssignUserToCharacterAsync([FromBody] AssignUserRequest request)
         {
             return await mediator.Send(new AssignUserCommand(request.CharacterId, request.UserId));
         }
@@ -82,7 +82,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>Specified character.</returns>
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<CharacterDto> GetCharacter([FromRoute] Guid id)
+        public async Task<CharacterDto> GetCharacterAsync([FromRoute] Guid id)
         {
             return await mediator.Send(new GetCharacterQuery(id));
         }
@@ -94,7 +94,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>Changed ability.</returns>
         [Authorize]
         [HttpPatch("edit/ability")]
-        public async Task<Ability> EditCharacterAbility([FromBody] EditAbilityRequest request)
+        public async Task<Ability> EditCharacterAbilityAsync([FromBody] EditAbilityRequest request)
         {
             return await mediator.Send(new EditAbilityCommand(HttpContext.GetUserId(), request.CharacterId, request.Type, request.Score));
         }
@@ -106,7 +106,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>Changed skill.</returns>
         [Authorize]
         [HttpPatch("edit/skill")]
-        public async Task<Skill> EditCharacterSkill([FromBody] EditSkillRequest request)
+        public async Task<Skill> EditCharacterSkillAsync([FromBody] EditSkillRequest request)
         {
             return await mediator.Send(new EditSkillCommand(HttpContext.GetUserId(), request.CharacterId, request.Type, request.Proficiency));
         }
@@ -118,7 +118,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>Changed health.</returns>
         [Authorize]
         [HttpPatch("edit/health")]
-        public async Task<Health> EditCharacterHealth([FromBody] EditHealthRequest request)
+        public async Task<Health> EditCharacterHealthAsync([FromBody] EditHealthRequest request)
         {
             return await mediator.Send(new EditHealthCommand(HttpContext.GetUserId(), request.CharacterId, request.Current, request.Max, request.Temporary));
         }
@@ -130,7 +130,7 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>Modified health.</returns>
         [Authorize]
         [HttpPatch("modify/health")]
-        public async Task<Health> ModifyCharacterHealth([FromBody] ModifyHealthRequest request)
+        public async Task<Health> ModifyCharacterHealthAsync([FromBody] ModifyHealthRequest request)
         {
             return await mediator.Send(new ModifyHealthCommand(HttpContext.GetUserId(), request.CharacterId, request.Change));
         }

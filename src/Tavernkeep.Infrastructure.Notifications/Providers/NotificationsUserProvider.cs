@@ -3,6 +3,9 @@ using Tavernkeep.Core.Contracts.Authentication;
 
 namespace Tavernkeep.Infrastructure.Notifications.Providers
 {
+    /// <summary>
+    /// Provides user id for the specified connection from the <see cref="HubConnectionContext"/>.
+    /// </summary>
     public class NotificationsUserProvider : IUserIdProvider
     {
         public string? GetUserId(HubConnectionContext connection)
