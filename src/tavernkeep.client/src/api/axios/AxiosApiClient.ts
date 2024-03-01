@@ -155,8 +155,7 @@ export class AxiosApiClient implements ApiClient {
 
     async getCharacters(): Promise<ApiResponse<Character[]>> {
         const response = await this.client.get<Character[]>('characters');
-        const data = plainToInstance(Character, response.data)
-        console.log(data)
+        const data = plainToInstance(Character, response.data);
         return new AxiosApiResponse(data, response.status, response.statusText);
     }
 
