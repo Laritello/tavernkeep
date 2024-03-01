@@ -14,6 +14,12 @@
                     <span class="w-20">{{ character.owner.login || 'Unknown' }}</span>
                     <UserSelector v-model="character.owner.id" :users="usersStore.users" />
                     <v-btn @click="assign(character.id, character.owner.id)"> Assign </v-btn>
+                    <v-btn
+                        size="small"
+                        variant="text"
+                        icon="mdi-delete"
+                        @click="charactersStore.deleteCharacter(character.id)"
+                    />
                 </div>
             </template>
         </div>
