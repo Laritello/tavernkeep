@@ -36,7 +36,7 @@
                         <RouterLink to="/">Home</RouterLink>
                     </li>
                     <li v-if="usersStore.currentUser?.role == UserRole.Master">
-                        <RouterLink to="/admin">Admin Panel</RouterLink>
+                        <RouterLink to="/users">Users</RouterLink>
                     </li>
                     <li v-if="usersStore.currentUser?.role == UserRole.Master">
                         <RouterLink to="/characters">Characters</RouterLink>

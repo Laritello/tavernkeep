@@ -6,7 +6,7 @@ import { UserRole } from './contracts/enums/UserRole';
 import LoginPage from './pages/LoginPage.vue';
 import HomePage from './pages/HomePage.vue';
 import ErrorPage from './pages/ErrorPage.vue';
-import AdminPanelPage from './pages/AdminPanelPage.vue';
+import UsersPage from './pages/UsersPage.vue';
 import CharactersPage from './pages/CharactersPage.vue';
 
 const routes: RouteRecordRaw[] = [
@@ -35,8 +35,8 @@ const routes: RouteRecordRaw[] = [
         },
     },
     {
-        path: '/admin',
-        component: AdminPanelPage,
+        path: '/users',
+        component: UsersPage,
         meta: {
             layout: 'AppLayout',
             protected: true,

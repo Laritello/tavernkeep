@@ -17,7 +17,7 @@ export class Character {
     @Type(() => Map<AbilityType, Ability>)
     abilities: Map<AbilityType, Ability>;
 
-    @Type(() => Map<AbilityType, Ability>)
+    @Type(() => Map<SkillType, Skill>)
     skills: Map<SkillType, Skill>;
 
     constructor(id: string, name: string, owner: User) {
