@@ -9,6 +9,7 @@ import type { Skill } from '@/contracts/character/Skill';
 import type { AbilityType } from '@/contracts/enums/AbilityType';
 import type { Ability } from '@/contracts/character/Ability';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
+import type { RollType } from '@/contracts/enums/RollType';
 
 export interface ApiClient {
     auth(login: string, password: string): Promise<ApiResponse<AuthenticationResponse>>;
@@ -31,5 +32,5 @@ export interface ApiClient {
 
     sendMessage(message: string, recipientId?: string): Promise<ApiResponse<Message>>;
     getMessages(skip: number, take: number): Promise<ApiResponse<Message[]>>;
-    sendRollMessage(message: string): Promise<ApiResponse<Message>>;
+    sendRollMessage(message: string, rollType: RollType): Promise<ApiResponse<Message>>;
 }
