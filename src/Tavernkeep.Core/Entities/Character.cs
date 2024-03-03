@@ -36,6 +36,8 @@ namespace Tavernkeep.Core.Entities
             Stealth = new(this, SkillType.Stealth);
             Survival = new(this, SkillType.Survival);
             Thievery = new(this, SkillType.Thievery);
+
+            Lores = [];
         }
 
         #endregion
@@ -70,6 +72,8 @@ namespace Tavernkeep.Core.Entities
         public Skill Stealth { get; set; }
         public Skill Survival { get; set; }
         public Skill Thievery { get; set; }
+
+        public List<Lore> Lores { get; set; }
 
         #endregion
 

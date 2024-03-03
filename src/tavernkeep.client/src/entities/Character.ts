@@ -1,5 +1,6 @@
 import { Ability } from '@/contracts/character/Ability';
 import { Health } from '@/contracts/character/Health';
+import type { Lore } from '@/contracts/character/Lore';
 import { Skill } from '@/contracts/character/Skill';
 import { AbilityType } from '@/contracts/enums/AbilityType';
 import { SkillType } from '@/contracts/enums/SkillType';
@@ -19,6 +20,8 @@ export class Character {
 
     @Type(() => Map<SkillType, Skill>)
     skills: Map<SkillType, Skill>;
+
+    lores: Lore[];
 
     constructor(id: string, name: string, owner: User) {
         this.id = id;
@@ -54,5 +57,7 @@ export class Character {
             [SkillType.Survival, new Skill(SkillType.Survival)],
             [SkillType.Thievery, new Skill(SkillType.Thievery)],
         ]);
+
+        this.lores = [];
     }
 }

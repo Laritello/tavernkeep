@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tavernkeep.Infrastructure.Data.Context;
 
@@ -10,9 +11,11 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    partial class SessionContextModelSnapshot : ModelSnapshot
+    [Migration("20240302230449_LoreCollection")]
+    partial class LoreCollection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
@@ -53,7 +56,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasMaxLength(21)
+                        .HasMaxLength(13)
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("SenderId")
@@ -121,9 +124,8 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     b.HasBaseType("Tavernkeep.Core.Entities.Messages.Message");
 
-                    b.Property<string>("Expression")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Result")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("RollType")
                         .IsRequired()
@@ -150,15 +152,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Messages");
 
                     b.HasDiscriminator().HasValue("TextMessage");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.SkillRollMessage", b =>
-                {
-                    b.HasBaseType("Tavernkeep.Core.Entities.Messages.RollMessage");
-
-                    b.ToTable("Messages");
-
-                    b.HasDiscriminator().HasValue("SkillRollMessage");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Character", b =>
@@ -812,59 +805,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.RollMessage", b =>
-                {
-                    b.OwnsOne("Tavernkeep.Core.Entities.Rolls.RollResult", "Result", b1 =>
-                        {
-                            b1.Property<Guid>("RollMessageId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Modifier")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Value")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("RollMessageId");
-
-                            b1.ToTable("Messages");
-
-                            b1.ToJson("Result");
-
-                            b1.WithOwner()
-                                .HasForeignKey("RollMessageId");
-
-                            b1.OwnsMany("Tavernkeep.Core.Entities.Rolls.ThrowResult", "Results", b2 =>
-                                {
-                                    b2.Property<Guid>("RollResultRollMessageId")
-                                        .HasColumnType("TEXT");
-
-                                    b2.Property<int>("Id")
-                                        .ValueGeneratedOnAddOrUpdate()
-                                        .HasColumnType("INTEGER");
-
-                                    b2.Property<string>("Type")
-                                        .IsRequired()
-                                        .HasColumnType("TEXT");
-
-                                    b2.Property<int>("Value")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.HasKey("RollResultRollMessageId", "Id");
-
-                                    b2.ToTable("Messages");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("RollResultRollMessageId");
-                                });
-
-                            b1.Navigation("Results");
-                        });
-
-                    b.Navigation("Result")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.TextMessage", b =>
                 {
                     b.HasOne("Tavernkeep.Core.Entities.User", "Recipient")
@@ -872,36 +812,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .HasForeignKey("RecipientId");
 
                     b.Navigation("Recipient");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.SkillRollMessage", b =>
-                {
-                    b.OwnsOne("Tavernkeep.Core.Entities.Snapshots.SkillSnapshot", "Skill", b1 =>
-                        {
-                            b1.Property<Guid>("SkillRollMessageId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Bonus")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("SkillRollMessageId");
-
-                            b1.ToTable("Messages");
-
-                            b1.ToJson("Skill");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SkillRollMessageId");
-                        });
-
-                    b.Navigation("Skill")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
