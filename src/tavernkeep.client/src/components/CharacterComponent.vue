@@ -100,6 +100,56 @@
                             </v-dialog>
                         </v-col>
                     </v-row>
+                    <v-row
+                        v-for="value in character.lores" 
+                        v-bind:key="value.topic"
+                        align="center"
+                        no-gutters
+                        class="pl-3"
+                    >
+                        <v-col>
+                            <div class="text-body">Lore ({{ value.topic }}): {{ value.proficiency }}</div>
+                        </v-col>
+                        <v-col cols="auto">
+                            <v-dialog width="500">
+                                <template v-slot:activator="{ props }">
+                                    <v-btn v-bind="props" icon="$edit" size="x-small" variant="text"></v-btn>
+                                </template>
+
+                                <template v-slot:default="{ isActive }">
+                                    <v-card title="Edit skill">
+                                        <v-card-text>
+                                            <div class="mb-1">
+                                                Enter the new proficiency for
+                                                Lore({{ value.topic }}).
+                                            </div>
+                                            <v-combobox
+                                                label="Proficiency"
+                                                v-model="dialogSkillProficiency"
+                                                :items="[
+                                                    Proficiency.Untrained,
+                                                    Proficiency.Trained,
+                                                    Proficiency.Expert,
+                                                    Proficiency.Master,
+                                                    Proficiency.Legendary,
+                                                ]"
+                                            >
+                                            </v-combobox>
+                                        </v-card-text>
+
+                                        <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
+                                            <v-btn
+                                                text="Confirm"
+                                                @click="updateLore(isActive, value, dialogSkillProficiency)"
+                                            ></v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </template>
+                            </v-dialog>
+                        </v-col>
+                    </v-row>
                 </v-col>
             </v-row>
         </v-container>
@@ -118,6 +168,7 @@ import type { AbilityEditedNotification } from '@/contracts/notifications/Abilit
 import type { SkillEditedNotification } from '@/contracts/notifications/SkillEditedNotification';
 
 import { onMounted, ref, type Ref } from 'vue';
+import type { Lore } from '@/contracts/character/Lore';
 
 const client: ApiClient = ApiClientFactory.createApiClient();
 
@@ -169,6 +220,14 @@ async function updateSkill(isActive: Ref<boolean>, skill: Skill, proficiency: Pr
 
     skill.proficiency = response.data.proficiency;
     dialogSkillProficiency.value = Proficiency.Untrained; // TODO: On show set selected skill current value
+    isActive.value = false;
+}
+
+async function updateLore(isActive: Ref<boolean>, lore: Lore, proficiency: Proficiency) {
+    var response = await client.editLore(props.character.id, lore.topic, proficiency);
+
+    lore.proficiency = response.data.proficiency;
+    dialogSkillProficiency.value = Proficiency.Untrained; // TODO: On show set selected lore skill current value
     isActive.value = false;
 }
 </script>
