@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.SignalR;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;

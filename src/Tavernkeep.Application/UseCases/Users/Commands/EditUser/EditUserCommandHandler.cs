@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using Tavernkeep.Core.Contracts.Users.Dtos;
-using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 

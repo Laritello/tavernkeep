@@ -9,8 +9,7 @@ using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice
 {
-    public class RollCustomDiceCommandHandler
-        (
+    public class RollCustomDiceCommandHandler(
         IDiceService diceService,
         IUserRepository userRepository,
         IMessageRepository messageRepository, 

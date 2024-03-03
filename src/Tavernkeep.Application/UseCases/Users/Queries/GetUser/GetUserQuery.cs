@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Contracts.Users.Dtos;
-using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Application.UseCases.Users.Queries.GetCurrentUser
 {
