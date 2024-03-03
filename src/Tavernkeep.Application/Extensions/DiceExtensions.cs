@@ -10,6 +10,7 @@ namespace Tavernkeep.Application.Extensions
             return new()
             {
                 Value = result.Value,
+                Modifier = result.Value - result.Results.Sum(x => x.Value),
                 Results = result.Results.Select(x => new ThrowResult()
                 {
                     Value = x.Value,
