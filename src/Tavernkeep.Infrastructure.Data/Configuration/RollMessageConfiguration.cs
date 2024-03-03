@@ -15,6 +15,8 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
                 .IsRequired()
                 .HasConversion(new EnumToStringConverter<RollType>());
 
+            builder.Property(m => m.Expression).IsRequired();
+
             builder.OwnsJson(m => m.Result, b =>
             {
                 b.ToJson();

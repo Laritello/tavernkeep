@@ -46,6 +46,7 @@ export class TextMessage extends Message {
 export class RollMessage extends Message {
     result: RollResult;
     rollType: RollType;
+    expression: string;
 
     constructor(
         $type: string,
@@ -53,12 +54,14 @@ export class RollMessage extends Message {
         sender: User,
         created: Date,
         result: RollResult,
-        rollType: RollType
+        rollType: RollType,
+        expression: string
     ) {
         super($type, id, sender, created)
 
         this.result = result;
         this.rollType = rollType;
+        this.expression = expression;
     }
 }
 

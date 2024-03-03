@@ -5,7 +5,8 @@ namespace Tavernkeep.Core.Contracts.Chat.Dtos
 {
     public class RollMessageDto : MessageDto
     {
-        public RollResult Result { get; set; } = default!;
         public RollType RollType { get; set; }
+        public string Expression { get; set; } = default!;
+        public RollResult Result { get; set; } = default!;
     }
 }
