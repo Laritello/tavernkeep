@@ -1,23 +1,18 @@
 <template>
-    <div class="rounded bg-secondary text-secondary-content divide-y">
+    <div class="rounded bg-base-content text-base-300 divide-y">
         <div class="flex justify-between px-2 pt-1">
             <div>{{ message.sender.login }}</div>
             <div>{{ message.rollType }}</div>
             <div class="text-xs font-light opacity-50">{{ formatDate(message.created) }}</div>
         </div>
         <div>
-            <ul class="grid grid-cols-10 px-2">
+            <ul class="grid grid-cols-10 px-2 my-2">
                 <template v-for="result in message.result.results" :key="result.value">
                     <li>
-                        <div class="image-container tooltip" :data-tip="result.type">
-                            <img src="@/assets/d20.png" :alt="result.type" />
-                            <div class="number-overlay text-2xl text-amber-200 font-bold">
-                                {{ result.value }}
-                            </div>
-                        </div>
+                        <DiceIcon :dice="result.type" :value="result.value" class="h-8" />
                     </li>
                 </template>
-                <li v-if="message.result.modifier" class="text-2xl text-amber-200 font-bold">
+                <li v-if="message.result.modifier" class="text-2xl text-base-300 font-thin">
                     {{ message.result.modifier > 0 ? '+' + message.result.modifier : message.result.modifier }}
                 </li>
             </ul>
@@ -28,6 +23,7 @@
     </div>
 </template>
 <script setup lang="ts">
+import DiceIcon from '@/components/DiceIcon.vue';
 import { RollMessage } from '@/entities/Message';
 const { message } = defineProps<{
     message: RollMessage;
@@ -51,10 +47,23 @@ function formatDate(dateString: Date): string {
     transform: translate(-50%, -50%);
 }
 
+.text-shadow {
+    text-shadow: #000000 0px 0 5px;
+}
+
 .image-container {
     position: relative;
     text-align: center;
     width: 32px;
     height: 32px;
+}
+
+.dice {
+    height: 100%;
+    max-width: fit-content;
+}
+
+.d20 path {
+    fill: #d88440;
 }
 </style>
