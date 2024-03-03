@@ -1,27 +1,20 @@
 <template>
-    <!-- <v-sheet :color="color || 'green'" rounded>
-        <div class="text-container px-2 pb-1">
-            <div class="header px-1 pt-1">
-                <div class="body-1 font-weight-medium">{{ message.sender.login }}</div>
-                <div class="body-1 font-weight-light">{{ formatDate(message.created) }}</div>
-            </div>
-            <div>
-                <div class="body-1 pl-1">
-                    Roll type: {{ message.rollType.toString() }}; Roll result: {{ message.result.value }}
-                </div>
-            </div>
-        </div>
-    </v-sheet> -->
     <div class="rounded bg-secondary text-secondary-content divide-y">
         <div class="flex justify-between px-2 pt-1">
             <div>{{ message.sender.login }}</div>
+            <div>{{ message.rollType }}</div>
             <div class="text-xs font-light opacity-50">{{ formatDate(message.created) }}</div>
         </div>
         <div>
-            <p class="flex justify-center p-4">List of rolled results will be there...</p>
+            <ul class="grid grid-cols-5 px-2">
+                <template v-for="result in message.result.results" :key="result.value">
+                    <li>{{ result.type }} = {{ result.value }}</li>
+                </template>
+                <li>{{ message.result.modifier > 0 ? '+' + message.result.modifier : message.result.modifier }}</li>
+            </ul>
         </div>
         <div>
-            <span class="flex text-3xl justify-center p-4">{{ message.result }}</span>
+            <span class="flex text-3xl justify-center p-4">{{ message.result.value }}</span>
         </div>
     </div>
 </template>
