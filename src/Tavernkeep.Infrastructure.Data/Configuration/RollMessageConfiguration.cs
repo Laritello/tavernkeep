@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.EntityFrameworkCore;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Messages;
+using Tavernkeep.Infrastructure.Data.Extensions;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration
 {
@@ -14,7 +15,11 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
                 .IsRequired()
                 .HasConversion(new EnumToStringConverter<RollType>());
 
-            builder.Property(m => m.Result).IsRequired();
+            builder.OwnsJson(m => m.Result, b =>
+            {
+                b.ToJson();
+                b.OwnsMany(x => x.Results);
+            });
         }
     }
 }

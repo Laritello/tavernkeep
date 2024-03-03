@@ -1,4 +1,5 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Entities.Rolls;
 
 namespace Tavernkeep.Core.Entities.Messages
 {
@@ -12,7 +13,7 @@ namespace Tavernkeep.Core.Entities.Messages
 
         #region Properties
 
-        public int Result { get; set; }
+        public RollResult Result { get; set; }
         public RollType RollType { get; set; }
 
         #endregion
