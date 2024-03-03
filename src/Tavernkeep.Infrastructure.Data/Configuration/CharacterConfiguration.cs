@@ -41,6 +41,8 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
             builder.OwnsJson(c => c.Stealth);
             builder.OwnsJson(c => c.Survival);
             builder.OwnsJson(c => c.Thievery);
+
+            builder.OwnsMany(c => c.Lores, b => b.ToJson());
         }
     }
 }

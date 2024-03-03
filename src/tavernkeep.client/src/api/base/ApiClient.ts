@@ -10,6 +10,7 @@ import type { AbilityType } from '@/contracts/enums/AbilityType';
 import type { Ability } from '@/contracts/character/Ability';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import type { RollType } from '@/contracts/enums/RollType';
+import type { Lore } from '@/contracts/character/Lore';
 
 export interface ApiClient {
     auth(login: string, password: string): Promise<ApiResponse<AuthenticationResponse>>;
@@ -26,6 +27,10 @@ export interface ApiClient {
     deleteCharacter(id: string): Promise<ApiResponse<null>>;
     getCharacter(id: string): Promise<ApiResponse<Character>>;
     assignUserToCharacter(characterId: string, userId: string): Promise<ApiResponse<Character>>;
+
+    createLore(characterId: string, topic: string, proficiency: Proficiency): Promise<ApiResponse<Lore>>;
+    editLore(characterId: string, topic: string, proficiency: Proficiency): Promise<ApiResponse<Lore>>;
+    deleteLore(characterId: string, topic: string): Promise<ApiResponse<null>>;
 
     editAbility(characterId: string, type: AbilityType, score: number): Promise<ApiResponse<Ability>>;
     editSkill(characterId: string, type: SkillType, proficiency: Proficiency): Promise<ApiResponse<Skill>>;

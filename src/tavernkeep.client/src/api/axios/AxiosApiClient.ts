@@ -15,6 +15,7 @@ import { plainToInstance } from 'class-transformer';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import { useAuthStore } from '@/stores/auth.store';
 import type { RollType } from '@/contracts/enums/RollType';
+import type { Lore } from '@/contracts/character/Lore';
 
 // TODO: Error handling and interceptors
 export class AxiosApiClient implements ApiClient {
@@ -185,6 +186,32 @@ export class AxiosApiClient implements ApiClient {
         });
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
+    }
+
+    async createLore(characterId: string, topic: string, proficiency: Proficiency): Promise<ApiResponse<Lore>> {
+        const response = await this.client.post<Lore>('lore', {
+            characterId: characterId,
+            topic: topic,
+            proficiency: proficiency
+        });
+
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
+    }
+
+    async editLore(characterId: string, topic: string, proficiency: Proficiency): Promise<ApiResponse<Lore>> {
+        const response = await this.client.patch<Lore>('lore', {
+            characterId: characterId,
+            topic: topic,
+            proficiency: proficiency
+        });
+
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
+    }
+
+    async deleteLore(characterId: string, topic: string): Promise<ApiResponse<null>> {
+        const response = await this.client.delete('lore/' + characterId, { params: { topic: topic } });
+
+        return new AxiosApiResponse(null, response.status, response.statusText);
     }
 
     async editAbility(characterId: string, type: AbilityType, score: number): Promise<ApiResponse<Ability>> {
