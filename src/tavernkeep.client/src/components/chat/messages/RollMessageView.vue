@@ -9,7 +9,7 @@
             <ul class="grid grid-cols-10 px-2">
                 <template v-for="result in message.result.results" :key="result.value">
                     <li>
-                        <div class="image-container">
+                        <div class="image-container tooltip" :data-tip="result.type">
                             <img src="@/assets/d20.png" :alt="result.type" />
                             <div class="number-overlay text-2xl text-amber-200 font-bold">
                                 {{ result.value }}
