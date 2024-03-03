@@ -19,7 +19,7 @@ namespace Tavernkeep.Server.Controllers
     public class RollController(IMediator mediator) : ControllerBase
     {
         /// <summary>
-        /// Roll custom dice.
+        /// Roll a custom dice.
         /// </summary>
         /// <param name="expression">Dice expression written in the dice notation.</param>
         /// <param name="rollType">Type of the roll.</param>
