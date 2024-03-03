@@ -6,11 +6,20 @@
             <div class="text-xs font-light opacity-50">{{ formatDate(message.created) }}</div>
         </div>
         <div>
-            <ul class="grid grid-cols-5 px-2">
+            <ul class="grid grid-cols-10 px-2">
                 <template v-for="result in message.result.results" :key="result.value">
-                    <li>{{ result.type }} = {{ result.value }}</li>
+                    <li>
+                        <div class="image-container">
+                            <img src="@/assets/d20.png" :alt="result.type" />
+                            <div class="number-overlay text-2xl text-amber-200 font-bold">
+                                {{ result.value }}
+                            </div>
+                        </div>
+                    </li>
                 </template>
-                <li>{{ message.result.modifier > 0 ? '+' + message.result.modifier : message.result.modifier }}</li>
+                <li v-if="message.result.modifier" class="text-2xl text-amber-200 font-bold">
+                    {{ message.result.modifier > 0 ? '+' + message.result.modifier : message.result.modifier }}
+                </li>
             </ul>
         </div>
         <div class="flex text-3xl justify-center p-4">
@@ -35,16 +44,17 @@ function formatDate(dateString: Date): string {
 }
 </script>
 <style scoped>
-.text-container {
-    display: grid;
-    grid-template-rows: min-content min-content 1fr;
-    grid-gap: 0px;
+.number-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.text-container .header {
-    display: grid;
-    grid-template-columns: 1fr min-content;
-    grid-gap: 3px;
-    align-items: center;
+.image-container {
+    position: relative;
+    text-align: center;
+    width: 32px;
+    height: 32px;
 }
 </style>
