@@ -17,9 +17,9 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
         IDiceService diceService,
         INotificationService notificationService,
         IMapper mapper
-        ) : IRequestHandler<RollSkillCommand, RollMessageDto>
+        ) : IRequestHandler<RollSkillCommand, SkillRollMessageDto>
     {
-        public async Task<RollMessageDto> Handle(RollSkillCommand request, CancellationToken cancellationToken)
+        public async Task<SkillRollMessageDto> Handle(RollSkillCommand request, CancellationToken cancellationToken)
         {
             var initiator = await userRepository.FindAsync(request.InitiatorId)
                 ?? throw new BusinessLogicException("Initiator with specified ID doesn't exist.");
@@ -27,22 +27,24 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
             var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
                 ?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
 
-            var roll = diceService.Roll(bonus: character.GetSkill(request.SkillType).Bonus);
+            var skill = character.GetSkill(request.SkillType);
+            var roll = diceService.Roll(bonus: skill.Bonus);
 
-            RollMessage message = new()
+            SkillRollMessage message = new()
             {
                 Sender = initiator,
                 Created = DateTime.UtcNow,
                 RollType = request.RollType,
                 Expression = roll.DiceExpression,
                 Result = roll.ToRollResult(),
+                Skill = skill.AsSnapshot()
             };
 
             messageRepository.Save(message);
 
             await messageRepository.CommitAsync(cancellationToken);
             
-            var result = mapper.Map<RollMessageDto>(message);
+            var result = mapper.Map<SkillRollMessageDto>(message);
             await notificationService.QueueMessage(result);
 
             return result;
