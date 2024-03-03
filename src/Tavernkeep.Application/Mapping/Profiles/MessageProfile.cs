@@ -13,7 +13,11 @@ namespace Tavernkeep.Application.Mapping.Profiles
                 .Include<RollMessage, RollMessageDto>();
 
             CreateMap<TextMessage, TextMessageDto>();
-            CreateMap<RollMessage, RollMessageDto>();
+
+            CreateMap<RollMessage, RollMessageDto>()
+                .Include<SkillRollMessage, SkillRollMessageDto>();
+
+            CreateMap<SkillRollMessage, SkillRollMessageDto>();
         }
     }
 }

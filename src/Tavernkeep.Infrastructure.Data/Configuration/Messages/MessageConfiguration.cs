@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Tavernkeep.Core.Entities.Messages;
 
-namespace Tavernkeep.Infrastructure.Data.Configuration
+namespace Tavernkeep.Infrastructure.Data.Configuration.Messages
 {
     internal class MessageConfiguration : IEntityTypeConfiguration<Message>
     {
@@ -13,6 +13,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
             builder.HasKey(m => m.Id);
 
             builder.Property(m => m.Created).IsRequired();
+            builder.HasOne(m => m.Sender).WithMany().HasForeignKey(x => x.SenderId).IsRequired();
         }
     }
 }

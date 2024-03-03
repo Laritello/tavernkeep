@@ -5,7 +5,7 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Infrastructure.Data.Extensions;
 
-namespace Tavernkeep.Infrastructure.Data.Configuration
+namespace Tavernkeep.Infrastructure.Data.Configuration.Messages
 {
     public class RollMessageConfiguration : IEntityTypeConfiguration<RollMessage>
     {
