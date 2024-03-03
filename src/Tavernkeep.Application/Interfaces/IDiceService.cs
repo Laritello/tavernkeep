@@ -1,8 +1,10 @@
-﻿namespace Tavernkeep.Application.Interfaces
+﻿using Tavernkeep.Core.Entities.Rolls;
+
+namespace Tavernkeep.Application.Interfaces
 {
     public interface IDiceService
     {
-        public int Roll(string diceNotation);
-        public int Roll(int bonus = 0, bool advantage = false);
+        public RollResult Roll(string diceNotation);
+        public RollResult Roll(int bonus = 0, bool advantage = false);
     }
 }

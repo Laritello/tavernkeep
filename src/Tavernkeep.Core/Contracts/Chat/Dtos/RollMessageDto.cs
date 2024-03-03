@@ -1,10 +1,11 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Entities.Rolls;
 
 namespace Tavernkeep.Core.Contracts.Chat.Dtos
 {
     public class RollMessageDto : MessageDto
     {
-        public int Result { get; set; }
+        public RollResult Result { get; set; } = default!;
         public RollType RollType { get; set; }
     }
 }

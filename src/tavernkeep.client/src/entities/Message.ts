@@ -44,7 +44,7 @@ export class TextMessage extends Message {
 }
 
 export class RollMessage extends Message {
-    result: number;
+    result: RollResult;
     rollType: RollType;
 
     constructor(
@@ -52,12 +52,32 @@ export class RollMessage extends Message {
         id: number,
         sender: User,
         created: Date,
-        result: number,
+        result: RollResult,
         rollType: RollType
     ) {
         super($type, id, sender, created)
 
         this.result = result;
         this.rollType = rollType;
+    }
+}
+
+export class RollResult {
+    value: number;
+    results: ThrowResult[];
+
+    constructor(value: number, results: ThrowResult[]) {
+        this.value = value;
+        this.results = results;
+    }
+}
+
+export class ThrowResult {
+    value: number;
+    type: string;
+
+    constructor(value: number, type: string) {
+        this.value = value;
+        this.type = type;
     }
 }

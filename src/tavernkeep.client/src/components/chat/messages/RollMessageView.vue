@@ -7,7 +7,7 @@
             </div>
             <div>
                 <div class="body-1 pl-1">
-                    Roll type: {{ message.rollType.toString() }}; Roll result: {{ message.result }}
+                    Roll type: {{ message.rollType.toString() }}; Roll result: {{ message.result.value }}
                 </div>
             </div>
         </div>
