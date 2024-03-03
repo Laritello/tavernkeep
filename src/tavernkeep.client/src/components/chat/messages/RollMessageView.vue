@@ -13,8 +13,8 @@
                 <li>{{ message.result.modifier > 0 ? '+' + message.result.modifier : message.result.modifier }}</li>
             </ul>
         </div>
-        <div>
-            <span class="flex text-3xl justify-center p-4">{{ message.result.value }}</span>
+        <div class="flex text-3xl justify-center p-4">
+            <span :data-tip="message.expression" class="tooltip">{{ message.result.value }}</span>
         </div>
     </div>
 </template>
