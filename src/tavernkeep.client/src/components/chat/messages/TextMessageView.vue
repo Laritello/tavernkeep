@@ -1,22 +1,4 @@
 <template>
-    <!-- <v-sheet :color="color || 'primary'" rounded>
-        <div class="text-container px-2 pb-1">
-            <div class="header px-1 pt-1">
-                <div class="body-1 font-weight-medium">{{ message.sender.login }}</div>
-                <div class="body-1 font-weight-light">{{ formatDate(message.created) }}</div>
-            </div>
-            <div class="pb-1" style="align-self: flex-end">
-                <div v-if="message.isPrivate" class="private">
-                    <div class="body-1 font-weight-light mr-1">Private</div>
-                    <v-icon size="x-small" icon="mdi-eye"></v-icon>
-                </div>
-            </div>
-            <div>
-                <div class="body-1 pl-1">{{ message.text }}</div>
-            </div>
-        </div>
-    </v-sheet> -->
-
     <div
         class="chat"
         :class="{

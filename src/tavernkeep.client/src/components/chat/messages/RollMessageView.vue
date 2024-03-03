@@ -1,5 +1,5 @@
 <template>
-    <v-sheet :color="color || 'green'" rounded>
+    <!-- <v-sheet :color="color || 'green'" rounded>
         <div class="text-container px-2 pb-1">
             <div class="header px-1 pt-1">
                 <div class="body-1 font-weight-medium">{{ message.sender.login }}</div>
@@ -11,7 +11,19 @@
                 </div>
             </div>
         </div>
-    </v-sheet>
+    </v-sheet> -->
+    <div class="rounded bg-secondary text-secondary-content divide-y">
+        <div class="flex justify-between px-2 pt-1">
+            <div>{{ message.sender.login }}</div>
+            <div class="text-xs font-light opacity-50">{{ formatDate(message.created) }}</div>
+        </div>
+        <div>
+            <p class="flex justify-center p-4">List of rolled results will be there...</p>
+        </div>
+        <div>
+            <span class="flex text-3xl justify-center p-4">{{ message.result }}</span>
+        </div>
+    </div>
 </template>
 <script setup lang="ts">
 import { RollMessage } from '@/entities/Message';
