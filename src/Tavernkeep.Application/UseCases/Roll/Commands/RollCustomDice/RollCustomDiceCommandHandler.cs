@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Tavernkeep.Application.Extensions;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Entities.Messages;
@@ -29,7 +30,8 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice
                 Sender = initiator,
                 Created = DateTime.UtcNow,
                 RollType = request.RollType,
-                Result = roll,
+                Expression = roll.DiceExpression,
+                Result = roll.ToRollResult(),
             };
 
             messageRepository.Save(message);

@@ -1,10 +1,11 @@
-﻿using Tavernkeep.Core.Entities.Rolls;
+﻿using d20Tek.DiceNotation.Results;
+using Tavernkeep.Core.Entities.Rolls;
 
 namespace Tavernkeep.Application.Interfaces
 {
     public interface IDiceService
     {
-        public RollResult Roll(string diceNotation);
-        public RollResult Roll(int bonus = 0, bool advantage = false);
+        public DiceResult Roll(string diceNotation);
+        public DiceResult Roll(int bonus = 0, bool advantage = false);
     }
 }

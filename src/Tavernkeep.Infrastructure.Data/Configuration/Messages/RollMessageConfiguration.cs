@@ -5,7 +5,7 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Infrastructure.Data.Extensions;
 
-namespace Tavernkeep.Infrastructure.Data.Configuration
+namespace Tavernkeep.Infrastructure.Data.Configuration.Messages
 {
     public class RollMessageConfiguration : IEntityTypeConfiguration<RollMessage>
     {
@@ -14,6 +14,8 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
             builder.Property(m => m.RollType)
                 .IsRequired()
                 .HasConversion(new EnumToStringConverter<RollType>());
+
+            builder.Property(m => m.Expression).IsRequired();
 
             builder.OwnsJson(m => m.Result, b =>
             {

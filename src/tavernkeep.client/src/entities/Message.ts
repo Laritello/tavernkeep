@@ -5,26 +5,20 @@ export class Message {
     id: number;
     sender: User;
     created: Date;
-    $type: string
+    $type: string;
 
-    constructor(
-        $type: string,
-        id: number,
-        sender: User,
-        created: Date,
-    ) {
+    constructor($type: string, id: number, sender: User, created: Date) {
         this.$type = $type;
         this.id = id;
         this.sender = sender;
         this.created = created;
-
     }
 }
 
 export class TextMessage extends Message {
     text: string;
     isPrivate: boolean;
-    recipient? : User;
+    recipient?: User;
 
     constructor(
         $type: string,
@@ -33,9 +27,9 @@ export class TextMessage extends Message {
         created: Date,
         text: string,
         isPrivate: boolean,
-        recipient?: User,
-        ) {
-        super($type, id, sender, created)
+        recipient?: User
+    ) {
+        super($type, id, sender, created);
 
         this.text = text;
         this.isPrivate = isPrivate;
@@ -46,6 +40,7 @@ export class TextMessage extends Message {
 export class RollMessage extends Message {
     result: RollResult;
     rollType: RollType;
+    expression: string;
 
     constructor(
         $type: string,
@@ -53,21 +48,25 @@ export class RollMessage extends Message {
         sender: User,
         created: Date,
         result: RollResult,
-        rollType: RollType
+        rollType: RollType,
+        expression: string
     ) {
-        super($type, id, sender, created)
+        super($type, id, sender, created);
 
         this.result = result;
         this.rollType = rollType;
+        this.expression = expression;
     }
 }
 
 export class RollResult {
     value: number;
+    modifier: number;
     results: ThrowResult[];
 
-    constructor(value: number, results: ThrowResult[]) {
+    constructor(value: number, modifier: number, results: ThrowResult[]) {
         this.value = value;
+        this.modifier = modifier;
         this.results = results;
     }
 }

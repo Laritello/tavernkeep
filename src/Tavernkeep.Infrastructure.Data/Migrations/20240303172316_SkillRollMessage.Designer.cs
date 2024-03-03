@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tavernkeep.Infrastructure.Data.Context;
 
@@ -10,9 +11,11 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    partial class SessionContextModelSnapshot : ModelSnapshot
+    [Migration("20240303172316_SkillRollMessage")]
+    partial class SkillRollMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
@@ -699,34 +702,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Navigation("Owner");
                         });
 
-                    b.OwnsMany("Tavernkeep.Core.Entities.Lore", "Lores", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("Topic")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.HasKey("OwnerId", "Id");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Lores");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
                     b.Navigation("Acrobatics")
                         .IsRequired();
 
@@ -762,8 +737,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.Navigation("Intimidation")
                         .IsRequired();
-
-                    b.Navigation("Lores");
 
                     b.Navigation("Medicine")
                         .IsRequired();
