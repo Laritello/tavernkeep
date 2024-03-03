@@ -6,10 +6,15 @@ import ChatHub from '@/api/hubs/ChatHub';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { ApiClient } from '@/api/base/ApiClient';
 import { Message, RollMessage, TextMessage } from '@/entities/Message';
+import type { RollType } from '@/contracts/enums/RollType';
 
 export const useMessagesStore = defineStore('messages.store', () => {
     const api: ApiClient = ApiClientFactory.createApiClient();
     ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
+        console.log(msg)
+        if (!msg.$type) {
+            console.warn('Message $type is undefined');
+        }
         appendMessage(msg);
     });
 
@@ -28,8 +33,8 @@ export const useMessagesStore = defineStore('messages.store', () => {
         messages.value.push(response.data);
     }
 
-    async function createRollMessage(expression: string) {
-        const response = await api.sendRollMessage(expression);
+    async function createRollMessage(expression: string, rollType: RollType) {
+        const response = await api.sendRollMessage(expression, rollType);
         if (!response.isSuccess()) {
             console.error(response.statusText);
         }

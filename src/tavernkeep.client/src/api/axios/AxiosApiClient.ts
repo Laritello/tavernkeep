@@ -14,6 +14,7 @@ import type { SkillType } from '@/contracts/enums/SkillType';
 import { plainToInstance } from 'class-transformer';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import { useAuthStore } from '@/stores/auth.store';
+import type { RollType } from '@/contracts/enums/RollType';
 
 // TODO: Error handling and interceptors
 export class AxiosApiClient implements ApiClient {
@@ -247,9 +248,9 @@ export class AxiosApiClient implements ApiClient {
         return new AxiosApiResponse(data, response.status, response.statusText);
     }
 
-    async sendRollMessage(expression: string): Promise<ApiResponse<Message>> {
+    async sendRollMessage(expression: string, rollType: RollType): Promise<ApiResponse<Message>> {
         const response = await this.client.get<Message>('roll/custom', {
-            params: { expression: expression },
+            params: { expression, rollType },
         });
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);

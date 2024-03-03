@@ -51,7 +51,7 @@
             </main>
             <!-- Chat panel -->
             <div class="w-96 shadow-md shadow-neutral-950 bg-base-200">
-                <ChatComponent class="flex" />
+                <ChatComponent class="h-full" />
             </div>
         </div>
     </div>
