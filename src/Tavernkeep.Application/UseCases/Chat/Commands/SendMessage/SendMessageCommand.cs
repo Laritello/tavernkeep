@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Contracts.Chat.Dtos;
-using Tavernkeep.Core.Entities.Messages;
 
 namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
 {

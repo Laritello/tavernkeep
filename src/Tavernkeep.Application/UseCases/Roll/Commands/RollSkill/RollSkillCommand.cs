@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Messages;
 
 namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
 {

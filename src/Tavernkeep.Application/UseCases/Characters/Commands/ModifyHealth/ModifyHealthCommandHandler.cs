@@ -6,7 +6,10 @@ using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.Actions.Characters.Commands.ModifyHealth
 {
-    public class ModifyHealthCommandHandler(IUserRepository userRepository, ICharacterRepository characterRepository) : IRequestHandler<ModifyHealthCommand, Health>
+    public class ModifyHealthCommandHandler(
+        IUserRepository userRepository, 
+        ICharacterRepository characterRepository
+        ) : IRequestHandler<ModifyHealthCommand, Health>
     {
         public async Task<Health> Handle(ModifyHealthCommand request, CancellationToken cancellationToken)
         {

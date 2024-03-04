@@ -9,8 +9,7 @@ using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
 {
-    public class RollSkillCommandHandler
-        (
+    public class RollSkillCommandHandler(
         IUserRepository userRepository, 
         ICharacterRepository characterRepository, 
         IMessageRepository messageRepository,

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.SignalR;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Entities.Messages;
@@ -9,8 +8,7 @@ using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
 {
-    public class SendMessageCommandHandler
-        (
+    public class SendMessageCommandHandler(
         IMessageRepository messageRepository, 
         IUserRepository userRepository,
         INotificationService notificationService,
