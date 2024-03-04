@@ -163,8 +163,8 @@ export class AxiosApiClient implements ApiClient {
 
     async createCharacter(name: string): Promise<ApiResponse<Character>> {
         const response = await this.client.post<Character>('characters/create', { name: name });
-
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        const data = plainToInstance(Character, response.data);
+        return new AxiosApiResponse(data, response.status, response.statusText);
     }
 
     async deleteCharacter(id: string): Promise<ApiResponse<null>> {
@@ -192,7 +192,7 @@ export class AxiosApiClient implements ApiClient {
         const response = await this.client.post<Lore>('lore', {
             characterId: characterId,
             topic: topic,
-            proficiency: proficiency
+            proficiency: proficiency,
         });
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
@@ -202,7 +202,7 @@ export class AxiosApiClient implements ApiClient {
         const response = await this.client.patch<Lore>('lore', {
             characterId: characterId,
             topic: topic,
-            proficiency: proficiency
+            proficiency: proficiency,
         });
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
