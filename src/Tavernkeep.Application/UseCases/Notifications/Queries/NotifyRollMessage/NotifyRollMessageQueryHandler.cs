@@ -20,7 +20,7 @@ namespace Tavernkeep.Application.UseCases.Notifications.Queries.NotifyRollMessag
                 case RollType.Public:
                 case RollType.Secret:
                     // Notify all connected recipients about the new message
-                    await context.Clients.AllExcept([message.Sender.Id.ToString()]).ReceiveMessage(message);
+                    await context.Clients.All.ReceiveMessage(message);
                     break;
 
                 case RollType.Private:

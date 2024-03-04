@@ -5,7 +5,6 @@ using Tavernkeep.Core.Entities.Rolls;
 
 namespace Tavernkeep.Core.Contracts.Chat.Dtos
 {
-    [JsonDerivedType(typeof(SkillRollMessageDto), typeDiscriminator: nameof(SkillRollMessage))]
     public class RollMessageDto : MessageDto
     {
         public RollType RollType { get; set; }

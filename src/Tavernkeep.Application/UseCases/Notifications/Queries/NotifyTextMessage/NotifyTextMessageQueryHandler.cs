@@ -6,7 +6,6 @@ using Tavernkeep.Infrastructure.Notifications.Storage;
 namespace Tavernkeep.Application.UseCases.Notifications.Queries.NotifyTextMessage
 {
     public class NotifyTextMessageQueryHandler(
-        IUserConnectionStorage<Guid> userStorage, 
         IHubContext<ChatHub, IChatHub> context
         ) : IRequestHandler<NotifyTextMessageQuery>
     {
@@ -16,14 +15,12 @@ namespace Tavernkeep.Application.UseCases.Notifications.Queries.NotifyTextMessag
 
             if (message.Recipient == null)
             {
-                // Notify all connected recipients about the new message
-                var senderConnections = userStorage.GetConnections(message.Sender.Id);
-                await context.Clients.AllExcept(senderConnections).ReceiveMessage(message);
+                await context.Clients.All.ReceiveMessage(message);
             }
             else
             {
                 // Notify recipient about the new message
-                await context.Clients.User(message.Recipient!.Id.ToString()).ReceiveMessage(message);
+                await context.Clients.Users(message.Recipient!.Id.ToString(), message.Sender.Id.ToString()).ReceiveMessage(message);
             }
         }
     }
