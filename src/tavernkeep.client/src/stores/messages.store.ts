@@ -11,6 +11,7 @@ import type { RollType } from '@/contracts/enums/RollType';
 export const useMessagesStore = defineStore('messages.store', () => {
     const api: ApiClient = ApiClientFactory.createApiClient();
     ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
+        console.log(msg);
         if (!msg.$type) {
             console.warn('Message $type is undefined');
         }

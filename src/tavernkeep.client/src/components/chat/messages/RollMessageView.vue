@@ -9,7 +9,7 @@
             <ul class="grid grid-cols-10 px-2 my-2">
                 <template v-for="result in message.result.results" :key="result.value">
                     <li>
-                        <DiceIcon :dice="result.type" :value="result.value" class="h-8" />
+                        <DiceIcon :die="result.type" :value="result.value" />
                     </li>
                 </template>
                 <li v-if="message.result.modifier" class="text-2xl text-base-300 font-thin">
@@ -39,31 +39,4 @@ function formatDate(dateString: Date): string {
     return `${hours}:${minutes}:${seconds}`;
 }
 </script>
-<style scoped>
-.number-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.text-shadow {
-    text-shadow: #000000 0px 0 5px;
-}
-
-.image-container {
-    position: relative;
-    text-align: center;
-    width: 32px;
-    height: 32px;
-}
-
-.dice {
-    height: 100%;
-    max-width: fit-content;
-}
-
-.d20 path {
-    fill: #d88440;
-}
-</style>
+<style scoped></style>
