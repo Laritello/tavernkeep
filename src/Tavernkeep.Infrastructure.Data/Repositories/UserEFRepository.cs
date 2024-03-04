@@ -9,7 +9,7 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
     {
         public Task<List<User>> GetAllUsersAsync(CancellationToken cancellationToken = default)
         {
-            return AsQueryable().ToListAsync(cancellationToken);
+            return AsQueryable().Include(x=>x.ActiveCharacter).ToListAsync(cancellationToken);
         }
 
         public Task<User?> GetUserByLoginAsync(string login, CancellationToken cancellationToken = default)

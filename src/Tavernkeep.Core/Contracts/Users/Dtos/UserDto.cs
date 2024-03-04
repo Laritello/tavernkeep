@@ -1,4 +1,5 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
+﻿using Tavernkeep.Core.Contracts.Character.Dtos;
+using Tavernkeep.Core.Contracts.Enums;
 
 namespace Tavernkeep.Core.Contracts.Users.Dtos
 {
@@ -7,5 +8,6 @@ namespace Tavernkeep.Core.Contracts.Users.Dtos
         public Guid Id { get; set; }
         public string Login { get; set; } = default!;
         public UserRole Role { get; set; }
+        public CharacterDto ActiveCharacter { get; set; } = default!;
     }
 }

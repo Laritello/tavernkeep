@@ -17,9 +17,11 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
             builder.Property(u => u.Login).IsRequired();
             builder.Property(u => u.Password).IsRequired();
 
-            builder.Property(d => d.Role)
+            builder.Property(u => u.Role)
                 .IsRequired()
                 .HasConversion(new EnumToStringConverter<UserRole>());
+
+            builder.HasOne(u => u.ActiveCharacter);
         }
     }
 }

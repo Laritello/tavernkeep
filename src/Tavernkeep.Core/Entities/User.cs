@@ -29,6 +29,7 @@ namespace Tavernkeep.Core.Entities
         public string Login { get; set; }
         public string Password { get; set; }
         public UserRole Role { get; set; }
+        public Character? ActiveCharacter { get; set; }
         public IReadOnlyList<Character> Characters => _characters.AsReadOnly();
 
         #endregion

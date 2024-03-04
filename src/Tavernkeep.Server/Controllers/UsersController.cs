@@ -5,6 +5,7 @@ using Tavernkeep.Application.Actions.Users.Commands.CreateUser;
 using Tavernkeep.Application.Actions.Users.Commands.DeleteUser;
 using Tavernkeep.Application.Actions.Users.Queries.GetUsers;
 using Tavernkeep.Application.UseCases.Users.Commands.EditUser;
+using Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter;
 using Tavernkeep.Application.UseCases.Users.Queries.GetCurrentUser;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Users.Dtos;
@@ -82,6 +83,18 @@ namespace Tavernkeep.Server.Controllers
         public async Task<UserDto> GetCurrentUserAsync()
         {
             return await mediator.Send(new GetUserQuery(HttpContext.GetUserId()));
+        }
+
+        /// <summary>
+        /// Set an active character for the user.
+        /// </summary>
+        /// <param name="request">Request with updated character and user.</param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPut("active-character")]
+        public async Task<UserDto> SetActiveCharacterAsync([FromBody] SetActiveCharacterRequest request)
+        {
+            return await mediator.Send(new SetActiveCharacterCommand(HttpContext.GetUserId(), request.UserId, request.CharacterId));
         }
     }
 }
