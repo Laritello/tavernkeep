@@ -30,7 +30,6 @@ export const useMessagesStore = defineStore('messages.store', () => {
         if (!response.isSuccess()) {
             console.error(response.statusText);
         }
-        messages.value.push(response.data);
     }
 
     async function createRollMessage(expression: string, rollType: RollType) {
