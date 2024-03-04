@@ -9,7 +9,7 @@
             <ul class="grid grid-cols-10 px-2 my-2">
                 <template v-for="result in message.result.results" :key="result.value">
                     <li>
-                        <DiceIcon :die="result.type" :value="result.value" />
+                        <DiceIcon :die="result.type" :value="result.value" class="w-8" />
                     </li>
                 </template>
                 <li v-if="message.result.modifier" class="text-2xl text-base-300 font-thin">
