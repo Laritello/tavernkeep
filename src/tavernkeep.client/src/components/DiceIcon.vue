@@ -31,7 +31,6 @@ defineProps<{
     text-shadow: #000000 0px 0 5px;
 }
 .dice {
-    width: 100%;
     aspect-ratio: 1;
 }
 

@@ -96,7 +96,6 @@ export class AxiosApiClient implements ApiClient {
             }
         );
     }
-
     async auth(login: string, password: string): Promise<ApiResponse<AuthenticationResponse>> {
         const response = await this.client.post<AuthenticationResponse>('authentication/auth', {
             login: login,
@@ -153,6 +152,15 @@ export class AxiosApiClient implements ApiClient {
         const response = await this.client.delete('users/' + id);
 
         return new AxiosApiResponse(null, response.status, response.statusText);
+    }
+
+    async setActiveCharacter(userId: string, characterId: string): Promise<ApiResponse<User>> {
+        const response = await this.client.put<User>('users/active-character', {
+            userId,
+            characterId,
+        });
+
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async getCharacters(): Promise<ApiResponse<Character[]>> {

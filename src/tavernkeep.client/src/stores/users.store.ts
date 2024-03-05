@@ -3,26 +3,28 @@ import { defineStore } from 'pinia';
 
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { ApiClient } from '@/api/base/ApiClient';
-import type { User } from '@/entities/User';
+import { User } from '@/entities/User';
 import type { UserRole } from '@/contracts/enums/UserRole';
 
 const api: ApiClient = ApiClientFactory.createApiClient();
 export const useUsersStore = defineStore('users.store', () => {
-    const currentUser = ref<User | null>(null);
-    const users = ref<User[]>([]);
-    const otherUsers = computed(() => users.value.filter((user) => user.id !== currentUser.value?.id));
+    const current = ref<User | undefined>();
+    const all = ref<User[]>([]);
+    const other = computed(() => all.value.filter((user) => user.id !== current.value?.id));
 
-    async function fetchUsers() {
+    async function fetch() {
         const usersResponse = await api.getUsers();
-        users.value = usersResponse.data;
+        all.value = usersResponse.data;
         const userResponse = await api.getCurrentUser();
-        currentUser.value = userResponse.data;
+        current.value = userResponse.data;
+
+        console.log(all.value);
     }
 
     async function createUser(login: string, password: string, role: UserRole) {
         const response = await api.createUser(login, password, role);
         if (response.isSuccess()) {
-            users.value.push(response.data);
+            all.value.push(response.data);
         } else {
             console.error(response.statusText);
         }
@@ -31,12 +33,31 @@ export const useUsersStore = defineStore('users.store', () => {
     async function deleteUser(id: string) {
         const response = await api.deleteUser(id);
         if (response.isSuccess()) {
-            const index = users.value.findIndex((user) => user.id === id);
-            users.value.splice(index, 1);
+            const index = all.value.findIndex((user) => user.id === id);
+            all.value.splice(index, 1);
         } else {
             console.error(response.statusText);
         }
     }
 
-    return { users, otherUsers, currentUser, fetchUsers, createUser, deleteUser };
+    async function setActiveCharacter(userId: string, characterId: string): Promise<void> {
+        const response = await api.setActiveCharacter(userId, characterId);
+
+        if (!response.isSuccess()) {
+            console.error(response.statusText);
+            return;
+        }
+
+        const userIndex = all.value.findIndex((user) => user.id === userId);
+        if (userIndex < 0) {
+            console.warn(`User '${userId}' not found`);
+            return;
+        }
+
+        console.log(all.value[userIndex].login, response.data.activeCharacter.name);
+
+        all.value[userIndex].activeCharacter = response.data.activeCharacter;
+    }
+
+    return { current, all, other, fetch, createUser, deleteUser, setActiveCharacter };
 });

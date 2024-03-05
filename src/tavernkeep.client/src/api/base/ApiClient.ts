@@ -21,6 +21,7 @@ export interface ApiClient {
     createUser(login: string, password: string, role: UserRole): Promise<ApiResponse<User>>;
     editUser(id: string, login: string, password: string, role: UserRole): Promise<ApiResponse<User>>;
     deleteUser(id: string): Promise<ApiResponse<null>>;
+    setActiveCharacter(userId: string, characterId: string): Promise<ApiResponse<User>>;
 
     getCharacters(): Promise<ApiResponse<Character[]>>;
     createCharacter(name: string): Promise<ApiResponse<Character>>;

@@ -6,8 +6,8 @@ import { UserRole } from './contracts/enums/UserRole';
 import LoginPage from './pages/LoginPage.vue';
 import HomePage from './pages/HomePage.vue';
 import ErrorPage from './pages/ErrorPage.vue';
-import UsersPage from './pages/UsersPage.vue';
 import CharactersPage from './pages/CharactersPage.vue';
+import AdminPage from './pages/AdminPage.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -31,16 +31,6 @@ const routes: RouteRecordRaw[] = [
         meta: {
             layout: 'AppLayout',
             protected: true,
-            allowedRoles: [UserRole.Master],
-        },
-    },
-    {
-        path: '/users',
-        component: UsersPage,
-        meta: {
-            layout: 'AppLayout',
-            protected: true,
-            allowedRoles: [UserRole.Master],
         },
     },
     {
@@ -57,6 +47,15 @@ const routes: RouteRecordRaw[] = [
         meta: {
             protected: false,
             errorMessage: 'Page not found',
+        },
+    },
+    {
+        path: '/admin',
+        component: AdminPage,
+        meta: {
+            layout: 'AppLayout',
+            protected: true,
+            allowedRoles: [UserRole.Master],
         },
     },
 ];

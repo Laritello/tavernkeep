@@ -11,7 +11,7 @@
                 <span class="label-text text-primary-content">Dark</span>
             </label>
             <div class="flex-none text-base-content">
-                <span class="text-primary-content">{{ usersStore.currentUser?.login }}</span>
+                <span class="text-primary-content">{{ appStore.users.current?.login }}</span>
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                         <div class="avatar w-10 rounded-full bg-orange-400"></div>
@@ -35,17 +35,17 @@
                     <li>
                         <RouterLink to="/">Home</RouterLink>
                     </li>
-                    <li v-if="usersStore.currentUser?.role == UserRole.Master">
-                        <RouterLink to="/users">Users</RouterLink>
-                    </li>
-                    <li v-if="usersStore.currentUser?.role == UserRole.Master">
+                    <li>
                         <RouterLink to="/characters">Characters</RouterLink>
+                    </li>
+                    <li v-if="appStore.users.current?.role == UserRole.Master">
+                        <RouterLink to="/admin">Admin</RouterLink>
                     </li>
                 </ul>
             </div>
             <!-- Content -->
             <main class="flex grow bg-base">
-                <div class="container m-4">
+                <div class="container">
                     <slot />
                 </div>
             </main>
@@ -61,29 +61,15 @@
 import { useRouter } from 'vue-router';
 import { UserRole } from '@/contracts/enums/UserRole';
 
-// Components
+import { useAppStore } from '@/stores/app.store';
+
 import ChatComponent from '@/components/chat/ChatComponent.vue';
 
-// Stores
-import { useCharactersStore } from '@/stores/characters.store';
-import { useMessagesStore } from '@/stores/messages.store';
-import { useUsersStore } from '@/stores/users.store';
-import { useAuthStore } from '@/stores/auth.store';
-
-const charactersStore = useCharactersStore();
-const messagesStore = useMessagesStore();
-const usersStore = useUsersStore();
-const auth = useAuthStore();
-
-// Fetch data from server
-charactersStore.fetchCharacters();
-messagesStore.fetchMessages(0, 20);
-usersStore.fetchUsers();
-
+const appStore = useAppStore();
 const router = useRouter();
 
 async function logout() {
-    auth.logout();
+    appStore.auth.logout();
     router.push('/login');
 }
 </script>

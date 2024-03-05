@@ -1,7 +1,7 @@
 <template>
-    <PartyComponent />
+    <CharacterView />
 </template>
 
 <script setup lang="ts">
-import PartyComponent from '@/components/PartyComponent.vue';
+import CharacterView from '@/components/character/CharacterView.vue';
 </script>

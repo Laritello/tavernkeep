@@ -11,18 +11,18 @@ import type { RollType } from '@/contracts/enums/RollType';
 export const useMessagesStore = defineStore('messages.store', () => {
     const api: ApiClient = ApiClientFactory.createApiClient();
     ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
-        console.log(msg);
         if (!msg.$type) {
+            console.log(msg);
             console.warn('Message $type is undefined');
         }
         appendMessage(msg);
     });
 
-    const messages = ref<Message[]>([]);
+    const all = ref<Message[]>([]);
 
-    async function fetchMessages(skip: number, take: number) {
+    async function fetch(skip: number, take: number) {
         const messagesResponse = await api.getMessages(skip, take);
-        messages.value = messagesResponse.data;
+        all.value = messagesResponse.data;
     }
 
     async function createMessage(message: string, recipientId?: string) {
@@ -52,8 +52,8 @@ export const useMessagesStore = defineStore('messages.store', () => {
             default:
                 typedMessage = plainToInstance(Message, message);
         }
-        messages.value.push(typedMessage);
+        all.value.push(typedMessage);
     }
 
-    return { messages, fetchMessages, createMessage, createRollMessage };
+    return { all, fetch, createMessage, createRollMessage };
 });

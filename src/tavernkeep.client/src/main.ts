@@ -2,8 +2,9 @@ import 'reflect-metadata';
 import './assets/main.css';
 import '@mdi/font/css/materialdesignicons.css';
 
-import { createApp } from 'vue';
+import { createApp, provide } from 'vue';
 import App from './App.vue';
+import { useAppStore } from './stores/app.store';
 
 import { createPinia } from 'pinia';
 import VueChatScroll from 'vue3-chat-scroll';
@@ -31,4 +32,7 @@ app.use(vuetify);
 app.use(pinia);
 app.use(router);
 app.use(VueChatScroll);
+
+useAppStore(); // Initialize store
+
 app.mount('#app');
