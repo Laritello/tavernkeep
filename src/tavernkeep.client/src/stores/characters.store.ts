@@ -40,6 +40,7 @@ export const useCharactersStore = defineStore('characters.store', () => {
             console.error(response.statusText);
             return;
         }
+        console.log(response.data);
         return response.data;
     }
 

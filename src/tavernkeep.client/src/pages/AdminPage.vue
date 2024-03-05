@@ -48,7 +48,7 @@
                         <div class="flex items-center flex-1 justify-end">
                             <UserSelector
                                 v-model="character.owner.id"
-                                @change="assign(character.id, user.id)"
+                                @update:modelValue="(userId) => assign(character.id, userId)"
                                 :users="appStore.users.all"
                                 class="pr-3"
                             />
@@ -96,9 +96,7 @@ async function setActiveCharacter(userId: string, characterId: string) {
 }
 
 async function assign(characterId: string, userId: string) {
-    console.log('assign');
     await appStore.characters.assignUserToCharacter(userId, characterId);
-    // await appStore.characters.setActiveCharacter(userId, characterId);
 }
 </script>
 <style scoped>
