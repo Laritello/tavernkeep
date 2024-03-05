@@ -18,7 +18,7 @@ namespace Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter
             var initiator = await userRepository.FindAsync(request.InitiatorId)
                 ?? throw new BusinessLogicException("Initiator with specified ID doesn't exist.");
 
-            var user = await userRepository.FindAsync(request.InitiatorId)
+            var user = await userRepository.FindAsync(request.UserId)
                 ?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
             var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
@@ -26,6 +26,9 @@ namespace Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter
 
             if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)
                 throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
+
+            if (character.Owner.Id != request.UserId)
+                throw new BusinessLogicException("Character cannot be set as active character for the user that is not his owner.");
 
             user.ActiveCharacter = character;
 
