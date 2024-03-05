@@ -4,11 +4,17 @@
     </div>
 </template>
 <script setup lang="ts">
-import { useUsersStore } from '@/stores/users.store';
-import AbilityView from './AbilityView.vue';
+import { useAppStore } from '@/stores/app.store';
 
-const users = useUsersStore();
-const currentUser = users.currentUser;
-const userCharacter = currentUser?.activeCharacter;
-console.log(userCharacter);
+import AbilityView from './AbilityView.vue';
+import { onMounted, ref } from 'vue';
+import { Character } from '@/entities/Character';
+const userCharacter = ref<Character>();
+
+const appStore = useAppStore();
+onMounted(() => {
+    const currentUser = appStore.users.current;
+    userCharacter.value = currentUser?.activeCharacter;
+    console.log(currentUser);
+});
 </script>

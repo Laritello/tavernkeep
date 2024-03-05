@@ -17,8 +17,6 @@ export const useUsersStore = defineStore('users.store', () => {
         all.value = usersResponse.data;
         const userResponse = await api.getCurrentUser();
         current.value = userResponse.data;
-
-        console.log(all.value);
     }
 
     async function createUser(login: string, password: string, role: UserRole) {
