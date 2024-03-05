@@ -31,17 +31,19 @@
             <!-- Left panel -->
             <div class="flex flex-col gap-4 w-72 shadow-md shadow-neutral-950 bg-base-200 p-4">
                 <h1 class="text-xl">Sidebar</h1>
-                <ul class="menu menu-sm">
-                    <li>
-                        <RouterLink to="/">Home</RouterLink>
-                    </li>
-                    <li>
-                        <RouterLink to="/characters">Characters</RouterLink>
-                    </li>
-                    <li v-if="appStore.users.current?.role == UserRole.Master">
-                        <RouterLink to="/admin">Admin</RouterLink>
-                    </li>
-                </ul>
+                <nav>
+                    <ul class="menu menu-sm">
+                        <li>
+                            <RouterLink to="/">Home</RouterLink>
+                        </li>
+                        <li>
+                            <RouterLink to="/characters">Characters</RouterLink>
+                        </li>
+                        <li v-if="appStore.users.current?.role == UserRole.Master">
+                            <RouterLink to="/admin">Admin</RouterLink>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <!-- Content -->
             <main class="flex grow bg-base">
@@ -76,5 +78,9 @@ async function logout() {
 <style scoped>
 .content-height {
     height: calc(100% - 4rem);
+}
+
+.router-link-active {
+    @apply active;
 }
 </style>
