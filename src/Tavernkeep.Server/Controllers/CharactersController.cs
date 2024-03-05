@@ -47,7 +47,7 @@ namespace Tavernkeep.Server.Controllers
         [HttpPost("create")]
         public async Task<CharacterDto> CreateCharacterAsync(CreateCharacterRequest request)
         {
-            return await mediator.Send(new CreateCharacterCommand(HttpContext.GetUserId(), request.Name));
+            return await mediator.Send(new CreateCharacterCommand(request.OwnerId, request.Name));
         }
 
         /// <summary>

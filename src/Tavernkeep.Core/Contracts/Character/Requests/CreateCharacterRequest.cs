@@ -6,6 +6,11 @@
     public class CreateCharacterRequest
     {
         /// <summary>
+        /// The ID of the owner.
+        /// </summary>
+        public Guid OwnerId { get; set; }
+
+        /// <summary>
         /// The name of the character.
         /// </summary>
         public string Name { get; set; } = default!;
