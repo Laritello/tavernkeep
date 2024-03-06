@@ -33,5 +33,21 @@ namespace Tavernkeep.Core.Entities
         public IReadOnlyList<Character> Characters => _characters.AsReadOnly();
 
         #endregion
+
+        #region Methods
+
+        public void AddCharacter(Character character)
+        {
+            // TODO: Validation
+            _characters.Add(character);
+        }
+
+        public void RemoveCharacter(Character character)
+        {
+            // TODO: Validation
+            _characters.Remove(character);
+        }
+
+        #endregion
     }
 }

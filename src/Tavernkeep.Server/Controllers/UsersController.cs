@@ -47,7 +47,7 @@ namespace Tavernkeep.Server.Controllers
         [HttpPost]
         public async Task<UserDto> CreateUserAsync([FromBody] CreateUserRequest request)
         {
-            var user = await mediator.Send(new CreateUserCommand(request.Login, request.Password, request.Role));
+            var user = await mediator.Send(new CreateUserCommand(request.Login, request.Password, request.Role, request.InitializeCharacter, request.CharacterName));
             return mapper.Map<UserDto>(user);
         }
 

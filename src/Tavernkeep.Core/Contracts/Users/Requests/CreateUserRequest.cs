@@ -23,5 +23,15 @@ namespace Tavernkeep.Core.Contracts.Users.Requests
         /// </summary>
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public UserRole Role { get; set; } = default!;
+
+        /// <summary>
+        /// Show if default character for user must be initialized.
+        /// </summary>
+        public bool InitializeCharacter { get; set; }
+
+        /// <summary>
+        /// Name of the character.
+        /// </summary>
+        public string? CharacterName { get; set; }
     }
 }
