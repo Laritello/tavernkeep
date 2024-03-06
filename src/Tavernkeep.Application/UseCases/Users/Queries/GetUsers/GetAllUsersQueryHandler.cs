@@ -1,16 +1,14 @@
-﻿using AutoMapper;
-using MediatR;
-using Tavernkeep.Core.Contracts.Users.Dtos;
+﻿using MediatR;
+using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.Actions.Users.Queries.GetUsers
 {
-    public class GetAllUsersQueryHandler(IUserRepository repository, IMapper mapper) : IRequestHandler<GetAllUsersQuery, List<UserDto>>
+    public class GetAllUsersQueryHandler(IUserRepository repository) : IRequestHandler<GetAllUsersQuery, List<User>>
     {
-        public async Task<List<UserDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+        public async Task<List<User>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var users = await repository.GetAllUsersAsync(cancellationToken);
-            return mapper.Map<List<UserDto>>(users);
+            return await repository.GetAllUsersAsync(cancellationToken);
         }
     }
 }

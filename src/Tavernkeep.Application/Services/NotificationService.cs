@@ -8,7 +8,7 @@ using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyAbilityEdited;
 using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyRollMessage;
 using Tavernkeep.Application.UseCases.Notifications.Queries.NotifySkillEdited;
 using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyTextMessage;
-using Tavernkeep.Core.Contracts.Chat.Dtos;
+using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Infrastructure.Notifications.Notifications;
 
 namespace Tavernkeep.Application.Services
@@ -26,7 +26,7 @@ namespace Tavernkeep.Application.Services
     {
         private readonly Channel<object> _queue = Channel.CreateUnbounded<object>();
 
-        public ValueTask QueueMessage(MessageDto message) =>_queue.Writer.WriteAsync(message);
+        public ValueTask QueueMessage(Message message) =>_queue.Writer.WriteAsync(message);
         public ValueTask QueueAbilityNotification(AbilityEditedNotification notification) =>_queue.Writer.WriteAsync(notification);
         public ValueTask QueueSkillNotification(SkillEditedNotification notification) =>_queue.Writer.WriteAsync(notification);
 
@@ -42,11 +42,11 @@ namespace Tavernkeep.Application.Services
                     // TODO: Switch to singular notification hub structure
                     switch (notification)
                     {
-                        case TextMessageDto textMessage:
+                        case TextMessage textMessage:
                             await mediator.Send(new NotifyTextMessageQuery(textMessage), cancellationToken);
                             break;
 
-                        case RollMessageDto rollMessage:
+                        case RollMessage rollMessage:
                             await mediator.Send(new NotifyRollMessageQuery(rollMessage), cancellationToken);
                             break;
 

@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Chat.Dtos;
+using Tavernkeep.Core.Entities.Messages;
 
 namespace Tavernkeep.Application.Actions.Chat.Queries.GetMessages
 {
-    public class GetMessagesQuery : IRequest<List<MessageDto>>
+    public class GetMessagesQuery : IRequest<List<Message>>
     {
         public Guid InitiatorId { get; set; }
         public int Skip { get; set; }

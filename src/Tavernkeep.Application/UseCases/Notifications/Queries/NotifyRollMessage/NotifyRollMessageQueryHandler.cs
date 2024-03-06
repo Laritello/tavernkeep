@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.SignalR;
+using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
 using Tavernkeep.Infrastructure.Notifications.Storage;
@@ -8,12 +10,13 @@ namespace Tavernkeep.Application.UseCases.Notifications.Queries.NotifyRollMessag
 {
     public class NotifyRollMessageQueryHandler(
         IUserConnectionStorage<Guid> userStorage,
-        IHubContext<ChatHub, IChatHub> context
+        IHubContext<ChatHub, IChatHub> context,
+        IMapper mapper
         ) : IRequestHandler<NotifyRollMessageQuery>
     {
         public async Task Handle(NotifyRollMessageQuery request, CancellationToken cancellationToken)
         {
-            var message = request.Message;
+            var message = mapper.Map<RollMessageDto>(request.Message);
 
             switch (message.RollType)
             {

@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Users.Dtos;
+using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Application.UseCases.Users.Queries.GetCurrentUser
 {
-    public class GetUserQuery : IRequest<UserDto>
+    public class GetUserQuery : IRequest<User>
     {
         public Guid UserId { get; set; }
 

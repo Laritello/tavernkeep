@@ -1,17 +1,19 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.SignalR;
+using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
-using Tavernkeep.Infrastructure.Notifications.Storage;
 
 namespace Tavernkeep.Application.UseCases.Notifications.Queries.NotifyTextMessage
 {
     public class NotifyTextMessageQueryHandler(
-        IHubContext<ChatHub, IChatHub> context
+        IHubContext<ChatHub, IChatHub> context,
+        IMapper mapper
         ) : IRequestHandler<NotifyTextMessageQuery>
     {
         public async Task Handle(NotifyTextMessageQuery request, CancellationToken cancellationToken)
         {
-            var message = request.Message;
+            var message = mapper.Map<TextMessageDto>(request.Message);
 
             if (message.Recipient == null)
             {

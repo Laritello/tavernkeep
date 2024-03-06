@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Users.Commands.CreateUser;
@@ -18,10 +19,11 @@ namespace Tavernkeep.Server.Controllers
     /// <summary>
     /// The <see cref="UsersController"/> class handles user operations within the application.
     /// </summary>
-    /// <param name="mediator">The mediator instance.</param>
+    /// <param name="mediator">The <see cref="IMediator"/> instance.</param>
+    /// <param name="mapper">The <see cref="IMapper"/> instance.</param>
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController(IMediator mediator) : ControllerBase
+    public class UsersController(IMediator mediator, IMapper mapper) : ControllerBase
     {
         /// <summary>
         /// Get all users.
@@ -32,7 +34,7 @@ namespace Tavernkeep.Server.Controllers
         public async Task<List<UserDto>> GetUsersAsync()
         {
             var users = await mediator.Send(new GetAllUsersQuery());
-            return users;
+            return mapper.Map<List<UserDto>>(users);
         }
 
         /// <summary>
@@ -45,7 +47,8 @@ namespace Tavernkeep.Server.Controllers
         [HttpPost]
         public async Task<UserDto> CreateUserAsync([FromBody] CreateUserRequest request)
         {
-            return await mediator.Send(new CreateUserCommand(request.Login, request.Password, request.Role));
+            var user = await mediator.Send(new CreateUserCommand(request.Login, request.Password, request.Role));
+            return mapper.Map<UserDto>(user);
         }
 
         /// <summary>
@@ -59,7 +62,8 @@ namespace Tavernkeep.Server.Controllers
         [HttpPatch("{userId}")]
         public async Task<UserDto> EditUserAsync([FromRoute] Guid userId, [FromBody] EditUserRequest request)
         {
-            return await mediator.Send(new EditUserCommand(userId, request.Login, request.Password, request.Role));
+            var user = await mediator.Send(new EditUserCommand(userId, request.Login, request.Password, request.Role));
+            return mapper.Map<UserDto>(user);
         }
 
         /// <summary>
@@ -82,7 +86,8 @@ namespace Tavernkeep.Server.Controllers
         [HttpGet("current")]
         public async Task<UserDto> GetCurrentUserAsync()
         {
-            return await mediator.Send(new GetUserQuery(HttpContext.GetUserId()));
+            var user = await mediator.Send(new GetUserQuery(HttpContext.GetUserId()));
+            return mapper.Map<UserDto>(user);
         }
 
         /// <summary>
@@ -94,7 +99,8 @@ namespace Tavernkeep.Server.Controllers
         [HttpPut("active-character")]
         public async Task<UserDto> SetActiveCharacterAsync([FromBody] SetActiveCharacterRequest request)
         {
-            return await mediator.Send(new SetActiveCharacterCommand(HttpContext.GetUserId(), request.UserId, request.CharacterId));
+            var user = await mediator.Send(new SetActiveCharacterCommand(HttpContext.GetUserId(), request.UserId, request.CharacterId));
+            return mapper.Map<UserDto>(user);
         }
     }
 }

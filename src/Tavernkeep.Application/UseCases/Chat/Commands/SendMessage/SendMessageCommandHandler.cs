@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
@@ -11,12 +9,11 @@ namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
     public class SendMessageCommandHandler(
         IMessageRepository messageRepository, 
         IUserRepository userRepository,
-        INotificationService notificationService,
-        IMapper mapper
+        INotificationService notificationService
         ) 
-        : IRequestHandler<SendMessageCommand, MessageDto>
+        : IRequestHandler<SendMessageCommand, Message>
     {
-        public async Task<MessageDto> Handle(SendMessageCommand request, CancellationToken cancellationToken)
+        public async Task<Message> Handle(SendMessageCommand request, CancellationToken cancellationToken)
         {
             var sender = await userRepository.FindAsync(request.SenderId)
                 ?? throw new BusinessLogicException("Sender with specified id not found");
@@ -34,11 +31,9 @@ namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
             messageRepository.Save(message);
 
             await messageRepository.CommitAsync(cancellationToken);
+            await notificationService.QueueMessage(message);
 
-            var result = mapper.Map<MessageDto>(message);
-            await notificationService.QueueMessage(result);
-
-            return result;
+            return message;
         }
     }
 }

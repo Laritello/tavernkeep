@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Contracts.Users.Dtos;
+using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
@@ -9,11 +8,10 @@ namespace Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter
 {
     public class SetActiveCharacterCommandHandler(
         IUserRepository userRepository, 
-        ICharacterRepository characterRepository,
-        IMapper mapper)
-        : IRequestHandler<SetActiveCharacterCommand, UserDto>
+        ICharacterRepository characterRepository
+        ) : IRequestHandler<SetActiveCharacterCommand, User>
     {
-        public async Task<UserDto> Handle(SetActiveCharacterCommand request, CancellationToken cancellationToken)
+        public async Task<User> Handle(SetActiveCharacterCommand request, CancellationToken cancellationToken)
         {
             var initiator = await userRepository.FindAsync(request.InitiatorId)
                 ?? throw new BusinessLogicException("Initiator with specified ID doesn't exist.");
@@ -35,7 +33,7 @@ namespace Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter
             userRepository.Save(user);
             await userRepository.CommitAsync(cancellationToken);
 
-            return mapper.Map<UserDto>(user);
+            return user;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice;
@@ -13,10 +14,11 @@ namespace Tavernkeep.Server.Controllers
     /// <summary>
     ///  The <see cref="RollController"/> class handles roll operations within the application.
     /// </summary>
-    /// <param name="mediator">The mediator instance.</param>
+    /// <param name="mediator">The <see cref="IMediator"/> instance.</param>
+    /// <param name="mapper">The <see cref="IMapper"/> instance.</param>
     [ApiController]
     [Route("api/[controller]")]
-    public class RollController(IMediator mediator) : ControllerBase
+    public class RollController(IMediator mediator, IMapper mapper) : ControllerBase
     {
         /// <summary>
         /// Roll a custom dice.
@@ -27,7 +29,8 @@ namespace Tavernkeep.Server.Controllers
         [HttpGet("custom")]
         public async Task<MessageDto> RollCustomDiceAsync([FromQuery] string expression, [FromQuery] RollType rollType)
         {
-            return await mediator.Send(new RollCustomDiceCommand(HttpContext.GetUserId(), rollType, expression));
+            var message = await mediator.Send(new RollCustomDiceCommand(HttpContext.GetUserId(), rollType, expression));
+            return mapper.Map<MessageDto>(message);
         }
 
         /// <summary>
@@ -39,7 +42,8 @@ namespace Tavernkeep.Server.Controllers
         [HttpPost("skill")]
         public async Task<MessageDto> RollSkillAsync([FromBody] RollSkillRequest request)
         {
-            return await mediator.Send(new RollSkillCommand(HttpContext.GetUserId(), request.CharacterId, request.SkillType, request.RollType));
+            var message = await mediator.Send(new RollSkillCommand(HttpContext.GetUserId(), request.CharacterId, request.SkillType, request.RollType));
+            return mapper.Map<MessageDto>(message);
         }
     }
 }

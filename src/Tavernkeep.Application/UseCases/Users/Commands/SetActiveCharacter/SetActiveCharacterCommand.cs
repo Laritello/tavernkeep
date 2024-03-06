@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Users.Dtos;
+using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter
 {
-    public class SetActiveCharacterCommand : IRequest<UserDto>
+    public class SetActiveCharacterCommand : IRequest<User>
     {
         public Guid InitiatorId { get; set; }
         public Guid UserId { get; set; }

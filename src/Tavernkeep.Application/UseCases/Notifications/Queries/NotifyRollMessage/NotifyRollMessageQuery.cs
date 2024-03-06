@@ -1,13 +1,13 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Chat.Dtos;
+using Tavernkeep.Core.Entities.Messages;
 
 namespace Tavernkeep.Application.UseCases.Notifications.Queries.NotifyRollMessage
 {
     public class NotifyRollMessageQuery : IRequest
     {
-        public RollMessageDto Message { get; set; }
+        public RollMessage Message { get; set; }
 
-        public NotifyRollMessageQuery(RollMessageDto message)
+        public NotifyRollMessageQuery(RollMessage message)
         {
             Message = message;
         }

@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Entities.Messages;
 
 namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
 {
-    public class RollSkillCommand : IRequest<SkillRollMessageDto>
+    public class RollSkillCommand : IRequest<SkillRollMessage>
     {
         public Guid InitiatorId { get; set; }
         public Guid CharacterId { get; set; }

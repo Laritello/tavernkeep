@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Entities.Messages;
 
 namespace Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice
 {
-    public class RollCustomDiceCommand : IRequest<RollMessageDto>
+    public class RollCustomDiceCommand : IRequest<RollMessage>
     {
         public Guid InitiatorId { get; set; }
         public RollType RollType { get; set; }

@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Tavernkeep.Application.Extensions;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
@@ -14,11 +12,10 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
         ICharacterRepository characterRepository, 
         IMessageRepository messageRepository,
         IDiceService diceService,
-        INotificationService notificationService,
-        IMapper mapper
-        ) : IRequestHandler<RollSkillCommand, SkillRollMessageDto>
+        INotificationService notificationService
+        ) : IRequestHandler<RollSkillCommand, SkillRollMessage>
     {
-        public async Task<SkillRollMessageDto> Handle(RollSkillCommand request, CancellationToken cancellationToken)
+        public async Task<SkillRollMessage> Handle(RollSkillCommand request, CancellationToken cancellationToken)
         {
             var initiator = await userRepository.FindAsync(request.InitiatorId)
                 ?? throw new BusinessLogicException("Initiator with specified ID doesn't exist.");
@@ -42,11 +39,9 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
             messageRepository.Save(message);
 
             await messageRepository.CommitAsync(cancellationToken);
-            
-            var result = mapper.Map<SkillRollMessageDto>(message);
-            await notificationService.QueueMessage(result);
+            await notificationService.QueueMessage(message);
 
-            return result;
+            return message;
         }
     }
 }

@@ -1,21 +1,19 @@
-﻿using AutoMapper;
-using MediatR;
-using Tavernkeep.Core.Contracts.Users.Dtos;
+﻿using MediatR;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.Actions.Users.Commands.CreateUser
 {
-    public class CreateUserCommandHandler(IUserRepository repository, IMapper mapper) : IRequestHandler<CreateUserCommand, UserDto>
+    public class CreateUserCommandHandler(IUserRepository repository) : IRequestHandler<CreateUserCommand, User>
     {
-        public async Task<UserDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<User> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             User user = new(request.Login, request.Password, request.Role);
             
             repository.Save(user);
             await repository.CommitAsync(cancellationToken);
 
-            return mapper.Map<UserDto>(user);
+            return user;
         }
     }
 }

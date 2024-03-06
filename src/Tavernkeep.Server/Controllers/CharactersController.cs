@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Characters.Commands.CreateCharacter;
@@ -22,10 +23,11 @@ namespace Tavernkeep.Server.Controllers
     /// <summary>
     /// The <see cref="CharactersController"/> class handles character operations within the application.
     /// </summary>
-    /// <param name="mediator"></param>
+    /// <param name="mediator">The <see cref="IMediator"/> instance.</param>
+    /// <param name="mapper">The <see cref="IMapper"/> instance.</param>
     [ApiController]
     [Route("/api/[controller]")]
-    public class CharactersController(IMediator mediator) : ControllerBase
+    public class CharactersController(IMediator mediator, IMapper mapper) : ControllerBase
     {
         /// <summary>
         /// Get all characters.
@@ -35,7 +37,8 @@ namespace Tavernkeep.Server.Controllers
         [HttpGet]
         public async Task<List<CharacterDto>> GetCharactersAsync()
         {
-            return await mediator.Send(new GetAllCharactersQuery());
+            var characters = await mediator.Send(new GetAllCharactersQuery());
+            return mapper.Map<List<CharacterDto>>(characters);
         }
 
         /// <summary>
@@ -47,7 +50,8 @@ namespace Tavernkeep.Server.Controllers
         [HttpPost("create")]
         public async Task<CharacterDto> CreateCharacterAsync(CreateCharacterRequest request)
         {
-            return await mediator.Send(new CreateCharacterCommand(request.OwnerId, request.Name));
+            var character = await mediator.Send(new CreateCharacterCommand(request.OwnerId, request.Name));
+            return mapper.Map<CharacterDto>(character);
         }
 
         /// <summary>
@@ -72,7 +76,8 @@ namespace Tavernkeep.Server.Controllers
         [HttpPatch("assign")]
         public async Task<CharacterDto> AssignUserToCharacterAsync([FromBody] AssignUserRequest request)
         {
-            return await mediator.Send(new AssignUserCommand(request.CharacterId, request.UserId));
+            var character = await mediator.Send(new AssignUserCommand(request.CharacterId, request.UserId));
+            return mapper.Map<CharacterDto>(character);
         }
 
         /// <summary>
@@ -84,7 +89,8 @@ namespace Tavernkeep.Server.Controllers
         [HttpGet("{id}")]
         public async Task<CharacterDto> GetCharacterAsync([FromRoute] Guid id)
         {
-            return await mediator.Send(new GetCharacterQuery(id));
+            var character = await mediator.Send(new GetCharacterQuery(id));
+            return mapper.Map<CharacterDto>(character);
         }
 
         /// <summary>

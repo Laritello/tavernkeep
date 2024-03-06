@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Chat.Commands.DeleteChat;
@@ -15,10 +16,11 @@ namespace Tavernkeep.Server.Controllers
     /// <summary>
     /// The <see cref="ChatController"/> class handles chat operations within the application.
     /// </summary>
-    /// <param name="mediator">The mediator instance.</param>
+    /// <param name="mediator">The <see cref="IMediator"/> instance.</param>
+    /// <param name="mapper">The <see cref="IMapper"/> instance.</param>
     [ApiController]
     [Route("api/[controller]")]
-    public class ChatController(IMediator mediator) : ControllerBase
+    public class ChatController(IMediator mediator, IMapper mapper) : ControllerBase
     {
         /// <summary>
         /// Send a message to the chat.
@@ -29,7 +31,8 @@ namespace Tavernkeep.Server.Controllers
         [HttpPost("message")]
         public async Task<MessageDto> SendMessageAsync([FromBody] SendMessageRequest request)
         {
-            return await mediator.Send(new SendMessageCommand(HttpContext.GetUserId(), request.Content, request.RecipientId));
+            var message = await mediator.Send(new SendMessageCommand(HttpContext.GetUserId(), request.Content, request.RecipientId));
+            return mapper.Map<MessageDto>(message);
         }
 
         /// <summary>
@@ -42,7 +45,8 @@ namespace Tavernkeep.Server.Controllers
         [HttpGet]
         public async Task<IEnumerable<MessageDto>> GetMessagesAsync([FromQuery] int skip = 0, [FromQuery] int take = 20)
         {
-            return await mediator.Send(new GetMessagesQuery(HttpContext.GetUserId(), skip, take));
+            var messages = await mediator.Send(new GetMessagesQuery(HttpContext.GetUserId(), skip, take));
+            return mapper.Map<IEnumerable<MessageDto>>(messages);
         }
 
         /// <summary>
