@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.Actions.Chat.Commands.DeleteChat;
 using Tavernkeep.Application.Actions.Chat.Commands.SendMessage;
 using Tavernkeep.Application.Actions.Chat.Queries.GetMessages;
+using Tavernkeep.Application.UseCases.Chat.Commands.DeleteMessage;
 using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Contracts.Chat.Requests;
 using Tavernkeep.Core.Contracts.Enums;
@@ -59,6 +60,19 @@ namespace Tavernkeep.Server.Controllers
         public async Task DeleteChatAsync()
         {
             await mediator.Send(new DeleteChatCommand());
+        }
+
+        /// <summary>
+        /// Delete specific message from the chat.
+        /// </summary>
+        /// <param name="messageId">The ID of the message for deletion.</param>
+        /// <returns></returns>
+        [Authorize]
+        [RequiresRole(UserRole.Moderator)]
+        [HttpDelete("{messageId}")]
+        public async Task DeleteChatAsync([FromRoute] Guid messageId)
+        {
+            await mediator.Send(new DeleteMessageCommand(messageId));
         }
     }
 }
