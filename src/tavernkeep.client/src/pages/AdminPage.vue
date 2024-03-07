@@ -3,12 +3,17 @@
         <div class="space-y-2 bg-base-300 shadow shadow-gray-950 rounded p-2">
             <div class="text-lg">Create character</div>
             <form @submit.prevent="createCharacter" class="flex space-x-2">
-                <label class="input input-bordered flex w-full items-center gap-2">
+                <label class="input input-bordered flex min-w-64 items-center gap-2">
                     <!-- prettier-ignore -->
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70" ><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
-                    <input v-model="newCharacterName" type="text" placeholder="Character name" required />
+                    <input
+                        v-model="newCharacterModel.characterName"
+                        type="text"
+                        placeholder="Character name"
+                        required
+                    />
                 </label>
-                <UserSelector v-model="newCharacterUserId" :users="appStore.users.all" class="pr-3" />
+                <UserSelector v-model="newCharacterModel.userId" :users="appStore.users.all" class="pr-3" />
                 <input type="submit" value="Create new" class="btn btn-active justify-end" />
             </form>
         </div>
@@ -36,6 +41,15 @@
                 <div class="flex gap-2 text-lg font-bold border-b">
                     <div>{{ user.role }}</div>
                     <div>{{ user.login }}</div>
+                    <div class="flex flex-1 justify-end">
+                        <v-btn
+                            size="small"
+                            variant="text"
+                            title="Delete user"
+                            icon="mdi-delete"
+                            @click="appStore.users.deleteUser(user.id)"
+                        />
+                    </div>
                 </div>
                 <div>
                     <div
@@ -53,13 +67,18 @@
                                 :users="appStore.users.all"
                                 class="pr-3"
                             />
-                            <button @click="setActiveCharacter(user.id, character.id)" class="btn btn-sm btn-active">
+                            <button
+                                @click="setActiveCharacter(user.id, character.id)"
+                                :disabled="character.id === user.activeCharacter?.id"
+                                class="btn btn-sm btn-active"
+                            >
                                 Set active
                             </button>
                             <v-btn
                                 size="small"
                                 variant="text"
                                 icon="mdi-delete"
+                                :disabled="character.id === user.activeCharacter?.id"
                                 @click="appStore.characters.deleteCharacter(character.id)"
                             />
                         </div>
@@ -71,13 +90,15 @@
 </template>
 <script setup lang="ts">
 import { useAppStore } from '@/stores/app.store';
-import { ref, reactive } from 'vue';
+import { reactive } from 'vue';
 import { UserRole } from '@/contracts/enums/UserRole';
 import UserSelector from '@/components/chat/UserSelector.vue';
 
 const appStore = useAppStore();
-const newCharacterName = ref('');
-const newCharacterUserId = ref('');
+const newCharacterModel = reactive({
+    userId: '',
+    characterName: '',
+});
 
 const newUserModel = reactive({
     login: '',
@@ -90,8 +111,9 @@ async function createUser() {
 }
 
 async function createCharacter() {
-    await appStore.characters.createCharacter(newCharacterUserId.value, newCharacterName.value);
-    newCharacterName.value = '';
+    await appStore.characters.createCharacter(newCharacterModel.userId, newCharacterModel.characterName);
+    newCharacterModel.userId = '';
+    newCharacterModel.characterName = '';
 }
 async function setActiveCharacter(userId: string, characterId: string) {
     await appStore.users.setActiveCharacter(userId, characterId);

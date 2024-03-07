@@ -14,8 +14,8 @@ export const useCharactersStore = defineStore('characters.store', () => {
         all.value = usersResponse.data;
     }
 
-    async function createCharacter(name: string): Promise<Character | undefined> {
-        const response = await api.createCharacter(name);
+    async function createCharacter(ownerId: string, name: string): Promise<Character | undefined> {
+        const response = await api.createCharacter(ownerId, name);
         if (!response.isSuccess()) {
             console.error(response.statusText);
             return;
