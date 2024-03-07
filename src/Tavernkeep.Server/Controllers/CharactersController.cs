@@ -59,11 +59,10 @@ namespace Tavernkeep.Server.Controllers
         /// </summary>
         /// <param name="characterId">The character ID for deletion.</param>
         [Authorize]
-        [RequiresRole(UserRole.Master)]
         [HttpDelete("delete/{characterId}")]
         public async Task DeleteCharacterAsync([FromRoute] Guid characterId)
         {
-            await mediator.Send(new DeleteCharacterCommand(characterId));
+            await mediator.Send(new DeleteCharacterCommand(HttpContext.GetUserId(),characterId));
         }
 
         /// <summary>
