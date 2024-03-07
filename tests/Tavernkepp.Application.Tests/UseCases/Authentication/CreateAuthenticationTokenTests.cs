@@ -8,7 +8,7 @@ using Tavernkeep.Core.Repositories;
 
 namespace Tavernkepp.Application.Tests.UseCases.Authentication
 {
-    public class AuthenticationTests
+    public class CreateAuthenticationTokenTests
     {
         private readonly Mock<IUserRepository> _mockUserRepository;
         private readonly Mock<IRefreshTokenRepository> _mockTokenRepository;
@@ -25,7 +25,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
 
         private readonly User authorizedUser = new(_correctLogin, _correctPassword, UserRole.Player);
 
-        public AuthenticationTests()
+        public CreateAuthenticationTokenTests()
         {
             _mockUserRepository = new Mock<IUserRepository>();
             _mockUserRepository.Setup(repo => repo.GetUserByLoginAsync(authorizedUser.Login, CancellationToken.None)).ReturnsAsync(authorizedUser);
@@ -53,7 +53,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
         }
 
         [Test]
-        public void Authenctication_CreateAuthenticationTokenCommand_NoLogin()
+        public void Authentication_CreateAuthenticationTokenCommand_NoLogin()
         {
             var request = new CreateAuthenticationTokenCommand(string.Empty, _correctPassword);
             var handler = new CreateAuthenticationTokenCommandHandler(_mockUserRepository.Object, _mockTokenRepository.Object, _mockAuthTokenService.Object);
