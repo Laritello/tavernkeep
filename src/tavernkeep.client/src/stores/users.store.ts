@@ -58,6 +58,7 @@ export const useUsersStore = defineStore('users.store', () => {
         }
 
         all.value[userIndex].activeCharacter = response.data.activeCharacter;
+        if (current.value) current.value.activeCharacter = response.data.activeCharacter;
     }
 
     return { current, all, other, fetch, createUser, deleteUser, setActiveCharacter };
