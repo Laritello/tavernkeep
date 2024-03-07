@@ -5,7 +5,7 @@ import { plainToInstance } from 'class-transformer';
 import ChatHub from '@/api/hubs/ChatHub';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { ApiClient } from '@/api/base/ApiClient';
-import { Message, RollMessage, TextMessage } from '@/entities/Message';
+import { Message, RollMessage, SkillRollMessage, TextMessage } from '@/entities/Message';
 import type { RollType } from '@/contracts/enums/RollType';
 
 export const useMessagesStore = defineStore('messages.store', () => {
@@ -55,6 +55,9 @@ export const useMessagesStore = defineStore('messages.store', () => {
                 break;
             case 'RollMessage':
                 typedMessage = plainToInstance(RollMessage, message);
+                break;
+            case 'SkillRollMessage':
+                typedMessage = plainToInstance(SkillRollMessage, message);
                 break;
             default:
                 typedMessage = plainToInstance(Message, message);
