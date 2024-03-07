@@ -1,10 +1,13 @@
 import type { UserRole } from '@/contracts/enums/UserRole';
-import type { Character } from './Character';
+import { Character } from './Character';
+import { Type } from 'class-transformer';
 
 export class User {
     id: string;
     login: string;
     role: UserRole;
+
+    @Type(() => Character)
     activeCharacter: Character;
 
     constructor(id: string, login: string, role: UserRole, activeCharacter: Character) {

@@ -36,12 +36,9 @@
 <script setup lang="ts">
 import DiceIcon from '@/components/DiceIcon.vue';
 import { SkillRollMessage } from '@/entities/Message';
-import { onMounted } from 'vue';
 const { message } = defineProps<{
     message: SkillRollMessage;
 }>();
-
-onMounted(() => console.log(message));
 
 function formatDate(dateString: Date): string {
     const date = new Date(dateString.toString());

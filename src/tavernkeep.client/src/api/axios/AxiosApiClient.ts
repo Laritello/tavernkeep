@@ -116,14 +116,14 @@ export class AxiosApiClient implements ApiClient {
 
     async getUsers(): Promise<ApiResponse<User[]>> {
         const response = await this.client.get<User[]>('users');
-
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        const data = plainToInstance(User, response.data);
+        return new AxiosApiResponse(data, response.status, response.statusText);
     }
 
     async getCurrentUser(): Promise<ApiResponse<User>> {
         const response = await this.client.get<User>('users/current');
-
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        const data = plainToInstance(User, response.data);
+        return new AxiosApiResponse(data, response.status, response.statusText);
     }
 
     // TODO: User request types instead of separate parameters
