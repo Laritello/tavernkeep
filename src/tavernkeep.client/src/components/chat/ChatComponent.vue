@@ -3,8 +3,8 @@
         <h1 class="text-xl p-2">Chat</h1>
         <div class="flex grow overflow-auto" v-chat-scroll="{ always: false, smooth: true }">
             <div class="w-full px-4">
-                <template v-for="item in appStore.messages.all" :key="item">
-                    <ChatBubble :message="item" />
+                <template v-for="item in appStore.messages.all" :key="item.id">
+                    <ChatMessageView :message="item" />
                 </template>
             </div>
         </div>
@@ -29,7 +29,7 @@ import { useAppStore } from '@/stores/app.store';
 
 // Components
 import UserSelector from './UserSelector.vue';
-import ChatBubble from './messages/ChatBubble.vue';
+import ChatMessageView from './messages/ChatMessageView.vue';
 import CommandInput from './CommandInput.vue';
 
 const appStore = useAppStore();

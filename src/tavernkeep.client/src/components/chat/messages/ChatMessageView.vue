@@ -1,37 +1,35 @@
 <template>
-    <div class="pb-2">
-        <div class="w-full">
-            <TextMessageView v-if="message instanceof TextMessage" :message="message" :color="messageColor(message)" />
-            <RollMessageView
-                v-else-if="message instanceof RollMessage"
-                :message="message"
-                :color="rollColor(message)"
-            />
-            <span v-else>Unknown message type: {{ message.$type }}</span>
-        </div>
+    <div class="pb-2 w-full">
+        <!-- prettier-ignore -->
+        <TextMessageView v-if="(message instanceof TextMessage)" :message="message" :align-right="isUserSender" />
+        <!-- prettier-ignore -->
+        <RollMessageView v-else-if="(message instanceof RollMessage)" :message="message" />
+        <!-- prettier-ignore -->
+        <SkillRollMessageView v-else-if="message instanceof SkillRollMessage" :message="message" />
+        <span v-else>Unknown message type: {{ message.$type }}</span>
     </div>
 </template>
 
 <script setup lang="ts">
-import { type Message } from '@/entities/Message';
+import { computed } from 'vue';
+
+import { Message } from '@/entities/Message';
 import { TextMessage } from '@/entities/Message';
 import { RollMessage } from '@/entities/Message';
-import { RollType } from '@/contracts/enums/RollType';
+import { SkillRollMessage } from '@/entities/Message';
 
 import TextMessageView from './TextMessageView.vue';
 import RollMessageView from './RollMessageView.vue';
+import SkillRollMessageView from './SkillRollMessageView.vue';
+
+import { useAppStore } from '@/stores/app.store';
 
 const { message } = defineProps<{
     message: Message;
 }>();
 
-function messageColor(message: TextMessage) {
-    return message.isPrivate ? 'deep-purple' : 'primary';
-}
-
-function rollColor(message: RollMessage) {
-    return message.rollType == RollType.Public ? 'green' : 'coral';
-}
+const appStore = useAppStore();
+const isUserSender = computed(() => appStore.users.current?.id === message.sender.id);
 </script>
 
 <style scoped>

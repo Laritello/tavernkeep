@@ -2,8 +2,8 @@
     <div
         class="chat"
         :class="{
-            'chat-end': message.sender.login === usersStore.currentUser?.login,
-            'chat-start': message.sender.login !== usersStore.currentUser?.login,
+            'chat-end': alignRight,
+            'chat-start': !alignRight,
         }"
     >
         <div class="chat-image">
@@ -26,13 +26,10 @@
 </template>
 <script setup lang="ts">
 import { TextMessage } from '@/entities/Message';
-import { useUsersStore } from '@/stores/users.store';
-
-const usersStore = useUsersStore();
 
 const { message } = defineProps<{
     message: TextMessage;
-    color?: string;
+    alignRight: boolean;
 }>();
 
 function formatDate(dateString: Date): string {

@@ -2,7 +2,7 @@
     <div class="tooltip" :data-tip="die">
         <component v-if="dice.has(die)" :is="dice.get(die)" class="dice" :class="[die]" />
         <div v-else class="bg-slate-500 outline outline-1 size-6 m-2 rounded pt-[2px] text-center">?</div>
-        <div class="text-center">{{ value }}</div>
+        <div v-if="value !== undefined" class="text-center">{{ value }}</div>
     </div>
 </template>
 <script setup lang="ts">
@@ -23,7 +23,7 @@ const dice = new Map<string, string>([
 ]);
 defineProps<{
     die: string;
-    value: number;
+    value?: number;
 }>();
 </script>
 <style scoped>
@@ -53,6 +53,6 @@ defineProps<{
     fill: #a040d8;
 }
 .d4 {
-    fill: #b9b0a9;
+    fill: #524e4c;
 }
 </style>

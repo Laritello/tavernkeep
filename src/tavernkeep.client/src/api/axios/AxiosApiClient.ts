@@ -4,7 +4,7 @@ import type { ApiResponse } from '../base/ApiResponse';
 import { AxiosApiResponse } from './AxiosApiResponse';
 import { User } from '@/entities/User';
 import { UserRole } from '@/contracts/enums/UserRole';
-import { Message, RollMessage, TextMessage } from '@/entities/Message';
+import { Message, RollMessage, SkillRollMessage, TextMessage } from '@/entities/Message';
 import { Character } from '@/entities/Character';
 import type { Ability } from '@/contracts/character/Ability';
 import type { Skill } from '@/contracts/character/Skill';
@@ -283,6 +283,8 @@ export class AxiosApiClient implements ApiClient {
                     return plainToInstance(TextMessage, item);
                 case 'RollMessage':
                     return plainToInstance(RollMessage, item);
+                case 'SkillRollMessage':
+                    return plainToInstance(SkillRollMessage, item);
                 default:
                     return plainToInstance(Message, item);
             }

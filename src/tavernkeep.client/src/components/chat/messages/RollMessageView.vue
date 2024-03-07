@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded bg-base-content text-base-300 divide-y">
+    <div class="rounded bg-[#460c084b] divide-y">
         <div class="flex justify-between px-2 pt-1">
             <div>{{ message.sender.login }}</div>
             <div>{{ message.rollType }}</div>
@@ -12,7 +12,7 @@
                         <DiceIcon :die="result.type" :value="result.value" class="w-8" />
                     </li>
                 </template>
-                <li v-if="message.result.modifier" class="text-2xl text-base-300 font-thin">
+                <li v-if="message.result.modifier" class="text-2xl font-thin">
                     {{ message.result.modifier > 0 ? '+' + message.result.modifier : message.result.modifier }}
                 </li>
             </ul>
@@ -27,7 +27,6 @@ import DiceIcon from '@/components/DiceIcon.vue';
 import { RollMessage } from '@/entities/Message';
 const { message } = defineProps<{
     message: RollMessage;
-    color?: string;
 }>();
 
 function formatDate(dateString: Date): string {

@@ -1,5 +1,6 @@
 import type { RollType } from '@/contracts/enums/RollType';
 import type { User } from './User';
+import type { Skill } from '@/contracts/character/Skill';
 
 export class Message {
     id: string;
@@ -56,6 +57,31 @@ export class RollMessage extends Message {
         this.result = result;
         this.rollType = rollType;
         this.expression = expression;
+    }
+}
+
+export class SkillRollMessage extends Message {
+    result: RollResult;
+    rollType: RollType;
+    expression: string;
+    skill: Skill;
+
+    constructor(
+        $type: string,
+        id: string,
+        sender: User,
+        created: Date,
+        result: RollResult,
+        rollType: RollType,
+        expression: string,
+        skill: Skill
+    ) {
+        super($type, id, sender, created);
+
+        this.result = result;
+        this.rollType = rollType;
+        this.expression = expression;
+        this.skill = skill;
     }
 }
 
