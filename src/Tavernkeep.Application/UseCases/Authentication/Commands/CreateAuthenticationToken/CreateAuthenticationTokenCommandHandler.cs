@@ -12,10 +12,10 @@ namespace Tavernkeep.Application.Actions.Authentication.Commands.CreateAuthentic
         public async Task<AuthenticationResponse> Handle(CreateAuthenticationTokenCommand request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(request.Login))
-                throw new BusinessLogicException("No user login provided..");
+                throw new BusinessLogicException("No user login provided.");
 
             var user = await repository.GetUserByLoginAsync(request.Login, cancellationToken) 
-                ?? throw new BusinessLogicException("No user with provided login exists.");
+                ?? throw new BusinessLogicException("User with provided login not found.");
 
             if (user.Password != request.Password)
                 throw new BusinessLogicException("Passwords do not match.");
