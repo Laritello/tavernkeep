@@ -18,13 +18,19 @@ export interface ApiClient {
 
     getUsers(): Promise<ApiResponse<User[]>>;
     getCurrentUser(): Promise<ApiResponse<User>>;
-    createUser(login: string, password: string, role: UserRole): Promise<ApiResponse<User>>;
+    createUser(
+        login: string,
+        password: string,
+        role: UserRole,
+        initializeCharacter: boolean,
+        characterName?: string
+    ): Promise<ApiResponse<User>>;
     editUser(id: string, login: string, password: string, role: UserRole): Promise<ApiResponse<User>>;
     deleteUser(id: string): Promise<ApiResponse<null>>;
     setActiveCharacter(userId: string, characterId: string): Promise<ApiResponse<User>>;
 
     getCharacters(): Promise<ApiResponse<Character[]>>;
-    createCharacter(name: string): Promise<ApiResponse<Character>>;
+    createCharacter(ownerId: string, name: string): Promise<ApiResponse<Character>>;
     deleteCharacter(id: string): Promise<ApiResponse<null>>;
     getCharacter(id: string): Promise<ApiResponse<Character>>;
     assignUserToCharacter(characterId: string, userId: string): Promise<ApiResponse<Character>>;

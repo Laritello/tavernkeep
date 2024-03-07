@@ -5,6 +5,7 @@ import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { ApiClient } from '@/api/base/ApiClient';
 import { User } from '@/entities/User';
 import type { UserRole } from '@/contracts/enums/UserRole';
+import { useCharactersStore } from './characters.store';
 
 const api: ApiClient = ApiClientFactory.createApiClient();
 export const useUsersStore = defineStore('users.store', () => {
@@ -19,13 +20,17 @@ export const useUsersStore = defineStore('users.store', () => {
         current.value = userResponse.data;
     }
 
-    async function createUser(login: string, password: string, role: UserRole) {
-        const response = await api.createUser(login, password, role);
-        if (response.isSuccess()) {
-            all.value.push(response.data);
-        } else {
+    async function createUser(login: string, password: string, role: UserRole, characterName?: string): Promise<void> {
+        const response = await api.createUser(login, password, role, characterName !== null, characterName);
+        if (!response.isSuccess()) {
             console.error(response.statusText);
+            return;
         }
+        console.log(response.data);
+        const characterStore = useCharactersStore();
+        all.value.push(response.data);
+        response.data.activeCharacter.owner = response.data;
+        characterStore.all.push(response.data.activeCharacter);
     }
 
     async function deleteUser(id: string) {
@@ -51,8 +56,6 @@ export const useUsersStore = defineStore('users.store', () => {
             console.warn(`User '${userId}' not found`);
             return;
         }
-
-        console.log(all.value[userIndex].login, response.data.activeCharacter.name);
 
         all.value[userIndex].activeCharacter = response.data.activeCharacter;
     }

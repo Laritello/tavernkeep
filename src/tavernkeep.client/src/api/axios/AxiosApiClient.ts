@@ -127,11 +127,19 @@ export class AxiosApiClient implements ApiClient {
     }
 
     // TODO: User request types instead of separate parameters
-    async createUser(login: string, password: string, role: UserRole): Promise<ApiResponse<User>> {
+    async createUser(
+        login: string,
+        password: string,
+        role: UserRole,
+        initializeCharacter: boolean,
+        characterName?: string
+    ): Promise<ApiResponse<User>> {
         const response = await this.client.post<User>('users', {
-            login: login,
-            password: password,
-            role: role,
+            login,
+            password,
+            role,
+            initializeCharacter,
+            characterName,
         });
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
@@ -169,8 +177,8 @@ export class AxiosApiClient implements ApiClient {
         return new AxiosApiResponse(data, response.status, response.statusText);
     }
 
-    async createCharacter(name: string): Promise<ApiResponse<Character>> {
-        const response = await this.client.post<Character>('characters/create', { name: name });
+    async createCharacter(ownerId: string, name: string): Promise<ApiResponse<Character>> {
+        const response = await this.client.post<Character>('characters/create', { ownerId, name });
         const data = plainToInstance(Character, response.data);
         return new AxiosApiResponse(data, response.status, response.statusText);
     }
