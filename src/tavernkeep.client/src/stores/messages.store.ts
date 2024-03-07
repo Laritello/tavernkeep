@@ -39,6 +39,13 @@ export const useMessagesStore = defineStore('messages.store', () => {
         }
     }
 
+    async function deleteMessage(messageId: string) {
+        const response = await api.deleteMessage(messageId);
+        if (!response.isSuccess()) {
+            console.error(response.statusText);
+        }
+    }
+
     function appendMessage(message: Message) {
         let typedMessage = message;
 
@@ -55,5 +62,5 @@ export const useMessagesStore = defineStore('messages.store', () => {
         all.value.push(typedMessage);
     }
 
-    return { all, fetch, createMessage, createRollMessage };
+    return { all, fetch, createMessage, deleteMessage, createRollMessage };
 });

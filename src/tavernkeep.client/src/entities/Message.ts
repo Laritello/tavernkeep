@@ -2,12 +2,12 @@ import type { RollType } from '@/contracts/enums/RollType';
 import type { User } from './User';
 
 export class Message {
-    id: number;
+    id: string;
     sender: User;
     created: Date;
     $type: string;
 
-    constructor($type: string, id: number, sender: User, created: Date) {
+    constructor($type: string, id: string, sender: User, created: Date) {
         this.$type = $type;
         this.id = id;
         this.sender = sender;
@@ -22,7 +22,7 @@ export class TextMessage extends Message {
 
     constructor(
         $type: string,
-        id: number,
+        id: string,
         sender: User,
         created: Date,
         text: string,
@@ -44,7 +44,7 @@ export class RollMessage extends Message {
 
     constructor(
         $type: string,
-        id: number,
+        id: string,
         sender: User,
         created: Date,
         result: RollResult,

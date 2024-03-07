@@ -42,6 +42,7 @@ export interface ApiClient {
     editAbility(characterId: string, type: AbilityType, score: number): Promise<ApiResponse<Ability>>;
     editSkill(characterId: string, type: SkillType, proficiency: Proficiency): Promise<ApiResponse<Skill>>;
 
+    deleteMessage(messageId: string): Promise<ApiResponse<null>>;
     sendMessage(message: string, recipientId?: string): Promise<ApiResponse<Message>>;
     getMessages(skip: number, take: number): Promise<ApiResponse<Message[]>>;
     sendRollMessage(message: string, rollType: RollType): Promise<ApiResponse<Message>>;

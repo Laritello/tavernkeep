@@ -291,6 +291,12 @@ export class AxiosApiClient implements ApiClient {
         return new AxiosApiResponse(data, response.status, response.statusText);
     }
 
+    async deleteMessage(messageId: string): Promise<ApiResponse<null>> {
+        const response = await this.client.delete<Message[]>(`chat/${messageId}`);
+
+        return new AxiosApiResponse(null, response.status, response.statusText);
+    }
+
     async sendRollMessage(expression: string, rollType: RollType): Promise<ApiResponse<Message>> {
         const response = await this.client.get<Message>('roll/custom', {
             params: { expression, rollType },
