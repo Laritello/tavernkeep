@@ -141,8 +141,8 @@ export class AxiosApiClient implements ApiClient {
             initializeCharacter,
             characterName,
         });
-
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        const data = plainToInstance(User, response.data);
+        return new AxiosApiResponse(data, response.status, response.statusText);
     }
 
     async editUser(id: string, login: string, password: string, role: UserRole): Promise<ApiResponse<User>> {
@@ -151,8 +151,8 @@ export class AxiosApiClient implements ApiClient {
             password: password,
             role: role,
         });
-
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        const data = plainToInstance(User, response.data);
+        return new AxiosApiResponse(data, response.status, response.statusText);
     }
 
     // TODO: ApiResponse for empty responses
@@ -167,8 +167,8 @@ export class AxiosApiClient implements ApiClient {
             userId,
             characterId,
         });
-
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        const data = plainToInstance(User, response.data);
+        return new AxiosApiResponse(data, response.status, response.statusText);
     }
 
     async getCharacters(): Promise<ApiResponse<Character[]>> {
@@ -191,8 +191,8 @@ export class AxiosApiClient implements ApiClient {
 
     async getCharacter(id: string): Promise<ApiResponse<Character>> {
         const response = await this.client.get<Character>('characters/' + id);
-
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        const data = plainToInstance(Character, response.data);
+        return new AxiosApiResponse(data, response.status, response.statusText);
     }
 
     async assignUserToCharacter(characterId: string, userId: string): Promise<ApiResponse<Character>> {
@@ -200,8 +200,8 @@ export class AxiosApiClient implements ApiClient {
             characterId: characterId,
             userId: userId,
         });
-
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        const data = plainToInstance(Character, response.data);
+        return new AxiosApiResponse(data, response.status, response.statusText);
     }
 
     async createLore(characterId: string, topic: string, proficiency: Proficiency): Promise<ApiResponse<Lore>> {
