@@ -8,7 +8,7 @@ using Tavernkeep.Core.Repositories;
 
 namespace Tavernkepp.Application.Tests.UseCases.Authentication
 {
-    public class CreateAuthenticationTokenTests
+    public class CreateAuthenticationTokenCommandTests
     {
         private readonly string correctLogin = "default_user";
         private readonly string correctPassword = "default_password";
@@ -21,13 +21,13 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
 
         private readonly User authorizedUser;
 
-        public CreateAuthenticationTokenTests()
+        public CreateAuthenticationTokenCommandTests()
         {
             authorizedUser = new(correctLogin, correctPassword, UserRole.Player);
         }
 
         [Test]
-        public async Task Authentication_CreateAuthenticationTokenCommand_Success()
+        public async Task CreateAuthenticationTokenCommand_Success()
         {
             var mockUserRepository = new Mock<IUserRepository>();
             var mockTokenRepository = new Mock<IRefreshTokenRepository>();
@@ -50,7 +50,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
         }
 
         [Test]
-        public void Authentication_CreateAuthenticationTokenCommand_WrongLogin()
+        public void CreateAuthenticationTokenCommand_WrongLogin()
         {
             var mockUserRepository = new Mock<IUserRepository>();
             var mockTokenRepository = new Mock<IRefreshTokenRepository>();
@@ -68,7 +68,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
         }
 
         [Test]
-        public void Authentication_CreateAuthenticationTokenCommand_UserNotFound()
+        public void CreateAuthenticationTokenCommand_UserNotFound()
         {
             var mockUserRepository = new Mock<IUserRepository>();
             var mockTokenRepository = new Mock<IRefreshTokenRepository>();
@@ -86,7 +86,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
         }
 
         [Test]
-        public void Authentication_CreateAuthenticationTokenCommand_WrongPassword()
+        public void CreateAuthenticationTokenCommand_WrongPassword()
         {
             var mockUserRepository = new Mock<IUserRepository>();
             var mockTokenRepository = new Mock<IRefreshTokenRepository>();

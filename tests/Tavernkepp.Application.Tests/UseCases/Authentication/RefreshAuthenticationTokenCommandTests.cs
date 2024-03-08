@@ -10,7 +10,7 @@ using Tavernkeep.Core.Repositories;
 
 namespace Tavernkepp.Application.Tests.UseCases.Authentication
 {
-    public class RefreshAuthenticationTokenTests
+    public class RefreshAuthenticationTokenCommandTests
     {
         private readonly string login = "default_user";
         private readonly string password = "default_password";
@@ -24,13 +24,13 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
 
         private readonly User user;
 
-        public RefreshAuthenticationTokenTests()
+        public RefreshAuthenticationTokenCommandTests()
         {
             user = new User(login, password, UserRole.Player) { Id = userId };
         }
 
         [Test]
-        public async Task Authentication_CreateAuthenticationTokenCommand_Success()
+        public async Task RefreshAuthenticationTokenCommand_Success()
         {
             var mockAuthTokenService = new Mock<IAuthTokenService>();
             var mockUserRepository = new Mock<IUserRepository>();
@@ -76,7 +76,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
         }
 
         [Test]
-        public void Authentication_CreateAuthenticationTokenCommand_WrongUserId()
+        public void RefreshAuthenticationTokenCommand_WrongUserId()
         {
             var mockAuthTokenService = new Mock<IAuthTokenService>();
             var mockUserRepository = new Mock<IUserRepository>();
@@ -117,7 +117,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
         }
 
         [Test]
-        public void Authentication_CreateAuthenticationTokenCommand_TokenNotFound()
+        public void RefreshAuthenticationTokenCommand_TokenNotFound()
         {
             var mockAuthTokenService = new Mock<IAuthTokenService>();
             var mockUserRepository = new Mock<IUserRepository>();
@@ -152,7 +152,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
         }
 
         [Test]
-        public void Authentication_CreateAuthenticationTokenCommand_TokenExpired()
+        public void RefreshAuthenticationTokenCommand_TokenExpired()
         {
             var mockAuthTokenService = new Mock<IAuthTokenService>();
             var mockUserRepository = new Mock<IUserRepository>();
