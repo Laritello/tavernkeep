@@ -10,53 +10,58 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
 {
     public class CreateAuthenticationTokenTests
     {
-        private readonly Mock<IUserRepository> _mockUserRepository;
-        private readonly Mock<IRefreshTokenRepository> _mockTokenRepository;
-        private readonly Mock<IAuthTokenService> _mockAuthTokenService;
+        private readonly string correctLogin = "default_user";
+        private readonly string correctPassword = "default_password";
 
-        private const string _correctLogin = "default_user";
-        private const string _correctPassword = "default_password";
+        private readonly string wrongLogin = "wrong_user";
+        private readonly string wrongPassword = "wrong_password";
 
-        private const string _wrongLogin = "wrong_user";
-        private const string _wrongPassword = "wrong_password";
+        private readonly string token = "default_token";
+        private readonly string refreshToken = "default_refresh_token";
 
-        private const string _token = "default_token";
-        private const string _refreshToken = "default_refresh_token";
-
-        private readonly User authorizedUser = new(_correctLogin, _correctPassword, UserRole.Player);
+        private readonly User authorizedUser;
 
         public CreateAuthenticationTokenTests()
         {
-            _mockUserRepository = new Mock<IUserRepository>();
-            _mockUserRepository.Setup(repo => repo.GetUserByLoginAsync(authorizedUser.Login, CancellationToken.None)).ReturnsAsync(authorizedUser);
-
-            _mockTokenRepository = new Mock<IRefreshTokenRepository>();
-
-            _mockAuthTokenService = new Mock<IAuthTokenService>();
-            _mockAuthTokenService.Setup(service => service.GenerateAccessToken(authorizedUser)).Returns(_token);
-            _mockAuthTokenService.Setup(service => service.GenerateRefreshToken()).Returns(_refreshToken);
+            authorizedUser = new(correctLogin, correctPassword, UserRole.Player);
         }
 
         [Test]
-        public async Task Authentication_CreateAuthenticationTokenCommand_ReturnsToken()
+        public async Task Authentication_CreateAuthenticationTokenCommand_Success()
         {
-            var request = new CreateAuthenticationTokenCommand(_correctLogin, _correctPassword);
-            var handler = new CreateAuthenticationTokenCommandHandler(_mockUserRepository.Object, _mockTokenRepository.Object, _mockAuthTokenService.Object);
+            var mockUserRepository = new Mock<IUserRepository>();
+            var mockTokenRepository = new Mock<IRefreshTokenRepository>();
+            var mockAuthTokenService = new Mock<IAuthTokenService>();
+
+            mockUserRepository.Setup(repo => repo.GetUserByLoginAsync(authorizedUser.Login, CancellationToken.None)).ReturnsAsync(authorizedUser);
+            mockAuthTokenService.Setup(service => service.GenerateAccessToken(authorizedUser)).Returns(token);
+            mockAuthTokenService.Setup(service => service.GenerateRefreshToken()).Returns(refreshToken);
+
+            var request = new CreateAuthenticationTokenCommand(correctLogin, correctPassword);
+            var handler = new CreateAuthenticationTokenCommandHandler(mockUserRepository.Object, mockTokenRepository.Object, mockAuthTokenService.Object);
 
             var response = await handler.Handle(request, CancellationToken.None);
 
             Assert.Multiple(() =>
             {
-                Assert.That(response.AccessToken, Is.EqualTo(_token));
-                Assert.That(response.RefreshToken, Is.EqualTo(_refreshToken));
+                Assert.That(response.AccessToken, Is.EqualTo(token));
+                Assert.That(response.RefreshToken, Is.EqualTo(refreshToken));
             });
         }
 
         [Test]
-        public void Authentication_CreateAuthenticationTokenCommand_NoLogin()
+        public void Authentication_CreateAuthenticationTokenCommand_WrongLogin()
         {
-            var request = new CreateAuthenticationTokenCommand(string.Empty, _correctPassword);
-            var handler = new CreateAuthenticationTokenCommandHandler(_mockUserRepository.Object, _mockTokenRepository.Object, _mockAuthTokenService.Object);
+            var mockUserRepository = new Mock<IUserRepository>();
+            var mockTokenRepository = new Mock<IRefreshTokenRepository>();
+            var mockAuthTokenService = new Mock<IAuthTokenService>();
+
+            mockUserRepository.Setup(repo => repo.GetUserByLoginAsync(authorizedUser.Login, CancellationToken.None)).ReturnsAsync(authorizedUser);
+            mockAuthTokenService.Setup(service => service.GenerateAccessToken(authorizedUser)).Returns(token);
+            mockAuthTokenService.Setup(service => service.GenerateRefreshToken()).Returns(refreshToken);
+
+            var request = new CreateAuthenticationTokenCommand(string.Empty, correctPassword);
+            var handler = new CreateAuthenticationTokenCommandHandler(mockUserRepository.Object, mockTokenRepository.Object, mockAuthTokenService.Object);
 
             var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
             Assert.That(ex.Message, Is.EqualTo("No user login provided."));
@@ -65,8 +70,16 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
         [Test]
         public void Authentication_CreateAuthenticationTokenCommand_UserNotFound()
         {
-            var request = new CreateAuthenticationTokenCommand(_wrongLogin, _correctPassword);
-            var handler = new CreateAuthenticationTokenCommandHandler(_mockUserRepository.Object, _mockTokenRepository.Object, _mockAuthTokenService.Object);
+            var mockUserRepository = new Mock<IUserRepository>();
+            var mockTokenRepository = new Mock<IRefreshTokenRepository>();
+            var mockAuthTokenService = new Mock<IAuthTokenService>();
+
+            mockUserRepository.Setup(repo => repo.GetUserByLoginAsync(authorizedUser.Login, CancellationToken.None)).ReturnsAsync(authorizedUser);
+            mockAuthTokenService.Setup(service => service.GenerateAccessToken(authorizedUser)).Returns(token);
+            mockAuthTokenService.Setup(service => service.GenerateRefreshToken()).Returns(refreshToken);
+
+            var request = new CreateAuthenticationTokenCommand(wrongLogin, correctPassword);
+            var handler = new CreateAuthenticationTokenCommandHandler(mockUserRepository.Object, mockTokenRepository.Object, mockAuthTokenService.Object);
 
             var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
             Assert.That(ex.Message, Is.EqualTo("User with provided login not found."));
@@ -75,8 +88,16 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
         [Test]
         public void Authentication_CreateAuthenticationTokenCommand_WrongPassword()
         {
-            var request = new CreateAuthenticationTokenCommand(_correctLogin, _wrongPassword);
-            var handler = new CreateAuthenticationTokenCommandHandler(_mockUserRepository.Object, _mockTokenRepository.Object, _mockAuthTokenService.Object);
+            var mockUserRepository = new Mock<IUserRepository>();
+            var mockTokenRepository = new Mock<IRefreshTokenRepository>();
+            var mockAuthTokenService = new Mock<IAuthTokenService>();
+
+            mockUserRepository.Setup(repo => repo.GetUserByLoginAsync(authorizedUser.Login, CancellationToken.None)).ReturnsAsync(authorizedUser);
+            mockAuthTokenService.Setup(service => service.GenerateAccessToken(authorizedUser)).Returns(token);
+            mockAuthTokenService.Setup(service => service.GenerateRefreshToken()).Returns(refreshToken);
+
+            var request = new CreateAuthenticationTokenCommand(correctLogin, wrongPassword);
+            var handler = new CreateAuthenticationTokenCommandHandler(mockUserRepository.Object, mockTokenRepository.Object, mockAuthTokenService.Object);
 
             var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
             Assert.That(ex.Message, Is.EqualTo("Passwords do not match."));
