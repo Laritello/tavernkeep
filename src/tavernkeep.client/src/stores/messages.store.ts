@@ -5,7 +5,7 @@ import { plainToInstance } from 'class-transformer';
 import ChatHub from '@/api/hubs/ChatHub';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { ApiClient } from '@/api/base/ApiClient';
-import { Message, RollMessage, SkillRollMessage, TextMessage } from '@/entities/Message';
+import type { Message, RollMessage, SkillRollMessage, TextMessage } from '@/entities/Message';
 import type { RollType } from '@/contracts/enums/RollType';
 
 export const useMessagesStore = defineStore('messages.store', () => {
@@ -47,22 +47,22 @@ export const useMessagesStore = defineStore('messages.store', () => {
     }
 
     function appendMessage(message: Message) {
-        let typedMessage = message;
+        // let typedMessage = message;
 
-        switch (message.$type) {
-            case 'TextMessage':
-                typedMessage = plainToInstance(TextMessage, message);
-                break;
-            case 'RollMessage':
-                typedMessage = plainToInstance(RollMessage, message);
-                break;
-            case 'SkillRollMessage':
-                typedMessage = plainToInstance(SkillRollMessage, message);
-                break;
-            default:
-                typedMessage = plainToInstance(Message, message);
-        }
-        all.value.push(typedMessage);
+        // switch (message.$type) {
+        //     case 'TextMessage':
+        //         typedMessage = message as TextMessage; //plainToInstance(TextMessage, message);
+        //         break;
+        //     case 'RollMessage':
+        //         typedMessage = message as RollMessage; // plainToInstance(RollMessage, message);
+        //         break;
+        //     case 'SkillRollMessage':
+        //         typedMessage = message as SkillRollMessage; // plainToInstance(SkillRollMessage, message);
+        //         break;
+        //     default:
+        //         typedMessage = message as Message; // plainToInstance(Message, message);
+        // }
+        all.value.push(message);
     }
 
     return { all, fetch, createMessage, deleteMessage, createRollMessage };

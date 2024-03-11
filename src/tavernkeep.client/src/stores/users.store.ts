@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { ApiClient } from '@/api/base/ApiClient';
-import { User } from '@/entities/User';
+import { type User } from '@/entities/User';
 import type { UserRole } from '@/contracts/enums/UserRole';
 import { useCharactersStore } from './characters.store';
 

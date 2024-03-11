@@ -2,16 +2,15 @@ import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import type { ApiClient } from '../base/ApiClient';
 import type { ApiResponse } from '../base/ApiResponse';
 import { AxiosApiResponse } from './AxiosApiResponse';
-import { User } from '@/entities/User';
+import { type User } from '@/entities/User';
 import { UserRole } from '@/contracts/enums/UserRole';
-import { Message, RollMessage, SkillRollMessage, TextMessage } from '@/entities/Message';
-import { Character } from '@/entities/Character';
+import type { Message } from '@/entities/Message';
+import { type Character } from '@/entities/Character';
 import type { Ability } from '@/contracts/character/Ability';
 import type { Skill } from '@/contracts/character/Skill';
 import type { AbilityType } from '@/contracts/enums/AbilityType';
 import type { Proficiency } from '@/contracts/enums/Proficiency';
 import type { SkillType } from '@/contracts/enums/SkillType';
-import { plainToInstance } from 'class-transformer';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import { useAuthStore } from '@/stores/auth.store';
 import type { RollType } from '@/contracts/enums/RollType';
@@ -116,14 +115,12 @@ export class AxiosApiClient implements ApiClient {
 
     async getUsers(): Promise<ApiResponse<User[]>> {
         const response = await this.client.get<User[]>('users');
-        const data = plainToInstance(User, response.data);
-        return new AxiosApiResponse(data, response.status, response.statusText);
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async getCurrentUser(): Promise<ApiResponse<User>> {
         const response = await this.client.get<User>('users/current');
-        const data = plainToInstance(User, response.data);
-        return new AxiosApiResponse(data, response.status, response.statusText);
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     // TODO: User request types instead of separate parameters
@@ -141,8 +138,7 @@ export class AxiosApiClient implements ApiClient {
             initializeCharacter,
             characterName,
         });
-        const data = plainToInstance(User, response.data);
-        return new AxiosApiResponse(data, response.status, response.statusText);
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async editUser(id: string, login: string, password: string, role: UserRole): Promise<ApiResponse<User>> {
@@ -151,14 +147,12 @@ export class AxiosApiClient implements ApiClient {
             password: password,
             role: role,
         });
-        const data = plainToInstance(User, response.data);
-        return new AxiosApiResponse(data, response.status, response.statusText);
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     // TODO: ApiResponse for empty responses
     async deleteUser(id: string): Promise<ApiResponse<null>> {
         const response = await this.client.delete('users/' + id);
-
         return new AxiosApiResponse(null, response.status, response.statusText);
     }
 
@@ -167,32 +161,27 @@ export class AxiosApiClient implements ApiClient {
             userId,
             characterId,
         });
-        const data = plainToInstance(User, response.data);
-        return new AxiosApiResponse(data, response.status, response.statusText);
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async getCharacters(): Promise<ApiResponse<Character[]>> {
         const response = await this.client.get<Character[]>('characters');
-        const data = plainToInstance(Character, response.data);
-        return new AxiosApiResponse(data, response.status, response.statusText);
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async createCharacter(ownerId: string, name: string): Promise<ApiResponse<Character>> {
         const response = await this.client.post<Character>('characters/create', { ownerId, name });
-        const data = plainToInstance(Character, response.data);
-        return new AxiosApiResponse(data, response.status, response.statusText);
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async deleteCharacter(id: string): Promise<ApiResponse<null>> {
         const response = await this.client.delete('characters/delete/' + id);
-
         return new AxiosApiResponse(null, response.status, response.statusText);
     }
 
     async getCharacter(id: string): Promise<ApiResponse<Character>> {
         const response = await this.client.get<Character>('characters/' + id);
-        const data = plainToInstance(Character, response.data);
-        return new AxiosApiResponse(data, response.status, response.statusText);
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async assignUserToCharacter(characterId: string, userId: string): Promise<ApiResponse<Character>> {
@@ -200,8 +189,7 @@ export class AxiosApiClient implements ApiClient {
             characterId: characterId,
             userId: userId,
         });
-        const data = plainToInstance(Character, response.data);
-        return new AxiosApiResponse(data, response.status, response.statusText);
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async createLore(characterId: string, topic: string, proficiency: Proficiency): Promise<ApiResponse<Lore>> {
@@ -256,20 +244,7 @@ export class AxiosApiClient implements ApiClient {
             content: content,
         });
 
-        let data = response.data;
-
-        switch (data.$type) {
-            case 'TextMessage':
-                data = plainToInstance(TextMessage, data);
-                break;
-            case 'RollMessage':
-                data = plainToInstance(RollMessage, data);
-                break;
-            default:
-                data = plainToInstance(Message, data);
-        }
-
-        return new AxiosApiResponse(data, response.status, response.statusText);
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async getMessages(skip: number, take: number): Promise<ApiResponse<Message[]>> {
@@ -277,25 +252,11 @@ export class AxiosApiClient implements ApiClient {
             params: { skip: skip, take: take },
         });
 
-        const data = response.data.map((item) => {
-            switch (item.$type) {
-                case 'TextMessage':
-                    return plainToInstance(TextMessage, item);
-                case 'RollMessage':
-                    return plainToInstance(RollMessage, item);
-                case 'SkillRollMessage':
-                    return plainToInstance(SkillRollMessage, item);
-                default:
-                    return plainToInstance(Message, item);
-            }
-        });
-
-        return new AxiosApiResponse(data, response.status, response.statusText);
+        return new AxiosApiResponse(response.data, response.status, response.statusText);
     }
 
     async deleteMessage(messageId: string): Promise<ApiResponse<null>> {
         const response = await this.client.delete<Message[]>(`chat/${messageId}`);
-
         return new AxiosApiResponse(null, response.status, response.statusText);
     }
 
