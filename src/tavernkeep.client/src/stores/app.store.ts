@@ -6,6 +6,9 @@ import { useUsersStore } from './users.store';
 import { useCharactersStore } from './characters.store';
 import { useMessagesStore } from './messages.store';
 
+import ChatHub from '@/api/hubs/ChatHub';
+import CharacterHub from '@/api/hubs/CharacterHub';
+
 export const useAppStore = defineStore('app.store', () => {
     const auth = useAuthStore();
     const users = useUsersStore();
@@ -18,16 +21,22 @@ export const useAppStore = defineStore('app.store', () => {
     if (isLoggedIn.value) {
         console.info('[AppStore] User already logged in. Fetching data...');
         fetch();
+        ChatHub.start();
+        CharacterHub.start();
     }
 
     watch(isLoggedIn, (value): void => {
         console.info('[AppStore] Auth status update');
         if (!value) {
             console.info('[AppStore] User logged out');
+            ChatHub.stop();
+            CharacterHub.stop();
             return;
         }
         console.info('[AppStore] User logged in. Fetching data...');
         fetch();
+        ChatHub.start();
+        CharacterHub.start();
     });
 
     function fetch(): void {

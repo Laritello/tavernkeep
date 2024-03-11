@@ -1,8 +1,4 @@
-import {
-    HttpTransportType,
-    HubConnection,
-    HubConnectionBuilder,
-} from '@microsoft/signalr';
+import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { getCookie } from 'typescript-cookie';
 
 class ChatHub {
@@ -21,11 +17,14 @@ class ChatHub {
                 },
             })
             .build();
-        this.start();
     }
 
     start() {
         this.connection.start();
+    }
+
+    stop() {
+        this.connection.stop();
     }
 }
 
