@@ -19,12 +19,12 @@ class CharacterHub {
             .build();
     }
 
-    start() {
-        this.connection.start();
+    async start() {
+        await this.connection.start();
     }
 
-    stop() {
-        this.connection.stop();
+    async stop() {
+        await this.connection.stop();
     }
 }
 
