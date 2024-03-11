@@ -1,16 +1,9 @@
-import type { User } from '@/entities/User';
 import type { ApiResponse } from './ApiResponse';
-import type { UserRole } from '@/contracts/enums/UserRole';
-import type { Message } from '@/entities/Message';
-import type { Character } from '@/entities/Character';
-import type { SkillType } from '@/contracts/enums/SkillType';
-import type { Proficiency } from '@/contracts/enums/Proficiency';
-import type { Skill } from '@/contracts/character/Skill';
-import type { AbilityType } from '@/contracts/enums/AbilityType';
-import type { Ability } from '@/contracts/character/Ability';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
-import type { RollType } from '@/contracts/enums/RollType';
-import type { Lore } from '@/contracts/character/Lore';
+
+import type { User, Message, Character } from '@/entities';
+import { UserRole, SkillType, Proficiency, AbilityType, RollType } from '@/contracts/enums';
+import type { Ability, Skill, Lore } from '@/contracts/character';
 
 export interface ApiClient {
     auth(login: string, password: string): Promise<ApiResponse<AuthenticationResponse>>;
