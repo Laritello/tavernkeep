@@ -35,7 +35,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Queries
         }
 
         [Test]
-        public async Task GetAllCharactersCommand_Success()
+        public async Task GetAllCharactersQuery_Success()
         {
             var mockUserRepository = new Mock<IUserRepository>();
             var mockCharacterRepository = new Mock<ICharacterRepository>();
