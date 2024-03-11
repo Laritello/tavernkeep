@@ -1,22 +1,15 @@
 <template>
     <div class="pb-2 w-full">
-        <!-- prettier-ignore -->
-        <TextMessageView v-if="(message instanceof TextMessage)" :message="message" :align-right="isUserSender" />
-        <!-- prettier-ignore -->
-        <RollMessageView v-else-if="(message instanceof RollMessage)" :message="message" />
-        <!-- prettier-ignore -->
-        <SkillRollMessageView v-else-if="message instanceof SkillRollMessage" :message="message" />
-        <span v-else>Unknown message type: {{ message.$type }}</span>
+        <component :is="getComponentByType(message)" :message="message" :align-right="isUserSender">
+            Unknown message type: {{ message.$type }}
+        </component>
     </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 
-import { Message } from '@/entities/Message';
-import { TextMessage } from '@/entities/Message';
-import { RollMessage } from '@/entities/Message';
-import { SkillRollMessage } from '@/entities/Message';
+import { type Message } from '@/entities/Message';
 
 import TextMessageView from './TextMessageView.vue';
 import RollMessageView from './RollMessageView.vue';
@@ -30,37 +23,19 @@ const { message } = defineProps<{
 
 const appStore = useAppStore();
 const isUserSender = computed(() => appStore.users.current?.id === message.sender.id);
+
+function getComponentByType(message: Message) {
+    switch (message.$type) {
+        case 'TextMessage':
+            return TextMessageView;
+        case 'RollMessage':
+            return RollMessageView;
+        case 'SkillRollMessage':
+            return SkillRollMessageView;
+        default:
+            return `div`;
+    }
+}
 </script>
 
-<style scoped>
-.message-bubble {
-    display: grid;
-    grid-template-rows: min-content min-content;
-    grid-gap: 0px;
-}
-
-.message-container {
-    display: grid;
-    grid-template-columns: min-content 1fr;
-    grid-gap: 5px;
-}
-
-.text-container {
-    display: grid;
-    grid-template-rows: min-content min-content 1fr;
-    grid-gap: 0px;
-}
-
-.text-container .header {
-    display: grid;
-    grid-template-columns: 1fr min-content;
-    grid-gap: 3px;
-    align-items: center;
-}
-
-.private {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-</style>
+<style scoped></style>
