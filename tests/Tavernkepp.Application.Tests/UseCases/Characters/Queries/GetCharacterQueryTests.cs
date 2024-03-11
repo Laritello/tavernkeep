@@ -12,7 +12,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkepp.Application.Tests.UseCases.Characters
+namespace Tavernkepp.Application.Tests.UseCases.Characters.Queries
 {
     public class GetCharacterQueryTests
     {

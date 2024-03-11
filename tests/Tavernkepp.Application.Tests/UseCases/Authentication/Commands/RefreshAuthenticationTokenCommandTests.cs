@@ -8,7 +8,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkepp.Application.Tests.UseCases.Authentication
+namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 {
     public class RefreshAuthenticationTokenCommandTests
     {
@@ -55,11 +55,11 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication
 
             mockTokenRepository
                 .Setup(repo => repo.GetTokensForUserAsync(userId, CancellationToken.None))
-                .ReturnsAsync([ 
-                    new() 
-                    { 
+                .ReturnsAsync([
+                    new()
+                    {
                         UserId = userId,
-                        Token = refreshToken, 
+                        Token = refreshToken,
                         Expires = DateTime.UtcNow.AddDays(7)
                     }]);
 

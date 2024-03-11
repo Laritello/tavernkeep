@@ -22,4 +22,8 @@
     <ProjectReference Include="..\..\src\Tavernkeep.Application\Tavernkeep.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\Chat\" />
+  </ItemGroup>
+
 </Project>

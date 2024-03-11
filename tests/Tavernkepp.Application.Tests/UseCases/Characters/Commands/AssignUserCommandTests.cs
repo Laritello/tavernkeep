@@ -5,7 +5,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkepp.Application.Tests.UseCases.Characters
+namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
     public class AssignUserCommandTests
     {
@@ -23,8 +23,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters
             };
         }
 
-        [SetUp] 
-        public void SetUp() 
+        [SetUp]
+        public void SetUp()
         {
             character = new();
         }

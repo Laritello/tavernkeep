@@ -1,27 +1,23 @@
 ﻿using Moq;
-using Tavernkeep.Application.Actions.Characters.Commands.EditHealth;
+using Tavernkeep.Application.Actions.Characters.Commands.EditAbility;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkepp.Application.Tests.UseCases.Characters
+namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
-    public class EditHealthCommandTests
+    public class EditAbilityCommandTests
     {
         private readonly Guid characterId = Guid.NewGuid();
-
-        private readonly int currentHealth = 0;
-        private readonly int maxHealth = 100;
-        private readonly int tempHealth = 15;
 
         private readonly User owner;
         private readonly User master;
 
         private Character character;
 
-        public EditHealthCommandTests()
+        public EditAbilityCommandTests()
         {
             owner = new User("owner", "owner", UserRole.Player) { Id = Guid.NewGuid() };
             master = new User("master", "master", UserRole.Master) { Id = Guid.NewGuid() };
@@ -39,11 +35,12 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters
         }
 
         [Test]
-        public async Task EditHealthCommand_Success()
+        public async Task EditAbilityCommand_Success()
         {
             var mockUserRepository = new Mock<IUserRepository>();
             var mockCharacterRepository = new Mock<ICharacterRepository>();
             var mockNotificationService = new Mock<INotificationService>();
+            var newScore = 12;
 
             mockUserRepository
                 .Setup(repo => repo.FindAsync(owner.Id, default!))
@@ -52,25 +49,21 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters
                 .Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
                 .ReturnsAsync(character);
 
-            var request = new EditHealthCommand(owner.Id, characterId, currentHealth, maxHealth, tempHealth);
-            var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
+            var request = new EditAbilityCommand(owner.Id, characterId, AbilityType.Strength, newScore);
+            var handler = new EditAbilityCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
             var response = await handler.Handle(request, CancellationToken.None);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(response.Current, Is.EqualTo(currentHealth));
-                Assert.That(response.Max, Is.EqualTo(maxHealth));
-                Assert.That(response.Temporary, Is.EqualTo(tempHealth));
-            });
+            Assert.That(response.Score, Is.EqualTo(newScore));
         }
 
         [Test]
-        public async Task EditHealthCommand_Success_Master()
+        public async Task EditAbilityCommand_Success_Master()
         {
             var mockUserRepository = new Mock<IUserRepository>();
             var mockCharacterRepository = new Mock<ICharacterRepository>();
             var mockNotificationService = new Mock<INotificationService>();
+            var newScore = 12;
 
             mockUserRepository
                 .Setup(repo => repo.FindAsync(master.Id, default!))
@@ -79,61 +72,59 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters
                 .Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
                 .ReturnsAsync(character);
 
-            var request = new EditHealthCommand(master.Id, characterId, currentHealth, maxHealth, tempHealth);
-            var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
+            var request = new EditAbilityCommand(master.Id, characterId, AbilityType.Strength, newScore);
+            var handler = new EditAbilityCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
             var response = await handler.Handle(request, CancellationToken.None);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(response.Current, Is.EqualTo(currentHealth));
-                Assert.That(response.Max, Is.EqualTo(maxHealth));
-                Assert.That(response.Temporary, Is.EqualTo(tempHealth));
-            });
+            Assert.That(response.Score, Is.EqualTo(newScore));
         }
 
         [Test]
-        public void EditHealthCommand_InitiatorNotFound()
+        public void EditAbilityCommand_InitiatorNotFound()
         {
             var mockUserRepository = new Mock<IUserRepository>();
             var mockCharacterRepository = new Mock<ICharacterRepository>();
             var mockNotificationService = new Mock<INotificationService>();
+            var newScore = 12;
 
             mockCharacterRepository
                 .Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
                 .ReturnsAsync(character);
 
-            var request = new EditHealthCommand(owner.Id, characterId, currentHealth, maxHealth, tempHealth);
-            var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
+            var request = new EditAbilityCommand(owner.Id, characterId, AbilityType.Strength, newScore);
+            var handler = new EditAbilityCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
             var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
             Assert.That(ex.Message, Is.EqualTo("User with specified ID doesn't exist."));
         }
 
         [Test]
-        public void EditHealthCommand_CharacterNotFound()
+        public void EditAbilityCommand_CharacterNotFound()
         {
             var mockUserRepository = new Mock<IUserRepository>();
             var mockCharacterRepository = new Mock<ICharacterRepository>();
             var mockNotificationService = new Mock<INotificationService>();
+            var newScore = 12;
 
             mockUserRepository
                 .Setup(repo => repo.FindAsync(owner.Id, default!))
                 .ReturnsAsync(owner);
 
-            var request = new EditHealthCommand(owner.Id, characterId, currentHealth, maxHealth, tempHealth);
-            var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
+            var request = new EditAbilityCommand(owner.Id, characterId, AbilityType.Strength, newScore);
+            var handler = new EditAbilityCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
             var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
             Assert.That(ex.Message, Is.EqualTo("Character with specified ID doesn't exist."));
         }
 
         [Test]
-        public void EditHealthCommand_NotEnoughPermissions()
+        public void EditAbilityCommand_NotEnoughPermissions()
         {
             var mockUserRepository = new Mock<IUserRepository>();
             var mockCharacterRepository = new Mock<ICharacterRepository>();
             var mockNotificationService = new Mock<INotificationService>();
+            var newScore = 12;
             var initiatorId = Guid.NewGuid();
 
             mockUserRepository
@@ -143,8 +134,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters
                 .Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
                 .ReturnsAsync(character);
 
-            var request = new EditHealthCommand(initiatorId, characterId, currentHealth, maxHealth, tempHealth);
-            var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
+            var request = new EditAbilityCommand(initiatorId, characterId, AbilityType.Strength, newScore);
+            var handler = new EditAbilityCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
             var ex = Assert.ThrowsAsync<InsufficientPermissionException>(async () => await handler.Handle(request, CancellationToken.None));
             Assert.That(ex.Message, Is.EqualTo("You do not have the necessary permissions to perform this operation."));
