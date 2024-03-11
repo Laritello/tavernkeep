@@ -1,13 +1,20 @@
 <template>
-    <div class="bg-base-300 rounded p-2">
-        <div class="text-center">{{ ability.type }}</div>
-        <div class="text-center rounded border">{{ ability.score }}</div>
+    <div class="w-56 h-64 flex flex-col justify-between text-center bg-base-300">
+        <div class="text-xl bg-slate-400">{{ type.toUpperCase() }}</div>
+        <div v-if="value !== undefined" class="text-2xl">{{ Math.round(value - 10 / 2) }}</div>
+        <div class="absolute inset-auto flex justify-center">
+            <div class="size-16 border rotate-45 flex flex-col justify-center align-middle">
+                <div class="-rotate-45">{{ value }}</div>
+            </div>
+        </div>
     </div>
 </template>
 <script setup lang="ts">
-import type { Ability } from '@/contracts/character/Ability';
+import type { AbilityType } from '@/contracts/enums/AbilityType';
 
 defineProps<{
-    ability: Ability;
+    type: AbilityType;
 }>();
+
+const value = defineModel<number>();
 </script>

@@ -1,5 +1,7 @@
 <template>
-    <CharacterView class="w-96 mx-auto mt-4" />
+    <div class="w-full h-full">
+        <CharacterView />
+    </div>
 </template>
 
 <script setup lang="ts">

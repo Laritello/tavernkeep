@@ -1,9 +1,11 @@
+divdiv
 <template>
-    <div class="grid grid-cols-2 gap-x-2 gap-y-3">
+    <div class="flex flex-wrap justify-center gap-2">
         <AbilityView
-            v-for="[key, ability] in appStore.users.current?.activeCharacter.abilities.entries()"
-            :key="key.toString()"
-            :ability="ability"
+            v-for="ability in appStore.users.current?.activeCharacter.abilities"
+            v-model="ability.score"
+            :key="ability.type.toString()"
+            :type="ability.type"
         />
     </div>
 </template>
