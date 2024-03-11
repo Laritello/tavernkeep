@@ -34,25 +34,21 @@
                 <nav>
                     <ul class="menu menu-sm">
                         <li>
-                            <RouterLink to="/">Home</RouterLink>
+                            <RouterLink active-class="active" to="/">Home</RouterLink>
                         </li>
                         <li>
-                            <RouterLink to="/characters">Characters</RouterLink>
+                            <RouterLink active-class="active" to="/characters">Characters</RouterLink>
                         </li>
                         <li v-if="appStore.users.current?.role == UserRole.Master">
-                            <RouterLink to="/admin">Admin</RouterLink>
+                            <RouterLink active-class="active" to="/admin">Admin</RouterLink>
                         </li>
                     </ul>
                 </nav>
             </div>
             <!-- Content -->
-            <main class="flex grow bg-base">
-                <div class="container">
-                    <slot />
-                </div>
-            </main>
+            <main class="flex flex-col grow bg-base"><slot /></main>
             <!-- Chat panel -->
-            <div class="w-96 shadow-md shadow-neutral-950 bg-base-200">
+            <div class="min-w-96 shadow-md shadow-neutral-950 bg-base-200">
                 <ChatComponent class="h-full" />
             </div>
         </div>
@@ -78,9 +74,5 @@ async function logout() {
 <style scoped>
 .content-height {
     height: calc(100% - 4rem);
-}
-
-.router-link-active {
-    @apply active;
 }
 </style>
