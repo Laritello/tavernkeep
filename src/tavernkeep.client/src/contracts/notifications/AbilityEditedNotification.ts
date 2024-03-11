@@ -1,13 +1,7 @@
-import type { AbilityType } from '../enums/AbilityType';
+import type { AbilityType } from '@/contracts/enums';
 
-export class AbilityEditedNotification {
+export interface AbilityEditedNotification {
     characterId: string;
     type: AbilityType;
     score: number;
-
-    constructor(characterId: string, type: AbilityType, score: number) {
-        this.characterId = characterId;
-        this.type = type;
-        this.score = score;
-    }
 }

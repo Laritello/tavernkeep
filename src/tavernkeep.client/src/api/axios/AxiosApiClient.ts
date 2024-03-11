@@ -2,19 +2,13 @@ import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import type { ApiClient } from '../base/ApiClient';
 import type { ApiResponse } from '../base/ApiResponse';
 import { AxiosApiResponse } from './AxiosApiResponse';
-import { type User } from '@/entities/User';
-import { UserRole } from '@/contracts/enums/UserRole';
-import type { Message } from '@/entities/Message';
-import { type Character } from '@/entities/Character';
-import type { Ability } from '@/contracts/character/Ability';
-import type { Skill } from '@/contracts/character/Skill';
-import type { AbilityType } from '@/contracts/enums/AbilityType';
-import type { Proficiency } from '@/contracts/enums/Proficiency';
-import type { SkillType } from '@/contracts/enums/SkillType';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
+
+import type { User, Message, Character } from '@/entities';
+import type { Ability, Skill, Lore } from '@/contracts/character';
+import { UserRole, AbilityType, Proficiency, SkillType, RollType } from '@/contracts/enums';
+
 import { useAuthStore } from '@/stores/auth.store';
-import type { RollType } from '@/contracts/enums/RollType';
-import type { Lore } from '@/contracts/character/Lore';
 
 // TODO: Error handling and interceptors
 export class AxiosApiClient implements ApiClient {

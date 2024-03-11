@@ -1,10 +1,6 @@
-import { Ability } from '@/contracts/character/Ability';
-import { Health } from '@/contracts/character/Health';
-import type { Lore } from '@/contracts/character/Lore';
-import { Skill } from '@/contracts/character/Skill';
-import { AbilityType } from '@/contracts/enums/AbilityType';
-import { SkillType } from '@/contracts/enums/SkillType';
-import { type User } from '@/entities/User';
+import type { Ability, Health, Lore, Skill } from '@/contracts/character';
+import type { AbilityType, SkillType } from '@/contracts/enums';
+import type { User } from './User';
 
 export interface Character {
     id: string;

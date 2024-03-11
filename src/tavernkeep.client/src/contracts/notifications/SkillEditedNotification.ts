@@ -1,18 +1,7 @@
-import type { Proficiency } from '../enums/Proficiency';
-import type { SkillType } from '../enums/SkillType';
+import type { Proficiency, SkillType } from '@/contracts/enums';
 
-export class SkillEditedNotification {
+export interface SkillEditedNotification {
     characterId: string;
     type: SkillType;
     proficiency: Proficiency;
-
-    constructor(
-        characterId: string,
-        type: SkillType,
-        proficiency: Proficiency
-    ) {
-        this.characterId = characterId;
-        this.type = type;
-        this.proficiency = proficiency;
-    }
 }

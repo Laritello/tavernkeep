@@ -1,6 +1,6 @@
-import type { RollType } from '@/contracts/enums/RollType';
+import type { RollType } from '@/contracts/enums';
 import type { User } from './User';
-import type { Skill } from '@/contracts/character/Skill';
+import type { Skill } from '@/contracts/character';
 
 export interface Message {
     id: string;

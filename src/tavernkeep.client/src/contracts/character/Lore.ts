@@ -1,13 +1,7 @@
-import { Proficiency } from '../enums/Proficiency';
+import { Proficiency } from '@/contracts/enums';
 
-export class Lore {
+export interface Lore {
     topic: string;
     proficiency: Proficiency;
     bonus: number;
-
-    constructor(topic: string, bonus: number) {
-        this.topic = topic;
-        this.bonus = bonus;
-        this.proficiency = Proficiency.Untrained;
-    }
 }

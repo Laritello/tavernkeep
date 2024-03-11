@@ -1,11 +1,6 @@
-import type { AbilityType } from '../enums/AbilityType';
+import type { AbilityType } from '@/contracts/enums';
 
-export class Ability {
+export interface Ability {
     type: AbilityType;
     score: number;
-
-    constructor(type: AbilityType) {
-        this.type = type;
-        this.score = 0;
-    }
 }

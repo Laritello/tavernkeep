@@ -1,5 +1,5 @@
-import type { UserRole } from '@/contracts/enums/UserRole';
-import { type Character } from './Character';
+import type { UserRole } from '@/contracts/enums';
+import type { Character } from './Character';
 
 export interface User {
     id: string;

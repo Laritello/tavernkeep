@@ -1,12 +1,6 @@
-import { Proficiency } from '../enums/Proficiency';
-import type { SkillType } from '../enums/SkillType';
+import type { Proficiency, SkillType } from '@/contracts/enums';
 
-export class Skill {
+export interface Skill {
     type: SkillType;
     proficiency: Proficiency;
-
-    constructor(type: SkillType) {
-        this.type = type;
-        this.proficiency = Proficiency.Untrained;
-    }
 }
