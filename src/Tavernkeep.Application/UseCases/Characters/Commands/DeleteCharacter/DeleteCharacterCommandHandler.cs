@@ -13,7 +13,7 @@ namespace Tavernkeep.Application.Actions.Characters.Commands.DeleteCharacter
                 ?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
             var character = await characterRepository.FindAsync(request.CharacterId)
-                ?? throw new BusinessLogicException("Character not found");
+                ?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
 
             if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)
                 throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
