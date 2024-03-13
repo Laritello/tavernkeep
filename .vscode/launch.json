@@ -2,11 +2,36 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "C#: Tavernkeep.Server [https]",
+      "name": "Run server (https)",
       "type": "dotnet",
       "request": "launch",
       "projectPath": "${workspaceFolder}\\src\\Tavernkeep.Server\\Tavernkeep.Server.csproj",
-      "launchConfigurationId": "TargetFramework=;https"
+      "launchConfigurationId": "TargetFramework=;https",
+      "presentation": {
+        "hidden": true
+      }
+    },
+    {
+      "name": "Debug frontend (Edge)",
+      "type": "msedge",
+      "request": "launch",
+      "url": "https://localhost:5173/",
+      "webRoot": "${workspaceFolder}/src/tavernkeep.client/src",
+      "sourceMapPathOverrides": {
+        "webpack:///./src/*": "${webRoot}/*"
+      },
+      "sourceMaps": true,
+      "runtimeArgs": ["--remote-debugging-port=9222"],
+      "presentation": {
+        "hidden": true
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug",
+      "configurations": ["Run server (https)", "Debug frontend (Edge)"],
+      "stopAll": true
     }
   ]
 }
