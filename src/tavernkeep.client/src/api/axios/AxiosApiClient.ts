@@ -1,5 +1,5 @@
 import axios, { type AxiosInstance } from 'axios';
-import ApplyAxiosRefreshInterceptor from './AxiosRefreshInterceptor';
+import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 import { AxiosApiResponse } from './AxiosApiResponse';
 
 import type { ApiClient } from '../base/ApiClient';
@@ -8,8 +8,6 @@ import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResp
 import type { User, Message, Character } from '@/entities';
 import type { Ability, Skill, Lore } from '@/contracts/character';
 import { UserRole, AbilityType, Proficiency, SkillType, RollType } from '@/contracts/enums';
-
-import { useAuthStore } from '@/stores/auth.store';
 
 // TODO: Error handling and interceptors
 export class AxiosApiClient implements ApiClient {
@@ -25,20 +23,12 @@ export class AxiosApiClient implements ApiClient {
             },
         });
 
-        this.client.interceptors.request.use(async (config) => {
-            if (config.url?.startsWith('authentication')) return config;
+        const { request, response } = AxiosAuthInterceptors(this.client);
 
-            const authStore = useAuthStore();
-            const token = await authStore.getAccessToken();
-
-            if (token) config.headers.Authorization = `Bearer ${token}`;
-            else config.headers.Authorization = null;
-
-            return config;
-        });
-
-        ApplyAxiosRefreshInterceptor(this.client);
+        this.client.interceptors.request.use(request);
+        this.client.interceptors.response.use(undefined, response);
     }
+
     async auth(login: string, password: string): Promise<ApiResponse<AuthenticationResponse>> {
         const response = await this.client.post<AuthenticationResponse>('authentication/auth', {
             login: login,
