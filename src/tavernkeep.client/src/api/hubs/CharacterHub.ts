@@ -23,13 +23,12 @@ class CharacterHub {
     }
 
     async start(): Promise<void> {
-        return this.connection.start();
-        //     .catch((error) => {
-        //     if (!error) return;
-        //     console.log('[CharacterHub] Refresh token and try to reconnect');
-        //     const authStore = useAuthStore();
-        //     return authStore.refresh().then(() => this.connection.start());
-        // });
+        return this.connection.start().catch((error) => {
+            if (!error) return;
+            console.log('[CharacterHub] Refresh token and try to reconnect');
+            const authStore = useAuthStore();
+            return authStore.refresh().then(() => this.connection.start());
+        });
     }
 
     async stop() {
