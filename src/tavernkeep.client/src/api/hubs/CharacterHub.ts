@@ -1,5 +1,5 @@
+import { useAuthStore } from '@/stores/auth.store';
 import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { getCookie } from 'typescript-cookie';
 
 class CharacterHub {
     private baseURL = 'https://' + window.location.hostname + ':7231/api/';
@@ -11,16 +11,22 @@ class CharacterHub {
             .withUrl(this.baseURL + 'hubs/character', {
                 skipNegotiation: true,
                 transport: HttpTransportType.WebSockets,
-                accessTokenFactory() {
-                    const jwt = getCookie('tavernkeep.auth.jwt');
-                    return jwt != undefined ? jwt : '';
+                async accessTokenFactory() {
+                    const authStore = useAuthStore();
+                    const accessToken = await authStore.getAccessToken();
+                    return accessToken ?? '';
                 },
             })
             .build();
     }
 
-    async start() {
-        await this.connection.start();
+    async start(): Promise<void> {
+        return this.connection.start().catch((error) => {
+            if (!error) return;
+            console.log('[CharacterHub] Refresh token and try to reconnect');
+            const authStore = useAuthStore();
+            return authStore.refresh().then(() => this.connection.start());
+        });
     }
 
     async stop() {

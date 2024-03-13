@@ -17,15 +17,16 @@ export const useAppStore = defineStore('app.store', () => {
 
     const { isLoggedIn } = storeToRefs(auth);
 
-    console.info('[AppStore] Initialize');
+    console.groupCollapsed('[AppStore] Initialize');
     if (isLoggedIn.value) {
         console.info('[AppStore] User already logged in. Fetching data...');
-        // TODO: Fix me
-        // HACK: Fetch data when user is logged in and connect to hubs AFTER it
         fetch().then(() => {
             console.info('[AppStore] Initial data fetched');
-            ChatHub.start().then(() => console.info('[AppStore] ChatHub started'));
-            CharacterHub.start().then(() => console.info('[AppStore] CharacterHub started'));
+        });
+        const chatHubPromise = ChatHub.start().then(() => console.info('[AppStore] ChatHub started'));
+        const charHubPromise = CharacterHub.start().then(() => console.info('[AppStore] CharacterHub started'));
+        Promise.all([chatHubPromise, charHubPromise]).then(() => {
+            console.groupEnd();
         });
     }
 
@@ -38,14 +39,13 @@ export const useAppStore = defineStore('app.store', () => {
             return;
         }
         console.info('[AppStore] User logged in. Fetching data...');
-        fetch().then(async () => {
-            ChatHub.start().then(() => console.info('[AppStore] ChatHub started'));
-            CharacterHub.start().then(() => console.info('[AppStore] CharacterHub started'));
-        });
+        fetch();
+        ChatHub.start().then(() => console.info('[AppStore] ChatHub started'));
+        CharacterHub.start().then(() => console.info('[AppStore] CharacterHub started'));
     });
 
-    async function fetch(): Promise<void> {
-        await Promise.race([users.fetch(), characters.fetch(), messages.fetch(0, 20)]);
+    async function fetch(): Promise<void[]> {
+        return Promise.all([users.fetch(), characters.fetch(), messages.fetch(0, 20)]);
     }
 
     return { auth, users, characters, messages };

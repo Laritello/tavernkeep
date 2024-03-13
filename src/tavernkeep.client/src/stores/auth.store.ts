@@ -69,23 +69,26 @@ export const useAuthStore = defineStore('auth.store', () => {
         refreshCookie.value = response.data.refreshToken;
     }
 
-    // If anything wrong - throw exception
+    let refreshPromise: Promise<TokenRefreshResult> | null = null;
     async function refresh(): Promise<TokenRefreshResult> {
+        if (refreshPromise) return refreshPromise;
+
         const accessToken = cookie.value;
         const refreshToken = refreshCookie.value;
 
-        const response = await client.refresh(accessToken!, refreshToken!);
+        refreshPromise = client
+            .refresh(accessToken!, refreshToken!)
+            .then((response) => {
+                if (!response.isSuccess()) throw new Error('Unable to refresh token');
+                cookie.value = response.data.accessToken;
+                refreshCookie.value = response.data.refreshToken;
+                return { ...response.data, isSuccess: true };
+            })
+            .finally(() => {
+                refreshPromise = null;
+            });
 
-        if (!response.isSuccess()) throw new Error('Unable to refresh tokein');
-
-        cookie.value = response.data.accessToken;
-        refreshCookie.value = response.data.refreshToken;
-
-        return {
-            isSuccess: true,
-            accessToken: response.data.accessToken,
-            refreshToken: response.data.refreshToken,
-        };
+        return refreshPromise;
     }
 
     async function logout() {
@@ -101,7 +104,13 @@ export const useAuthStore = defineStore('auth.store', () => {
         return requiredRoles.includes(role);
     }
 
-    function getAccessToken(): string | undefined {
+    async function getAccessToken(): Promise<string | undefined> {
+        if (refreshPromise) {
+            console.info('[AuthStore.getAccessToken] Waiting for token refresh');
+            const { accessToken } = await refreshPromise;
+            return accessToken;
+        }
+
         return cookie.value;
     }
 

@@ -1,9 +1,10 @@
-import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
+import axios, { type AxiosInstance } from 'axios';
+import ApplyAxiosRefreshInterceptor from './AxiosRefreshInterceptor';
+import { AxiosApiResponse } from './AxiosApiResponse';
+
 import type { ApiClient } from '../base/ApiClient';
 import type { ApiResponse } from '../base/ApiResponse';
-import { AxiosApiResponse } from './AxiosApiResponse';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
-
 import type { User, Message, Character } from '@/entities';
 import type { Ability, Skill, Lore } from '@/contracts/character';
 import { UserRole, AbilityType, Proficiency, SkillType, RollType } from '@/contracts/enums';
@@ -15,10 +16,6 @@ export class AxiosApiClient implements ApiClient {
     client: AxiosInstance;
     private baseURL = 'https://' + window.location.hostname + ':7231/api/';
 
-    // Axios request interceptor to refresh the token on 401 Unauthorized errors
-    private isRefreshing: boolean = false; // Flag to track token refresh status
-    private refreshSubscribers: ((token: string) => void)[] = []; // Array to hold pending requests while token is refreshing
-
     constructor() {
         this.client = axios.create({
             baseURL: this.baseURL,
@@ -28,9 +25,11 @@ export class AxiosApiClient implements ApiClient {
             },
         });
 
-        this.client.interceptors.request.use(function (config) {
+        this.client.interceptors.request.use(async (config) => {
+            if (config.url?.startsWith('authentication')) return config;
+
             const authStore = useAuthStore();
-            const token = authStore.getAccessToken();
+            const token = await authStore.getAccessToken();
 
             if (token) config.headers.Authorization = `Bearer ${token}`;
             else config.headers.Authorization = null;
@@ -38,56 +37,7 @@ export class AxiosApiClient implements ApiClient {
             return config;
         });
 
-        this.client.interceptors.response.use(
-            (response) => response,
-            async (error) => {
-                if (error.response && error.response.status === 401) {
-                    const originalRequest: AxiosRequestConfig = error.config;
-
-                    if (!this.isRefreshing) {
-                        this.isRefreshing = true;
-
-                        try {
-                            const authStore = useAuthStore();
-                            const result = await authStore.refresh();
-
-                            this.onTokenRefreshed(result.accessToken);
-                            this.client.defaults.headers.common.Authorization = `Bearer ${result.accessToken}`;
-                            originalRequest.headers!.Authorization = `Bearer ${result.accessToken}`;
-                            console.log(
-                                `Token updated. New token: ${this.client.defaults.headers.common.Authorization}`
-                            );
-
-                            return this.client(originalRequest);
-                        } catch (refreshError) {
-                            // Handle the refresh error, e.g., redirect to the login page
-                            console.error('Failed to refresh auth token:', refreshError);
-
-                            const authStore = useAuthStore();
-                            authStore.logout();
-
-                            throw refreshError;
-                        } finally {
-                            this.isRefreshing = false;
-                        }
-                    } else {
-                        // If token refresh is already in progress, wait for the new token
-                        return new Promise((resolve) => {
-                            this.subscribeTokenRefresh((token) => {
-                                originalRequest.headers!.Authorization = `Bearer ${token}`;
-                                console.log(
-                                    `Updated token without additional calls: ${originalRequest.headers!.Authorization}`
-                                );
-                                resolve(this.client(originalRequest));
-                            });
-                        });
-                    }
-                }
-
-                // For other errors, just pass them through
-                throw error;
-            }
-        );
+        ApplyAxiosRefreshInterceptor(this.client);
     }
     async auth(login: string, password: string): Promise<ApiResponse<AuthenticationResponse>> {
         const response = await this.client.post<AuthenticationResponse>('authentication/auth', {
@@ -260,15 +210,5 @@ export class AxiosApiClient implements ApiClient {
         });
 
         return new AxiosApiResponse(response.data, response.status, response.statusText);
-    }
-
-    // Handling refresh token
-    subscribeTokenRefresh(onRefresh: (token: string) => void): void {
-        this.refreshSubscribers.push(onRefresh);
-    }
-
-    onTokenRefreshed(token: string): void {
-        this.refreshSubscribers.forEach((onRefresh) => onRefresh(token));
-        this.refreshSubscribers = [];
     }
 }
