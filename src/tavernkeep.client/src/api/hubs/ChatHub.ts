@@ -1,5 +1,6 @@
-import { useAuthStore } from '@/stores/auth.store';
 import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { RefreshHttpClient } from './RefreshHttpClient';
+import { useAuthStore } from '@/stores/auth.store';
 class ChatHub {
     private baseURL = 'https://' + window.location.hostname + ':7231/api/';
 
@@ -8,6 +9,7 @@ class ChatHub {
     constructor() {
         this.connection = new HubConnectionBuilder()
             .withUrl(this.baseURL + 'hubs/chat', {
+                httpClient: new RefreshHttpClient(),
                 skipNegotiation: true,
                 transport: HttpTransportType.WebSockets,
                 async accessTokenFactory() {
@@ -20,12 +22,13 @@ class ChatHub {
     }
 
     async start(): Promise<void> {
-        return this.connection.start().catch((error) => {
-            if (!error) return;
-            console.log('[ChatHub] Refresh token and try to reconnect');
-            const authStore = useAuthStore();
-            return authStore.refresh().then(() => this.connection.start());
-        });
+        return this.connection.start();
+        //     .catch((error) => {
+        //     if (!error) return;
+        //     console.log('[ChatHub] Refresh token and try to reconnect');
+        //     const authStore = useAuthStore();
+        //     return authStore.refresh().then(() => this.connection.start());
+        // });
     }
 
     async stop() {
