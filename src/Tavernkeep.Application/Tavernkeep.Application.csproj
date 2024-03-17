@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Tavernkeep.Infrastructure.Notifications\Tavernkeep.Infrastructure.Notifications.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UseCases\Roll\Queries\" />
-  </ItemGroup>
-
 </Project>
