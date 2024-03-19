@@ -109,6 +109,8 @@ namespace Tavernkeep.Server.Extensions
             services.AddSingleton<IDiceService, DiceService>();
             services.AddSingleton<INotificationService, NotificationService>();
 
+            services.AddScoped<ICharacterService, CharacterService>();
+
             services.AddSingleton<IUserConnectionStorage<Guid>, UserConnectionStorage<Guid>>();
 
             services.AddHostedService(sp => (NotificationService)sp.GetRequiredService<INotificationService>());

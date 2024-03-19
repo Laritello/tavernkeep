@@ -1,5 +1,6 @@
 ﻿using Moq;
 using Tavernkeep.Application.Actions.Characters.Commands.CreateCharacter;
+using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
@@ -12,26 +13,31 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
         private readonly Guid userId = Guid.NewGuid();
 
         private readonly string name = "default_character";
-
         private readonly User owner;
+        private readonly Character character;
 
         public CreateCharacterCommandTests()
         {
             owner = new(string.Empty, string.Empty, UserRole.Player) { Id = userId };
+            character = new() { Id = Guid.NewGuid(), Name = name, Owner = owner };
         }
 
         [Test]
         public async Task CreateCharacterCommand_Success()
         {
             var mockUserRepository = new Mock<IUserRepository>();
-            var mockCharacterRepository = new Mock<ICharacterRepository>();
+            var mockCharacterService = new Mock<ICharacterService>();
 
             mockUserRepository
                 .Setup(repo => repo.FindAsync(userId, default!))
                 .ReturnsAsync(owner);
 
+            mockCharacterService
+                .Setup(service => service.CreateCharacterAsync(owner, name, default!))
+                .ReturnsAsync(character);
+
             var request = new CreateCharacterCommand(userId, name);
-            var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
+            var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterService.Object);
 
             var response = await handler.Handle(request, CancellationToken.None);
 
@@ -46,10 +52,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
         public void CreateCharacterCommand_OwnerNotFound()
         {
             var mockUserRepository = new Mock<IUserRepository>();
-            var mockCharacterRepository = new Mock<ICharacterRepository>();
+            var mockCharacterService = new Mock<ICharacterService>();
 
             var request = new CreateCharacterCommand(userId, name);
-            var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
+            var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterService.Object);
 
             var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
             Assert.That(ex.Message, Is.EqualTo("Owner with specified ID doesn't exist."));
