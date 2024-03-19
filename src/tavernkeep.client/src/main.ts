@@ -2,11 +2,12 @@ import 'reflect-metadata';
 import './assets/main.css';
 import '@mdi/font/css/materialdesignicons.css';
 
-import { createApp, provide } from 'vue';
+import { createApp } from 'vue';
 import App from './App.vue';
 import { useAppStore } from './stores/app.store';
 
 import { createPinia } from 'pinia';
+// @ts-ignore
 import VueChatScroll from 'vue3-chat-scroll';
 
 // Vuetify
