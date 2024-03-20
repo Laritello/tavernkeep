@@ -11,7 +11,7 @@ namespace Tavernkeep.Application.UseCases.Users.Queries.GetCurrentUser
         public async Task<User> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             var user = await userRepository.FindAsync(new FullUserSpecification(request.UserId))
-                ?? throw new BusinessLogicException("User with specified id not found.");
+                ?? throw new BusinessLogicException("User with specified ID not found.");
 
             return user;
         }
