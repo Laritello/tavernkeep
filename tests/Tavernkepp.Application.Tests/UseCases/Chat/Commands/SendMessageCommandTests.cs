@@ -1,0 +1,154 @@
+﻿using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Tavernkeep.Application.UseCases.Chat.Commands.DeleteMessage;
+using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Entities.Messages;
+using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Exceptions;
+using Tavernkeep.Core.Repositories;
+using Tavernkeep.Application.Actions.Chat.Commands.SendMessage;
+using Tavernkeep.Application.Interfaces;
+using System.Xml.Linq;
+
+namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
+{
+    public class SendMessageCommandTests
+    {
+        private readonly Message message;
+        private readonly User sender;
+        private readonly User recipient;
+        private readonly string text = "Lorem ipsum";
+
+        public SendMessageCommandTests()
+        {
+            sender = new("user_sender", string.Empty, UserRole.Player)
+            {
+                Id = Guid.NewGuid()
+            };
+
+            recipient = new("user_recipient", string.Empty, UserRole.Player)
+            {
+                Id = Guid.NewGuid()
+            };
+
+            message = new TextMessage()
+            {
+                Id = Guid.NewGuid(),
+                Created = DateTime.UtcNow,
+                SenderId = sender.Id,
+                Sender = sender,
+                Text = string.Empty
+            };
+        }
+
+        [Test]
+        public async Task SendMessageCommand_Success()
+        {
+            var mockMessageRepository = new Mock<IMessageRepository>();
+            var mockUserRepository = new Mock<IUserRepository>();
+            var mockNotificationService = new Mock<INotificationService>();
+
+            mockUserRepository
+                .Setup(repo => repo.FindAsync(sender.Id, default!))
+                .ReturnsAsync(sender);
+
+            var request = new SendMessageCommand(sender.Id, text);
+            var handler = new SendMessageCommandHandler(mockMessageRepository.Object, mockUserRepository.Object, mockNotificationService.Object);
+
+            var response = await handler.Handle(request, CancellationToken.None);
+
+            Assert.Multiple(() =>
+            {
+                Assert.IsAssignableFrom<TextMessage>(response);
+                Assert.That(response.SenderId, Is.EqualTo(sender.Id));
+                Assert.That(response.Sender.Id, Is.EqualTo(sender.Id));
+                Assert.That(((TextMessage)response).Text, Is.EqualTo(text));
+            });
+        }
+
+        [Test]
+        public async Task SendMessageCommand_Success_WithRecipient()
+        {
+            var mockMessageRepository = new Mock<IMessageRepository>();
+            var mockUserRepository = new Mock<IUserRepository>();
+            var mockNotificationService = new Mock<INotificationService>();
+
+            mockUserRepository
+                .Setup(repo => repo.FindAsync(sender.Id, default!))
+                .ReturnsAsync(sender);
+
+            mockUserRepository
+                .Setup(repo => repo.FindAsync(recipient.Id, default!))
+                .ReturnsAsync(recipient);
+
+            var request = new SendMessageCommand(sender.Id, text, recipient.Id);
+            var handler = new SendMessageCommandHandler(mockMessageRepository.Object, mockUserRepository.Object, mockNotificationService.Object);
+
+            var response = await handler.Handle(request, CancellationToken.None);
+
+            Assert.Multiple(() =>
+            {
+                Assert.IsAssignableFrom<TextMessage>(response);
+                Assert.That(response.SenderId, Is.EqualTo(sender.Id));
+                Assert.That(response.Sender.Id, Is.EqualTo(sender.Id));
+                Assert.That(((TextMessage)response).RecipientId, Is.EqualTo(recipient.Id));
+                Assert.That(((TextMessage)response).Recipient?.Id, Is.EqualTo(recipient.Id));
+                Assert.That(((TextMessage)response).Text, Is.EqualTo(text));
+            });
+        }
+
+        [Test]
+        public void SendMessageCommand_EmptyText()
+        {
+            var mockMessageRepository = new Mock<IMessageRepository>();
+            var mockUserRepository = new Mock<IUserRepository>();
+            var mockNotificationService = new Mock<INotificationService>();
+
+            mockUserRepository
+                .Setup(repo => repo.FindAsync(sender.Id, default!))
+                .ReturnsAsync(sender);
+
+            var request = new SendMessageCommand(sender.Id, string.Empty);
+            var handler = new SendMessageCommandHandler(mockMessageRepository.Object, mockUserRepository.Object, mockNotificationService.Object);
+
+            var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
+            Assert.That(ex.Message, Is.EqualTo("Text of the message cannot be empty."));
+        }
+
+        [Test]
+        public void SendMessageCommand_SenderNotFound()
+        {
+            var mockMessageRepository = new Mock<IMessageRepository>();
+            var mockUserRepository = new Mock<IUserRepository>();
+            var mockNotificationService = new Mock<INotificationService>();
+
+            var request = new SendMessageCommand(sender.Id, text);
+            var handler = new SendMessageCommandHandler(mockMessageRepository.Object, mockUserRepository.Object, mockNotificationService.Object);
+
+            var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
+            Assert.That(ex.Message, Is.EqualTo("Sender with specified ID not found."));
+        }
+
+        [Test]
+        public void SendMessageCommand_RecipientNotFound()
+        {
+            var mockMessageRepository = new Mock<IMessageRepository>();
+            var mockUserRepository = new Mock<IUserRepository>();
+            var mockNotificationService = new Mock<INotificationService>();
+
+            mockUserRepository
+                .Setup(repo => repo.FindAsync(sender.Id, default!))
+                .ReturnsAsync(sender);
+
+            var request = new SendMessageCommand(sender.Id, text, recipient.Id);
+            var handler = new SendMessageCommandHandler(mockMessageRepository.Object, mockUserRepository.Object, mockNotificationService.Object);
+
+            var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
+            Assert.That(ex.Message, Is.EqualTo("Recipient with specified id not found."));
+        }
+    }
+}

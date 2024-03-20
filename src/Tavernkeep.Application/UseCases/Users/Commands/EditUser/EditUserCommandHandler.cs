@@ -12,6 +12,12 @@ namespace Tavernkeep.Application.UseCases.Users.Commands.EditUser
             var user = await userRepository.FindAsync(request.UserId)
                 ?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
+            if (string.IsNullOrWhiteSpace(request.Login))
+                throw new BusinessLogicException("User can't have an empty login.");
+
+            if (string.IsNullOrWhiteSpace(request.Password))
+                throw new BusinessLogicException("User can't have an empty password.");
+
             user.Login = request.Login;
             user.Password = request.Password;
             user.Role = request.Role;

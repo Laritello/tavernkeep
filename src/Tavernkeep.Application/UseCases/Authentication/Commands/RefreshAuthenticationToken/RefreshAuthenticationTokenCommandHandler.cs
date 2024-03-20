@@ -2,6 +2,7 @@
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Authentication;
 using Tavernkeep.Core.Contracts.Authentication.Responses;
+using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
@@ -33,7 +34,7 @@ namespace Tavernkeep.Application.UseCases.Authentication.Commands.RefreshAuthent
             var newAccessToken = tokenService.GenerateAccessToken(user);
             var newRefreshToken = tokenService.GenerateRefreshToken();
 
-            tokenRepository.Save(new Core.Entities.RefreshToken()
+            tokenRepository.Save(new RefreshToken()
             {
                 UserId = user.Id,
                 Token = newRefreshToken,
