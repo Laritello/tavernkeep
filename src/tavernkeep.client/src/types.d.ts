@@ -1,6 +1,5 @@
 import 'vue-router';
-import { UserRole } from '@/contracts/enums/UserRole';
-import type { Component } from 'vue';
+import { UserRole } from '@/contracts/enums';
 
 declare module 'vue-router' {
     interface RouteMeta {

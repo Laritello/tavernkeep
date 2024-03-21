@@ -23,7 +23,7 @@
                         variant="text"
                         icon="mdi-delete"
                         :disabled="character.id === user.activeCharacter.id"
-                        @click="appStore.characters.deleteCharacter(character.id)"
+                        @click="deleteCharacter(character.id)"
                     />
                 </div>
             </div>
@@ -45,11 +45,20 @@
 import { useAppStore } from '@/stores/app.store';
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
+import { useModal } from '@/composables/useModal';
+import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
 
+const modal = useModal();
 const appStore = useAppStore();
 const { current: user } = storeToRefs(appStore.users);
 
 const characterNameRef = ref('');
+
+async function deleteCharacter(id: string) {
+    const result = await modal.show(ConfirmationDialog, { message: 'Are you sure you want to delete this character?' });
+    if (result.action !== 'confirm') return;
+    appStore.characters.deleteCharacter(id);
+}
 
 async function createCharacter(userId: string, characterName: string) {
     await appStore.characters.createCharacter(userId, characterName);

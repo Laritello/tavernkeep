@@ -2,12 +2,14 @@
     <component :is="layout">
         <router-view />
     </component>
+    <ModalsProvider />
 </template>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { shallowRef, provide, type Component } from 'vue';
 import layouts from '@/layouts';
+import ModalsProvider from './components/dialogs/ModalsProvider.vue';
 
 const layout = shallowRef<Component>();
 const router = useRouter();
