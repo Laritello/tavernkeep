@@ -1,12 +1,14 @@
 <template>
     <Teleport to="#modal">
-        <component
-            v-if="modal.isOpen.value"
-            :is="modal.component.value"
-            v-bind="{ ...modal.props.value }"
-            :class="{ 'modal-open': modal.isOpen.value }"
-            @click="onClick"
-        />
+        <Transition name="fade">
+            <component
+                v-if="modal.isOpen.value"
+                :is="modal.component.value"
+                v-bind="{ ...modal.props.value }"
+                @click="onClick"
+                class="modal-open"
+            />
+        </Transition>
     </Teleport>
 </template>
 <script setup lang="ts">
@@ -39,3 +41,20 @@ onBeforeUnmount(() => {
     document.removeEventListener('keydown', buttonPressHandler);
 });
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+    @apply transition ease-out duration-300;
+}
+
+.fade-leave-to,
+.fade-enter-from {
+    @apply opacity-0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+    @apply opacity-100;
+}
+</style>
