@@ -32,15 +32,15 @@ import type { Ability } from '@/contracts/character';
 const modal = useModal();
 const input = ref<HTMLInputElement>();
 
-watchEffect(() => {
-    if (!modal.isOpen.value) return;
-    input.value?.focus();
-});
-
 const { closeModal, ability } = defineProps<{
     ability: Ability;
     closeModal: DialogResultCallback<Ability>;
 }>();
+
+watchEffect(() => {
+    if (!modal.isOpen.value) return;
+    input.value?.focus();
+});
 
 const score = ref(ability.score);
 

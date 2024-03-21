@@ -14,12 +14,11 @@
 </template>
 <script setup lang="ts">
 import type { DialogResultCallback } from '@/composables/useModal';
-import type { Ability } from '@/contracts/character';
 
 const { closeModal, caption, message } = defineProps<{
     caption: string;
     message: string;
-    closeModal: DialogResultCallback<Ability>;
+    closeModal: DialogResultCallback;
 }>();
 
 function confirm(choice: 'confirm' | 'reject') {

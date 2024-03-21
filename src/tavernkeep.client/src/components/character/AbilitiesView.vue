@@ -20,7 +20,7 @@ const modal = useModal();
 const { abilities } = defineProps<{ abilities: Record<AbilityType, Ability> }>();
 
 async function showEditDialog(ability: Ability) {
-    const result = await modal.showWithResult(AbilityEditDialog, {} as Ability, { ability });
+    const result = await modal.show(AbilityEditDialog, { ability });
     if (result.action === 'result') {
         ability.score = result.payload.score;
     }
