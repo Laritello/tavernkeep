@@ -1,7 +1,7 @@
 <template>
     <dialog class="modal">
         <div class="modal-box">
-            <h3 class="font-bold text-lg">Are you sure?</h3>
+            <h3 class="font-bold text-lg">{{ caption }}</h3>
             <p class="py-4">{{ message }}</p>
             <div class="modal-action">
                 <form method="dialog" class="space-x-2">
@@ -16,7 +16,8 @@
 import type { DialogResultCallback } from '@/composables/useModal';
 import type { Ability } from '@/contracts/character';
 
-const { closeModal, message } = defineProps<{
+const { closeModal, caption, message } = defineProps<{
+    caption: string;
     message: string;
     closeModal: DialogResultCallback<Ability>;
 }>();

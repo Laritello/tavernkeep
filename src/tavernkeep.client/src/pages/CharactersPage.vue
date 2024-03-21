@@ -55,7 +55,10 @@ const { current: user } = storeToRefs(appStore.users);
 const characterNameRef = ref('');
 
 async function deleteCharacter(id: string) {
-    const result = await modal.show(ConfirmationDialog, { message: 'Are you sure you want to delete this character?' });
+    const result = await modal.show(ConfirmationDialog, {
+        caption: 'Delete character',
+        message: 'Are you sure you want to delete this character?',
+    });
     if (result.action !== 'confirm') return;
     appStore.characters.deleteCharacter(id);
 }
