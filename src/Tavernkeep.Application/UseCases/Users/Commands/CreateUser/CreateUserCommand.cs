@@ -12,7 +12,7 @@ namespace Tavernkeep.Application.Actions.Users.Commands.CreateUser
         public bool InitializeCharacter { get; set; }
         public string? CharacterName { get; set; }
 
-        public CreateUserCommand(string login, string password, UserRole role, bool initializeCharacter, string? characterName)
+        public CreateUserCommand(string login, string password, UserRole role, bool initializeCharacter, string? characterName = null)
         {
             Login = login;
             Password = password;

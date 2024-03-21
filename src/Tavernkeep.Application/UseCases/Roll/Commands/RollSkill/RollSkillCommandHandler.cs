@@ -8,10 +8,10 @@ using Tavernkeep.Core.Repositories;
 namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
 {
     public class RollSkillCommandHandler(
+        IDiceService diceService,
         IUserRepository userRepository, 
         ICharacterRepository characterRepository, 
         IMessageRepository messageRepository,
-        IDiceService diceService,
         INotificationService notificationService
         ) : IRequestHandler<RollSkillCommand, SkillRollMessage>
     {

@@ -19,6 +19,7 @@ namespace Tavernkeep.Application.Actions.Characters.Commands.EditHealth
             if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)
                 throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
 
+            // TODO: Switch to expceptions
             // Health rules:
             // 1 - Max and temporary can't be bellow zero
             // 2 - Current must be in range [0; Max]
