@@ -5,6 +5,7 @@
             :is="modal.component.value"
             v-bind="{ ...modal.props.value }"
             :class="{ 'modal-open': modal.isOpen.value }"
+            @click="onClick"
         />
     </Teleport>
 </template>
@@ -20,6 +21,12 @@ const buttonPressHandler = (e: KeyboardEvent) => {
     }
 
     if (e.key === 'Escape') {
+        modal.props.value.closeModal({ action: 'reject' });
+    }
+};
+
+const onClick = (e: MouseEvent) => {
+    if (e.target === e.currentTarget) {
         modal.props.value.closeModal({ action: 'reject' });
     }
 };
