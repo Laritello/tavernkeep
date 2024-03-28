@@ -8,7 +8,8 @@ namespace Tavernkeep.Application.Mapping.Profiles
     {
         public UserProfile()
         {
-            CreateMap<User, UserDto>();
+            CreateMap<User, UserDto>()
+                .ForMember(x => x.CharactersId, opt => opt.MapFrom(u => u.Characters.Select(x => x.Id)));
         }
     }
 }
