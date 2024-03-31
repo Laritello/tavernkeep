@@ -6,11 +6,12 @@ namespace Tavernkeep.Application.Actions.Characters.Queries.GetCharacters
 {
     public class GetAllCharactersQueryHandler(
         ICharacterRepository characterRepository
-        ) : IRequestHandler<GetAllCharactersQuery, List<Character>>
+        ) : IRequestHandler<GetAllCharactersQuery, Dictionary<Guid, Character>>
     {
-        public async Task<List<Character>> Handle(GetAllCharactersQuery request, CancellationToken cancellationToken)
+        public async Task<Dictionary<Guid, Character>> Handle(GetAllCharactersQuery request, CancellationToken cancellationToken)
         {
-            return await characterRepository.GetAllCharactersAsync(cancellationToken);
+            var characters = await characterRepository.GetAllCharactersAsync(cancellationToken);
+            return characters.ToDictionary(x => x.Id);
         }
     }
 }

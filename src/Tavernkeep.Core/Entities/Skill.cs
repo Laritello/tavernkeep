@@ -14,9 +14,10 @@ namespace Tavernkeep.Core.Entities
 
         }
 
-        public Skill(Character owner, SkillType type)
+        public Skill(Character owner, AbilityType baseAbility, SkillType type)
         {
             Owner = owner;
+            BaseAbility = baseAbility;
             Type = type;
         }
 
@@ -26,6 +27,7 @@ namespace Tavernkeep.Core.Entities
 
         [JsonIgnore]
         public Character Owner { get; set; } = default!;
+        public AbilityType BaseAbility { get; set; }
         public SkillType Type { get; set; }
         public Proficiency Proficiency { get; set; }
         public int Bonus => Owner.GetSkillAbility(Type).Modifier + Proficiency.GetProficiencyBonus(Owner);

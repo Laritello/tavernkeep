@@ -35,10 +35,10 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>List containing all characters.</returns>
         [Authorize]
         [HttpGet]
-        public async Task<List<CharacterDto>> GetCharactersAsync()
+        public async Task<Dictionary<Guid, CharacterDto>> GetCharactersAsync()
         {
             var characters = await mediator.Send(new GetAllCharactersQuery());
-            return mapper.Map<List<CharacterDto>>(characters);
+            return mapper.Map<Dictionary<Guid, CharacterDto>>(characters);
         }
 
         /// <summary>

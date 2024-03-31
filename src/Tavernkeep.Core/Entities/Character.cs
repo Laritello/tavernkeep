@@ -20,22 +20,22 @@ namespace Tavernkeep.Core.Entities
             Wisdom = new(this, AbilityType.Wisdom);
             Charisma = new(this, AbilityType.Charisma);
 
-            Acrobatics = new(this, SkillType.Acrobatics);
-            Arcana = new(this, SkillType.Arcana);
-            Athletics = new(this, SkillType.Athletics);
-            Crafting = new(this, SkillType.Crafting);
-            Deception = new(this, SkillType.Deception);
-            Diplomacy = new(this, SkillType.Diplomacy);
-            Intimidation = new(this, SkillType.Intimidation);
-            Medicine = new(this, SkillType.Medicine);
-            Nature = new(this, SkillType.Nature);
-            Occultism = new(this, SkillType.Occultism);
-            Performance = new(this, SkillType.Performance);
-            Religion = new(this, SkillType.Religion);
-            Society = new(this, SkillType.Society);
-            Stealth = new(this, SkillType.Stealth);
-            Survival = new(this, SkillType.Survival);
-            Thievery = new(this, SkillType.Thievery);
+            Acrobatics = new(this, AbilityType.Dexterity, SkillType.Acrobatics);
+            Arcana = new(this, AbilityType.Intelligence, SkillType.Arcana);
+            Athletics = new(this, AbilityType.Strength, SkillType.Athletics);
+            Crafting = new(this, AbilityType.Intelligence, SkillType.Crafting);
+            Deception = new(this, AbilityType.Charisma, SkillType.Deception);
+            Diplomacy = new(this, AbilityType.Charisma, SkillType.Diplomacy);
+            Intimidation = new(this, AbilityType.Charisma, SkillType.Intimidation);
+            Medicine = new(this, AbilityType.Wisdom, SkillType.Medicine);
+            Nature = new(this, AbilityType.Wisdom, SkillType.Nature);
+            Occultism = new(this, AbilityType.Intelligence, SkillType.Occultism);
+            Performance = new(this, AbilityType.Charisma, SkillType.Performance);
+            Religion = new(this, AbilityType.Wisdom, SkillType.Religion);
+            Society = new(this, AbilityType.Intelligence, SkillType.Society);
+            Stealth = new(this, AbilityType.Dexterity, SkillType.Stealth);
+            Survival = new(this, AbilityType.Wisdom, SkillType.Survival);
+            Thievery = new(this, AbilityType.Dexterity, SkillType.Thievery);
 
             Lores = [];
         }

@@ -4,11 +4,12 @@ using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.Actions.Users.Queries.GetUsers
 {
-    public class GetAllUsersQueryHandler(IUserRepository repository) : IRequestHandler<GetAllUsersQuery, List<User>>
+    public class GetAllUsersQueryHandler(IUserRepository repository) : IRequestHandler<GetAllUsersQuery, Dictionary<Guid,User>>
     {
-        public async Task<List<User>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+        public async Task<Dictionary<Guid, User>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            return await repository.GetAllUsersAsync(cancellationToken);
+            var users = await repository.GetAllUsersAsync(cancellationToken);
+            return users.ToDictionary(x => x.Id);
         }
     }
 }

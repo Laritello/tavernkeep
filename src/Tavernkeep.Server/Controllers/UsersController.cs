@@ -31,10 +31,10 @@ namespace Tavernkeep.Server.Controllers
         /// <returns>List of all registered users.</returns>
         [Authorize]
         [HttpGet]
-        public async Task<List<UserDto>> GetUsersAsync()
+        public async Task<Dictionary<Guid,UserDto>> GetUsersAsync()
         {
             var users = await mediator.Send(new GetAllUsersQuery());
-            return mapper.Map<List<UserDto>>(users);
+            return mapper.Map<Dictionary<Guid,UserDto>>(users);
         }
 
         /// <summary>
