@@ -44,6 +44,7 @@ export const useAuthStore = defineStore('auth.store', () => {
 
     const token = computed(() => (cookie.value ? jwtDecode<JwtToken>(cookie.value) : undefined));
     const isLoggedIn = computed(() => token.value !== undefined);
+    const currentUserId = computed(() => token.value?.['user-id']!);
 
     watch(cookie, (value) => {
         if (value) {
@@ -120,5 +121,5 @@ export const useAuthStore = defineStore('auth.store', () => {
         return cookie.value;
     }
 
-    return { isLoggedIn, login, logout, havePermissions, getAccessToken, refresh };
+    return { isLoggedIn, currentUserId, login, logout, havePermissions, getAccessToken, refresh };
 });
