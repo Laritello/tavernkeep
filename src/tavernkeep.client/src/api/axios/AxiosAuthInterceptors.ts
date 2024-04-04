@@ -12,8 +12,12 @@ export default (axiosClient: AxiosInstance) => {
         }
 
         const authStore = useAuthStore();
-        const { accessToken } = await authStore.refresh();
-        const authorization = `Bearer ${accessToken}`;
+        const refreshResult = await authStore.refresh();
+        if (refreshResult.status === 'error') {
+            throw new Error('Unable to refresh access token: ' + refreshResult.message);
+        }
+
+        const authorization = `Bearer ${refreshResult.accessToken}`;
         originalRequest.headers.Authorization = authorization;
 
         originalRequest.isRetry = true;
