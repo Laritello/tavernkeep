@@ -4,7 +4,7 @@ import { ref, computed, watch } from 'vue';
 import { defineStore } from 'pinia';
 
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import type { ApiClient } from '@/api/base/ApiClient';
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import type { UserRole } from '@/contracts/enums/UserRole';
 
 // Interface declarations
@@ -14,11 +14,18 @@ export interface UserCredentials {
     password: string;
 }
 
-export interface TokenRefreshResult {
-    isSuccess: boolean;
+type RefreshSuccess = {
+    status: 'ok';
     accessToken: string;
     refreshToken: string;
-}
+};
+
+type RefreshFailure = {
+    status: 'error';
+    message: string;
+};
+
+export type TokenRefreshResult = RefreshSuccess | RefreshFailure;
 
 // Constants initializations
 const cookieName: string = 'tavernkeep.auth.jwt';
@@ -31,12 +38,13 @@ interface JwtToken {
 }
 
 export const useAuthStore = defineStore('auth.store', () => {
-    const client: ApiClient = ApiClientFactory.createApiClient();
+    const client: AxiosApiClient = ApiClientFactory.createApiClient();
     const cookie = ref<string | undefined>(getCookie(cookieName));
     const refreshCookie = ref<string | undefined>(getCookie(refreshName));
 
     const token = computed(() => (cookie.value ? jwtDecode<JwtToken>(cookie.value) : undefined));
     const isLoggedIn = computed(() => token.value !== undefined);
+    const currentUserId = computed(() => token.value?.['user-id']!);
 
     watch(cookie, (value) => {
         if (value) {
@@ -56,17 +64,10 @@ export const useAuthStore = defineStore('auth.store', () => {
 
     async function login(credentials: UserCredentials) {
         if (isLoggedIn.value) logout();
-
-        // Call API for JWT
         const response = await client.auth(credentials.login, credentials.password);
 
-        // TODO: Error handling
-        if (!response.isSuccess()) {
-            return;
-        }
-
-        cookie.value = response.data.accessToken;
-        refreshCookie.value = response.data.refreshToken;
+        cookie.value = response.accessToken;
+        refreshCookie.value = response.refreshToken;
     }
 
     let refreshPromise: Promise<TokenRefreshResult> | null = null;
@@ -78,11 +79,13 @@ export const useAuthStore = defineStore('auth.store', () => {
 
         refreshPromise = client
             .refresh(accessToken!, refreshToken!)
-            .then((response) => {
-                if (!response.isSuccess()) throw new Error('Unable to refresh token');
-                cookie.value = response.data.accessToken;
-                refreshCookie.value = response.data.refreshToken;
-                return { ...response.data, isSuccess: true };
+            .then((response): TokenRefreshResult => {
+                cookie.value = response.accessToken;
+                refreshCookie.value = response.refreshToken;
+                return { status: 'ok', accessToken: response.accessToken, refreshToken: response.refreshToken };
+            })
+            .catch((error: Error): TokenRefreshResult => {
+                return { status: 'error', message: error.message };
             })
             .finally(() => {
                 refreshPromise = null;
@@ -107,12 +110,16 @@ export const useAuthStore = defineStore('auth.store', () => {
     async function getAccessToken(): Promise<string | undefined> {
         if (refreshPromise) {
             console.info('[AuthStore.getAccessToken] Waiting for token refresh');
-            const { accessToken } = await refreshPromise;
-            return accessToken;
+            const refreshResult = await refreshPromise;
+            if (refreshResult.status === 'error') {
+                throw new Error('Unable to refresh access token: ' + refreshResult.message);
+            }
+
+            return refreshResult.accessToken;
         }
 
         return cookie.value;
     }
 
-    return { isLoggedIn, login, logout, havePermissions, getAccessToken, refresh };
+    return { isLoggedIn, currentUserId, login, logout, havePermissions, getAccessToken, refresh };
 });

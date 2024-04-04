@@ -1,56 +1,44 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 
-import type { ApiClient } from '@/api/base/ApiClient';
 import type { Character } from '@/entities/Character';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 
-const api: ApiClient = ApiClientFactory.createApiClient();
-export const useCharactersStore = defineStore('characters.store', () => {
-    const all = ref<Character[]>([]);
+const api: AxiosApiClient = ApiClientFactory.createApiClient();
+export const useCharactersStore = defineStore('characters', () => {
+    const all = ref<Record<string, Character>>({});
     const mapByUserId = computed(() =>
-        all.value.reduce((acc, cur) => {
-            if (!acc.has(cur.owner.id)) {
-                acc.set(cur.owner.id, []);
+        Object.values(all.value).reduce((acc, cur) => {
+            if (!acc.has(cur.ownerId)) {
+                acc.set(cur.ownerId, []);
             }
-            acc.get(cur.owner.id)!.push(cur);
+            acc.get(cur.ownerId)!.push(cur);
             return acc;
         }, new Map<string, Character[]>())
     );
 
     async function fetch() {
-        const usersResponse = await api.getCharacters();
-        all.value = usersResponse.data;
+        all.value = await api.getCharacters();
     }
 
-    async function createCharacter(ownerId: string, name: string): Promise<Character | undefined> {
-        const response = await api.createCharacter(ownerId, name);
-        if (!response.isSuccess()) {
-            console.error(response.statusText);
-            return;
-        }
-        all.value.push(response.data);
-        return response.data;
+    async function createCharacter(ownerId: string, name: string): Promise<Character> {
+        const character = await api.createCharacter(ownerId, name);
+        all.value[character.id] = character;
+
+        return character;
     }
 
     async function deleteCharacter(id: string) {
-        const response = await api.deleteCharacter(id);
-        if (!response.isSuccess()) {
-            console.error(response.statusText);
-            return;
-        }
-        const index = all.value.findIndex((user) => user.id === id);
-        all.value.splice(index, 1);
+        await api.deleteCharacter(id);
+        delete all.value[id];
     }
 
-    async function assignUserToCharacter(userId: string, characterId: string): Promise<Character | undefined> {
-        const response = await api.assignUserToCharacter(characterId, userId);
-        if (!response.isSuccess()) {
-            console.error(response.statusText);
-            return;
-        }
-        console.log(response.data);
-        return response.data;
+    async function assignUserToCharacter(userId: string, characterId: string): Promise<Character> {
+        const character = await api.assignUserToCharacter(characterId, userId);
+        all.value[characterId] = character;
+        // TODO: update character owner
+        return character;
     }
 
     return {
