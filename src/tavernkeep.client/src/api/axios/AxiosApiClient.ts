@@ -1,16 +1,13 @@
-import axios, { type AxiosInstance } from 'axios';
+import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 import AxiosAuthInterceptors from './AxiosAuthInterceptors';
-import { AxiosApiResponse } from './AxiosApiResponse';
 
-import type { ApiClient } from '../base/ApiClient';
-import type { ApiResponse } from '../base/ApiResponse';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import type { User, Message, Character } from '@/entities';
 import type { Ability, Skill, Lore } from '@/contracts/character';
 import { UserRole, AbilityType, Proficiency, SkillType, RollType } from '@/contracts/enums';
 
 // TODO: Error handling and interceptors
-export class AxiosApiClient implements ApiClient {
+export class AxiosApiClient {
     client: AxiosInstance;
     private baseURL = 'https://' + window.location.hostname + ':7231/api/';
 
@@ -29,32 +26,32 @@ export class AxiosApiClient implements ApiClient {
         this.client.interceptors.response.use(undefined, response);
     }
 
-    async auth(login: string, password: string): Promise<ApiResponse<AuthenticationResponse>> {
+    async auth(login: string, password: string): Promise<AuthenticationResponse> {
         const response = await this.client.post<AuthenticationResponse>('authentication/auth', {
             login: login,
             password: password,
         });
 
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async refresh(accessToken: string, refreshToken: string): Promise<ApiResponse<AuthenticationResponse>> {
+    async refresh(accessToken: string, refreshToken: string): Promise<AuthenticationResponse> {
         const response = await this.client.post<AuthenticationResponse>('authentication/refresh', {
             accessToken: accessToken,
             refreshToken: refreshToken,
         });
 
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async getUsers(): Promise<ApiResponse<User[]>> {
-        const response = await this.client.get<User[]>('users');
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+    async getUsers(): Promise<Record<string, User>> {
+        const response = await this.client.get<Record<string, User>>('users');
+        return getPayloadOrThrow(response);
     }
 
-    async getCurrentUser(): Promise<ApiResponse<User>> {
+    async getCurrentUser(): Promise<User> {
         const response = await this.client.get<User>('users/current');
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
     // TODO: User request types instead of separate parameters
@@ -64,7 +61,7 @@ export class AxiosApiClient implements ApiClient {
         role: UserRole,
         initializeCharacter: boolean,
         characterName?: string
-    ): Promise<ApiResponse<User>> {
+    ): Promise<User> {
         const response = await this.client.post<User>('users', {
             login,
             password,
@@ -72,133 +69,140 @@ export class AxiosApiClient implements ApiClient {
             initializeCharacter,
             characterName,
         });
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async editUser(id: string, login: string, password: string, role: UserRole): Promise<ApiResponse<User>> {
+    async editUser(id: string, login: string, password: string, role: UserRole): Promise<User> {
         const response = await this.client.patch<User>('users/' + id, {
             login: login,
             password: password,
             role: role,
         });
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    // TODO: ApiResponse for empty responses
-    async deleteUser(id: string): Promise<ApiResponse<null>> {
+    async deleteUser(id: string): Promise<void> {
         const response = await this.client.delete('users/' + id);
-        return new AxiosApiResponse(null, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async setActiveCharacter(userId: string, characterId: string): Promise<ApiResponse<User>> {
+    async setActiveCharacter(userId: string, characterId: string): Promise<User> {
         const response = await this.client.put<User>('users/active-character', {
             userId,
             characterId,
         });
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async getCharacters(): Promise<ApiResponse<Character[]>> {
-        const response = await this.client.get<Character[]>('characters');
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+    async getCharacters(): Promise<Record<string, Character>> {
+        const response = await this.client.get<Record<string, Character>>('characters');
+        return getPayloadOrThrow(response);
     }
 
-    async createCharacter(ownerId: string, name: string): Promise<ApiResponse<Character>> {
+    async createCharacter(ownerId: string, name: string): Promise<Character> {
         const response = await this.client.post<Character>('characters/create', { ownerId, name });
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async deleteCharacter(id: string): Promise<ApiResponse<null>> {
+    async deleteCharacter(id: string): Promise<void> {
         const response = await this.client.delete('characters/delete/' + id);
-        return new AxiosApiResponse(null, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async getCharacter(id: string): Promise<ApiResponse<Character>> {
+    async getCharacter(id: string): Promise<Character> {
         const response = await this.client.get<Character>('characters/' + id);
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async assignUserToCharacter(characterId: string, userId: string): Promise<ApiResponse<Character>> {
+    async assignUserToCharacter(characterId: string, userId: string): Promise<Character> {
         const response = await this.client.patch<Character>('characters/assign', {
             characterId: characterId,
             userId: userId,
         });
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async createLore(characterId: string, topic: string, proficiency: Proficiency): Promise<ApiResponse<Lore>> {
+    async createLore(characterId: string, topic: string, proficiency: Proficiency): Promise<Lore> {
         const response = await this.client.post<Lore>('lore', {
             characterId: characterId,
             topic: topic,
             proficiency: proficiency,
         });
 
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async editLore(characterId: string, topic: string, proficiency: Proficiency): Promise<ApiResponse<Lore>> {
+    async editLore(characterId: string, topic: string, proficiency: Proficiency): Promise<Lore> {
         const response = await this.client.patch<Lore>('lore', {
             characterId: characterId,
             topic: topic,
             proficiency: proficiency,
         });
 
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async deleteLore(characterId: string, topic: string): Promise<ApiResponse<null>> {
+    async deleteLore(characterId: string, topic: string): Promise<void> {
         const response = await this.client.delete('lore/' + characterId, { params: { topic: topic } });
 
-        return new AxiosApiResponse(null, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async editAbility(characterId: string, type: AbilityType, score: number): Promise<ApiResponse<Ability>> {
+    async editAbility(characterId: string, type: AbilityType, score: number): Promise<Ability> {
         const response = await this.client.patch<Ability>('characters/edit/ability', {
             characterId: characterId,
             type: type,
             score: score,
         });
 
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async editSkill(characterId: string, type: SkillType, proficiency: Proficiency): Promise<ApiResponse<Skill>> {
+    async editSkill(characterId: string, type: SkillType, proficiency: Proficiency): Promise<Skill> {
         const response = await this.client.patch<Skill>('characters/edit/skill', {
             characterId: characterId,
             type: type,
             proficiency: proficiency,
         });
 
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async sendMessage(content: string, recipientId?: string): Promise<ApiResponse<Message>> {
+    async sendMessage(content: string, recipientId?: string): Promise<Message> {
         const response = await this.client.post<Message>('chat/message', {
             recipientId: recipientId,
             content: content,
         });
 
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async getMessages(skip: number, take: number): Promise<ApiResponse<Message[]>> {
+    async getMessages(skip: number, take: number): Promise<Message[]> {
         const response = await this.client.get<Message[]>('chat', {
             params: { skip: skip, take: take },
         });
 
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async deleteMessage(messageId: string): Promise<ApiResponse<null>> {
+    async deleteMessage(messageId: string): Promise<void> {
         const response = await this.client.delete<Message[]>(`chat/${messageId}`);
-        return new AxiosApiResponse(null, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
 
-    async sendRollMessage(expression: string, rollType: RollType): Promise<ApiResponse<Message>> {
+    async sendRollMessage(expression: string, rollType: RollType): Promise<Message> {
         const response = await this.client.get<Message>('roll/custom', {
             params: { expression, rollType },
         });
 
-        return new AxiosApiResponse(response.data, response.status, response.statusText);
+        return getPayloadOrThrow(response);
     }
+}
+
+function getPayloadOrThrow<T>(response: AxiosResponse): T {
+    if (response.status < 100 || response.status >= 400) {
+        throw new Error(response.statusText);
+    }
+
+    return response.data;
 }
