@@ -22,7 +22,7 @@ const { message } = defineProps<{
 }>();
 
 const appStore = useAppStore();
-const isUserSender = computed(() => appStore.users.current?.id === message.sender.id);
+const isUserSender = computed(() => appStore.users.currentUser?.id === message.sender.id);
 
 function getComponentByType(message: Message) {
     switch (message.$type) {

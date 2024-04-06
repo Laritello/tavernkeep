@@ -6,14 +6,14 @@
                 v-for="(character, i) in appStore.characters.mapByUserId.get(user.id) || []"
                 :key="character.id"
                 class="flex items-center rounded px-2 py-3 my-2 space-x-4 hover:bg-base-200"
-                :class="{ 'active-character': character.id === user.activeCharacter.id }"
+                :class="{ 'active-character': character.id === user.activeCharacterId }"
             >
                 <div>{{ i + 1 }}</div>
                 <div class="w-24">{{ character.name }}</div>
                 <div class="flex items-center flex-1 justify-end">
                     <button
-                        @click="setActiveCharacter(character.owner.id, character.id)"
-                        :disabled="character.id === user.activeCharacter.id"
+                        @click="setActiveCharacter(character.ownerId, character.id)"
+                        :disabled="character.id === user.activeCharacterId"
                         class="btn btn-sm btn-active"
                     >
                         Set active
@@ -22,7 +22,7 @@
                         size="small"
                         variant="text"
                         icon="mdi-delete"
-                        :disabled="character.id === user.activeCharacter.id"
+                        :disabled="character.id === user.activeCharacterId"
                         @click="deleteCharacter(character.id)"
                     />
                 </div>
@@ -50,7 +50,7 @@ import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
 
 const modal = useModal();
 const appStore = useAppStore();
-const { current: user } = storeToRefs(appStore.users);
+const { currentUser: user } = storeToRefs(appStore.users);
 
 const characterNameRef = ref('');
 

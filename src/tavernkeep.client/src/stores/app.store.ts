@@ -1,14 +1,17 @@
 import { watch } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
+import ChatHub from '@/api/hubs/ChatHub';
+import CharacterHub from '@/api/hubs/CharacterHub';
+
 import { useAuthStore } from './auth.store';
 import { useUsersStore } from './users.store';
 import { useCharactersStore } from './characters.store';
 import { useMessagesStore } from './messages.store';
 
-import ChatHub from '@/api/hubs/ChatHub';
-import CharacterHub from '@/api/hubs/CharacterHub';
-
+const api: AxiosApiClient = ApiClientFactory.createApiClient();
 export const useAppStore = defineStore('app.store', () => {
     const auth = useAuthStore();
     const users = useUsersStore();

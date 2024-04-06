@@ -35,7 +35,7 @@
 </template>
 <script setup lang="ts">
 import DiceIcon from '@/components/DiceIcon.vue';
-import { SkillRollMessage } from '@/entities/Message';
+import type { SkillRollMessage } from '@/entities/Message';
 const { message } = defineProps<{
     message: SkillRollMessage;
 }>();

@@ -3,13 +3,11 @@
         <h1 class="text-xl p-2">Chat</h1>
         <div class="flex grow overflow-auto" v-chat-scroll="{ always: false, smooth: true }">
             <div class="w-full px-4">
-                <template v-for="item in appStore.messages.all" :key="item.id">
-                    <ChatMessageView :message="item" />
-                </template>
+                <ChatMessageView v-for="item in appStore.messages.list" :key="item.id" :message="item" />
             </div>
         </div>
         <div class="">
-            <UserSelector v-model="selectedUserId" :users="appStore.users.other" />
+            <UserSelector v-model="selectedUserId" :users="appStore.users.listExceptCurrent" />
             <form @submit.prevent="sendMessage" class="m-2">
                 <div class="join w-full">
                     <CommandInput v-model="message" :commands="slashCommands" class="w-full" />

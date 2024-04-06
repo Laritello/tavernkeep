@@ -25,7 +25,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { TextMessage } from '@/entities/Message';
+import type { TextMessage } from '@/entities/Message';
 
 const { message } = defineProps<{
     message: TextMessage;

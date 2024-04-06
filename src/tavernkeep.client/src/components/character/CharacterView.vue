@@ -1,12 +1,11 @@
 <template>
-    <AbilitiesView v-if="currentUser" :abilities="currentUser.activeCharacter.abilities" />
-    <h3 v-else>No active user</h3>
+    <AbilitiesView :abilities="character.abilities" />
 </template>
 <script setup lang="ts">
-import { useAppStore } from '@/stores/app.store';
 import AbilitiesView from './AbilitiesView.vue';
-import { storeToRefs } from 'pinia';
+import type { Character } from '@/entities';
 
-const appStore = useAppStore();
-const { current: currentUser } = storeToRefs(appStore.users);
+defineProps<{
+    character: Character;
+}>();
 </script>
