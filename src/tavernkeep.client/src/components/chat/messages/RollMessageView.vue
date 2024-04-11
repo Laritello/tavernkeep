@@ -24,7 +24,7 @@
 </template>
 <script setup lang="ts">
 import DiceIcon from '@/components/DiceIcon.vue';
-import { RollMessage } from '@/entities/Message';
+import type { RollMessage } from '@/entities/Message';
 const { message } = defineProps<{
     message: RollMessage;
 }>();

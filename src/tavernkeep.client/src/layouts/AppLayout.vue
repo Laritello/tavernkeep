@@ -11,7 +11,7 @@
                 <span class="label-text text-primary-content">Dark</span>
             </label>
             <div class="flex-none text-base-content">
-                <span class="text-primary-content">{{ appStore.users.current?.login }}</span>
+                <span class="text-primary-content">{{ session.userLogin.value }}</span>
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                         <div class="avatar w-10 rounded-full bg-orange-400"></div>
@@ -39,7 +39,7 @@
                         <li>
                             <RouterLink active-class="active" to="/characters">Characters</RouterLink>
                         </li>
-                        <li v-if="appStore.users.current?.role == UserRole.Master">
+                        <li v-if="session.userRole.value === UserRole.Master">
                             <RouterLink active-class="active" to="/admin">Admin</RouterLink>
                         </li>
                     </ul>
@@ -59,16 +59,17 @@
 import { useRouter } from 'vue-router';
 import { UserRole } from '@/contracts/enums/UserRole';
 
-import { useAppStore } from '@/stores/app.store';
-
 import ChatComponent from '@/components/chat/ChatComponent.vue';
+import { useAuth } from '@/composables/useAuth';
+import { useSession } from '@/composables/useSession';
 
-const appStore = useAppStore();
+const session = useSession();
 const router = useRouter();
 
 async function logout() {
-    appStore.auth.logout();
-    router.push('/login');
+    const auth = useAuth();
+    auth.logout();
+    await router.push('/login');
 }
 </script>
 <style scoped>

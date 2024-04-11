@@ -1,43 +1,49 @@
-import { computed, ref } from 'vue';
+import { computed, ref, reactive, type MaybeRef, unref } from 'vue';
 import { defineStore } from 'pinia';
 
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import type { User } from '@/entities/User';
 import type { UserRole } from '@/contracts/enums/UserRole';
+import { useSession } from '@/composables/useSession';
 
-import { useAuthStore } from './auth.store';
+type Users = Record<string, User>;
 
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
-export const useUsersStore = defineStore('users.store', () => {
+export const useUsersStore = defineStore('users', () => {
     const current = ref<User>();
-    const all = ref<Record<string, User>>({});
-    const other = computed(() => Object.values(all.value).filter((user) => user.id !== current.value?.id));
+    const usersDictionary = reactive<Users>({});
+
+    const list = computed(() => Object.values(usersDictionary));
+    const listExceptCurrent = computed(() => list.value.filter((user) => user.id !== current.value?.id));
+    const currentUser = computed(() => current.value);
+    const getById = (id: MaybeRef<string>) => computed(() => usersDictionary[unref(id)]);
 
     async function fetch() {
-        all.value = await api.getUsers();
+        const users = await api.getUsers();
+        Object.assign(usersDictionary, users);
 
-        const auth = useAuthStore();
-        if (!auth.isLoggedIn) return;
+        const session = useSession();
+        if (!session.isAuthenticated) return;
 
-        const currentUserId = auth.currentUserId;
-        current.value = all.value[currentUserId];
+        const currentUserId = session.userId.value;
+        current.value = usersDictionary[currentUserId!];
     }
 
     async function createUser(login: string, password: string, role: UserRole): Promise<void> {
         const user = await api.createUser(login, password, role, false);
-        all.value[user.id] = user;
+        usersDictionary[user.id] = user;
     }
 
     async function deleteUser(id: string) {
         await api.deleteUser(id);
-        delete all.value[id];
+        delete usersDictionary[id];
     }
 
     async function setActiveCharacter(userId: string, characterId: string): Promise<void> {
         await api.setActiveCharacter(userId, characterId);
-        all.value[userId].activeCharacterId = characterId;
+        usersDictionary[userId].activeCharacterId = characterId;
     }
 
-    return { current, all, other, fetch, createUser, deleteUser, setActiveCharacter };
+    return { list, listExceptCurrent, currentUser, getById, fetch, createUser, deleteUser, setActiveCharacter };
 });

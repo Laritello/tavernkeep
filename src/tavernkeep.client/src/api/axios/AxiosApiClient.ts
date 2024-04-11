@@ -6,7 +6,6 @@ import type { User, Message, Character } from '@/entities';
 import type { Ability, Skill, Lore } from '@/contracts/character';
 import { UserRole, AbilityType, Proficiency, SkillType, RollType } from '@/contracts/enums';
 
-// TODO: Error handling and interceptors
 export class AxiosApiClient {
     client: AxiosInstance;
     private baseURL = 'https://' + window.location.hostname + ':7231/api/';

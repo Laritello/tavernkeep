@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
-import { useAuthStore } from './stores/auth.store';
 import { UserRole } from './contracts/enums/UserRole';
 
 //Pages
@@ -8,6 +7,7 @@ import HomePage from './pages/HomePage.vue';
 import ErrorPage from './pages/ErrorPage.vue';
 import CharactersPage from './pages/CharactersPage.vue';
 import AdminPage from './pages/AdminPage.vue';
+import { useSession } from './composables/useSession';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -65,10 +65,10 @@ export const router = createRouter({
 });
 
 router.beforeEach((to) => {
-    const auth = useAuthStore();
+    const session = useSession();
 
     const protectedRoute = to.meta.protected;
-    const isLoggedIn = auth.isLoggedIn;
+    const isLoggedIn = session.isAuthenticated.value;
 
     // Redirect to login if not logged in and trying to access a restricted page
     if (protectedRoute && !isLoggedIn) {
@@ -82,7 +82,7 @@ router.beforeEach((to) => {
 
     const allowedRoles = to.meta.allowedRoles;
     if (allowedRoles === undefined) return;
-    const dontHavePermissions = !auth.havePermissions(allowedRoles);
+    const dontHavePermissions = !session.havePermissions(allowedRoles);
 
     // Redirect to not-allowed if logged in and trying to access a page that requires a specific role
     if (dontHavePermissions) {

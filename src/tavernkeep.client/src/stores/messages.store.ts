@@ -1,53 +1,40 @@
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 
 import ChatHub from '@/api/hubs/ChatHub';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import type { ApiClient } from '@/api/base/ApiClient';
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import type { Message } from '@/entities/Message';
 import type { RollType } from '@/contracts/enums/RollType';
 
 export const useMessagesStore = defineStore('messages.store', () => {
-    const api: ApiClient = ApiClientFactory.createApiClient();
+    const api: AxiosApiClient = ApiClientFactory.createApiClient();
     ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
-        if (!msg.$type) {
-            console.log(msg);
-            console.warn('Message $type is undefined');
-        }
         appendMessage(msg);
     });
 
-    const all = ref<Message[]>([]);
+    const messageList = ref<Message[]>([]);
+    const list = computed(() => messageList.value);
 
     async function fetch(skip: number, take: number) {
-        const messagesResponse = await api.getMessages(skip, take);
-        all.value = messagesResponse.data;
+        messageList.value = await api.getMessages(skip, take);
     }
 
     async function createMessage(message: string, recipientId?: string) {
-        const response = await api.sendMessage(message, recipientId);
-        if (!response.isSuccess()) {
-            console.error(response.statusText);
-        }
+        await api.sendMessage(message, recipientId);
     }
 
     async function createRollMessage(expression: string, rollType: RollType) {
-        const response = await api.sendRollMessage(expression, rollType);
-        if (!response.isSuccess()) {
-            console.error(response.statusText);
-        }
+        await api.sendRollMessage(expression, rollType);
     }
 
     async function deleteMessage(messageId: string) {
-        const response = await api.deleteMessage(messageId);
-        if (!response.isSuccess()) {
-            console.error(response.statusText);
-        }
+        await api.deleteMessage(messageId);
     }
 
     function appendMessage(message: Message) {
-        all.value.push(message);
+        messageList.value.push(message);
     }
 
-    return { all, fetch, createMessage, deleteMessage, createRollMessage };
+    return { list, fetch, createMessage, deleteMessage, createRollMessage };
 });

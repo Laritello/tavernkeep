@@ -1,24 +1,22 @@
 import { watch } from 'vue';
-import { defineStore, storeToRefs } from 'pinia';
-
-import { useAuthStore } from './auth.store';
-import { useUsersStore } from './users.store';
-import { useCharactersStore } from './characters.store';
-import { useMessagesStore } from './messages.store';
+import { defineStore } from 'pinia';
 
 import ChatHub from '@/api/hubs/ChatHub';
 import CharacterHub from '@/api/hubs/CharacterHub';
 
+import { useUsersStore } from './users.store';
+import { useCharactersStore } from './characters.store';
+import { useMessagesStore } from './messages.store';
+import { useSession } from '@/composables/useSession';
+
 export const useAppStore = defineStore('app.store', () => {
-    const auth = useAuthStore();
+    const session = useSession();
     const users = useUsersStore();
     const characters = useCharactersStore();
     const messages = useMessagesStore();
 
-    const { isLoggedIn } = storeToRefs(auth);
-
     console.groupCollapsed('[AppStore] Initialize');
-    if (isLoggedIn.value) {
+    if (session.isAuthenticated.value) {
         console.info('[AppStore] User already logged in. Fetching data...');
         initialize().then(() => {
             console.info('[AppStore] Initialized');
@@ -26,7 +24,7 @@ export const useAppStore = defineStore('app.store', () => {
         });
     }
 
-    watch(isLoggedIn, (value): void => {
+    watch(session.isAuthenticated, (value): void => {
         console.info('[AppStore] Auth status update');
         if (!value) {
             console.info('[AppStore] User logged out');
@@ -55,5 +53,5 @@ export const useAppStore = defineStore('app.store', () => {
         return Promise.all([ChatHub.stop(), CharacterHub.stop()]);
     }
 
-    return { auth, users, characters, messages };
+    return { users, characters, messages };
 });

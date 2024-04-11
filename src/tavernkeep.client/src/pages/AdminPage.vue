@@ -13,7 +13,7 @@
                         required
                     />
                 </label>
-                <UserSelector v-model="newCharacterModel.userId" :users="appStore.users.all" class="pr-3" />
+                <UserSelector v-model="newCharacterModel.userId" :users="appStore.users.list" class="pr-3" />
                 <input type="submit" value="Create new" class="btn btn-active justify-end" />
             </form>
         </div>
@@ -36,7 +36,7 @@
             />
             <button type="submit" class="btn w-full btn-active">Create new</button>
         </form>
-        <div v-for="user in appStore.users.all" :key="user.id" class="bg-base-300 shadow shadow-gray-950 rounded p-2">
+        <div v-for="user in appStore.users.list" :key="user.id" class="bg-base-300 shadow shadow-gray-950 rounded p-2">
             <div>
                 <div class="flex gap-2 text-lg font-bold border-b">
                     <div>{{ user.role }}</div>
@@ -53,23 +53,25 @@
                 </div>
                 <div>
                     <div
-                        v-for="(character, i) in appStore.characters.all.filter((c) => c.owner.id === user.id)"
+                        v-for="(character, i) in Object.values(appStore.characters.all).filter(
+                            (c) => c.ownerId === user.id
+                        )"
                         :key="character.id"
                         class="flex items-center px-2 py-3 my-2 space-x-4"
-                        :class="{ 'active-character': character.id === user.activeCharacter?.id }"
+                        :class="{ 'active-character': character.id === user.activeCharacterId }"
                     >
                         <div>{{ i + 1 }}</div>
                         <div class="w-24">{{ character.name }}</div>
                         <div class="flex items-center flex-1 justify-end">
                             <UserSelector
-                                v-model="character.owner.id"
+                                v-model="character.ownerId"
                                 @update:modelValue="(userId) => assign(character.id, userId)"
-                                :users="appStore.users.all"
+                                :users="appStore.users.list"
                                 class="pr-3"
                             />
                             <button
                                 @click="setActiveCharacter(user.id, character.id)"
-                                :disabled="character.id === user.activeCharacter?.id"
+                                :disabled="character.id === user.activeCharacterId"
                                 class="btn btn-sm btn-active"
                             >
                                 Set active
@@ -78,7 +80,7 @@
                                 size="small"
                                 variant="text"
                                 icon="mdi-delete"
-                                :disabled="character.id === user.activeCharacter?.id"
+                                :disabled="character.id === user.activeCharacterId"
                                 @click="appStore.characters.deleteCharacter(character.id)"
                             />
                         </div>
@@ -107,7 +109,7 @@ const newUserModel = reactive({
 });
 
 async function createUser() {
-    await appStore.users.createUser(newUserModel.login, newUserModel.password, newUserModel.role, 'New character');
+    await appStore.users.createUser(newUserModel.login, newUserModel.password, newUserModel.role);
 }
 
 async function createCharacter() {

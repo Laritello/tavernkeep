@@ -5,4 +5,5 @@ export interface User {
     login: string;
     role: UserRole;
     activeCharacterId: string;
+    charactersId: string[];
 }
