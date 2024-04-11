@@ -1,6 +1,6 @@
 import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { RefreshHttpClient } from './RefreshHttpClient';
-import { useAuthStore } from '@/stores/auth.store';
+import { useSession } from '@/composables/useSession';
 class ChatHub {
     private baseURL = 'https://' + window.location.hostname + ':7231/api/';
 
@@ -13,8 +13,14 @@ class ChatHub {
                 skipNegotiation: true,
                 transport: HttpTransportType.WebSockets,
                 async accessTokenFactory() {
-                    const authStore = useAuthStore();
-                    const accessToken = await authStore.getAccessToken();
+                    const session = useSession();
+                    if (!session.isAuthenticated.value) throw Error('No access token available. Authorize first.');
+                    if (session.isExpired.value) {
+                        const refreshResult = await session.refresh();
+                        if (refreshResult.status === 'error') throw Error('Refresh failed');
+                        return refreshResult.accessToken;
+                    }
+                    const accessToken = await session.getAccessToken();
                     return accessToken ?? '';
                 },
             })
@@ -22,12 +28,7 @@ class ChatHub {
     }
 
     async start(): Promise<void> {
-        return this.connection.start().catch((error) => {
-            if (!error) return;
-            console.log('[ChatHub] Refresh token and try to reconnect');
-            const authStore = useAuthStore();
-            return authStore.refresh().then(() => this.connection.start());
-        });
+        return this.connection.start();
     }
 
     async stop() {

@@ -1,8 +1,8 @@
-import { useStorage } from '@vueuse/core';
-import { storeKey, type JwtTokenData, type SessionStorage } from './useAuth';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import { jwtDecode } from 'jwt-decode';
 import { computed } from 'vue';
+import type { UserRole } from '@/contracts/enums';
+import { useSessionLocalStorage } from '@/stores/sessionLocalStorage';
+import { storeToRefs } from 'pinia';
 
 const api = ApiClientFactory.createApiClient();
 
@@ -22,31 +22,23 @@ type TokenRefreshResult = RefreshSuccess | RefreshFailure;
 let refreshPromise: Promise<TokenRefreshResult> | null = null;
 
 export const useSession = () => {
-    const token = useStorage<SessionStorage>(storeKey, null);
-    const isAuthenticated = computed(() => !!token.value);
+    const sessionData = useSessionLocalStorage();
+    const { userId, userRole, userLogin, hasData: isAuthenticated } = storeToRefs(sessionData);
     const isExpired = computed(() => {
-        if (!token.value) return false;
-        return Date.now() >= token.value.expiresAt;
+        if (!isAuthenticated.value) return false;
+        return Date.now() >= sessionData.expiresAt * 1000;
     });
 
     const refresh = async (): Promise<TokenRefreshResult> => {
-        if (!token.value) throw new Error('Not authorized user. Authenticate first');
+        if (!isAuthenticated.value) throw new Error('Not authorized user. Authenticate first');
         if (refreshPromise) return refreshPromise;
 
-        const { accessToken, refreshToken } = token.value;
+        const { accessToken, refreshToken } = sessionData;
 
         refreshPromise = api
-            .refresh(accessToken, refreshToken)
+            .refresh(accessToken!, refreshToken!)
             .then((response): TokenRefreshResult => {
-                const jwt = jwtDecode<JwtTokenData>(response.accessToken);
-
-                token.value = {
-                    ...response,
-                    userId: jwt.userId,
-                    userLogin: jwt.userLogin,
-                    userRole: jwt.userRole,
-                    expiresAt: jwt.exp,
-                };
+                sessionData.setData(response);
 
                 return { status: 'ok', ...response };
             })
@@ -60,5 +52,26 @@ export const useSession = () => {
         return refreshPromise;
     };
 
-    return { data: token, isAuthenticated, isExpired, refresh };
+    const getAccessToken = async (): Promise<string | undefined> => {
+        if (refreshPromise) {
+            const refreshResult = await refreshPromise;
+            if (refreshResult.status === 'error') {
+                throw new Error('Unable to refresh access token: ' + refreshResult.message);
+            }
+
+            return refreshResult.accessToken;
+        }
+
+        return sessionData.accessToken;
+    };
+
+    const havePermissions = (requiredRoles?: UserRole[]): Boolean => {
+        const role = sessionData.userRole ?? undefined;
+        if (role === undefined) return false;
+        if (requiredRoles === undefined) return true;
+
+        return requiredRoles.includes(role);
+    };
+
+    return { userId, userRole, userLogin, isAuthenticated, isExpired, refresh, getAccessToken, havePermissions };
 };

@@ -1,54 +1,27 @@
-import type { UserRole } from '@/contracts/enums';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import { useStorage } from '@vueuse/core';
-import { jwtDecode } from 'jwt-decode';
-
-export type JwtTokenData = {
-    id: string;
-    userId: string;
-    userLogin: string;
-    userRole: UserRole;
-    exp: number;
-};
+import { useSessionLocalStorage, type SessionStorageData } from '@/stores/sessionLocalStorage';
 
 export type UserCredentials = {
     login: string;
     password: string;
 };
 
-export type SessionStorage = {
-    accessToken: string;
-    refreshToken: string;
-    userId: string;
-    userLogin: string;
-    userRole: UserRole;
-    expiresAt: number;
-};
-
 export const storeKey: string = 'tavernkeep.auth.data';
 const api = ApiClientFactory.createApiClient();
 
 export const useAuth = () => {
-    const token = useStorage<SessionStorage>(storeKey, null);
+    const sessionData = useSessionLocalStorage();
 
-    async function login(credentials: UserCredentials): Promise<SessionStorage> {
-        if (token.value) logout();
+    async function login(credentials: UserCredentials): Promise<SessionStorageData> {
+        if (sessionData.hasData) logout();
         const response = await api.auth(credentials.login, credentials.password);
-        const jwt = jwtDecode<JwtTokenData>(response.accessToken);
+        sessionData.setData(response);
 
-        token.value = {
-            ...response,
-            userId: jwt.userId,
-            userLogin: jwt.userLogin,
-            userRole: jwt.userRole,
-            expiresAt: jwt.exp,
-        };
-
-        return token.value;
+        return response;
     }
 
     function logout() {
-        token.value = null;
+        sessionData.setData(undefined);
     }
 
     return { login, logout };

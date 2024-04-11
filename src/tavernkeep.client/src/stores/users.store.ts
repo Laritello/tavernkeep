@@ -5,8 +5,7 @@ import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import type { User } from '@/entities/User';
 import type { UserRole } from '@/contracts/enums/UserRole';
-
-import { useAuthStore } from './auth.store';
+import { useSession } from '@/composables/useSession';
 
 type Users = Record<string, User>;
 
@@ -24,11 +23,11 @@ export const useUsersStore = defineStore('users', () => {
         const users = await api.getUsers();
         Object.assign(usersDictionary, users);
 
-        const auth = useAuthStore();
-        if (!auth.isLoggedIn) return;
+        const session = useSession();
+        if (!session.isAuthenticated) return;
 
-        const currentUserId = auth.currentUserId;
-        current.value = usersDictionary[currentUserId];
+        const currentUserId = session.userId.value;
+        current.value = usersDictionary[currentUserId!];
     }
 
     async function createUser(login: string, password: string, role: UserRole): Promise<void> {

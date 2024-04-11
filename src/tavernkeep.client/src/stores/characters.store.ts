@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
 import type { Character } from '@/entities/Character';
@@ -8,15 +8,10 @@ import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
 export const useCharactersStore = defineStore('characters', () => {
     const all = ref<Record<string, Character>>({});
-    const mapByUserId = computed(() =>
-        Object.values(all.value).reduce((acc, cur) => {
-            if (!acc.has(cur.ownerId)) {
-                acc.set(cur.ownerId, []);
-            }
-            acc.get(cur.ownerId)!.push(cur);
-            return acc;
-        }, new Map<string, Character[]>())
-    );
+
+    function get(id: string): Character {
+        return all.value[id];
+    }
 
     async function fetch() {
         all.value = await api.getCharacters();
@@ -43,7 +38,7 @@ export const useCharactersStore = defineStore('characters', () => {
 
     return {
         all,
-        mapByUserId,
+        get,
         fetch,
         createCharacter,
         deleteCharacter,

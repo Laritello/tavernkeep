@@ -7,12 +7,17 @@
 
 <script setup lang="ts">
 import CharacterView from '@/components/character/CharacterView.vue';
+import type { Character } from '@/entities';
 
-import { storeToRefs } from 'pinia';
 import { useAppStore } from '@/stores/app.store';
-import { useActiveCharacter } from '@/composables/useCharacter';
+import { ref, watchEffect } from 'vue';
 
 const appStore = useAppStore();
-const { currentUserId } = storeToRefs(appStore.auth);
-const { character: activeCharacter } = useActiveCharacter(currentUserId.value);
+const activeCharacter = ref<Character>();
+
+watchEffect(() => {
+    const currentUser = appStore.users.currentUser;
+    if (!currentUser) return;
+    activeCharacter.value = appStore.characters.get(currentUser.activeCharacterId);
+});
 </script>

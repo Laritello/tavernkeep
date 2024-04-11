@@ -29,11 +29,11 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore, type UserCredentials } from '@/stores/auth.store';
+import { useAuth, type UserCredentials } from '@/composables/useAuth';
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
-const authStore = useAuthStore();
+const auth = useAuth();
 const router = useRouter();
 
 const credentials = reactive<UserCredentials>({
@@ -42,7 +42,7 @@ const credentials = reactive<UserCredentials>({
 });
 
 async function authorize() {
-    await authStore.login(credentials);
-    router.push('/');
+    await auth.login(credentials);
+    await router.push('/');
 }
 </script>
