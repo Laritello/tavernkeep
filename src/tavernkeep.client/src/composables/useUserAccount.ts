@@ -1,10 +1,10 @@
-import { useCharactersStore } from '@/stores/characters.store';
-import { useUsersStore } from '@/stores/users';
+import { useCharacters } from '@/stores/characters';
+import { useUsers } from '@/stores/users';
 import { computed, unref, type MaybeRef } from 'vue';
 
 export const useUserAccount = (id: MaybeRef<string | undefined>) => {
-    const users = useUsersStore();
-    const characters = useCharactersStore();
+    const users = useUsers();
+    const characters = useCharacters();
 
     const userId = unref(id);
     const user = users.get(userId);
@@ -14,7 +14,6 @@ export const useUserAccount = (id: MaybeRef<string | undefined>) => {
     );
 
     const userCharacters = computed(() => {
-        console.log('User characters is updated');
         return Object.values(characters.all).filter((character) => character.ownerId === userId);
     });
 

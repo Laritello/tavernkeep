@@ -21,9 +21,9 @@
 import { reactive } from 'vue';
 import { UserRole } from '@/contracts/enums/UserRole';
 
-import { useUsersStore } from '@/stores/users';
+import { useUsers } from '@/stores/users';
 
-const usersStore = useUsersStore();
+const usersStore = useUsers();
 
 interface UserData {
     login: string;

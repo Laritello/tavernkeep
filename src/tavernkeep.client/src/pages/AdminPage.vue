@@ -1,3 +1,42 @@
+<script setup lang="ts">
+import { reactive } from 'vue';
+import { UserRole } from '@/contracts/enums/UserRole';
+import UserSelector from '@/components/chat/UserSelector.vue';
+import { useUsers } from '@/stores/users';
+import { useCharacters } from '@/stores/characters';
+
+const users = useUsers();
+const characters = useCharacters();
+
+const newCharacterModel = reactive({
+    userId: '',
+    characterName: '',
+});
+
+const newUserModel = reactive({
+    login: '',
+    password: '',
+    role: UserRole.Player,
+});
+
+async function createUser() {
+    await users.createUser(newUserModel.login, newUserModel.password, newUserModel.role);
+}
+
+async function createCharacter() {
+    await characters.createCharacter(newCharacterModel.userId, newCharacterModel.characterName);
+    newCharacterModel.userId = '';
+    newCharacterModel.characterName = '';
+}
+async function setActiveCharacter(userId: string, characterId: string) {
+    await users.setActiveCharacter(userId, characterId);
+}
+
+async function assign(characterId: string, userId: string) {
+    await characters.assignUserToCharacter(userId, characterId);
+}
+</script>
+
 <template>
     <div class="space-y-4 px-2 py-4 h-full overflow-auto">
         <div class="space-y-2 bg-base-300 shadow shadow-gray-950 rounded p-2">
@@ -13,7 +52,11 @@
                         required
                     />
                 </label>
-                <UserSelector v-model="newCharacterModel.userId" :users="appStore.users.list" class="pr-3" />
+                <UserSelector
+                    v-model="newCharacterModel.userId"
+                    :users="Object.values(users.dictionary)"
+                    class="pr-3"
+                />
                 <input type="submit" value="Create new" class="btn btn-active justify-end" />
             </form>
         </div>
@@ -36,7 +79,7 @@
             />
             <button type="submit" class="btn w-full btn-active">Create new</button>
         </form>
-        <div v-for="user in appStore.users.list" :key="user.id" class="bg-base-300 shadow shadow-gray-950 rounded p-2">
+        <div v-for="user in users.dictionary" :key="user.id" class="bg-base-300 shadow shadow-gray-950 rounded p-2">
             <div>
                 <div class="flex gap-2 text-lg font-bold border-b">
                     <div>{{ user.role }}</div>
@@ -47,15 +90,13 @@
                             variant="text"
                             title="Delete user"
                             icon="mdi-delete"
-                            @click="appStore.users.deleteUser(user.id)"
+                            @click="users.deleteUser(user.id)"
                         />
                     </div>
                 </div>
                 <div>
                     <div
-                        v-for="(character, i) in Object.values(appStore.characters.all).filter(
-                            (c) => c.ownerId === user.id
-                        )"
+                        v-for="(character, i) in Object.values(characters.all).filter((c) => c.ownerId === user.id)"
                         :key="character.id"
                         class="flex items-center px-2 py-3 my-2 space-x-4"
                         :class="{ 'active-character': character.id === user.activeCharacterId }"
@@ -66,7 +107,7 @@
                             <UserSelector
                                 v-model="character.ownerId"
                                 @update:modelValue="(userId) => assign(character.id, userId)"
-                                :users="appStore.users.list"
+                                :users="Object.values(users.dictionary)"
                                 class="pr-3"
                             />
                             <button
@@ -81,7 +122,7 @@
                                 variant="text"
                                 icon="mdi-delete"
                                 :disabled="character.id === user.activeCharacterId"
-                                @click="appStore.characters.deleteCharacter(character.id)"
+                                @click="characters.deleteCharacter(character.id)"
                             />
                         </div>
                     </div>
@@ -90,41 +131,7 @@
         </div>
     </div>
 </template>
-<script setup lang="ts">
-import { useAppStore } from '@/stores/app.store';
-import { reactive } from 'vue';
-import { UserRole } from '@/contracts/enums/UserRole';
-import UserSelector from '@/components/chat/UserSelector.vue';
 
-const appStore = useAppStore();
-const newCharacterModel = reactive({
-    userId: '',
-    characterName: '',
-});
-
-const newUserModel = reactive({
-    login: '',
-    password: '',
-    role: UserRole.Player,
-});
-
-async function createUser() {
-    await appStore.users.createUser(newUserModel.login, newUserModel.password, newUserModel.role);
-}
-
-async function createCharacter() {
-    await appStore.characters.createCharacter(newCharacterModel.userId, newCharacterModel.characterName);
-    newCharacterModel.userId = '';
-    newCharacterModel.characterName = '';
-}
-async function setActiveCharacter(userId: string, characterId: string) {
-    await appStore.users.setActiveCharacter(userId, characterId);
-}
-
-async function assign(characterId: string, userId: string) {
-    await appStore.characters.assignUserToCharacter(userId, characterId);
-}
-</script>
 <style scoped>
 .active-character {
     @apply bg-base-200 rounded shadow-md;

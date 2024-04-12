@@ -1,11 +1,3 @@
-<template>
-    <div class="pb-2 w-full">
-        <component :is="getComponentByType(message)" :message="message" :align-right="isUserSender">
-            Unknown message type: {{ message.$type }}
-        </component>
-    </div>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 
@@ -14,15 +6,14 @@ import { type Message } from '@/entities/Message';
 import TextMessageView from './TextMessageView.vue';
 import RollMessageView from './RollMessageView.vue';
 import SkillRollMessageView from './SkillRollMessageView.vue';
-
-import { useAppStore } from '@/stores/app.store';
+import { useSession } from '@/composables/useSession';
 
 const { message } = defineProps<{
     message: Message;
 }>();
 
-const appStore = useAppStore();
-const isUserSender = computed(() => appStore.users.currentUser?.id === message.sender.id);
+const session = useSession();
+const isUserSender = computed(() => message.sender.id === session.userId.value);
 
 function getComponentByType(message: Message) {
     switch (message.$type) {
@@ -37,5 +28,13 @@ function getComponentByType(message: Message) {
     }
 }
 </script>
+
+<template>
+    <div class="pb-2 w-full">
+        <component :is="getComponentByType(message)" :message="message" :align-right="isUserSender">
+            Unknown message type: {{ message.$type }}
+        </component>
+    </div>
+</template>
 
 <style scoped></style>

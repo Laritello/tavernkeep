@@ -23,12 +23,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useUsersStore } from '@/stores/users';
+import { useUsers } from '@/stores/users';
 import UserEdit from './UserEdit.vue';
 import { reactive } from 'vue';
 import { UserRole } from '@/contracts/enums/UserRole';
 
-const usersStore = useUsersStore();
+const usersStore = useUsers();
 const editDialog = ref(false);
 const editUserModel = reactive({
     login: '',

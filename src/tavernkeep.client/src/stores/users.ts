@@ -10,7 +10,7 @@ import { useSession } from '@/composables/useSession';
 type Users = Record<string, User>;
 
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
-export const useUsersStore = defineStore('users', () => {
+export const useUsers = defineStore('users', () => {
     const dictionary = reactive<Users>({});
     const get = (id: MaybeRef<string | undefined>) => {
         const userId = unref(id);
