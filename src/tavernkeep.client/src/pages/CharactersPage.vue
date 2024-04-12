@@ -2,12 +2,9 @@
 import { ref } from 'vue';
 import { useModal } from '@/composables/useModal';
 import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
-import { useUserAccount } from '@/composables/useUserAccount';
-import { useSession } from '@/composables/useSession';
+import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 
-const modal = useModal();
-const session = useSession();
-const userAccount = useUserAccount(session.userId);
+const userAccount = useCurrentUserAccount();
 
 const currentUser = userAccount.user;
 const characterNameRef = ref('');
@@ -18,6 +15,7 @@ async function createCharacter(characterName: string) {
 }
 
 async function deleteCharacter(id: string) {
+    const modal = useModal();
     const result = await modal.show(ConfirmationDialog, {
         caption: 'Delete character',
         message: 'Are you sure you want to delete this character?',
@@ -38,7 +36,7 @@ const isActiveCharacter = (id: string) => id === currentUser.value?.activeCharac
         <div class="bg-base-300 shadow shadow-gray-950 rounded p-2">
             <h1 class="text-xl">Characters</h1>
             <div
-                v-for="(character, i) in userAccount.userCharacters.value"
+                v-for="(character, i) in userAccount.characters.value"
                 :key="character.id"
                 class="flex items-center rounded px-2 py-3 my-2 space-x-4 hover:bg-base-200"
                 :class="{ 'active-character': isActiveCharacter(character.id) }"

@@ -2,8 +2,11 @@
 import { reactive } from 'vue';
 import { UserRole } from '@/contracts/enums/UserRole';
 import UserSelector from '@/components/chat/UserSelector.vue';
+import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
+
 import { useUsers } from '@/stores/users';
 import { useCharacters } from '@/stores/characters';
+import { useModal } from '@/composables/useModal';
 
 const users = useUsers();
 const characters = useCharacters();
@@ -34,6 +37,16 @@ async function setActiveCharacter(userId: string, characterId: string) {
 
 async function assign(characterId: string, userId: string) {
     await characters.assignUserToCharacter(userId, characterId);
+}
+
+async function deleteCharacter(id: string) {
+    const modal = useModal();
+    const result = await modal.show(ConfirmationDialog, {
+        caption: 'Delete character',
+        message: 'Are you sure you want to delete this character?',
+    });
+    if (result.action !== 'confirm') return;
+    characters.deleteCharacter(id);
 }
 </script>
 
@@ -122,7 +135,7 @@ async function assign(characterId: string, userId: string) {
                                 variant="text"
                                 icon="mdi-delete"
                                 :disabled="character.id === user.activeCharacterId"
-                                @click="characters.deleteCharacter(character.id)"
+                                @click="deleteCharacter(character.id)"
                             />
                         </div>
                     </div>
