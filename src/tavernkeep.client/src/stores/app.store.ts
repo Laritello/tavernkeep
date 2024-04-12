@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 import ChatHub from '@/api/hubs/ChatHub';
 import CharacterHub from '@/api/hubs/CharacterHub';
 
-import { useUsersStore } from './users.store';
+import { useUsersStore } from './users';
 import { useCharactersStore } from './characters.store';
 import { useMessagesStore } from './messages.store';
 import { useSession } from '@/composables/useSession';

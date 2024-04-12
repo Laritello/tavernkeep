@@ -7,17 +7,10 @@
 
 <script setup lang="ts">
 import CharacterView from '@/components/character/CharacterView.vue';
-import type { Character } from '@/entities';
+import { useSession } from '@/composables/useSession';
+import { useUserAccount } from '@/composables/useUserAccount';
 
-import { useAppStore } from '@/stores/app.store';
-import { ref, watchEffect } from 'vue';
-
-const appStore = useAppStore();
-const activeCharacter = ref<Character>();
-
-watchEffect(() => {
-    const currentUser = appStore.users.currentUser;
-    if (!currentUser) return;
-    activeCharacter.value = appStore.characters.get(currentUser.activeCharacterId);
-});
+const session = useSession();
+const userAccount = useUserAccount(session.userId);
+const activeCharacter = userAccount.activeCharacter;
 </script>

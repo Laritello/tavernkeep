@@ -1,4 +1,4 @@
-import { computed, ref, reactive, type MaybeRef, unref } from 'vue';
+import { computed, reactive, type MaybeRef, unref } from 'vue';
 import { defineStore } from 'pinia';
 
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
@@ -11,39 +11,41 @@ type Users = Record<string, User>;
 
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
 export const useUsersStore = defineStore('users', () => {
-    const current = ref<User>();
-    const usersDictionary = reactive<Users>({});
-
-    const list = computed(() => Object.values(usersDictionary));
-    const listExceptCurrent = computed(() => list.value.filter((user) => user.id !== current.value?.id));
-    const currentUser = computed(() => current.value);
-    const getById = (id: MaybeRef<string>) => computed(() => usersDictionary[unref(id)]);
+    const dictionary = reactive<Users>({});
+    const get = (id: MaybeRef<string | undefined>) => {
+        const userId = unref(id);
+        return computed(() => (userId ? dictionary[userId] : undefined));
+    };
 
     async function fetch() {
-        const users = await api.getUsers();
-        Object.assign(usersDictionary, users);
-
         const session = useSession();
         if (!session.isAuthenticated) return;
 
-        const currentUserId = session.userId.value;
-        current.value = usersDictionary[currentUserId!];
+        const users = await api.getUsers();
+        Object.assign(dictionary, users);
     }
 
     async function createUser(login: string, password: string, role: UserRole): Promise<void> {
         const user = await api.createUser(login, password, role, false);
-        usersDictionary[user.id] = user;
+        dictionary[user.id] = user;
     }
 
     async function deleteUser(id: string) {
         await api.deleteUser(id);
-        delete usersDictionary[id];
+        delete dictionary[id];
     }
 
     async function setActiveCharacter(userId: string, characterId: string): Promise<void> {
         await api.setActiveCharacter(userId, characterId);
-        usersDictionary[userId].activeCharacterId = characterId;
+        dictionary[userId].activeCharacterId = characterId;
     }
 
-    return { list, listExceptCurrent, currentUser, getById, fetch, createUser, deleteUser, setActiveCharacter };
+    return {
+        dictionary,
+        get,
+        fetch,
+        createUser,
+        deleteUser,
+        setActiveCharacter,
+    };
 });

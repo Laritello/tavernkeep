@@ -32,7 +32,6 @@ export const useCharactersStore = defineStore('characters', () => {
     async function assignUserToCharacter(userId: string, characterId: string): Promise<Character> {
         const character = await api.assignUserToCharacter(characterId, userId);
         all.value[characterId] = character;
-        // TODO: update character owner
         return character;
     }
 
