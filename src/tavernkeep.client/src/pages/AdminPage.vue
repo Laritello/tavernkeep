@@ -24,6 +24,8 @@ const newUserModel = reactive({
 
 async function createUser() {
     await users.createUser(newUserModel.login, newUserModel.password, newUserModel.role);
+    newUserModel.login = '';
+    newUserModel.password = '';
 }
 
 async function createCharacter() {
@@ -47,6 +49,16 @@ async function deleteCharacter(id: string) {
     });
     if (result.action !== 'confirm') return;
     characters.deleteCharacter(id);
+}
+
+async function deleteUser(id: string) {
+    const modal = useModal();
+    const result = await modal.show(ConfirmationDialog, {
+        caption: 'Delete user',
+        message: 'Are you sure you want to delete this user?',
+    });
+    if (result.action !== 'confirm') return;
+    users.deleteUser(id);
 }
 </script>
 
@@ -103,7 +115,7 @@ async function deleteCharacter(id: string) {
                             variant="text"
                             title="Delete user"
                             icon="mdi-delete"
-                            @click="users.deleteUser(user.id)"
+                            @click="deleteUser(user.id)"
                         />
                     </div>
                 </div>
