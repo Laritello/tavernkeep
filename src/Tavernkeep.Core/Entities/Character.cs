@@ -7,6 +7,12 @@ namespace Tavernkeep.Core.Entities
     [Table("Characters")]
     public class Character : Entity
     {
+        #region Backing fields
+
+        private readonly List<Condition> _conditions = [];
+
+        #endregion
+
         #region Constructors
 
         public Character()
@@ -48,6 +54,7 @@ namespace Tavernkeep.Core.Entities
         public string Name { get; set; } = default!;
         public int Level { get; set; }
         public Health Health { get; set; }
+        public IReadOnlyCollection<Condition> Conditions => _conditions.AsReadOnly();
 
         public Ability Strength { get; set; }
         public Ability Dexterity { get; set; }
@@ -115,6 +122,11 @@ namespace Tavernkeep.Core.Entities
                 SkillType.Thievery => Thievery,
                 _ => throw new NotImplementedException(),
             };
+        }
+
+        public void AddCondition(Condition condition)
+        {
+            _conditions.Add(condition);
         }
 
         #endregion

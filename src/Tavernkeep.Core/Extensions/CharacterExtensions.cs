@@ -33,5 +33,7 @@ namespace Tavernkeep.Core.Extensions
         {
             return (int)proficiency + (proficiency > Proficiency.Untrained ? owner.Level : 0);
         }
+
+        public static ModifierTarget ToTarget(this SkillType type) => (ModifierTarget)(1 << (int)type);
     }
 }
