@@ -43,6 +43,11 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
             builder.OwnsJson(c => c.Thievery);
 
             builder.OwnsMany(c => c.Lores, b => b.ToJson());
+            builder.OwnsMany(c => c.Conditions, b =>
+            {
+                b.OwnsMany(con => con.Modifiers, b => b.ToJson());
+                b.ToJson();
+            });
         }
     }
 }

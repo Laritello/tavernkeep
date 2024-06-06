@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Modifiers.Managers;
@@ -10,6 +11,11 @@ namespace Tavernkeep.Core.Entities
     public class Skill : IModifiable
     {
         #region Constructors
+
+        public Skill() 
+        {
+
+        }
 
         public Skill(Character owner, AbilityType baseAbility, SkillType type)
         {
@@ -26,7 +32,9 @@ namespace Tavernkeep.Core.Entities
 
         [JsonIgnore]
         public Character Owner { get; set; } = default!;
+
         [JsonIgnore]
+        [NotMapped]
         public IModifierManager Manager { get; set; } = default!;
         public AbilityType BaseAbility { get; set; }
         public SkillType Type { get; set; }
