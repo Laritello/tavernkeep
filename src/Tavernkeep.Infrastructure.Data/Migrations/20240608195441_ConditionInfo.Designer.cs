@@ -11,7 +11,7 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    [Migration("20240606213449_ConditionInfo")]
+    [Migration("20240608195441_ConditionInfo")]
     partial class ConditionInfo
     {
         /// <inheritdoc />
@@ -45,7 +45,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Characters");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.ConditionInfo", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.CondtionInfo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,7 +66,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasIndex("SecondaryId");
 
-                    b.ToTable("ConditionInfo");
+                    b.ToTable("CondtionInfo");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.Message", b =>
@@ -936,15 +936,15 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.ConditionInfo", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.CondtionInfo", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.ConditionInfo", "Secondary")
+                    b.HasOne("Tavernkeep.Core.Entities.CondtionInfo", "Secondary")
                         .WithMany()
                         .HasForeignKey("SecondaryId");
 
                     b.OwnsMany("Tavernkeep.Core.Entities.Modifiers.Modifier", "Modifiers", b1 =>
                         {
-                            b1.Property<Guid>("ConditionInfoId")
+                            b1.Property<Guid>("CondtionInfoId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("Id")
@@ -957,14 +957,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("Value")
                                 .HasColumnType("INTEGER");
 
-                            b1.HasKey("ConditionInfoId", "Id");
+                            b1.HasKey("CondtionInfoId", "Id");
 
-                            b1.ToTable("ConditionInfo");
+                            b1.ToTable("CondtionInfo");
 
                             b1.ToJson("Modifiers");
 
                             b1.WithOwner()
-                                .HasForeignKey("ConditionInfoId");
+                                .HasForeignKey("CondtionInfoId");
                         });
 
                     b.Navigation("Modifiers");

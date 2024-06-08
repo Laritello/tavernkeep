@@ -4,9 +4,9 @@ using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration
 {
-    public class ConditionInfoConfiguration : IEntityTypeConfiguration<ConditionInfo>
+    public class ConditionInfoConfiguration : IEntityTypeConfiguration<CondtionInfo>
     {
-        public void Configure(EntityTypeBuilder<ConditionInfo> builder)
+        public void Configure(EntityTypeBuilder<CondtionInfo> builder)
         {
             builder.HasKey(x => x.Id);
 
