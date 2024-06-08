@@ -18,7 +18,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 nullable: true);
 
             migrationBuilder.CreateTable(
-                name: "CondtionInfo",
+                name: "ConditionInfo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -29,17 +29,17 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CondtionInfo", x => x.Id);
+                    table.PrimaryKey("PK_ConditionInfo", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CondtionInfo_CondtionInfo_SecondaryId",
+                        name: "FK_ConditionInfo_ConditionInfo_SecondaryId",
                         column: x => x.SecondaryId,
-                        principalTable: "CondtionInfo",
+                        principalTable: "ConditionInfo",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CondtionInfo_SecondaryId",
-                table: "CondtionInfo",
+                name: "IX_ConditionInfo_SecondaryId",
+                table: "ConditionInfo",
                 column: "SecondaryId");
         }
 
@@ -47,7 +47,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CondtionInfo");
+                name: "ConditionInfo");
 
             migrationBuilder.DropColumn(
                 name: "Conditions",

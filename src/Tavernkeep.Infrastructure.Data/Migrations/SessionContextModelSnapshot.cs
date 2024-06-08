@@ -42,7 +42,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Characters");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.CondtionInfo", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.ConditionInfo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasIndex("SecondaryId");
 
-                    b.ToTable("CondtionInfo");
+                    b.ToTable("ConditionInfo");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.Message", b =>
@@ -933,15 +933,15 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.CondtionInfo", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.ConditionInfo", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.CondtionInfo", "Secondary")
+                    b.HasOne("Tavernkeep.Core.Entities.ConditionInfo", "Secondary")
                         .WithMany()
                         .HasForeignKey("SecondaryId");
 
                     b.OwnsMany("Tavernkeep.Core.Entities.Modifiers.Modifier", "Modifiers", b1 =>
                         {
-                            b1.Property<Guid>("CondtionInfoId")
+                            b1.Property<Guid>("ConditionInfoId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("Id")
@@ -954,14 +954,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("Value")
                                 .HasColumnType("INTEGER");
 
-                            b1.HasKey("CondtionInfoId", "Id");
+                            b1.HasKey("ConditionInfoId", "Id");
 
-                            b1.ToTable("CondtionInfo");
+                            b1.ToTable("ConditionInfo");
 
                             b1.ToJson("Modifiers");
 
                             b1.WithOwner()
-                                .HasForeignKey("CondtionInfoId");
+                                .HasForeignKey("ConditionInfoId");
                         });
 
                     b.Navigation("Modifiers");

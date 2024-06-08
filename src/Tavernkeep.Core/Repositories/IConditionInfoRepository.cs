@@ -2,7 +2,7 @@
 
 namespace Tavernkeep.Core.Repositories
 {
-    public interface IConditionInfoRepository : IRepositoryBase<CondtionInfo, Guid>
+    public interface IConditionInfoRepository : IRepositoryBase<ConditionInfo, Guid>
     {
     }
 }

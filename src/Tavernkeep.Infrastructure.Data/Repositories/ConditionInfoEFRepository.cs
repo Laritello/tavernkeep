@@ -4,7 +4,7 @@ using Tavernkeep.Infrastructure.Data.Context;
 
 namespace Tavernkeep.Infrastructure.Data.Repositories
 {
-    public class ConditionInfoEFRepository(SessionContext context) : EntityFrameworkRepository<CondtionInfo>(context), IConditionInfoRepository
+    public class ConditionInfoEFRepository(SessionContext context) : EntityFrameworkRepository<ConditionInfo>(context), IConditionInfoRepository
     {
     }
 }

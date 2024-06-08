@@ -3,7 +3,7 @@ using Tavernkeep.Core.Entities.Modifiers;
 
 namespace Tavernkeep.Core.Entities
 {
-    public class CondtionInfo : Entity
+    public class ConditionInfo : Entity
     {
         #region Backing fields
 
@@ -13,7 +13,7 @@ namespace Tavernkeep.Core.Entities
 
         #region Constructors
 
-        public CondtionInfo(string name, string description)
+        public ConditionInfo(string name, string description)
         {
             Name = name;
             Description = description;
@@ -25,7 +25,7 @@ namespace Tavernkeep.Core.Entities
 
         public string Name { get; set; }
         public string Description { get; set; }
-        public CondtionInfo? Secondary { get; set; }
+        public ConditionInfo? Secondary { get; set; }
         public IReadOnlyCollection<Modifier> Modifiers => _modifiers.AsReadOnly();
 
         #endregion
