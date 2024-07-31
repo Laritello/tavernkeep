@@ -21,13 +21,12 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice
 
             var roll = diceService.Roll(request.Expression);
 
-            RollMessage message = new()
+            RollMessage message = new(roll.ToRollResult())
             {
                 Sender = initiator,
                 Created = DateTime.UtcNow,
                 RollType = request.RollType,
                 Expression = roll.DiceExpression,
-                Result = roll.ToRollResult(),
             };
 
             messageRepository.Save(message);

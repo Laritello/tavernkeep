@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{6D460C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Infrastructure.Notifications", "src\Tavernkeep.Infrastructure.Notifications\Tavernkeep.Infrastructure.Notifications.csproj", "{26886077-D0EE-44C2-B129-FE2CEB67E31D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tavernkepp.Application.Tests", "tests\Tavernkepp.Application.Tests\Tavernkepp.Application.Tests.csproj", "{526B4DEB-DAF5-40F7-9DC3-B917E326F6F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkepp.Application.Tests", "tests\Tavernkepp.Application.Tests\Tavernkepp.Application.Tests.csproj", "{526B4DEB-DAF5-40F7-9DC3-B917E326F6F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3D31C5BB-2405-46CD-9DF2-A1AA7CC9EC98}"
 EndProject

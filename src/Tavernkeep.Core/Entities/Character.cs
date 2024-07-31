@@ -37,6 +37,7 @@ namespace Tavernkeep.Core.Entities
             Survival = new(this, AbilityType.Wisdom, SkillType.Survival);
             Thievery = new(this, AbilityType.Dexterity, SkillType.Thievery);
 
+            Conditions = [];
             Lores = [];
         }
 

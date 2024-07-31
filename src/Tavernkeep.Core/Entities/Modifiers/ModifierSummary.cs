@@ -1,18 +1,11 @@
 ﻿namespace Tavernkeep.Core.Entities.Modifiers
 {
-    public class ModifierSummary
-    {
-        public List<Modifier> Modifiers { get; set; }
-        public Modifier? ActiveBonus { get; set; }
-        public Modifier? ActivePenalty { get; set; }
-        public int Total { get; set; }
-
-        public ModifierSummary(List<Modifier> modifiers, int total, Modifier? activeBonus, Modifier? activePenalty)
-        {
-            Modifiers = modifiers;
-            Total = total;
-            ActiveBonus = activeBonus;
-            ActivePenalty = activePenalty;
-        }
-    }
+	// TODO: Check if struct is better
+    public class ModifierSummary(List<Modifier> modifiers, int total, Modifier? activeBonus, Modifier? activePenalty)
+	{
+		public List<Modifier> Modifiers { get; set; } = modifiers;
+		public Modifier? ActiveBonus { get; set; } = activeBonus;
+		public Modifier? ActivePenalty { get; set; } = activePenalty;
+		public int Total { get; set; } = total;
+	}
 }
