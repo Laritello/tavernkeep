@@ -2,7 +2,7 @@
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.Actions.Characters.Queries.GetCharacters
+namespace Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters
 {
     public class GetAllCharactersQueryHandler(
         ICharacterRepository characterRepository

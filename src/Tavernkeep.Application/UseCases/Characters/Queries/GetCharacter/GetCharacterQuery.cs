@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Entities;
 
-namespace Tavernkeep.Application.Actions.Characters.Queries.GetCharacter
+namespace Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter
 {
     public class GetCharacterQuery : IRequest<Character>
     {

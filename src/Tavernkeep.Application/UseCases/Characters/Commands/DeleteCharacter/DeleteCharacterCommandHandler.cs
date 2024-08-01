@@ -3,7 +3,7 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.Actions.Characters.Commands.DeleteCharacter
+namespace Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter
 {
     public class DeleteCharacterCommandHandler(IUserRepository userRepository, ICharacterRepository characterRepository) : IRequestHandler<DeleteCharacterCommand>
     {

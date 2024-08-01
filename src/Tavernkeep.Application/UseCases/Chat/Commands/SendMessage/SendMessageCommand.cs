@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Entities.Messages;
 
-namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
+namespace Tavernkeep.Application.UseCases.Chat.Commands.SendMessage
 {
     public class SendMessageCommand : IRequest<Message>
     {

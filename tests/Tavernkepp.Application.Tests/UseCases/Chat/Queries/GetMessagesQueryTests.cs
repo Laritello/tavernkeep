@@ -4,7 +4,7 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Repositories;
-using Tavernkeep.Application.Actions.Chat.Queries.GetMessages;
+using Tavernkeep.Application.UseCases.Chat.Queries.GetMessages;
 using Tavernkeep.Core.Exceptions;
 
 namespace Tavernkepp.Application.Tests.UseCases.Chat.Queries

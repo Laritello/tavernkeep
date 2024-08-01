@@ -4,7 +4,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.Actions.Characters.Commands.EditHealth
+namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHealth
 {
     public class EditHealthCommandHandler(IUserRepository userRepository, ICharacterRepository characterRepository) : IRequestHandler<EditHealthCommand, Health>
     {

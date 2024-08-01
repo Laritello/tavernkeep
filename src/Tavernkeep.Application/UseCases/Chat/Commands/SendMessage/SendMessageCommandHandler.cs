@@ -4,7 +4,7 @@ using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.Actions.Chat.Commands.SendMessage
+namespace Tavernkeep.Application.UseCases.Chat.Commands.SendMessage
 {
     public class SendMessageCommandHandler(
         IMessageRepository messageRepository, 

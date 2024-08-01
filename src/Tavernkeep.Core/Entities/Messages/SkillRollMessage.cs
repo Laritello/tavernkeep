@@ -1,4 +1,5 @@
-﻿using Tavernkeep.Core.Entities.Snapshots;
+﻿using Tavernkeep.Core.Entities.Rolls;
+using Tavernkeep.Core.Entities.Snapshots;
 
 namespace Tavernkeep.Core.Entities.Messages
 {
@@ -6,7 +7,7 @@ namespace Tavernkeep.Core.Entities.Messages
     {
         #region Constructors
 
-        public SkillRollMessage() { }
+        public SkillRollMessage(RollResult result):base(result) { }
 
         #endregion
 

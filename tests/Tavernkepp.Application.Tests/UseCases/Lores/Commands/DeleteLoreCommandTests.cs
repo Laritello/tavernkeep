@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tavernkeep.Application.Actions.Characters.Commands.DeleteCharacter;
+using Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter;
 using Tavernkeep.Application.UseCases.Lores.Commands.DeleteLore;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;

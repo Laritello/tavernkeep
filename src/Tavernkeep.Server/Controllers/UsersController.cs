@@ -2,9 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Tavernkeep.Application.Actions.Users.Commands.CreateUser;
-using Tavernkeep.Application.Actions.Users.Commands.DeleteUser;
-using Tavernkeep.Application.Actions.Users.Queries.GetUsers;
+using Tavernkeep.Application.UseCases.Users.Commands.CreateUser;
+using Tavernkeep.Application.UseCases.Users.Commands.DeleteUser;
+using Tavernkeep.Application.UseCases.Users.Queries.GetUsers;
 using Tavernkeep.Application.UseCases.Users.Commands.EditUser;
 using Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter;
 using Tavernkeep.Application.UseCases.Users.Queries.GetCurrentUser;

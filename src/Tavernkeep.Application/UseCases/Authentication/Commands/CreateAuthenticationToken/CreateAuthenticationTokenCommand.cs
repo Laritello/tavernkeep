@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Contracts.Authentication.Responses;
 
-namespace Tavernkeep.Application.Actions.Authentication.Commands.CreateAuthenticationnToken
+namespace Tavernkeep.Application.UseCases.Authentication.Commands.CreateAuthenticationnToken
 {
     public class CreateAuthenticationTokenCommand : IRequest<AuthenticationResponse>
     {

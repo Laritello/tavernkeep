@@ -4,7 +4,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.Actions.Users.Commands.CreateUser
+namespace Tavernkeep.Application.UseCases.Users.Commands.CreateUser
 {
     public class CreateUserCommandHandler(IUserRepository repository, ICharacterService characterService) : IRequestHandler<CreateUserCommand, User>
     {

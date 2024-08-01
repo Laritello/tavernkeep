@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tavernkeep.Application.Actions.Users.Commands.CreateUser;
+using Tavernkeep.Application.UseCases.Users.Commands.CreateUser;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Users.Commands.EditUser;
 using Tavernkeep.Core.Contracts.Enums;

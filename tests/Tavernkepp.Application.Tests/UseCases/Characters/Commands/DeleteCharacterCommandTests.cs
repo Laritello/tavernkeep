@@ -1,5 +1,5 @@
 ﻿using Moq;
-using Tavernkeep.Application.Actions.Characters.Commands.DeleteCharacter;
+using Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;

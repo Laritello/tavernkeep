@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Tavernkeep.Application.Actions.Users.Commands.DeleteUser
+namespace Tavernkeep.Application.UseCases.Users.Commands.DeleteUser
 {
     public class DeleteUserCommand(Guid userId) : IRequest
     {

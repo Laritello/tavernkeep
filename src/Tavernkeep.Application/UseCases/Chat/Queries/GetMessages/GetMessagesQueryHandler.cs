@@ -5,7 +5,7 @@ using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Specifications;
 using Tavernkeep.Core.Specifications.Chat;
 
-namespace Tavernkeep.Application.Actions.Chat.Queries.GetMessages
+namespace Tavernkeep.Application.UseCases.Chat.Queries.GetMessages
 {
     public class GetMessagesQueryHandler(
         IUserRepository userRepository, 

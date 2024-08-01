@@ -1,6 +1,6 @@
 using CommandLine;
 using Tavernkeep.Shared.Options;
-using Tavernkeep.Application.Actions.Users.Commands.CreateUser;
+using Tavernkeep.Application.UseCases.Users.Commands.CreateUser;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using Tavernkeep.Server.Extensions;

@@ -10,7 +10,7 @@ using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
-using Tavernkeep.Application.Actions.Chat.Commands.SendMessage;
+using Tavernkeep.Application.UseCases.Chat.Commands.SendMessage;
 using Tavernkeep.Application.Interfaces;
 using System.Xml.Linq;
 

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Tavernkeep.Application.Actions.Authentication.Commands.CreateAuthenticationnToken;
+using Tavernkeep.Application.UseCases.Authentication.Commands.CreateAuthenticationnToken;
 using Tavernkeep.Application.UseCases.Authentication.Commands.RefreshAuthenticationToken;
 using Tavernkeep.Core.Contracts.Authentication.Requests;
 using Tavernkeep.Core.Contracts.Authentication.Responses;

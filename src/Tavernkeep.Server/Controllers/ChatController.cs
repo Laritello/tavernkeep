@@ -2,9 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Tavernkeep.Application.Actions.Chat.Commands.DeleteChat;
-using Tavernkeep.Application.Actions.Chat.Commands.SendMessage;
-using Tavernkeep.Application.Actions.Chat.Queries.GetMessages;
+using Tavernkeep.Application.UseCases.Chat.Commands.DeleteChat;
+using Tavernkeep.Application.UseCases.Chat.Commands.SendMessage;
+using Tavernkeep.Application.UseCases.Chat.Queries.GetMessages;
 using Tavernkeep.Application.UseCases.Chat.Commands.DeleteMessage;
 using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Contracts.Chat.Requests;

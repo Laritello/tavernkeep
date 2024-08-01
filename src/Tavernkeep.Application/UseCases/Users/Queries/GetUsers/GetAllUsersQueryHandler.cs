@@ -2,7 +2,7 @@
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.Actions.Users.Queries.GetUsers
+namespace Tavernkeep.Application.UseCases.Users.Queries.GetUsers
 {
     public class GetAllUsersQueryHandler(IUserRepository repository) : IRequestHandler<GetAllUsersQuery, Dictionary<Guid,User>>
     {
