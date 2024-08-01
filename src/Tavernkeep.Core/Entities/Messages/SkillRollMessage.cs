@@ -7,7 +7,7 @@ namespace Tavernkeep.Core.Entities.Messages
     {
         #region Constructors
 
-        public SkillRollMessage(RollResult result):base(result) { }
+        public SkillRollMessage() { }
 
         #endregion
 

@@ -7,7 +7,7 @@ using Tavernkeep.Application.UseCases.Users.Commands.DeleteUser;
 using Tavernkeep.Application.UseCases.Users.Queries.GetUsers;
 using Tavernkeep.Application.UseCases.Users.Commands.EditUser;
 using Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter;
-using Tavernkeep.Application.UseCases.Users.Queries.GetCurrentUser;
+using Tavernkeep.Application.UseCases.Users.Queries.GetUser;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Users.Dtos;
 using Tavernkeep.Core.Contracts.Users.Requests;
