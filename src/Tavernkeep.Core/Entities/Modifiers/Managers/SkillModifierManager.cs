@@ -1,5 +1,6 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
+using Tavernkeep.Core.Entities.Conditions;
 using Tavernkeep.Core.Extensions;
 
 namespace Tavernkeep.Core.Entities.Modifiers.Managers
@@ -15,11 +16,16 @@ namespace Tavernkeep.Core.Entities.Modifiers.Managers
         }
 
         public ModifierTarget Target { get; init; }
+        public IReadOnlyCollection<Condition> Conditions => _character.Conditions.AsReadOnly();
 
         public ModifierSummary GetSummary()
         {
             // TODO: Include item modifiers
-            var conditionModifiers = _character.Conditions.SelectMany(x => x.Modifiers).Where(x => x.Target.HasFlag(Target)).ToList();
+            var conditionModifiers = Conditions
+                .SelectMany(x => x.CollectModifiers(_character))
+                .Where(x => x.Target.HasFlag(Target))
+                .ToList();
+
             var activeBonus = conditionModifiers.Where(x => x.IsBonus).MaxBy(x => x.Value);
             var activePenalty = conditionModifiers.Where(x => x.IsPenalty).MinBy(x => x.Value);
 

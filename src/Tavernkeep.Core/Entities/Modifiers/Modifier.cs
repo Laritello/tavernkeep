@@ -1,14 +1,14 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Contracts.Interfaces;
 
 namespace Tavernkeep.Core.Entities.Modifiers
 {
-	public class Modifier(IModifierSource source)
+	public class Modifier
     {
-        public IModifierSource Source { get; set; } = source;
         public ModifierTarget Target { get; set; }
+        public ModifierScaling Scaling { get; set; }
+        public ModifierType Type { get; set; }
         public int Value { get; set; }
-        public bool IsBonus => Value > 0;
-        public bool IsPenalty => Value < 0;
+        public bool IsBonus { get; set; }
+        public bool IsPenalty => !IsBonus;
     }
 }

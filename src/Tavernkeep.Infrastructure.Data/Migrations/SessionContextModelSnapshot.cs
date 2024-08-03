@@ -42,7 +42,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Characters");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.ConditionInfo", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Conditions.ConditionMetadata", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,18 +52,19 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("HasLevels")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("SecondaryId")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SecondaryId");
-
-                    b.ToTable("ConditionInfo");
+                    b.ToTable("ConditionMetadata");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.Message", b =>
@@ -198,13 +199,19 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsMany("Tavernkeep.Core.Entities.Condition", "Conditions", b1 =>
+                    b.OwnsMany("Tavernkeep.Core.Entities.Conditions.Condition", "Conditions", b1 =>
                         {
                             b1.Property<Guid>("CharacterId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<bool>("HasLevels")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Level")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<string>("Name")
@@ -232,7 +239,16 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                         .ValueGeneratedOnAddOrUpdate()
                                         .HasColumnType("INTEGER");
 
+                                    b2.Property<bool>("IsBonus")
+                                        .HasColumnType("INTEGER");
+
+                                    b2.Property<int>("Scaling")
+                                        .HasColumnType("INTEGER");
+
                                     b2.Property<int>("Target")
+                                        .HasColumnType("INTEGER");
+
+                                    b2.Property<int>("Type")
                                         .HasColumnType("INTEGER");
 
                                     b2.Property<int>("Value")
@@ -933,40 +949,49 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.ConditionInfo", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Conditions.ConditionMetadata", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.ConditionInfo", "Secondary")
-                        .WithMany()
-                        .HasForeignKey("SecondaryId");
-
-                    b.OwnsMany("Tavernkeep.Core.Entities.Modifiers.Modifier", "Modifiers", b1 =>
+                    b.OwnsOne("System.Collections.Generic.List<Tavernkeep.Core.Entities.Conditions.Condition>", "Related", b1 =>
                         {
-                            b1.Property<Guid>("ConditionInfoId")
+                            b1.Property<Guid>("ConditionMetadataId")
                                 .HasColumnType("TEXT");
 
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
+                            b1.Property<int>("Capacity")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<int>("Target")
+                            b1.HasKey("ConditionMetadataId");
+
+                            b1.ToTable("ConditionMetadata");
+
+                            b1.ToJson("Related");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ConditionMetadataId");
+                        });
+
+                    b.OwnsOne("System.Collections.Generic.List<Tavernkeep.Core.Entities.Modifiers.Modifier>", "Modifiers", b1 =>
+                        {
+                            b1.Property<Guid>("ConditionMetadataId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Capacity")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<int>("Value")
-                                .HasColumnType("INTEGER");
+                            b1.HasKey("ConditionMetadataId");
 
-                            b1.HasKey("ConditionInfoId", "Id");
-
-                            b1.ToTable("ConditionInfo");
+                            b1.ToTable("ConditionMetadata");
 
                             b1.ToJson("Modifiers");
 
                             b1.WithOwner()
-                                .HasForeignKey("ConditionInfoId");
+                                .HasForeignKey("ConditionMetadataId");
                         });
 
-                    b.Navigation("Modifiers");
+                    b.Navigation("Modifiers")
+                        .IsRequired();
 
-                    b.Navigation("Secondary");
+                    b.Navigation("Related")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.Message", b =>

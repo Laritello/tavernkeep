@@ -12,23 +12,20 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ConditionInfo",
+                name: "ConditionMetadata",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
-                    SecondaryId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    Modifiers = table.Column<string>(type: "TEXT", nullable: true)
+                    HasLevels = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Level = table.Column<int>(type: "INTEGER", nullable: false),
+                    Modifiers = table.Column<string>(type: "TEXT", nullable: false),
+                    Related = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConditionInfo", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ConditionInfo_ConditionInfo_SecondaryId",
-                        column: x => x.SecondaryId,
-                        principalTable: "ConditionInfo",
-                        principalColumn: "Id");
+                    table.PrimaryKey("PK_ConditionMetadata", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,11 +138,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ConditionInfo_SecondaryId",
-                table: "ConditionInfo",
-                column: "SecondaryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Messages_RecipientId",
                 table: "Messages",
                 column: "RecipientId");
@@ -183,7 +175,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 table: "Characters");
 
             migrationBuilder.DropTable(
-                name: "ConditionInfo");
+                name: "ConditionMetadata");
 
             migrationBuilder.DropTable(
                 name: "Messages");

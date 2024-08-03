@@ -5,6 +5,6 @@ namespace Tavernkeep.Core.Contracts.Interfaces
 	public interface IModifierSource
     {
         public string Name { get; }
-        public IReadOnlyCollection<Modifier> Modifiers { get; }
+        public List<Modifier> Modifiers { get; }
     }
 }

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Server", "src\Tavernkeep.Server\Tavernkeep.Server.csproj", "{72EE961E-7343-401F-AAE9-2F42F8CE1E3C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{26886077-D0EE-44C2-B129-FE2CEB67E31D} = {26886077-D0EE-44C2-B129-FE2CEB67E31D}
+	EndProjectSection
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "tavernkeep.client", "src\tavernkeep.client\tavernkeep.client.esproj", "{2A192FE0-95CE-4B5C-A8A4-31421A625C9C}"
 EndProject
