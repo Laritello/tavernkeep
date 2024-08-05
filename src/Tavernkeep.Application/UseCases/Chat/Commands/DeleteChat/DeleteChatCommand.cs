@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Tavernkeep.Application.Actions.Chat.Commands.DeleteChat
+namespace Tavernkeep.Application.UseCases.Chat.Commands.DeleteChat
 {
     public class DeleteChatCommand : IRequest { }
 }

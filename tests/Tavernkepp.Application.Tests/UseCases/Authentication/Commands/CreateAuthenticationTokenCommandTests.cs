@@ -1,5 +1,5 @@
 ﻿using Moq;
-using Tavernkeep.Application.Actions.Authentication.Commands.CreateAuthenticationnToken;
+using Tavernkeep.Application.UseCases.Authentication.Commands.CreateAuthenticationToken;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;

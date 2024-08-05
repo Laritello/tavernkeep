@@ -2,7 +2,7 @@
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 
-namespace Tavernkeep.Application.Actions.Characters.Commands.EditAbility
+namespace Tavernkeep.Application.UseCases.Characters.Commands.EditAbility
 {
     public class EditAbilityCommand : IRequest<Ability>
     {

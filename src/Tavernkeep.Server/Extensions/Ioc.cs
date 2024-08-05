@@ -2,9 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.Services;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Conditions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Repositories;
@@ -15,10 +16,10 @@ using Tavernkeep.Shared.Options;
 
 namespace Tavernkeep.Server.Extensions
 {
-    /// <summary>
-    /// Provides convenient way to implement dependency injection.
-    /// </summary>
-    public static class Ioc
+	/// <summary>
+	/// Provides convenient way to implement dependency injection.
+	/// </summary>
+	public static class Ioc
     {
         /// <summary>
         /// Initializes required services for authentication and authorization.
@@ -81,6 +82,7 @@ namespace Tavernkeep.Server.Extensions
             services.AddScoped<ICharacterRepository, CharacterEFRepository>();
             services.AddScoped<IMessageRepository, MessageEFRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenEFRepository>();
+            services.AddScoped<IConditionMetadataRepository, ConditionMetadataEFRepository>();
 
             return services;
         }
@@ -130,12 +132,16 @@ namespace Tavernkeep.Server.Extensions
             var context = scope.ServiceProvider.GetRequiredService<SessionContext>();
             context.Database.Migrate();
 
-            if (!context.Set<User>().Any())
+            if (!context.Set<ConditionMetadata>().Any())
             {
-                User admin = new("admin", "admin", Core.Contracts.Enums.UserRole.Master);
-                context.Set<User>().Add(admin);
-                context.SaveChanges();
-            }
+				using var sr = new StreamReader("Resources/Conditions.en-UK.json");
+
+				var json = sr.ReadToEnd();
+				var conditions = JsonSerializer.Deserialize<List<ConditionMetadata>>(json) ?? [];
+
+				context.Set<ConditionMetadata>().AddRange(conditions);
+				context.SaveChanges();
+			}
 
             return provider;
         }

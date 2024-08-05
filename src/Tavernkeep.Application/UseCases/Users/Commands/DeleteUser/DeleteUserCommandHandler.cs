@@ -2,7 +2,7 @@
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.Actions.Users.Commands.DeleteUser
+namespace Tavernkeep.Application.UseCases.Users.Commands.DeleteUser
 {
     public class DeleteUserCommandHandler(IUserRepository repository) : IRequestHandler<DeleteUserCommand>
     {

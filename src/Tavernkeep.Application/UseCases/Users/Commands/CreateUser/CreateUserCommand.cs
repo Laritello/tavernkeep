@@ -2,7 +2,7 @@
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 
-namespace Tavernkeep.Application.Actions.Users.Commands.CreateUser
+namespace Tavernkeep.Application.UseCases.Users.Commands.CreateUser
 {
     public class CreateUserCommand : IRequest<User>
     {

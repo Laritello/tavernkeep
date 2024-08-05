@@ -12,17 +12,34 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "ConditionMetadata",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Login = table.Column<string>(type: "TEXT", nullable: false),
-                    Password = table.Column<string>(type: "TEXT", nullable: false),
-                    Role = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    HasLevels = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Level = table.Column<int>(type: "INTEGER", nullable: false),
+                    Modifiers = table.Column<string>(type: "TEXT", nullable: true),
+                    Related = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_ConditionMetadata", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Token = table.Column<string>(type: "TEXT", nullable: false),
+                    Expires = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,10 +49,12 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Level = table.Column<int>(type: "INTEGER", nullable: false, defaultValue: 1),
                     Acrobatics = table.Column<string>(type: "TEXT", nullable: false),
                     Arcana = table.Column<string>(type: "TEXT", nullable: false),
                     Athletics = table.Column<string>(type: "TEXT", nullable: false),
                     Charisma = table.Column<string>(type: "TEXT", nullable: false),
+                    Conditions = table.Column<string>(type: "TEXT", nullable: true),
                     Constitution = table.Column<string>(type: "TEXT", nullable: false),
                     Crafting = table.Column<string>(type: "TEXT", nullable: false),
                     Deception = table.Column<string>(type: "TEXT", nullable: false),
@@ -44,6 +63,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Health = table.Column<string>(type: "TEXT", nullable: false),
                     Intelligence = table.Column<string>(type: "TEXT", nullable: false),
                     Intimidation = table.Column<string>(type: "TEXT", nullable: false),
+                    Lores = table.Column<string>(type: "TEXT", nullable: true),
                     Medicine = table.Column<string>(type: "TEXT", nullable: false),
                     Nature = table.Column<string>(type: "TEXT", nullable: false),
                     Occultism = table.Column<string>(type: "TEXT", nullable: false),
@@ -59,12 +79,26 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Characters", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Login = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false),
+                    Role = table.Column<string>(type: "TEXT", nullable: false),
+                    ActiveCharacterId = table.Column<Guid>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Characters_Users_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Users_Characters_ActiveCharacterId",
+                        column: x => x.ActiveCharacterId,
+                        principalTable: "Characters",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -74,11 +108,13 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     SenderId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Discriminator = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false),
-                    Result = table.Column<int>(type: "INTEGER", nullable: true),
+                    Discriminator = table.Column<string>(type: "TEXT", maxLength: 21, nullable: false),
                     RollType = table.Column<string>(type: "TEXT", nullable: true),
+                    Expression = table.Column<string>(type: "TEXT", nullable: true),
                     Text = table.Column<string>(type: "TEXT", nullable: true),
-                    RecipientId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    RecipientId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    Result = table.Column<string>(type: "TEXT", nullable: true),
+                    Skill = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -96,6 +132,11 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "ActiveCharacterId", "Login", "Password", "Role" },
+                values: new object[] { new Guid("49786f33-2671-4705-9a4f-5570584c6f5c"), null, "admin", "admin", "Master" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Characters_OwnerId",
                 table: "Characters",
@@ -112,23 +153,46 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_ActiveCharacterId",
+                table: "Users",
+                column: "ActiveCharacterId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_Login",
                 table: "Users",
                 column: "Login",
                 unique: true);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Characters_Users_OwnerId",
+                table: "Characters",
+                column: "OwnerId",
+                principalTable: "Users",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Characters_Users_OwnerId",
+                table: "Characters");
+
             migrationBuilder.DropTable(
-                name: "Characters");
+                name: "ConditionMetadata");
 
             migrationBuilder.DropTable(
                 name: "Messages");
 
             migrationBuilder.DropTable(
+                name: "RefreshTokens");
+
+            migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Characters");
         }
     }
 }

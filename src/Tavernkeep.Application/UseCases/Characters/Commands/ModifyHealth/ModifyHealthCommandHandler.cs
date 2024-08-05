@@ -4,7 +4,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.Actions.Characters.Commands.ModifyHealth
+namespace Tavernkeep.Application.UseCases.Characters.Commands.ModifyHealth
 {
     public class ModifyHealthCommandHandler(
         IUserRepository userRepository, 

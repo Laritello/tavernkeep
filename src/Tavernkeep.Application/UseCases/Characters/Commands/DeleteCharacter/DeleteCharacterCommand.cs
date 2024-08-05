@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Tavernkeep.Application.Actions.Characters.Commands.DeleteCharacter
+namespace Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter
 {
     public class DeleteCharacterCommand : IRequest
     {

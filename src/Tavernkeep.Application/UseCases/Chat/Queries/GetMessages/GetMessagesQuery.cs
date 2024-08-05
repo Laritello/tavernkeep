@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Entities.Messages;
 
-namespace Tavernkeep.Application.Actions.Chat.Queries.GetMessages
+namespace Tavernkeep.Application.UseCases.Chat.Queries.GetMessages
 {
     public class GetMessagesQuery : IRequest<List<Message>>
     {

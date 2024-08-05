@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Entities;
 
-namespace Tavernkeep.Application.Actions.Characters.Commands.CreateCharacter
+namespace Tavernkeep.Application.UseCases.Characters.Commands.CreateCharacter
 {
     public class CreateCharacterCommand : IRequest<Character>
     {

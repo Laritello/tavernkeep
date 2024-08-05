@@ -4,7 +4,7 @@ using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Specifications.Users;
 
-namespace Tavernkeep.Application.UseCases.Users.Queries.GetCurrentUser
+namespace Tavernkeep.Application.UseCases.Users.Queries.GetUser
 {
     public class GetUserQueryHandler(IUserRepository userRepository) : IRequestHandler<GetUserQuery, User>
     {

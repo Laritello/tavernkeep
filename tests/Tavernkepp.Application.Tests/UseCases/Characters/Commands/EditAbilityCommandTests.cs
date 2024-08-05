@@ -1,5 +1,5 @@
 ﻿using Moq;
-using Tavernkeep.Application.Actions.Characters.Commands.EditAbility;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditAbility;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;

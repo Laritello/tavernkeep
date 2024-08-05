@@ -4,8 +4,10 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Repositories;
-using Tavernkeep.Application.Actions.Chat.Queries.GetMessages;
+using Tavernkeep.Application.UseCases.Chat.Queries.GetMessages;
 using Tavernkeep.Core.Exceptions;
+using Tavernkeep.Core.Specifications.Chat;
+using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Chat.Queries
 {
@@ -13,7 +15,6 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Queries
     {
         private readonly User initiator;
         private readonly List<Message> messages;
-        private readonly string text = "Lorem ipsum";
 
         public GetMessagesQueryTests()
         {
@@ -28,15 +29,15 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Queries
                     Id = Guid.NewGuid(),
                     Created = DateTime.UtcNow,
                     SenderId = Guid.NewGuid(),
-                    Text = string.Empty
+                    Text = "Message One"
                 },
                 new TextMessage()
                 {
                     Id = Guid.NewGuid(),
                     Created = DateTime.UtcNow,
                     SenderId = Guid.NewGuid(),
-                    Text = string.Empty
-                }];
+                    Text = "Message Two"
+				}];
         }
 
         [Test]
@@ -46,19 +47,25 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Queries
             var mockUserRepository = new Mock<IUserRepository>();
             var mockNotificationService = new Mock<INotificationService>();
 
-            mockUserRepository
+            var chatSpecification = new ChatSpecification(initiator);
+
+			mockUserRepository
                 .Setup(repo => repo.FindAsync(initiator.Id, default!))
                 .ReturnsAsync(initiator);
+
+            mockMessageRepository
+                .Setup(repo => repo.GetMessagesChunkAsync(0, 20, It.IsAny<ISpecification<Message>>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(messages);
 
             var request = new GetMessagesQuery(initiator.Id, 0, 20);
             var handler = new GetMessagesQueryHandler(mockUserRepository.Object, mockMessageRepository.Object);
 
             var response = await handler.Handle(request, CancellationToken.None);
 
-            //Assert.Multiple(() =>
-            //{
-            //    Assert.That(response, Has.Count.EqualTo(2));
-            //});
+            Assert.Multiple(() =>
+            {
+                Assert.That(response, Has.Count.EqualTo(2));
+            });
         }
 
         [Test]

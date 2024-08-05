@@ -27,8 +27,8 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice
                 Created = DateTime.UtcNow,
                 RollType = request.RollType,
                 Expression = roll.DiceExpression,
-                Result = roll.ToRollResult(),
-            };
+                Result = roll.ToRollResult()
+			};
 
             messageRepository.Save(message);
 

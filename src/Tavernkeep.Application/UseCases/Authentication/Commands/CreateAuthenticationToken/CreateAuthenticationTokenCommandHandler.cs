@@ -5,7 +5,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.Actions.Authentication.Commands.CreateAuthenticationnToken
+namespace Tavernkeep.Application.UseCases.Authentication.Commands.CreateAuthenticationToken
 {
     public class CreateAuthenticationTokenCommandHandler(IUserRepository repository, IRefreshTokenRepository tokenRepository, IAuthTokenService tokenService) : IRequestHandler<CreateAuthenticationTokenCommand, AuthenticationResponse>
     {

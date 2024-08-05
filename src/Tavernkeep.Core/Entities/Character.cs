@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Base;
+using Tavernkeep.Core.Entities.Conditions;
 
 namespace Tavernkeep.Core.Entities
 {
@@ -37,6 +38,7 @@ namespace Tavernkeep.Core.Entities
             Survival = new(this, AbilityType.Wisdom, SkillType.Survival);
             Thievery = new(this, AbilityType.Dexterity, SkillType.Thievery);
 
+            Conditions = [];
             Lores = [];
         }
 
@@ -48,6 +50,7 @@ namespace Tavernkeep.Core.Entities
         public string Name { get; set; } = default!;
         public int Level { get; set; }
         public Health Health { get; set; }
+        public List<Condition> Conditions { get; set; }
 
         public Ability Strength { get; set; }
         public Ability Dexterity { get; set; }
@@ -115,6 +118,11 @@ namespace Tavernkeep.Core.Entities
                 SkillType.Thievery => Thievery,
                 _ => throw new NotImplementedException(),
             };
+        }
+
+        public void AddCondition(Condition condition)
+        {
+            Conditions.Add(condition);
         }
 
         #endregion

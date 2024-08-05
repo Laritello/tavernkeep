@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tavernkeep.Application.UseCases.Users.Queries.GetCurrentUser;
+using Tavernkeep.Application.UseCases.Users.Queries.GetUser;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;

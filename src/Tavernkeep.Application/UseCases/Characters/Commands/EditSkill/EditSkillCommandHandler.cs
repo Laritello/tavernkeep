@@ -6,7 +6,7 @@ using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Notifications.Notifications;
 
-namespace Tavernkeep.Application.Actions.Characters.Commands.EditSkill
+namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSkill
 {
     public class EditSkillCommandHandler(
         IUserRepository userRepository,

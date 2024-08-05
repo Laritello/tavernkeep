@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Entities;
 
-namespace Tavernkeep.Application.Actions.Characters.Commands.ModifyHealth
+namespace Tavernkeep.Application.UseCases.Characters.Commands.ModifyHealth
 {
     public class ModifyHealthCommand : IRequest<Health>
     {

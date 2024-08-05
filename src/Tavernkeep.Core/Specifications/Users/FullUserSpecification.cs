@@ -7,7 +7,7 @@ namespace Tavernkeep.Core.Specifications.Users
         public FullUserSpecification(Guid id) : base(x => x.Id == id)
         {
             AddInclude(x => x.Characters);
-            AddInclude(x => x.ActiveCharacter);
+            AddInclude(x => x.ActiveCharacter!);
         }
     }
 }

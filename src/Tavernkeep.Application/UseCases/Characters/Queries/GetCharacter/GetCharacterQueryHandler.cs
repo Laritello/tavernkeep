@@ -3,7 +3,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.Actions.Characters.Queries.GetCharacter
+namespace Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter
 {
     public class GetCharacterQueryHandler(ICharacterRepository characterRepository) : IRequestHandler<GetCharacterQuery, Character>
     {
