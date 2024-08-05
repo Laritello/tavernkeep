@@ -10,7 +10,7 @@ namespace Tavernkeep.Application.UseCases.Conditions.Commands.ApplyCondition
 		public string ConditionName { get; set; }
 		public int? ConditionLevel { get; set; }
 
-		public ApplyConditionCommand(Guid initiatorId, Guid characterId, string conditionName, int? conditionLevel)
+		public ApplyConditionCommand(Guid initiatorId, Guid characterId, string conditionName, int? conditionLevel = 1)
 		{
 			InitiatorId = initiatorId;
 			CharacterId = characterId;

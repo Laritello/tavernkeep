@@ -10,6 +10,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Conditions.en-UK.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Conditions.en-UK.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="NUnit" Version="3.13.3" />
@@ -20,6 +32,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Tavernkeep.Application\Tavernkeep.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UseCases\Conditions\Queries\" />
   </ItemGroup>
 
 </Project>
