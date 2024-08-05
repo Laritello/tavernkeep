@@ -1,5 +1,6 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Conditions;
 
 namespace Tavernkeep.Core.Contracts.Character.Dtos
 {
@@ -12,5 +13,6 @@ namespace Tavernkeep.Core.Contracts.Character.Dtos
         public Dictionary<AbilityType, Ability> Abilities { get; set; } = default!;
         public Dictionary<SkillType, Skill> Skills { get; set; } = default!;
         public List<Lore> Lores { get; set; } = default!;
+        public List<Condition> Conditions { get; set; } = default!;
     }
 }

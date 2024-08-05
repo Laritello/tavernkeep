@@ -27,7 +27,7 @@ namespace Tavernkeep.Core.Entities.Modifiers.Managers
                 .ToList();
 
             var activeBonus = conditionModifiers.Where(x => x.IsBonus).MaxBy(x => x.Value);
-            var activePenalty = conditionModifiers.Where(x => x.IsPenalty).MinBy(x => x.Value);
+            var activePenalty = conditionModifiers.Where(x => x.IsPenalty).MaxBy(x => x.Value);
 
             var total = (activeBonus != null ? activeBonus.Value : 0) + (activePenalty != null ? activePenalty.Value : 0);
 

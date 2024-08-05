@@ -22,5 +22,21 @@ namespace Tavernkeep.Core.Entities.Conditions
 		public List<Modifier> Modifiers { get; set; } = [];
 
 		#endregion
+
+		#region Methods
+
+		public Condition ToCondition()
+		{
+			return new Condition()
+			{
+				Name = Name,
+				HasLevels = HasLevels,
+				Level = Level,
+				Related = Related,
+				Modifiers = Modifiers
+			};
+		}
+
+		#endregion
 	}
 }

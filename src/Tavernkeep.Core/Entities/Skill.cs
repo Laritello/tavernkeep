@@ -10,9 +10,14 @@ namespace Tavernkeep.Core.Entities
 {
     public class Skill : IModifiable
     {
-        #region Constructors
+        #region Backing fields
 
-        public Skill() 
+        private IModifierManager _manager;
+
+		#endregion
+		#region Constructors
+
+		public Skill() 
         {
 
         }
@@ -22,8 +27,6 @@ namespace Tavernkeep.Core.Entities
             Owner = owner;
             BaseAbility = baseAbility;
             Type = type;
-
-            Manager = new SkillModifierManager(owner, type);
         }
 
         #endregion
@@ -35,7 +38,7 @@ namespace Tavernkeep.Core.Entities
 
         [JsonIgnore]
         [NotMapped]
-        public IModifierManager Manager { get; set; } = default!;
+        public IModifierManager Manager => _manager ??= new SkillModifierManager(Owner, Type);
         public AbilityType BaseAbility { get; set; }
         public SkillType Type { get; set; }
         public Proficiency Proficiency { get; set; }
