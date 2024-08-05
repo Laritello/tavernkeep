@@ -23,7 +23,7 @@ namespace Tavernkeep.Core.Entities.Modifiers.Managers
             // TODO: Include item modifiers
             var conditionModifiers = Conditions
                 .SelectMany(x => x.CollectModifiers(_character))
-                .Where(x => x.Target.HasFlag(Target))
+                .Where(x => x.Targets.Contains(Target))
                 .ToList();
 
             var activeBonus = conditionModifiers.Where(x => x.IsBonus).MaxBy(x => x.Value);

@@ -20,8 +20,8 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     HasLevels = table.Column<bool>(type: "INTEGER", nullable: false),
                     Level = table.Column<int>(type: "INTEGER", nullable: false),
-                    Modifiers = table.Column<string>(type: "TEXT", nullable: false),
-                    Related = table.Column<string>(type: "TEXT", nullable: false)
+                    Modifiers = table.Column<string>(type: "TEXT", nullable: true),
+                    Related = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -131,6 +131,11 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "ActiveCharacterId", "Login", "Password", "Role" },
+                values: new object[] { new Guid("49786f33-2671-4705-9a4f-5570584c6f5c"), null, "admin", "admin", "Master" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Characters_OwnerId",
