@@ -162,11 +162,10 @@ import { type Character } from '@/entities/Character';
 import { Proficiency } from '@/contracts/enums/Proficiency';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import CharacterHub from '@/api/hubs/CharacterHub';
-import type { AbilityEditedNotification } from '@/contracts/notifications/AbilityEditedNotification';
-import type { SkillEditedNotification } from '@/contracts/notifications/SkillEditedNotification';
 
 import { onMounted, ref, type Ref } from 'vue';
 import type { Lore } from '@/contracts/character/Lore';
+import type { CharacterEditedNotification } from '@/contracts/notifications/CharacterEditedNotification';
 
 const client = ApiClientFactory.createApiClient();
 
@@ -178,33 +177,10 @@ const dialogAbilityScore = ref(0);
 const dialogSkillProficiency = ref(Proficiency.Untrained);
 
 onMounted(() => {
-    CharacterHub.connection.on('OnAbilityEdited', (notification: AbilityEditedNotification) => {
-        updateAbilityFromNotification(notification);
-    });
-
-    CharacterHub.connection.on('OnSkillEdited', (notification: SkillEditedNotification) => {
-        updateSkillFromNotification(notification);
+    CharacterHub.connection.on('OnCharacterEdited', (notification: CharacterEditedNotification) => {
+        console.log(notification.character);
     });
 });
-
-function updateAbilityFromNotification(notification: AbilityEditedNotification) {
-    const char = props.character;
-    // TODO: If we decide to keep calculcations off client - also should update modifier
-    if (char.id == notification.characterId) {
-        if (char.abilities[notification.type] != undefined) {
-            char.abilities[notification.type]!.score = notification.score;
-        }
-    }
-}
-function updateSkillFromNotification(notification: SkillEditedNotification) {
-    const char = props.character;
-    // TODO: If we decide to keep calculcations off client - also should update bonus
-    if (char.id == notification.characterId) {
-        if (char.skills[notification.type] != undefined) {
-            char.skills[notification.type]!.proficiency = notification.proficiency;
-        }
-    }
-}
 
 async function editAbility(isActive: Ref<boolean>, ability: Ability, score: number) {
     var response = await client.editAbility(props.character.id, ability.type, score);
@@ -213,6 +189,7 @@ async function editAbility(isActive: Ref<boolean>, ability: Ability, score: numb
     dialogAbilityScore.value = 0;
     isActive.value = false;
 }
+
 async function updateSkill(isActive: Ref<boolean>, skill: Skill, proficiency: Proficiency) {
     var response = await client.editSkill(props.character.id, skill.type, proficiency);
 

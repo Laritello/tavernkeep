@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using System.Text.Json;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Entities.Conditions;
 
 namespace Tavernkeep.Infrastructure.Data.Context
 {

@@ -15,7 +15,7 @@ namespace Tavernkeep.Core.Entities.Messages
 
         public RollType RollType { get; set; }
         public string Expression { get; set; } = default!;
-        public RollResult Result { get; set; }
+        public RollResult Result { get; set; } = default!;
 
         #endregion
 

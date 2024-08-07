@@ -6,7 +6,6 @@ namespace Tavernkeep.Application.Interfaces
     public interface INotificationService
     {
         ValueTask QueueMessage(Message message);
-        ValueTask QueueAbilityNotification(AbilityEditedNotification notification);
-        ValueTask QueueSkillNotification(SkillEditedNotification notification);
+        ValueTask QueueCharacterNotification(CharacterEditedNotification notification);
     }
 }
