@@ -9,7 +9,7 @@
                     -->
                 <v-col cols="5">
                     <v-row
-                        v-for="[key, value] in character.abilities.entries()"
+                        v-for="[key, value] in Object.entries(character.abilities)"
                         v-bind:key="key"
                         align="center"
                         no-gutters
@@ -51,7 +51,7 @@
                 <v-divider vertical> </v-divider>
                 <v-col cols="7">
                     <v-row
-                        v-for="[key, value] in character.skills.entries()"
+                        v-for="[key, value] in Object.entries(character.skills)"
                         v-bind:key="key"
                         align="center"
                         no-gutters
@@ -101,7 +101,7 @@
                         </v-col>
                     </v-row>
                     <v-row
-                        v-for="value in character.lores" 
+                        v-for="value in character.lores"
                         v-bind:key="value.topic"
                         align="center"
                         no-gutters
@@ -120,8 +120,7 @@
                                     <v-card title="Edit skill">
                                         <v-card-text>
                                             <div class="mb-1">
-                                                Enter the new proficiency for
-                                                Lore({{ value.topic }}).
+                                                Enter the new proficiency for Lore({{ value.topic }}).
                                             </div>
                                             <v-combobox
                                                 label="Proficiency"
@@ -161,7 +160,6 @@ import type { Ability } from '@/contracts/character/Ability';
 import type { Skill } from '@/contracts/character/Skill';
 import { type Character } from '@/entities/Character';
 import { Proficiency } from '@/contracts/enums/Proficiency';
-import type { ApiClient } from '@/api/base/ApiClient';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import CharacterHub from '@/api/hubs/CharacterHub';
 import type { AbilityEditedNotification } from '@/contracts/notifications/AbilityEditedNotification';
@@ -170,7 +168,7 @@ import type { SkillEditedNotification } from '@/contracts/notifications/SkillEdi
 import { onMounted, ref, type Ref } from 'vue';
 import type { Lore } from '@/contracts/character/Lore';
 
-const client: ApiClient = ApiClientFactory.createApiClient();
+const client = ApiClientFactory.createApiClient();
 
 const props = defineProps<{
     character: Character;
@@ -193,8 +191,8 @@ function updateAbilityFromNotification(notification: AbilityEditedNotification) 
     const char = props.character;
     // TODO: If we decide to keep calculcations off client - also should update modifier
     if (char.id == notification.characterId) {
-        if (char.abilities.get(notification.type) != undefined) {
-            char.abilities.get(notification.type)!.score = notification.score;
+        if (char.abilities[notification.type] != undefined) {
+            char.abilities[notification.type]!.score = notification.score;
         }
     }
 }
@@ -202,8 +200,8 @@ function updateSkillFromNotification(notification: SkillEditedNotification) {
     const char = props.character;
     // TODO: If we decide to keep calculcations off client - also should update bonus
     if (char.id == notification.characterId) {
-        if (char.skills.get(notification.type) != undefined) {
-            char.skills.get(notification.type)!.proficiency = notification.proficiency;
+        if (char.skills[notification.type] != undefined) {
+            char.skills[notification.type]!.proficiency = notification.proficiency;
         }
     }
 }
@@ -211,14 +209,14 @@ function updateSkillFromNotification(notification: SkillEditedNotification) {
 async function editAbility(isActive: Ref<boolean>, ability: Ability, score: number) {
     var response = await client.editAbility(props.character.id, ability.type, score);
 
-    ability.score = response.data.score;
+    ability.score = response.score;
     dialogAbilityScore.value = 0;
     isActive.value = false;
 }
 async function updateSkill(isActive: Ref<boolean>, skill: Skill, proficiency: Proficiency) {
     var response = await client.editSkill(props.character.id, skill.type, proficiency);
 
-    skill.proficiency = response.data.proficiency;
+    skill.proficiency = response.proficiency;
     dialogSkillProficiency.value = Proficiency.Untrained; // TODO: On show set selected skill current value
     isActive.value = false;
 }
@@ -226,7 +224,7 @@ async function updateSkill(isActive: Ref<boolean>, skill: Skill, proficiency: Pr
 async function updateLore(isActive: Ref<boolean>, lore: Lore, proficiency: Proficiency) {
     var response = await client.editLore(props.character.id, lore.topic, proficiency);
 
-    lore.proficiency = response.data.proficiency;
+    lore.proficiency = response.proficiency;
     dialogSkillProficiency.value = Proficiency.Untrained; // TODO: On show set selected lore skill current value
     isActive.value = false;
 }

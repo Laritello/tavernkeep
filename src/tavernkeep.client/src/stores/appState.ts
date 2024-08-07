@@ -8,6 +8,7 @@ import { useCharacters } from '@/stores/characters';
 import { useMessages } from '@/stores/messages';
 import { ref, watch } from 'vue';
 import { useAuth } from '@/composables/useAuth';
+import { useRouter } from 'vue-router';
 
 export const useAppState = defineStore('appState', () => {
     const session = useSession();
@@ -22,13 +23,6 @@ export const useAppState = defineStore('appState', () => {
         initialize().then(() => {
             console.info('[AppStore] Initialized');
             console.groupEnd();
-        });
-
-        if (!session.isExpired.value) return;
-        session.refresh().catch(() => {
-            const auth = useAuth();
-            auth.logout();
-            console.error('[AppStore] Failed to refresh token. Logout now!');
         });
     }
 
@@ -50,7 +44,12 @@ export const useAppState = defineStore('appState', () => {
     async function initialize() {
         const fetchPromise = fetch().then(() => console.info('[AppStore] Initial data fetched'));
         const startHubsPromise = startHubs().then(() => console.info('[AppStore] Hubs started'));
-        await Promise.all([fetchPromise, startHubsPromise]);
+        await Promise.all([fetchPromise, startHubsPromise]).catch((e) => {
+            const auth = useAuth();
+            auth.logout();
+            console.error('[AppStore] Something went wrong. Logout now!');
+            console.error(e);
+        });
 
         isLoading.value = false;
     }
