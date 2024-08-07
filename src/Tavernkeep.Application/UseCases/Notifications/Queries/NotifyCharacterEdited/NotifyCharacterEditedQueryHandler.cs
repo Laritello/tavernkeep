@@ -8,7 +8,7 @@ namespace Tavernkeep.Application.UseCases.Notifications.Queries.NotifyCharacterE
 	{
 		public async Task Handle(NotifyCharacterEditedQuery request, CancellationToken cancellationToken)
 		{
-			await context.Clients.All.OnCharactedEdited(request.Notification);
+			await context.Clients.All.OnCharacterEdited(request.Notification);
 		}
 	}
 }
