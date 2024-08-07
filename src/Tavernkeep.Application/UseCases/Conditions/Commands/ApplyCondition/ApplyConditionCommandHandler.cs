@@ -1,15 +1,18 @@
 ﻿using MediatR;
+using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Infrastructure.Notifications.Notifications;
 
 namespace Tavernkeep.Application.UseCases.Conditions.Commands.ApplyCondition
 {
 	public class ApplyConditionCommandHandler(
 		IUserRepository userRepository,
 		ICharacterRepository characterRepository,
-		IConditionMetadataRepository conditionRepository
+		IConditionMetadataRepository conditionRepository,
+		INotificationService notificationService
 		) : IRequestHandler<ApplyConditionCommand, Character>
 	{
 		public async Task<Character> Handle(ApplyConditionCommand request, CancellationToken cancellationToken)
@@ -42,6 +45,8 @@ namespace Tavernkeep.Application.UseCases.Conditions.Commands.ApplyCondition
 			}
 
 			await characterRepository.CommitAsync(cancellationToken);
+			await notificationService.QueueCharacterNotification(new CharacterEditedNotification(character));
+
 			return character;
 		}
 	}

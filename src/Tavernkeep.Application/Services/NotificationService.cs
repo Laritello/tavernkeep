@@ -4,9 +4,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Channels;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyAbilityEdited;
+using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyCharacterEdited;
 using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyRollMessage;
-using Tavernkeep.Application.UseCases.Notifications.Queries.NotifySkillEdited;
 using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyTextMessage;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Infrastructure.Notifications.Notifications;
@@ -27,8 +26,7 @@ namespace Tavernkeep.Application.Services
         private readonly Channel<object> _queue = Channel.CreateUnbounded<object>();
 
         public ValueTask QueueMessage(Message message) =>_queue.Writer.WriteAsync(message);
-        public ValueTask QueueAbilityNotification(AbilityEditedNotification notification) =>_queue.Writer.WriteAsync(notification);
-        public ValueTask QueueSkillNotification(SkillEditedNotification notification) =>_queue.Writer.WriteAsync(notification);
+        public ValueTask QueueCharacterNotification(CharacterEditedNotification notification) => _queue.Writer.WriteAsync(notification);
 
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
@@ -50,12 +48,8 @@ namespace Tavernkeep.Application.Services
                             await mediator.Send(new NotifyRollMessageQuery(rollMessage), cancellationToken);
                             break;
 
-                        case AbilityEditedNotification abilityNotification:
-                            await mediator.Send(new NotifyAbilityEditedQuery(abilityNotification), cancellationToken);
-                            break;
-
-                        case SkillEditedNotification skillEditedNotification:
-                            await mediator.Send(new NotifySkillEditedQuery(skillEditedNotification), cancellationToken);
+                        case CharacterEditedNotification characterChangedNotification:
+                            await mediator.Send(new NotifyCharacterEditedQuery(characterChangedNotification), cancellationToken);
                             break;
 
                         default:

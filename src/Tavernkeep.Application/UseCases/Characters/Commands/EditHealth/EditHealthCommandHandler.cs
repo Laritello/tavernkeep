@@ -1,12 +1,18 @@
 ﻿using MediatR;
+using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Infrastructure.Notifications.Notifications;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHealth
 {
-    public class EditHealthCommandHandler(IUserRepository userRepository, ICharacterRepository characterRepository) : IRequestHandler<EditHealthCommand, Health>
+    public class EditHealthCommandHandler(
+        IUserRepository userRepository, 
+        ICharacterRepository characterRepository,
+        INotificationService notificationService
+        ) : IRequestHandler<EditHealthCommand, Health>
     {
         public async Task<Health> Handle(EditHealthCommand request, CancellationToken cancellationToken)
         {
@@ -29,8 +35,9 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHealth
 
             characterRepository.Save(character);
             await characterRepository.CommitAsync(cancellationToken);
+			await notificationService.QueueCharacterNotification(new CharacterEditedNotification(character));
 
-            return character.Health;
+			return character.Health;
         }
     }
 }

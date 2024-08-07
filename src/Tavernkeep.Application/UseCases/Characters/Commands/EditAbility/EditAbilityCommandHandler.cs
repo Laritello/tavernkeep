@@ -30,12 +30,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditAbility
 
             characterRepository.Save(character);
             await characterRepository.CommitAsync(cancellationToken);
-            await notificationService.QueueAbilityNotification(new AbilityEditedNotification()
-            {
-                CharacterId = character.Id,
-                Type = ability.Type,
-                Score = ability.Score
-            });
+            await notificationService.QueueCharacterNotification(new CharacterEditedNotification(character));
 
             return ability;
         }
