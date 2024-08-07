@@ -68,12 +68,21 @@ import ChatComponent from '@/components/chat/ChatComponent.vue';
 import { useAuth } from '@/composables/useAuth';
 import { useSession } from '@/composables/useSession';
 import { useAppState } from '@/stores/appState';
+import { useModal } from '@/composables/useModal';
+import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
 
 const session = useSession();
 const router = useRouter();
 const appState = useAppState();
 
 async function logout() {
+    const modal = useModal();
+    const modalResult = await modal.show(ConfirmationDialog, {
+        caption: 'Logout',
+        message: 'Вы уверены что хотите выйти?',
+    });
+
+    if (modalResult.action !== 'confirm') return;
     const auth = useAuth();
     auth.logout();
     await router.push('/login');
