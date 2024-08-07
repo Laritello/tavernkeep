@@ -23,10 +23,13 @@ let refreshPromise: Promise<TokenRefreshResult> | null = null;
 
 export const useSession = () => {
     const sessionData = useSessionLocalStorage();
-    const { userId, userRole, userLogin, hasData: isAuthenticated } = storeToRefs(sessionData);
+    const { userId, userRole, userLogin, hasData } = storeToRefs(sessionData);
     const isExpired = computed(() => {
-        if (!isAuthenticated.value) return false;
         return Date.now() >= sessionData.expiresAt * 1000;
+    });
+
+    const isAuthenticated = computed(() => {
+        return hasData.value;
     });
 
     const refresh = async (): Promise<TokenRefreshResult> => {

@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import CharacterComponent from './CharacterComponent.vue';
-import { useCharactersStore } from '@/stores/characters.store';
+import { useCharacters } from '@/stores/characters';
 
-const charactersStore = useCharactersStore();
+const charactersStore = useCharacters();
 </script>

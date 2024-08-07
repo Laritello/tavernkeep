@@ -1,19 +1,19 @@
-import { watch } from 'vue';
 import { defineStore } from 'pinia';
-
 import ChatHub from '@/api/hubs/ChatHub';
 import CharacterHub from '@/api/hubs/CharacterHub';
 
-import { useUsersStore } from './users.store';
-import { useCharactersStore } from './characters.store';
-import { useMessagesStore } from './messages.store';
 import { useSession } from '@/composables/useSession';
+import { useUsers } from '@/stores/users';
+import { useCharacters } from '@/stores/characters';
+import { useMessages } from '@/stores/messages';
+import { ref, watch } from 'vue';
 
-export const useAppStore = defineStore('app.store', () => {
+export const useAppState = defineStore('appState', () => {
     const session = useSession();
-    const users = useUsersStore();
-    const characters = useCharactersStore();
-    const messages = useMessagesStore();
+    const users = useUsers();
+    const characters = useCharacters();
+    const messages = useMessages();
+    const isLoading = ref(true);
 
     console.groupCollapsed('[AppStore] Initialize');
     if (session.isAuthenticated.value) {
@@ -42,7 +42,8 @@ export const useAppStore = defineStore('app.store', () => {
     async function initialize() {
         const fetchPromise = fetch().then(() => console.info('[AppStore] Initial data fetched'));
         const startHubsPromise = startHubs().then(() => console.info('[AppStore] Hubs started'));
-        return Promise.all([fetchPromise, startHubsPromise]);
+        await Promise.all([fetchPromise, startHubsPromise]);
+        isLoading.value = false;
     }
 
     async function startHubs() {
@@ -53,5 +54,5 @@ export const useAppStore = defineStore('app.store', () => {
         return Promise.all([ChatHub.stop(), CharacterHub.stop()]);
     }
 
-    return { users, characters, messages };
+    return { initialize, isLoading };
 });

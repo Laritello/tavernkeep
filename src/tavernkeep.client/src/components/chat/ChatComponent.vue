@@ -1,39 +1,30 @@
-<template>
-    <div class="flex flex-col">
-        <h1 class="text-xl p-2">Chat</h1>
-        <div class="flex grow overflow-auto" v-chat-scroll="{ always: false, smooth: true }">
-            <div class="w-full px-4">
-                <ChatMessageView v-for="item in appStore.messages.list" :key="item.id" :message="item" />
-            </div>
-        </div>
-        <div class="">
-            <UserSelector v-model="selectedUserId" :users="appStore.users.listExceptCurrent" />
-            <form @submit.prevent="sendMessage" class="m-2">
-                <div class="join w-full">
-                    <CommandInput v-model="message" :commands="slashCommands" class="w-full" />
-                    <button type="submit" class="btn btn-ghost">
-                        <v-icon icon="mdi-send" />
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { RollType } from '@/contracts/enums/RollType';
-import { useAppStore } from '@/stores/app.store';
 
 // Components
 import UserSelector from './UserSelector.vue';
 import ChatMessageView from './messages/ChatMessageView.vue';
 import CommandInput from './CommandInput.vue';
+import { useMessages } from '@/stores/messages';
+import { useUsers } from '@/stores/users';
+import { useSession } from '@/composables/useSession';
 
-const appStore = useAppStore();
+const messages = useMessages();
 
 const message = ref('');
 const selectedUserId = ref<string>();
+
+const listOfMessageRecepient = computed(() => {
+    const session = useSession();
+    const users = useUsers();
+    if (!session.isAuthenticated) return [];
+
+    const currentUserId = session.userId.value!;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { [currentUserId]: _, ...rest } = users.dictionary;
+    return Object.values(rest);
+});
 
 const slashCommands = [
     {
@@ -66,14 +57,36 @@ async function sendMessage() {
             default:
                 console.warn('Unknown command');
         }
-        await appStore.messages.createRollMessage(expression, rollType);
+        await messages.createRollMessage(expression, rollType);
     } else {
         const privateMessageRecipient = selectedUserId.value || undefined;
-        await appStore.messages.createMessage(message.value, privateMessageRecipient);
+        await messages.createMessage(message.value, privateMessageRecipient);
     }
 
     message.value = '';
 }
 </script>
+
+<template>
+    <div class="flex flex-col">
+        <h1 class="text-xl p-2">Chat</h1>
+        <div class="flex grow overflow-auto" v-chat-scroll="{ always: false, smooth: true }">
+            <div class="w-full px-4">
+                <ChatMessageView v-for="item in messages.list" :key="item.id" :message="item" />
+            </div>
+        </div>
+        <div class="">
+            <UserSelector v-model="selectedUserId" :users="listOfMessageRecepient" />
+            <form @submit.prevent="sendMessage" class="m-2">
+                <div class="join w-full">
+                    <CommandInput v-model="message" :commands="slashCommands" class="w-full" />
+                    <button type="submit" class="btn btn-ghost">
+                        <v-icon icon="mdi-send" />
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</template>
 
 <style scoped></style>

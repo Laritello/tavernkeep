@@ -1,10 +1,8 @@
-import 'reflect-metadata';
 import './assets/main.css';
 import '@mdi/font/css/materialdesignicons.css';
 
 import { createApp } from 'vue';
 import App from './App.vue';
-import { useAppStore } from './stores/app.store';
 
 import { createPinia } from 'pinia';
 // @ts-ignore
@@ -18,6 +16,7 @@ import * as directives from 'vuetify/directives';
 
 // Router
 import { router } from './router';
+import { useAppState } from './stores/appState';
 
 const vuetify = createVuetify({
     components,
@@ -34,6 +33,6 @@ app.use(pinia);
 app.use(router);
 app.use(VueChatScroll);
 
-useAppStore(); // Initialize store
+useAppState();
 
 app.mount('#app');

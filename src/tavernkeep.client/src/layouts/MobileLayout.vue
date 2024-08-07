@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import { useAuth } from '@/composables/useAuth';
+import { useSession } from '@/composables/useSession';
+import { useRouter } from 'vue-router';
+
+const session = useSession();
+const router = useRouter();
+
+async function logout() {
+    const auth = useAuth();
+    auth.logout();
+    await router.push('/login');
+}
+</script>
+
 <template>
     <div class="flex flex-col h-screen">
         <!-- Navbar -->
@@ -11,7 +26,7 @@
                 <span class="label-text text-primary-content">Dark</span>
             </label>
             <div class="flex-none text-base-content">
-                <span class="text-primary-content">{{ appStore.users.current?.login }}</span>
+                <span class="text-primary-content">{{ session.userLogin }}</span>
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                         <div class="avatar w-10 rounded-full bg-orange-400"></div>
@@ -33,19 +48,6 @@
     </div>
 </template>
 
-<script setup lang="ts">
-import { useRouter } from 'vue-router';
-
-import { useAppStore } from '@/stores/app.store';
-
-const appStore = useAppStore();
-const router = useRouter();
-
-async function logout() {
-    appStore.auth.logout();
-    router.push('/login');
-}
-</script>
 <style scoped>
 .content-height {
     height: calc(100% - 4rem);

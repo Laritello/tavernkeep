@@ -2,17 +2,9 @@
     <v-sheet class="mx-auto">
         <v-form fast-fail @submit.prevent="createUser" class="pa-2">
             <div class="text-h6">Create</div>
-            <v-text-field
-                v-model="model.login"
-                label="Login"
-                :rules="model.loginRules"
-            ></v-text-field>
+            <v-text-field v-model="model.login" label="Login" :rules="model.loginRules"></v-text-field>
 
-            <v-text-field
-                v-model="model.password"
-                label="Password"
-                :rules="model.passwordRules"
-            ></v-text-field>
+            <v-text-field v-model="model.password" label="Password" :rules="model.passwordRules"></v-text-field>
 
             <v-combobox
                 v-model="model.role"
@@ -29,9 +21,9 @@
 import { reactive } from 'vue';
 import { UserRole } from '@/contracts/enums/UserRole';
 
-import { useUsersStore } from '@/stores/users.store';
+import { useUsers } from '@/stores/users';
 
-const usersStore = useUsersStore();
+const usersStore = useUsers();
 
 interface UserData {
     login: string;

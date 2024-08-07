@@ -7,7 +7,7 @@ import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import type { Message } from '@/entities/Message';
 import type { RollType } from '@/contracts/enums/RollType';
 
-export const useMessagesStore = defineStore('messages.store', () => {
+export const useMessages = defineStore('messages.store', () => {
     const api: AxiosApiClient = ApiClientFactory.createApiClient();
     ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
         appendMessage(msg);
