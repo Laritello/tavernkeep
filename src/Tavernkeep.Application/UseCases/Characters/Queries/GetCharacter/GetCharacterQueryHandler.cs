@@ -9,7 +9,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter
 	{
 		public async Task<Character> Handle(GetCharacterQuery request, CancellationToken cancellationToken)
 		{
-			var character = await characterRepository.FindAsync(request.Id)
+			var character = await characterRepository.FindAsync(request.Id, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("No character with provided ID found.");
 
 			return character;

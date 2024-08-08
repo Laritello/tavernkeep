@@ -15,11 +15,11 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.CreateCharacter
 	{
 		public async Task<Character> Handle(CreateCharacterCommand request, CancellationToken cancellationToken)
 		{
-			var user = await userRepository.FindAsync(request.OwnerId)
+			var user = await userRepository.FindAsync(request.OwnerId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("Owner with specified ID doesn't exist.");
 
 			var character = await characterService.CreateCharacterAsync(user, request.Name, cancellationToken);
-			await notificationService.QueueCharacterNotification(new CharacterEditedNotification(character));
+			await notificationService.QueueCharacterNotificationAsync(new CharacterEditedNotification(character), cancellationToken);
 
 			return character;
 		}

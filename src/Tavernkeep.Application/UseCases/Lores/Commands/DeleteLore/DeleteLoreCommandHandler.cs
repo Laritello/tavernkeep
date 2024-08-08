@@ -12,7 +12,7 @@ namespace Tavernkeep.Application.UseCases.Lores.Commands.DeleteLore
 	{
 		public async Task Handle(DeleteLoreCommand request, CancellationToken cancellationToken)
 		{
-			var initiator = await userRepository.FindAsync(request.InitiatorId)
+			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
 			var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)

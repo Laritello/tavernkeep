@@ -8,7 +8,7 @@ namespace Tavernkeep.Application.UseCases.Chat.Commands.DeleteMessage
 	{
 		public async Task Handle(DeleteMessageCommand request, CancellationToken cancellationToken)
 		{
-			var message = await messageRepository.FindAsync(request.MessageId)
+			var message = await messageRepository.FindAsync(request.MessageId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("Message not found.");
 
 			messageRepository.Remove(message);

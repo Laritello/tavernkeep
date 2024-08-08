@@ -25,8 +25,8 @@ namespace Tavernkeep.Application.Services
 	{
 		private readonly Channel<object> _queue = Channel.CreateUnbounded<object>();
 
-		public ValueTask QueueMessage(Message message) => _queue.Writer.WriteAsync(message);
-		public ValueTask QueueCharacterNotification(CharacterEditedNotification notification) => _queue.Writer.WriteAsync(notification);
+		public ValueTask QueueMessageAsync(Message message, CancellationToken cancellationToken = default) => _queue.Writer.WriteAsync(message, cancellationToken);
+		public ValueTask QueueCharacterNotificationAsync(CharacterEditedNotification notification, CancellationToken cancellationToken = default) => _queue.Writer.WriteAsync(notification, cancellationToken);
 
 		protected override async Task ExecuteAsync(CancellationToken cancellationToken)
 		{

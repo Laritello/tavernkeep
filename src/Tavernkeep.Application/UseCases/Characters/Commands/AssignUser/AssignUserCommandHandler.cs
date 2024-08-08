@@ -12,10 +12,10 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.AssignUser
 	{
 		public async Task<Character> Handle(AssignUserCommand request, CancellationToken cancellationToken)
 		{
-			var character = await characterRepository.FindAsync(request.CharacterId)
+			var character = await characterRepository.FindAsync(request.CharacterId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
 
-			var user = await userRepository.FindAsync(request.UserId)
+			var user = await userRepository.FindAsync(request.UserId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
 			character.Owner = user;

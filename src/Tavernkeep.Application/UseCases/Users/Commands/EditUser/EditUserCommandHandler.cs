@@ -9,7 +9,7 @@ namespace Tavernkeep.Application.UseCases.Users.Commands.EditUser
 	{
 		public async Task<User> Handle(EditUserCommand request, CancellationToken cancellationToken)
 		{
-			var user = await userRepository.FindAsync(request.UserId)
+			var user = await userRepository.FindAsync(request.UserId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
 			if (string.IsNullOrWhiteSpace(request.Login))

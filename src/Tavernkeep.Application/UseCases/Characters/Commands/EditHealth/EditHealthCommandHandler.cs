@@ -16,10 +16,10 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHealth
 	{
 		public async Task<Health> Handle(EditHealthCommand request, CancellationToken cancellationToken)
 		{
-			var initiator = await userRepository.FindAsync(request.InitiatorId)
+			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
-			var character = await characterRepository.GetFullCharacterAsync(request.CharacterId)
+			var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
 				?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
 
 			if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)
@@ -35,7 +35,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHealth
 
 			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueCharacterNotification(new CharacterEditedNotification(character));
+			await notificationService.QueueCharacterNotificationAsync(new CharacterEditedNotification(character), cancellationToken);
 
 			return character.Health;
 		}

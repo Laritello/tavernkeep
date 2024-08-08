@@ -15,10 +15,10 @@ namespace Tavernkeep.Application.UseCases.Authentication.Commands.RefreshAuthent
 			string accessToken = request.AccessToken;
 			string refreshToken = request.RefreshToken;
 
-			var principal = await tokenService.GetUserIdentityFromExpiredToken(accessToken);
+			var principal = await tokenService.GetUserIdentityFromExpiredTokenAsync(accessToken);
 			var id = principal.FindFirst(JwtCustomClaimNames.UserId)!.Value;
 
-			var user = await userRepository.FindAsync(new Guid(id))
+			var user = await userRepository.FindAsync(new Guid(id), cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
 			var tokens = await tokenRepository.GetTokensForUserAsync(user.Id, cancellationToken);
@@ -40,6 +40,7 @@ namespace Tavernkeep.Application.UseCases.Authentication.Commands.RefreshAuthent
 				Token = newRefreshToken,
 				Expires = DateTime.UtcNow.AddDays(7)
 			});
+
 			await tokenRepository.CommitAsync(cancellationToken);
 
 			return new AuthenticationResponse()

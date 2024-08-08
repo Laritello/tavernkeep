@@ -7,6 +7,6 @@ namespace Tavernkeep.Application.Interfaces
 	{
 		string GenerateAccessToken(User user);
 		string GenerateRefreshToken();
-		Task<ClaimsIdentity> GetUserIdentityFromExpiredToken(string token);
+		Task<ClaimsIdentity> GetUserIdentityFromExpiredTokenAsync(string token);
 	}
 }

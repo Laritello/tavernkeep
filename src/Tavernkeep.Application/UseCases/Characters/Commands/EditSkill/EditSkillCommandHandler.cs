@@ -16,7 +16,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSkill
 	{
 		public async Task<Skill> Handle(EditSkillCommand request, CancellationToken cancellationToken)
 		{
-			var initiator = await userRepository.FindAsync(request.InitiatorId)
+			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
 			var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
@@ -30,7 +30,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSkill
 
 			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueCharacterNotification(new CharacterEditedNotification(character));
+			await notificationService.QueueCharacterNotificationAsync(new CharacterEditedNotification(character), cancellationToken);
 
 			return skill;
 		}

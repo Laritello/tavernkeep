@@ -17,7 +17,7 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
 	{
 		public async Task<SkillRollMessage> Handle(RollSkillCommand request, CancellationToken cancellationToken)
 		{
-			var initiator = await userRepository.FindAsync(request.InitiatorId)
+			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("Initiator with specified ID doesn't exist.");
 
 			var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
@@ -39,7 +39,7 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
 			messageRepository.Save(message);
 
 			await messageRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueMessage(message);
+			await notificationService.QueueMessageAsync(message, cancellationToken);
 
 			return message;
 		}

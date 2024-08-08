@@ -18,16 +18,16 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 
 		protected IQueryable<T> AsQueryable() => Context.Set<T>();
 
-		public async Task<T?> FindAsync(Guid id, ISpecification<T> specification = default!)
+		public async Task<T?> FindAsync(Guid id, ISpecification<T> specification = default!, CancellationToken cancellationToken = default)
 		{
 			var query = AsQueryable();
 			if (specification != null)
 				query = EntityFrameworkSpecificationEvaluator<T>.GetQuery(query, specification);
 
-			return await query.FirstOrDefaultAsync(x => x.Id == id);
+			return await query.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 		}
 
-		public async Task<T?> FindAsync(ISpecification<T> specification = default!)
+		public async Task<T?> FindAsync(ISpecification<T> specification = default!, CancellationToken cancellationToken = default)
 		{
 			ArgumentNullException.ThrowIfNull(specification);
 
@@ -35,29 +35,29 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 			if (specification != null)
 				query = EntityFrameworkSpecificationEvaluator<T>.GetQuery(query, specification);
 
-			return await query.FirstOrDefaultAsync();
+			return await query.FirstOrDefaultAsync(cancellationToken);
 		}
 
-		public async Task<IList<T>> GetAsync(IEnumerable<Guid> ids, ISpecification<T> specification = default!)
+		public async Task<IList<T>> GetAsync(IEnumerable<Guid> ids, ISpecification<T> specification = default!, CancellationToken cancellationToken = default)
 		{
 			var query = AsQueryable().Where(x => ids.Any(z => x.Id == z));
 
 			if (specification != null)
 				query = EntityFrameworkSpecificationEvaluator<T>.GetQuery(query, specification);
 
-			return await query.ToListAsync();
+			return await query.ToListAsync(cancellationToken);
 		}
 
-		public async Task<IList<T>> GetAsync(ISpecification<T> specification)
+		public async Task<IList<T>> GetAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
 		{
 			var query = EntityFrameworkSpecificationEvaluator<T>.GetQuery(AsQueryable(), specification);
-			return await query.ToListAsync();
+			return await query.ToListAsync(cancellationToken);
 		}
 
-		public async Task<IList<T>> GetAsync(IEnumerable<Guid> ids)
+		public async Task<IList<T>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken)
 		{
 			var query = AsQueryable().Where(x => ids.Any(z => x.Id == z));
-			return await query.ToListAsync();
+			return await query.ToListAsync(cancellationToken);
 		}
 
 		public virtual void Save(T entity)
@@ -77,6 +77,6 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 
 		public void Remove(IEnumerable<T> entities) => Context.RemoveRange(entities);
 
-		public async Task CommitAsync(CancellationToken ct = default) => await Context.SaveChangesAsync(ct);
+		public async Task CommitAsync(CancellationToken cancellationToken = default) => await Context.SaveChangesAsync(cancellationToken);
 	}
 }

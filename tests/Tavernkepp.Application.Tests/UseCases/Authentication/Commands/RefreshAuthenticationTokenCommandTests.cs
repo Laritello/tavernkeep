@@ -40,7 +40,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 			claims.AddClaim(new Claim(JwtCustomClaimNames.UserId, userId.ToString()));
 
 			mockAuthTokenService
-				.Setup(service => service.GetUserIdentityFromExpiredToken(accessToken))
+				.Setup(service => service.GetUserIdentityFromExpiredTokenAsync(accessToken))
 				.ReturnsAsync(claims);
 			mockAuthTokenService
 				.Setup(service => service.GenerateAccessToken(user))
@@ -86,7 +86,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 			claims.AddClaim(new Claim(JwtCustomClaimNames.UserId, Guid.Empty.ToString()));
 
 			mockAuthTokenService
-				.Setup(service => service.GetUserIdentityFromExpiredToken(accessToken))
+				.Setup(service => service.GetUserIdentityFromExpiredTokenAsync(accessToken))
 				.ReturnsAsync(claims);
 			mockAuthTokenService
 				.Setup(service => service.GenerateAccessToken(user))
@@ -127,7 +127,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 			claims.AddClaim(new Claim(JwtCustomClaimNames.UserId, userId.ToString()));
 
 			mockAuthTokenService
-				.Setup(service => service.GetUserIdentityFromExpiredToken(accessToken))
+				.Setup(service => service.GetUserIdentityFromExpiredTokenAsync(accessToken))
 				.ReturnsAsync(claims);
 			mockAuthTokenService
 				.Setup(service => service.GenerateAccessToken(user))
@@ -162,7 +162,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 			claims.AddClaim(new Claim(JwtCustomClaimNames.UserId, userId.ToString()));
 
 			mockAuthTokenService
-				.Setup(service => service.GetUserIdentityFromExpiredToken(accessToken))
+				.Setup(service => service.GetUserIdentityFromExpiredTokenAsync(accessToken))
 				.ReturnsAsync(claims);
 			mockAuthTokenService
 				.Setup(service => service.GenerateAccessToken(user))

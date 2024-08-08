@@ -9,10 +9,10 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter
 	{
 		public async Task Handle(DeleteCharacterCommand request, CancellationToken cancellationToken)
 		{
-			var initiator = await userRepository.FindAsync(request.InitiatorId)
+			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
-			var character = await characterRepository.FindAsync(request.CharacterId)
+			var character = await characterRepository.FindAsync(request.CharacterId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
 
 			if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)

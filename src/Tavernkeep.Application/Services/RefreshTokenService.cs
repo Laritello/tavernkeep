@@ -14,11 +14,11 @@ namespace Tavernkeep.Application.Services
 	{
 		private readonly TimeSpan delay = TimeSpan.FromSeconds(30);
 
-		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+		protected override async Task ExecuteAsync(CancellationToken cancellationToken)
 		{
-			while (!stoppingToken.IsCancellationRequested)
+			while (!cancellationToken.IsCancellationRequested)
 			{
-				await Task.Delay(delay, stoppingToken);
+				await Task.Delay(delay, cancellationToken);
 				await PurgeExpiredTokensAsync();
 			}
 		}

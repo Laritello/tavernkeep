@@ -19,13 +19,13 @@ namespace Tavernkeep.Application.Services
 
 			var tokenDescriptor = new SecurityTokenDescriptor()
 			{
-				Subject = new ClaimsIdentity(new[]
-				{
+				Subject = new ClaimsIdentity(
+				[
 					new Claim("id", Guid.NewGuid().ToString()),
 					new Claim(JwtCustomClaimNames.UserId, user.Id.ToString()),
 					new Claim(JwtCustomClaimNames.UserLogin, user.Login),
 					new Claim(JwtCustomClaimNames.UserRole, user.Role.ToString()),
-				}),
+				]),
 				Expires = DateTime.UtcNow.AddMinutes(5),
 				SigningCredentials = signingCredentials
 			};
@@ -43,7 +43,7 @@ namespace Tavernkeep.Application.Services
 			return Convert.ToBase64String(randomNumber);
 		}
 
-		public async Task<ClaimsIdentity> GetUserIdentityFromExpiredToken(string token)
+		public async Task<ClaimsIdentity> GetUserIdentityFromExpiredTokenAsync(string token)
 		{
 			var key = Encoding.ASCII.GetBytes(configuration["Jwt:Key"] ?? string.Empty);
 

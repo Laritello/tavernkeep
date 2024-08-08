@@ -8,7 +8,7 @@ namespace Tavernkeep.Application.UseCases.Users.Commands.DeleteUser
 	{
 		public async Task Handle(DeleteUserCommand request, CancellationToken cancellationToken)
 		{
-			var user = await repository.FindAsync(request.UserId)
+			var user = await repository.FindAsync(request.UserId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
 			repository.Remove(user);

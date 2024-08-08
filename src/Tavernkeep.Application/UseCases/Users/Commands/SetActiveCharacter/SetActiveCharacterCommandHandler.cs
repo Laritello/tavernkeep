@@ -13,10 +13,10 @@ namespace Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter
 	{
 		public async Task<User> Handle(SetActiveCharacterCommand request, CancellationToken cancellationToken)
 		{
-			var initiator = await userRepository.FindAsync(request.InitiatorId)
+			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("Initiator with specified ID doesn't exist.");
 
-			var user = await userRepository.FindAsync(request.UserId)
+			var user = await userRepository.FindAsync(request.UserId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
 
 			var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
