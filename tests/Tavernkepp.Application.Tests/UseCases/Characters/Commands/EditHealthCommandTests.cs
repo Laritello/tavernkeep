@@ -113,6 +113,69 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		}
 
 		[Test]
+		public void EditHealthCommand_NegativeMaxHealth()
+		{
+			var mockUserRepository = new Mock<IUserRepository>();
+			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockNotificationService = new Mock<INotificationService>();
+
+			mockUserRepository
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
+				.ReturnsAsync(owner);
+			mockCharacterRepository
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+				.ReturnsAsync(character);
+
+			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, -1, tempHealth);
+			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+
+			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
+			Assert.That(ex.Message, Is.EqualTo($"{nameof(request.Max)} can't be below zero."));
+		}
+
+		[Test]
+		public void EditHealthCommand_NegativeCurrentHealth()
+		{
+			var mockUserRepository = new Mock<IUserRepository>();
+			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockNotificationService = new Mock<INotificationService>();
+
+			mockUserRepository
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
+				.ReturnsAsync(owner);
+			mockCharacterRepository
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+				.ReturnsAsync(character);
+
+			var request = new EditHealthCommand(owner.Id, characterId, -1, maxHealth, tempHealth);
+			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+
+			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
+			Assert.That(ex.Message, Is.EqualTo($"{nameof(request.Current)} can't be below zero."));
+		}
+
+		[Test]
+		public void EditHealthCommand_NegativeTemporaryHealth()
+		{
+			var mockUserRepository = new Mock<IUserRepository>();
+			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockNotificationService = new Mock<INotificationService>();
+
+			mockUserRepository
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
+				.ReturnsAsync(owner);
+			mockCharacterRepository
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+				.ReturnsAsync(character);
+
+			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, maxHealth, -1);
+			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+
+			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
+			Assert.That(ex.Message, Is.EqualTo($"{nameof(request.Temporary)} can't be below zero."));
+		}
+
+		[Test]
 		public void EditHealthCommand_CharacterNotFound()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();

@@ -33,12 +33,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				Id = characterId,
 				Name = "Demo",
 				Owner = owner,
-				Health = new()
-				{
-					Current = 8,
-					Max = 15,
-					Temporary = 10
-				}
+				Health = new(15, 8, 10)
 			};
 		}
 

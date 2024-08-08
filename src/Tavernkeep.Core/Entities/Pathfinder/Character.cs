@@ -12,7 +12,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 
 		public Character()
 		{
-			Health = new();
+			Health = new(1, 1, 0);
 
 			Strength = new(this, AbilityType.Strength);
 			Dexterity = new(this, AbilityType.Dexterity);
