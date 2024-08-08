@@ -1,7 +1,5 @@
 ﻿using Moq;
 using System.Text.Json;
-using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Application.UseCases.Characters.Commands.EditAbility;
 using Tavernkeep.Application.UseCases.Conditions.Commands.ApplyCondition;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;

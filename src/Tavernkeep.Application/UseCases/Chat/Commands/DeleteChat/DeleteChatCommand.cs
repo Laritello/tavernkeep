@@ -2,5 +2,5 @@
 
 namespace Tavernkeep.Application.UseCases.Chat.Commands.DeleteChat
 {
-    public class DeleteChatCommand : IRequest { }
+	public class DeleteChatCommand : IRequest { }
 }

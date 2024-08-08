@@ -4,17 +4,17 @@ using Tavernkeep.Core.Entities.Messages;
 
 namespace Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice
 {
-    public class RollCustomDiceCommand : IRequest<RollMessage>
-    {
-        public Guid InitiatorId { get; set; }
-        public RollType RollType { get; set; }
-        public string Expression { get; set; }
+	public class RollCustomDiceCommand : IRequest<RollMessage>
+	{
+		public Guid InitiatorId { get; set; }
+		public RollType RollType { get; set; }
+		public string Expression { get; set; }
 
-        public RollCustomDiceCommand(Guid initiatorId, RollType rollType, string expression)
-        {
-            InitiatorId = initiatorId;
-            RollType = rollType;
-            Expression = expression;
-        }
-    }
+		public RollCustomDiceCommand(Guid initiatorId, RollType rollType, string expression)
+		{
+			InitiatorId = initiatorId;
+			RollType = rollType;
+			Expression = expression;
+		}
+	}
 }

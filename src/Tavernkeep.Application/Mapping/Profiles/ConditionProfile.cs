@@ -6,7 +6,7 @@ namespace Tavernkeep.Application.Mapping.Profiles
 {
 	public class ConditionProfile : Profile
 	{
-		public ConditionProfile() 
+		public ConditionProfile()
 		{
 			CreateMap<ConditionMetadata, ConditionMetadataDto>();
 		}

@@ -4,13 +4,13 @@ using Tavernkeep.Core.Entities.Messages;
 
 namespace Tavernkeep.Core.Contracts.Chat.Dtos
 {
-    [JsonDerivedType(typeof(TextMessageDto), typeDiscriminator: nameof(TextMessage))]
-    [JsonDerivedType(typeof(RollMessageDto), typeDiscriminator: nameof(RollMessage))]
-    [JsonDerivedType(typeof(SkillRollMessageDto), typeDiscriminator: nameof(SkillRollMessage))]
-    public abstract class MessageDto
-    {
-        public Guid Id { get; set; }
-        public UserDto Sender { get; set; } = default!;
-        public DateTime Created { get; set; }
-    }
+	[JsonDerivedType(typeof(TextMessageDto), typeDiscriminator: nameof(TextMessage))]
+	[JsonDerivedType(typeof(RollMessageDto), typeDiscriminator: nameof(RollMessage))]
+	[JsonDerivedType(typeof(SkillRollMessageDto), typeDiscriminator: nameof(SkillRollMessage))]
+	public abstract class MessageDto
+	{
+		public Guid Id { get; set; }
+		public UserDto Sender { get; set; } = default!;
+		public DateTime Created { get; set; }
+	}
 }

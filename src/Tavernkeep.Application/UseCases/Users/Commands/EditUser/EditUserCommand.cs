@@ -4,19 +4,19 @@ using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Application.UseCases.Users.Commands.EditUser
 {
-    public class EditUserCommand : IRequest<User>
-    {
-        public Guid UserId { get; set; } = default;
-        public string Login { get; set; } = default!;
-        public string Password { get; set; } = default!;
-        public UserRole Role { get; set; } = default!;
+	public class EditUserCommand : IRequest<User>
+	{
+		public Guid UserId { get; set; } = default;
+		public string Login { get; set; } = default!;
+		public string Password { get; set; } = default!;
+		public UserRole Role { get; set; } = default!;
 
-        public EditUserCommand(Guid userId, string login, string password, UserRole role)
-        {
-            UserId = userId;
-            Login = login;
-            Password = password;
-            Role = role;
-        }
-    }
+		public EditUserCommand(Guid userId, string login, string password, UserRole role)
+		{
+			UserId = userId;
+			Login = login;
+			Password = password;
+			Role = role;
+		}
+	}
 }

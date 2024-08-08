@@ -5,15 +5,15 @@ using Tavernkeep.Infrastructure.Data.Context;
 
 namespace Tavernkeep.Infrastructure.Data.Repositories
 {
-    public class CharacterEFRepository(SessionContext context) : EntityFrameworkRepository<Character>(context), ICharacterRepository
-    {
-        public async Task<List<Character>> GetAllCharactersAsync(CancellationToken cancellationToken = default)
-        {
-            return await AsQueryable().Include(x => x.Owner).ToListAsync(cancellationToken);
-        }
-        public async Task<Character?> GetFullCharacterAsync(Guid id, CancellationToken cancellationToken = default)
-        {
-            return await AsQueryable().Where(x => x.Id == id).Include(x => x.Owner).FirstOrDefaultAsync(cancellationToken);
-        }
-    }
+	public class CharacterEFRepository(SessionContext context) : EntityFrameworkRepository<Character>(context), ICharacterRepository
+	{
+		public async Task<List<Character>> GetAllCharactersAsync(CancellationToken cancellationToken = default)
+		{
+			return await AsQueryable().Include(x => x.Owner).ToListAsync(cancellationToken);
+		}
+		public async Task<Character?> GetFullCharacterAsync(Guid id, CancellationToken cancellationToken = default)
+		{
+			return await AsQueryable().Where(x => x.Id == id).Include(x => x.Owner).FirstOrDefaultAsync(cancellationToken);
+		}
+	}
 }

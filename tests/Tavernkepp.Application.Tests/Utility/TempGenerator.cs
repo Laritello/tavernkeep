@@ -6,7 +6,7 @@ namespace Tavernkepp.Application.Tests.Utility
 	// TODO: Generate via other methods
 	public static class TempGenerator
 	{
-		public static Character GenerateCharacter(Guid id) 
+		public static Character GenerateCharacter(Guid id)
 		{
 			var character = new Character()
 			{

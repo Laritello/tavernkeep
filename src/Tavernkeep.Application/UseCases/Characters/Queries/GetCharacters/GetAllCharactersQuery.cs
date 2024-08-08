@@ -3,5 +3,5 @@ using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters
 {
-    public class GetAllCharactersQuery : IRequest<Dictionary<Guid, Character>> { }
+	public class GetAllCharactersQuery : IRequest<Dictionary<Guid, Character>> { }
 }

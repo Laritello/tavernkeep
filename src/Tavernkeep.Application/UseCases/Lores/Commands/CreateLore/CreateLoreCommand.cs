@@ -4,19 +4,19 @@ using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Application.UseCases.Lores.Commands.CreateLore
 {
-    public class CreateLoreCommand : IRequest<Lore>
-    {
-        public Guid InitiatorId { get; set; }
-        public Guid CharacterId { get; set; }
-        public string Topic { get; set; }
-        public Proficiency Proficiency { get; set; }
+	public class CreateLoreCommand : IRequest<Lore>
+	{
+		public Guid InitiatorId { get; set; }
+		public Guid CharacterId { get; set; }
+		public string Topic { get; set; }
+		public Proficiency Proficiency { get; set; }
 
-        public CreateLoreCommand(Guid initiatorId, Guid characterId, string topic, Proficiency proficiency)
-        {
-            InitiatorId = initiatorId;
-            CharacterId = characterId;
-            Topic = topic;
-            Proficiency = proficiency;
-        }
-    }
+		public CreateLoreCommand(Guid initiatorId, Guid characterId, string topic, Proficiency proficiency)
+		{
+			InitiatorId = initiatorId;
+			CharacterId = characterId;
+			Topic = topic;
+			Proficiency = proficiency;
+		}
+	}
 }

@@ -5,11 +5,11 @@ using Tavernkeep.Infrastructure.Data.Extensions;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration.Messages
 {
-    public class SkillRollMessageConfiguration : IEntityTypeConfiguration<SkillRollMessage>
-    {
-        public void Configure(EntityTypeBuilder<SkillRollMessage> builder)
-        {
-            builder.OwnsJson(m => m.Skill);
-        }
-    }
+	public class SkillRollMessageConfiguration : IEntityTypeConfiguration<SkillRollMessage>
+	{
+		public void Configure(EntityTypeBuilder<SkillRollMessage> builder)
+		{
+			builder.OwnsJson(m => m.Skill);
+		}
+	}
 }

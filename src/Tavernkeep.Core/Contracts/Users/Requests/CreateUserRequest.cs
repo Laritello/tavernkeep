@@ -3,35 +3,35 @@ using Tavernkeep.Core.Contracts.Enums;
 
 namespace Tavernkeep.Core.Contracts.Users.Requests
 {
-    /// <summary>
-    /// Represents a request to create a user.
-    /// </summary>
-    public class CreateUserRequest
-    {
-        /// <summary>
-        /// The user's login.
-        /// </summary>
-        public string Login { get; set; } = default!;
+	/// <summary>
+	/// Represents a request to create a user.
+	/// </summary>
+	public class CreateUserRequest
+	{
+		/// <summary>
+		/// The user's login.
+		/// </summary>
+		public string Login { get; set; } = default!;
 
-        /// <summary>
-        /// The user's password.
-        /// </summary>
-        public string Password { get; set; } = default!;
+		/// <summary>
+		/// The user's password.
+		/// </summary>
+		public string Password { get; set; } = default!;
 
-        /// <summary>
-        /// The user's role.
-        /// </summary>
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public UserRole Role { get; set; } = default!;
+		/// <summary>
+		/// The user's role.
+		/// </summary>
+		[JsonConverter(typeof(JsonStringEnumConverter))]
+		public UserRole Role { get; set; } = default!;
 
-        /// <summary>
-        /// Show if default character for user must be initialized.
-        /// </summary>
-        public bool InitializeCharacter { get; set; }
+		/// <summary>
+		/// Show if default character for user must be initialized.
+		/// </summary>
+		public bool InitializeCharacter { get; set; }
 
-        /// <summary>
-        /// Name of the character.
-        /// </summary>
-        public string? CharacterName { get; set; }
-    }
+		/// <summary>
+		/// Name of the character.
+		/// </summary>
+		public string? CharacterName { get; set; }
+	}
 }

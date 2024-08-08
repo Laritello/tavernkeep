@@ -8,56 +8,56 @@ using Tavernkeep.Core.Extensions;
 
 namespace Tavernkeep.Core.Entities
 {
-    public class Skill : IModifiable
-    {
-        #region Backing fields
+	public class Skill : IModifiable
+	{
+		#region Backing fields
 
-        private IModifierManager _manager;
+		private IModifierManager _manager;
 
 		#endregion
 		#region Constructors
 
-		public Skill() 
-        {
+		public Skill()
+		{
 
-        }
+		}
 
-        public Skill(Character owner, AbilityType baseAbility, SkillType type)
-        {
-            Owner = owner;
-            BaseAbility = baseAbility;
-            Type = type;
-        }
+		public Skill(Character owner, AbilityType baseAbility, SkillType type)
+		{
+			Owner = owner;
+			BaseAbility = baseAbility;
+			Type = type;
+		}
 
-        #endregion
+		#endregion
 
-        #region Properties
+		#region Properties
 
-        [JsonIgnore]
-        public Character Owner { get; set; } = default!;
+		[JsonIgnore]
+		public Character Owner { get; set; } = default!;
 
-        [JsonIgnore]
-        [NotMapped]
-        public IModifierManager Manager => _manager ??= new SkillModifierManager(Owner, Type);
-        public AbilityType BaseAbility { get; set; }
-        public SkillType Type { get; set; }
-        public Proficiency Proficiency { get; set; }
-        public int Bonus => Owner.GetSkillAbility(Type).Modifier + Proficiency.GetProficiencyBonus(Owner) + Manager.GetSummary().Total;
+		[JsonIgnore]
+		[NotMapped]
+		public IModifierManager Manager => _manager ??= new SkillModifierManager(Owner, Type);
+		public AbilityType BaseAbility { get; set; }
+		public SkillType Type { get; set; }
+		public Proficiency Proficiency { get; set; }
+		public int Bonus => Owner.GetSkillAbility(Type).Modifier + Proficiency.GetProficiencyBonus(Owner) + Manager.GetSummary().Total;
 
-        #endregion
+		#endregion
 
-        #region Methods
+		#region Methods
 
-        public SkillSnapshot AsSnapshot()
-        {
-            return new()
-            {
-                Type = Type,
-                Proficiency = Proficiency,
-                Bonus = Bonus
-            };
-        }
+		public SkillSnapshot AsSnapshot()
+		{
+			return new()
+			{
+				Type = Type,
+				Proficiency = Proficiency,
+				Bonus = Bonus
+			};
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

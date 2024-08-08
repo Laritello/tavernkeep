@@ -4,31 +4,31 @@ using Tavernkeep.Core.Extensions;
 
 namespace Tavernkeep.Core.Entities
 {
-    public class Lore
-    {
-        #region Constructors
+	public class Lore
+	{
+		#region Constructors
 
-        public Lore()
-        {
+		public Lore()
+		{
 
-        }
+		}
 
-        public Lore(Character owner, string topic)
-        {
-            Owner = owner;
-            Topic = topic;
-        }
+		public Lore(Character owner, string topic)
+		{
+			Owner = owner;
+			Topic = topic;
+		}
 
-        #endregion
+		#endregion
 
-        #region Properties
+		#region Properties
 
-        [JsonIgnore]
-        public Character Owner { get; set; } = default!;
-        public string Topic { get; set; } = default!;
-        public Proficiency Proficiency { get; set; }
-        public int Bonus => Owner.GetAbility(AbilityType.Intelligence).Modifier + Proficiency.GetProficiencyBonus(Owner);
+		[JsonIgnore]
+		public Character Owner { get; set; } = default!;
+		public string Topic { get; set; } = default!;
+		public Proficiency Proficiency { get; set; }
+		public int Bonus => Owner.GetAbility(AbilityType.Intelligence).Modifier + Proficiency.GetProficiencyBonus(Owner);
 
-        #endregion
-    }
+		#endregion
+	}
 }

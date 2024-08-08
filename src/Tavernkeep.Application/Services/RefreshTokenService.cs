@@ -5,53 +5,53 @@ using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.Services
 {
-    /// <summary>
-    /// Deletes the expired refresh tokens from the database.
-    /// </summary>
-    /// <param name="logger">The logger instance.</param>
-    /// <param name="tokenRepository">The <see cref="IRefreshTokenRepository"/> implementation.</param>
-    public class RefreshTokenService(ILogger<RefreshTokenService> logger, IServiceProvider serviceProvider) : BackgroundService
-    {
-        private readonly TimeSpan delay = TimeSpan.FromSeconds(30);
+	/// <summary>
+	/// Deletes the expired refresh tokens from the database.
+	/// </summary>
+	/// <param name="logger">The logger instance.</param>
+	/// <param name="tokenRepository">The <see cref="IRefreshTokenRepository"/> implementation.</param>
+	public class RefreshTokenService(ILogger<RefreshTokenService> logger, IServiceProvider serviceProvider) : BackgroundService
+	{
+		private readonly TimeSpan delay = TimeSpan.FromSeconds(30);
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                await Task.Delay(delay, stoppingToken);
-                await PurgeExpiredTokensAsync();
-            }
-        }
+		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+		{
+			while (!stoppingToken.IsCancellationRequested)
+			{
+				await Task.Delay(delay, stoppingToken);
+				await PurgeExpiredTokensAsync();
+			}
+		}
 
-        public override async Task StartAsync(CancellationToken cancellationToken)
-        {
-            logger.LogInformation("Refresh Token Hosted Service is launching.");
-            await base.StartAsync(cancellationToken);
-        }
+		public override async Task StartAsync(CancellationToken cancellationToken)
+		{
+			logger.LogInformation("Refresh Token Hosted Service is launching.");
+			await base.StartAsync(cancellationToken);
+		}
 
-        public override async Task StopAsync(CancellationToken cancellationToken)
-        {
-            logger.LogInformation("Timed Hosted Service is stopping.");
-            await base.StopAsync(cancellationToken);
-        }
+		public override async Task StopAsync(CancellationToken cancellationToken)
+		{
+			logger.LogInformation("Timed Hosted Service is stopping.");
+			await base.StopAsync(cancellationToken);
+		}
 
-        /// <summary>
-        /// Collects all expired refresh tokens and deletes them from the database.
-        /// </summary>
-        private async Task PurgeExpiredTokensAsync()
-        {
-            using var scope = serviceProvider.CreateScope();
-            var tokenRepository = scope.ServiceProvider.GetRequiredService<IRefreshTokenRepository>();
+		/// <summary>
+		/// Collects all expired refresh tokens and deletes them from the database.
+		/// </summary>
+		private async Task PurgeExpiredTokensAsync()
+		{
+			using var scope = serviceProvider.CreateScope();
+			var tokenRepository = scope.ServiceProvider.GetRequiredService<IRefreshTokenRepository>();
 
-            var expiredTokens = await tokenRepository.GetExpiredTokensAsync();
+			var expiredTokens = await tokenRepository.GetExpiredTokensAsync();
 
-            tokenRepository.Remove(expiredTokens);
-            await tokenRepository.CommitAsync();
+			tokenRepository.Remove(expiredTokens);
+			await tokenRepository.CommitAsync();
 
-            if (expiredTokens.Count > 0)
-            {
-                logger.LogInformation("Refresh Token Hosted Service is working. Tokens removed: {Count}", expiredTokens.Count);
-            }
-        }
-    }
+			if (expiredTokens.Count > 0)
+			{
+				logger.LogInformation("Refresh Token Hosted Service is working. Tokens removed: {Count}", expiredTokens.Count);
+			}
+		}
+	}
 }
