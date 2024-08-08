@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tavernkeep.Core.Entities.Conditions;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
 

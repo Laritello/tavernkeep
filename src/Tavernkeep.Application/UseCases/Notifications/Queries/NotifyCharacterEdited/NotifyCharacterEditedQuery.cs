@@ -3,13 +3,8 @@ using Tavernkeep.Infrastructure.Notifications.Notifications;
 
 namespace Tavernkeep.Application.UseCases.Notifications.Queries.NotifyCharacterEdited
 {
-	public class NotifyCharacterEditedQuery : IRequest
+	public class NotifyCharacterEditedQuery(CharacterEditedNotification notification) : IRequest
 	{
-		public CharacterEditedNotification Notification { get; set; }
-
-		public NotifyCharacterEditedQuery(CharacterEditedNotification notification)
-		{
-			Notification = notification;
-		}
+		public CharacterEditedNotification Notification { get; set; } = notification;
 	}
 }

@@ -1,29 +1,29 @@
 ﻿namespace Tavernkeep.Core.Entities.Messages
 {
-    public class TextMessage : Message
-    {
-        #region Constructors
+	public class TextMessage : Message
+	{
+		#region Constructors
 
-        public TextMessage() { }
+		public TextMessage() { }
 
-        #endregion
+		#endregion
 
-        #region Properties
+		#region Properties
 
-        public string Text { get; set; } = default!;
-        public Guid? RecipientId { get; set; }
-        public User? Recipient { get; set; }
-        public bool IsPrivate => RecipientId.HasValue;
+		public string Text { get; set; } = default!;
+		public Guid? RecipientId { get; set; }
+		public User? Recipient { get; set; }
+		public bool IsPrivate => RecipientId.HasValue;
 
-        #endregion
+		#endregion
 
-        #region Methods
+		#region Methods
 
-        public override bool CheckVisbility(User user)
-        {
-            return SenderId == user.Id || RecipientId == null || RecipientId == user.Id;
-        }
+		public override bool CheckVisbility(User user)
+		{
+			return SenderId == user.Id || RecipientId == null || RecipientId == user.Id;
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

@@ -1,15 +1,10 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Conditions;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 
 namespace Tavernkeep.Application.UseCases.Conditions.Queries.GetCondition
 {
-	public class GetConditionQuery : IRequest<ConditionMetadata>
+	public class GetConditionQuery(string name) : IRequest<ConditionMetadata>
 	{
-		public string Name { get; set; }
-
-		public GetConditionQuery(string name)
-		{
-			Name = name;
-		}
+		public string Name { get; set; } = name;
 	}
 }

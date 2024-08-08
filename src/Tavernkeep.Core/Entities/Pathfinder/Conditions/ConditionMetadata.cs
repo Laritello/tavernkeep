@@ -1,7 +1,7 @@
 ﻿using Tavernkeep.Core.Entities.Base;
-using Tavernkeep.Core.Entities.Modifiers;
+using Tavernkeep.Core.Entities.Pathfinder.Modifiers;
 
-namespace Tavernkeep.Core.Entities.Conditions
+namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 {
 	public class ConditionMetadata : Entity
 	{

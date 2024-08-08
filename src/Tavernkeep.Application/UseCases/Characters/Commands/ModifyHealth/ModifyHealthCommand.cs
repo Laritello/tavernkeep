@@ -1,19 +1,12 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.ModifyHealth
 {
-    public class ModifyHealthCommand : IRequest<Health>
-    {
-        public Guid InitiatorId { get; set; }
-        public Guid CharacterId { get; set; }
-        public int Change { get; set; }
-
-        public ModifyHealthCommand(Guid initiatorId, Guid characterId, int change)
-        {
-            InitiatorId = initiatorId;
-            CharacterId = characterId;
-            Change = change;
-        }
-    }
+	public class ModifyHealthCommand(Guid initiatorId, Guid characterId, int change) : IRequest<Health>
+	{
+		public Guid InitiatorId { get; set; } = initiatorId;
+		public Guid CharacterId { get; set; } = characterId;
+		public int Change { get; set; } = change;
+	}
 }

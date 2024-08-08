@@ -1,22 +1,14 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkeep.Application.UseCases.Lores.Commands.CreateLore
 {
-    public class CreateLoreCommand : IRequest<Lore>
-    {
-        public Guid InitiatorId { get; set; }
-        public Guid CharacterId { get; set; }
-        public string Topic { get; set; }
-        public Proficiency Proficiency { get; set; }
-
-        public CreateLoreCommand(Guid initiatorId, Guid characterId, string topic, Proficiency proficiency)
-        {
-            InitiatorId = initiatorId;
-            CharacterId = characterId;
-            Topic = topic;
-            Proficiency = proficiency;
-        }
-    }
+	public class CreateLoreCommand(Guid initiatorId, Guid characterId, string topic, Proficiency proficiency) : IRequest<Lore>
+	{
+		public Guid InitiatorId { get; set; } = initiatorId;
+		public Guid CharacterId { get; set; } = characterId;
+		public string Topic { get; set; } = topic;
+		public Proficiency Proficiency { get; set; } = proficiency;
+	}
 }

@@ -1,15 +1,10 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter
 {
-    public class GetCharacterQuery : IRequest<Character>
-    {
-        public Guid Id { get; set; }
-
-        public GetCharacterQuery(Guid id)
-        {
-            Id = id;
-        }
-    }
+	public class GetCharacterQuery(Guid id) : IRequest<Character>
+	{
+		public Guid Id { get; set; } = id;
+	}
 }

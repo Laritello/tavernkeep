@@ -2,13 +2,8 @@
 
 namespace Tavernkeep.Application.UseCases.Chat.Commands.DeleteMessage
 {
-    public class DeleteMessageCommand : IRequest
-    {
-        public Guid MessageId { get; set; }
-
-        public DeleteMessageCommand(Guid messageId)
-        {
-            MessageId = messageId;
-        }
-    }
+	public class DeleteMessageCommand(Guid messageId) : IRequest
+	{
+		public Guid MessageId { get; set; } = messageId;
+	}
 }

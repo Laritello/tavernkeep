@@ -7,36 +7,36 @@ using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Authentication.Commands.CreateAuthenticationToken
 {
-    public class CreateAuthenticationTokenCommandHandler(IUserRepository repository, IRefreshTokenRepository tokenRepository, IAuthTokenService tokenService) : IRequestHandler<CreateAuthenticationTokenCommand, AuthenticationResponse>
-    {
-        public async Task<AuthenticationResponse> Handle(CreateAuthenticationTokenCommand request, CancellationToken cancellationToken)
-        {
-            if (string.IsNullOrEmpty(request.Login))
-                throw new BusinessLogicException("No user login provided.");
+	public class CreateAuthenticationTokenCommandHandler(IUserRepository repository, IRefreshTokenRepository tokenRepository, IAuthTokenService tokenService) : IRequestHandler<CreateAuthenticationTokenCommand, AuthenticationResponse>
+	{
+		public async Task<AuthenticationResponse> Handle(CreateAuthenticationTokenCommand request, CancellationToken cancellationToken)
+		{
+			if (string.IsNullOrEmpty(request.Login))
+				throw new BusinessLogicException("No user login provided.");
 
-            var user = await repository.GetUserByLoginAsync(request.Login, cancellationToken) 
-                ?? throw new BusinessLogicException("User with provided login not found.");
+			var user = await repository.GetUserByLoginAsync(request.Login, cancellationToken)
+				?? throw new BusinessLogicException("User with provided login not found.");
 
-            if (user.Password != request.Password)
-                throw new BusinessLogicException("Passwords do not match.");
+			if (user.Password != request.Password)
+				throw new BusinessLogicException("Passwords do not match.");
 
-            var token = tokenService.GenerateAccessToken(user);
-            var refreshToken = tokenService.GenerateRefreshToken();
+			var token = tokenService.GenerateAccessToken(user);
+			var refreshToken = tokenService.GenerateRefreshToken();
 
-            tokenRepository.Save(new RefreshToken()
-            {
-                UserId = user.Id,
-                Token = refreshToken,
-                Expires = DateTime.UtcNow.AddDays(7)
-            });
+			tokenRepository.Save(new RefreshToken()
+			{
+				UserId = user.Id,
+				Token = refreshToken,
+				Expires = DateTime.UtcNow.AddDays(7)
+			});
 
-            await tokenRepository.CommitAsync(cancellationToken);
+			await tokenRepository.CommitAsync(cancellationToken);
 
-            return new AuthenticationResponse() 
-            {
-                AccessToken = token,
-                RefreshToken = refreshToken,
-            };
-        }
-    }
+			return new AuthenticationResponse()
+			{
+				AccessToken = token,
+				RefreshToken = refreshToken,
+			};
+		}
+	}
 }

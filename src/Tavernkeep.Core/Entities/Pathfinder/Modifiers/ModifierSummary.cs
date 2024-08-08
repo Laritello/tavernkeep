@@ -1,7 +1,7 @@
-﻿namespace Tavernkeep.Core.Entities.Modifiers
+﻿namespace Tavernkeep.Core.Entities.Pathfinder.Modifiers
 {
 	// TODO: Check if struct is better
-    public class ModifierSummary(List<Modifier> modifiers, int total, Modifier? activeBonus, Modifier? activePenalty)
+	public class ModifierSummary(List<Modifier> modifiers, int total, Modifier? activeBonus, Modifier? activePenalty)
 	{
 		public List<Modifier> Modifiers { get; set; } = modifiers;
 		public Modifier? ActiveBonus { get; set; } = activeBonus;
