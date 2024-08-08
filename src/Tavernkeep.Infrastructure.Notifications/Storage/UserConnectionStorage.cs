@@ -37,7 +37,7 @@
 				return connections;
 			}
 
-			return Enumerable.Empty<string>();
+			return [];
 		}
 
 		public void Remove(T key, string connectionId)

@@ -2,15 +2,9 @@
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter
 {
-	public class DeleteCharacterCommand : IRequest
+	public class DeleteCharacterCommand(Guid initiatorId, Guid characterId) : IRequest
 	{
-		public Guid InitiatorId { get; set; }
-		public Guid CharacterId { get; set; }
-
-		public DeleteCharacterCommand(Guid initiatorId, Guid characterId)
-		{
-			InitiatorId = initiatorId;
-			CharacterId = characterId;
-		}
+		public Guid InitiatorId { get; set; } = initiatorId;
+		public Guid CharacterId { get; set; } = characterId;
 	}
 }

@@ -2,17 +2,10 @@
 
 namespace Tavernkeep.Application.UseCases.Lores.Commands.DeleteLore
 {
-	public class DeleteLoreCommand : IRequest
+	public class DeleteLoreCommand(Guid initiatorId, Guid characterId, string topic) : IRequest
 	{
-		public Guid InitiatorId { get; set; }
-		public Guid CharacterId { get; set; }
-		public string Topic { get; set; }
-
-		public DeleteLoreCommand(Guid initiatorId, Guid characterId, string topic)
-		{
-			InitiatorId = initiatorId;
-			CharacterId = characterId;
-			Topic = topic;
-		}
+		public Guid InitiatorId { get; set; } = initiatorId;
+		public Guid CharacterId { get; set; } = characterId;
+		public string Topic { get; set; } = topic;
 	}
 }

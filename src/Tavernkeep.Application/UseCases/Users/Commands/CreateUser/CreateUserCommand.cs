@@ -4,21 +4,12 @@ using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Application.UseCases.Users.Commands.CreateUser
 {
-	public class CreateUserCommand : IRequest<User>
+	public class CreateUserCommand(string login, string password, UserRole role, bool initializeCharacter, string? characterName = null) : IRequest<User>
 	{
-		public string Login { get; set; }
-		public string Password { get; set; }
-		public UserRole Role { get; set; }
-		public bool InitializeCharacter { get; set; }
-		public string? CharacterName { get; set; }
-
-		public CreateUserCommand(string login, string password, UserRole role, bool initializeCharacter, string? characterName = null)
-		{
-			Login = login;
-			Password = password;
-			Role = role;
-			InitializeCharacter = initializeCharacter;
-			CharacterName = characterName;
-		}
+		public string Login { get; set; } = login;
+		public string Password { get; set; } = password;
+		public UserRole Role { get; set; } = role;
+		public bool InitializeCharacter { get; set; } = initializeCharacter;
+		public string? CharacterName { get; set; } = characterName;
 	}
 }
