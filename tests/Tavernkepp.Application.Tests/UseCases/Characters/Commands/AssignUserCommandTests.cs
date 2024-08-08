@@ -2,6 +2,7 @@
 using Tavernkeep.Application.UseCases.Characters.Commands.AssignUser;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 

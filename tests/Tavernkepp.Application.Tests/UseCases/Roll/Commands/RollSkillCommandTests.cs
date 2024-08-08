@@ -4,6 +4,7 @@ using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Roll.Commands.RollSkill;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 

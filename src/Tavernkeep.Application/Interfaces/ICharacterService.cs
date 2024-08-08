@@ -1,4 +1,5 @@
 ﻿using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkeep.Application.Interfaces
 {

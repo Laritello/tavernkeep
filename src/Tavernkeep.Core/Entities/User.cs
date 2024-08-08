@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Base;
+using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkeep.Core.Entities
 {

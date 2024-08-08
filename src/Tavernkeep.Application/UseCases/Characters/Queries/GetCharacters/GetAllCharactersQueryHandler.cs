@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters

@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.Services;
-using Tavernkeep.Core.Entities.Conditions;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Repositories;

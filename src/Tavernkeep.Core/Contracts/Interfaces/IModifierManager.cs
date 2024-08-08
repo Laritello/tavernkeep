@@ -1,5 +1,5 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Modifiers;
+using Tavernkeep.Core.Entities.Pathfinder.Modifiers;
 
 namespace Tavernkeep.Core.Contracts.Interfaces
 {

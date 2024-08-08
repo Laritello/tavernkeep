@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.EditAbility
 {

@@ -1,4 +1,4 @@
-﻿using Tavernkeep.Core.Entities.Conditions;
+﻿using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 
 namespace Tavernkeep.Core.Repositories
 {

@@ -1,5 +1,6 @@
 ﻿using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.Services

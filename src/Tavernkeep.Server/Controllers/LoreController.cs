@@ -5,7 +5,7 @@ using Tavernkeep.Application.UseCases.Lores.Commands.CreateLore;
 using Tavernkeep.Application.UseCases.Lores.Commands.DeleteLore;
 using Tavernkeep.Application.UseCases.Lores.Commands.EditLore;
 using Tavernkeep.Core.Contracts.Lores.Requests;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Server.Extensions;
 
 namespace Tavernkeep.Server.Controllers
