@@ -1,9 +1,11 @@
 ﻿using Moq;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
 using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Queries
 {
@@ -29,7 +31,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Queries
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
 
 			mockCharacterRepository
-				.Setup(repo => repo.FindAsync(characterId, default!))
+				.Setup(repo => repo.FindAsync(characterId, It.IsAny<ISpecification<Character>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new GetCharacterQuery(characterId);

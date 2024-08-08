@@ -5,13 +5,14 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 {
 	public class SetActiveCharacterCommandTests
 	{
+		private readonly User master;
 		private User owner;
-		private User master;
 		private Character character;
 
 		public SetActiveCharacterCommandTests()
@@ -55,11 +56,11 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, default!))
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(character.Id, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(character.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new SetActiveCharacterCommand(owner.Id, owner.Id, character.Id);
@@ -82,15 +83,15 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, default!))
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(master.Id, default!))
+				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(master);
 
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(character.Id, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(character.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new SetActiveCharacterCommand(master.Id, owner.Id, character.Id);
@@ -113,7 +114,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
 
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(character.Id, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(character.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new SetActiveCharacterCommand(owner.Id, owner.Id, character.Id);
@@ -130,11 +131,11 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(master.Id, default!))
+				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(master);
 
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(character.Id, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(character.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new SetActiveCharacterCommand(master.Id, owner.Id, character.Id);
@@ -151,7 +152,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, default!))
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
 			var request = new SetActiveCharacterCommand(owner.Id, owner.Id, character.Id);
@@ -170,15 +171,15 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			character.Owner = new User(string.Empty, string.Empty, UserRole.Player);
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, default!))
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(master.Id, default!))
+				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(master);
 
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(character.Id, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(character.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new SetActiveCharacterCommand(master.Id, owner.Id, character.Id);
@@ -195,15 +196,15 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, default!))
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(master.Id, default!))
+				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(new User(string.Empty, string.Empty, UserRole.Player));
 
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(character.Id, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(character.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new SetActiveCharacterCommand(master.Id, owner.Id, character.Id);

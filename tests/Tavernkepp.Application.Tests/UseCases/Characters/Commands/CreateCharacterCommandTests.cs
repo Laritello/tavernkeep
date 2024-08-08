@@ -6,6 +6,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
@@ -28,17 +29,18 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterService = new Mock<ICharacterService>();
+			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(userId, default!))
+				.Setup(repo => repo.FindAsync(userId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
 			mockCharacterService
-				.Setup(service => service.CreateCharacterAsync(owner, name, default!))
+				.Setup(service => service.CreateCharacterAsync(owner, name, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new CreateCharacterCommand(userId, name);
-			var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterService.Object);
+			var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterService.Object, mockNotificationService.Object);
 
 			var response = await handler.Handle(request, CancellationToken.None);
 
@@ -54,9 +56,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterService = new Mock<ICharacterService>();
+			var mockNotificationService = new Mock<INotificationService>();
 
 			var request = new CreateCharacterCommand(userId, name);
-			var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterService.Object);
+			var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterService.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("Owner with specified ID doesn't exist."));

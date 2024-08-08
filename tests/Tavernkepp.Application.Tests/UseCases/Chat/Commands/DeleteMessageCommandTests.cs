@@ -5,6 +5,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
 {
@@ -36,7 +37,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
 			var mockMessageRepository = new Mock<IMessageRepository>();
 
 			mockMessageRepository
-				.Setup(repo => repo.FindAsync(message.Id, default!))
+				.Setup(repo => repo.FindAsync(message.Id, It.IsAny<ISpecification<Message>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(message);
 
 			var request = new DeleteMessageCommand(message.Id);

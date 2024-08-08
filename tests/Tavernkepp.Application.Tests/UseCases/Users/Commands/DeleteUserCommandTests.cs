@@ -4,18 +4,17 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 {
 	public class DeleteUserCommandTests
 	{
 		private readonly User user;
-		private readonly User master;
 
 		public DeleteUserCommandTests()
 		{
 			user = new User("user", "user", UserRole.Player) { Id = Guid.NewGuid() };
-			master = new User("master", "master", UserRole.Master) { Id = Guid.NewGuid() };
 		}
 
 		[Test]
@@ -24,7 +23,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var mockUserRepository = new Mock<IUserRepository>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(user.Id, default!))
+				.Setup(repo => repo.FindAsync(user.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(user);
 
 			var request = new DeleteUserCommand(user.Id);

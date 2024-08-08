@@ -6,6 +6,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
@@ -44,10 +45,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var newScore = 12;
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, default!))
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()!))
 				.ReturnsAsync(owner);
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditAbilityCommand(owner.Id, characterId, AbilityType.Strength, newScore);
@@ -67,10 +68,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var newScore = 12;
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(master.Id, default!))
+				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(master);
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditAbilityCommand(master.Id, characterId, AbilityType.Strength, newScore);
@@ -90,7 +91,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var newScore = 12;
 
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditAbilityCommand(owner.Id, characterId, AbilityType.Strength, newScore);
@@ -109,7 +110,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var newScore = 12;
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, default!))
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
 			var request = new EditAbilityCommand(owner.Id, characterId, AbilityType.Strength, newScore);
@@ -129,10 +130,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var initiatorId = Guid.NewGuid();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(initiatorId, default!))
+				.Setup(repo => repo.FindAsync(initiatorId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(new User(string.Empty, string.Empty, UserRole.Player));
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditAbilityCommand(initiatorId, characterId, AbilityType.Strength, newScore);

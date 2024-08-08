@@ -6,6 +6,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
@@ -44,10 +45,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, default!))
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditSkillCommand(owner.Id, characterId, SkillType.Acrobatics, proficiency);
@@ -66,10 +67,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(master.Id, default!))
+				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(master);
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditSkillCommand(master.Id, characterId, SkillType.Acrobatics, proficiency);
@@ -88,7 +89,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditSkillCommand(owner.Id, characterId, SkillType.Acrobatics, proficiency);
@@ -106,7 +107,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, default!))
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
 			var request = new EditSkillCommand(owner.Id, characterId, SkillType.Acrobatics, proficiency);
@@ -125,10 +126,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var initiatorId = Guid.NewGuid();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(initiatorId, default!))
+				.Setup(repo => repo.FindAsync(initiatorId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(new User(string.Empty, string.Empty, UserRole.Player));
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditSkillCommand(initiatorId, characterId, SkillType.Acrobatics, proficiency);

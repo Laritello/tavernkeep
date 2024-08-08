@@ -6,12 +6,12 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
 {
 	public class SendMessageCommandTests
 	{
-		private readonly Message message;
 		private readonly User sender;
 		private readonly User recipient;
 		private readonly string text = "Lorem ipsum";
@@ -27,15 +27,6 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
 			{
 				Id = Guid.NewGuid()
 			};
-
-			message = new TextMessage()
-			{
-				Id = Guid.NewGuid(),
-				Created = DateTime.UtcNow,
-				SenderId = sender.Id,
-				Sender = sender,
-				Text = string.Empty
-			};
 		}
 
 		[Test]
@@ -46,7 +37,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(sender.Id, default!))
+				.Setup(repo => repo.FindAsync(sender.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(sender);
 
 			var request = new SendMessageCommand(sender.Id, text);
@@ -71,11 +62,11 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(sender.Id, default!))
+				.Setup(repo => repo.FindAsync(sender.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(sender);
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(recipient.Id, default!))
+				.Setup(repo => repo.FindAsync(recipient.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(recipient);
 
 			var request = new SendMessageCommand(sender.Id, text, recipient.Id);
@@ -102,7 +93,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(sender.Id, default!))
+				.Setup(repo => repo.FindAsync(sender.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(sender);
 
 			var request = new SendMessageCommand(sender.Id, string.Empty);
@@ -134,7 +125,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(sender.Id, default!))
+				.Setup(repo => repo.FindAsync(sender.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(sender);
 
 			var request = new SendMessageCommand(sender.Id, text, recipient.Id);

@@ -5,6 +5,7 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 {
@@ -31,7 +32,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(initiator.Id, default!))
+				.Setup(repo => repo.FindAsync(initiator.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(initiator);
 
 			mockDiceService

@@ -7,6 +7,7 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 {
@@ -50,7 +51,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 				.Returns(newRefreshToken);
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(userId, null!))
+				.Setup(repo => repo.FindAsync(userId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(user);
 
 			mockTokenRepository
@@ -96,7 +97,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 				.Returns(newRefreshToken);
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(userId, null!))
+				.Setup(repo => repo.FindAsync(userId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(user);
 
 			mockTokenRepository
@@ -137,7 +138,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 				.Returns(newRefreshToken);
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(userId, null!))
+				.Setup(repo => repo.FindAsync(userId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(user);
 
 			mockTokenRepository
@@ -172,7 +173,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 				.Returns(newRefreshToken);
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(userId, null!))
+				.Setup(repo => repo.FindAsync(userId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(user);
 
 			mockTokenRepository

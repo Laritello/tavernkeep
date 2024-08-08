@@ -4,6 +4,7 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 {
@@ -30,7 +31,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var mockUserRepository = new Mock<IUserRepository>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(user.Id, default!))
+				.Setup(repo => repo.FindAsync(user.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(user);
 
 			var request = new EditUserCommand(user.Id, login, password, role);
@@ -64,7 +65,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var mockUserRepository = new Mock<IUserRepository>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(user.Id, default!))
+				.Setup(repo => repo.FindAsync(user.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(user);
 
 			var request = new EditUserCommand(user.Id, string.Empty, password, role);
@@ -80,7 +81,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var mockUserRepository = new Mock<IUserRepository>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(user.Id, default!))
+				.Setup(repo => repo.FindAsync(user.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(user);
 
 			var request = new EditUserCommand(user.Id, login, string.Empty, role);

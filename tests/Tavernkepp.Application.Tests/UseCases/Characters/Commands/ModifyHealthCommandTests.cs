@@ -6,6 +6,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
@@ -52,16 +53,17 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, default!))
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new ModifyHealthCommand(owner.Id, characterId, change);
-			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
+			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var response = await handler.Handle(request, CancellationToken.None);
 
@@ -80,14 +82,14 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(master.Id, default!))
+				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(master);
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new ModifyHealthCommand(master.Id, characterId, -10);
-			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
+			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var response = await handler.Handle(request, CancellationToken.None);
 
@@ -106,11 +108,11 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new ModifyHealthCommand(owner.Id, characterId, -10);
-			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
+			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("User with specified ID doesn't exist."));
@@ -124,11 +126,11 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, default!))
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
 			var request = new ModifyHealthCommand(owner.Id, characterId, -10);
-			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
+			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("Character with specified ID doesn't exist."));
@@ -143,14 +145,14 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var initiatorId = Guid.NewGuid();
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(initiatorId, default!))
+				.Setup(repo => repo.FindAsync(initiatorId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(new User(string.Empty, string.Empty, UserRole.Player));
 			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, default!))
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new ModifyHealthCommand(initiatorId, characterId, -10);
-			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
+			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<InsufficientPermissionException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("You do not have the necessary permissions to perform this operation."));

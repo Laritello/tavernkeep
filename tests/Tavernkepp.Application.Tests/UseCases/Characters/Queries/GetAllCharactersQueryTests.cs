@@ -34,7 +34,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Queries
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
 
 			mockCharacterRepository
-				.Setup(repo => repo.GetAllCharactersAsync(default!))
+				.Setup(repo => repo.GetAllCharactersAsync(It.IsAny<CancellationToken>()))
 				.ReturnsAsync(characters);
 
 			var request = new GetAllCharactersQuery();

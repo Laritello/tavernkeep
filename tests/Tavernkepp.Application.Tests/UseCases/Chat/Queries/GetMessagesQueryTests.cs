@@ -50,7 +50,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Queries
 			var chatSpecification = new ChatSpecification(initiator);
 
 			mockUserRepository
-				.Setup(repo => repo.FindAsync(initiator.Id, default!))
+				.Setup(repo => repo.FindAsync(initiator.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(initiator);
 
 			mockMessageRepository
