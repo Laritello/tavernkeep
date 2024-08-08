@@ -3,40 +3,40 @@ using Tavernkeep.Core.Entities.Pathfinder.Modifiers;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 {
-    public class ConditionMetadata : Entity
-    {
-        #region Constructors
+	public class ConditionMetadata : Entity
+	{
+		#region Constructors
 
-        public ConditionMetadata() { }
+		public ConditionMetadata() { }
 
-        #endregion
+		#endregion
 
-        #region Properties
+		#region Properties
 
-        public string Name { get; set; } = default!;
-        public string Description { get; set; } = default!;
-        public bool HasLevels { get; set; }
-        public int Level { get; set; }
+		public string Name { get; set; } = default!;
+		public string Description { get; set; } = default!;
+		public bool HasLevels { get; set; }
+		public int Level { get; set; }
 
-        public List<Condition> Related { get; set; } = [];
-        public List<Modifier> Modifiers { get; set; } = [];
+		public List<Condition> Related { get; set; } = [];
+		public List<Modifier> Modifiers { get; set; } = [];
 
-        #endregion
+		#endregion
 
-        #region Methods
+		#region Methods
 
-        public Condition ToCondition()
-        {
-            return new Condition()
-            {
-                Name = Name,
-                HasLevels = HasLevels,
-                Level = Level,
-                Related = Related,
-                Modifiers = Modifiers
-            };
-        }
+		public Condition ToCondition()
+		{
+			return new Condition()
+			{
+				Name = Name,
+				HasLevels = HasLevels,
+				Level = Level,
+				Related = Related,
+				Modifiers = Modifiers
+			};
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }
