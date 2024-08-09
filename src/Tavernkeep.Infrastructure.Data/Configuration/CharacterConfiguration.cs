@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Text.Json;
+using Tavernkeep.Core.Contracts.Structures;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Infrastructure.Data.Extensions;
 
@@ -17,6 +19,11 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
 			builder.HasOne(c => c.Owner).WithMany(u => u.Characters).IsRequired();
 
 			builder.OwnsJson(c => c.Health);
+			builder.OwnsOne(c => c.Armor, b =>
+			{
+				b.OwnsOne(a => a.Proficiencies);
+				b.ToJson();
+			});
 
 			builder.OwnsJson(c => c.Strength);
 			builder.OwnsJson(c => c.Dexterity);

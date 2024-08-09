@@ -1,21 +1,14 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
-using Tavernkeep.Core.Extensions;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Modifiers.Managers
 {
-	public class SkillModifierManager : IModifierManager
+	public class GeneralModifierManager(Character character, ModifierTarget target) : IModifierManager
 	{
-		private readonly Character _character;
+		private readonly Character _character = character;
 
-		public SkillModifierManager(Character character, SkillType type)
-		{
-			_character = character;
-			Target = type.ToTarget();
-		}
-
-		public ModifierTarget Target { get; init; }
+		public ModifierTarget Target { get; init; } = target;
 		public IReadOnlyCollection<Condition> Conditions => _character.Conditions.AsReadOnly();
 
 		public ModifierSummary GetSummary()

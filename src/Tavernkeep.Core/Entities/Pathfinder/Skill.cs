@@ -15,6 +15,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		private IModifierManager _manager;
 
 		#endregion
+
 		#region Constructors
 
 		public Skill()
@@ -38,7 +39,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 
 		[JsonIgnore]
 		[NotMapped]
-		public IModifierManager Manager => _manager ??= new SkillModifierManager(Owner, Type);
+		public IModifierManager Manager => _manager ??= new GeneralModifierManager(Owner, Type.ToTarget());
 		public AbilityType BaseAbility { get; set; }
 		public SkillType Type { get; set; }
 		public Proficiency Proficiency { get; set; }

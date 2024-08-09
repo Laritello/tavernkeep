@@ -13,6 +13,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		public Character()
 		{
 			Health = new(1, 1, 0);
+			Armor = new(this);
 
 			Strength = new(this, AbilityType.Strength);
 			Dexterity = new(this, AbilityType.Dexterity);
@@ -50,6 +51,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		public string Name { get; set; } = default!;
 		public int Level { get; set; }
 		public Health Health { get; set; }
+		public ArmorClass Armor { get; set; }
 		public List<Condition> Conditions { get; set; }
 
 		public Ability Strength { get; set; }

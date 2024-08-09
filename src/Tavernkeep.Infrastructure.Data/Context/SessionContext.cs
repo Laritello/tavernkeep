@@ -12,6 +12,7 @@ namespace Tavernkeep.Infrastructure.Data.Context
 			base.OnModelCreating(modelBuilder);
 			modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
+			// TODO: Check why it removes and adds a new admin every time
 			modelBuilder.Entity<User>().HasData(new User("admin", "admin", UserRole.Master)
 			{
 				Id = Guid.NewGuid()
