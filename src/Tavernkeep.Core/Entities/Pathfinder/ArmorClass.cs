@@ -2,7 +2,6 @@
 using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
-using Tavernkeep.Core.Contracts.Structures;
 using Tavernkeep.Core.Entities.Pathfinder.Modifiers.Managers;
 using Tavernkeep.Core.Extensions;
 

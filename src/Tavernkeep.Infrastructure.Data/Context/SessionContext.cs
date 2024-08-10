@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Infrastructure.Data.Context
 {
@@ -11,12 +9,6 @@ namespace Tavernkeep.Infrastructure.Data.Context
 		{
 			base.OnModelCreating(modelBuilder);
 			modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-			// TODO: Check why it removes and adds a new admin every time
-			modelBuilder.Entity<User>().HasData(new User("admin", "admin", UserRole.Master)
-			{
-				Id = Guid.NewGuid()
-			});
 		}
 	}
 }

@@ -145,15 +145,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f31ec05c-c23e-4195-97ba-3ad59be92f22"),
-                            Login = "admin",
-                            Password = "admin",
-                            Role = "Master"
-                        });
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.RollMessage", b =>
@@ -326,7 +317,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.WithOwner("Owner")
                                 .HasForeignKey("OwnerId");
 
-                            b1.OwnsOne("Tavernkeep.Core.Contracts.Structures.ArmorProficiencies", "Proficiencies", b2 =>
+                            b1.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.ArmorProficiencies", "Proficiencies", b2 =>
                                 {
                                     b2.Property<Guid>("ArmorClassOwnerId")
                                         .HasColumnType("TEXT");

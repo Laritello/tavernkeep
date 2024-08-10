@@ -5,6 +5,8 @@ using System.Text;
 using System.Text.Json;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.Services;
+using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
@@ -131,6 +133,14 @@ namespace Tavernkeep.Server.Extensions
 			var scope = provider.CreateScope();
 			var context = scope.ServiceProvider.GetRequiredService<SessionContext>();
 			context.Database.Migrate();
+
+			if (!context.Set<User>().Any())
+			{
+				context.Set<User>().Add(new("admin", "admin", UserRole.Master)
+				{
+					Id = Guid.NewGuid()
+				});
+			}
 
 			if (!context.Set<ConditionMetadata>().Any())
 			{
