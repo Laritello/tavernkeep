@@ -60,7 +60,23 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		}
 
 		[Test]
-		public async Task EditSkillCommand_Success_Master()
+		[TestCase(SkillType.Acrobatics)]
+		[TestCase(SkillType.Arcana)]
+		[TestCase(SkillType.Athletics)]
+		[TestCase(SkillType.Crafting)]
+		[TestCase(SkillType.Deception)]
+		[TestCase(SkillType.Diplomacy)]
+		[TestCase(SkillType.Intimidation)]
+		[TestCase(SkillType.Medicine)]
+		[TestCase(SkillType.Nature)]
+		[TestCase(SkillType.Occultism)]
+		[TestCase(SkillType.Performance)]
+		[TestCase(SkillType.Religion)]
+		[TestCase(SkillType.Society)]
+		[TestCase(SkillType.Stealth)]
+		[TestCase(SkillType.Survival)]
+		[TestCase(SkillType.Thievery)]
+		public async Task EditSkillCommand_Success_Master(SkillType type)
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
@@ -73,12 +89,16 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSkillCommand(master.Id, characterId, SkillType.Acrobatics, proficiency);
+			var request = new EditSkillCommand(master.Id, characterId, type, proficiency);
 			var handler = new EditSkillCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var response = await handler.Handle(request, CancellationToken.None);
 
-			Assert.That(response.Proficiency, Is.EqualTo(proficiency));
+			Assert.Multiple(() =>
+			{
+				Assert.That(response.Type, Is.EqualTo(type));
+				Assert.That(response.Proficiency, Is.EqualTo(proficiency));
+			});
 		}
 
 		[Test]
