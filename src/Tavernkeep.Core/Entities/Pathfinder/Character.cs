@@ -39,6 +39,10 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 			Survival = new(this, AbilityType.Wisdom, SkillType.Survival);
 			Thievery = new(this, AbilityType.Dexterity, SkillType.Thievery);
 
+			Fortitude = new(this, AbilityType.Constitution, SavingThrowType.Fortitude);
+			Reflex = new(this, AbilityType.Dexterity, SavingThrowType.Reflex);
+			Will = new(this, AbilityType.Wisdom, SavingThrowType.Will);
+
 			Conditions = [];
 			Lores = [];
 		}
@@ -80,6 +84,10 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 
 		public List<Lore> Lores { get; set; }
 
+		public SavingThrow Fortitude { get; set; }
+		public SavingThrow Reflex { get; set; }
+		public SavingThrow Will { get; set; }
+
 		#endregion
 
 		#region Methods
@@ -118,6 +126,17 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 				SkillType.Stealth => Stealth,
 				SkillType.Survival => Survival,
 				SkillType.Thievery => Thievery,
+				_ => throw new NotImplementedException(),
+			};
+		}
+
+		public SavingThrow GetSavingThrow(SavingThrowType type)
+		{
+			return type switch
+			{
+				SavingThrowType.Fortitude => Fortitude,
+				SavingThrowType.Reflex => Reflex,
+				SavingThrowType.Will => Will,
 				_ => throw new NotImplementedException(),
 			};
 		}

@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Text.Json;
-using Tavernkeep.Core.Contracts.Structures;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Infrastructure.Data.Extensions;
 
@@ -50,6 +48,11 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
 			builder.OwnsJson(c => c.Thievery);
 
 			builder.OwnsMany(c => c.Lores, b => b.ToJson());
+
+			builder.OwnsJson(c => c.Fortitude);
+			builder.OwnsJson(c => c.Reflex);
+			builder.OwnsJson(c => c.Will);
+
 			builder.OwnsMany(c => c.Conditions, b =>
 			{
 				b.OwnsMany(con => con.Modifiers, b => b.ToJson());

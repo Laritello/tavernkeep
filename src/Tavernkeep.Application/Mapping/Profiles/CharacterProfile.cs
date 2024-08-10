@@ -44,6 +44,15 @@ namespace Tavernkeep.Application.Mapping.Profiles
 							{ SkillType.Stealth, src.Stealth },
 							{ SkillType.Survival, src.Survival },
 							{ SkillType.Thievery, src.Thievery }
+						}))
+				.ForMember(
+					dest => dest.SavingThrows,
+					opt => opt.MapFrom(src =>
+						new Dictionary<SavingThrowType, SavingThrow>()
+						{
+							{ SavingThrowType.Fortitude, src.Fortitude },
+							{ SavingThrowType.Reflex, src.Reflex },
+							{ SavingThrowType.Will, src.Will },
 						}));
 		}
 	}

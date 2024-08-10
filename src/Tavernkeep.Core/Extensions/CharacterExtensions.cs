@@ -29,11 +29,24 @@ namespace Tavernkeep.Core.Extensions
 			};
 		}
 
+		public static Ability GetSavingThrowAbility(this Character character, SavingThrowType type)
+		{
+			return type switch
+			{
+				SavingThrowType.Fortitude => character.Constitution,
+				SavingThrowType.Reflex => character.Dexterity,
+				SavingThrowType.Will => character.Wisdom,
+				_ => throw new NotImplementedException()
+			};
+		}
+
 		public static int GetProficiencyBonus(this Proficiency proficiency, Character owner)
 		{
 			return (int)proficiency + (proficiency > Proficiency.Untrained ? owner.Level : 0);
 		}
 
 		public static ModifierTarget ToTarget(this SkillType type) => (ModifierTarget)(int)type;
+
+		public static ModifierTarget ToTarget(this SavingThrowType type) => (ModifierTarget)(int)type + 17;
 	}
 }
