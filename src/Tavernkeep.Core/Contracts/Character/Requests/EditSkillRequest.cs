@@ -18,7 +18,7 @@ namespace Tavernkeep.Core.Contracts.Character.Requests
 		public SkillType Type { get; set; } = default!;
 
 		/// <summary>
-		/// The proficiency of the ability.
+		/// The proficiency of the skill.
 		/// </summary>
 		public Proficiency Proficiency { get; set; } = default!;
 	}

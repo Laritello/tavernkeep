@@ -7,6 +7,7 @@ using Tavernkeep.Application.UseCases.Characters.Commands.CreateCharacter;
 using Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditAbility;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditHealth;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrow;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditSkill;
 using Tavernkeep.Application.UseCases.Characters.Commands.ModifyHealth;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
@@ -114,6 +115,18 @@ namespace Tavernkeep.Server.Controllers
 		public async Task<Skill> EditCharacterSkillAsync([FromBody] EditSkillRequest request)
 		{
 			return await mediator.Send(new EditSkillCommand(HttpContext.GetUserId(), request.CharacterId, request.Type, request.Proficiency));
+		}
+
+		/// <summary>
+		/// Change saving throw of the character.
+		/// </summary>
+		/// <param name="request">The skill edit request.</param>
+		/// <returns>Changed saving throw.</returns>
+		[Authorize]
+		[HttpPatch("edit/savingthrow")]
+		public async Task<SavingThrow> EditCharacterSavingThrowAsync([FromBody] EditSavingThrowRequest request)
+		{
+			return await mediator.Send(new EditSavingThrowCommand(HttpContext.GetUserId(), request.CharacterId, request.Type, request.Proficiency));
 		}
 
 		/// <summary>
