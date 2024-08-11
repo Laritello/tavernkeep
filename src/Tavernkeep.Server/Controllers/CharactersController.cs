@@ -6,6 +6,7 @@ using Tavernkeep.Application.UseCases.Characters.Commands.AssignUser;
 using Tavernkeep.Application.UseCases.Characters.Commands.CreateCharacter;
 using Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditAbility;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditArmor;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditHealth;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrow;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditSkill;
@@ -123,10 +124,22 @@ namespace Tavernkeep.Server.Controllers
 		/// <param name="request">The skill edit request.</param>
 		/// <returns>Changed saving throw.</returns>
 		[Authorize]
-		[HttpPatch("edit/savingthrow")]
+		[HttpPatch("edit/saving-throw")]
 		public async Task<SavingThrow> EditCharacterSavingThrowAsync([FromBody] EditSavingThrowRequest request)
 		{
 			return await mediator.Send(new EditSavingThrowCommand(HttpContext.GetUserId(), request.CharacterId, request.Type, request.Proficiency));
+		}
+
+		/// <summary>
+		/// Change armor proficiency of the character.
+		/// </summary>
+		/// <param name="request">The armor proficiency edit request.</param>
+		/// <returns>Changed armor proficiencies.</returns>
+		[Authorize]
+		[HttpPatch("edit/armor-proficiency")]
+		public async Task<ArmorProficiencies> EditCharacterArmorProficiencyThrowAsync([FromBody] EditArmorProficiencyRequest request)
+		{
+			return await mediator.Send(new EditArmorProficiencyCommand(HttpContext.GetUserId(), request.CharacterId, request.Type, request.Proficiency));
 		}
 
 		/// <summary>
