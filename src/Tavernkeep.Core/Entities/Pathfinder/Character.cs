@@ -39,6 +39,8 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 			Survival = new(this, AbilityType.Wisdom, SkillType.Survival);
 			Thievery = new(this, AbilityType.Dexterity, SkillType.Thievery);
 
+			Perception = new(this);
+
 			Fortitude = new(this, AbilityType.Constitution, SavingThrowType.Fortitude);
 			Reflex = new(this, AbilityType.Dexterity, SavingThrowType.Reflex);
 			Will = new(this, AbilityType.Wisdom, SavingThrowType.Will);
@@ -83,6 +85,8 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		public Skill Thievery { get; set; }
 
 		public List<Lore> Lores { get; set; }
+
+		public Perception Perception { get; set; }
 
 		public SavingThrow Fortitude { get; set; }
 		public SavingThrow Reflex { get; set; }
