@@ -8,6 +8,7 @@ using Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditAbility;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditArmor;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditHealth;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditPerception;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrow;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditSkill;
 using Tavernkeep.Application.UseCases.Characters.Commands.ModifyHealth;
@@ -116,6 +117,18 @@ namespace Tavernkeep.Server.Controllers
 		public async Task<Skill> EditCharacterSkillAsync([FromBody] EditSkillRequest request)
 		{
 			return await mediator.Send(new EditSkillCommand(HttpContext.GetUserId(), request.CharacterId, request.Type, request.Proficiency));
+		}
+
+		/// <summary>
+		/// Change perception of the character.
+		/// </summary>
+		/// <param name="request">The perception edit request.</param>
+		/// <returns>Changed perception.</returns>
+		[Authorize]
+		[HttpPatch("edit/perception")]
+		public async Task<Perception> EditCharacterPerceptionAsync([FromBody] EditPerceptionRequest request)
+		{
+			return await mediator.Send(new EditPerceptionCommand(HttpContext.GetUserId(), request.CharacterId, request.Proficiency));
 		}
 
 		/// <summary>
