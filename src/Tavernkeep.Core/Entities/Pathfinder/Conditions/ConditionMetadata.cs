@@ -3,7 +3,7 @@ using Tavernkeep.Core.Entities.Pathfinder.Modifiers;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 {
-	public class ConditionMetadata : Entity
+	public class ConditionMetadata : NameEntity
 	{
 		#region Constructors
 
@@ -13,7 +13,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 
 		#region Properties
 
-		public string Name { get; set; } = default!;
 		public string Description { get; set; } = default!;
 		public bool HasLevels { get; set; }
 		public int Level { get; set; }

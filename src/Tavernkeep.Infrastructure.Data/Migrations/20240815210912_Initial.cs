@@ -15,7 +15,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 name: "ConditionMetadata",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     HasLevels = table.Column<bool>(type: "INTEGER", nullable: false),
@@ -25,7 +24,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConditionMetadata", x => x.Id);
+                    table.PrimaryKey("PK_ConditionMetadata", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,6 +68,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Medicine = table.Column<string>(type: "TEXT", nullable: false),
                     Nature = table.Column<string>(type: "TEXT", nullable: false),
                     Occultism = table.Column<string>(type: "TEXT", nullable: false),
+                    Perception = table.Column<string>(type: "TEXT", nullable: false),
                     Performance = table.Column<string>(type: "TEXT", nullable: false),
                     Reflex = table.Column<string>(type: "TEXT", nullable: false),
                     Religion = table.Column<string>(type: "TEXT", nullable: false),

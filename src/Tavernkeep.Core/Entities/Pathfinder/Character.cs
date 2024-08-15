@@ -7,7 +7,7 @@ using Tavernkeep.Core.Entities.Pathfinder.Properties;
 namespace Tavernkeep.Core.Entities.Pathfinder
 {
 	[Table("Characters")]
-	public class Character : Entity
+	public class Character : GuidEntity
 	{
 		#region Constructors
 

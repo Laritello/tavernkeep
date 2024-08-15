@@ -8,7 +8,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
 	{
 		public void Configure(EntityTypeBuilder<ConditionMetadata> builder)
 		{
-			builder.HasKey(c => c.Id);
+			builder.HasKey(c => c.Name);
 			builder.Property(c => c.Name).IsRequired();
 			builder.Property(c => c.Description).IsRequired();
 			builder.Property(c => c.HasLevels).IsRequired();

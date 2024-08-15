@@ -3,7 +3,7 @@ using Tavernkeep.Core.Specifications;
 
 namespace Tavernkeep.Core.Repositories
 {
-	public interface IRepositoryBase<T, in TId> where T : Entity
+	public interface IGuidRepositoryBase<T, in TId> where T : GuidEntity
 	{
 		Task<T?> FindAsync(TId id, ISpecification<T> specification = default!, CancellationToken cancellationToken = default);
 		Task<T?> FindAsync(ISpecification<T> specification = default!, CancellationToken cancellationToken = default);
