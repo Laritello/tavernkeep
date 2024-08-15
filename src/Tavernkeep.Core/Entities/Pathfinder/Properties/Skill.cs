@@ -6,7 +6,7 @@ using Tavernkeep.Core.Entities.Pathfinder.Modifiers.Managers;
 using Tavernkeep.Core.Entities.Snapshots;
 using Tavernkeep.Core.Extensions;
 
-namespace Tavernkeep.Core.Entities.Pathfinder
+namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
 	public class Skill : IModifiable
 	{

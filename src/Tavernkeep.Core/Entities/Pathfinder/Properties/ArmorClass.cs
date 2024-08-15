@@ -5,7 +5,7 @@ using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Pathfinder.Modifiers.Managers;
 using Tavernkeep.Core.Extensions;
 
-namespace Tavernkeep.Core.Entities.Pathfinder
+namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
 	public class ArmorClass : IModifiable
 	{

@@ -2,7 +2,7 @@
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Extensions;
 
-namespace Tavernkeep.Core.Entities.Pathfinder
+namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
 	public class Lore
 	{

@@ -1,4 +1,4 @@
-﻿namespace Tavernkeep.Core.Entities.Pathfinder
+﻿namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
 	public class Health
 	{
@@ -18,7 +18,7 @@
 			Current = 1;
 		}
 
-		public Health(int max, int current, int temporary) 
+		public Health(int max, int current, int temporary)
 		{
 			Max = max;
 			Current = current;

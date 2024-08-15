@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Enums;
 
-namespace Tavernkeep.Core.Entities.Pathfinder
+namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
 	public class Ability
 	{
