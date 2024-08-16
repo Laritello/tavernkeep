@@ -150,8 +150,9 @@ namespace Tavernkeep.Server.Extensions
 				var conditions = JsonSerializer.Deserialize<List<ConditionMetadata>>(json) ?? [];
 
 				context.Set<ConditionMetadata>().AddRange(conditions);
-				context.SaveChanges();
 			}
+
+			context.SaveChanges();
 
 			return provider;
 		}
