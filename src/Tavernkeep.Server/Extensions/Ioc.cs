@@ -10,6 +10,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
+using Tavernkeep.Infrastructure.Data.Extensions;
 using Tavernkeep.Infrastructure.Data.Repositories;
 using Tavernkeep.Infrastructure.Data.Utility;
 using Tavernkeep.Infrastructure.Notifications.Storage;
@@ -133,27 +134,7 @@ namespace Tavernkeep.Server.Extensions
 			var scope = provider.CreateScope();
 			var context = scope.ServiceProvider.GetRequiredService<SessionContext>();
 			context.Database.Migrate();
-
-			if (!context.Set<User>().Any())
-			{
-				context.Set<User>().Add(new("admin", "admin", UserRole.Master)
-				{
-					Id = Guid.NewGuid()
-				});
-			}
-
-			if (!context.Set<ConditionMetadata>().Any())
-			{
-				using var sr = new StreamReader("Resources/Conditions.en-UK.json");
-
-				var json = sr.ReadToEnd();
-				var conditions = JsonSerializer.Deserialize<List<ConditionMetadata>>(json) ?? [];
-
-				context.Set<ConditionMetadata>().AddRange(conditions);
-			}
-
-			context.SaveChanges();
-
+			
 			return provider;
 		}
 	}

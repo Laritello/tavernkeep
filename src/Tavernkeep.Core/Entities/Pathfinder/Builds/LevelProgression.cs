@@ -1,4 +1,4 @@
-﻿using Tavernkeep.Core.Contracts.Interfaces;
+﻿using Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Builds
 {
@@ -17,7 +17,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds
 		#region Properties
 
 		public int Level { get; set; }
-		public List<ILevelProgressionAdvancements> Advancements { get; set; }
+		public List<Advancement> Advancements { get; set; }
 
 		#endregion
 	}

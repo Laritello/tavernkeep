@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using Tavernkeep.Application.Mapping.Profiles;
 using Tavernkeep.Application.UseCases.Users.Commands.CreateUser;
+using Tavernkeep.Infrastructure.Data.Extensions;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
 using Tavernkeep.Infrastructure.Notifications.Providers;
 using Tavernkeep.Infrastructure.Notifications.Serialization;
@@ -84,7 +85,9 @@ builder.Logging.ClearProviders().AddConsole();
 
 var app = builder.Build();
 
-app.Services.ApplyDatabaseMigrations();
+app.Services
+	.ApplyDatabaseMigrations()
+	.SeedData();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
