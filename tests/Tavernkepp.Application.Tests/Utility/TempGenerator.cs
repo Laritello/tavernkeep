@@ -1,5 +1,6 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements;
 
 namespace Tavernkepp.Application.Tests.Utility
 {
@@ -13,6 +14,84 @@ namespace Tavernkepp.Application.Tests.Utility
 				Id = id,
 				Name = "Soveliss",
 				Level = 3
+			};
+
+			character.Build.Ancestry = new()
+			{
+				Name = "Elf",
+				Progression =
+				[
+					new(1)
+					{
+						Level = 1,
+						Advancements =
+						[
+							new AbilityBoostAdvancement()
+							{
+								Possible = [AbilityType.Dexterity],
+								Selected = AbilityType.Dexterity
+							},
+							new AbilityBoostAdvancement()
+							{
+								Possible = [AbilityType.Intelligence],
+								Selected = AbilityType.Intelligence
+							},
+							new AbilityBoostAdvancement()
+							{
+								Possible = [AbilityType.Strength, AbilityType.Constitution, AbilityType.Wisdom, AbilityType.Charisma],
+								Selected = AbilityType.Strength
+							},
+							new AbilityFlawAdvancement(){
+								Possible = [AbilityType.Constitution],
+								Selected = AbilityType.Constitution
+							}
+						]
+					},
+				]
+			};
+
+			character.Build.Background = new()
+			{
+				Name = "Scholar (Religion)",
+				Progression =
+				[
+					new(1)
+					{
+						Level = 1,
+						Advancements =
+						[
+							new AbilityBoostAdvancement()
+							{
+								Possible = [AbilityType.Intelligence, AbilityType.Wisdom],
+								Selected = AbilityType.Intelligence
+							},
+							new AbilityFlawAdvancement(){
+								Possible = [AbilityType.Strength, AbilityType.Dexterity, AbilityType.Constitution, AbilityType.Intelligence, AbilityType.Wisdom, AbilityType.Charisma],
+								Selected = AbilityType.Strength
+							}
+						]
+					},
+				]
+			};
+
+			character.Build.Class = new()
+			{
+				Name = "Cleric",
+				Progression =
+				[
+					new(1)
+					{
+						Level = 1,
+						Advancements =
+						[
+							new AbilityBoostAdvancement()
+							{
+								Possible = [AbilityType.Wisdom],
+								Selected = AbilityType.Wisdom
+							}
+						]
+					},
+				]
 			};
 
 			character.Strength.Score = 12;

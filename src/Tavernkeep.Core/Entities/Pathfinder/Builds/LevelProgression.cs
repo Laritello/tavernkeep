@@ -20,5 +20,20 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds
 		public List<Advancement> Advancements { get; set; }
 
 		#endregion
+
+		#region Operators
+
+		public static LevelProgression operator +(LevelProgression a, LevelProgression b)
+		{
+			if (a.Level != b.Level)
+				throw new InvalidOperationException("To combine two LevelProgression object they must have the same level.");
+
+			return new(a.Level)
+			{
+				Advancements = [.. a.Advancements, .. b.Advancements]
+			};
+		}
+
+		#endregion
 	}
 }

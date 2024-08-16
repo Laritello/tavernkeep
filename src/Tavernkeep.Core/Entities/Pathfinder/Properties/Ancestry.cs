@@ -15,5 +15,9 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 		{
 			Progression = [];
 		}
+
+		public LevelProgression this[int level] => Progression.FirstOrDefault(p => p.Level == level) ?? new(level);
+
+		public static Ancestry Empty => new();
 	}
 }
