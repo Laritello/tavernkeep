@@ -7,6 +7,7 @@ using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.Services;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
@@ -134,7 +135,7 @@ namespace Tavernkeep.Server.Extensions
 			var scope = provider.CreateScope();
 			var context = scope.ServiceProvider.GetRequiredService<SessionContext>();
 			context.Database.Migrate();
-			
+
 			return provider;
 		}
 	}

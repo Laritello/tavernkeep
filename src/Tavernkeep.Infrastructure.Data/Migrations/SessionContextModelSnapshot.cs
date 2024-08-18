@@ -45,6 +45,52 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Ancestries.AncestryMetadata", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("HitPoints")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Languages")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Speed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Tags")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Ancestries");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Backgrounds.BackgroundMetadata", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Backgrounds");
+                });
+
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Character", b =>
                 {
                     b.Property<Guid>("Id")
@@ -70,6 +116,20 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Characters");
                 });
 
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Classes.ClassMetadata", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Classes");
+                });
+
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionMetadata", b =>
                 {
                     b.Property<string>("Name")
@@ -87,49 +147,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasKey("Name");
 
-                    b.ToTable("ConditionMetadata");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Ancestry", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Name");
-
-                    b.ToTable("Ancestries");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Background", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Name");
-
-                    b.ToTable("Backgrounds");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Class", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Name");
-
-                    b.ToTable("Classes");
+                    b.ToTable("Conditions");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.RefreshToken", b =>
@@ -237,6 +255,68 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Ancestries.AncestryMetadata", b =>
+                {
+                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Builds.LevelProgression", "Progression", b1 =>
+                        {
+                            b1.Property<string>("AncestryMetadataName")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAddOrUpdate()
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("Advancements")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Level")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("AncestryMetadataName", "Id");
+
+                            b1.ToTable("Ancestries");
+
+                            b1.ToJson("Progression");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AncestryMetadataName");
+                        });
+
+                    b.Navigation("Progression");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Backgrounds.BackgroundMetadata", b =>
+                {
+                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Builds.LevelProgression", "Progression", b1 =>
+                        {
+                            b1.Property<string>("BackgroundMetadataName")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("Advancements")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Level")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("BackgroundMetadataName", "Id");
+
+                            b1.ToTable("Backgrounds");
+
+                            b1.ToJson("Progression");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BackgroundMetadataName");
+                        });
+
+                    b.Navigation("Progression");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Character", b =>
@@ -1156,6 +1236,37 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Classes.ClassMetadata", b =>
+                {
+                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Builds.LevelProgression", "Progression", b1 =>
+                        {
+                            b1.Property<string>("ClassMetadataName")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("Advancements")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Level")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("ClassMetadataName", "Id");
+
+                            b1.ToTable("Classes");
+
+                            b1.ToJson("Progression");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ClassMetadataName");
+                        });
+
+                    b.Navigation("Progression");
+                });
+
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionMetadata", b =>
                 {
                     b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Modifiers.Modifier", "Modifiers", b1 =>
@@ -1185,7 +1296,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                             b1.HasKey("ConditionMetadataName", "Id");
 
-                            b1.ToTable("ConditionMetadata");
+                            b1.ToTable("Conditions");
 
                             b1.ToJson("Modifiers");
 
@@ -1214,7 +1325,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                             b1.HasKey("ConditionMetadataName", "Id");
 
-                            b1.ToTable("ConditionMetadata");
+                            b1.ToTable("Conditions");
 
                             b1.ToJson("Related");
 
@@ -1251,7 +1362,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                                     b2.HasKey("ConditionMetadataName", "ConditionId", "Id");
 
-                                    b2.ToTable("ConditionMetadata");
+                                    b2.ToTable("Conditions");
 
                                     b2.ToJson("Modifiers");
 
@@ -1265,99 +1376,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Modifiers");
 
                     b.Navigation("Related");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Ancestry", b =>
-                {
-                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Builds.LevelProgression", "Progression", b1 =>
-                        {
-                            b1.Property<string>("AncestryName")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAddOrUpdate()
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("Advancements")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Level")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("AncestryName", "Id");
-
-                            b1.ToTable("Ancestries");
-
-                            b1.ToJson("Progression");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AncestryName");
-                        });
-
-                    b.Navigation("Progression");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Background", b =>
-                {
-                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Builds.LevelProgression", "Progression", b1 =>
-                        {
-                            b1.Property<string>("BackgroundName")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("Advancements")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Level")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("BackgroundName", "Id");
-
-                            b1.ToTable("Backgrounds");
-
-                            b1.ToJson("Progression");
-
-                            b1.WithOwner()
-                                .HasForeignKey("BackgroundName");
-                        });
-
-                    b.Navigation("Progression");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Class", b =>
-                {
-                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Builds.LevelProgression", "Progression", b1 =>
-                        {
-                            b1.Property<string>("ClassName")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("Advancements")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Level")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("ClassName", "Id");
-
-                            b1.ToTable("Classes");
-
-                            b1.ToJson("Progression");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ClassName");
-                        });
-
-                    b.Navigation("Progression");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>

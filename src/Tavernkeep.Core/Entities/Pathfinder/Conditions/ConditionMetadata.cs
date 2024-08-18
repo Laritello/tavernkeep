@@ -1,8 +1,10 @@
-﻿using Tavernkeep.Core.Entities.Base;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Tavernkeep.Core.Entities.Base;
 using Tavernkeep.Core.Entities.Pathfinder.Modifiers;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 {
+	[Table("Conditions")]
 	public class ConditionMetadata : NameEntity
 	{
 		#region Constructors

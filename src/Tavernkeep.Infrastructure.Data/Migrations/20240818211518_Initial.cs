@@ -12,7 +12,51 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ConditionMetadata",
+                name: "Ancestries",
+                columns: table => new
+                {
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Tags = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    HitPoints = table.Column<int>(type: "INTEGER", nullable: false),
+                    Size = table.Column<string>(type: "TEXT", nullable: false),
+                    Speed = table.Column<int>(type: "INTEGER", nullable: false),
+                    Languages = table.Column<string>(type: "TEXT", nullable: false),
+                    Progression = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ancestries", x => x.Name);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Backgrounds",
+                columns: table => new
+                {
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Progression = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Backgrounds", x => x.Name);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Classes",
+                columns: table => new
+                {
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Progression = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Classes", x => x.Name);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Conditions",
                 columns: table => new
                 {
                     Name = table.Column<string>(type: "TEXT", nullable: false),
@@ -24,7 +68,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConditionMetadata", x => x.Name);
+                    table.PrimaryKey("PK_Conditions", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,7 +223,16 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 table: "Characters");
 
             migrationBuilder.DropTable(
-                name: "ConditionMetadata");
+                name: "Ancestries");
+
+            migrationBuilder.DropTable(
+                name: "Backgrounds");
+
+            migrationBuilder.DropTable(
+                name: "Classes");
+
+            migrationBuilder.DropTable(
+                name: "Conditions");
 
             migrationBuilder.DropTable(
                 name: "Messages");
