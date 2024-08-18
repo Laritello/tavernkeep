@@ -152,6 +152,9 @@
                 </v-col>
             </v-row>
         </v-container>
+        <v-container>
+            <ConditionsView :characterId="character.id" :conditions="character.conditions" />
+        </v-container>
     </v-card>
 </template>
 
@@ -166,6 +169,7 @@ import CharacterHub from '@/api/hubs/CharacterHub';
 import { onMounted, ref, type Ref } from 'vue';
 import type { Lore } from '@/contracts/character/Lore';
 import type { CharacterEditedNotification } from '@/contracts/notifications/CharacterEditedNotification';
+import ConditionsView from '@/components/character/ConditionsView.vue';
 
 const client = ApiClientFactory.createApiClient();
 
@@ -176,9 +180,9 @@ const props = defineProps<{
 const dialogAbilityScore = ref(0);
 const dialogSkillProficiency = ref(Proficiency.Untrained);
 
-onMounted(() => {
+onMounted(async () => {
     CharacterHub.connection.on('OnCharacterEdited', (notification: CharacterEditedNotification) => {
-        console.log(notification.character);
+        console.info(notification.character);
     });
 });
 
