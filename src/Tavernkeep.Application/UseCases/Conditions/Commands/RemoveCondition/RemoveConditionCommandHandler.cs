@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
@@ -11,7 +13,8 @@ namespace Tavernkeep.Application.UseCases.Conditions.Commands.RemoveCondition
 	public class RemoveConditionCommandHandler(
 		IUserRepository userRepository,
 		ICharacterRepository characterRepository,
-		INotificationService notificationService
+		INotificationService notificationService,
+		IMapper mapper
 		) : IRequestHandler<RemoveConditionCommand, Character>
 	{
 		public async Task<Character> Handle(RemoveConditionCommand request, CancellationToken cancellationToken)
@@ -31,7 +34,7 @@ namespace Tavernkeep.Application.UseCases.Conditions.Commands.RemoveCondition
 			character.Conditions.RemoveAll(x => x.Name == request.ConditionName);
 
 			await characterRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueCharacterNotificationAsync(new CharacterEditedNotification(character), cancellationToken);
+			await notificationService.QueueCharacterNotificationAsync(new CharacterEditedNotification(mapper.Map<CharacterDto>(character)), cancellationToken);
 
 			return character;
 		}

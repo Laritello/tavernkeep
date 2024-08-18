@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
@@ -11,7 +13,8 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrow
 	public class EditSavingThrowCommandHandler(
 		IUserRepository userRepository,
 		ICharacterRepository characterRepository,
-		INotificationService notificationService
+		INotificationService notificationService,
+		IMapper mapper
 		) : IRequestHandler<EditSavingThrowCommand, SavingThrow>
 	{
 		public async Task<SavingThrow> Handle(EditSavingThrowCommand request, CancellationToken cancellationToken)
@@ -30,7 +33,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrow
 
 			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueCharacterNotificationAsync(new CharacterEditedNotification(character), cancellationToken);
+			await notificationService.QueueCharacterNotificationAsync(new CharacterEditedNotification(mapper.Map<CharacterDto>(character)), cancellationToken);
 
 			return savingThrow;
 		}

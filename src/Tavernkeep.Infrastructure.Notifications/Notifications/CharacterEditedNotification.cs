@@ -1,9 +1,10 @@
-﻿using Tavernkeep.Core.Entities.Pathfinder;
+﻿using Tavernkeep.Core.Contracts.Character.Dtos;
+using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkeep.Infrastructure.Notifications.Notifications
 {
-	public class CharacterEditedNotification(Character character)
+	public class CharacterEditedNotification(CharacterDto character)
 	{
-		public Character Character { get; set; } = character;
+		public CharacterDto Character { get; set; } = character;
 	}
 }

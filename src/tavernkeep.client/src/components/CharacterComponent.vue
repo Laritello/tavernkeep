@@ -180,12 +180,6 @@ const props = defineProps<{
 const dialogAbilityScore = ref(0);
 const dialogSkillProficiency = ref(Proficiency.Untrained);
 
-onMounted(async () => {
-    CharacterHub.connection.on('OnCharacterEdited', (notification: CharacterEditedNotification) => {
-        console.info(notification.character);
-    });
-});
-
 async function editAbility(isActive: Ref<boolean>, ability: Ability, score: number) {
     var response = await client.editAbility(props.character.id, ability.type, score);
 

@@ -45,12 +45,10 @@ async function removeCondtion(condition: Condition) {
 
 async function increaseCondtionLevel(condition: Condition) {
     await client.applyCondition(characterId, condition.name, condition.level + 1);
-    condition.level += 1;
 }
 
 async function decreaseCondtionLevel(condition: Condition) {
     await client.applyCondition(characterId, condition.name, condition.level - 1);
-    condition.level -= 1;
 }
 </script>
 
