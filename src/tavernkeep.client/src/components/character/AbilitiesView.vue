@@ -1,6 +1,7 @@
 <template>
-    <div class="card bg-neutral text-neutral-content w-96">
-        <div class="flex flex-col gap-2 card-body">
+    <div class="card card-body bg-neutral text-neutral-content w-96">
+        <h1 class="card-title">Abilities</h1>
+        <div class="flex flex-col gap-1">
             <AbilityView
                 v-for="ability in abilities"
                 :key="ability.type.toString()"

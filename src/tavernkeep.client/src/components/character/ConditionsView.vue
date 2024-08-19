@@ -1,5 +1,6 @@
 <template>
     <div class="card card-body bg-neutral text-neutral-content w-96">
+        <h1 class="card-title">Conditions</h1>
         <div v-for="condition in conditions" :key="condition.name" class="grid grid-cols-3 grid-flow-col">
             <span class="col-start-1">{{ condition.name }}</span>
             <div v-if="condition.hasLevels" class="flow col-start-2">
