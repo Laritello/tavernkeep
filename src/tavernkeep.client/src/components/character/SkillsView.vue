@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col">
-        <SkillView v-for="skill in skills" :skill="skill" :key="skill.type" />
+        <SkillView v-for="skill in skills" :skill="skill" :key="skill.type" @edit="$emit('edit', skill)" />
     </div>
 </template>
 

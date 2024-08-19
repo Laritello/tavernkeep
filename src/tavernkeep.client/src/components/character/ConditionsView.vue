@@ -1,20 +1,20 @@
 <template>
-    <div v-for="condition in conditions" :key="condition.name" class="flex items-center">
-        <span>{{ condition.name }}</span>
-        <div v-if="condition.hasLevels" class="flex items-center">
+    <div v-for="condition in conditions" :key="condition.name" class="grid grid-cols-3 grid-flow-col my-1 w-96">
+        <span class="col-start-1">{{ condition.name }}</span>
+        <div v-if="condition.hasLevels" class="flow col-start-2">
             <div
-                class="btn mx-2"
+                class="btn btn-xs mx-2"
                 :class="{ 'btn-disabled': condition.level <= 1 }"
                 @click="decreaseCondtionLevel(condition)"
             >
                 -
             </div>
             <span>{{ condition.level }}</span>
-            <div class="btn mx-2" @click="increaseCondtionLevel(condition)">+</div>
+            <div class="btn btn-xs mx-2" @click="increaseCondtionLevel(condition)">+</div>
         </div>
-        <div class="btn mx-2" @click="removeCondtion(condition)">X</div>
+        <div class="btn btn-error btn-xs mx-2 col-start-3 w-8" @click="removeCondtion(condition)">X</div>
     </div>
-    <div class="btn" @click="showApplyDialog">Add</div>
+    <div class="btn btn-success btn-sm" @click="showApplyDialog">Add</div>
 </template>
 
 <script lang="ts" setup>

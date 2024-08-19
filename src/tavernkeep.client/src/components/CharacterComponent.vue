@@ -12,6 +12,7 @@ import AbilitiesView from './character/AbilitiesView.vue';
 import SkillsView from './character/SkillsView.vue';
 import AbilityEditDialog from '@/components/dialogs/AbilityEditDialog.vue';
 import { useModal } from '@/composables/useModal';
+import SkillEditDialog from './dialogs/SkillEditDialog.vue';
 
 const client = ApiClientFactory.createApiClient();
 
@@ -27,6 +28,15 @@ async function showEditAbilityDialog(ability: Ability) {
     if (result.action === 'result') {
         ability.score = result.payload.score;
         client.editAbility(character.id, ability.type, ability.score);
+    }
+}
+
+async function showEditSkillDialog(skill: Skill) {
+    const modal = useModal();
+    const result = await modal.show(SkillEditDialog, { skill });
+    if (result.action === 'result') {
+        skill.proficiency = result.payload.proficiency;
+        client.editSkill(character.id, skill.type, skill.proficiency);
     }
 }
 
@@ -47,68 +57,18 @@ async function updateLore(isActive: Ref<boolean>, lore: Lore, proficiency: Profi
 }
 </script>
 <template>
-    <v-card width="500">
+    <v-card>
         <v-card-title>{{ character.name }}</v-card-title>
         <v-container>
-            <v-row no-gutters>
+            <v-row no-gutters class="flex flex-col gap-y-4">
                 <v-divider vertical> </v-divider>
-                <v-col cols="7">
-                    <v-row>
-                        <AbilitiesView :abilities="character.abilities" @edit="showEditAbilityDialog" />
-                    </v-row>
-                    <v-row>
-                        <SkillsView :skills="character.skills" />
-                    </v-row>
-                    <v-row
-                        v-for="value in character.lores"
-                        v-bind:key="value.topic"
-                        align="center"
-                        no-gutters
-                        class="pl-3"
-                    >
-                        <v-col>
-                            <div class="text-body">Lore ({{ value.topic }}): {{ value.proficiency }}</div>
-                        </v-col>
-                        <v-col cols="auto">
-                            <v-dialog width="500">
-                                <template v-slot:activator="{ props }">
-                                    <v-btn v-bind="props" icon="$edit" size="x-small" variant="text"></v-btn>
-                                </template>
-
-                                <template v-slot:default="{ isActive }">
-                                    <v-card title="Edit skill">
-                                        <v-card-text>
-                                            <div class="mb-1">
-                                                Enter the new proficiency for Lore({{ value.topic }}).
-                                            </div>
-                                            <v-combobox
-                                                label="Proficiency"
-                                                v-model="dialogSkillProficiency"
-                                                :items="[
-                                                    Proficiency.Untrained,
-                                                    Proficiency.Trained,
-                                                    Proficiency.Expert,
-                                                    Proficiency.Master,
-                                                    Proficiency.Legendary,
-                                                ]"
-                                            >
-                                            </v-combobox>
-                                        </v-card-text>
-
-                                        <v-card-actions>
-                                            <v-spacer></v-spacer>
-                                            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-                                            <v-btn
-                                                text="Confirm"
-                                                @click="updateLore(isActive, value, dialogSkillProficiency)"
-                                            ></v-btn>
-                                        </v-card-actions>
-                                    </v-card>
-                                </template>
-                            </v-dialog>
-                        </v-col>
-                    </v-row>
-                </v-col>
+                <AbilitiesView :abilities="character.abilities" @edit="showEditAbilityDialog" />
+                <SkillsView :skills="character.skills" @edit="showEditSkillDialog" />
+                <v-row v-for="value in character.lores" v-bind:key="value.topic" align="center" no-gutters class="pl-3">
+                    <v-col>
+                        <div class="text-body">Lore ({{ value.topic }}): {{ value.proficiency }}</div>
+                    </v-col>
+                </v-row>
             </v-row>
         </v-container>
         <v-container>
