@@ -36,16 +36,8 @@ async function showEditSkillDialog(skill: Skill) {
     const result = await modal.show(SkillEditDialog, { skill });
     if (result.action === 'result') {
         skill.proficiency = result.payload.proficiency;
-        client.editSkill(character.id, skill.type, skill.proficiency);
+        await client.editSkill(character.id, skill.type, skill.proficiency);
     }
-}
-
-async function updateSkill(isActive: Ref<boolean>, skill: Skill, proficiency: Proficiency) {
-    var response = await client.editSkill(character.id, skill.type, proficiency);
-
-    skill.proficiency = response.proficiency;
-    dialogSkillProficiency.value = Proficiency.Untrained; // TODO: On show set selected skill current value
-    isActive.value = false;
 }
 
 async function updateLore(isActive: Ref<boolean>, lore: Lore, proficiency: Proficiency) {
@@ -57,11 +49,10 @@ async function updateLore(isActive: Ref<boolean>, lore: Lore, proficiency: Profi
 }
 </script>
 <template>
-    <v-card>
-        <v-card-title>{{ character.name }}</v-card-title>
-        <v-container>
-            <v-row no-gutters class="flex flex-col gap-y-4">
-                <v-divider vertical> </v-divider>
+    <div class="p-3">
+        <h1 class="text-4xl py-2 font-semibold">{{ character.name }}</h1>
+        <div class="container flex gap-2">
+            <div class="flex flex-col gap-2">
                 <AbilitiesView :abilities="character.abilities" @edit="showEditAbilityDialog" />
                 <SkillsView :skills="character.skills" @edit="showEditSkillDialog" />
                 <v-row v-for="value in character.lores" v-bind:key="value.topic" align="center" no-gutters class="pl-3">
@@ -69,10 +60,8 @@ async function updateLore(isActive: Ref<boolean>, lore: Lore, proficiency: Profi
                         <div class="text-body">Lore ({{ value.topic }}): {{ value.proficiency }}</div>
                     </v-col>
                 </v-row>
-            </v-row>
-        </v-container>
-        <v-container>
-            <ConditionsView :characterId="character.id" :conditions="character.conditions" />
-        </v-container>
-    </v-card>
+            </div>
+            <ConditionsView :characterId="character.id" :conditions="character.conditions" class="h-fit" />
+        </div>
+    </div>
 </template>

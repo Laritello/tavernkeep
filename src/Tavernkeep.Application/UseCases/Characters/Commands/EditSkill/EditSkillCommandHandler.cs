@@ -1,20 +1,17 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
-using Tavernkeep.Infrastructure.Notifications.Notifications;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSkill
 {
 	public class EditSkillCommandHandler(
 		IUserRepository userRepository,
 		ICharacterRepository characterRepository,
-		INotificationService notificationService,
-		IMapper mapper
+		INotificationService notificationService
 		) : IRequestHandler<EditSkillCommand, Skill>
 	{
 		public async Task<Skill> Handle(EditSkillCommand request, CancellationToken cancellationToken)
@@ -33,7 +30,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSkill
 
 			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueCharacterNotificationAsync(new CharacterEditedNotification(mapper.Map<CharacterDto>(character)), cancellationToken);
+			await notificationService.QueueCharacterNotificationAsync(character, cancellationToken);
 
 			return skill;
 		}

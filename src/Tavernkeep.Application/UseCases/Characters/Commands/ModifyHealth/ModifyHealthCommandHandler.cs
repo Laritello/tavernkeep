@@ -1,20 +1,16 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
-using Tavernkeep.Infrastructure.Notifications.Notifications;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.ModifyHealth
 {
 	public class ModifyHealthCommandHandler(
 		IUserRepository userRepository,
 		ICharacterRepository characterRepository,
-		INotificationService notificationService,
-		IMapper mapper
+		INotificationService notificationService
 		) : IRequestHandler<ModifyHealthCommand, Health>
 	{
 		public async Task<Health> Handle(ModifyHealthCommand request, CancellationToken cancellationToken)
@@ -35,7 +31,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.ModifyHealth
 
 			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueCharacterNotificationAsync(new CharacterEditedNotification(mapper.Map<CharacterDto>(character)), cancellationToken);
+			await notificationService.QueueCharacterNotificationAsync(character, cancellationToken);
 
 			return character.Health;
 		}
