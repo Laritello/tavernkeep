@@ -5,7 +5,6 @@ import type { Character } from '@/entities/Character';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import CharacterHub from '@/api/hubs/CharacterHub';
-import type { CharacterEditedNotification } from '@/contracts/notifications/CharacterEditedNotification';
 
 type Characters = Record<string, Character>;
 
@@ -13,9 +12,9 @@ export const useCharacters = defineStore('characters', () => {
     const api: AxiosApiClient = ApiClientFactory.createApiClient();
     const dictionary = reactive<Characters>({});
 
-    CharacterHub.connection.on('OnCharacterEdited', (notification: CharacterEditedNotification) => {
-        console.log(notification.character);
-        Object.assign(dictionary[notification.character.id], notification.character);
+    CharacterHub.connection.on('OnCharacterEdited', (character: Character) => {
+        console.log(character);
+        Object.assign(dictionary[character.id], character);
     });
 
     function get(id: string): Character {

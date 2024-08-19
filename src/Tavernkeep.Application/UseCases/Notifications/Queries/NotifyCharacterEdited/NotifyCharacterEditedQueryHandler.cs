@@ -6,11 +6,15 @@ using Tavernkeep.Infrastructure.Notifications.Hubs;
 
 namespace Tavernkeep.Application.UseCases.Notifications.Queries.NotifyCharacterEdited
 {
-	public class NotifyCharacterEditedQueryHandler(IHubContext<CharacterHub, ICharacterHub> context) : IRequestHandler<NotifyCharacterEditedQuery>
+	public class NotifyCharacterEditedQueryHandler(
+		IHubContext<CharacterHub, ICharacterHub> context,
+		IMapper mapper
+		) : IRequestHandler<NotifyCharacterEditedQuery>
 	{
 		public async Task Handle(NotifyCharacterEditedQuery request, CancellationToken cancellationToken)
 		{
-			await context.Clients.All.OnCharacterEdited(request.Notification);
+			var character = mapper.Map<CharacterDto>(request.Character);
+			await context.Clients.All.OnCharacterEdited(character);
 		}
 	}
 }
