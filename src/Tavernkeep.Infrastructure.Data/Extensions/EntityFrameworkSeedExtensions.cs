@@ -1,9 +1,9 @@
-﻿using System.Text.Json;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Infrastructure.Data.Context;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Tavernkeep.Infrastructure.Data.Extensions
 {
@@ -40,7 +40,7 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 			return context;
 		}
 
-		private static SessionContext SeedConditions(this SessionContext context) 
+		private static SessionContext SeedConditions(this SessionContext context)
 		{
 			if (!context.Set<ConditionMetadata>().Any())
 			{

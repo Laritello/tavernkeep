@@ -6,7 +6,7 @@ using Tavernkeep.Infrastructure.Data.Repositories.Base;
 
 namespace Tavernkeep.Infrastructure.Data.Repositories
 {
-    public class CharacterEFRepository(SessionContext context) : EntityFrameworkGuidRepository<Character>(context), ICharacterRepository
+	public class CharacterEFRepository(SessionContext context) : EntityFrameworkGuidRepository<Character>(context), ICharacterRepository
 	{
 		public async Task<List<Character>> GetAllCharactersAsync(CancellationToken cancellationToken = default)
 		{

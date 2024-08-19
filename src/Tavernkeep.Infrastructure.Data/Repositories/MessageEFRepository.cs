@@ -8,7 +8,7 @@ using Tavernkeep.Infrastructure.Data.Repositories.Base;
 
 namespace Tavernkeep.Infrastructure.Data.Repositories
 {
-    public class MessageEFRepository(SessionContext context) : EntityFrameworkGuidRepository<Message>(context), IMessageRepository
+	public class MessageEFRepository(SessionContext context) : EntityFrameworkGuidRepository<Message>(context), IMessageRepository
 	{
 		public async Task PurgeMessagesAsync(CancellationToken cancellationToken = default)
 		{

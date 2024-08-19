@@ -6,7 +6,7 @@ using Tavernkeep.Infrastructure.Data.Repositories.Base;
 
 namespace Tavernkeep.Infrastructure.Data.Repositories
 {
-    public class ConditionMetadataEFRepository(SessionContext context) : EntityFrameworkNameRepository<ConditionMetadata>(context), IConditionMetadataRepository
+	public class ConditionMetadataEFRepository(SessionContext context) : EntityFrameworkNameRepository<ConditionMetadata>(context), IConditionMetadataRepository
 	{
 		public Task<List<ConditionMetadata>> GetAllConditionsAsync(CancellationToken cancellationToken = default)
 		{

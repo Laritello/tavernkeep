@@ -7,7 +7,6 @@ using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyCharacterEdited;
 using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyRollMessage;
 using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyTextMessage;
-using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Entities.Pathfinder;
 

@@ -2,5 +2,5 @@
 
 namespace Tavernkeep.Core.Repositories
 {
-    public interface IBackgroundMetadataRepository : INameRepositoryBase<BackgroundMetadata, string> { }
+	public interface IBackgroundMetadataRepository : INameRepositoryBase<BackgroundMetadata, string> { }
 }

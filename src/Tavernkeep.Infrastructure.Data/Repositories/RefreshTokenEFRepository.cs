@@ -6,7 +6,7 @@ using Tavernkeep.Infrastructure.Data.Repositories.Base;
 
 namespace Tavernkeep.Infrastructure.Data.Repositories
 {
-    public class RefreshTokenEFRepository(SessionContext context) : EntityFrameworkGuidRepository<RefreshToken>(context), IRefreshTokenRepository
+	public class RefreshTokenEFRepository(SessionContext context) : EntityFrameworkGuidRepository<RefreshToken>(context), IRefreshTokenRepository
 	{
 		public async Task<List<RefreshToken>> GetExpiredTokensAsync(CancellationToken cancellationToken = default)
 		{

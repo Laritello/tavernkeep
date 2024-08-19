@@ -5,5 +5,5 @@ using Tavernkeep.Infrastructure.Data.Repositories.Base;
 
 namespace Tavernkeep.Infrastructure.Data.Repositories
 {
-    public class ClassMetadataEFRepository(SessionContext context) : EntityFrameworkNameRepository<ClassMetadata>(context), IClassMetadataRepository { }
+	public class ClassMetadataEFRepository(SessionContext context) : EntityFrameworkNameRepository<ClassMetadata>(context), IClassMetadataRepository { }
 }

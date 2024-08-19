@@ -6,7 +6,7 @@ using Tavernkeep.Core.Entities.Pathfinder.Classes;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Builds
 {
-    public class Build
+	public class Build
 	{
 		private Dictionary<int, LevelProgression>? _progression;
 
