@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Exceptions;
@@ -11,7 +13,8 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditAbility
 	public class EditAbilityCommandHandler(
 		IUserRepository userRepository,
 		ICharacterRepository characterRepository,
-		INotificationService notificationService
+		INotificationService notificationService,
+		IMapper mapper
 		) : IRequestHandler<EditAbilityCommand, Ability>
 	{
 		public async Task<Ability> Handle(EditAbilityCommand request, CancellationToken cancellationToken)
@@ -30,7 +33,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditAbility
 
 			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueCharacterNotificationAsync(new CharacterEditedNotification(character), cancellationToken);
+			await notificationService.QueueCharacterNotificationAsync(new CharacterEditedNotification(mapper.Map<CharacterDto>(character)), cancellationToken);
 
 			return ability;
 		}

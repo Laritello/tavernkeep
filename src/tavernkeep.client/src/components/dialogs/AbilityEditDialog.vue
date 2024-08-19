@@ -45,7 +45,7 @@ watchEffect(() => {
 const score = ref(ability.score);
 
 function save() {
-    const payload = { type: ability.type, score: score.value };
+    const payload = { type: ability.type, score: score.value, modifier: ability.modifier };
     closeModal({ action: 'result', payload });
 }
 

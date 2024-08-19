@@ -1,5 +1,6 @@
 import type { Ability, Health, Lore, Skill } from '@/contracts/character';
 import type { AbilityType, SkillType } from '@/contracts/enums';
+import type { Condition } from './Condition';
 
 export interface Character {
     id: string;
@@ -11,4 +12,5 @@ export interface Character {
     skills: Record<SkillType, Skill>;
 
     lores: Lore[];
+    conditions: Condition[];
 }

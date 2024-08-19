@@ -1,10 +1,10 @@
 <template>
-    <div class="flex flex-wrap justify-center gap-2">
+    <div class="flex flex-col gap-2">
         <AbilityView
             v-for="ability in abilities"
             :key="ability.type.toString()"
             :ability="ability"
-            @click="() => showEditDialog(ability)"
+            @edit="$emit('edit', ability)"
         />
     </div>
 </template>
@@ -12,17 +12,7 @@
 import type { Ability } from '@/contracts/character';
 
 import AbilityView from './AbilityView.vue';
-import AbilityEditDialog from '../dialogs/AbilityEditDialog.vue';
-import { useModal } from '@/composables/useModal';
 import type { AbilityType } from '@/contracts/enums';
 
-const modal = useModal();
 const { abilities } = defineProps<{ abilities: Record<AbilityType, Ability> }>();
-
-async function showEditDialog(ability: Ability) {
-    const result = await modal.show(AbilityEditDialog, { ability });
-    if (result.action === 'result') {
-        ability.score = result.payload.score;
-    }
-}
 </script>

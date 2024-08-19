@@ -8,7 +8,6 @@ import { useCharacters } from '@/stores/characters';
 import { useMessages } from '@/stores/messages';
 import { ref, watch } from 'vue';
 import { useAuth } from '@/composables/useAuth';
-import { useRouter } from 'vue-router';
 
 export const useAppState = defineStore('appState', () => {
     const session = useSession();
