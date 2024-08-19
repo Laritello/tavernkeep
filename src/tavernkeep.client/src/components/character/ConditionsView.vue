@@ -1,20 +1,22 @@
 <template>
-    <div v-for="condition in conditions" :key="condition.name" class="grid grid-cols-3 grid-flow-col my-1 w-96">
-        <span class="col-start-1">{{ condition.name }}</span>
-        <div v-if="condition.hasLevels" class="flow col-start-2">
-            <div
-                class="btn btn-xs mx-2"
-                :class="{ 'btn-disabled': condition.level <= 1 }"
-                @click="decreaseCondtionLevel(condition)"
-            >
-                -
+    <div class="card card-body bg-neutral text-neutral-content w-96">
+        <div v-for="condition in conditions" :key="condition.name" class="grid grid-cols-3 grid-flow-col">
+            <span class="col-start-1">{{ condition.name }}</span>
+            <div v-if="condition.hasLevels" class="flow col-start-2">
+                <div
+                    class="btn btn-xs mx-2"
+                    :class="{ 'btn-disabled': condition.level <= 1 }"
+                    @click="decreaseCondtionLevel(condition)"
+                >
+                    -
+                </div>
+                <span>{{ condition.level }}</span>
+                <div class="btn btn-xs mx-2" @click="increaseCondtionLevel(condition)">+</div>
             </div>
-            <span>{{ condition.level }}</span>
-            <div class="btn btn-xs mx-2" @click="increaseCondtionLevel(condition)">+</div>
+            <div class="btn btn-error btn-xs mx-2 col-start-3 w-8" @click="removeCondtion(condition)">X</div>
         </div>
-        <div class="btn btn-error btn-xs mx-2 col-start-3 w-8" @click="removeCondtion(condition)">X</div>
+        <div class="btn btn-success btn-sm" @click="showApplyDialog">Add</div>
     </div>
-    <div class="btn btn-success btn-sm" @click="showApplyDialog">Add</div>
 </template>
 
 <script lang="ts" setup>

@@ -1,11 +1,13 @@
 <template>
-    <div class="flex flex-col gap-2">
-        <AbilityView
-            v-for="ability in abilities"
-            :key="ability.type.toString()"
-            :ability="ability"
-            @edit="$emit('edit', ability)"
-        />
+    <div class="card bg-neutral text-neutral-content w-96">
+        <div class="flex flex-col gap-2 card-body">
+            <AbilityView
+                v-for="ability in abilities"
+                :key="ability.type.toString()"
+                :ability="ability"
+                @edit="$emit('edit', ability)"
+            />
+        </div>
     </div>
 </template>
 <script setup lang="ts">

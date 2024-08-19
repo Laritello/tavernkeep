@@ -1,8 +1,9 @@
 <template>
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-4 gap-4">
         <div class="col-start-1">{{ skill.type }}</div>
-        <div class="col-start-2">{{ skill.proficiency }}</div>
-        <button class="col-start-3 btn btn-xs w-10" @click="$emit('edit')">Edit</button>
+        <span class="col-start-2 mx-auto">{{ skill.bonus }}</span>
+        <div class="col-start-3">{{ skill.proficiency }}</div>
+        <button class="col-start-4 btn btn-xs w-10 mx-auto" @click="$emit('edit')">Edit</button>
     </div>
 </template>
 
