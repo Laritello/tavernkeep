@@ -1,24 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using Tavernkeep.Core.Entities.Pathfinder.Ancestries;
-using Tavernkeep.Core.Entities.Pathfinder.Backgrounds;
-using Tavernkeep.Core.Entities.Pathfinder.Classes;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Builds
 {
 	public class Build
 	{
+		[NotMapped]
 		private Dictionary<int, LevelProgression>? _progression;
 
 		[JsonIgnore]
 		public Character Owner { get; init; }
-		[NotMapped]
-		public AncestryMetadata Ancestry { get; set; } = AncestryMetadata.Empty;
-		[NotMapped]
-		public BackgroundMetadata Background { get; set; } = BackgroundMetadata.Empty;
-		[NotMapped]
-		public ClassMetadata Class { get; set; } = ClassMetadata.Empty;
+		public int Level { get; set; } = 1;
+		public Ancestry Ancestry { get; set; } = Ancestry.Empty;
+		public Background Background { get; set; } = Background.Empty;
+		public Class Class { get; set; } = Class.Empty;
 
+		[NotMapped]
 		public Dictionary<int, LevelProgression> Progression => _progression ??= CollectProgression();
 
 		public Build()

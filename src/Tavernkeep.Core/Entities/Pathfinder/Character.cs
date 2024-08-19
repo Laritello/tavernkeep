@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Base;
+using Tavernkeep.Core.Entities.Pathfinder.Builds;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
@@ -13,6 +14,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 
 		public Character()
 		{
+			Build = new(this);
 			Health = new(1, 1, 0);
 			Armor = new(this);
 
@@ -56,7 +58,8 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		public User Owner { get; set; } = default!;
 
 		public string Name { get; set; } = default!;
-		public int Level { get; set; }
+		public Build Build { get; set; }
+		public int Level => Build.Level;
 		public Health Health { get; set; }
 		public ArmorClass Armor { get; set; }
 		public List<Condition> Conditions { get; set; }

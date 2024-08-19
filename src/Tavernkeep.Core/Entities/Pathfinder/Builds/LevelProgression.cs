@@ -9,7 +9,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds
 		public LevelProgression(int level)
 		{
 			Level = level;
-			Advancements = [];
 		}
 
 		#endregion
@@ -17,7 +16,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds
 		#region Properties
 
 		public int Level { get; set; }
-		public List<Advancement> Advancements { get; set; }
+		public List<Advancement> Advancements { get; set; } = [];
 
 		#endregion
 
