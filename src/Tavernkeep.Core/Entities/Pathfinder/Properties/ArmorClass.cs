@@ -1,17 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Tavernkeep.Core.Calculations.Managers;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
-using Tavernkeep.Core.Entities.Pathfinder.Modifiers.Managers;
 using Tavernkeep.Core.Extensions;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
-	public class ArmorClass : IModifiable
+	public class ArmorClass
 	{
 		#region Backing fields
 
-		private IModifierManager _manager;
+		private IPropertyManager _manager;
 
 		#endregion
 
@@ -37,9 +37,9 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		[JsonIgnore]
 		[NotMapped]
-		public IModifierManager Manager => _manager ??= new GeneralModifierManager(Owner, ModifierTarget.ArmorClass);
+		public IPropertyManager Manager => _manager ??= new ArmorClassPropertyManager(Owner);
 		public ArmorProficiencies Proficiencies { get; set; }
-		public int Class => 10 + Owner.Dexterity.Modifier + Proficiencies[ArmorType.Unarmored].GetProficiencyBonus(Owner) + Manager.GetSummary().Total;
+		public int Class => 10 + Owner.Dexterity.Modifier + Proficiencies[ArmorType.Unarmored].GetProficiencyBonus(Owner) + Manager.GetBonus();
 
 		#endregion
 	}

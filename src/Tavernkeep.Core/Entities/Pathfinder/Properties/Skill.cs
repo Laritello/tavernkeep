@@ -1,18 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Tavernkeep.Core.Calculations.Managers;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
-using Tavernkeep.Core.Entities.Pathfinder.Modifiers.Managers;
 using Tavernkeep.Core.Entities.Snapshots;
 using Tavernkeep.Core.Extensions;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
-	public class Skill : IModifiable
+	public class Skill
 	{
 		#region Backing fields
 
-		private IModifierManager _manager;
+		private IPropertyManager _manager;
 
 		#endregion
 
@@ -39,11 +39,11 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		[JsonIgnore]
 		[NotMapped]
-		public IModifierManager Manager => _manager ??= new GeneralModifierManager(Owner, Type.ToTarget());
+		public IPropertyManager Manager => _manager ??= new SkillPropertyManager(Owner, Type.ToTarget());
 		public AbilityType BaseAbility { get; set; }
 		public SkillType Type { get; set; }
 		public Proficiency Proficiency { get; set; }
-		public int Bonus => Owner.GetSkillAbility(Type).Modifier + Proficiency.GetProficiencyBonus(Owner) + Manager.GetSummary().Total;
+		public int Bonus => Owner.GetSkillAbility(Type).Modifier + Proficiency.GetProficiencyBonus(Owner) + Manager.GetBonus();
 
 		#endregion
 
