@@ -1,12 +1,12 @@
 <template>
-    <div class="w-full h-full">
+    <div class="mx-auto overflow-y-auto overflow-x-hidden">
         <CharacterComponent v-if="activeCharacter" :character="activeCharacter" />
         <span v-else>No active character</span>
     </div>
 </template>
 
 <script setup lang="ts">
-import CharacterComponent from '@/components/CharacterComponent.vue';
+import CharacterComponent from '@/components/character/CharacterComponent.vue';
 import { useSession } from '@/composables/useSession';
 import { useUserAccount } from '@/composables/useUserAccount';
 

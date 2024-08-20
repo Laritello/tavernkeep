@@ -1,7 +1,7 @@
 <template>
     <dialog class="modal">
         <div class="modal-box">
-            <h3 class="font-bold text-lg">Edit skill</h3>
+            <h3 class="font-bold text-lg">Edit proficiency level</h3>
             <form @submit.prevent="save" method="dialog" class="space-x-2">
                 <ProficiencySelectComponent v-model="selected" />
                 <div class="modal-action">
@@ -15,15 +15,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { type DialogResultCallback } from '@/composables/useModal';
-import type { Skill } from '@/contracts/character';
-import ProficiencySelectComponent from '../ProficiencySelectComponent.vue';
+import ProficiencySelectComponent from '@/components/ProficiencySelectComponent.vue';
+import type { Proficiency } from '@/contracts/enums';
 
-const { closeModal, skill } = defineProps<{
-    skill: Skill;
-    closeModal: DialogResultCallback<Skill>;
+const { closeModal, proficiency } = defineProps<{
+    proficiency: Proficiency;
+    closeModal: DialogResultCallback<{ value: Proficiency }>;
 }>();
 
-const selected = ref(skill.proficiency);
+const selected = ref(proficiency);
 
 async function save() {
     if (selected.value === undefined) {
@@ -31,7 +31,7 @@ async function save() {
         return;
     }
 
-    const payload = { ...skill, proficiency: selected.value };
+    const payload = { value: selected.value };
 
     closeModal({ action: 'result', payload });
 }
