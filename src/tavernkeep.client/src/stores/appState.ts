@@ -43,14 +43,16 @@ export const useAppState = defineStore('appState', () => {
     async function initialize() {
         const fetchPromise = fetch().then(() => console.info('[AppStore] Initial data fetched'));
         const startHubsPromise = startHubs().then(() => console.info('[AppStore] Hubs started'));
-        await Promise.all([fetchPromise, startHubsPromise]).catch((e) => {
-            const auth = useAuth();
-            auth.logout();
-            console.error('[AppStore] Something went wrong. Logout now!');
-            console.error(e);
-        });
-
-        isLoading.value = false;
+        Promise.all([fetchPromise, startHubsPromise])
+            .catch((e) => {
+                const auth = useAuth();
+                auth.logout();
+                console.error('[AppStore] Something went wrong. Logout now!');
+                console.error(e);
+            })
+            .finally(() => {
+                isLoading.value = false;
+            });
     }
 
     async function startHubs() {
