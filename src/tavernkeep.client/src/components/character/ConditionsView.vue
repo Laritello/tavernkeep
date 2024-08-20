@@ -1,58 +1,39 @@
 <template>
-    <div class="card card-body bg-neutral text-neutral-content w-96">
+    <div class="card card-body bg-neutral text-neutral-content">
         <h1 class="card-title">Conditions</h1>
         <div v-for="condition in conditions" :key="condition.name" class="grid grid-cols-3 grid-flow-col">
             <span class="col-start-1">{{ condition.name }}</span>
-            <div v-if="condition.hasLevels" class="flow col-start-2">
+            <div v-if="condition.hasLevels" class="flow col-start-2 mx-auto">
                 <div
                     class="btn btn-xs mx-2"
                     :class="{ 'btn-disabled': condition.level <= 1 }"
-                    @click="decreaseCondtionLevel(condition)"
+                    @click="$emit('decreaseConditionLevel', condition)"
                 >
                     -
                 </div>
                 <span>{{ condition.level }}</span>
-                <div class="btn btn-xs mx-2" @click="increaseCondtionLevel(condition)">+</div>
+                <div class="btn btn-xs mx-2" @click="$emit('increaseConditionLevel', condition)">+</div>
             </div>
-            <div class="btn btn-error btn-xs mx-2 col-start-3 w-8" @click="removeCondtion(condition)">X</div>
+            <div class="mx-auto">
+                <button class="btn btn-error btn-xs mx-2 col-start-3 w-8" @click="$emit('removeCondition', condition)">
+                    X
+                </button>
+            </div>
         </div>
-        <div class="btn btn-success btn-sm" @click="showApplyDialog">Add</div>
+        <button class="btn btn-success btn-sm" @click="$emit('addCondition')">Add</button>
     </div>
 </template>
 
-<script lang="ts" setup>
-import { useModal } from '@/composables/useModal';
+<script setup lang="ts">
 import type { Condition } from '@/entities';
-import ConditionApplyDialog from '../dialogs/ConditionApplyDialog.vue';
-import { ApiClientFactory } from '@/factories/ApiClientFactory';
-const { characterId, conditions } = defineProps<{
-    characterId: string;
+const { conditions } = defineProps<{
     conditions: Condition[];
 }>();
-
-const modal = useModal();
-const client = ApiClientFactory.createApiClient();
-
-async function showApplyDialog() {
-    const conditions = await client.getConditions();
-    const result = await modal.show(ConditionApplyDialog, { conditions });
-    if (result.action === 'result') {
-        console.log(result.payload);
-        await client.applyCondition(characterId, result.payload.name, result.payload.level);
-    }
-}
-
-async function removeCondtion(condition: Condition) {
-    await client.removeCondition(characterId, condition.name);
-}
-
-async function increaseCondtionLevel(condition: Condition) {
-    await client.applyCondition(characterId, condition.name, condition.level + 1);
-}
-
-async function decreaseCondtionLevel(condition: Condition) {
-    await client.applyCondition(characterId, condition.name, condition.level - 1);
-}
 </script>
-
-<style></style>
+<style>
+.align-right {
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+}
+</style>

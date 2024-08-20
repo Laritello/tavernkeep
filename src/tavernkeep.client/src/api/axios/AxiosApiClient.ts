@@ -3,8 +3,8 @@ import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import type { User, Message, Character } from '@/entities';
-import type { Ability, Skill, Lore } from '@/contracts/character';
-import { UserRole, AbilityType, Proficiency, SkillType, RollType } from '@/contracts/enums';
+import type { Ability, Skill, Lore, Perception } from '@/contracts/character';
+import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowType } from '@/contracts/enums';
 import type { Condition } from '@/entities/Condition';
 
 export class AxiosApiClient {
@@ -162,6 +162,29 @@ export class AxiosApiClient {
         const response = await this.client.patch<Skill>('characters/edit/skill', {
             characterId: characterId,
             type: type,
+            proficiency: proficiency,
+        });
+
+        return getPayloadOrThrow(response);
+    }
+
+    async editSavingThrow(
+        characterId: string,
+        type: SavingThrowType,
+        proficiency: Proficiency
+    ): Promise<SavingThrowType> {
+        const response = await this.client.patch<Skill>('characters/edit/saving-throw', {
+            characterId: characterId,
+            type: type,
+            proficiency: proficiency,
+        });
+
+        return getPayloadOrThrow(response);
+    }
+
+    async editPerception(characterId: string, proficiency: Proficiency): Promise<Perception> {
+        const response = await this.client.patch<Perception>('characters/edit/perception', {
+            characterId: characterId,
             proficiency: proficiency,
         });
 
