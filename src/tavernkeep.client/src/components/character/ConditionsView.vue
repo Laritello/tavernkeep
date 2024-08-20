@@ -14,7 +14,7 @@
                 <span>{{ condition.level }}</span>
                 <div class="btn btn-xs mx-2" @click="$emit('increaseConditionLevel', condition)">+</div>
             </div>
-            <div class="mx-auto">
+            <div class="col-start-3 align-right">
                 <button class="btn btn-error btn-xs mx-2 col-start-3 w-8" @click="$emit('removeCondition', condition)">
                     X
                 </button>
