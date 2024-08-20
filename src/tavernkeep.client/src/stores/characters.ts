@@ -8,13 +8,17 @@ import CharacterHub from '@/api/hubs/CharacterHub';
 
 type Characters = Record<string, Character>;
 
+type CharacterChangeNotification = {
+    character: Character;
+};
+
 export const useCharacters = defineStore('characters', () => {
     const api: AxiosApiClient = ApiClientFactory.createApiClient();
     const dictionary = reactive<Characters>({});
 
-    CharacterHub.connection.on('OnCharacterEdited', (character: Character) => {
-        console.log(character);
-        Object.assign(dictionary[character.id], character);
+    CharacterHub.connection.on('OnCharacterEdited', (notification: CharacterChangeNotification) => {
+        console.log(notification);
+        Object.assign(dictionary[notification.character.id], notification.character);
     });
 
     function get(id: string): Character {
