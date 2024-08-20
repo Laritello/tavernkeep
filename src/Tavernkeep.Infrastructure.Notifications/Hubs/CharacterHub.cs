@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using Tavernkeep.Infrastructure.Notifications.Notifications;
+using Tavernkeep.Core.Contracts.Character.Dtos;
 
 namespace Tavernkeep.Infrastructure.Notifications.Hubs
 {
 	public interface ICharacterHub
 	{
-		Task OnCharacterEdited(CharacterEditedNotification notification);
+		Task OnCharacterEdited(CharacterDto notification);
 	}
 
 	public class CharacterHub : Hub<ICharacterHub>
 	{
-		public async Task SendCharacterEditedNotification(CharacterEditedNotification notification)
+		public async Task SendCharacterEditedNotification(CharacterDto notification)
 			=> await Clients.All.OnCharacterEdited(notification);
 	}
 }

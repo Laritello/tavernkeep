@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using Tavernkeep.Infrastructure.Notifications.Notifications;
+using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkeep.Application.UseCases.Notifications.Queries.NotifyCharacterEdited
 {
-	public class NotifyCharacterEditedQuery(CharacterEditedNotification notification) : IRequest
+	public class NotifyCharacterEditedQuery(Character character) : IRequest
 	{
-		public CharacterEditedNotification Notification { get; set; } = notification;
+		public Character Character { get; set; } = character;
 	}
 }

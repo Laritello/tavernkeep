@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
-using Tavernkeep.Infrastructure.Notifications.Notifications;
 
 namespace Tavernkeep.Application.UseCases.Conditions.Commands.ApplyCondition
 {
@@ -14,8 +11,7 @@ namespace Tavernkeep.Application.UseCases.Conditions.Commands.ApplyCondition
 		IUserRepository userRepository,
 		ICharacterRepository characterRepository,
 		IConditionMetadataRepository conditionRepository,
-		INotificationService notificationService,
-		IMapper mapper
+		INotificationService notificationService
 		) : IRequestHandler<ApplyConditionCommand, Character>
 	{
 		public async Task<Character> Handle(ApplyConditionCommand request, CancellationToken cancellationToken)
@@ -48,7 +44,7 @@ namespace Tavernkeep.Application.UseCases.Conditions.Commands.ApplyCondition
 			}
 
 			await characterRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueCharacterNotificationAsync(new CharacterEditedNotification(mapper.Map<CharacterDto>(character)), cancellationToken);
+			await notificationService.QueueCharacterNotificationAsync(character, cancellationToken);
 
 			return character;
 		}
