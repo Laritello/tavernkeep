@@ -18,5 +18,11 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements
 		public AbilityType Selected { get; set; }
 
 		public override string ToString() => $"AbilityBoostAdvancement: {Selected} ({string.Join(',', Possible)})";
+
+		public static AbilityBoostAdvancement Free => new()
+		{
+			Possible = [AbilityType.Strength, AbilityType.Dexterity, AbilityType.Constitution, AbilityType.Intelligence, AbilityType.Wisdom, AbilityType.Charisma],
+			Selected = AbilityType.Strength,
+		};
 	}
 }

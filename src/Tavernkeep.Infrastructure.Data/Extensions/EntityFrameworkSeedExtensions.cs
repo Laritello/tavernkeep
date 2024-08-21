@@ -25,7 +25,6 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 				.SeedUsers()
 				.SeedConditions()
 				.SeedCharacter();
-			context.SaveChanges();
 
 			return provider;
 		}
@@ -39,6 +38,8 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 					Id = Guid.NewGuid()
 				});
 			}
+
+			context.SaveChanges();
 
 			return context;
 		}
@@ -55,6 +56,8 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 
 				context.Set<ConditionMetadata>().AddRange(conditions);
 			}
+
+			context.SaveChanges();
 
 			return context;
 		}
@@ -168,6 +171,8 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 
 				context.Set<Character>().Add(character);
 			}
+
+			context.SaveChanges();
 
 			return context;
 		}

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tavernkeep.Core.Entities.Pathfinder.Classes;
-
-namespace Tavernkeep.Core.Entities.Pathfinder.Builds
+﻿namespace Tavernkeep.Core.Entities.Pathfinder.Builds
 {
 	public class Class
 	{
