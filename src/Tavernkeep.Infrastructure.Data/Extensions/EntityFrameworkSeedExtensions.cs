@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Ancestries;
 using Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Infrastructure.Data.Context;
@@ -11,6 +13,11 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 {
 	public static class EntityFrameworkSeedExtensions
 	{
+		private static readonly JsonSerializerOptions options = new()
+		{
+			Converters = { new JsonStringEnumConverter() }
+		};
+
 		/// <summary>
 		/// Seeds data (ancestries, classes, etc.) into the database.
 		/// </summary>
@@ -24,6 +31,7 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 			context
 				.SeedUsers()
 				.SeedConditions()
+				.SeedAncestries()
 				.SeedCharacter();
 
 			return provider;
@@ -52,9 +60,27 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 				using var sr = new StreamReader(filePath);
 
 				var json = sr.ReadToEnd();
-				var conditions = JsonSerializer.Deserialize<List<ConditionMetadata>>(json) ?? [];
+				var conditions = JsonSerializer.Deserialize<List<ConditionMetadata>>(json, options) ?? [];
 
 				context.Set<ConditionMetadata>().AddRange(conditions);
+			}
+
+			context.SaveChanges();
+
+			return context;
+		}
+
+		private static SessionContext SeedAncestries(this SessionContext context)
+		{
+			if (!context.Set<AncestryMetadata>().Any())
+			{
+				var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Ancestries.en-UK.json");
+				using var sr = new StreamReader(filePath);
+
+				var json = sr.ReadToEnd();
+				var conditions = JsonSerializer.Deserialize<List<AncestryMetadata>>(json, options) ?? [];
+
+				context.Set<AncestryMetadata>().AddRange(conditions);
 			}
 
 			context.SaveChanges();

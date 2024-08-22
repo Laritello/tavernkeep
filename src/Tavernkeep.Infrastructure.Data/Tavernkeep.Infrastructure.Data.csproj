@@ -7,10 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Ancestries.en-UK.json" />
     <None Remove="Resources\Conditions.en-UK.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Resources\Ancestries.en-UK.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Conditions.en-UK.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
