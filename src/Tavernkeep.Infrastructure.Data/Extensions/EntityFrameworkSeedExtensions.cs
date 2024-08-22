@@ -100,7 +100,7 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 							new AbilityBoostAdvancement()
 							{
 								Possible = [AbilityType.Strength, AbilityType.Constitution, AbilityType.Wisdom, AbilityType.Charisma],
-								Selected = AbilityType.Strength
+								Selected = AbilityType.Wisdom
 							},
 							new AbilityFlawAdvancement(){
 								Possible = [AbilityType.Constitution],
@@ -124,11 +124,7 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 							new AbilityBoostAdvancement()
 							{
 								Possible = [AbilityType.Intelligence, AbilityType.Wisdom],
-								Selected = AbilityType.Intelligence
-							},
-							new AbilityFlawAdvancement(){
-								Possible = [AbilityType.Strength, AbilityType.Dexterity, AbilityType.Constitution, AbilityType.Intelligence, AbilityType.Wisdom, AbilityType.Charisma],
-								Selected = AbilityType.Strength
+								Selected = AbilityType.Wisdom
 							}
 						]
 					},
@@ -154,13 +150,6 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 					},
 				]
 				};
-
-				character.Strength.Score = 12;
-				character.Dexterity.Score = 10;
-				character.Constitution.Score = 16;
-				character.Intelligence.Score = 14;
-				character.Wisdom.Score = 18;
-				character.Charisma.Score = 10;
 
 				character.Arcana.Proficiency = Proficiency.Trained;
 				character.Religion.Proficiency = Proficiency.Expert;

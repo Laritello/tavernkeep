@@ -4,7 +4,6 @@ using Tavernkeep.Core.Calculations.Managers;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Snapshots;
-using Tavernkeep.Core.Extensions;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
@@ -39,11 +38,11 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		[JsonIgnore]
 		[NotMapped]
-		public IPropertyManager Manager => _manager ??= new SkillPropertyManager(Owner, Type.ToTarget());
+		public IPropertyManager Manager => _manager ??= new SkillPropertyManager(this);
 		public AbilityType BaseAbility { get; set; }
 		public SkillType Type { get; set; }
 		public Proficiency Proficiency { get; set; }
-		public int Bonus => Owner.GetSkillAbility(Type).Modifier + Proficiency.GetProficiencyBonus(Owner) + Manager.GetBonus();
+		public int Bonus => Manager.Value;
 
 		#endregion
 

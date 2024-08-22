@@ -2,6 +2,6 @@
 {
 	public interface IPropertyManager
 	{
-		public int GetBonus();
+		public int Value { get; }
 	}
 }

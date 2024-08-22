@@ -6,20 +6,21 @@ using Tavernkeep.Core.Extensions;
 
 namespace Tavernkeep.Core.Calculations.Managers
 {
-	public class ArmorClassPropertyManager(ArmorClass armorClass) : IPropertyManager
+	public class PerceptionPropertyManager(Perception perception) : IPropertyManager
 	{
-		private readonly ArmorClass _armorClass = armorClass;
-		private readonly Character _character = armorClass.Owner;
+		private readonly Perception _perception = perception;
+		private readonly Character _character = perception.Owner;
 
-		public int Value => 10 + _character.Dexterity.Modifier + _armorClass.Proficiencies[ArmorType.Unarmored].GetProficiencyBonus(_character) + CalculateBonus();
+		public int Value => _character.Wisdom.Modifier + _perception.Proficiency.GetProficiencyBonus(_character) + CalculateBonus();
 
-		public int CalculateBonus()
+		private int CalculateBonus()
 		{
+			var target = ModifierTarget.Perception;
 			var conditions = _character.Conditions;
 
 			var conditionModifiers = _character.Conditions
 				.SelectMany(x => x.CollectModifiers(_character))
-				.Where(x => x.Targets.Contains(ModifierTarget.ArmorClass))
+				.Where(x => x.Targets.Contains(target))
 				.ToList();
 
 			var activeBonus = conditionModifiers.Where(x => x.IsBonus).MaxBy(x => x.Value);

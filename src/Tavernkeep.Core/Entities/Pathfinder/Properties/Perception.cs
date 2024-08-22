@@ -37,9 +37,9 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		[JsonIgnore]
 		[NotMapped]
-		public IPropertyManager Manager => _manager ??= new SkillPropertyManager(Owner, ModifierTarget.Perception);
+		public IPropertyManager Manager => _manager ??= new PerceptionPropertyManager(this);
 		public Proficiency Proficiency { get; set; }
-		public int Bonus => Owner.Wisdom.Modifier + Proficiency.GetProficiencyBonus(Owner) + Manager.GetBonus();
+		public int Bonus => Manager.Value;
 
 		#endregion
 

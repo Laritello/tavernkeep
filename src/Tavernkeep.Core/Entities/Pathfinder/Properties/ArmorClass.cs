@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Tavernkeep.Core.Calculations.Managers;
-using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
-using Tavernkeep.Core.Extensions;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
@@ -37,9 +35,9 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		[JsonIgnore]
 		[NotMapped]
-		public IPropertyManager Manager => _manager ??= new ArmorClassPropertyManager(Owner);
+		public IPropertyManager Manager => _manager ??= new ArmorClassPropertyManager(this);
 		public ArmorProficiencies Proficiencies { get; set; }
-		public int Class => 10 + Owner.Dexterity.Modifier + Proficiencies[ArmorType.Unarmored].GetProficiencyBonus(Owner) + Manager.GetBonus();
+		public int Class => Manager.Value;
 
 		#endregion
 	}
