@@ -385,6 +385,8 @@ FodyWeavers.xsd
 !.vscode/tailwind.json
 *.code-workspace
 
+.idea
+
 # Local History for Visual Studio Code
 .history/
 
