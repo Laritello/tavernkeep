@@ -15,11 +15,11 @@ namespace Tavernkeep.Core.Calculations.Evaluators
 		private int CalculateScore()
 		{
 			int boostAmount = _character.Build.Advancements
-				.Where(x => x.Level < _character.Level && x is AbilityBoostAdvancement a && a.Selected == _ability.Type)
+				.Where(x => x.Level <= _character.Level && x is AbilityBoostAdvancement a && a.Selected == _ability.Type)
 				.Count();
 
 			int flawAmount = _character.Build.Advancements
-				.Where(x => x.Level < _character.Level && x is AbilityFlawAdvancement a && a.Selected == _ability.Type)
+				.Where(x => x.Level <= _character.Level && x is AbilityFlawAdvancement a && a.Selected == _ability.Type)
 				.Count();
 
 			int netAmount = boostAmount - flawAmount;
