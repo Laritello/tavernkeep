@@ -5,7 +5,7 @@ using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
 namespace Tavernkeep.Core.Evaluators.Properties
 {
-	public class AbilityScorePropertyEvaluator(Ability ability) : IPropertyEvaluator<int>
+	public class AbilityScorePropertyEvaluator(Ability ability) : IValueEvaluator<int>
 	{
 		private readonly Ability _ability = ability;
 		private readonly Character _character = ability.Owner;

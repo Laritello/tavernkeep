@@ -8,7 +8,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 	{
 		#region Backing fields
 
-		private IPropertyEvaluator<int>? _armorClassEvaluator;
+		private IValueEvaluator<int>? _armorClassEvaluator;
 
 		#endregion
 

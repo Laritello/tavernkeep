@@ -6,7 +6,7 @@ using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
 namespace Tavernkeep.Core.Evaluators.Properties
 {
-	public class SkillProficiencyPropertyEvaluator(Skill skill) : IPropertyEvaluator<Proficiency>
+	public class SkillProficiencyPropertyEvaluator(Skill skill) : IValueEvaluator<Proficiency>
 	{
 		private readonly Skill _skill = skill;
 		private readonly Character _character = skill.Owner;

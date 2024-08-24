@@ -1,6 +1,6 @@
 ﻿namespace Tavernkeep.Core.Contracts.Interfaces
 {
-	public interface IPropertyEvaluator<T>
+	public interface IValueEvaluator<T>
 	{
 		public T Value { get; }
 	}

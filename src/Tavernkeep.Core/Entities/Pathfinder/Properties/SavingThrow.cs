@@ -10,7 +10,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 	{
 		#region Backing fields
 
-		private IPropertyEvaluator<int>? _savingThrowBonusEvaluator;
+		private IValueEvaluator<int>? _savingThrowBonusEvaluator;
 
 		#endregion
 
