@@ -11,9 +11,9 @@ namespace Tavernkeep.Core.Calculations.Evaluators
 		private readonly ArmorClass _armorClass = armorClass;
 		private readonly Character _character = armorClass.Owner;
 
-		public int Value => 10 + _character.Dexterity.Modifier + _armorClass.Proficiencies[ArmorType.Unarmored].GetProficiencyBonus(_character) + CalculateBonus();
+		public int Value => Calculate();
 
-		public int CalculateBonus()
+		public int Calculate()
 		{
 			var conditions = _character.Conditions;
 
@@ -25,9 +25,9 @@ namespace Tavernkeep.Core.Calculations.Evaluators
 			var activeBonus = conditionModifiers.Where(x => x.IsBonus).MaxBy(x => x.Value);
 			var activePenalty = conditionModifiers.Where(x => x.IsPenalty).MaxBy(x => x.Value);
 
-			var total = (activeBonus != null ? activeBonus.Value : 0) + (activePenalty != null ? activePenalty.Value : 0);
+			var totalBonus = (activeBonus != null ? activeBonus.Value : 0) + (activePenalty != null ? activePenalty.Value : 0);
 
-			return total;
+			return 10 + _character.Dexterity.Modifier + _armorClass.Proficiencies[ArmorType.Unarmored].GetProficiencyBonus(_character) + totalBonus;
 		}
 	}
 }

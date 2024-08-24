@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Builds
@@ -39,7 +38,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds
 		public Class Class { get; set; } = new();
 
 		[NotMapped]
-		public List<Advancement> Advancements => _advancements ??= CollectProgression();
+		public List<Advancement> Advancements => _advancements ??= CollectAdvancements();
 
 		public Build()
 		{
@@ -51,23 +50,10 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds
 			Owner = owner;
 		}
 
-		private List<Advancement> CollectProgression()
+		private List<Advancement> CollectAdvancements()
 		{
-			List<Advancement> result = [];
-
-			if (General != null)
-				result.AddRange(General.Advancements);
-
-			if (Ancestry != null)
-				result.AddRange(Ancestry.Advancements);
-
-			if (Background != null)
-				result.AddRange(Background.Advancements);
-
-			if (Class != null)
-				result.AddRange(Class.Advancements);
-
-			return result;
+			var advancements = General.Advancements.Concat(Ancestry.Advancements).Concat(Background.Advancements).Concat(Class.Advancements);
+			return [.. advancements.OrderBy(x => x.Level)];
 		}
 	}
 }

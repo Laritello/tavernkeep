@@ -192,6 +192,7 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 						},
 						new PerceptionProficiencyAdvancement()
 						{
+							Level = 1,
 							Proficiency = Proficiency.Trained
 						}
 					]

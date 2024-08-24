@@ -15,8 +15,8 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements
 		/// <summary>
 		/// Selected target ability of the flaw.
 		/// </summary>
-		public AbilityType Selected { get; set; }
+		public AbilityType? Selected { get; set; }
 
-		public override string ToString() => $"AbilityFlawAdvancement [Level {Level}]: {Selected}";
+		public override string ToString() => $"AbilityFlawAdvancement [Level {Level}]: {(Selected.HasValue ? Selected : "Not Selected")}";
 	}
 }

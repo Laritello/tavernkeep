@@ -10,9 +10,9 @@ namespace Tavernkeep.Core.Calculations.Evaluators
 		private readonly Ability _ability = ability;
 		private readonly Character _character = ability.Owner;
 
-		public int Value => CalculateScore();
+		public int Value => Calculate();
 
-		private int CalculateScore()
+		private int Calculate()
 		{
 			int boostAmount = _character.Build.Advancements
 				.Where(x => x.Level <= _character.Level && x is AbilityBoostAdvancement a && a.Selected == _ability.Type)

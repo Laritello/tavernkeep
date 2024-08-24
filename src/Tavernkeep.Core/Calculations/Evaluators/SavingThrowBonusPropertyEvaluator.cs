@@ -10,9 +10,9 @@ namespace Tavernkeep.Core.Calculations.Evaluators
 		private readonly SavingThrow _savingThrow = savingThrow;
 		private readonly Character _character = savingThrow.Owner;
 
-		public int Value => _character.GetSavingThrowAbility(_savingThrow.Type).Modifier + _savingThrow.Proficiency.GetProficiencyBonus(_character) + CalculateBonus();
+		public int Value => Calculate();
 
-		private int CalculateBonus()
+		private int Calculate()
 		{
 			var target = _savingThrow.Type.ToTarget();
 			var conditions = _character.Conditions;
@@ -27,7 +27,7 @@ namespace Tavernkeep.Core.Calculations.Evaluators
 
 			var total = (activeBonus != null ? activeBonus.Value : 0) + (activePenalty != null ? activePenalty.Value : 0);
 
-			return total;
+			return _character.GetSavingThrowAbility(_savingThrow.Type).Modifier + _savingThrow.Proficiency.GetProficiencyBonus(_character) + total;
 		}
 	}
 }

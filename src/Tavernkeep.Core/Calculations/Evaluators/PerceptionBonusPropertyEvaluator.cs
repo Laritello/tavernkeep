@@ -11,9 +11,9 @@ namespace Tavernkeep.Core.Calculations.Evaluators
 		private readonly Perception _perception = perception;
 		private readonly Character _character = perception.Owner;
 
-		public int Value => _character.Wisdom.Modifier + _perception.Proficiency.GetProficiencyBonus(_character) + CalculateBonus();
+		public int Value => Calculate();
 
-		private int CalculateBonus()
+		private int Calculate()
 		{
 			var target = ModifierTarget.Perception;
 			var conditions = _character.Conditions;
@@ -26,9 +26,9 @@ namespace Tavernkeep.Core.Calculations.Evaluators
 			var activeBonus = conditionModifiers.Where(x => x.IsBonus).MaxBy(x => x.Value);
 			var activePenalty = conditionModifiers.Where(x => x.IsPenalty).MaxBy(x => x.Value);
 
-			var total = (activeBonus != null ? activeBonus.Value : 0) + (activePenalty != null ? activePenalty.Value : 0);
+			var totalBonus = (activeBonus != null ? activeBonus.Value : 0) + (activePenalty != null ? activePenalty.Value : 0);
 
-			return total;
+			return _character.Wisdom.Modifier + _perception.Proficiency.GetProficiencyBonus(_character) + totalBonus;
 		}
 	}
 }

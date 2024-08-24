@@ -15,9 +15,9 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements
 		/// <summary>
 		/// Selected target ability of the boost.
 		/// </summary>
-		public AbilityType Selected { get; set; }
+		public AbilityType? Selected { get; set; }
 
-		public override string ToString() => $"AbilityBoostAdvancement [Level {Level}]: {Selected}";
+		public override string ToString() => $"AbilityBoostAdvancement [Level {Level}]: {(Selected.HasValue ? Selected : "Not Selected")}";
 
 		public static AbilityBoostAdvancement Free => new()
 		{

@@ -10,7 +10,7 @@ namespace Tavernkeep.Core.Calculations.Evaluators
 		private readonly Skill _skill = skill;
 		private readonly Character _character = skill.Owner;
 
-		public int Value =>  Calculate();
+		public int Value => Calculate();
 
 		private int Calculate()
 		{

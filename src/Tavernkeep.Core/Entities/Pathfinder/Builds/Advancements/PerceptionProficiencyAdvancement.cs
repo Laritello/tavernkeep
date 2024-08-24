@@ -4,8 +4,8 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements
 {
 	public class PerceptionProficiencyAdvancement : Advancement
 	{
-		public Proficiency Proficiency { get; set; }
+		public Proficiency? Proficiency { get; set; }
 
-		public override string ToString() => $"PerceptionProficiencyAdvancement [Level {Level}]: {Proficiency}";
+		public override string ToString() => $"PerceptionProficiencyAdvancement [Level {Level}]: {(Proficiency.HasValue ? Proficiency : "Not Selected")}";
 	}
 }
