@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tavernkeep.Core.Contracts.Enums;
+﻿using Tavernkeep.Core.Contracts.Enums;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements
 {
@@ -13,6 +8,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements
 		public List<SkillType> Possible { get; set; } = [];
 		public SkillType? Selected { get; set; }
 		public Proficiency MaximumAllowedProficiency { get; set; } = Proficiency.Trained;
-		public override string ToString() => $"AbilityBoostAdvancement: {Selected} ({string.Join(',', Possible)})";
+		public override string ToString() => $"SkillIncreaseAdvancement [Level {Level}]: {Selected}";
 	}
 }

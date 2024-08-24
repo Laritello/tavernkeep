@@ -17,6 +17,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements
 		/// </summary>
 		public AbilityType Selected { get; set; }
 
-		public override string ToString() => $"AbilityBoostAdvancement: {Selected} ({string.Join(',', Possible)})";
+		public override string ToString() => $"AbilityFlawAdvancement [Level {Level}]: {Selected}";
 	}
 }

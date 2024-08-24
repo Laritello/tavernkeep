@@ -4,6 +4,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements
 {
 	public class KeyAbilityAdvancement : AbilityBoostAdvancement
 	{
-		public override string ToString() => $"AbilityBoostAdvancement: {Selected} ({string.Join(',', Possible)})";
+		public override string ToString() => $"KeyAbilityAdvancement [Level {Level}]: {Selected}";
 	}
 }
