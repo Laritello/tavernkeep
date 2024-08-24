@@ -4,22 +4,23 @@ using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Extensions;
 
-namespace Tavernkeep.Core.Calculations.Evaluators
+namespace Tavernkeep.Core.Evaluators.Properties
 {
-	public class ArmorClassPropertyEvaluator(ArmorClass armorClass) : IPropertyEvaluator<int>
+	public class PerceptionBonusPropertyEvaluator(Perception perception) : IPropertyEvaluator<int>
 	{
-		private readonly ArmorClass _armorClass = armorClass;
-		private readonly Character _character = armorClass.Owner;
+		private readonly Perception _perception = perception;
+		private readonly Character _character = perception.Owner;
 
 		public int Value => Calculate();
 
-		public int Calculate()
+		private int Calculate()
 		{
+			var target = ModifierTarget.Perception;
 			var conditions = _character.Conditions;
 
 			var conditionModifiers = _character.Conditions
 				.SelectMany(x => x.CollectModifiers(_character))
-				.Where(x => x.Targets.Contains(ModifierTarget.ArmorClass))
+				.Where(x => x.Targets.Contains(target))
 				.ToList();
 
 			var activeBonus = conditionModifiers.Where(x => x.IsBonus).MaxBy(x => x.Value);
@@ -27,7 +28,7 @@ namespace Tavernkeep.Core.Calculations.Evaluators
 
 			var totalBonus = (activeBonus != null ? activeBonus.Value : 0) + (activePenalty != null ? activePenalty.Value : 0);
 
-			return 10 + _character.Dexterity.Modifier + _armorClass.Proficiencies[ArmorType.Unarmored].GetProficiencyBonus(_character) + totalBonus;
+			return _character.Wisdom.Modifier + _perception.Proficiency.GetProficiencyBonus(_character) + totalBonus;
 		}
 	}
 }

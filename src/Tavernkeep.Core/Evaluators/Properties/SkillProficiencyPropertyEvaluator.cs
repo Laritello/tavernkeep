@@ -4,7 +4,7 @@ using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
-namespace Tavernkeep.Core.Calculations.Evaluators
+namespace Tavernkeep.Core.Evaluators.Properties
 {
 	public class SkillProficiencyPropertyEvaluator(Skill skill) : IPropertyEvaluator<Proficiency>
 	{

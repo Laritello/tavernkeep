@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using Tavernkeep.Core.Calculations.Evaluators;
+using Tavernkeep.Core.Evaluators.Properties;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
 

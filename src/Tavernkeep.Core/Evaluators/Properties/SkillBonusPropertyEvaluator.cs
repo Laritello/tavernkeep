@@ -3,18 +3,18 @@ using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Extensions;
 
-namespace Tavernkeep.Core.Calculations.Evaluators
+namespace Tavernkeep.Core.Evaluators.Properties
 {
-	public class SavingThrowBonusPropertyEvaluator(SavingThrow savingThrow) : IPropertyEvaluator<int>
+	public class SkillBonusPropertyEvaluator(Skill skill) : IPropertyEvaluator<int>
 	{
-		private readonly SavingThrow _savingThrow = savingThrow;
-		private readonly Character _character = savingThrow.Owner;
+		private readonly Skill _skill = skill;
+		private readonly Character _character = skill.Owner;
 
 		public int Value => Calculate();
 
 		private int Calculate()
 		{
-			var target = _savingThrow.Type.ToTarget();
+			var target = _skill.Type.ToTarget();
 			var conditions = _character.Conditions;
 
 			var conditionModifiers = _character.Conditions
@@ -25,9 +25,9 @@ namespace Tavernkeep.Core.Calculations.Evaluators
 			var activeBonus = conditionModifiers.Where(x => x.IsBonus).MaxBy(x => x.Value);
 			var activePenalty = conditionModifiers.Where(x => x.IsPenalty).MaxBy(x => x.Value);
 
-			var total = (activeBonus != null ? activeBonus.Value : 0) + (activePenalty != null ? activePenalty.Value : 0);
-
-			return _character.GetSavingThrowAbility(_savingThrow.Type).Modifier + _savingThrow.Proficiency.GetProficiencyBonus(_character) + total;
+			var totalBonus = (activeBonus != null ? activeBonus.Value : 0) + (activePenalty != null ? activePenalty.Value : 0);
+			
+			return _character.GetSkillAbility(_skill.Type).Modifier + _skill.Proficiency.GetProficiencyBonus(_character) + totalBonus;
 		}
 	}
 }
