@@ -11,7 +11,7 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    [Migration("20240819203519_Initial")]
+    [Migration("20240823164236_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -71,7 +71,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Property<int>("Speed")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Tags")
+                    b.Property<string>("Traits")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -124,6 +124,13 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("HitPoints")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Traits")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -505,9 +512,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
 
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -527,9 +531,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         {
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
@@ -603,9 +604,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
 
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -677,9 +675,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         {
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
@@ -935,9 +930,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
 
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -1035,9 +1027,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         {
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");

@@ -1,4 +1,5 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Builds
 {
@@ -10,15 +11,11 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds
 		public UnitSize Size { get; set; }
 		public int Speed { get; set; }
 		public List<string> Languages { get; set; } = [];
-		public List<LevelProgression> Progression { get; set; } = [];
+		public List<Advancement> Advancements { get; set; } = [];
 
 		public Ancestry()
 		{
 
 		}
-
-		public LevelProgression this[int level] => Progression.FirstOrDefault(p => p.Level == level) ?? new(level);
-
-		public static Ancestry Empty => new();
 	}
 }

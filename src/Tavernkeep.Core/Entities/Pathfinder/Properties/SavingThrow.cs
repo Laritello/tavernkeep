@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-using Tavernkeep.Core.Calculations.Managers;
+﻿using System.Text.Json.Serialization;
+using Tavernkeep.Core.Calculations.Evaluators;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Snapshots;
-using Tavernkeep.Core.Extensions;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
@@ -12,7 +10,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 	{
 		#region Backing fields
 
-		private IPropertyManager _manager;
+		private IPropertyEvaluator<int>? _savingThrowBonusEvaluator;
 
 		#endregion
 
@@ -36,14 +34,17 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		[JsonIgnore]
 		public Character Owner { get; set; } = default!;
-
-		[JsonIgnore]
-		[NotMapped]
-		public IPropertyManager Manager => _manager ??= new SavingThrowPropertyManager(this);
 		public AbilityType BaseAbility { get; set; }
 		public SavingThrowType Type { get; set; }
 		public Proficiency Proficiency { get; set; }
-		public int Bonus => Manager.Value;
+		public int Bonus
+		{
+			get
+			{
+				_savingThrowBonusEvaluator ??= new SavingThrowBonusPropertyEvaluator(this);
+				return _savingThrowBonusEvaluator.Value;
+			}
+		}
 
 		#endregion
 

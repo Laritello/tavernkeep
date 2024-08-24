@@ -1,26 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Base;
-using Tavernkeep.Core.Entities.Pathfinder.Builds;
+using Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Ancestries
 {
-	// TODO: Add base repository for types that use name as primary key
 	[Table("Ancestries")]
 	public class AncestryMetadata : NameEntity
 	{
-		public List<string> Tags { get; set; }
+		public List<string> Traits { get; set; }
 		public string Description { get; set; } = default!;
 		public int HitPoints { get; set; }
 		public UnitSize Size { get; set; }
 		public int Speed { get; set; }
 		public List<string> Languages { get; set; }
-		public List<LevelProgression> Progression { get; set; }
+		public List<Advancement> Advancements { get; set; }
 
 		public AncestryMetadata()
 		{
-			Progression = [];
-			Tags = [];
+			Advancements = [];
+			Traits = [];
 			Languages = [];
 		}
 	}

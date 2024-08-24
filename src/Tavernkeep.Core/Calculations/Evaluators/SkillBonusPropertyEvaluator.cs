@@ -3,16 +3,16 @@ using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Extensions;
 
-namespace Tavernkeep.Core.Calculations.Managers
+namespace Tavernkeep.Core.Calculations.Evaluators
 {
-	public class SkillPropertyManager(Skill skill) : IPropertyManager
+	public class SkillBonusPropertyEvaluator(Skill skill) : IPropertyEvaluator<int>
 	{
 		private readonly Skill _skill = skill;
 		private readonly Character _character = skill.Owner;
 
-		public int Value => _character.GetSkillAbility(_skill.Type).Modifier + _skill.Proficiency.GetProficiencyBonus(_character) + CalculateBonus();
+		public int Value =>  Calculate();
 
-		private int CalculateBonus()
+		private int Calculate()
 		{
 			var target = _skill.Type.ToTarget();
 			var conditions = _character.Conditions;
@@ -25,9 +25,9 @@ namespace Tavernkeep.Core.Calculations.Managers
 			var activeBonus = conditionModifiers.Where(x => x.IsBonus).MaxBy(x => x.Value);
 			var activePenalty = conditionModifiers.Where(x => x.IsPenalty).MaxBy(x => x.Value);
 
-			var total = (activeBonus != null ? activeBonus.Value : 0) + (activePenalty != null ? activePenalty.Value : 0);
+			var totalBonus = (activeBonus != null ? activeBonus.Value : 0) + (activePenalty != null ? activePenalty.Value : 0);
 			
-			return total;
+			return _character.GetSkillAbility(_skill.Type).Modifier + _skill.Proficiency.GetProficiencyBonus(_character) + totalBonus;
 		}
 	}
 }

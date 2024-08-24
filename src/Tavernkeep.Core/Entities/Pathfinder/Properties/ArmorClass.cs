@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-using Tavernkeep.Core.Calculations.Managers;
+﻿using System.Text.Json.Serialization;
+using Tavernkeep.Core.Calculations.Evaluators;
 using Tavernkeep.Core.Contracts.Interfaces;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
@@ -9,7 +8,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 	{
 		#region Backing fields
 
-		private IPropertyManager _manager;
+		private IPropertyEvaluator<int>? _armorClassEvaluator;
 
 		#endregion
 
@@ -32,12 +31,15 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		[JsonIgnore]
 		public Character Owner { get; set; } = default!;
-
-		[JsonIgnore]
-		[NotMapped]
-		public IPropertyManager Manager => _manager ??= new ArmorClassPropertyManager(this);
 		public ArmorProficiencies Proficiencies { get; set; }
-		public int Class => Manager.Value;
+		public int Class
+		{
+			get
+			{
+				_armorClassEvaluator ??= new ArmorClassPropertyEvaluator(this);
+				return _armorClassEvaluator.Value;
+			}
+		}
 
 		#endregion
 	}

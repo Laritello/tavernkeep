@@ -4,9 +4,9 @@ using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Extensions;
 
-namespace Tavernkeep.Core.Calculations.Managers
+namespace Tavernkeep.Core.Calculations.Evaluators
 {
-	public class PerceptionPropertyManager(Perception perception) : IPropertyManager
+	public class PerceptionBonusPropertyEvaluator(Perception perception) : IPropertyEvaluator<int>
 	{
 		private readonly Perception _perception = perception;
 		private readonly Character _character = perception.Owner;

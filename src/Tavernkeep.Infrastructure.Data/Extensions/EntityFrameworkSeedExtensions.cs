@@ -167,22 +167,46 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 						Level = 1,
 						Advancements =
 						[
-							new AbilityBoostAdvancement()
+							new KeyAbilityAdvancement()
 							{
 								Possible = [AbilityType.Wisdom],
 								Selected = AbilityType.Wisdom
+							},
+							new SkillIncreaseAdvancement()
+							{
+								Possible = [SkillType.Religion],
+								Selected = SkillType.Religion
+							},
+							new SkillIncreaseAdvancement()
+							{
+								IsFree = true,
+								Selected = SkillType.Medicine,
+							},
+							new IntelligenceBasedSkillIncreaseAdvancement()
+							{
+								BaseAmount = 2,
+								Advancements =
+								[
+									new SkillIncreaseAdvancement()
+									{
+										IsFree = true,
+										Selected = SkillType.Arcana,
+									},
+									new SkillIncreaseAdvancement()
+									{
+										IsFree = true,
+										Selected = SkillType.Crafting,
+									}
+								]
+							},
+							new PerceptionProficiencyAdvancement()
+							{
+								Proficiency = Proficiency.Trained
 							}
 						]
 					},
 				]
 				};
-
-				character.Arcana.Proficiency = Proficiency.Trained;
-				character.Religion.Proficiency = Proficiency.Expert;
-				character.Medicine.Proficiency = Proficiency.Trained;
-				character.Diplomacy.Proficiency = Proficiency.Trained;
-				character.Arcana.Proficiency = Proficiency.Trained;
-
 
 				context.Set<Character>().Add(character);
 			}

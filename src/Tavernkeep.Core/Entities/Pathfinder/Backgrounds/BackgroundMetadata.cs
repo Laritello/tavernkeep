@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Tavernkeep.Core.Entities.Base;
-using Tavernkeep.Core.Entities.Pathfinder.Builds;
+using Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Backgrounds
 {
@@ -8,14 +8,11 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Backgrounds
 	public class BackgroundMetadata : NameEntity
 	{
 		public string Description { get; set; } = default!;
-		public List<LevelProgression> Progression { get; set; }
+		public List<Advancement> Advancements { get; set; }
 
 		public BackgroundMetadata()
 		{
-			Progression = [];
+			Advancements = [];
 		}
-
-		public LevelProgression this[int level] => Progression.FirstOrDefault(p => p.Level == level) ?? new(level);
-		public static BackgroundMetadata Empty => new();
 	}
 }

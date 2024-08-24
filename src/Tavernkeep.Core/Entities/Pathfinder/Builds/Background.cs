@@ -1,18 +1,16 @@
 ﻿using Tavernkeep.Core.Entities.Pathfinder.Backgrounds;
+using Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Builds
 {
 	public class Background
 	{
 		public string Name { get; set; } = default!;
-		public List<LevelProgression> Progression { get; set; }
+		public List<Advancement> Advancements { get; set; } = [];
 
 		public Background()
 		{
-			Progression = [];
+			
 		}
-
-		public LevelProgression this[int level] => Progression.FirstOrDefault(p => p.Level == level) ?? new(level);
-		public static Background Empty => new();
 	}
 }

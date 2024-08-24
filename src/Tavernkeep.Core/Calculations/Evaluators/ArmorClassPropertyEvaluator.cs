@@ -1,25 +1,25 @@
-﻿using Tavernkeep.Core.Contracts.Interfaces;
+﻿using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Extensions;
 
-namespace Tavernkeep.Core.Calculations.Managers
+namespace Tavernkeep.Core.Calculations.Evaluators
 {
-	public class SavingThrowPropertyManager(SavingThrow savingThrow) : IPropertyManager
+	public class ArmorClassPropertyEvaluator(ArmorClass armorClass) : IPropertyEvaluator<int>
 	{
-		private readonly SavingThrow _savingThrow = savingThrow;
-		private readonly Character _character = savingThrow.Owner;
+		private readonly ArmorClass _armorClass = armorClass;
+		private readonly Character _character = armorClass.Owner;
 
-		public int Value => _character.GetSavingThrowAbility(_savingThrow.Type).Modifier + _savingThrow.Proficiency.GetProficiencyBonus(_character) + CalculateBonus();
+		public int Value => 10 + _character.Dexterity.Modifier + _armorClass.Proficiencies[ArmorType.Unarmored].GetProficiencyBonus(_character) + CalculateBonus();
 
-		private int CalculateBonus()
+		public int CalculateBonus()
 		{
-			var target = _savingThrow.Type.ToTarget();
 			var conditions = _character.Conditions;
 
 			var conditionModifiers = _character.Conditions
 				.SelectMany(x => x.CollectModifiers(_character))
-				.Where(x => x.Targets.Contains(target))
+				.Where(x => x.Targets.Contains(ModifierTarget.ArmorClass))
 				.ToList();
 
 			var activeBonus = conditionModifiers.Where(x => x.IsBonus).MaxBy(x => x.Value);

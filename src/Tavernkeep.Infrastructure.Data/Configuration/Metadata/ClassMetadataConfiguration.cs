@@ -15,7 +15,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.Metadata
 			builder.Property(a => a.Name).IsRequired();
 			builder.Property(a => a.Description).IsRequired();
 
-			builder.OwnsMany(a => a.Progression, b =>
+			builder.OwnsMany(a => a.Advancements, b =>
 			{
 				b.Property(p => p.Advancements)
 				.HasConversion(

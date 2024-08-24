@@ -16,7 +16,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Tags = table.Column<string>(type: "TEXT", nullable: false),
+                    Traits = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     HitPoints = table.Column<int>(type: "INTEGER", nullable: false),
                     Size = table.Column<string>(type: "TEXT", nullable: false),
@@ -47,7 +47,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Traits = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
+                    HitPoints = table.Column<int>(type: "INTEGER", nullable: false),
                     Progression = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>

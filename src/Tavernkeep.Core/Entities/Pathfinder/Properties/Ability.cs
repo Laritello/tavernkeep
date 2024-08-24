@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-using Tavernkeep.Core.Calculations.Managers;
+﻿using System.Text.Json.Serialization;
+using Tavernkeep.Core.Calculations.Evaluators;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
 
@@ -10,7 +9,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 	{
 		#region Backing fields
 
-		private IPropertyManager _manager;
+		private IPropertyEvaluator<int>? _scoreEvaluator;
 
 		#endregion
 
@@ -33,11 +32,15 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		[JsonIgnore]
 		public Character Owner { get; set; } = default!;
-		[JsonIgnore]
-		[NotMapped]
-		public IPropertyManager Manager => _manager ??= new AbilityPropertyManager(this);
 		public AbilityType Type { get; set; }
-		public int Score => Manager.Value;
+		public int Score
+		{
+			get
+			{
+				_scoreEvaluator ??= new AbilityScorePropertyEvaluator(this);
+				return _scoreEvaluator.Value;
+			}
+		}
 		public int Modifier => (Score - 10) / 2;
 
 		#endregion
