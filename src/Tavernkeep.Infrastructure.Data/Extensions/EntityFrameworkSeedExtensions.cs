@@ -106,106 +106,95 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 				character.Build.Ancestry = new()
 				{
 					Name = "Elf",
-					Progression =
+					Advancements =
 					[
-						new(1)
-					{
-						Level = 1,
-						Advancements =
-						[
-							new AbilityBoostAdvancement()
-							{
-								Possible = [AbilityType.Dexterity],
-								Selected = AbilityType.Dexterity
-							},
-							new AbilityBoostAdvancement()
-							{
-								Possible = [AbilityType.Intelligence],
-								Selected = AbilityType.Intelligence
-							},
-							new AbilityBoostAdvancement()
-							{
-								Possible = [AbilityType.Strength, AbilityType.Constitution, AbilityType.Wisdom, AbilityType.Charisma],
-								Selected = AbilityType.Wisdom
-							},
-							new AbilityFlawAdvancement(){
-								Possible = [AbilityType.Constitution],
-								Selected = AbilityType.Constitution
-							}
-						]
-					},
-				]
+						new AbilityBoostAdvancement()
+						{
+							Level = 1,
+							Possible = [AbilityType.Dexterity],
+							Selected = AbilityType.Dexterity
+						},
+						new AbilityBoostAdvancement()
+						{
+							Level = 1,
+							Possible = [AbilityType.Intelligence],
+							Selected = AbilityType.Intelligence
+						},
+						new AbilityBoostAdvancement()
+						{
+							Level = 1,
+							Possible = [AbilityType.Strength, AbilityType.Constitution, AbilityType.Wisdom, AbilityType.Charisma],
+							Selected = AbilityType.Wisdom
+						},
+						new AbilityFlawAdvancement()
+						{
+							Level = 1,
+							Possible = [AbilityType.Constitution],
+							Selected = AbilityType.Constitution
+						}
+					]
 				};
 
 				character.Build.Background = new()
 				{
 					Name = "Scholar (Religion)",
-					Progression =
+					Advancements =
 					[
-						new(1)
-					{
-						Level = 1,
-						Advancements =
-						[
-							new AbilityBoostAdvancement()
-							{
-								Possible = [AbilityType.Intelligence, AbilityType.Wisdom],
-								Selected = AbilityType.Wisdom
-							}
-						]
-					},
-				]
+						new AbilityBoostAdvancement()
+						{
+							Level = 1,
+							Possible = [AbilityType.Intelligence, AbilityType.Wisdom],
+							Selected = AbilityType.Wisdom
+						}
+					]
 				};
 
 				character.Build.Class = new()
 				{
 					Name = "Cleric",
-					Progression =
+					Advancements =
 					[
-						new(1)
-					{
-						Level = 1,
-						Advancements =
-						[
-							new KeyAbilityAdvancement()
-							{
-								Possible = [AbilityType.Wisdom],
-								Selected = AbilityType.Wisdom
-							},
-							new SkillIncreaseAdvancement()
-							{
-								Possible = [SkillType.Religion],
-								Selected = SkillType.Religion
-							},
-							new SkillIncreaseAdvancement()
-							{
-								IsFree = true,
-								Selected = SkillType.Medicine,
-							},
-							new IntelligenceBasedSkillIncreaseAdvancement()
-							{
-								BaseAmount = 2,
-								Advancements =
-								[
-									new SkillIncreaseAdvancement()
-									{
-										IsFree = true,
-										Selected = SkillType.Arcana,
-									},
-									new SkillIncreaseAdvancement()
-									{
-										IsFree = true,
-										Selected = SkillType.Crafting,
-									}
-								]
-							},
-							new PerceptionProficiencyAdvancement()
-							{
-								Proficiency = Proficiency.Trained
-							}
-						]
-					},
-				]
+						new KeyAbilityAdvancement()
+						{
+							Level = 1,
+							Possible = [AbilityType.Wisdom],
+							Selected = AbilityType.Wisdom
+						},
+						new SkillIncreaseAdvancement()
+						{
+							Level = 1,
+							Possible = [SkillType.Religion],
+							Selected = SkillType.Religion
+						},
+						new SkillIncreaseAdvancement()
+						{
+							Level = 1,
+							IsFree = true,
+							Selected = SkillType.Medicine,
+						},
+						new IntelligenceBasedSkillIncreaseAdvancement()
+						{
+							Level = 1,
+							BaseAmount = 2,
+							Advancements =
+							[
+								new SkillIncreaseAdvancement()
+								{
+									IsFree = true,
+									Selected = SkillType.Arcana,
+								},
+								new SkillIncreaseAdvancement()
+								{
+									IsFree = true,
+									Selected = SkillType.Crafting,
+								}
+							]
+						},
+						new PerceptionProficiencyAdvancement()
+						{
+							Proficiency = Proficiency.Trained
+						}
+					]
 				};
 
 				context.Set<Character>().Add(character);
