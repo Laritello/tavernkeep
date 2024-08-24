@@ -11,13 +11,11 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.Metadata
 	{
 		public void Configure(EntityTypeBuilder<ClassMetadata> builder)
 		{
-			builder.HasKey(a => a.Name);
-			builder.Property(a => a.Name).IsRequired();
-			builder.Property(a => a.Description).IsRequired();
+			builder.HasKey(c => c.Name);
+			builder.Property(c => c.Name).IsRequired();
+			builder.Property(c => c.Description).IsRequired();
 
-			builder.OwnsMany(a => a.Advancements, b =>
-			{
-				b.Property(p => p.Advancements)
+			builder.Property(c => c.Advancements)
 				.HasConversion(
 					v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
 					v => JsonSerializer.Deserialize<List<Advancement>>(v, JsonSerializerOptions.Default) ?? new List<Advancement>(),
@@ -25,9 +23,6 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.Metadata
 						(c1, c2) => c1!.SequenceEqual(c2!),
 						c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
 						c => c.ToList()));
-
-				b.ToJson();
-			});
 		}
 	}
 }

@@ -22,7 +22,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Size = table.Column<string>(type: "TEXT", nullable: false),
                     Speed = table.Column<int>(type: "INTEGER", nullable: false),
                     Languages = table.Column<string>(type: "TEXT", nullable: false),
-                    Progression = table.Column<string>(type: "TEXT", nullable: true)
+                    Advancements = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +35,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
-                    Progression = table.Column<string>(type: "TEXT", nullable: true)
+                    Advancements = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,7 +50,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Traits = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     HitPoints = table.Column<int>(type: "INTEGER", nullable: false),
-                    Progression = table.Column<string>(type: "TEXT", nullable: true)
+                    Advancements = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

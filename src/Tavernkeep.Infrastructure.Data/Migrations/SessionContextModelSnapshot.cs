@@ -50,6 +50,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Advancements")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -80,6 +84,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Backgrounds.BackgroundMetadata", b =>
                 {
                     b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Advancements")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -118,6 +126,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Classes.ClassMetadata", b =>
                 {
                     b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Advancements")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -263,68 +275,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Ancestries.AncestryMetadata", b =>
-                {
-                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Builds.LevelProgression", "Progression", b1 =>
-                        {
-                            b1.Property<string>("AncestryMetadataName")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAddOrUpdate()
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("Advancements")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Level")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("AncestryMetadataName", "Id");
-
-                            b1.ToTable("Ancestries");
-
-                            b1.ToJson("Progression");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AncestryMetadataName");
-                        });
-
-                    b.Navigation("Progression");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Backgrounds.BackgroundMetadata", b =>
-                {
-                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Builds.LevelProgression", "Progression", b1 =>
-                        {
-                            b1.Property<string>("BackgroundMetadataName")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("Advancements")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Level")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("BackgroundMetadataName", "Id");
-
-                            b1.ToTable("Backgrounds");
-
-                            b1.ToJson("Progression");
-
-                            b1.WithOwner()
-                                .HasForeignKey("BackgroundMetadataName");
-                        });
-
-                    b.Navigation("Progression");
-                });
-
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Character", b =>
                 {
                     b.HasOne("Tavernkeep.Core.Entities.User", "Owner")
@@ -434,9 +384,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -460,9 +407,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -484,9 +428,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -552,9 +493,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -576,9 +514,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -622,9 +557,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -696,9 +628,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -720,9 +649,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -748,9 +674,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -774,9 +697,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -798,9 +718,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -852,9 +769,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -878,9 +792,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -902,9 +813,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -950,9 +858,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -974,9 +879,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -1222,37 +1124,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.Navigation("Wisdom")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Classes.ClassMetadata", b =>
-                {
-                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Builds.LevelProgression", "Progression", b1 =>
-                        {
-                            b1.Property<string>("ClassMetadataName")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("Advancements")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Level")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("ClassMetadataName", "Id");
-
-                            b1.ToTable("Classes");
-
-                            b1.ToJson("Progression");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ClassMetadataName");
-                        });
-
-                    b.Navigation("Progression");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionMetadata", b =>

@@ -20,9 +20,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.Metadata
 			builder.Property(a => a.Size)
 				.HasConversion(new EnumToStringConverter<UnitSize>());
 
-			builder.OwnsMany(a => a.Advancements, b =>
-			{
-				b.Property(p => p.Advancements)
+			builder.Property(a => a.Advancements)
 				.HasConversion(
 					v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
 					v => JsonSerializer.Deserialize<List<Advancement>>(v, JsonSerializerOptions.Default) ?? new List<Advancement>(),
@@ -30,9 +28,6 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.Metadata
 						(c1, c2) => c1!.SequenceEqual(c2!),
 						c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
 						c => c.ToList()));
-
-				b.ToJson();
-			});
 		}
 	}
 }
