@@ -8,7 +8,7 @@ using Tavernkeep.Core.Entities.Pathfinder.Classes;
 namespace Tavernkeep.Server.Controllers
 {
 	/// <summary>
-	///  The <see cref="RollController"/> class that returns glossary data.
+	///  The <see cref="GlossaryController"/> class that returns glossary data.
 	/// </summary>
 	/// <param name="mediator">The <see cref="IMediator"/> instance.</param>
 	[ApiController]
