@@ -75,10 +75,10 @@ async function sendMessage() {
                 <ChatMessageView v-for="item in messages.list" :key="item.id" :message="item" />
             </div>
         </div>
-        <div class="">
+        <div class="w-full absolute bottom-0 pr-8">
             <UserSelector v-model="selectedUserId" :users="listOfMessageRecepient" />
-            <form @submit.prevent="sendMessage" class="m-2">
-                <div class="join w-full">
+            <form @submit.prevent="sendMessage">
+                <div class="flex gap-2 my-2">
                     <CommandInput v-model="message" :commands="slashCommands" class="w-full" />
                     <button type="submit" class="btn btn-ghost">
                         <v-icon icon="mdi-send" />

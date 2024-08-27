@@ -18,7 +18,7 @@
                 ref="textInput"
                 @input="updateSuggestions"
                 @keydown.tab.prevent="tryToCompleteSuggestion"
-                class="input input-bordered w-full max-w-xs"
+                class="input input-bordered w-full"
                 placeholder="Type here..."
             />
             <ul
