@@ -14,7 +14,7 @@ const routes: RouteRecordRaw[] = [
         path: '/',
         component: HomePage,
         meta: {
-            layout: 'AppLayout',
+            layout: 'MobileLayout',
             protected: true,
         },
     },
@@ -29,7 +29,7 @@ const routes: RouteRecordRaw[] = [
         path: '/characters',
         component: CharactersPage,
         meta: {
-            layout: 'AppLayout',
+            layout: 'MobileLayout',
             protected: true,
         },
     },
@@ -53,7 +53,7 @@ const routes: RouteRecordRaw[] = [
         path: '/admin',
         component: AdminPage,
         meta: {
-            layout: 'AppLayout',
+            layout: 'MobileLayout',
             protected: true,
             allowedRoles: [UserRole.Master],
         },

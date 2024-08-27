@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-auto overflow-y-auto overflow-x-hidden">
+    <div class="mx-auto ">
         <CharacterComponent v-if="activeCharacter" :character="activeCharacter" />
         <span v-else>No active character</span>
     </div>
