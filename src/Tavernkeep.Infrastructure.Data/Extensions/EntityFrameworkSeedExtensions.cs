@@ -4,10 +4,8 @@ using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Entities.Pathfinder.Ancestries;
-using Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements;
-using Tavernkeep.Core.Entities.Pathfinder.Classes;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
+using Tavernkeep.Core.Entities.Templates;
 using Tavernkeep.Infrastructure.Data.Context;
 
 namespace Tavernkeep.Infrastructure.Data.Extensions
@@ -56,15 +54,15 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 
 		private static SessionContext SeedConditions(this SessionContext context)
 		{
-			if (!context.Set<ConditionMetadata>().Any())
+			if (!context.Set<ConditionTemplate>().Any())
 			{
 				var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Conditions.en-UK.json");
 				using var sr = new StreamReader(filePath);
 
 				var json = sr.ReadToEnd();
-				var conditions = JsonSerializer.Deserialize<List<ConditionMetadata>>(json, options) ?? [];
+				var conditions = JsonSerializer.Deserialize<List<ConditionTemplate>>(json, options) ?? [];
 
-				context.Set<ConditionMetadata>().AddRange(conditions);
+				context.Set<ConditionTemplate>().AddRange(conditions);
 			}
 
 			context.SaveChanges();
@@ -74,15 +72,15 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 
 		private static SessionContext SeedAncestries(this SessionContext context)
 		{
-			if (!context.Set<AncestryMetadata>().Any())
+			if (!context.Set<AncestryTemplate>().Any())
 			{
 				var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Ancestries.en-UK.json");
 				using var sr = new StreamReader(filePath);
 
 				var json = sr.ReadToEnd();
-				var ancestries = JsonSerializer.Deserialize<List<AncestryMetadata>>(json, options) ?? [];
+				var ancestries = JsonSerializer.Deserialize<List<AncestryTemplate>>(json, options) ?? [];
 
-				context.Set<AncestryMetadata>().AddRange(ancestries);
+				context.Set<AncestryTemplate>().AddRange(ancestries);
 			}
 
 			context.SaveChanges();
@@ -92,15 +90,15 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 
 		private static SessionContext SeedClasses(this SessionContext context)
 		{
-			if (!context.Set<ClassMetadata>().Any())
+			if (!context.Set<ClassTemplate>().Any())
 			{
 				var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Classes.en-UK.json");
 				using var sr = new StreamReader(filePath);
 
 				var json = sr.ReadToEnd();
-				var classes = JsonSerializer.Deserialize<List<ClassMetadata>>(json, options) ?? [];
+				var classes = JsonSerializer.Deserialize<List<ClassTemplate>>(json, options) ?? [];
 
-				context.Set<ClassMetadata>().AddRange(classes);
+				context.Set<ClassTemplate>().AddRange(classes);
 			}
 
 			context.SaveChanges();
@@ -121,101 +119,6 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 					{
 						Level = 1
 					}
-				};
-
-				character.Build.Ancestry = new()
-				{
-					Name = "Elf",
-					Advancements =
-					[
-						new AbilityBoostAdvancement()
-						{
-							Level = 1,
-							Possible = [AbilityType.Dexterity],
-							Selected = AbilityType.Dexterity
-						},
-						new AbilityBoostAdvancement()
-						{
-							Level = 1,
-							Possible = [AbilityType.Intelligence],
-							Selected = AbilityType.Intelligence
-						},
-						new AbilityBoostAdvancement()
-						{
-							Level = 1,
-							Possible = [AbilityType.Strength, AbilityType.Constitution, AbilityType.Wisdom, AbilityType.Charisma],
-							Selected = AbilityType.Wisdom
-						},
-						new AbilityFlawAdvancement()
-						{
-							Level = 1,
-							Possible = [AbilityType.Constitution],
-							Selected = AbilityType.Constitution
-						}
-					]
-				};
-
-				character.Build.Background = new()
-				{
-					Name = "Scholar (Religion)",
-					Advancements =
-					[
-						new AbilityBoostAdvancement()
-						{
-							Level = 1,
-							Possible = [AbilityType.Intelligence, AbilityType.Wisdom],
-							Selected = AbilityType.Wisdom
-						}
-					]
-				};
-
-				character.Build.Class = new()
-				{
-					Name = "Cleric",
-					Advancements =
-					[
-						new KeyAbilityAdvancement()
-						{
-							Level = 1,
-							Possible = [AbilityType.Wisdom],
-							Selected = AbilityType.Wisdom
-						},
-						new SkillIncreaseAdvancement()
-						{
-							Level = 1,
-							Possible = [SkillType.Religion],
-							Selected = SkillType.Religion
-						},
-						new SkillIncreaseAdvancement()
-						{
-							Level = 1,
-							IsFree = true,
-							Selected = SkillType.Medicine,
-						},
-						new IntelligenceBasedSkillIncreaseAdvancement()
-						{
-							Level = 1,
-							BaseAmount = 2,
-							Advancements =
-							[
-								new SkillIncreaseAdvancement()
-								{
-									IsFree = true,
-									Selected = SkillType.Arcana,
-								},
-								new SkillIncreaseAdvancement()
-								{
-									IsFree = true,
-									Selected = SkillType.Crafting,
-								}
-							]
-						},
-						new PerceptionProficiencyAdvancement()
-						{
-							Level = 1,
-							Proficiency = Proficiency.Trained
-						}
-					]
 				};
 
 				context.Set<Character>().Add(character);

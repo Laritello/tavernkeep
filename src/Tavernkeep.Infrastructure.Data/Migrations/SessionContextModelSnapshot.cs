@@ -45,60 +45,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Ancestries.AncestryMetadata", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Advancements")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("HitPoints")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Languages")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Speed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Traits")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Name");
-
-                    b.ToTable("Ancestries");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Backgrounds.BackgroundMetadata", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Advancements")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Name");
-
-                    b.ToTable("Backgrounds");
-                });
-
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Character", b =>
                 {
                     b.Property<Guid>("Id")
@@ -116,6 +62,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Snapshot")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
@@ -123,32 +73,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Characters");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Classes.ClassMetadata", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Advancements")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("HitPoints")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Traits")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Name");
-
-                    b.ToTable("Classes");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionMetadata", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionTemplate", b =>
                 {
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
@@ -159,6 +84,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.Property<bool>("HasLevels")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Level")
                         .HasColumnType("INTEGER");
@@ -187,6 +115,44 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RefreshTokens");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Templates.AncestryTemplate", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Attributes")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ancestries");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Templates.ClassTemplate", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Attributes")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("BonusSkillsAmount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
@@ -1126,11 +1092,11 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionMetadata", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionTemplate", b =>
                 {
                     b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Modifiers.Modifier", "Modifiers", b1 =>
                         {
-                            b1.Property<string>("ConditionMetadataName")
+                            b1.Property<string>("ConditionTemplateName")
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("Id")
@@ -1153,19 +1119,19 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("Value")
                                 .HasColumnType("INTEGER");
 
-                            b1.HasKey("ConditionMetadataName", "Id");
+                            b1.HasKey("ConditionTemplateName", "Id");
 
                             b1.ToTable("Conditions");
 
                             b1.ToJson("Modifiers");
 
                             b1.WithOwner()
-                                .HasForeignKey("ConditionMetadataName");
+                                .HasForeignKey("ConditionTemplateName");
                         });
 
                     b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Conditions.Condition", "Related", b1 =>
                         {
-                            b1.Property<string>("ConditionMetadataName")
+                            b1.Property<string>("ConditionTemplateName")
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("Id")
@@ -1182,18 +1148,18 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
-                            b1.HasKey("ConditionMetadataName", "Id");
+                            b1.HasKey("ConditionTemplateName", "Id");
 
                             b1.ToTable("Conditions");
 
                             b1.ToJson("Related");
 
                             b1.WithOwner()
-                                .HasForeignKey("ConditionMetadataName");
+                                .HasForeignKey("ConditionTemplateName");
 
                             b1.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Modifiers.Modifier", "Modifiers", b2 =>
                                 {
-                                    b2.Property<string>("ConditionMetadataName")
+                                    b2.Property<string>("ConditionTemplateName")
                                         .HasColumnType("TEXT");
 
                                     b2.Property<int>("ConditionId")
@@ -1219,14 +1185,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                     b2.Property<int>("Value")
                                         .HasColumnType("INTEGER");
 
-                                    b2.HasKey("ConditionMetadataName", "ConditionId", "Id");
+                                    b2.HasKey("ConditionTemplateName", "ConditionId", "Id");
 
                                     b2.ToTable("Conditions");
 
                                     b2.ToJson("Modifiers");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("ConditionMetadataName", "ConditionId");
+                                        .HasForeignKey("ConditionTemplateName", "ConditionId");
                                 });
 
                             b1.Navigation("Modifiers");

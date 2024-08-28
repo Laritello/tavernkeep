@@ -2,6 +2,7 @@
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Base;
 using Tavernkeep.Core.Entities.Pathfinder.Builds;
+using Tavernkeep.Core.Entities.Pathfinder.Builds.Snapshots;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
@@ -14,7 +15,9 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 
 		public Character()
 		{
-			Build = new(this);
+			Build = new();
+			Snapshot = new();
+
 			Health = new(1, 1, 0);
 			Armor = new(this);
 
@@ -59,7 +62,10 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 
 		public string Name { get; set; } = default!;
 		public Build Build { get; set; }
+		public CharacterSnapshot Snapshot { get; set; }
+
 		public int Level => Build.Level;
+
 		public Health Health { get; set; }
 		public ArmorClass Armor { get; set; }
 		public List<Condition> Conditions { get; set; }

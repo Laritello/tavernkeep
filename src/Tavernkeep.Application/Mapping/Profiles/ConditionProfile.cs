@@ -8,7 +8,7 @@ namespace Tavernkeep.Application.Mapping.Profiles
 	{
 		public ConditionProfile()
 		{
-			CreateMap<ConditionMetadata, ConditionMetadataDto>();
+			CreateMap<ConditionTemplate, ConditionMetadataDto>();
 		}
 	}
 }

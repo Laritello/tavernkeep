@@ -81,9 +81,8 @@ namespace Tavernkeep.Server.Extensions
 			services.AddScoped<IMessageRepository, MessageEFRepository>();
 			services.AddScoped<IRefreshTokenRepository, RefreshTokenEFRepository>();
 			services.AddScoped<IConditionMetadataRepository, ConditionMetadataEFRepository>();
-			services.AddScoped<IAncestryMetadataRepository, AncestryMetadataEFRepository>();
-			services.AddScoped<IBackgroundMetadataRepository, BackgroundMetadataEFRepository>();
-			services.AddScoped<IClassMetadataRepository, ClassMetadataEFRepository>();
+			services.AddScoped<IAncestryTemplateRepository, AncestryTemplateEFRepository>();
+			services.AddScoped<IClassTemplateRepository, ClassTemplateEFRepository>();
 
 			return services;
 		}

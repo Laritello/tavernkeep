@@ -1,7 +1,7 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Entities.Pathfinder.Builds.Advancements;
+using Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.Base;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
 namespace Tavernkeep.Core.Evaluators.Properties
@@ -15,11 +15,11 @@ namespace Tavernkeep.Core.Evaluators.Properties
 
 		private Proficiency Calculate()
 		{
-			var advancementsCount = _character.Build.Advancements
-				.Where(x => x.Level <= _character.Level && x is SkillIncreaseAdvancement)
-				.Cast<SkillIncreaseAdvancement>()
-				.Where(x => x.Selected == _skill.Type)
-				.DistinctBy(x => x.MaximumAllowedProficiency)
+			var advancementsCount = _character.Build.Attributes
+				.Where(x => x.Level <= _character.Level && x is SkillIncreaseAttribute)
+				.Cast<SkillIncreaseAttribute>()
+				.Where(x => x.Contains(_skill.Type))
+				.DistinctBy(x => x.MaxProficiency)
 				.Count();
 
 			// Proficiency values relate to the base proficiency bonus

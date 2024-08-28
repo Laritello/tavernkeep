@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Pathfinder.Ancestries;
+using Tavernkeep.Core.Entities.Templates;
 
 namespace Tavernkeep.Application.UseCases.Glossary.Query.GetAncestries
 {
-	public class GetAncestriesQuery : IRequest<List<AncestryMetadata>> { }
+	public class GetAncestriesQuery : IRequest<List<AncestryTemplate>> { }
 }

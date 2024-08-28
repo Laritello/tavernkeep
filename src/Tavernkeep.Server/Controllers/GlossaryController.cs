@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Glossary.Query.GetAncestries;
 using Tavernkeep.Application.UseCases.Glossary.Query.GetClasses;
-using Tavernkeep.Core.Entities.Pathfinder.Ancestries;
-using Tavernkeep.Core.Entities.Pathfinder.Classes;
+using Tavernkeep.Core.Entities.Templates;
 
 namespace Tavernkeep.Server.Controllers
 {
@@ -20,7 +19,7 @@ namespace Tavernkeep.Server.Controllers
 		/// </summary>
 		/// <returns><see cref="List{T}"/> of all available classes.</returns>
 		[HttpGet("classes")]
-		public async Task<List<ClassMetadata>> GetClassesAsync()
+		public async Task<List<ClassTemplate>> GetClassesAsync()
 		{
 			var classes = await mediator.Send(new GetClassesQuery());
 			return classes;
@@ -31,7 +30,7 @@ namespace Tavernkeep.Server.Controllers
 		/// </summary>
 		/// <returns><see cref="List{T}"/> of all available ancestries.</returns>
 		[HttpGet("ancestries")]
-		public async Task<List<AncestryMetadata>> GetAncestriesAsync()
+		public async Task<List<AncestryTemplate>> GetAncestriesAsync()
 		{
 			var ancestries = await mediator.Send(new GetAncestriesQuery());
 			return ancestries;

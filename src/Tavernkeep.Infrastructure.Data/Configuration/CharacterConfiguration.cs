@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Text.Json;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities.Pathfinder.Builds;
+using Tavernkeep.Core.Entities.Pathfinder.Builds.Snapshots;
 using Tavernkeep.Infrastructure.Data.Extensions;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration
@@ -19,6 +20,11 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
 				.HasConversion(
 				v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
 				v => JsonSerializer.Deserialize<Build>(v, JsonSerializerOptions.Default) ?? new());
+
+			builder.Property(c => c.Snapshot)
+				.HasConversion(
+				v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
+				v => JsonSerializer.Deserialize<CharacterSnapshot>(v, JsonSerializerOptions.Default) ?? new());
 
 			builder.OwnsJson(c => c.Health);
 			builder.OwnsOne(c => c.Armor, b =>

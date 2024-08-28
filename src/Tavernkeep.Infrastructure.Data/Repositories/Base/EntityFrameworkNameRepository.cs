@@ -7,7 +7,7 @@ using Tavernkeep.Infrastructure.Data.Extensions;
 
 namespace Tavernkeep.Infrastructure.Data.Repositories.Base
 {
-	public class EntityFrameworkNameRepository<T> : INameRepositoryBase<T, string> where T : NameEntity
+	public class EntityFrameworkNameRepository<T> : IStringRepositoryBase<T, string> where T : StringEntity
 	{
 		protected readonly SessionContext Context;
 
@@ -18,13 +18,13 @@ namespace Tavernkeep.Infrastructure.Data.Repositories.Base
 
 		protected IQueryable<T> AsQueryable() => Context.Set<T>();
 
-		public async Task<T?> FindAsync(string name, ISpecification<T> specification = default!, CancellationToken cancellationToken = default)
+		public async Task<T?> FindAsync(string id, ISpecification<T> specification = default!, CancellationToken cancellationToken = default)
 		{
 			var query = AsQueryable();
 			if (specification != null)
 				query = EntityFrameworkSpecificationEvaluator<T>.GetQuery(query, specification);
 
-			return await query.FirstOrDefaultAsync(x => x.Name == name, cancellationToken);
+			return await query.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 		}
 
 		public async Task<T?> FindAsync(ISpecification<T> specification = default!, CancellationToken cancellationToken = default)
@@ -38,9 +38,9 @@ namespace Tavernkeep.Infrastructure.Data.Repositories.Base
 			return await query.FirstOrDefaultAsync(cancellationToken);
 		}
 
-		public async Task<IList<T>> GetAsync(IEnumerable<string> names, ISpecification<T> specification = default!, CancellationToken cancellationToken = default)
+		public async Task<IList<T>> GetAsync(IEnumerable<string> ids, ISpecification<T> specification = default!, CancellationToken cancellationToken = default)
 		{
-			var query = AsQueryable().Where(x => names.Any(z => x.Name == z));
+			var query = AsQueryable().Where(x => ids.Any(z => x.Id == z));
 
 			if (specification != null)
 				query = EntityFrameworkSpecificationEvaluator<T>.GetQuery(query, specification);
@@ -54,9 +54,9 @@ namespace Tavernkeep.Infrastructure.Data.Repositories.Base
 			return await query.ToListAsync(cancellationToken);
 		}
 
-		public async Task<IList<T>> GetAsync(IEnumerable<string> names, CancellationToken cancellationToken)
+		public async Task<IList<T>> GetAsync(IEnumerable<string> ids, CancellationToken cancellationToken)
 		{
-			var query = AsQueryable().Where(x => names.Any(z => x.Name == z));
+			var query = AsQueryable().Where(x => ids.Any(z => x.Id == z));
 			return await query.ToListAsync(cancellationToken);
 		}
 

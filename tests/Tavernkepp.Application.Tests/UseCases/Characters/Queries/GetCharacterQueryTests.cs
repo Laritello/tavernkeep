@@ -1,10 +1,10 @@
 ﻿using Moq;
+using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Queries
 {
@@ -27,10 +27,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Queries
 		public async Task GetCharacterQuery_Success()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockCharacterRepository = new Mock<ICharacterService>();
 
 			mockCharacterRepository
-				.Setup(repo => repo.FindAsync(characterId, It.IsAny<ISpecification<Character>>(), It.IsAny<CancellationToken>()))
+				.Setup(ser => ser.GetCharacter(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new GetCharacterQuery(characterId);
@@ -45,7 +45,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Queries
 		public void GetCharacterQuery_CharacterNotFound()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockCharacterRepository = new Mock<ICharacterService>();
 
 			var request = new GetCharacterQuery(characterId);
 			var handler = new GetCharacterQueryHandler(mockCharacterRepository.Object);

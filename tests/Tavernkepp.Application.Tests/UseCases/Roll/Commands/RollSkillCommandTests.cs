@@ -30,7 +30,6 @@ namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 				Id = Guid.NewGuid(),
 				Owner = initiator,
 			};
-			character.Acrobatics.Proficiency = Proficiency.Master;
 		}
 
 		[Test]

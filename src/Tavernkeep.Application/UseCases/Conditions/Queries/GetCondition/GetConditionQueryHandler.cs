@@ -6,9 +6,9 @@ namespace Tavernkeep.Application.UseCases.Conditions.Queries.GetCondition
 {
 	public class GetConditionQueryHandler(
 		IConditionMetadataRepository conditionRepository
-		) : IRequestHandler<GetConditionQuery, ConditionMetadata>
+		) : IRequestHandler<GetConditionQuery, ConditionTemplate>
 	{
-		public async Task<ConditionMetadata> Handle(GetConditionQuery request, CancellationToken cancellationToken)
+		public async Task<ConditionTemplate> Handle(GetConditionQuery request, CancellationToken cancellationToken)
 		{
 			return await conditionRepository.GetConditionAsync(request.Name, cancellationToken);
 		}
