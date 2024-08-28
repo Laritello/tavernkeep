@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using Tavernkeep.Core.Evaluators.Properties;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Snapshots;
+using Tavernkeep.Core.Evaluators.Properties;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {

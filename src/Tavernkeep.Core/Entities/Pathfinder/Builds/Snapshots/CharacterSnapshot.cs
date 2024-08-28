@@ -6,7 +6,7 @@
 		public BuildSnapshot Ancestry { get; set; }
 		public BuildSnapshot Class { get; set; }
 
-		public CharacterSnapshot() 
+		public CharacterSnapshot()
 		{
 			General = new BuildSnapshot();
 			Ancestry = new BuildSnapshot();

@@ -2,7 +2,7 @@
 
 namespace Tavernkeep.Core.Repositories
 {
-	public interface IAncestryTemplateRepository : IStringRepositoryBase<AncestryTemplate, string> 
+	public interface IAncestryTemplateRepository : IStringRepositoryBase<AncestryTemplate, string>
 	{
 		Task<List<AncestryTemplate>> GetAllAncestriesAsync(CancellationToken cancellationToken = default);
 	}

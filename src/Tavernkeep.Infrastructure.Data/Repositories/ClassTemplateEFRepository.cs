@@ -6,7 +6,7 @@ using Tavernkeep.Infrastructure.Data.Repositories.Base;
 
 namespace Tavernkeep.Infrastructure.Data.Repositories
 {
-	public class ClassTemplateEFRepository(SessionContext context) : EntityFrameworkNameRepository<ClassTemplate>(context), IClassTemplateRepository 
+	public class ClassTemplateEFRepository(SessionContext context) : EntityFrameworkNameRepository<ClassTemplate>(context), IClassTemplateRepository
 	{
 		public Task<List<ClassTemplate>> GetAllClassesAsync(CancellationToken cancellationToken = default)
 		{

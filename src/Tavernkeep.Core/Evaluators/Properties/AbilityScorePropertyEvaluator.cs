@@ -22,7 +22,7 @@ namespace Tavernkeep.Core.Evaluators.Properties
 				.Count(x => x.Level <= _character.Level && x is AbilityFlawAttribute a && a.Contains(_ability.Type));
 
 			int netAmount = boostAmount - flawAmount;
-			int score = 10 + Math.Min(netAmount, 4) * 2 + Math.Max(netAmount - 4 , 0);
+			int score = 10 + Math.Min(netAmount, 4) * 2 + Math.Max(netAmount - 4, 0);
 
 			return score;
 		}
