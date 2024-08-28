@@ -8,7 +8,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter
 	{
 		public async Task<Character> Handle(GetCharacterQuery request, CancellationToken cancellationToken)
 		{
-			return await characterService.GetCharacter(request.Id, cancellationToken);
+			return await characterService.GetCharacterAsync(request.Id, cancellationToken);
 		}
 	}
 }
