@@ -53,7 +53,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion.Converters
 
 			var evaluator = new IntelligenceModifierEvaluator(template, snapshot);
 
-			return classTemplate.BonusSkillsAmount + evaluator.Value;
+			return classTemplate.SkillBaseAmount + evaluator.Value;
 		}
 	}
 }

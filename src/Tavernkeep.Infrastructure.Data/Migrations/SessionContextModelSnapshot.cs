@@ -144,11 +144,11 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("BonusSkillsAmount")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("SkillBaseAmount")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Name");
 

@@ -29,7 +29,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    BonusSkillsAmount = table.Column<int>(type: "INTEGER", nullable: false),
+                    SkillBaseAmount = table.Column<int>(type: "INTEGER", nullable: false),
                     Attributes = table.Column<string>(type: "TEXT", nullable: false),
                     Id = table.Column<string>(type: "TEXT", nullable: true)
                 },

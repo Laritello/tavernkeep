@@ -13,7 +13,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.Templates
 		{
 			builder.HasKey(c => c.Name);
 			builder.Property(c => c.Name).IsRequired();
-			builder.Property(c => c.BonusSkillsAmount).IsRequired();
+			builder.Property(c => c.SkillBaseAmount).IsRequired();
 
 			builder.Property(c => c.Attributes)
 				.HasConversion(
