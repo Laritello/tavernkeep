@@ -11,6 +11,7 @@ namespace Tavernkeep.Application.Services
 	public class CharacterService(
 		ICharacterRepository characterRepository,
 		IAncestryTemplateRepository ancestryRepository,
+		IBackgroundTemplateRepository backgroundRepository,
 		IClassTemplateRepository classRepository
 		) : ICharacterService
 	{
@@ -32,11 +33,12 @@ namespace Tavernkeep.Application.Services
 		{
 			var characters = await characterRepository.GetAllCharactersAsync(cancellationToken);
 			var ancestryTemplates = await ancestryRepository.GetAllAncestriesAsync(cancellationToken);
+			var backgroundTemplates = await backgroundRepository.GetAllBackgroundsAsync(cancellationToken);
 			var classTemplates = await classRepository.GetAllClassesAsync(cancellationToken);
 
 			foreach (var character in characters)
 			{
-				RestoreCharacter(character, ancestryTemplates, classTemplates);
+				RestoreCharacter(character, ancestryTemplates, backgroundTemplates, classTemplates);
 			}
 
 			return characters;
@@ -50,34 +52,48 @@ namespace Tavernkeep.Application.Services
 			var ancestryTemplate = await ancestryRepository.FindAsync(character.Snapshot.Ancestry.Id, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("No ancestry with provided ID found.");
 
+			var backgroundTemplate = await backgroundRepository.FindAsync(character.Snapshot.Background.Id, cancellationToken: cancellationToken)
+				?? throw new BusinessLogicException("No background with provided ID found.");
+
 			var classTemplate = await classRepository.FindAsync(character.Snapshot.Class.Id, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("No class with provided ID found.");
 
 			var generalConverter = new GeneralConverter(character);
 			var ancestryConverter = new AncestryConverter(character, ancestryTemplate);
+			var backgroundConverter = new BackgroundConverter(character, backgroundTemplate);
 			var classConverter = new ClassConverter(character, ancestryTemplate, classTemplate);
 
 			character.Build.General = generalConverter.Convert();
 			character.Build.Ancestry = ancestryConverter.Convert();
+			character.Build.Background = backgroundConverter.Convert();
 			character.Build.Class = classConverter.Convert();
 
 			return character;
 		}
 
-		private Character RestoreCharacter(Character character, List<AncestryTemplate> ancestryTemplates, List<ClassTemplate> classTemplates)
+		private Character RestoreCharacter(
+			Character character, 
+			List<AncestryTemplate> ancestryTemplates, 
+			List<BackgroundTemplate> backgroundTemplates, 
+			List<ClassTemplate> classTemplates)
 		{
 			var ancestryTemplate = ancestryTemplates.FirstOrDefault(x => x.Id == character.Snapshot.Ancestry.Id)
 				?? throw new BusinessLogicException("No ancestry with provided ID found.");
+
+			var backgroundTemplate = backgroundTemplates.FirstOrDefault(x => x.Id == character.Snapshot.Background.Id)
+				?? throw new BusinessLogicException("No background with provided ID found.");
 
 			var classTemplate = classTemplates.FirstOrDefault(x => x.Id == character.Snapshot.Class.Id)
 				?? throw new BusinessLogicException("No class with provided ID found.");
 
 			var generalConverter = new GeneralConverter(character);
 			var ancestryConverter = new AncestryConverter(character, ancestryTemplate);
+			var backgroundConverter = new BackgroundConverter(character, backgroundTemplate);
 			var classConverter = new ClassConverter(character, ancestryTemplate, classTemplate);
 
 			character.Build.General = generalConverter.Convert();
 			character.Build.Ancestry = ancestryConverter.Convert();
+			character.Build.Background = backgroundConverter.Convert();
 			character.Build.Class = classConverter.Convert();
 
 			return character;
