@@ -10,8 +10,8 @@ import ConditionsView from '@/components/character/ConditionsView.vue';
 import AbilitiesView from '@/components/character/AbilitiesView.vue';
 import SkillsView from '@/components/character/SkillsView.vue';
 import SavingThrowsView from './SavingThrowsView.vue';
-import ArmorClassView from './ArmorClassView.vue';
-import PerceptionView from './PerceptionView.vue';
+import ArmorClassWidget from './ArmorClassWidget.vue';
+import PerceptionWidget from './PerceptionWidget.vue';
 
 import ProficiencyEditDialog from '@/components/dialogs/ProficiencyEditDialog.vue';
 import AbilityEditDialog from '@/components/dialogs/AbilityEditDialog.vue';
@@ -81,8 +81,8 @@ async function decreaseCondtionLevel(condition: Condition) {
                 <SkillsView :skills="character.skills" @edit="showEditSkillDialog" />
             </div>
             <div class="flex flex-col gap-2 h-fit">
-                <PerceptionView :perception="character.perception" @edit="showPerceptionEditDialog" />
-                <ArmorClassView :armor="character.armor" />
+                <PerceptionWidget :perception="character.perception" @edit="showPerceptionEditDialog" />
+                <ArmorClassWidget :armor="character.armor" />
                 <SavingThrowsView :saving-throws="character.savingThrows" @edit="showSavingThrowEditDialog" />
                 <ConditionsView
                     :conditions="character.conditions"

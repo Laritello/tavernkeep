@@ -9,6 +9,8 @@ import HealthBar from '@/components/character/HealthBar.vue';
 
 import { UserRole } from '@/contracts/enums';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
+import ArmorClassWidget from '@/components/character/ArmorClassWidget.vue';
+import PerceptionWidget from '@/components/character/PerceptionWidget.vue';
 
 const session = useSession();
 const router = useRouter();
@@ -29,7 +31,7 @@ async function logout() {
 </script>
 
 <template>
-    <!-- Drawer layout -->
+    <!-- Mobile layout -->
     <div class="flex flex-col overflow-clip h-full">
         <!-- Navbar -->
         <header class="navbar bg-base-300 w-full">
@@ -88,14 +90,19 @@ async function logout() {
                         <li class="pt-2"><a @click.prevent="logout">Logout</a></li>
                     </ul>
                 </div>
+                <div v-if="user.activeCharacter.value !== undefined" class="block">
+                    <div class="text-xl font-bold">{{ user.activeCharacter.value.name }}</div>
+                    <HealthBar
+                        @click="() => console.log('Health edit')"
+                        :health="user.activeCharacter.value.health"
+                        class="w-32"
+                    />
+                </div>
             </div>
-            <div v-if="user.activeCharacter.value !== undefined" class="block w-fit">
-                <div class="text-xl font-bold">{{ user.activeCharacter.value.name }}</div>
-                <HealthBar
-                    @click="() => console.log('Health edit')"
-                    :health="user.activeCharacter.value.health"
-                    class="w-32"
-                />
+
+            <div v-if="user.activeCharacter.value !== undefined" class="flex w-full justify-end">
+                <PerceptionWidget :perception="user.activeCharacter.value.perception" class="w-12 h-12" />
+                <ArmorClassWidget :armor="user.activeCharacter.value.armor" class="w-12 h-12" />
             </div>
         </header>
         <!-- /Navbar -->
@@ -111,7 +118,7 @@ async function logout() {
         </footer>
         <!--  /Bottom navbar  -->
     </div>
-    <!-- /Drawer layout -->
+    <!-- /Mobile layout -->
 </template>
 
 <style scoped>
