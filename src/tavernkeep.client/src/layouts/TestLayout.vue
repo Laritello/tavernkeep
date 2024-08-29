@@ -5,6 +5,8 @@ import { useAuth } from '@/composables/useAuth';
 import { useSession } from '@/composables/useSession';
 import { useModal } from '@/composables/useModal';
 import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
+import HealthBar from '@/components/character/HealthBar.vue';
+
 import { UserRole } from '@/contracts/enums';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 
@@ -87,11 +89,13 @@ async function logout() {
                     </ul>
                 </div>
             </div>
-            <div class="flex-1">
-                <div>
-                    <div class="text-xl">{{ user.activeCharacter.value?.name }}</div>
-                    <div class="text-sm">HP: {{ user.activeCharacter.value?.health.current }}</div>
-                </div>
+            <div v-if="user.activeCharacter.value !== undefined" class="block w-fit">
+                <div class="text-xl font-bold">{{ user.activeCharacter.value.name }}</div>
+                <HealthBar
+                    @click="() => console.log('Health edit')"
+                    :health="user.activeCharacter.value.health"
+                    class="w-32"
+                />
             </div>
         </header>
         <!-- /Navbar -->
