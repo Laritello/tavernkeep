@@ -7,6 +7,8 @@ import HomePage from './pages/HomePage.vue';
 import ErrorPage from './pages/ErrorPage.vue';
 import CharactersPage from './pages/CharactersPage.vue';
 import AdminPage from './pages/AdminPage.vue';
+import CharacterPage from './pages/mobile/CharacterPage.vue';
+import ChatPage from './pages/mobile/ChatPage.vue';
 import { useSession } from './composables/useSession';
 
 const routes: RouteRecordRaw[] = [
@@ -14,7 +16,23 @@ const routes: RouteRecordRaw[] = [
         path: '/',
         component: HomePage,
         meta: {
-            layout: 'MobileLayout',
+            layout: 'TestLayout',
+            protected: true,
+        },
+    },
+    {
+        path: '/character',
+        component: CharacterPage,
+        meta: {
+            layout: 'TestLayout',
+            protected: true,
+        },
+    },
+    {
+        path: '/chat',
+        component: ChatPage,
+        meta: {
+            layout: 'TestLayout',
             protected: true,
         },
     },
@@ -29,7 +47,7 @@ const routes: RouteRecordRaw[] = [
         path: '/characters',
         component: CharactersPage,
         meta: {
-            layout: 'MobileLayout',
+            layout: 'TestLayout',
             protected: true,
         },
     },
@@ -53,7 +71,7 @@ const routes: RouteRecordRaw[] = [
         path: '/admin',
         component: AdminPage,
         meta: {
-            layout: 'MobileLayout',
+            layout: 'TestLayout',
             protected: true,
             allowedRoles: [UserRole.Master],
         },

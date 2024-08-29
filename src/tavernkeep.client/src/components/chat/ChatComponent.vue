@@ -68,14 +68,13 @@ async function sendMessage() {
 </script>
 
 <template>
-    <div class="flex flex-col">
-        <h1 class="text-xl p-2">Chat</h1>
-        <div class="flex grow overflow-auto" v-chat-scroll="{ always: false, smooth: true }">
-            <div class="w-full px-4">
+    <div class="flex flex-col h-full">
+        <div class="w-full max-h-full overflow-y-scroll px-2">
+            <div v-chat-scroll="{ always: false, smooth: true }">
                 <ChatMessageView v-for="item in messages.list" :key="item.id" :message="item" />
             </div>
         </div>
-        <div class="w-full absolute bottom-0 pr-8">
+        <div class="grow-0">
             <UserSelector v-model="selectedUserId" :users="listOfMessageRecepient" />
             <form @submit.prevent="sendMessage">
                 <div class="flex gap-2 my-2">
