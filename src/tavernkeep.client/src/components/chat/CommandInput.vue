@@ -11,14 +11,15 @@
                 <p class="text-sm text-opacity-50">{{ suggestion.description }}</p>
             </div>
         </div> -->
-        <div class="dropdown dropdown-top dropdown-end w-full">
+        <div class="input input-bordered dropdown dropdown-top dropdown-end w-full">
             <input
+                type="text"
                 v-model="query"
                 tabindex="0"
                 ref="textInput"
                 @input="updateSuggestions"
                 @keydown.tab.prevent="tryToCompleteSuggestion"
-                class="input input-bordered w-full"
+                class="input w-full"
                 placeholder="Type here..."
             />
             <ul
