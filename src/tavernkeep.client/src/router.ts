@@ -14,14 +14,6 @@ import { useSession } from './composables/useSession';
 const routes: RouteRecordRaw[] = [
     {
         path: '/',
-        component: HomePage,
-        meta: {
-            layout: 'TestLayout',
-            protected: true,
-        },
-    },
-    {
-        path: '/character',
         component: CharacterPage,
         meta: {
             layout: 'TestLayout',
