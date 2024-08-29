@@ -1,16 +1,5 @@
 <template>
     <div>
-        <!-- <div v-if="suggestions.length > 0" class="absolute z-10 w-full bg-white border border-gray-400 rounded mt-1">
-            <div
-                v-for="suggestion in suggestions"
-                :key="suggestion.name"
-                @click="selectSuggestion(suggestion)"
-                class="p-2 hover:bg-gray-200"
-            >
-                <h1 class="text-xl">{{ suggestion.name }}</h1>
-                <p class="text-sm text-opacity-50">{{ suggestion.description }}</p>
-            </div>
-        </div> -->
         <div class="input input-bordered dropdown dropdown-top dropdown-end w-full">
             <input
                 type="text"
