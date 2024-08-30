@@ -11,6 +11,9 @@ import { UserRole } from '@/contracts/enums';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import ArmorClassWidget from '@/components/character/ArmorClassWidget.vue';
 import PerceptionWidget from '@/components/character/PerceptionWidget.vue';
+import ChatIcon from '@/components/icons/ChatIcon.vue';
+import CharacterIcon from '@/components/icons/CharacterIcon.vue';
+import CombatIcon from '@/components/icons/CombatIcon.vue';
 
 const session = useSession();
 const router = useRouter();
@@ -113,56 +116,13 @@ async function logout() {
         <!--  Bottom navbar  -->
         <footer class="sticky bottom-0 btm-nav min-h-16 lg:hidden">
             <RouterLink active-class="active text-info" to="/combat" class="fill-neutral-500">
-                <svg width="32px" height="32px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 0L6.58579 3.58579L3.58579 6.58579L0 3V0H3Z" />
-                    <path
-                        d="M6.70711 12.2929L8.20711 13.7929L6.79289 15.2071L4.5 12.9142L2.99771 14.4165C2.99923 14.4441 3 14.472 3 14.5C3 15.3284 2.32843 16 1.5 16C0.671573 16 0 15.3284 0 14.5C0 13.6716 0.671573 13 1.5 13C1.52802 13 1.55586 13.0008 1.5835 13.0023L3.08579 11.5L0.792893 9.20711L2.20711 7.79289L3.70711 9.29289L13 0H16V3L6.70711 12.2929Z"
-                    />
-                    <path
-                        d="M14.5 16C13.6716 16 13 15.3284 13 14.5C13 14.472 13.0008 14.4441 13.0023 14.4165L10.0858 11.5L13.7929 7.79289L15.2071 9.20711L12.9142 11.5L14.4165 13.0023C14.4441 13.0008 14.472 13 14.5 13C15.3284 13 16 13.6716 16 14.5C16 15.3284 15.3284 16 14.5 16Z"
-                    />
-                </svg>
+                <CombatIcon />
             </RouterLink>
             <RouterLink active-class="active text-info" to="/" class="fill-neutral-500">
-                <svg height="32px" width="32px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <g>
-                        <path
-                            d="M458.159,404.216c-18.93-33.65-49.934-71.764-100.409-93.431c-28.868,20.196-63.938,32.087-101.745,32.087
-		c-37.828,0-72.898-11.89-101.767-32.087c-50.474,21.667-81.479,59.782-100.398,93.431C28.731,448.848,48.417,512,91.842,512
-		c43.426,0,164.164,0,164.164,0s120.726,0,164.153,0C463.583,512,483.269,448.848,458.159,404.216z"
-                        />
-                        <path
-                            d="M256.005,300.641c74.144,0,134.231-60.108,134.231-134.242v-32.158C390.236,60.108,330.149,0,256.005,0
-		c-74.155,0-134.252,60.108-134.252,134.242V166.4C121.753,240.533,181.851,300.641,256.005,300.641z"
-                        />
-                    </g>
-                </svg>
+                <CharacterIcon />
             </RouterLink>
             <RouterLink active-class="active text-info" to="/chat">
-                <svg
-                    width="48px"
-                    height="48px"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="fill-neutral-500"
-                >
-                    <path
-                        d="M13.6288 20.4718L13.0867 21.3877C12.6035 22.204 11.3965 22.204 10.9133 21.3877L10.3712 20.4718C9.95073 19.7614 9.74049 19.4063 9.40279 19.2098C9.06509 19.0134 8.63992 19.0061 7.78958 18.9915C6.53422 18.9698 5.74689 18.8929 5.08658 18.6194C3.86144 18.1119 2.88807 17.1386 2.3806 15.9134C2 14.9946 2 13.8297 2 11.5V10.5C2 7.22657 2 5.58985 2.7368 4.38751C3.14908 3.71473 3.71473 3.14908 4.38751 2.7368C5.58985 2 7.22657 2 10.5 2H13.5C16.7734 2 18.4101 2 19.6125 2.7368C20.2853 3.14908 20.8509 3.71473 21.2632 4.38751C22 5.58985 22 7.22657 22 10.5V11.5C22 13.8297 22 14.9946 21.6194 15.9134C21.1119 17.1386 20.1386 18.1119 18.9134 18.6194C18.2531 18.8929 17.4658 18.9698 16.2104 18.9915C15.36 19.0061 14.9349 19.0134 14.5972 19.2098C14.2595 19.4062 14.0492 19.7614 13.6288 20.4718Z"
-                    />
-                    <path
-                        d="M17 11C17 11.5523 16.5523 12 16 12C15.4477 12 15 11.5523 15 11C15 10.4477 15.4477 10 16 10C16.5523 10 17 10.4477 17 11Z"
-                        class="fill-neutral-700"
-                    />
-                    <path
-                        d="M13 11C13 11.5523 12.5523 12 12 12C11.4477 12 11 11.5523 11 11C11 10.4477 11.4477 10 12 10C12.5523 10 13 10.4477 13 11Z"
-                        class="fill-neutral-700"
-                    />
-                    <path
-                        d="M9 11C9 11.5523 8.55228 12 8 12C7.44772 12 7 11.5523 7 11C7 10.4477 7.44772 10 8 10C8.55228 10 9 10.4477 9 11Z"
-                        class="fill-neutral-700"
-                    />
-                </svg>
+                <ChatIcon />
             </RouterLink>
         </footer>
         <!--  /Bottom navbar  -->
