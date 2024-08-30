@@ -1,5 +1,5 @@
 <template>
-    <div class="card card-body bg-neutral text-neutral-content w-auto">
+    <div class="card card-body bg-neutral text-neutral-content w-full lg:max-w-md">
         <h1 class="card-title self-center">Skills</h1>
         <div>
             <table class="table">

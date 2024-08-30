@@ -1,5 +1,5 @@
 <template>
-    <div class="card card-body bg-neutral text-neutral-content w-96">
+    <div class="card card-body bg-neutral text-neutral-content w-full max-h-72 lg:max-w-md">
         <h1 class="card-title">Abilities</h1>
         <div class="flex flex-col gap-1">
             <AbilityView

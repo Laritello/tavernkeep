@@ -8,7 +8,7 @@ const character = user.activeCharacter;
 </script>
 
 <template>
-    <div v-if="character !== undefined" class="flex overflow-y-auto max-h-full p-2 gap-2 flex-wrap">
+    <div v-if="character !== undefined" class="flex flex-wrap max-h-full overflow-y-auto p-2 gap-2">
         <AbilitiesView :abilities="character.abilities" />
         <SkillsWidget :skills="character.skills" />
     </div>
