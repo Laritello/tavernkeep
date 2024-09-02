@@ -1,0 +1,400 @@
+[
+  {
+    "Id": "pf:class:bard",
+    "Name": "Bard",
+    "Traits": [],
+    "Description": "You are a master of artistry, a scholar of hidden secrets, and a captivating persuader. Using powerful performances, you influence minds and elevate souls to new levels of heroics. You might use your powers to become a charismatic leader, or perhaps you might instead be a counselor, manipulator, scholar, scoundrel, or virtuoso. While your versatility leads some to consider you a beguiling ne-erdo- well and a jack-of-all-trades, it\u0027s dangerous to dismiss you as a master of none.",
+    "HitPoints": 8,
+    "Attributes": [
+      {
+        "$type": "FixedKeyAbilityAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "e27ab4c7-8317-47c4-8297-be11dec4e78b",
+        "Level": 1
+      },
+      {
+        "$type": "FixedSkillIncreaseAttribute",
+        "Selected": [
+          "Occultism"
+        ],
+        "MaxProficiency": "Trained",
+        "Id": "5ffbaa41-99b2-411d-8b81-e4292f63459c",
+        "Level": 1
+      },
+      {
+        "$type": "FixedSkillIncreaseAttribute",
+        "Selected": [
+          "Performance"
+        ],
+        "MaxProficiency": "Trained",
+        "Id": "b2c61660-ff5e-471f-aa2b-0b781bf173d3",
+        "Level": 1
+      },
+      {
+        "$type": "IntelligenceSkillIncreaseAttribute",
+        "BaseAmount": 4,
+        "Amount": 0,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "f6a77136-f1ff-40c1-af85-1dea772d91f4",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:class:cleric",
+    "Name": "Cleric",
+    "Traits": [],
+    "Description": "Deities work their will upon the world in infinite ways, and you serve as one of their most stalwart mortal servants. Blessed with divine magic, you live the ideals of your faith, adorn yourself with the symbols of your church, and train diligently to wield your deity\u0027s favored weapon. Your spells might protect and heal your allies, or they might punish foes and enemies of your faith, as your deity wills. Yours is a life of devotion, spreading the teachings of your faith through both word and deed.",
+    "HitPoints": 8,
+    "Attributes": [
+      {
+        "$type": "FixedKeyAbilityAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "61a4e08f-56e1-462b-80c1-7c1d8b0aba49",
+        "Level": 1
+      },
+      {
+        "$type": "FixedSkillIncreaseAttribute",
+        "Selected": [
+          "Religion"
+        ],
+        "MaxProficiency": "Trained",
+        "Id": "6550727e-804a-4146-9048-3cd35bc2afc1",
+        "Level": 1
+      },
+      {
+        "$type": "VariableSkillIncreaseAttribute",
+        "Possible": [
+          "Acrobatics",
+          "Arcana",
+          "Athletics",
+          "Crafting",
+          "Deception",
+          "Diplomacy",
+          "Intimidation",
+          "Medicine",
+          "Nature",
+          "Occultism",
+          "Performance",
+          "Religion",
+          "Society",
+          "Stealth",
+          "Survival",
+          "Thievery"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "5be3d081-2a84-4953-b6e4-936175fed3bc",
+        "Level": 1
+      },
+      {
+        "$type": "IntelligenceSkillIncreaseAttribute",
+        "BaseAmount": 2,
+        "Amount": 0,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "c6915d52-32f0-4b7c-8a41-7a443f73b509",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:class:druid",
+    "Name": "Druid",
+    "Traits": [],
+    "Description": "The power of nature is impossible to resist. It can bring ruin to the stoutest fortress in minutes, reducing even the mightiest works to rubble, burning them to ash, burying them beneath an avalanche of snow, or drowning them beneath the waves. It can provide endless bounty and breathtaking splendor to those who respect it - and an agonizing death to those who take it too lightly. You are one of those who hear nature\u0027s call. You stand in awe of the majesty of its power and give yourself over to its service.",
+    "HitPoints": 8,
+    "Attributes": [
+      {
+        "$type": "FixedKeyAbilityAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "3a84ab9f-cb61-4344-b263-b58f3ebb903f",
+        "Level": 1
+      },
+      {
+        "$type": "FixedSkillIncreaseAttribute",
+        "Selected": [
+          "Nature"
+        ],
+        "MaxProficiency": "Trained",
+        "Id": "38ae6515-495c-4df7-b8ff-344d4c46201b",
+        "Level": 1
+      },
+      {
+        "$type": "VariableSkillIncreaseAttribute",
+        "Possible": [
+          "Acrobatics",
+          "Arcana",
+          "Athletics",
+          "Crafting",
+          "Deception",
+          "Diplomacy",
+          "Intimidation",
+          "Medicine",
+          "Nature",
+          "Occultism",
+          "Performance",
+          "Religion",
+          "Society",
+          "Stealth",
+          "Survival",
+          "Thievery"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "1d386b6f-b8f5-4e50-8272-b776e25ecd3b",
+        "Level": 1
+      },
+      {
+        "$type": "IntelligenceSkillIncreaseAttribute",
+        "BaseAmount": 2,
+        "Amount": 0,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "95eb5bb1-7482-4cb8-8221-a44c0e79f8ba",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:class:fighter",
+    "Name": "Fighter",
+    "Traits": [],
+    "Description": "Fighting for honor, greed, loyalty, or simply the thrill of battle, you are an undisputed master of weaponry and combat techniques. You combine your actions through clever combinations of opening moves, finishing strikes, and counterattacks whenever your foes are unwise enough to drop their guard. Whether you are a knight, mercenary, sharpshooter, or blade master, you have honed your martial skills into an art form and perform devastating critical attacks on your enemies.",
+    "HitPoints": 10,
+    "Attributes": [
+      {
+        "$type": "VariableKeyAbilityAttribute",
+        "Possible": [],
+        "Selected": [],
+        "Id": "fd8d1657-f658-4eac-9053-23da6b5e4d7f",
+        "Level": 1
+      },
+      {
+        "$type": "VariableSkillIncreaseAttribute",
+        "Possible": [
+          "Acrobatics",
+          "Athletics"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "d94bc348-e05f-49c2-9b23-8a3e4435376b",
+        "Level": 1
+      },
+      {
+        "$type": "IntelligenceSkillIncreaseAttribute",
+        "BaseAmount": 3,
+        "Amount": 0,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "11e00491-4b51-4779-b44b-9b875f89ff1f",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:class:ranger",
+    "Name": "Ranger",
+    "Traits": [],
+    "Description": "Some rangers believe civilization wears down the soul, but still needs to be protected from wild creatures. Others say nature needs to be protected from the greedy, who wish to tame its beauty and plunder its treasures. You could champion either goal, or both. You might be a scout, tracker, or hunter of fugitives or beasts, haunting the edge of civilization or exploring the wilds. You know how to live off the land and are skilled at spotting and taking down both opportune prey and hated enemies.",
+    "HitPoints": 10,
+    "Attributes": [
+      {
+        "$type": "VariableKeyAbilityAttribute",
+        "Possible": [],
+        "Selected": [],
+        "Id": "281d98e0-35af-4f83-bbac-912ce41262b5",
+        "Level": 1
+      },
+      {
+        "$type": "FixedSkillIncreaseAttribute",
+        "Selected": [
+          "Nature"
+        ],
+        "MaxProficiency": "Trained",
+        "Id": "a271f13e-794f-4992-979b-5f2d04247464",
+        "Level": 1
+      },
+      {
+        "$type": "FixedSkillIncreaseAttribute",
+        "Selected": [
+          "Survival"
+        ],
+        "MaxProficiency": "Trained",
+        "Id": "19abda99-4c02-4a98-9cd0-c2688e7964a4",
+        "Level": 1
+      },
+      {
+        "$type": "IntelligenceSkillIncreaseAttribute",
+        "BaseAmount": 4,
+        "Amount": 0,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "fee760c3-719f-404b-9cd1-e5abe9c3a35b",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:class:rogue",
+    "Name": "Rogue",
+    "Traits": [],
+    "Description": "You are skilled and opportunistic . Using your sharp wits and quick reactions, you take advantage of your opponents\u0027 missteps and strike where it hurts most. You play a dangerous game, seeking thrills and testing your skills, and likely don\u0027t care much for any laws that happen to get in your way. While the path of every rogue is unique and riddled with danger, the one thing you all share in common is the breadth and depth of your skills.",
+    "HitPoints": 8,
+    "Attributes": [
+      {
+        "$type": "VariableKeyAbilityAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Selected": [],
+        "Id": "e50028e1-e455-43ab-bbc1-2b89e867e9cd",
+        "Level": 1
+      },
+      {
+        "$type": "FixedSkillIncreaseAttribute",
+        "Selected": [
+          "Stealth"
+        ],
+        "MaxProficiency": "Trained",
+        "Id": "402cae84-9617-491e-a40c-c7812fb53753",
+        "Level": 1
+      },
+      {
+        "$type": "VariableSkillIncreaseAttribute",
+        "Possible": [
+          "Acrobatics",
+          "Arcana",
+          "Athletics",
+          "Crafting",
+          "Deception",
+          "Diplomacy",
+          "Intimidation",
+          "Medicine",
+          "Nature",
+          "Occultism",
+          "Performance",
+          "Religion",
+          "Society",
+          "Stealth",
+          "Survival",
+          "Thievery"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "bae75378-1c71-420d-8e06-c6413341adda",
+        "Level": 1
+      },
+      {
+        "$type": "IntelligenceSkillIncreaseAttribute",
+        "BaseAmount": 7,
+        "Amount": 0,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "222dbb80-935e-4f5b-a674-3bf4c8a208d5",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:class:witch",
+    "Name": "Witch",
+    "Traits": [],
+    "Description": "You command powerful magic, not through study or devotion to any ideal, but as a vessel or agent for a mysterious, otherworldly patron that even you don\u0027t entirely understand. This entity might be a covert divinity, a powerful fey, a manifestation of natural energies, an ancient spirit, or any other mighty supernatural being\u2014but its nature is likely as much a mystery to you as it is to anyone else. Through a special familiar, your patron grants you versatile spells and powerful hexes to use as you see fit, though you\u0027re never certain if these gifts will end up serving your patron\u0027s larger plan.",
+    "HitPoints": 6,
+    "Attributes": [
+      {
+        "$type": "FixedKeyAbilityAttribute",
+        "Selected": [],
+        "Id": "ab8ad87e-5259-4c29-a220-77b8010a7b70",
+        "Level": 1
+      },
+      {
+        "$type": "VariableSkillIncreaseAttribute",
+        "Possible": [
+          "Acrobatics",
+          "Arcana",
+          "Athletics",
+          "Crafting",
+          "Deception",
+          "Diplomacy",
+          "Intimidation",
+          "Medicine",
+          "Nature",
+          "Occultism",
+          "Performance",
+          "Religion",
+          "Society",
+          "Stealth",
+          "Survival",
+          "Thievery"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "72e189f6-c0c2-492e-8805-c45f7c787071",
+        "Level": 1
+      },
+      {
+        "$type": "IntelligenceSkillIncreaseAttribute",
+        "BaseAmount": 3,
+        "Amount": 0,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "911d5614-1c78-4293-8be4-660d8ed8e65f",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:class:wizard",
+    "Name": "Wizard",
+    "Traits": [],
+    "Description": "You are an eternal student of the arcane secrets of the universe, using your mastery of magic to cast powerful and devastating spells. You treat magic like a science, cross-referencing the latest texts on practical spellcraft with ancient esoteric tomes to discover and understand how magic works. Yet magical theory is vast, and there\u0027s no way you can study it all. You either specialize in one of the eight schools of magic, gaining deeper understanding of the nuances of those spells above all others, or favor a broader approach that emphasizes the way all magic comes together at the expense of depth.",
+    "HitPoints": 6,
+    "Attributes": [
+      {
+        "$type": "FixedKeyAbilityAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "677e1cca-8116-41e8-9954-235c20bed545",
+        "Level": 1
+      },
+      {
+        "$type": "FixedSkillIncreaseAttribute",
+        "Selected": [
+          "Arcana"
+        ],
+        "MaxProficiency": "Trained",
+        "Id": "9edcb2be-c332-4a6c-84fb-7a8fdf3144cb",
+        "Level": 1
+      },
+      {
+        "$type": "IntelligenceSkillIncreaseAttribute",
+        "BaseAmount": 2,
+        "Amount": 0,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "b86e7de2-9848-4ff9-b79e-1b66d2482579",
+        "Level": 1
+      }
+    ]
+  }
+]

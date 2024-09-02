@@ -20,6 +20,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion.Converters
 			{
 				Id = template.Id,
 				Name = template.Name,
+				HitPoints = template.HitPoints,
 			};
 
 			ConversionParameters parameters = new()

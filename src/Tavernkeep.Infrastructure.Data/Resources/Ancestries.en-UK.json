@@ -55,38 +55,30 @@
         "Possible": [
           "Acrobatics",
           "Athletics",
-          "Crafting"
+          "Nature"
         ],
         "Amount": 2,
         "Selected": [],
-        "MaxProficiency": "Trained",
+        "MaxProficiency": "Legendary",
         "Id": "51f66396-bf28-4e84-a2f6-5b9fd5158dc4",
         "Level": 1
       },
       {
         "$type": "VariableSkillIncreaseAttribute",
-        "Possible": [
-          "Acrobatics",
-          "Arcana",
-          "Athletics",
-          "Crafting",
-          "Deception",
-          "Diplomacy",
-          "Intimidation",
-          "Medicine",
-          "Thievery",
-          "Stealth",
-          "Survival",
-          "Society",
-          "Religion",
-          "Performance",
-          "Occultism",
-          "Nature"
-        ],
+        "Possible": [],
         "Amount": 3,
         "Selected": [],
-        "MaxProficiency": "Trained",
+        "MaxProficiency": "Master",
         "Id": "64f486b8-1a63-404f-9368-0359bf2351a1",
+        "Level": 1
+      },
+      {
+        "$type": "IntelligenceSkillIncreaseAttribute",
+        "BaseAmount": 4,
+        "Amount": 0,
+        "Selected": [],
+        "MaxProficiency": "Expert",
+        "Id": "cfe02939-0ad8-4a60-90e0-37ade58914b1",
         "Level": 1
       }
     ]

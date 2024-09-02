@@ -17,6 +17,12 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Traits = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    HitPoints = table.Column<int>(type: "INTEGER", nullable: false),
+                    Size = table.Column<int>(type: "INTEGER", nullable: false),
+                    Speed = table.Column<int>(type: "INTEGER", nullable: false),
+                    Languagues = table.Column<string>(type: "TEXT", nullable: false),
                     Attributes = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -25,17 +31,32 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Classes",
+                name: "Backgrounds",
                 columns: table => new
                 {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    SkillBaseAmount = table.Column<int>(type: "INTEGER", nullable: false),
-                    Attributes = table.Column<string>(type: "TEXT", nullable: false),
-                    Id = table.Column<string>(type: "TEXT", nullable: true)
+                    Traits = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Attributes = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Classes", x => x.Name);
+                    table.PrimaryKey("PK_Backgrounds", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Classes",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    HitPoints = table.Column<int>(type: "INTEGER", nullable: false),
+                    Attributes = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Classes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,6 +230,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ancestries");
+
+            migrationBuilder.DropTable(
+                name: "Backgrounds");
 
             migrationBuilder.DropTable(
                 name: "Classes");

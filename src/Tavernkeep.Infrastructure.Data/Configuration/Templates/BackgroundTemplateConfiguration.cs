@@ -7,15 +7,14 @@ using Tavernkeep.Core.Entities.Templates;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration.Templates
 {
-	internal class ClassTemplateConfiguration : IEntityTypeConfiguration<ClassTemplate>
+	public class BackgroundTemplateConfiguration : IEntityTypeConfiguration<BackgroundTemplate>
 	{
-		public void Configure(EntityTypeBuilder<ClassTemplate> builder)
+		public void Configure(EntityTypeBuilder<BackgroundTemplate> builder)
 		{
-			builder.HasKey(c => c.Id);
-			builder.Property(c => c.Name).IsRequired();
-			builder.Property(c => c.HitPoints).IsRequired();
+			builder.HasKey(a => a.Id);
+			builder.Property(a => a.Name).IsRequired();
 
-			builder.Property(c => c.Attributes)
+			builder.Property(a => a.Attributes)
 				.HasConversion(
 					v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
 					v => JsonSerializer.Deserialize<List<BuildAttribute>>(v, JsonSerializerOptions.Default) ?? new List<BuildAttribute>(),

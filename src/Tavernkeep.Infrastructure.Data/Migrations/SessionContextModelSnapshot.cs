@@ -126,7 +126,28 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("HitPoints")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Languagues")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Speed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Traits")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -135,22 +156,49 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Ancestries");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Templates.ClassTemplate", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Templates.BackgroundTemplate", b =>
                 {
-                    b.Property<string>("Name")
+                    b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Attributes")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Traits")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Backgrounds");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Templates.ClassTemplate", b =>
+                {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SkillBaseAmount")
+                    b.Property<string>("Attributes")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("HitPoints")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Classes");
                 });

@@ -8,6 +8,8 @@ namespace Tavernkeep.Core.Entities.Templates
 	public class BackgroundTemplate : StringEntity
 	{
 		public string Name { get; set; } = string.Empty;
+		public List<string> Traits { get; set; } = [];
+		public string Description { get; set; } = string.Empty;
 		public List<BuildAttribute> Attributes { get; set; } = [];
 	}
 }

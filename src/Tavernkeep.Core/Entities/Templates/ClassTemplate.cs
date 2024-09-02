@@ -8,7 +8,7 @@ namespace Tavernkeep.Core.Entities.Templates
 	public class ClassTemplate : StringEntity
 	{
 		public string Name { get; set; } = string.Empty;
-		public int SkillBaseAmount { get; set; }
+		public int HitPoints { get; set; } = 0;
 		public List<BuildAttribute> Attributes { get; set; } = [];
 	}
 }

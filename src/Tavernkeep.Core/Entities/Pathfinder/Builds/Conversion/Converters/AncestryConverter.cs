@@ -17,6 +17,10 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion.Converters
 			{
 				Id = template.Id,
 				Name = template.Name,
+				HitPoints = template.HitPoints,
+				Size = template.Size,
+				Speed = template.Speed,
+				Languagues = template.Languagues,
 			};
 
 			foreach (var attribute in template.Attributes)

@@ -1,0 +1,45 @@
+[
+  {
+    "Id": "pf:background:academy_dropout",
+    "Name": "Academy Dropout",
+    "Description": "You were enrolled at a prestigious magical academy, but you\u2019ve since dropped out. Maybe there was a momentous incident, maybe you had to return to other responsibilities, or perhaps it was just too much for you. Whatever the case, your exit from the academy has shaped your life as much as your entrance and led you to a life of adventure.",
+    "Traits": [],
+    "Attributes": [
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Intelligence",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "5b32bde4-c7e2-46cd-919f-3cc5b13c3777",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "c9ea3a56-abca-4af6-b9bd-90390bf40755",
+        "Level": 1
+      },
+      {
+        "$type": "FixedSkillIncreaseAttribute",
+        "Selected": [
+          "Arcana"
+        ],
+        "MaxProficiency": "Trained",
+        "Id": "1088e4e4-eb97-45a6-a144-2204dc28a4a5",
+        "Level": 1
+      }
+    ]
+  }
+]
