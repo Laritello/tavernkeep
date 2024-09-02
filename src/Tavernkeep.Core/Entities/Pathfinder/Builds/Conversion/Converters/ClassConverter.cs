@@ -24,7 +24,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion.Converters
 
 			ConversionParameters parameters = new()
 			{
-				{ "BonusSkillsAmount", GetBonusSkillsAmount() }
+				{ "IntelligenceModifier", GetIntelligenceModifier() }
 			};
 
 			foreach (var attribute in template.Attributes)
@@ -35,7 +35,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion.Converters
 			return convertedClass;
 		}
 
-		private int GetBonusSkillsAmount()
+		private int GetIntelligenceModifier()
 		{
 			List<AbilityModifierAttribute> template =
 			[
@@ -53,7 +53,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion.Converters
 
 			var evaluator = new IntelligenceModifierEvaluator(template, snapshot);
 
-			return classTemplate.SkillBaseAmount + evaluator.Value;
+			return evaluator.Value;
 		}
 	}
 }

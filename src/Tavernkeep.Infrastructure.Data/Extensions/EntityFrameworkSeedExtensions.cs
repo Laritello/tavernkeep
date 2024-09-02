@@ -165,7 +165,7 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 							Selected = [SkillType.Performance],
 							MaxProficiency = Proficiency.Trained,
 						},
-						new BonusSkillIncreaseAttribute()
+						new IntelligenceSkillIncreaseAttribute()
 						{
 							Id = Guid.Parse("2d6dc40a-f7fb-4eb9-ba0a-fd33af64ce55"),
 							Level = 1,

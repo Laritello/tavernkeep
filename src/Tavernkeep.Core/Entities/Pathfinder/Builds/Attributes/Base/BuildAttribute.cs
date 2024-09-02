@@ -25,7 +25,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.Base
 
 	[JsonDerivedType(typeof(FixedSkillIncreaseAttribute), nameof(FixedSkillIncreaseAttribute))]
 	[JsonDerivedType(typeof(VariableSkillIncreaseAttribute), nameof(VariableSkillIncreaseAttribute))]
-	[JsonDerivedType(typeof(BonusSkillIncreaseAttribute), nameof(BonusSkillIncreaseAttribute))]
+	[JsonDerivedType(typeof(IntelligenceSkillIncreaseAttribute), nameof(IntelligenceSkillIncreaseAttribute))]
 	public abstract class BuildAttribute
 	{
 		public Guid Id { get; set; }

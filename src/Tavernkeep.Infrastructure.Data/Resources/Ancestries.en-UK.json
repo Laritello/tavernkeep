@@ -1,0 +1,213 @@
+[
+  {
+    "Id": "pf:ancestry:dwarf",
+    "Name": "Dwarf",
+    "Traits": [
+      "Dwarf",
+      "Humanoid"
+    ],
+    "Description": "Dwarves are a short, stocky people who are often stubborn, fierce, and devoted.",
+    "HitPoints": 10,
+    "Size": "Medium",
+    "Speed": 20,
+    "Languagues": [
+      "Common",
+      "Dwarven"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "21153688-65d5-4885-8bd7-2c11ef6c7ed0",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "fd369c0e-2044-4d5e-a5c0-f25ce5629e2a",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "8789d095-969c-4e09-80eb-f44bd3fb2df7",
+        "Level": 1
+      },
+      {
+        "$type": "FixedSkillIncreaseAttribute",
+        "Selected": [
+          "Athletics"
+        ],
+        "MaxProficiency": "Trained",
+        "Id": "facc7da4-8f8e-4f0b-8993-ecc4483e8fc0",
+        "Level": 1
+      },
+      {
+        "$type": "VariableSkillIncreaseAttribute",
+        "Possible": [
+          "Acrobatics",
+          "Athletics",
+          "Crafting"
+        ],
+        "Amount": 2,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "51f66396-bf28-4e84-a2f6-5b9fd5158dc4",
+        "Level": 1
+      },
+      {
+        "$type": "VariableSkillIncreaseAttribute",
+        "Possible": [
+          "Acrobatics",
+          "Arcana",
+          "Athletics",
+          "Crafting",
+          "Deception",
+          "Diplomacy",
+          "Intimidation",
+          "Medicine",
+          "Thievery",
+          "Stealth",
+          "Survival",
+          "Society",
+          "Religion",
+          "Performance",
+          "Occultism",
+          "Nature"
+        ],
+        "Amount": 3,
+        "Selected": [],
+        "MaxProficiency": "Trained",
+        "Id": "64f486b8-1a63-404f-9368-0359bf2351a1",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:elf",
+    "Name": "Elf",
+    "Traits": [
+      "Elf",
+      "Humanoid"
+    ],
+    "Description": "Elves are a tall, long-lived people with a strong tradition of art and magic.",
+    "HitPoints": 6,
+    "Size": "Medium",
+    "Speed": 30,
+    "Languagues": [
+      "Common",
+      "Elven"
+    ],
+    "Attributes": []
+  },
+  {
+    "Id": "pf:ancestry:gnome",
+    "Name": "Gnome",
+    "Traits": [
+      "Gnome",
+      "Humanoid"
+    ],
+    "Description": "Gnomes are short and hardy folk, with an unquenchable curiosity and eccentric habits.",
+    "HitPoints": 8,
+    "Size": "Small",
+    "Speed": 25,
+    "Languagues": [
+      "Common",
+      "Fey",
+      "Gnomish"
+    ],
+    "Attributes": []
+  },
+  {
+    "Id": "pf:ancestry:goblin",
+    "Name": "Goblin",
+    "Traits": [
+      "Goblin",
+      "Humanoid"
+    ],
+    "Description": "Goblins are a short, scrappy, energetic people who have spent millennia maligned and feared.",
+    "HitPoints": 6,
+    "Size": "Small",
+    "Speed": 25,
+    "Languagues": [
+      "Common",
+      "Goblin"
+    ],
+    "Attributes": []
+  },
+  {
+    "Id": "pf:ancestry:halfling",
+    "Name": "Halfling",
+    "Traits": [
+      "Halfling",
+      "Humanoid"
+    ],
+    "Description": "Halflings are a short, resilient people who exhibit remarkable curiosity and humor.",
+    "HitPoints": 6,
+    "Size": "Small",
+    "Speed": 25,
+    "Languagues": [
+      "Common",
+      "Halfling"
+    ],
+    "Attributes": []
+  },
+  {
+    "Id": "pf:ancestry:human",
+    "Name": "Human",
+    "Traits": [
+      "Human",
+      "Humanoid"
+    ],
+    "Description": "Humans are diverse and adaptable people with wide potential and deep ambitions.",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Languagues": [
+      "Common"
+    ],
+    "Attributes": []
+  },
+  {
+    "Id": "pf:ancestry:leshy",
+    "Name": "Leshy",
+    "Traits": [
+      "Leshy",
+      "Plant"
+    ],
+    "Description": "Leshies are immortal nature spirits placed in small plant bodies, seeking to experience the world.",
+    "HitPoints": 8,
+    "Size": "Small",
+    "Speed": 25,
+    "Languagues": [
+      "Common",
+      "Fey"
+    ],
+    "Attributes": []
+  },
+  {
+    "Id": "pf:ancestry:orc",
+    "Name": "Orc",
+    "Traits": [
+      "Orc",
+      "Humanoid"
+    ],
+    "Description": "Orcs are proud, strong people with hardened physiques who value physical might and glory in combat.",
+    "HitPoints": 10,
+    "Size": "Medium",
+    "Speed": 25,
+    "Languagues": [
+      "Common",
+      "Orcish"
+    ],
+    "Attributes": []
+  }
+]
