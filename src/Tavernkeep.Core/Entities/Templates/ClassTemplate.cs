@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Base;
 using Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.Base;
 
@@ -8,7 +9,10 @@ namespace Tavernkeep.Core.Entities.Templates
 	public class ClassTemplate : StringEntity
 	{
 		public string Name { get; set; } = string.Empty;
+		public List<string> Traits { get; set; } = [];
+		public string Description { get; set; } = string.Empty;
 		public int HitPoints { get; set; } = 0;
+		public Rarity Rarity { get; set; }
 		public List<BuildAttribute> Attributes { get; set; } = [];
 	}
 }

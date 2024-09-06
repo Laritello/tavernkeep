@@ -14,6 +14,7 @@ namespace Tavernkeep.Core.Entities.Templates
 		public int HitPoints { get; set; } = 0;
 		public UnitSize Size { get; set; } = UnitSize.Medium;
 		public int Speed { get; set; }
+		public Rarity Rarity { get; set; }
 		public List<string> Languagues { get; set; } = ["Common"];
 		public List<BuildAttribute> Attributes { get; set; } = [];
 	}

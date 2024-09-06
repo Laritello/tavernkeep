@@ -1,15 +1,525 @@
 [
   {
+    "Id": "pf:ancestry:anadi",
+    "Name": "Anadi",
+    "Traits": [
+      "Anadi",
+      "Humanoid"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Anadi",
+      "Mwangi"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "bd1c9063-eaca-4f11-8b6d-45229dd3714c",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "fee34bf6-2e36-4ddc-9a5e-46ca540f8b2b",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "5501f71f-9e98-4612-b7e5-a89a4092252d",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "74fd15b8-3c56-4fe3-9c15-98d7ff82489c",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:android",
+    "Name": "Android",
+    "Traits": [
+      "Android",
+      "Humanoid"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Androffan",
+      "Common"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "0a33e186-f97d-4b69-b658-26a8cf09b8e6",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "a8f0e36a-ac4a-431f-b110-c63f1daa6c44",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "8b357be1-e395-4b75-a0e3-cb5dfefb327b",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "981c4069-0c02-4616-9378-9d48742b2076",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:athamaru",
+    "Name": "Athamaru",
+    "Traits": [
+      "Amphibious",
+      "Athamaru",
+      "Humanoid"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 20,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Thalassic"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Strength"
+        ],
+        "Id": "e4346b8a-9b03-46da-bebd-20444b39abe5",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "22331523-fb8b-473d-9721-e4584644b166",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "2834ece4-ed42-44af-9b25-0c4f8d9806f3",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "8369fbed-0548-4d57-bd39-d3c657438ac1",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:automaton",
+    "Name": "Automaton",
+    "Traits": [
+      "Automaton",
+      "Construct"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common",
+      "Utopian"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Strength"
+        ],
+        "Id": "8e76eb62-0499-4cd5-9202-7650927e2101",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "1ed0ed18-20c7-4ded-9a01-31e91f28dece",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:awakened_animal",
+    "Name": "Awakened Animal",
+    "Traits": [
+      "Awakened-animal",
+      "Beast"
+    ],
+    "Description": "",
+    "HitPoints": 6,
+    "Size": "Medium",
+    "Speed": 5,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "c0162720-33cc-4917-a0af-48ebd509306d",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "5af99510-6f36-44f9-8d7e-1bca2f16b4cc",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "ea61cf3a-b90e-48dc-9cbe-16149fd27cee",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "ca3092d4-afd9-4969-a4be-6b371373bc87",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:azarketi",
+    "Name": "Azarketi",
+    "Traits": [
+      "Amphibious",
+      "Azarketi",
+      "Humanoid"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 20,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Alghollthu",
+      "Common"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "84180f7e-e21a-411f-891c-c619bb772b42",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "6f8538b3-dfa1-4290-a07c-36f5dcc95ec9",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "b3a53779-3ee8-4933-a526-98b168b16e7b",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "f197291d-ed14-411f-9966-f9d8eacb6104",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:catfolk",
+    "Name": "Catfolk",
+    "Traits": [
+      "Catfolk",
+      "Humanoid"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Amurrun",
+      "Common"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "66e425f8-f0c9-45b0-a9b8-2929be462d1c",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "e647051a-2a6f-41b6-86aa-449af34e0599",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "f6321111-8fab-40e2-8819-5550437dce76",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "1e794e7c-7205-4e68-b795-bb87366685e0",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:centaur",
+    "Name": "Centaur",
+    "Traits": [
+      "Beast",
+      "Centaur",
+      "Humanoid"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Large",
+    "Speed": 30,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Fey"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Strength"
+        ],
+        "Id": "faf9d3a9-ce96-4364-ad58-925172a6bf73",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "05fc7618-af60-4eb0-b126-0729ff8cabe3",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "d3160ee7-3db1-489e-b961-3b0bd041b4eb",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "4ad08bb2-2d08-4e56-9116-5f811d31ce48",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:conrasu",
+    "Name": "Conrasu",
+    "Traits": [
+      "Aeon",
+      "Conrasu",
+      "Plant"
+    ],
+    "Description": "",
+    "HitPoints": 10,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Mwangi",
+      "Rasu"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "5a9c144b-9225-42ab-9e2b-2c3a735a60de",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "987611ac-d0d6-4f59-b2d1-e2effd6cf850",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "012481f0-5693-4e55-a499-c15adf61878f",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "ca08a57b-a0e9-452c-8095-324ecd94ddd1",
+        "Level": 1
+      }
+    ]
+  },
+  {
     "Id": "pf:ancestry:dwarf",
     "Name": "Dwarf",
     "Traits": [
       "Dwarf",
       "Humanoid"
     ],
-    "Description": "Dwarves are a short, stocky people who are often stubborn, fierce, and devoted.",
+    "Description": "",
     "HitPoints": 10,
     "Size": "Medium",
     "Speed": 20,
+    "Rarity": "Common",
     "Languagues": [
       "Common",
       "Dwarven"
@@ -18,67 +528,40 @@
       {
         "$type": "FixedAbilityBoostAttribute",
         "Selected": [
-          "Dexterity"
+          "Constitution"
         ],
-        "Id": "21153688-65d5-4885-8bd7-2c11ef6c7ed0",
+        "Id": "99f118aa-2826-42d4-81ae-2d607d484d21",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "4ee9bbce-472a-4587-95e8-2cd59427b11c",
         "Level": 1
       },
       {
         "$type": "VariableAbilityBoostAttribute",
         "Possible": [
-          "Strength"
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
         ],
         "Amount": 1,
         "Selected": [],
-        "Id": "fd369c0e-2044-4d5e-a5c0-f25ce5629e2a",
+        "Id": "b9ef1b91-f262-44fa-9064-3c2302d87281",
         "Level": 1
       },
       {
         "$type": "FixedAbilityFlawAttribute",
         "Selected": [
-          "Intelligence"
+          "Charisma"
         ],
-        "Id": "8789d095-969c-4e09-80eb-f44bd3fb2df7",
-        "Level": 1
-      },
-      {
-        "$type": "FixedSkillIncreaseAttribute",
-        "Selected": [
-          "Athletics"
-        ],
-        "MaxProficiency": "Trained",
-        "Id": "facc7da4-8f8e-4f0b-8993-ecc4483e8fc0",
-        "Level": 1
-      },
-      {
-        "$type": "VariableSkillIncreaseAttribute",
-        "Possible": [
-          "Acrobatics",
-          "Athletics",
-          "Nature"
-        ],
-        "Amount": 2,
-        "Selected": [],
-        "MaxProficiency": "Legendary",
-        "Id": "51f66396-bf28-4e84-a2f6-5b9fd5158dc4",
-        "Level": 1
-      },
-      {
-        "$type": "VariableSkillIncreaseAttribute",
-        "Possible": [],
-        "Amount": 3,
-        "Selected": [],
-        "MaxProficiency": "Master",
-        "Id": "64f486b8-1a63-404f-9368-0359bf2351a1",
-        "Level": 1
-      },
-      {
-        "$type": "IntelligenceSkillIncreaseAttribute",
-        "BaseAmount": 4,
-        "Amount": 0,
-        "Selected": [],
-        "MaxProficiency": "Expert",
-        "Id": "cfe02939-0ad8-4a60-90e0-37ade58914b1",
+        "Id": "534d1267-ec88-405e-afd5-b62326ec54b0",
         "Level": 1
       }
     ]
@@ -90,15 +573,182 @@
       "Elf",
       "Humanoid"
     ],
-    "Description": "Elves are a tall, long-lived people with a strong tradition of art and magic.",
+    "Description": "",
     "HitPoints": 6,
     "Size": "Medium",
     "Speed": 30,
+    "Rarity": "Common",
     "Languagues": [
       "Common",
       "Elven"
     ],
-    "Attributes": []
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "8abdbd01-bded-4df5-a548-17e8c8514631",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "aeff347e-14bf-4b46-8612-3e0dc89c9155",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "fdaf8cdb-e2de-4d96-8828-346baa29e0c4",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "e5225e81-7e01-4619-a576-aa77e7355a76",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:fetchling",
+    "Name": "Fetchling",
+    "Traits": [
+      "Fetchling",
+      "Humanoid"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Shadowtongue"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "2d403507-45a6-4711-bb05-155001583226",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "03f4bf7f-7ffe-47cc-8b78-15f7e436aee8",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:fleshwarp",
+    "Name": "Fleshwarp",
+    "Traits": [
+      "Aberration",
+      "Humanoid"
+    ],
+    "Description": "",
+    "HitPoints": 10,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "9e0b6bc8-9f31-4e9f-b8f7-31a74652c1a0",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "76fdf8b3-0fc8-4d21-9eea-82a6f7d56431",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:ghoran",
+    "Name": "Ghoran",
+    "Traits": [
+      "Ghoran",
+      "Humanoid",
+      "Plant"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common",
+      "Fey"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "db12af0d-c22d-4dcc-9c7d-65828fca02b3",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "5aa61a5f-462d-45a5-ac98-68427d30710f",
+        "Level": 1
+      }
+    ]
   },
   {
     "Id": "pf:ancestry:gnome",
@@ -107,16 +757,57 @@
       "Gnome",
       "Humanoid"
     ],
-    "Description": "Gnomes are short and hardy folk, with an unquenchable curiosity and eccentric habits.",
+    "Description": "",
     "HitPoints": 8,
     "Size": "Small",
     "Speed": 25,
+    "Rarity": "Common",
     "Languagues": [
       "Common",
       "Fey",
       "Gnomish"
     ],
-    "Attributes": []
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "3e52f987-b7ff-4d9a-9230-f70777fb91e6",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "64517257-36a9-43a2-8207-b19a8c6472c5",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "13d49039-bd46-4be3-a443-8c8376283969",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Strength"
+        ],
+        "Id": "4fcad270-1918-4a30-bf66-c88afc3fa9ff",
+        "Level": 1
+      }
+    ]
   },
   {
     "Id": "pf:ancestry:goblin",
@@ -125,15 +816,98 @@
       "Goblin",
       "Humanoid"
     ],
-    "Description": "Goblins are a short, scrappy, energetic people who have spent millennia maligned and feared.",
+    "Description": "",
     "HitPoints": 6,
     "Size": "Small",
     "Speed": 25,
+    "Rarity": "Common",
     "Languagues": [
       "Common",
       "Goblin"
     ],
-    "Attributes": []
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "e78ea4e1-c304-4ce0-93d5-6e62b4575566",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "a4c2bab1-9b89-4ef3-96a3-80967d6b8981",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "28ad1235-3649-4aa8-96cf-4a2f21832965",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "a626acda-8269-44a5-8b28-b87530d65b13",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:goloma",
+    "Name": "Goloma",
+    "Traits": [
+      "Goloma",
+      "Humanoid"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 30,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Goloma",
+      "Mwangi"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "f4a4bca6-b22e-4819-ae8e-ae64c86ea17f",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "6fcf857d-b316-4cf5-ad7f-7bfcd12c139c",
+        "Level": 1
+      }
+    ]
   },
   {
     "Id": "pf:ancestry:halfling",
@@ -142,15 +916,114 @@
       "Halfling",
       "Humanoid"
     ],
-    "Description": "Halflings are a short, resilient people who exhibit remarkable curiosity and humor.",
+    "Description": "",
     "HitPoints": 6,
     "Size": "Small",
     "Speed": 25,
+    "Rarity": "Common",
     "Languagues": [
       "Common",
       "Halfling"
     ],
-    "Attributes": []
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "44650453-fca1-42b5-8326-aed8f2d2c846",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "ef0541e8-7b70-4a08-a334-065e5e6f782f",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "a1c7912f-1406-4256-9ea5-b118902121c1",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Strength"
+        ],
+        "Id": "b29a8682-a52e-4693-86e0-3d86738eda6b",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:hobgoblin",
+    "Name": "Hobgoblin",
+    "Traits": [
+      "Hobgoblin",
+      "Humanoid"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Goblin"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "e4f351c2-bd1b-4644-90e2-a5c351e3cbde",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "9352d65f-a048-47a7-be70-3c73a196179e",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "818c9c58-31e9-4d2b-a7ac-bfbb5fb85a5f",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "a0334f99-0b00-4582-81bf-ab8e383a0898",
+        "Level": 1
+      }
+    ]
   },
   {
     "Id": "pf:ancestry:human",
@@ -159,14 +1032,244 @@
       "Human",
       "Humanoid"
     ],
-    "Description": "Humans are diverse and adaptable people with wide potential and deep ambitions.",
+    "Description": "",
     "HitPoints": 8,
     "Size": "Medium",
     "Speed": 25,
+    "Rarity": "Common",
     "Languagues": [
       "Common"
     ],
-    "Attributes": []
+    "Attributes": [
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Charisma",
+          "Constitution",
+          "Dexterity",
+          "Intelligence",
+          "Strength",
+          "Wisdom"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "ca3a4d97-2025-45f1-94fd-c669a78610fe",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "f8f9db8b-ff38-43a1-bd68-ae8c13ef5ffd",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:kashrishi",
+    "Name": "Kashrishi",
+    "Traits": [
+      "Humanoid",
+      "Kashrishi"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Small",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "5422614f-91ff-4d25-b52b-13201172e44a",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "d3c93fdb-bf60-4e49-a9c7-18931a4d200a",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:kholo",
+    "Name": "Kholo",
+    "Traits": [
+      "Gnoll",
+      "Humanoid"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Kholo"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Strength"
+        ],
+        "Id": "54fa5446-7f44-45e7-9d61-eb3e54b546a3",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "e450d3dd-bccf-480d-ac03-e9137b07de0d",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "bc811ab8-f2ab-4e10-bb7b-c0a0e89c28b4",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "3439dfd2-6694-4dd4-9a92-ffe0bc5c7c0e",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:kitsune",
+    "Name": "Kitsune",
+    "Traits": [
+      "Humanoid",
+      "Kitsune"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "3907066d-b872-42f4-864f-210ecfbfd3bc",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "4bb81f44-05ee-428a-9e8f-e7257b3783a1",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:kobold",
+    "Name": "Kobold",
+    "Traits": [
+      "Humanoid",
+      "Kobold"
+    ],
+    "Description": "",
+    "HitPoints": 6,
+    "Size": "Small",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Sakvroth"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "8e57f0e1-86de-47a6-b2a7-0aa3d2564d5e",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "7edc0b1d-b6aa-4df9-b9ec-dcb285873a97",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "aca93c56-0e17-469c-b20b-b9f2d99acfe2",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "ada917e3-0607-412b-bdac-f4d0cf3028c1",
+        "Level": 1
+      }
+    ]
   },
   {
     "Id": "pf:ancestry:leshy",
@@ -175,31 +1278,1270 @@
       "Leshy",
       "Plant"
     ],
-    "Description": "Leshies are immortal nature spirits placed in small plant bodies, seeking to experience the world.",
+    "Description": "",
     "HitPoints": 8,
     "Size": "Small",
     "Speed": 25,
+    "Rarity": "Common",
     "Languagues": [
       "Common",
       "Fey"
     ],
-    "Attributes": []
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "02602855-9429-48ec-b096-291eda307af8",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "25707612-a915-49de-9a3b-41588fe4aa06",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "bd67e701-b108-4e35-a3cc-bba502e0fe7d",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "7310cfd3-e01c-479a-8d56-17b3af289344",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:lizardfolk",
+    "Name": "Lizardfolk",
+    "Traits": [
+      "Humanoid",
+      "Lizardfolk"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Iruxi"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Strength"
+        ],
+        "Id": "a4f77d5f-9f23-42cb-92e8-5e9b97207207",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "1f09c2af-c72d-4b87-adff-ee9d5789574b",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "404e9fe5-39d9-4791-8037-dd532aaa8b99",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "3e051a4d-cdba-4967-b6dd-6db6db8394e2",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:merfolk",
+    "Name": "Merfolk",
+    "Traits": [
+      "Amphibious",
+      "Humanoid",
+      "Merfolk"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 5,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Thalassic"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "10a7c1f5-05f0-432c-a722-3cac405b2c5e",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "ab6fc9a1-ea65-4874-969c-cf6e3f3716d1",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "21ce772b-1564-490c-9bb2-1f68768caad7",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "ab2984e8-960f-44cb-b28f-2011d7586f55",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:minotaur",
+    "Name": "Minotaur",
+    "Traits": [
+      "Beast",
+      "Humanoid",
+      "Minotaur"
+    ],
+    "Description": "",
+    "HitPoints": 10,
+    "Size": "Large",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Jotun"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Strength"
+        ],
+        "Id": "faaafa50-27ac-487f-85d7-22df82b8f61d",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "c6b883c6-b903-4849-b65c-e089cea94871",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "03c93b27-ceac-4f33-a02d-68034d76dd83",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "fb33ec6b-b2d8-4b19-bcd1-0ea065db445b",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:nagaji",
+    "Name": "Nagaji",
+    "Traits": [
+      "Humanoid",
+      "Nagaji"
+    ],
+    "Description": "",
+    "HitPoints": 10,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Nagaji"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Strength"
+        ],
+        "Id": "9ede6f09-1c3e-43fa-88b2-7005eb55af7e",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "049cc6ca-3395-4a8f-b001-1c7215c184b7",
+        "Level": 1
+      }
+    ]
   },
   {
     "Id": "pf:ancestry:orc",
     "Name": "Orc",
     "Traits": [
-      "Orc",
-      "Humanoid"
+      "Humanoid",
+      "Orc"
     ],
-    "Description": "Orcs are proud, strong people with hardened physiques who value physical might and glory in combat.",
+    "Description": "",
     "HitPoints": 10,
     "Size": "Medium",
     "Speed": 25,
+    "Rarity": "Common",
     "Languagues": [
       "Common",
       "Orcish"
     ],
-    "Attributes": []
+    "Attributes": [
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Charisma",
+          "Constitution",
+          "Dexterity",
+          "Intelligence",
+          "Strength",
+          "Wisdom"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "1e4241da-4e7f-4e50-bba9-c675d07a7321",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Charisma",
+          "Constitution",
+          "Dexterity",
+          "Intelligence",
+          "Strength",
+          "Wisdom"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "18e6ba82-319d-404c-9ccb-fce6981ab56f",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:poppet",
+    "Name": "Poppet",
+    "Traits": [
+      "Construct",
+      "Humanoid"
+    ],
+    "Description": "",
+    "HitPoints": 6,
+    "Size": "Small",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "ec8c3ab8-b486-4849-8745-3ce107c92ebc",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "cd93000a-3174-4d34-83aa-767692f983b4",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "70b19738-4068-43c9-b166-ba26675efc6c",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "bbfcb658-a70b-4490-9c67-a130374d1ee6",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:ratfolk",
+    "Name": "Ratfolk",
+    "Traits": [
+      "Humanoid",
+      "Ratfolk"
+    ],
+    "Description": "",
+    "HitPoints": 6,
+    "Size": "Small",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Ysoki"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "d2f9d979-8b57-48bd-b4bb-8f61d9675774",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "d95cf433-600e-42f6-96c5-003b706b13a2",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "c3b895c8-39b6-49b5-9000-7226ae724a0e",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Strength"
+        ],
+        "Id": "6e90a788-fb63-493b-b612-c46ec704cd1b",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:samsaran",
+    "Name": "Samsaran",
+    "Traits": [
+      "Humanoid",
+      "Samsaran"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Samsaran"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "8a7ca397-7b20-4410-ad4f-d7cb0bf5b400",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "1fe9db02-a643-4765-bb38-05f826026959",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "1eec2f25-c74c-4ee7-b123-56e2010b8f33",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "671dfb9e-404b-482a-94bf-37ea187d96bb",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:sarangay",
+    "Name": "Sarangay",
+    "Traits": [
+      "Humanoid",
+      "Sarangay"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Strength"
+        ],
+        "Id": "8b44c42c-0303-416f-aae6-302e21977a2f",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "8b6d4f2e-96f5-441a-81da-1da4d9b4b640",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "71d78d2e-93ac-4ae8-92b0-b6c8514657a3",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "da581750-6bea-4696-b13c-3eed9ba12c09",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:shisk",
+    "Name": "Shisk",
+    "Traits": [
+      "Humanoid",
+      "Shisk"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Mwangi",
+      "Shisk"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "9b7d6641-0e09-4282-be4f-4248a9b17c20",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "7862f558-9965-4a9e-9fb9-92e026b2b02c",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:shoony",
+    "Name": "Shoony",
+    "Traits": [
+      "Humanoid",
+      "Shoony"
+    ],
+    "Description": "",
+    "HitPoints": 6,
+    "Size": "Small",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common",
+      "Shoony"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "a4545584-827a-4cb7-aa17-29ef207ebff0",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "6ce33b68-1526-460e-91f8-31aed399e665",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "d7f62d87-0afe-4618-b170-dc91cbdb7ba8",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "1db52e1a-51ed-42fd-bc3f-eed307ada7c8",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:skeleton",
+    "Name": "Skeleton",
+    "Traits": [
+      "Skeleton",
+      "Undead"
+    ],
+    "Description": "",
+    "HitPoints": 6,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common",
+      "Necril"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "e6e9a97a-d0fa-472d-af4c-bcc68dd9e51a",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "b80f9acb-cbad-46db-9b6c-a783a32ff88e",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "91cca640-0e7f-4bff-accd-667023d86051",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "4bc7ef1a-3338-48ff-bd76-c559ed287c49",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:sprite",
+    "Name": "Sprite",
+    "Traits": [
+      "Fey",
+      "Sprite"
+    ],
+    "Description": "",
+    "HitPoints": 6,
+    "Size": "Tiny",
+    "Speed": 20,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common",
+      "Fey"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "67e44241-81ef-4dcf-9d9d-0d9df0f9242a",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "8fdfd1f7-b685-4a86-9356-93bfecc11e3e",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "2817a692-a85c-4185-9d63-ec763d42707c",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Strength"
+        ],
+        "Id": "37bc4e4b-5986-4318-8292-d1abfa603b1b",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:strix",
+    "Name": "Strix",
+    "Traits": [
+      "Humanoid",
+      "Strix"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common",
+      "Strix"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "da9a6ab2-ba39-4cfc-8f3f-e96222f06fc4",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "af10aa7c-44f5-42f3-a0d1-c7160462c260",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:surki",
+    "Name": "Surki",
+    "Traits": [
+      "Humanoid",
+      "Surki"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common",
+      "Surki"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "b54a29e8-2ae8-40c0-9260-9f628098a614",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "c783d0c1-9e92-481d-accd-d236ffcf319f",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:tanuki",
+    "Name": "Tanuki",
+    "Traits": [
+      "Humanoid",
+      "Tanuki"
+    ],
+    "Description": "",
+    "HitPoints": 10,
+    "Size": "Small",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Tanuki"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "8c4a097f-017d-4e83-a5f7-72876db68a73",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "f6fdf55e-eb31-443f-978d-53dba9c15ff9",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "a6c3ed28-d4f6-4617-ac8b-196bfb1635e9",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "06740029-d2d5-484e-a531-73ffee139e0a",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:tengu",
+    "Name": "Tengu",
+    "Traits": [
+      "Humanoid",
+      "Tengu"
+    ],
+    "Description": "",
+    "HitPoints": 6,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Tengu"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "8856b33c-036f-485e-bca1-15e319586570",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "13c3ed91-bd6b-462a-88dd-0dc1cdc12da1",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:tripkee",
+    "Name": "Tripkee",
+    "Traits": [
+      "Grippli",
+      "Humanoid"
+    ],
+    "Description": "",
+    "HitPoints": 6,
+    "Size": "Small",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Grippli"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "3ea4c91d-ecc5-4562-a944-4f808fd7271a",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Wisdom"
+        ],
+        "Id": "4e9952b3-79d3-46d1-9891-814c8e9d938d",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "6d873904-d9d9-4a1c-8303-2d39f6f68e39",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Strength"
+        ],
+        "Id": "a159edeb-7485-46a3-8cee-b2b96238878e",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:vanara",
+    "Name": "Vanara",
+    "Traits": [
+      "Humanoid",
+      "Vanara"
+    ],
+    "Description": "",
+    "HitPoints": 6,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Vanara"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "b9780cbd-2d16-4008-89a3-448b2d7df5e1",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "563f0700-ef2c-4aac-822b-03d9421bb901",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:vishkanya",
+    "Name": "Vishkanya",
+    "Traits": [
+      "Humanoid",
+      "Vishkanya"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common",
+      "Vishkanyan"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "5d5b4834-f293-41de-9e33-8dc492818c23",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "523a20ba-e0e6-4e98-b3f1-8d43afba77fa",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:wayang",
+    "Name": "Wayang",
+    "Traits": [
+      "Humanoid",
+      "Shadow",
+      "Wayang"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Small",
+    "Speed": 25,
+    "Rarity": "Uncommon",
+    "Languagues": [
+      "Common",
+      "Shadowtongue",
+      "Wayang"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Dexterity"
+        ],
+        "Id": "35a9b2b0-e116-41bf-8f54-707aaf84988c",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "e2baa565-b640-43b0-8a1c-7a0175849ea8",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "38b14d73-bb06-476c-955c-af29142980b9",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "bb30c41d-1231-43b6-833e-de392097fa3a",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:yaksha",
+    "Name": "Yaksha",
+    "Traits": [
+      "Spirit",
+      "Yaksha"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common",
+      "Fey",
+      "Yaksha"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "ca082a2a-b507-4a48-b9c3-57bbdd082794",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "30eb7615-5c8d-49ad-9212-be4a7a3e732a",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "6924b4cd-3a69-41e7-b74e-415800866fb1",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "af578dd6-29b9-46d2-9584-caa7f8728344",
+        "Level": 1
+      }
+    ]
+  },
+  {
+    "Id": "pf:ancestry:yaoguai",
+    "Name": "Yaoguai",
+    "Traits": [
+      "Humanoid",
+      "Yaoguai"
+    ],
+    "Description": "",
+    "HitPoints": 8,
+    "Size": "Medium",
+    "Speed": 25,
+    "Rarity": "Rare",
+    "Languagues": [
+      "Common"
+    ],
+    "Attributes": [
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Charisma"
+        ],
+        "Id": "29352c64-4574-4dcf-a090-fbacb8192204",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityBoostAttribute",
+        "Selected": [
+          "Constitution"
+        ],
+        "Id": "9fdfe261-61d1-4de1-9cc1-820cdd038a46",
+        "Level": 1
+      },
+      {
+        "$type": "VariableAbilityBoostAttribute",
+        "Possible": [
+          "Strength",
+          "Dexterity",
+          "Constitution",
+          "Intelligence",
+          "Wisdom",
+          "Charisma"
+        ],
+        "Amount": 1,
+        "Selected": [],
+        "Id": "6f528c82-17f7-43a8-9dbf-b53d4e3bdcf2",
+        "Level": 1
+      },
+      {
+        "$type": "FixedAbilityFlawAttribute",
+        "Selected": [
+          "Intelligence"
+        ],
+        "Id": "812e474b-0615-443d-937d-e581e3104a46",
+        "Level": 1
+      }
+    ]
   }
 ]

@@ -22,6 +22,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     HitPoints = table.Column<int>(type: "INTEGER", nullable: false),
                     Size = table.Column<int>(type: "INTEGER", nullable: false),
                     Speed = table.Column<int>(type: "INTEGER", nullable: false),
+                    Rarity = table.Column<int>(type: "INTEGER", nullable: false),
                     Languagues = table.Column<string>(type: "TEXT", nullable: false),
                     Attributes = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -51,7 +52,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Traits = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
                     HitPoints = table.Column<int>(type: "INTEGER", nullable: false),
+                    Rarity = table.Column<int>(type: "INTEGER", nullable: false),
                     Attributes = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
