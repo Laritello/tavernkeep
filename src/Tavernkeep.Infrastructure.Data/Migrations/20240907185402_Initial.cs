@@ -39,6 +39,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Traits = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Rarity = table.Column<int>(type: "INTEGER", nullable: false),
                     Attributes = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>

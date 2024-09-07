@@ -176,6 +176,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Rarity")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Traits")
                         .IsRequired()
                         .HasColumnType("TEXT");
