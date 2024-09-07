@@ -4,6 +4,9 @@ using Tavernkeep.Core.Entities;
 
 namespace Tavernkeep.Application.Mapping.Profiles
 {
+	/// <summary>
+	/// Mapping profile for the <see cref="User"/> class.
+	/// </summary>
 	public class UserProfile : Profile
 	{
 		public UserProfile()

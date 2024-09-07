@@ -28,10 +28,10 @@ namespace Tavernkeep.Server.Controllers
 		/// <returns>List containing all conditions.</returns>
 		[Authorize]
 		[HttpGet]
-		public async Task<List<ConditionMetadataDto>> GetAllConditionsAsync()
+		public async Task<List<ConditionTemplateDto>> GetAllConditionsAsync()
 		{
 			var conditions = await mediator.Send(new GetConditionsQuery());
-			return mapper.Map<List<ConditionMetadataDto>>(conditions);
+			return mapper.Map<List<ConditionTemplateDto>>(conditions);
 		}
 
 		/// <summary>
@@ -41,10 +41,10 @@ namespace Tavernkeep.Server.Controllers
 		/// <returns>Specified condition.</returns>
 		[Authorize]
 		[HttpGet("{name}")]
-		public async Task<ConditionMetadataDto> GetConditionAsync([FromRoute] string name)
+		public async Task<ConditionTemplateDto> GetConditionAsync([FromRoute] string name)
 		{
 			var condition = await mediator.Send(new GetConditionQuery(name));
-			return mapper.Map<ConditionMetadataDto>(condition);
+			return mapper.Map<ConditionTemplateDto>(condition);
 		}
 
 		/// <summary>

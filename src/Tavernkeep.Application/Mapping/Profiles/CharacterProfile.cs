@@ -6,6 +6,9 @@ using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
 namespace Tavernkeep.Application.Mapping.Profiles
 {
+	/// <summary>
+	/// Mapping profile for the <see cref="Character"/> class.
+	/// </summary>
 	public class CharacterProfile : Profile
 	{
 		public CharacterProfile()
