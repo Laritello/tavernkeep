@@ -15,6 +15,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		private readonly Guid userId = Guid.NewGuid();
 
 		private readonly string name = "default_character";
+		private readonly string ancestryId = "pf:ancestry:default";
+		private readonly string backgroundId = "pf:background:default";
+		private readonly string classId = "pf:class:default";
 		private readonly User owner;
 		private readonly Character character;
 
@@ -36,10 +39,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.ReturnsAsync(owner);
 
 			mockCharacterService
-				.Setup(service => service.CreateCharacterAsync(owner, name, It.IsAny<CancellationToken>()))
+				.Setup(service => service.CreateCharacterAsync(owner, name, ancestryId, backgroundId, classId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new CreateCharacterCommand(userId, name);
+			var request = new CreateCharacterCommand(userId, name, ancestryId, backgroundId, classId);
 			var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterService.Object, mockNotificationService.Object);
 
 			var response = await handler.Handle(request, CancellationToken.None);
@@ -58,7 +61,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockCharacterService = new Mock<ICharacterService>();
 			var mockNotificationService = new Mock<INotificationService>();
 
-			var request = new CreateCharacterCommand(userId, name);
+			var request = new CreateCharacterCommand(userId, name, ancestryId, backgroundId, classId);
 			var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterService.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));

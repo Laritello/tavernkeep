@@ -18,5 +18,14 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.AbilityBoost
 				Selected = Selected,
 			};
 		}
+
+		public override BuildValue Snapshot()
+		{
+			return new AbilityBoostValue()
+			{
+				Id = Id,
+				Selected = Selected,
+			};
+		}
 	}
 }

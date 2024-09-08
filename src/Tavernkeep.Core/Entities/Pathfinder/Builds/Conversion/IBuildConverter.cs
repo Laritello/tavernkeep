@@ -1,7 +1,11 @@
-﻿namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion
+﻿using Tavernkeep.Core.Entities.Pathfinder.Builds.Snapshots;
+
+namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion
 {
-	public interface IBuildConverter<T>
+	public interface IBuildConverter<TEntity, TTemplate>
 	{
-		public T Convert();
+		public TEntity Convert();
+		public TTemplate Restore();
+		public BuildSnapshot Snapshot();
 	}
 }

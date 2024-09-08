@@ -1,9 +1,10 @@
 ﻿using Tavernkeep.Core.Entities.Pathfinder.Builds.Parts;
+using Tavernkeep.Core.Entities.Pathfinder.Builds.Snapshots;
 using Tavernkeep.Core.Entities.Templates;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion.Converters
 {
-	public class AncestryConverter(Character character, AncestryTemplate ancestryTemplate) : IBuildConverter<Ancestry>
+	public class AncestryConverter(Character character, AncestryTemplate ancestryTemplate) : IBuildConverter<Ancestry, AncestryTemplate>
 	{
 		public Ancestry Convert()
 		{
@@ -29,6 +30,37 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion.Converters
 			}
 
 			return convertedAncestry;
+		}
+
+		public AncestryTemplate Restore()
+		{
+			var snapshot = character.Snapshot.Ancestry;
+			var template = ancestryTemplate;
+
+			if (snapshot.Id != template.Id)
+				throw new ArgumentException();
+
+			foreach (var attribute in template.Attributes)
+			{
+				attribute.Restore(snapshot);
+			}
+
+			return template;
+		}
+
+		public BuildSnapshot Snapshot()
+		{
+			BuildSnapshot snapshot = new()
+			{
+				Id = ancestryTemplate.Id
+			};
+
+			foreach (var attribute in ancestryTemplate.Attributes)
+			{
+				snapshot.Values.Add(attribute.Snapshot());
+			}
+
+			return snapshot;
 		}
 	}
 }

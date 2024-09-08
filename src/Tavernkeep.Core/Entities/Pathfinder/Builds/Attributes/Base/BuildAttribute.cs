@@ -32,5 +32,10 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.Base
 		public int Level { get; set; }
 		public abstract BuildAttribute Convert(BuildSnapshot snapshot, ConversionParameters? parameters = null);
 		public abstract BuildAttribute Convert(List<BuildValue> values, ConversionParameters? parameters = null);
+
+		public virtual void Restore(BuildSnapshot snapshot, ConversionParameters? parameters = null) { }
+		public virtual void Restore(List<BuildValue> values, ConversionParameters? parameters = null) { }
+
+		public abstract BuildValue Snapshot();
 	}
 }

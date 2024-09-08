@@ -138,9 +138,20 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 					Id = Guid.NewGuid(),
 					Owner = context.Set<User>().First(),
 					Name = "Soveliss",
-					Build = new()
+					Snapshot = new()
 					{
-						Level = 1
+						Ancestry = new()
+						{
+							Id = "pf:ancestry:human"
+						},
+						Background = new()
+						{
+							Id = "pf:background:acolyte"
+						},
+						Class = new()
+						{
+							Id = "pf:class:cleric"
+						}
 					},
 				};
 

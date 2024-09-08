@@ -5,7 +5,6 @@ using Tavernkeep.Application.UseCases.Glossary.Query.GetAncestries;
 using Tavernkeep.Application.UseCases.Glossary.Query.GetBackgrounds;
 using Tavernkeep.Application.UseCases.Glossary.Query.GetClasses;
 using Tavernkeep.Core.Contracts.Glossary.Dtos;
-using Tavernkeep.Core.Entities.Templates;
 
 namespace Tavernkeep.Server.Controllers
 {
@@ -13,6 +12,7 @@ namespace Tavernkeep.Server.Controllers
 	///  The <see cref="GlossaryController"/> class that returns glossary data.
 	/// </summary>
 	/// <param name="mediator">The <see cref="IMediator"/> instance.</param>
+	/// <param name="mapper">The <see cref="IMapper"/> instance.</param>
 	[ApiController]
 	[Route("api/[controller]")]
 	public class GlossaryController(IMediator mediator, IMapper mapper) : ControllerBase

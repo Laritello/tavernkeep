@@ -11,8 +11,8 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    [Migration("20240907185402_Initial")]
-    partial class Initial
+    [Migration("20240908155307_Iniital")]
+    partial class Iniital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

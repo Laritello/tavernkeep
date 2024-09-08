@@ -26,5 +26,23 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.AbilityBoost
 				Possible = Possible,
 			};
 		}
+
+		public override void Restore(BuildSnapshot snapshot, ConversionParameters? parameters = null) => Restore(snapshot.Values, parameters);
+
+		public override void Restore(List<BuildValue> values, ConversionParameters? parameters = null)
+		{
+			Selected = values.FirstOrDefault(x => x.Id == Id) is AbilityBoostValue attributeValue
+					? attributeValue.Selected
+					: [];
+		}
+
+		public override BuildValue Snapshot()
+		{
+			return new AbilityBoostValue()
+			{
+				Id = Id,
+				Selected = Selected,
+			};
+		}
 	}
 }

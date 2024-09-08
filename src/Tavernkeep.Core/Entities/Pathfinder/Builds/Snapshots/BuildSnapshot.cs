@@ -4,7 +4,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Snapshots
 {
 	public class BuildSnapshot
 	{
-		public string Id { get; set; }
-		public List<BuildValue> Values { get; set; }
+		public string Id { get; set; } = default!;
+		public List<BuildValue> Values { get; set; } = [];
 	}
 }

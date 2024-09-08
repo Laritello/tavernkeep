@@ -9,6 +9,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.SkillIncrease
 	public class VariableSkillIncreaseAttribute : SkillIncreaseAttribute
 	{
 		public List<SkillType> Possible { get; set; } = [];
+		public int Amount { get; set; }
 
 		public override BuildAttribute Convert(BuildSnapshot snapshot, ConversionParameters? parameters = null) => Convert(snapshot.Values, parameters);
 
@@ -18,10 +19,29 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.SkillIncrease
 			{
 				Id = Id,
 				Level = Level,
+				Amount = Amount,
 				Selected = values.FirstOrDefault(x => x.Id == Id) is SkillIncreaseValue value
 				? value.Selected
 				: [],
 				Possible = Possible,
+			};
+		}
+
+		public override void Restore(BuildSnapshot snapshot, ConversionParameters? parameters = null) => Restore(snapshot.Values, parameters);
+
+		public override void Restore(List<BuildValue> values, ConversionParameters? parameters = null)
+		{
+			Selected = values.FirstOrDefault(x => x.Id == Id) is SkillIncreaseValue value
+				? value.Selected
+				: [];
+		}
+
+		public override BuildValue Snapshot()
+		{
+			return new SkillIncreaseValue()
+			{
+				Id = Id,
+				Selected = Selected,
 			};
 		}
 	}

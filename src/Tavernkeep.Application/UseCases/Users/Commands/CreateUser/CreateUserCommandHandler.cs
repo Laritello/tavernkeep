@@ -1,12 +1,11 @@
 ﻿using MediatR;
-using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Users.Commands.CreateUser
 {
-	public class CreateUserCommandHandler(IUserRepository repository, ICharacterService characterService) : IRequestHandler<CreateUserCommand, User>
+	public class CreateUserCommandHandler(IUserRepository repository) : IRequestHandler<CreateUserCommand, User>
 	{
 		public async Task<User> Handle(CreateUserCommand request, CancellationToken cancellationToken)
 		{
@@ -20,16 +19,6 @@ namespace Tavernkeep.Application.UseCases.Users.Commands.CreateUser
 
 			repository.Save(user);
 			await repository.CommitAsync(cancellationToken);
-
-			if (request.InitializeCharacter)
-			{
-				var character = await characterService.CreateCharacterAsync(user, request.CharacterName ?? "Default Character", cancellationToken);
-
-				user.AddCharacter(character);
-				user.ActiveCharacter = character;
-
-				await repository.CommitAsync(cancellationToken);
-			}
 
 			return user;
 		}

@@ -18,5 +18,14 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.SkillIncrease
 				Selected = Selected,
 			};
 		}
+
+		public override BuildValue Snapshot()
+		{
+			return new SkillIncreaseValue()
+			{
+				Id = Id,
+				Selected = Selected,
+			};
+		}
 	}
 }

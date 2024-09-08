@@ -1,12 +1,13 @@
 ﻿using Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.Base;
 using Tavernkeep.Core.Entities.Pathfinder.Builds.Parts;
+using Tavernkeep.Core.Entities.Pathfinder.Builds.Snapshots;
 using Tavernkeep.Core.Entities.Pathfinder.Builds.Values;
 using Tavernkeep.Core.Entities.Templates;
 using Tavernkeep.Core.Evaluators.Builds;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion.Converters
 {
-	public class ClassConverter(Character character, AncestryTemplate ancestryTemplate, ClassTemplate classTemplate) : IBuildConverter<Class>
+	public class ClassConverter(Character character, AncestryTemplate ancestryTemplate, ClassTemplate classTemplate) : IBuildConverter<Class, ClassTemplate>
 	{
 		public Class Convert()
 		{
@@ -36,6 +37,27 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion.Converters
 			return convertedClass;
 		}
 
+		public ClassTemplate Restore()
+		{
+			var snapshot = character.Snapshot.Class;
+			var template = classTemplate;
+
+			if (snapshot.Id != template.Id)
+				throw new ArgumentException();
+
+			ConversionParameters parameters = new()
+			{
+				{ "IntelligenceModifier", GetIntelligenceModifier() }
+			};
+
+			foreach (var attribute in template.Attributes)
+			{
+				attribute.Restore(snapshot, parameters);
+			}
+
+			return template;
+		}
+
 		private int GetIntelligenceModifier()
 		{
 			List<AbilityModifierAttribute> template =
@@ -55,6 +77,21 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion.Converters
 			var evaluator = new IntelligenceModifierEvaluator(template, snapshot);
 
 			return evaluator.Value;
+		}
+
+		public BuildSnapshot Snapshot()
+		{
+			BuildSnapshot snapshot = new()
+			{
+				Id = classTemplate.Id
+			};
+
+			foreach (var attribute in classTemplate.Attributes)
+			{
+				snapshot.Values.Add(attribute.Snapshot());
+			}
+
+			return snapshot;
 		}
 	}
 }

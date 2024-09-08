@@ -1,18 +1,18 @@
 ﻿using MediatR;
+using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Entities.Pathfinder.Builds;
 using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Builds.Queries.GetCharacterBuild
 {
-	public class GetCharacterBuildQueryHandler(ICharacterRepository characterRepository) : IRequestHandler<GetCharacterBuildQuery, Build>
+	public class GetCharacterBuildQueryHandler(ICharacterService characterService) : IRequestHandler<GetCharacterBuildQuery, BuildDetails>
 	{
-		public async Task<Build> Handle(GetCharacterBuildQuery request, CancellationToken cancellationToken)
+		public async Task<BuildDetails> Handle(GetCharacterBuildQuery request, CancellationToken cancellationToken)
 		{
-			var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
+			var build = await characterService.GetBuild(request.CharacterId, cancellationToken)
 				?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
 
-			return character.Build;
+			return build;
 		}
 	}
 }

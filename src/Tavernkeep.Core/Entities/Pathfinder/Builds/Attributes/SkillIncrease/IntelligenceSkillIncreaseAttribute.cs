@@ -25,5 +25,25 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.SkillIncrease
 				Amount = parameters?["IntelligenceModifier"] is int amount ? BaseAmount + amount : BaseAmount
 			};
 		}
+
+		public override void Restore(BuildSnapshot snapshot, ConversionParameters? parameters = null) => Restore(snapshot.Values, parameters);
+
+		public override void Restore(List<BuildValue> values, ConversionParameters? parameters = null)
+		{
+			Selected = values.FirstOrDefault(x => x.Id == Id) is SkillIncreaseValue value
+				? value.Selected
+				: [];
+
+			Amount = parameters?["IntelligenceModifier"] is int amount ? BaseAmount + amount : BaseAmount;
+		}
+
+		public override BuildValue Snapshot()
+		{
+			return new SkillIncreaseValue()
+			{
+				Id = Id,
+				Selected = Selected,
+			};
+		}
 	}
 }

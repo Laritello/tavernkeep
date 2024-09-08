@@ -18,5 +18,14 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.AbilityFlaw
 				Selected = Selected,
 			};
 		}
+
+		public override BuildValue Snapshot()
+		{
+			return new AbilityFlawValue()
+			{
+				Id = Id,
+				Selected = Selected,
+			};
+		}
 	}
 }

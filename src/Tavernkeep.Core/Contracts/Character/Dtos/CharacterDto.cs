@@ -9,6 +9,7 @@ namespace Tavernkeep.Core.Contracts.Character.Dtos
 		public Guid Id { get; set; }
 		public Guid OwnerId { get; set; }
 		public string Name { get; set; } = default!;
+		public int Level { get; set; } = 1;
 		public Health Health { get; set; } = default!;
 		public ArmorClass Armor { get; set; } = default!;
 		public Dictionary<AbilityType, Ability> Abilities { get; set; } = default!;

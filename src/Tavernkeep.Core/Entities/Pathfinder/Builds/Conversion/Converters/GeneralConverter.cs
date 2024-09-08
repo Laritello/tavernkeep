@@ -1,14 +1,12 @@
 ﻿using Tavernkeep.Core.Entities.Pathfinder.Builds.Parts;
+using Tavernkeep.Core.Entities.Pathfinder.Builds.Snapshots;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion.Converters
 {
-	public class GeneralConverter(Character character) : IBuildConverter<General>
+	public class GeneralConverter(Character character, General generalTemplate) : IBuildConverter<General, General>
 	{
-		// LMAO FIX THIS
 		public General Convert()
 		{
-			var generalTemplate = new General();
-
 			var general = new General()
 			{
 				Attributes = []
@@ -20,6 +18,23 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Builds.Conversion.Converters
 			}
 
 			return general;
+		}
+
+		public General Restore()
+		{
+			return character.Build.General;
+		}
+
+		public BuildSnapshot Snapshot()
+		{
+			BuildSnapshot snapshot = new();
+			
+			foreach (var attribute in generalTemplate.Attributes)
+			{
+				snapshot.Values.Add(attribute.Snapshot());
+			}
+
+			return snapshot;
 		}
 	}
 }
