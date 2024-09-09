@@ -7,8 +7,8 @@ import { useModal } from '@/composables/useModal';
 
 import CharacterHeaderView from '@/components/character/CharacterHeaderView.vue';
 import ConditionsView from '@/components/character/ConditionsView.vue';
-import AbilitiesView from '@/components/character/AbilitiesView.vue';
-import SkillsView from '@/components/character/SkillsView.vue';
+import AbilitiesWidget from '@/components/character/AbilitiesWidget.vue';
+import SkillsWidget from '@/components/character/SkillsWidget.vue';
 import SavingThrowsView from './SavingThrowsView.vue';
 import ArmorClassWidget from './ArmorClassWidget.vue';
 import PerceptionWidget from './PerceptionWidget.vue';
@@ -17,6 +17,7 @@ import ProficiencyEditDialog from '@/components/dialogs/ProficiencyEditDialog.vu
 import AbilityEditDialog from '@/components/dialogs/AbilityEditDialog.vue';
 import ConditionApplyDialog from '../dialogs/ConditionApplyDialog.vue';
 import type { Condition } from '@/entities';
+
 
 const client = ApiClientFactory.createApiClient();
 const modal = useModal();
@@ -77,8 +78,8 @@ async function decreaseCondtionLevel(condition: Condition) {
         <CharacterHeaderView :name="character.name" :health="character.health" class="mb-2" />
         <div class="container flex gap-2">
             <div class="flex flex-col gap-2">
-                <AbilitiesView :abilities="character.abilities" @edit="showEditAbilityDialog" />
-                <SkillsView :skills="character.skills" @edit="showEditSkillDialog" />
+                <AbilitiesWidget :abilities="character.abilities" @edit="showEditAbilityDialog" />
+                <SkillsWidget :skills="character.skills" @edit="showEditSkillDialog" />
             </div>
             <div class="flex flex-col gap-2 h-fit">
                 <PerceptionWidget :perception="character.perception" @edit="showPerceptionEditDialog" />
