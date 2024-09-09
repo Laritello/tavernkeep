@@ -16,7 +16,7 @@ const routes: RouteRecordRaw[] = [
         path: '/',
         component: CharacterPage,
         meta: {
-            layout: 'TestLayout',
+            layout: 'AppLayout',
             protected: true,
         },
     },
@@ -24,7 +24,7 @@ const routes: RouteRecordRaw[] = [
         path: '/chat',
         component: ChatPage,
         meta: {
-            layout: 'TestLayout',
+            layout: 'AppLayout',
             protected: true,
         },
     },
@@ -32,7 +32,7 @@ const routes: RouteRecordRaw[] = [
         path: '/combat',
         component: CombatPage,
         meta: {
-            layout: 'TestLayout',
+            layout: 'AppLayout',
             protected: true,
         },
     },
@@ -47,7 +47,7 @@ const routes: RouteRecordRaw[] = [
         path: '/characters',
         component: CharactersPage,
         meta: {
-            layout: 'TestLayout',
+            layout: 'AppLayout',
             protected: true,
         },
     },
@@ -71,7 +71,7 @@ const routes: RouteRecordRaw[] = [
         path: '/admin',
         component: AdminPage,
         meta: {
-            layout: 'TestLayout',
+            layout: 'AppLayout',
             protected: true,
             allowedRoles: [UserRole.Master],
         },
@@ -88,7 +88,7 @@ router.beforeEach((to) => {
     const protectedRoute = to.meta.protected;
     const isLoggedIn = session.isAuthenticated.value;
 
-    // Redirect to login if not logged in and trying to access a restricted page
+    // Redirect to login page if not logged in and trying to access a restricted page
     if (protectedRoute && !isLoggedIn) {
         return { path: '/login' };
     }

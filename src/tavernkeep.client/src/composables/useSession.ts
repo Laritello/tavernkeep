@@ -4,8 +4,6 @@ import type { UserRole } from '@/contracts/enums';
 import { useSessionLocalStorage } from '@/stores/sessionLocalStorage';
 import { storeToRefs } from 'pinia';
 
-const api = ApiClientFactory.createApiClient();
-
 type RefreshSuccess = {
     status: 'ok';
     accessToken: string;
@@ -22,6 +20,7 @@ type TokenRefreshResult = RefreshSuccess | RefreshFailure;
 let refreshPromise: Promise<TokenRefreshResult> | null = null;
 
 export const useSession = () => {
+    const api = ApiClientFactory.createApiClient();
     const sessionData = useSessionLocalStorage();
     const { userId, userRole, userLogin, hasData } = storeToRefs(sessionData);
     const isExpired = computed(() => {
