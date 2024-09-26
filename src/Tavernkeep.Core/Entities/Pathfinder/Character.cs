@@ -18,9 +18,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 			Build = new();
 			Snapshot = new();
 
-			Health = new(1, 1, 0);
-			Armor = new(this);
-
 			Strength = new(this, AbilityType.Strength);
 			Dexterity = new(this, AbilityType.Dexterity);
 			Constitution = new(this, AbilityType.Constitution);
@@ -45,11 +42,14 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 			Survival = new(this, AbilityType.Wisdom, SkillType.Survival);
 			Thievery = new(this, AbilityType.Dexterity, SkillType.Thievery);
 
-			Perception = new(this);
-
 			Fortitude = new(this, AbilityType.Constitution, SavingThrowType.Fortitude);
 			Reflex = new(this, AbilityType.Dexterity, SavingThrowType.Reflex);
 			Will = new(this, AbilityType.Wisdom, SavingThrowType.Will);
+
+			Health = new(this);
+			Armor = new(this);
+
+			Perception = new(this);
 
 			Conditions = [];
 			Lores = [];
