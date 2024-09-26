@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 

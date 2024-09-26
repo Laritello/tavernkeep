@@ -20,7 +20,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Conditions.Commands
 
 		private Character character;
 
-		private readonly Dictionary<string, ConditionMetadata> conditions;
+		private readonly Dictionary<string, ConditionTemplate> conditions;
 
 		private readonly User owner;
 		private readonly User master;
@@ -34,12 +34,12 @@ namespace Tavernkepp.Application.Tests.UseCases.Conditions.Commands
 			character = TempGenerator.GenerateCharacter(characterId);
 		}
 
-		private static Dictionary<string, ConditionMetadata> PopulateConditions(string culture)
+		private static Dictionary<string, ConditionTemplate> PopulateConditions(string culture)
 		{
 			using var sr = new StreamReader($"Resources/Conditions.{culture}.json");
 
 			var json = sr.ReadToEnd();
-			var conditions = JsonSerializer.Deserialize<List<ConditionMetadata>>(json) ?? [];
+			var conditions = JsonSerializer.Deserialize<List<ConditionTemplate>>(json) ?? [];
 
 			return conditions.ToDictionary(c => c.Name);
 		}

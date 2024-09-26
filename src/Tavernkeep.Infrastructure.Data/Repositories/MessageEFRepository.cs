@@ -4,10 +4,11 @@ using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Specifications;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Extensions;
+using Tavernkeep.Infrastructure.Data.Repositories.Base;
 
 namespace Tavernkeep.Infrastructure.Data.Repositories
 {
-	public class MessageEFRepository(SessionContext context) : EntityFrameworkRepository<Message>(context), IMessageRepository
+	public class MessageEFRepository(SessionContext context) : EntityFrameworkGuidRepository<Message>(context), IMessageRepository
 	{
 		public async Task PurgeMessagesAsync(CancellationToken cancellationToken = default)
 		{

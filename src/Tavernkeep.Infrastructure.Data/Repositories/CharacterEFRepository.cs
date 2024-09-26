@@ -2,10 +2,11 @@
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
+using Tavernkeep.Infrastructure.Data.Repositories.Base;
 
 namespace Tavernkeep.Infrastructure.Data.Repositories
 {
-	public class CharacterEFRepository(SessionContext context) : EntityFrameworkRepository<Character>(context), ICharacterRepository
+	public class CharacterEFRepository(SessionContext context) : EntityFrameworkGuidRepository<Character>(context), ICharacterRepository
 	{
 		public async Task<List<Character>> GetAllCharactersAsync(CancellationToken cancellationToken = default)
 		{

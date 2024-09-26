@@ -4,7 +4,7 @@ using Tavernkeep.Core.Entities.Base;
 namespace Tavernkeep.Core.Entities
 {
 	[Table("RefreshTokens")]
-	public class RefreshToken : Entity
+	public class RefreshToken : GuidEntity
 	{
 		public Guid UserId { get; set; }
 		public string Token { get; set; } = default!;

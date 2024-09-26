@@ -51,16 +51,19 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Level")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasDefaultValue(1);
+                    b.Property<string>("Build")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("OwnerId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Snapshot")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -70,10 +73,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Characters");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionMetadata", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionTemplate", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -83,16 +85,15 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Property<bool>("HasLevels")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Level")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.HasKey("Name");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("ConditionMetadata");
+                    b.ToTable("Conditions");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.RefreshToken", b =>
@@ -114,6 +115,109 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RefreshTokens");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Templates.AncestryTemplate", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Attributes")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("HitPoints")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Languagues")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Rarity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Speed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Traits")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ancestries");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Templates.BackgroundTemplate", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Attributes")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Rarity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Traits")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Backgrounds");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Templates.ClassTemplate", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Attributes")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("HitPoints")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Rarity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Traits")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
@@ -279,7 +383,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Navigation("Modifiers");
                         });
 
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Health", "Health", b1 =>
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Health", "Health", b1 =>
                         {
                             b1.Property<Guid>("CharacterId")
                                 .HasColumnType("TEXT");
@@ -303,7 +407,573 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasForeignKey("CharacterId");
                         });
 
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.ArmorClass", "Armor", b1 =>
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Acrobatics", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Acrobatics");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Arcana", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Arcana");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Athletics", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Athletics");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", "Charisma", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Charisma");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", "Constitution", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Constitution");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Crafting", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Crafting");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Deception", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Deception");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", "Dexterity", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Dexterity");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Diplomacy", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Diplomacy");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.SavingThrow", "Fortitude", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Proficiency")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Fortitude");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", "Intelligence", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Intelligence");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Intimidation", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Intimidation");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Medicine", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Medicine");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Nature", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Nature");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Occultism", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Occultism");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Performance", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Performance");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.SavingThrow", "Reflex", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Proficiency")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Reflex");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Religion", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Religion");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Society", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Society");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Stealth", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Stealth");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", "Strength", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Strength");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Survival", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Survival");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Thievery", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Thievery");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.SavingThrow", "Will", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Proficiency")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Will");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", "Wisdom", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Wisdom");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.ArmorClass", "Armor", b1 =>
                         {
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
@@ -317,7 +987,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.WithOwner("Owner")
                                 .HasForeignKey("OwnerId");
 
-                            b1.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.ArmorProficiencies", "Proficiencies", b2 =>
+                            b1.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.ArmorProficiencies", "Proficiencies", b2 =>
                                 {
                                     b2.Property<Guid>("ArmorClassOwnerId")
                                         .HasColumnType("TEXT");
@@ -348,639 +1018,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .IsRequired();
                         });
 
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Acrobatics", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Acrobatics");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Arcana", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Arcana");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Athletics", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Athletics");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Ability", "Charisma", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Charisma");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Ability", "Constitution", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Constitution");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Crafting", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Crafting");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Deception", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Deception");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Ability", "Dexterity", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Dexterity");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Diplomacy", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Diplomacy");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.SavingThrow", "Fortitude", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Fortitude");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Ability", "Intelligence", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Intelligence");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Intimidation", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Intimidation");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Medicine", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Medicine");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Nature", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Nature");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Occultism", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Occultism");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Performance", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Performance");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.SavingThrow", "Reflex", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Reflex");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Religion", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Religion");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Society", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Society");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Stealth", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Stealth");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Ability", "Strength", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Strength");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Survival", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Survival");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Skill", "Thievery", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Thievery");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.SavingThrow", "Will", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("BaseAbility")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Will");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Ability", "Wisdom", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Score")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Wisdom");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Lore", "Lores", b1 =>
+                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Properties.Lore", "Lores", b1 =>
                         {
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
@@ -1008,7 +1046,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Navigation("Owner");
                         });
 
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Perception", "Perception", b1 =>
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Perception", "Perception", b1 =>
                         {
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
@@ -1119,11 +1157,11 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionMetadata", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionTemplate", b =>
                 {
                     b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Modifiers.Modifier", "Modifiers", b1 =>
                         {
-                            b1.Property<Guid>("ConditionMetadataId")
+                            b1.Property<string>("ConditionTemplateName")
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("Id")
@@ -1146,19 +1184,19 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("Value")
                                 .HasColumnType("INTEGER");
 
-                            b1.HasKey("ConditionMetadataId", "Id");
+                            b1.HasKey("ConditionTemplateName", "Id");
 
-                            b1.ToTable("ConditionMetadata");
+                            b1.ToTable("Conditions");
 
                             b1.ToJson("Modifiers");
 
                             b1.WithOwner()
-                                .HasForeignKey("ConditionMetadataId");
+                                .HasForeignKey("ConditionTemplateName");
                         });
 
                     b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Conditions.Condition", "Related", b1 =>
                         {
-                            b1.Property<Guid>("ConditionMetadataId")
+                            b1.Property<string>("ConditionTemplateName")
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("Id")
@@ -1175,18 +1213,18 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
-                            b1.HasKey("ConditionMetadataId", "Id");
+                            b1.HasKey("ConditionTemplateName", "Id");
 
-                            b1.ToTable("ConditionMetadata");
+                            b1.ToTable("Conditions");
 
                             b1.ToJson("Related");
 
                             b1.WithOwner()
-                                .HasForeignKey("ConditionMetadataId");
+                                .HasForeignKey("ConditionTemplateName");
 
                             b1.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Modifiers.Modifier", "Modifiers", b2 =>
                                 {
-                                    b2.Property<Guid>("ConditionMetadataId")
+                                    b2.Property<string>("ConditionTemplateName")
                                         .HasColumnType("TEXT");
 
                                     b2.Property<int>("ConditionId")
@@ -1212,14 +1250,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                     b2.Property<int>("Value")
                                         .HasColumnType("INTEGER");
 
-                                    b2.HasKey("ConditionMetadataId", "ConditionId", "Id");
+                                    b2.HasKey("ConditionTemplateName", "ConditionId", "Id");
 
-                                    b2.ToTable("ConditionMetadata");
+                                    b2.ToTable("Conditions");
 
                                     b2.ToJson("Modifiers");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("ConditionMetadataId", "ConditionId");
+                                        .HasForeignKey("ConditionTemplateName", "ConditionId");
                                 });
 
                             b1.Navigation("Modifiers");

@@ -3,6 +3,7 @@ using Tavernkeep.Application.UseCases.Lores.Commands.CreateLore;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Specifications;

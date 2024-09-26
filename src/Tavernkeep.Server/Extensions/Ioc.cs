@@ -2,12 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using System.Text.Json;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.Services;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Repositories;
@@ -85,6 +81,9 @@ namespace Tavernkeep.Server.Extensions
 			services.AddScoped<IMessageRepository, MessageEFRepository>();
 			services.AddScoped<IRefreshTokenRepository, RefreshTokenEFRepository>();
 			services.AddScoped<IConditionMetadataRepository, ConditionMetadataEFRepository>();
+			services.AddScoped<IAncestryTemplateRepository, AncestryTemplateEFRepository>();
+			services.AddScoped<IBackgroundTemplateRepository, BackgroundTemplateEFRepository>();
+			services.AddScoped<IClassTemplateRepository, ClassTemplateEFRepository>();
 
 			return services;
 		}
@@ -133,25 +132,6 @@ namespace Tavernkeep.Server.Extensions
 			var scope = provider.CreateScope();
 			var context = scope.ServiceProvider.GetRequiredService<SessionContext>();
 			context.Database.Migrate();
-
-			if (!context.Set<User>().Any())
-			{
-				context.Set<User>().Add(new("admin", "admin", UserRole.Master)
-				{
-					Id = Guid.NewGuid()
-				});
-			}
-
-			if (!context.Set<ConditionMetadata>().Any())
-			{
-				using var sr = new StreamReader("Resources/Conditions.en-UK.json");
-
-				var json = sr.ReadToEnd();
-				var conditions = JsonSerializer.Deserialize<List<ConditionMetadata>>(json) ?? [];
-
-				context.Set<ConditionMetadata>().AddRange(conditions);
-				context.SaveChanges();
-			}
 
 			return provider;
 		}

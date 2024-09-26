@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Text.Json;
 using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Builds;
+using Tavernkeep.Core.Entities.Pathfinder.Builds.Snapshots;
 using Tavernkeep.Infrastructure.Data.Extensions;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration
@@ -10,11 +13,18 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
 		public void Configure(EntityTypeBuilder<Character> builder)
 		{
 			builder.HasKey(c => c.Id);
+			builder.HasOne(c => c.Owner).WithMany(u => u.Characters).IsRequired();
 
 			builder.Property(c => c.Name).IsRequired();
-			builder.Property(c => c.Level).IsRequired().HasDefaultValue(1);
+			builder.Property(c => c.Build)
+				.HasConversion(
+				v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
+				v => JsonSerializer.Deserialize<Build>(v, JsonSerializerOptions.Default) ?? new());
 
-			builder.HasOne(c => c.Owner).WithMany(u => u.Characters).IsRequired();
+			builder.Property(c => c.Snapshot)
+				.HasConversion(
+				v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
+				v => JsonSerializer.Deserialize<CharacterSnapshot>(v, JsonSerializerOptions.Default) ?? new());
 
 			builder.OwnsJson(c => c.Health);
 			builder.OwnsOne(c => c.Armor, b =>
@@ -57,8 +67,8 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
 
 			builder.OwnsMany(c => c.Conditions, b =>
 			{
-				b.OwnsMany(con => con.Modifiers, b => b.ToJson());
 				b.ToJson();
+				b.OwnsMany(con => con.Modifiers, b => b.ToJson());
 			});
 		}
 	}

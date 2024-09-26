@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.ModifyHealth
 {

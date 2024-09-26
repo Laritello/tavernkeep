@@ -17,7 +17,7 @@ using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
 using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Character.Requests;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Server.Extensions;
 using Tavernkeep.Server.Middleware;
 
@@ -53,7 +53,7 @@ namespace Tavernkeep.Server.Controllers
 		[HttpPost("create")]
 		public async Task<CharacterDto> CreateCharacterAsync(CreateCharacterRequest request)
 		{
-			var character = await mediator.Send(new CreateCharacterCommand(request.OwnerId, request.Name));
+			var character = await mediator.Send(new CreateCharacterCommand(request.OwnerId, request.Name, request.AncestryId, request.BackgroundId, request.ClassId));
 			return mapper.Map<CharacterDto>(character);
 		}
 

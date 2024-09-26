@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
@@ -34,7 +33,6 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHealth
 			if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)
 				throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
 
-			character.Health.Max = request.Max;
 			character.Health.Current = request.Current;
 			character.Health.Temporary = request.Temporary;
 

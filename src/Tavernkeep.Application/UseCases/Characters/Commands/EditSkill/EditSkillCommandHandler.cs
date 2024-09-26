@@ -1,8 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
@@ -26,7 +25,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSkill
 				throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
 
 			var skill = character.GetSkill(request.Type);
-			skill.Proficiency = request.Proficiency;
+			//skill.Proficiency = request.Proficiency;
 
 			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);

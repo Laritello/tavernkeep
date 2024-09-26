@@ -1,19 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Base;
+using Tavernkeep.Core.Entities.Pathfinder.Builds;
+using Tavernkeep.Core.Entities.Pathfinder.Builds.Snapshots;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
+using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
 namespace Tavernkeep.Core.Entities.Pathfinder
 {
 	[Table("Characters")]
-	public class Character : Entity
+	public class Character : GuidEntity
 	{
 		#region Constructors
 
 		public Character()
 		{
-			Health = new(1, 1, 0);
-			Armor = new(this);
+			Build = new();
+			Snapshot = new();
 
 			Strength = new(this, AbilityType.Strength);
 			Dexterity = new(this, AbilityType.Dexterity);
@@ -39,11 +42,14 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 			Survival = new(this, AbilityType.Wisdom, SkillType.Survival);
 			Thievery = new(this, AbilityType.Dexterity, SkillType.Thievery);
 
-			Perception = new(this);
-
 			Fortitude = new(this, AbilityType.Constitution, SavingThrowType.Fortitude);
 			Reflex = new(this, AbilityType.Dexterity, SavingThrowType.Reflex);
 			Will = new(this, AbilityType.Wisdom, SavingThrowType.Will);
+
+			Health = new(this);
+			Armor = new(this);
+
+			Perception = new(this);
 
 			Conditions = [];
 			Lores = [];
@@ -55,7 +61,11 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		public User Owner { get; set; } = default!;
 
 		public string Name { get; set; } = default!;
-		public int Level { get; set; }
+		public Build Build { get; set; }
+		public CharacterSnapshot Snapshot { get; set; }
+
+		public int Level => Build.Level;
+
 		public Health Health { get; set; }
 		public ArmorClass Armor { get; set; }
 		public List<Condition> Conditions { get; set; }

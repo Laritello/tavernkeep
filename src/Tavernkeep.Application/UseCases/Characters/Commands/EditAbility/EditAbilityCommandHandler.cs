@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
@@ -25,7 +25,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditAbility
 				throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
 
 			var ability = character.GetAbility(request.Type);
-			ability.Score = request.Score;
+			//ability.Score = request.Score;
 
 			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);

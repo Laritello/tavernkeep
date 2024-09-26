@@ -1,5 +1,4 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
+﻿using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkepp.Application.Tests.Utility
 {
@@ -12,21 +11,11 @@ namespace Tavernkepp.Application.Tests.Utility
 			{
 				Id = id,
 				Name = "Soveliss",
-				Level = 3
+				Build = new()
+				{
+					Level = 1
+				}
 			};
-
-			character.Strength.Score = 12;
-			character.Dexterity.Score = 10;
-			character.Constitution.Score = 16;
-			character.Intelligence.Score = 14;
-			character.Wisdom.Score = 18;
-			character.Charisma.Score = 10;
-
-			character.Arcana.Proficiency = Proficiency.Trained;
-			character.Religion.Proficiency = Proficiency.Expert;
-			character.Medicine.Proficiency = Proficiency.Trained;
-			character.Diplomacy.Proficiency = Proficiency.Trained;
-			character.Arcana.Proficiency = Proficiency.Trained;
 
 			return character;
 		}

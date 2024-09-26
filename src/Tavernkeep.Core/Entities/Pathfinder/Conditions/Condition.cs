@@ -1,10 +1,9 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Pathfinder.Modifiers;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 {
-	public class Condition : IModifierSource
+	public class Condition
 	{
 		#region Constructors
 

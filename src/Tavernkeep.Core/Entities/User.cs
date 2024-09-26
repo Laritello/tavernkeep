@@ -6,7 +6,7 @@ using Tavernkeep.Core.Entities.Pathfinder;
 namespace Tavernkeep.Core.Entities
 {
 	[Table("Users")]
-	public class User : Entity
+	public class User : GuidEntity
 	{
 		#region Backing fields
 

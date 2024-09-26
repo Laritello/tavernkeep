@@ -4,7 +4,7 @@ using Tavernkeep.Core.Entities.Base;
 namespace Tavernkeep.Core.Entities.Messages
 {
 	[Table("Messages")]
-	public abstract class Message : Entity
+	public abstract class Message : GuidEntity
 	{
 		#region Constructors
 

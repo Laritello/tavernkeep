@@ -1,4 +1,5 @@
 ﻿using Moq;
+using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder;
@@ -31,7 +32,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Queries
 		public async Task GetAllCharactersQuery_Success()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockCharacterRepository = new Mock<ICharacterService>();
 
 			mockCharacterRepository
 				.Setup(repo => repo.GetAllCharactersAsync(It.IsAny<CancellationToken>()))

@@ -2,10 +2,11 @@
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
+using Tavernkeep.Infrastructure.Data.Repositories.Base;
 
 namespace Tavernkeep.Infrastructure.Data.Repositories
 {
-	public class UserEFRepository(SessionContext context) : EntityFrameworkRepository<User>(context), IUserRepository
+	public class UserEFRepository(SessionContext context) : EntityFrameworkGuidRepository<User>(context), IUserRepository
 	{
 		public Task<List<User>> GetAllUsersAsync(CancellationToken cancellationToken = default)
 		{
