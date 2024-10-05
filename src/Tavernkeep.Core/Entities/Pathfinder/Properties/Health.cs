@@ -18,13 +18,12 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 		#region Constructors
 		public Health()
 		{
-			Current = 1;
+			
 		}
 
 		public Health(Character owner)
 		{
 			Owner = owner;
-			Current = 1;
 		}
 
 		#endregion
