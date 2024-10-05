@@ -68,24 +68,19 @@ async function sendMessage() {
 </script>
 
 <template>
-    <div class="flex flex-col">
-        <h1 class="text-xl p-2">Chat</h1>
-        <div class="flex grow overflow-auto" v-chat-scroll="{ always: false, smooth: true }">
-            <div class="w-full px-4">
-                <ChatMessageView v-for="item in messages.list" :key="item.id" :message="item" />
-            </div>
+    <div class="flex flex-col h-full">
+        <div v-chat-scroll="{ always: false, smooth: true }" class="w-full grow max-h-full overflow-y-auto px-2 mb-2">
+            <ChatMessageView v-for="item in messages.list" :key="item.id" :message="item" />
         </div>
-        <div class="">
-            <UserSelector v-model="selectedUserId" :users="listOfMessageRecepient" />
-            <form @submit.prevent="sendMessage" class="m-2">
-                <div class="join w-full">
-                    <CommandInput v-model="message" :commands="slashCommands" class="w-full" />
-                    <button type="submit" class="btn btn-ghost">
-                        <v-icon icon="mdi-send" />
-                    </button>
-                </div>
+        <div class="border-t-2 py-2">
+            <form @submit.prevent="sendMessage" class="flex gap-2 mx-2">
+                <CommandInput v-model="message" :commands="slashCommands" class="w-full" />
+                <button type="submit" class="btn">
+                    <v-icon icon="mdi-send" />
+                </button>
             </form>
         </div>
+        
     </div>
 </template>
 

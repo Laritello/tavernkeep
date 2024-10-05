@@ -1,11 +1,9 @@
 <template>
-    <div class="grid grid-cols-3 gap-4">
-        <div>{{ ability.type }}</div>
-        <div>{{ ability.score }}/{{ ability.modifier }}</div>
-        <div class="align-right">
-            <button class="btn btn-xs w-10" @click="$emit('edit')">Edit</button>
-        </div>
-    </div>
+    <tr>
+        <th>{{ ability.type }}</th>
+        <td>{{ ability.score }}</td>
+        <td>{{ ability.modifier }}</td>
+    </tr>
 </template>
 <script setup lang="ts">
 import type { Ability } from '@/contracts/character';
