@@ -15,7 +15,7 @@
 		/// </summary>
 		public string Name { get; set; } = default!;
 
-		public string AncestryId { get;set; } = default!;
+		public string AncestryId { get; set; } = default!;
 		public string BackgroundId { get; set; } = default!;
 		public string ClassId { get; set; } = default!;
 	}

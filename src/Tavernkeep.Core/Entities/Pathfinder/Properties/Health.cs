@@ -14,7 +14,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 		#region Constructors
 		public Health()
 		{
-			
+
 		}
 
 		public Health(Character owner)

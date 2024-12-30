@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Exceptions;
 
 namespace Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter
 {
