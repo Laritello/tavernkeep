@@ -11,10 +11,6 @@ namespace Tavernkepp.Application.Tests.Utility
 			{
 				Id = id,
 				Name = "Soveliss",
-				Build = new()
-				{
-					Level = 1
-				}
 			};
 
 			return character;

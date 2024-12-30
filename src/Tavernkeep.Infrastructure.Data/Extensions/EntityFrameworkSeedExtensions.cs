@@ -4,12 +4,7 @@ using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.AbilityBoost;
-using Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.AbilityFlaw;
-using Tavernkeep.Core.Entities.Pathfinder.Builds.Attributes.SkillIncrease;
-using Tavernkeep.Core.Entities.Pathfinder.Builds.Values;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
-using Tavernkeep.Core.Entities.Templates;
 using Tavernkeep.Infrastructure.Data.Context;
 
 namespace Tavernkeep.Infrastructure.Data.Extensions
@@ -34,9 +29,6 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 			context
 				.SeedUsers()
 				.SeedConditions()
-				.SeedAncestries()
-				.SeedBackgrounds()
-				.SeedClasses()
 				.SeedCharacter();
 
 			return provider;
@@ -75,60 +67,6 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 			return context;
 		}
 
-		private static SessionContext SeedAncestries(this SessionContext context)
-		{
-			if (!context.Set<AncestryTemplate>().Any())
-			{
-				var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Ancestries.en-UK.json");
-				using var sr = new StreamReader(filePath);
-
-				var json = sr.ReadToEnd();
-				var ancestries = JsonSerializer.Deserialize<List<AncestryTemplate>>(json, options) ?? [];
-
-				context.Set<AncestryTemplate>().AddRange(ancestries);
-			}
-
-			context.SaveChanges();
-
-			return context;
-		}
-
-		private static SessionContext SeedBackgrounds(this SessionContext context)
-		{
-			if (!context.Set<BackgroundTemplate>().Any())
-			{
-				var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Backgrounds.en-UK.json");
-				using var sr = new StreamReader(filePath);
-
-				var json = sr.ReadToEnd();
-				var ancestries = JsonSerializer.Deserialize<List<BackgroundTemplate>>(json, options) ?? [];
-
-				context.Set<BackgroundTemplate>().AddRange(ancestries);
-			}
-
-			context.SaveChanges();
-
-			return context;
-		}
-
-		private static SessionContext SeedClasses(this SessionContext context)
-		{
-			if (!context.Set<ClassTemplate>().Any())
-			{
-				var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Classes.en-UK.json");
-				using var sr = new StreamReader(filePath);
-
-				var json = sr.ReadToEnd();
-				var classes = JsonSerializer.Deserialize<List<ClassTemplate>>(json, options) ?? [];
-
-				context.Set<ClassTemplate>().AddRange(classes);
-			}
-
-			context.SaveChanges();
-
-			return context;
-		}
-
 		private static SessionContext SeedCharacter(this SessionContext context)
 		{
 			if (!context.Set<Character>().Any())
@@ -138,21 +76,6 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 					Id = Guid.NewGuid(),
 					Owner = context.Set<User>().First(),
 					Name = "Soveliss",
-					Snapshot = new()
-					{
-						Ancestry = new()
-						{
-							Id = "pf:ancestry:human"
-						},
-						Background = new()
-						{
-							Id = "pf:background:acolyte"
-						},
-						Class = new()
-						{
-							Id = "pf:class:cleric"
-						}
-					},
 				};
 
 				context.Set<Character>().Add(character);

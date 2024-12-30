@@ -11,7 +11,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 		#region Backing fields
 
 		private IValueEvaluator<int>? _bonusEvaluator;
-		private IValueEvaluator<Proficiency>? _proficiencyEvaluator;
 
 		#endregion
 
@@ -38,14 +37,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		public AbilityType BaseAbility { get; set; }
 		public SkillType Type { get; set; }
-		public Proficiency Proficiency
-		{
-			get
-			{
-				_proficiencyEvaluator ??= new SkillProficiencyPropertyEvaluator(this);
-				return _proficiencyEvaluator.Value;
-			}
-		}
+		public Proficiency Proficiency { get; set; }
 		public int Bonus
 		{
 			get

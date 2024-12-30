@@ -49,6 +49,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
 			var mockNotificationService = new Mock<INotificationService>();
 
+			character.Health.Temporary = 10;
+			character.Health.Max = 15;
+			character.Health.Current = 8;
+
 			mockUserRepository
 				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
@@ -75,6 +79,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
 			var mockNotificationService = new Mock<INotificationService>();
 
+			character.Health.Temporary = 4;
+			character.Health.Max = 10;
+			character.Health.Current = 10;
+
 			mockUserRepository
 				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(master);
@@ -89,7 +97,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(response.Current, Is.EqualTo(8));
+				Assert.That(response.Current, Is.EqualTo(4));
 				Assert.That(response.Temporary, Is.EqualTo(0));
 			});
 		}
