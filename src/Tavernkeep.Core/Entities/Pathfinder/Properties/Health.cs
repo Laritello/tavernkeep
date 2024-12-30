@@ -1,6 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using Tavernkeep.Core.Contracts.Interfaces;
-using Tavernkeep.Core.Evaluators.Properties;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
@@ -10,8 +8,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		private int _current;
 		private int _temporary;
-
-		private IValueEvaluator<int>? _maxHealthEvaluator;
 
 		#endregion
 
@@ -37,14 +33,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 			set => _current = Math.Clamp(value, 0, Max);
 		}
 
-		public int Max
-		{
-			get
-			{
-				_maxHealthEvaluator ??= new MaxHealthPropertyEvaluator(this);
-				return _maxHealthEvaluator.Value;
-			}
-		}
+		public int Max { get; set; }
 
 		public int Temporary
 		{

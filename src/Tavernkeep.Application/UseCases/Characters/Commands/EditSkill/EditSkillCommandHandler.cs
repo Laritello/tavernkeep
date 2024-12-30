@@ -25,7 +25,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSkill
 				throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
 
 			var skill = character.GetSkill(request.Type);
-			//skill.Proficiency = request.Proficiency;
+			skill.Proficiency = request.Proficiency;
 
 			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);

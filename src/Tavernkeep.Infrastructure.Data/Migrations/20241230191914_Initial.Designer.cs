@@ -11,14 +11,14 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    [Migration("20240908155307_Iniital")]
-    partial class Iniital
+    [Migration("20241230191914_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.Message", b =>
                 {
@@ -43,7 +43,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.ToTable("Messages");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Message");
+                    b.HasDiscriminator().HasValue("Message");
 
                     b.UseTphMappingStrategy();
                 });
@@ -54,19 +54,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Build")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Level")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("OwnerId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Snapshot")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -118,109 +113,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RefreshTokens");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Templates.AncestryTemplate", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Attributes")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("HitPoints")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Languagues")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Rarity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Size")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Speed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Traits")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Ancestries");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Templates.BackgroundTemplate", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Attributes")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Rarity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Traits")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Backgrounds");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Templates.ClassTemplate", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Attributes")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("HitPoints")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Rarity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Traits")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
@@ -322,7 +214,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<Guid>("CharacterId")
                                 .HasColumnType("TEXT");
 
-                            b1.Property<int>("Id")
+                            b1.Property<int>("__synthesizedOrdinal")
                                 .ValueGeneratedOnAddOrUpdate()
                                 .HasColumnType("INTEGER");
 
@@ -336,7 +228,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
-                            b1.HasKey("CharacterId", "Id");
+                            b1.HasKey("CharacterId", "__synthesizedOrdinal");
 
                             b1.ToTable("Characters");
 
@@ -350,10 +242,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                     b2.Property<Guid>("ConditionCharacterId")
                                         .HasColumnType("TEXT");
 
-                                    b2.Property<int>("ConditionId")
+                                    b2.Property<int>("Condition__synthesizedOrdinal")
                                         .HasColumnType("INTEGER");
 
-                                    b2.Property<int>("Id")
+                                    b2.Property<int>("__synthesizedOrdinal")
                                         .ValueGeneratedOnAddOrUpdate()
                                         .HasColumnType("INTEGER");
 
@@ -363,7 +255,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                     b2.Property<int>("Scaling")
                                         .HasColumnType("INTEGER");
 
-                                    b2.Property<string>("Targets")
+                                    b2.PrimitiveCollection<string>("Targets")
                                         .IsRequired()
                                         .HasColumnType("TEXT");
 
@@ -373,41 +265,17 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                     b2.Property<int>("Value")
                                         .HasColumnType("INTEGER");
 
-                                    b2.HasKey("ConditionCharacterId", "ConditionId", "Id");
+                                    b2.HasKey("ConditionCharacterId", "Condition__synthesizedOrdinal", "__synthesizedOrdinal");
 
                                     b2.ToTable("Characters");
 
                                     b2.ToJson("Modifiers");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("ConditionCharacterId", "ConditionId");
+                                        .HasForeignKey("ConditionCharacterId", "Condition__synthesizedOrdinal");
                                 });
 
                             b1.Navigation("Modifiers");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Health", "Health", b1 =>
-                        {
-                            b1.Property<Guid>("CharacterId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Current")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Max")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Temporary")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("CharacterId");
-
-                            b1.ToTable("Characters");
-
-                            b1.ToJson("Health");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CharacterId");
                         });
 
                     b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", "Acrobatics", b1 =>
@@ -416,6 +284,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -441,6 +312,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
+                            b1.Property<int>("Proficiency")
+                                .HasColumnType("INTEGER");
+
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -464,6 +338,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
+                            b1.Property<int>("Proficiency")
+                                .HasColumnType("INTEGER");
+
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -484,6 +361,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
 
+                            b1.Property<int>("Score")
+                                .HasColumnType("INTEGER");
+
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -503,6 +383,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         {
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
+
+                            b1.Property<int>("Score")
+                                .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
@@ -525,6 +408,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -550,6 +436,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
+                            b1.Property<int>("Proficiency")
+                                .HasColumnType("INTEGER");
+
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -569,6 +458,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         {
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
+
+                            b1.Property<int>("Score")
+                                .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
@@ -591,6 +483,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -639,6 +534,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
 
+                            b1.Property<int>("Score")
+                                .HasColumnType("INTEGER");
+
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -660,6 +558,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -685,6 +586,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
+                            b1.Property<int>("Proficiency")
+                                .HasColumnType("INTEGER");
+
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -706,6 +610,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -731,6 +638,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
+                            b1.Property<int>("Proficiency")
+                                .HasColumnType("INTEGER");
+
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -752,6 +662,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -803,6 +716,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
+                            b1.Property<int>("Proficiency")
+                                .HasColumnType("INTEGER");
+
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -824,6 +740,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -849,6 +768,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
+                            b1.Property<int>("Proficiency")
+                                .HasColumnType("INTEGER");
+
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -868,6 +790,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         {
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
+
+                            b1.Property<int>("Score")
+                                .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
@@ -892,6 +817,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("BaseAbility")
                                 .HasColumnType("INTEGER");
 
+                            b1.Property<int>("Proficiency")
+                                .HasColumnType("INTEGER");
+
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
@@ -913,6 +841,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("BaseAbility")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Proficiency")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
@@ -960,6 +891,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         {
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
+
+                            b1.Property<int>("Score")
+                                .HasColumnType("INTEGER");
 
                             b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
@@ -1021,13 +955,39 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .IsRequired();
                         });
 
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Health", "Health", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Current")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Max")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Temporary")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Characters");
+
+                            b1.ToJson("Health");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
                     b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Properties.Lore", "Lores", b1 =>
                         {
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
 
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate()
                                 .HasColumnType("INTEGER");
 
                             b1.Property<int>("Proficiency")
@@ -1037,7 +997,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
-                            b1.HasKey("OwnerId", "Id");
+                            b1.HasKey("OwnerId", "__synthesizedOrdinal");
 
                             b1.ToTable("Characters");
 
@@ -1167,8 +1127,8 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<string>("ConditionTemplateName")
                                 .HasColumnType("TEXT");
 
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate()
                                 .HasColumnType("INTEGER");
 
                             b1.Property<bool>("IsBonus")
@@ -1177,7 +1137,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("Scaling")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<string>("Targets")
+                            b1.PrimitiveCollection<string>("Targets")
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
@@ -1187,7 +1147,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<int>("Value")
                                 .HasColumnType("INTEGER");
 
-                            b1.HasKey("ConditionTemplateName", "Id");
+                            b1.HasKey("ConditionTemplateName", "__synthesizedOrdinal");
 
                             b1.ToTable("Conditions");
 
@@ -1202,8 +1162,8 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Property<string>("ConditionTemplateName")
                                 .HasColumnType("TEXT");
 
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate()
                                 .HasColumnType("INTEGER");
 
                             b1.Property<bool>("HasLevels")
@@ -1216,7 +1176,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
-                            b1.HasKey("ConditionTemplateName", "Id");
+                            b1.HasKey("ConditionTemplateName", "__synthesizedOrdinal");
 
                             b1.ToTable("Conditions");
 
@@ -1230,10 +1190,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                     b2.Property<string>("ConditionTemplateName")
                                         .HasColumnType("TEXT");
 
-                                    b2.Property<int>("ConditionId")
+                                    b2.Property<int>("Condition__synthesizedOrdinal")
                                         .HasColumnType("INTEGER");
 
-                                    b2.Property<int>("Id")
+                                    b2.Property<int>("__synthesizedOrdinal")
                                         .ValueGeneratedOnAddOrUpdate()
                                         .HasColumnType("INTEGER");
 
@@ -1243,7 +1203,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                     b2.Property<int>("Scaling")
                                         .HasColumnType("INTEGER");
 
-                                    b2.Property<string>("Targets")
+                                    b2.PrimitiveCollection<string>("Targets")
                                         .IsRequired()
                                         .HasColumnType("TEXT");
 
@@ -1253,14 +1213,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                     b2.Property<int>("Value")
                                         .HasColumnType("INTEGER");
 
-                                    b2.HasKey("ConditionTemplateName", "ConditionId", "Id");
+                                    b2.HasKey("ConditionTemplateName", "Condition__synthesizedOrdinal", "__synthesizedOrdinal");
 
                                     b2.ToTable("Conditions");
 
                                     b2.ToJson("Modifiers");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("ConditionTemplateName", "ConditionId");
+                                        .HasForeignKey("ConditionTemplateName", "Condition__synthesizedOrdinal");
                                 });
 
                             b1.Navigation("Modifiers");
@@ -1307,7 +1267,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                     b2.Property<Guid>("RollResultRollMessageId")
                                         .HasColumnType("TEXT");
 
-                                    b2.Property<int>("Id")
+                                    b2.Property<int>("__synthesizedOrdinal")
                                         .ValueGeneratedOnAddOrUpdate()
                                         .HasColumnType("INTEGER");
 
@@ -1318,7 +1278,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                     b2.Property<int>("Value")
                                         .HasColumnType("INTEGER");
 
-                                    b2.HasKey("RollResultRollMessageId", "Id");
+                                    b2.HasKey("RollResultRollMessageId", "__synthesizedOrdinal");
 
                                     b2.ToTable("Messages");
 

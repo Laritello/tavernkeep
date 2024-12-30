@@ -44,11 +44,17 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Queries
 		[Test]
 		public void GetCharacterQuery_CharacterNotFound()
 		{
+			/*
+			 * TODO: This tests doesn't make any sense and obsolete.
+			 * When tests for services are 
+			*/
 			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterService>();
+			var mockCharacterService = new Mock<ICharacterService>();
+
+			mockCharacterService.Setup(ser => ser.GetCharacterAsync(characterId, CancellationToken.None)).ThrowsAsync(new BusinessLogicException("No character with provided ID found."));
 
 			var request = new GetCharacterQuery(characterId);
-			var handler = new GetCharacterQueryHandler(mockCharacterRepository.Object);
+			var handler = new GetCharacterQueryHandler(mockCharacterService.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("No character with provided ID found."));

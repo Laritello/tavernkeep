@@ -6,64 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Iniital : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Ancestries",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Traits = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    HitPoints = table.Column<int>(type: "INTEGER", nullable: false),
-                    Size = table.Column<int>(type: "INTEGER", nullable: false),
-                    Speed = table.Column<int>(type: "INTEGER", nullable: false),
-                    Rarity = table.Column<int>(type: "INTEGER", nullable: false),
-                    Languagues = table.Column<string>(type: "TEXT", nullable: false),
-                    Attributes = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ancestries", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Backgrounds",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Traits = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    Rarity = table.Column<int>(type: "INTEGER", nullable: false),
-                    Attributes = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Backgrounds", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Classes",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Traits = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    HitPoints = table.Column<int>(type: "INTEGER", nullable: false),
-                    Rarity = table.Column<int>(type: "INTEGER", nullable: false),
-                    Attributes = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Classes", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Conditions",
                 columns: table => new
@@ -102,8 +49,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Build = table.Column<string>(type: "TEXT", nullable: false),
-                    Snapshot = table.Column<string>(type: "TEXT", nullable: false),
+                    Level = table.Column<int>(type: "INTEGER", nullable: false),
                     Acrobatics = table.Column<string>(type: "TEXT", nullable: false),
                     Arcana = table.Column<string>(type: "TEXT", nullable: false),
                     Armor = table.Column<string>(type: "TEXT", nullable: false),
@@ -232,15 +178,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Characters_Users_OwnerId",
                 table: "Characters");
-
-            migrationBuilder.DropTable(
-                name: "Ancestries");
-
-            migrationBuilder.DropTable(
-                name: "Backgrounds");
-
-            migrationBuilder.DropTable(
-                name: "Classes");
 
             migrationBuilder.DropTable(
                 name: "Conditions");

@@ -47,7 +47,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
 
 			Assert.Multiple(() =>
 			{
-				Assert.IsAssignableFrom<TextMessage>(response);
+				Assert.That(response, Is.AssignableFrom<TextMessage>());
 				Assert.That(response.SenderId, Is.EqualTo(sender.Id));
 				Assert.That(response.Sender.Id, Is.EqualTo(sender.Id));
 				Assert.That(((TextMessage)response).Text, Is.EqualTo(text));
@@ -76,7 +76,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
 
 			Assert.Multiple(() =>
 			{
-				Assert.IsAssignableFrom<TextMessage>(response);
+				Assert.That(response, Is.AssignableFrom<TextMessage>());
 				Assert.That(response.SenderId, Is.EqualTo(sender.Id));
 				Assert.That(response.Sender.Id, Is.EqualTo(sender.Id));
 				Assert.That(((TextMessage)response).RecipientId, Is.EqualTo(recipient.Id));
