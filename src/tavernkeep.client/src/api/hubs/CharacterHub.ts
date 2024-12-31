@@ -3,7 +3,7 @@ import { RefreshHttpClient } from './RefreshHttpClient';
 import { useSession } from '@/composables/useSession';
 
 class CharacterHub {
-    private baseURL = 'https://' + window.location.hostname + ':7231/api/';
+    private baseURL = 'http://' + window.location.hostname + ':5207/api/';
 
     connection: HubConnection;
 

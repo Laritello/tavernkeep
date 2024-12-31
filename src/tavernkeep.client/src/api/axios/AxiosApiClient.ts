@@ -9,7 +9,7 @@ import type { Condition } from '@/entities/Condition';
 
 export class AxiosApiClient {
     client: AxiosInstance;
-    private baseURL = 'https://' + window.location.hostname + ':7231/api/';
+    private baseURL = 'http://' + window.location.hostname + ':5207/api/';
 
     constructor() {
         this.client = axios.create({

@@ -2,7 +2,7 @@ import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microso
 import { RefreshHttpClient } from './RefreshHttpClient';
 import { useSession } from '@/composables/useSession';
 class ChatHub {
-    private baseURL = 'https://' + window.location.hostname + ':7231/api/';
+    private baseURL = 'http://' + window.location.hostname + ':5207/api/';
 
     connection: HubConnection;
 
