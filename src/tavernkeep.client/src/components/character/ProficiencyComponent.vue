@@ -14,8 +14,8 @@ const values: Record<Proficiency, number> =
 </script>
 
 <template>
-    <div>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 39 17" class="w-16" stroke="currentColor">
+    <div class="min-w-fit">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.8 -1 39.3 17" class="w-16" stroke="currentColor">
             <rect transform="rotate(45)" x="5.3033" y="-5.3033" width="10.6066017" height="10.6066017"
                 :fill="values[proficiency] >= values['Trained'] ? '#efbf04' : '#FFFFFF'" stroke-width="1" />
             <rect transform="rotate(45)" x="10.6066017" y="-10.6066017" width="10.6066017" height="10.6066017"
