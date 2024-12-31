@@ -1,7 +1,7 @@
 <template>
     <div class="border-2 rounded-xl border-inherit flex flex-col p-2 w-full lg:max-w-md">
         <div class="flex flex-row justify-center items-center">
-            <p class="mr-1 text-lg font-semibold">Skills</p>
+            <p class="mr-1 text-lg font-semibold select-none">Skills</p>
             <button class="btn-sm btn-circle">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 -960 960 960">
                     <path

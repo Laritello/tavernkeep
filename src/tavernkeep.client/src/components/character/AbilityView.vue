@@ -1,7 +1,7 @@
 <template>
     <div class="box-border flex flex-col m-2 p-2 border-2 rounded-lg red">
-        <p class="text-3xl font-extrabold text-center">{{ ability.modifier }}</p>
-        <p class="text-sm font-light text-center">{{ ability.type }}</p>
+        <p class="text-3xl font-extrabold text-center select-none">{{ ability.modifier }}</p>
+        <p class="text-sm font-light text-center select-none">{{ ability.type }}</p>
     </div>
 </template>
 <script setup lang="ts">
