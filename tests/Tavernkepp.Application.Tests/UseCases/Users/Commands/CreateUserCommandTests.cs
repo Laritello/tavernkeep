@@ -1,7 +1,6 @@
 ﻿using Moq;
 using Tavernkeep.Application.UseCases.Users.Commands.CreateUser;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
@@ -12,13 +11,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 		private readonly string login = "login";
 		private readonly string password = "password";
 		private readonly UserRole role = UserRole.Player;
-		private readonly string characterName = "character";
-
-		private User user;
 
 		public CreateUserCommandTests()
 		{
-			user = new(login, password, role);
+			
 		}
 
 		[Test]
@@ -48,7 +44,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var handler = new CreateUserCommandHandler(mockUserRepository.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("User can't have an empty login."));
+			Assert.That(ex?.Message, Is.EqualTo("User can't have an empty login."));
 		}
 
 		[Test]
@@ -60,7 +56,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var handler = new CreateUserCommandHandler(mockUserRepository.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("User can't have an empty password."));
+			Assert.That(ex?.Message, Is.EqualTo("User can't have an empty password."));
 		}
 	}
 }

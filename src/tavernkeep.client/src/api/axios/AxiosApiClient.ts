@@ -100,12 +100,12 @@ export class AxiosApiClient {
     }
 
     async createCharacter(ownerId: string, name: string): Promise<Character> {
-        const response = await this.client.post<Character>('characters/create', { ownerId, name });
+        const response = await this.client.post<Character>('characters', { ownerId, name });
         return getPayloadOrThrow(response);
     }
 
     async deleteCharacter(id: string): Promise<void> {
-        const response = await this.client.delete('characters/delete/' + id);
+        const response = await this.client.delete('characters/' + id);
         return getPayloadOrThrow(response);
     }
 
@@ -149,8 +149,7 @@ export class AxiosApiClient {
     }
 
     async editAbility(characterId: string, type: AbilityType, score: number): Promise<Ability> {
-        const response = await this.client.patch<Ability>('characters/edit/ability', {
-            characterId: characterId,
+        const response = await this.client.patch<Ability>(`characters/${characterId}/ability`, {
             type: type,
             score: score,
         });
@@ -159,8 +158,7 @@ export class AxiosApiClient {
     }
 
     async editSkill(characterId: string, type: SkillType, proficiency: Proficiency): Promise<Skill> {
-        const response = await this.client.patch<Skill>('characters/edit/skill', {
-            characterId: characterId,
+        const response = await this.client.patch<Skill>(`characters/${characterId}/skill`, {
             type: type,
             proficiency: proficiency,
         });
@@ -173,8 +171,7 @@ export class AxiosApiClient {
         type: SavingThrowType,
         proficiency: Proficiency
     ): Promise<SavingThrowType> {
-        const response = await this.client.patch<Skill>('characters/edit/saving-throw', {
-            characterId: characterId,
+        const response = await this.client.patch<Skill>(`characters/${characterId}/saving-throw`, {
             type: type,
             proficiency: proficiency,
         });
@@ -183,8 +180,7 @@ export class AxiosApiClient {
     }
 
     async editPerception(characterId: string, proficiency: Proficiency): Promise<Perception> {
-        const response = await this.client.patch<Perception>('characters/edit/perception', {
-            characterId: characterId,
+        const response = await this.client.patch<Perception>(`characters/${characterId}/perception`, {
             proficiency: proficiency,
         });
 

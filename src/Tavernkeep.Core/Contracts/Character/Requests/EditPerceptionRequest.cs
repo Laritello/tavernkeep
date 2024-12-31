@@ -8,11 +8,6 @@ namespace Tavernkeep.Core.Contracts.Character.Requests
 	public class EditPerceptionRequest
 	{
 		/// <summary>
-		/// The ID of the character.
-		/// </summary>
-		public Guid CharacterId { get; set; } = default!;
-
-		/// <summary>
 		/// The proficiency of the perception.
 		/// </summary>
 		public Proficiency Proficiency { get; set; } = default!;

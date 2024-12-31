@@ -50,7 +50,7 @@ namespace Tavernkeep.Server.Controllers
 		/// <param name="request">The character creation request.</param>
 		/// <returns>Created character.</returns>
 		[Authorize]
-		[HttpPost("create")]
+		[HttpPost]
 		public async Task<CharacterDto> CreateCharacterAsync(CreateCharacterRequest request)
 		{
 			var character = await mediator.Send(new CreateCharacterCommand(request.OwnerId, request.Name, request.AncestryId, request.BackgroundId, request.ClassId));
@@ -62,7 +62,7 @@ namespace Tavernkeep.Server.Controllers
 		/// </summary>
 		/// <param name="characterId">The character ID for deletion.</param>
 		[Authorize]
-		[HttpDelete("delete/{characterId}")]
+		[HttpDelete("{characterId}")]
 		public async Task DeleteCharacterAsync([FromRoute] Guid characterId)
 		{
 			await mediator.Send(new DeleteCharacterCommand(HttpContext.GetUserId(), characterId));
@@ -83,100 +83,107 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Get an existing character.
+		/// Find character by ID.
 		/// </summary>
-		/// <param name="id">The character ID.</param>
+		/// <param name="characterId">Character ID to retrieve.</param>
 		/// <returns>Specified character.</returns>
 		[Authorize]
-		[HttpGet("{id}")]
-		public async Task<CharacterDto> GetCharacterAsync([FromRoute] Guid id)
+		[HttpGet("{characterId}")]
+		public async Task<CharacterDto> GetCharacterAsync([FromRoute] Guid characterId)
 		{
-			var character = await mediator.Send(new GetCharacterQuery(id));
+			var character = await mediator.Send(new GetCharacterQuery(characterId));
 			return mapper.Map<CharacterDto>(character);
 		}
 
 		/// <summary>
 		/// Change ability of the character.
 		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The ability edit request.</param>
 		/// <returns>Changed ability.</returns>
 		[Authorize]
-		[HttpPatch("edit/ability")]
-		public async Task<Ability> EditCharacterAbilityAsync([FromBody] EditAbilityRequest request)
+		[HttpPatch("{characterId}/ability")]
+		public async Task<Ability> EditCharacterAbilityAsync([FromRoute] Guid characterId, [FromBody] EditAbilityRequest request)
 		{
-			return await mediator.Send(new EditAbilityCommand(HttpContext.GetUserId(), request.CharacterId, request.Type, request.Score));
+			return await mediator.Send(new EditAbilityCommand(HttpContext.GetUserId(), characterId, request.Type, request.Score));
 		}
 
 		/// <summary>
 		/// Change skill of the character.
 		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The skill edit request.</param>
 		/// <returns>Changed skill.</returns>
 		[Authorize]
-		[HttpPatch("edit/skill")]
-		public async Task<Skill> EditCharacterSkillAsync([FromBody] EditSkillRequest request)
+		[HttpPatch("{characterId}/skill")]
+		public async Task<Skill> EditCharacterSkillAsync([FromRoute] Guid characterId, [FromBody] EditSkillRequest request)
 		{
-			return await mediator.Send(new EditSkillCommand(HttpContext.GetUserId(), request.CharacterId, request.Type, request.Proficiency));
+			return await mediator.Send(new EditSkillCommand(HttpContext.GetUserId(), characterId, request.Type, request.Proficiency));
 		}
 
 		/// <summary>
 		/// Change perception of the character.
 		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The perception edit request.</param>
 		/// <returns>Changed perception.</returns>
 		[Authorize]
-		[HttpPatch("edit/perception")]
-		public async Task<Perception> EditCharacterPerceptionAsync([FromBody] EditPerceptionRequest request)
+		[HttpPatch("{characterId}/perception")]
+		public async Task<Perception> EditCharacterPerceptionAsync([FromRoute] Guid characterId, [FromBody] EditPerceptionRequest request)
 		{
-			return await mediator.Send(new EditPerceptionCommand(HttpContext.GetUserId(), request.CharacterId, request.Proficiency));
+			return await mediator.Send(new EditPerceptionCommand(HttpContext.GetUserId(), characterId, request.Proficiency));
 		}
 
 		/// <summary>
 		/// Change saving throw of the character.
 		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The skill edit request.</param>
 		/// <returns>Changed saving throw.</returns>
 		[Authorize]
-		[HttpPatch("edit/saving-throw")]
-		public async Task<SavingThrow> EditCharacterSavingThrowAsync([FromBody] EditSavingThrowRequest request)
+		[HttpPatch("{characterId}/saving-throw")]
+		public async Task<SavingThrow> EditCharacterSavingThrowAsync([FromRoute] Guid characterId, [FromBody] EditSavingThrowRequest request)
 		{
-			return await mediator.Send(new EditSavingThrowCommand(HttpContext.GetUserId(), request.CharacterId, request.Type, request.Proficiency));
+			return await mediator.Send(new EditSavingThrowCommand(HttpContext.GetUserId(), characterId, request.Type, request.Proficiency));
 		}
 
 		/// <summary>
 		/// Change armor proficiency of the character.
 		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The armor proficiency edit request.</param>
 		/// <returns>Changed armor proficiencies.</returns>
 		[Authorize]
-		[HttpPatch("edit/armor-proficiency")]
-		public async Task<ArmorProficiencies> EditCharacterArmorProficiencyThrowAsync([FromBody] EditArmorProficiencyRequest request)
+		[HttpPatch("{characterId}/armor-proficiency")]
+		public async Task<ArmorProficiencies> EditCharacterArmorProficiencyThrowAsync([FromRoute] Guid characterId, [FromBody] EditArmorProficiencyRequest request)
 		{
-			return await mediator.Send(new EditArmorProficiencyCommand(HttpContext.GetUserId(), request.CharacterId, request.Type, request.Proficiency));
+			return await mediator.Send(new EditArmorProficiencyCommand(HttpContext.GetUserId(), characterId, request.Type, request.Proficiency));
 		}
 
 		/// <summary>
 		/// Change health of the character.
 		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The health edit request.</param>
 		/// <returns>Changed health.</returns>
 		[Authorize]
-		[HttpPatch("edit/health")]
-		public async Task<Health> EditCharacterHealthAsync([FromBody] EditHealthRequest request)
+		[HttpPatch("{characterId}/health")]
+		public async Task<Health> EditCharacterHealthAsync([FromRoute] Guid characterId, [FromBody] EditHealthRequest request)
 		{
-			return await mediator.Send(new EditHealthCommand(HttpContext.GetUserId(), request.CharacterId, request.Current, request.Max, request.Temporary));
+			return await mediator.Send(new EditHealthCommand(HttpContext.GetUserId(), characterId, request.Current, request.Max, request.Temporary));
 		}
 
 		/// <summary>
 		/// Apply heal or damage to the character.
 		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The health modify request.</param>
 		/// <returns>Modified health.</returns>
 		[Authorize]
-		[HttpPatch("modify/health")]
-		public async Task<Health> ModifyCharacterHealthAsync([FromBody] ModifyHealthRequest request)
+		[HttpPatch("{characterId}/health-modify")]
+		public async Task<Health> ModifyCharacterHealthAsync([FromRoute] Guid characterId, [FromBody] ModifyHealthRequest request)
 		{
-			return await mediator.Send(new ModifyHealthCommand(HttpContext.GetUserId(), request.CharacterId, request.Change));
+			return await mediator.Send(new ModifyHealthCommand(HttpContext.GetUserId(), characterId, request.Change));
 		}
 	}
 }

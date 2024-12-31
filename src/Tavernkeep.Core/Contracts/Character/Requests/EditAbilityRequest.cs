@@ -8,11 +8,6 @@ namespace Tavernkeep.Core.Contracts.Character.Requests
 	public class EditAbilityRequest
 	{
 		/// <summary>
-		/// The ID of the character.
-		/// </summary>
-		public Guid CharacterId { get; set; } = default!;
-
-		/// <summary>
 		/// The type of the ability.
 		/// </summary>
 		public AbilityType Type { get; set; } = default!;

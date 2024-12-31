@@ -8,11 +8,6 @@ namespace Tavernkeep.Core.Contracts.Character.Requests
 	public class EditSavingThrowRequest
 	{
 		/// <summary>
-		/// The ID of the character.
-		/// </summary>
-		public Guid CharacterId { get; set; } = default!;
-
-		/// <summary>
 		/// The type of the saving throw.
 		/// </summary>
 		public SavingThrowType Type { get; set; } = default!;

@@ -6,11 +6,6 @@
 	public class EditHealthRequest
 	{
 		/// <summary>
-		/// The ID of the character.
-		/// </summary>
-		public Guid CharacterId { get; set; } = default!;
-
-		/// <summary>
 		/// The current hitpoints value of the character.
 		/// </summary>
 		public int Current { get; set; } = default!;
