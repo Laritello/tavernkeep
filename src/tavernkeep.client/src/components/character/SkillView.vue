@@ -1,17 +1,14 @@
 <template>
-    <tr>
-        <th>{{ skill.proficiency.slice(0, 3) }}</th>
-        <td>{{ skill.type }}</td>
-        <td>{{ skill.bonus }}</td>
-        <td class="py-1">
-            <d20 @click="emit('roll', skill)" class="btn btn-ghost btn-circle size-8 fill-red-500" />
-        </td>
-    </tr>
+    <div class="flex flex-row items-center p-1 gap-x-2 border-b-2">
+        <p class="grow">{{ skill.type }}</p>
+        <ProficiencyComponent :proficiency="skill.proficiency"/>
+        <p class="border-2 rounded-md w-12 text-center">{{ skill.bonus }}</p>
+    </div>
 </template>
 
 <script lang="ts" setup>
 import type { Skill } from '@/contracts/character';
-import d20 from '@/assets/dice/d20-grey.svg';
+import ProficiencyComponent from './ProficiencyComponent.vue';
 
 const { skill } = defineProps<{
     skill: Skill;
