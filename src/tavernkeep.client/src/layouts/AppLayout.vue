@@ -37,7 +37,7 @@ async function logout() {
     <!-- Mobile layout -->
     <div class="flex flex-col overflow-clip h-full">
         <!-- Navbar -->
-        <header class="navbar bg-base-300 w-full">
+        <header class="navbar bg-base-100 w-full">
             <div class="flex-none gap-2">
                 <div class="dropdown">
                     <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">

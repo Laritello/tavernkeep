@@ -3,8 +3,6 @@ import SkillsWidget from '@/components/character/SkillsWidget.vue';
 import AbilitiesWidget from '@/components/character/AbilitiesWidget.vue';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import SavingThrowsWidgetView from '@/components/character/SavingThrowsWidgetView.vue';
-import { el } from 'vuetify/locale';
-import { head } from 'node_modules/axios/index.cjs';
 import { onMounted } from 'vue';
 
 const user = useCurrentUserAccount();
@@ -28,11 +26,16 @@ onMounted(() => {
     updateSection();
 });
 
+// TODO: scroll navigation bar to the selected tab
 function updateSection() {
     let headers = document.querySelectorAll('h2');
     let navigation = document.querySelectorAll('#sections-bar a');
 
     let sectionBar = document.querySelector('#sections-bar');
+
+    if (sectionBar == undefined) {
+        return;
+    }
 
     /*
     * Find first header that hasn't reach the border
@@ -64,7 +67,10 @@ function updateSection() {
     sectionIndex = (sectionIndex == 0 || (headers.item(sectionIndex).getBoundingClientRect().top - border) <= 60) ? sectionIndex : sectionIndex - 1;
     let target = headers.item(sectionIndex).innerText;
 
-    navigation.forEach((element, index) => {
+    /*
+    * Update styleclass for each navigation button
+    */
+    navigation.forEach((element) => {
         if (element.innerHTML == target) {
             element.classList.add("active");
         } else {
@@ -76,11 +82,12 @@ function updateSection() {
 
 <template>
     <div v-if="character !== undefined" class="flex flex-col max-h-full max-h-full">
-        <div class="flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar gap-2 px-2" id="sections-bar">
+        <div class="bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar" id="sections-bar">
             <a v-for="section in sections" :key="section.link" v-bind:href="section.link"
-                class="p-1 pb-0 grow text-nowrap tracking-tight border-b-4 select-none">{{ section.header }}</a>
+                class="py-1 px-4 pb-0 grow text-nowrap tracking-tight border-b-4 select-none">{{ section.header }}</a>
         </div>
-        <div v-on:scroll="updateSection" class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar">
+        <div v-on:scroll="updateSection"
+            class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar bg-base-300">
             <AbilitiesWidget id="attributes" :abilities="character.abilities" />
             <SavingThrowsWidgetView id="saving-throws" :savingThrows="character.savingThrows" />
             <SkillsWidget id="skills" :skills="character.skills" />
@@ -107,5 +114,6 @@ function updateSection() {
 
 .active {
     font-weight: bold;
+    border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
 }
 </style>
