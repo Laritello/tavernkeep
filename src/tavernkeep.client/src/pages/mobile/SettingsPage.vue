@@ -39,7 +39,7 @@ async function logout() {
 </script>
 
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-col bg-base-200 h-full">
         <p class="font-semibold px-4 text-slate-500">THEMES</p>
 
         <button v-on:click="setLight" class="btn btn-ghost justify-start">

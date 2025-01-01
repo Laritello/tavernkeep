@@ -18,7 +18,7 @@ const user = useCurrentUserAccount();
 </script>
 
 <template>
-    <div class="navbar bg-base-100 z-10 min-h-fit">
+    <div class="navbar bg-base-100 z-10 min-h-fit border-b-2">
         <div class="relative navbar-start">
             <div v-if="user.activeCharacter.value !== undefined" class="block absolute left-8 bottom-0">
                 <HealthBar @click="() => console.log('Health edit')" :health="user.activeCharacter.value.health"
