@@ -11,9 +11,7 @@ import { UserRole } from '@/contracts/enums';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import ArmorClassWidget from '@/components/character/ArmorClassWidget.vue';
 import PerceptionWidget from '@/components/character/PerceptionWidget.vue';
-import ChatIcon from '@/components/icons/ChatIcon.vue';
-import CharacterIcon from '@/components/icons/CharacterIcon.vue';
-import CombatIcon from '@/components/icons/CombatIcon.vue';
+import BottomNavigationView from '@/components/BottomNavigationView.vue';
 
 const session = useSession();
 const router = useRouter();
@@ -110,23 +108,10 @@ async function logout() {
         <!-- /Navbar -->
 
         <!-- Page content here -->
-        <div class="top-16 bot-16 h-dvh overflow-hidden">
+        <div class="h-dvh overflow-hidden">
             <slot />
         </div>
-        
-        <!--  Bottom navbar  -->
-        <div class="sticky bottom-0 btm-nav min-h-16 lg:hidden">
-            <RouterLink active-class="active text-info" to="/combat" class="fill-neutral-500">
-                <CombatIcon />
-            </RouterLink>
-            <RouterLink active-class="active text-info" to="/" class="fill-neutral-500">
-                <CharacterIcon />
-            </RouterLink>
-            <RouterLink active-class="active text-info" to="/chat">
-                <ChatIcon />
-            </RouterLink>
-        </div>
-        <!--  /Bottom navbar  -->
+        <BottomNavigationView class="sticky bottom-0 lg:hidden"/>
     </div>
 </template>
 

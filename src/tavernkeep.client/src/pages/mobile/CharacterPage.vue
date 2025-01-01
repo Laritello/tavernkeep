@@ -27,7 +27,11 @@ onMounted(() => {
 });
 
 // TODO: scroll navigation bar to the selected tab
+/*
+* Update section based on scrolled content.
+*/
 function updateSection() {
+    // Collect all required elements
     let headers = document.querySelectorAll('h2');
     let navigation = document.querySelectorAll('#sections-bar a');
 
@@ -37,9 +41,7 @@ function updateSection() {
         return;
     }
 
-    /*
-    * Find first header that hasn't reach the border
-    */
+    // Find first header that hasn't reach the border
     let border = sectionBar!.getBoundingClientRect().bottom;
     let start = headers.item(0).getBoundingClientRect().top;
     let sectionIndex = 0;
@@ -53,23 +55,17 @@ function updateSection() {
             }
         }
 
-        /*
-        *   If every single header is beyond border - assume the last section is selected
-        */
+        // If every single header is beyond border - assume the last section is selected
         if (border > headers.item(headers.length - 1).getBoundingClientRect().top) {
             sectionIndex = headers.length - 1;
         }
     }
 
-    /*
-    * If header is not close enough to the border, we're still looking at previous section
-    */
+    // If header is not close enough to the border, we're still looking at previous section
     sectionIndex = (sectionIndex == 0 || (headers.item(sectionIndex).getBoundingClientRect().top - border) <= 60) ? sectionIndex : sectionIndex - 1;
     let target = headers.item(sectionIndex).innerText;
 
-    /*
-    * Update styleclass for each navigation button
-    */
+    // Update styleclass for each navigation button
     navigation.forEach((element) => {
         if (element.innerHTML == target) {
             element.classList.add("active");
@@ -82,10 +78,13 @@ function updateSection() {
 
 <template>
     <div v-if="character !== undefined" class="flex flex-col max-h-full max-h-full">
-        <div class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar" id="sections-bar">
+        <!--Header-->
+        <div class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar lg:hidden" id="sections-bar">
             <a v-for="section in sections" :key="section.link" v-bind:href="section.link"
                 class="py-1 px-4 pb-0 grow text-nowrap tracking-tight border-b-4 select-none">{{ section.header }}</a>
         </div>
+
+        <!--Character Sheet Content-->
         <div v-on:scroll="updateSection"
             class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar bg-base-300">
             <AbilitiesWidget id="attributes" :abilities="character.abilities" />
