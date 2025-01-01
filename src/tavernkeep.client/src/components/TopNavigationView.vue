@@ -35,18 +35,21 @@ async function logout() {
         <div class="relative navbar-start">
             <div v-if="user.activeCharacter.value !== undefined" class="block absolute left-8 bottom-0">
                 <HealthBar @click="() => console.log('Health edit')" :health="user.activeCharacter.value.health"
-                    class="w-32 h-6" />
+                    class="w-44 h-6" />
             </div>
             <div class="avatar">
                 <div class="w-16 rounded-full">
                     <img alt="Tailwind CSS Navbar component"
-                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                        src="https://www.fantasyflightgames.com/media/ffg_content/dark-heresy/images/WH_Pushed-to-the-Limit_HRF_090918_IFS.jpg" />
                 </div>
             </div>
             <div v-if="user.activeCharacter.value !== undefined" class="flex flex-col self-stretch justify-start pt-1">
-                <p class="text-xl font-bold leading-4 antialiased">
-                    {{ user.activeCharacter.value.name }} <br>
-                    <span class="text-xs font-normal">{{ user.activeCharacter.value.ancestry }} {{ user.activeCharacter.value.class}} {{ user.activeCharacter.value.level }}</span>
+                <p class="text-md font-bold  leading-tight antialiased text-clip text-nowrap">
+                    {{ user.activeCharacter.value.name }}
+                </p>
+                <p class="text-xs font-normal leading-tight">
+                    {{ user.activeCharacter.value.ancestry }} {{ user.activeCharacter.value.class }} {{
+                        user.activeCharacter.value.level }}
                 </p>
             </div>
         </div>
