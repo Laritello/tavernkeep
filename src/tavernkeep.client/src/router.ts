@@ -10,6 +10,7 @@ import AdminPage from './pages/AdminPage.vue';
 import CharacterPage from './pages/mobile/CharacterPage.vue';
 import ChatPage from './pages/mobile/ChatPage.vue';
 import CombatPage from '@/pages/mobile/CombatPage.vue';
+import SettingsPage from './pages/mobile/SettingsPage.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -46,6 +47,14 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/characters',
         component: CharactersPage,
+        meta: {
+            layout: 'AppLayout',
+            protected: true,
+        },
+    },
+    {
+        path: '/settings',
+        component: SettingsPage,
         meta: {
             layout: 'AppLayout',
             protected: true,
