@@ -7,7 +7,11 @@ import type { ArmorClass } from '../contracts/character/ArmorClass';
 export interface Character {
     id: string;
     name: string;
+    class: string;
+    ancestry: string;
     ownerId: string;
+
+    level: number;
 
     health: Health;
     perception: Perception;
