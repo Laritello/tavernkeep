@@ -22,7 +22,7 @@ const user = useCurrentUserAccount();
         <div class="relative navbar-start">
             <div v-if="user.activeCharacter.value !== undefined" class="block absolute left-8 bottom-0">
                 <HealthBar @click="() => console.log('Health edit')" :health="user.activeCharacter.value.health"
-                    class="w-44 h-6" />
+                    class="min-w-40 h-6" />
             </div>
             <div class="avatar">
                 <div class="w-16 rounded-full">
