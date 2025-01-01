@@ -24,13 +24,6 @@ onMounted(() => {
     themeChange(true);
 })
 
-// Change the theme dynamically
-const changeTheme = (event: Event): void => {
-    const target = event.target as HTMLSelectElement;
-    const selectedTheme = target.value;
-    document.documentElement.setAttribute("data-theme", selectedTheme);
-};
-
 </script>
 
 <style scoped></style>
