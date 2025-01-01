@@ -15,19 +15,6 @@ import PerceptionWidget from '@/components/character/PerceptionWidget.vue';
 const session = useSession();
 const router = useRouter();
 const user = useCurrentUserAccount();
-
-async function logout() {
-    const modal = useModal();
-    const modalResult = await modal.show(ConfirmationDialog, {
-        caption: 'Logout',
-        message: 'You sure you want to logout?',
-    });
-
-    if (modalResult.action !== 'confirm') return;
-    const auth = useAuth();
-    auth.logout();
-    await router.push('/login');
-}
 </script>
 
 <template>
