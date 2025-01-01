@@ -68,8 +68,10 @@ function updateSection() {
     // Update styleclass for each navigation button
     navigation.forEach((element) => {
         if (element.innerHTML == target) {
+            element.classList.add("text-primary");
             element.classList.add("active");
         } else {
+            element.classList.remove("text-primary");
             element.classList.remove("active");
         }
     });
@@ -81,12 +83,12 @@ function updateSection() {
         <!--Header-->
         <div class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar lg:hidden" id="sections-bar">
             <a v-for="section in sections" :key="section.link" v-bind:href="section.link"
-                class="py-1 px-4 pb-0 grow text-nowrap tracking-tight border-b-4 select-none">{{ section.header }}</a>
+                class="py-1 px-4 pb-0 grow text-nowrap tracking-tight border-b-2 select-none">{{ section.header }}</a>
         </div>
 
         <!--Character Sheet Content-->
         <div v-on:scroll="updateSection"
-            class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar bg-base-300">
+            class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar bg-base-200">
             <AbilitiesWidget id="attributes" :abilities="character.abilities" />
             <SavingThrowsWidgetView id="saving-throws" :savingThrows="character.savingThrows" />
             <SkillsWidget id="skills" :skills="character.skills" />
@@ -113,6 +115,6 @@ function updateSection() {
 
 .active {
     font-weight: bold;
-    border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
+    border-color: currentColor;
 }
 </style>
