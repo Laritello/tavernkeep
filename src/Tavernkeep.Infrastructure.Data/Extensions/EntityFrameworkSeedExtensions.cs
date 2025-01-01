@@ -75,13 +75,46 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 				{
 					Id = Guid.NewGuid(),
 					Owner = context.Set<User>().First(),
-					Name = "Soveliss",
+					Name = "Roland",
+					Ancestry = "Human",
+					Class = "Psychic",
+					Level = 6
 				};
 
-				context.Set<Character>().Add(character);
-			}
+				character.Health.Max = 56;
+				character.Health.Current = 13;
+				character.Health.Temporary = 5;
 
-			context.SaveChanges();
+				character.Strength.Score = 10;
+				character.Dexterity.Score = 12;
+				character.Constitution.Score = 14;
+				character.Intelligence.Score = 18;
+				character.Wisdom.Score = 12;
+				character.Charisma.Score = 19;
+
+				character.Fortitude.Proficiency = Proficiency.Trained;
+				character.Reflex.Proficiency = Proficiency.Expert;
+				character.Will.Proficiency = Proficiency.Expert;
+
+				character.Perception.Proficiency = Proficiency.Expert;
+
+				character.Acrobatics.Proficiency = Proficiency.Trained;
+				character.Arcana.Proficiency = Proficiency.Trained;
+				character.Deception.Proficiency = Proficiency.Trained;
+				character.Diplomacy.Proficiency = Proficiency.Expert;
+				character.Intimidation.Proficiency = Proficiency.Trained;
+				character.Occultism.Proficiency = Proficiency.Expert;
+				character.Performance.Proficiency = Proficiency.Trained;
+				character.Religion.Proficiency = Proficiency.Trained;
+				character.Society.Proficiency = Proficiency.Trained;
+				character.Stealth.Proficiency = Proficiency.Trained;
+
+				context.Set<Character>().Add(character);
+				context.SaveChanges();
+
+				context.Set<User>().First().ActiveCharacter = character;
+				context.SaveChanges();
+			}
 
 			return context;
 		}

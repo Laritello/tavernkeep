@@ -56,6 +56,8 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		public User Owner { get; set; } = default!;
 
 		public string Name { get; set; } = default!;
+		public string Class { get; set; } = default!;
+		public string Ancestry { get; set; } = default!;
 
 		public int Level { get; set; }
 		public Health Health { get; set; }
