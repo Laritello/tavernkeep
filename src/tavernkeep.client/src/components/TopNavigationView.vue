@@ -82,9 +82,9 @@ async function logout() {
             </div>
         </div>
 
-        <div v-if="user.activeCharacter.value !== undefined" class="flex w-full justify-end">
-            <PerceptionWidget :perception="user.activeCharacter.value.perception" class="w-12 h-12" />
-            <ArmorClassWidget :armor="user.activeCharacter.value.armor" class="w-12 h-12" />
+        <div v-if="user.activeCharacter.value !== undefined" class="flex flex-row w-full justify-end">
+            <PerceptionWidget :perception="user.activeCharacter.value.perception" class="w-12" />
+            <ArmorClassWidget :armor="user.activeCharacter.value.armor" class="w-12" />
         </div>
     </div>
 </template>
