@@ -82,7 +82,7 @@ function updateSection() {
 
 <template>
     <div v-if="character !== undefined" class="flex flex-col max-h-full max-h-full">
-        <div class="bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar" id="sections-bar">
+        <div class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar" id="sections-bar">
             <a v-for="section in sections" :key="section.link" v-bind:href="section.link"
                 class="py-1 px-4 pb-0 grow text-nowrap tracking-tight border-b-4 select-none">{{ section.header }}</a>
         </div>

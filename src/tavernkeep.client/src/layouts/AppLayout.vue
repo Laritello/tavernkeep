@@ -34,10 +34,9 @@ async function logout() {
 </script>
 
 <template>
-    <!-- Mobile layout -->
-    <div class="flex flex-col overflow-clip h-full">
+    <div class="flex flex-col h-full">
         <!-- Navbar -->
-        <header class="navbar bg-base-100 w-full">
+        <div class="sticky top-0 navbar bg-base-100 h-16">
             <div class="flex-none gap-2">
                 <div class="dropdown">
                     <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
@@ -107,14 +106,16 @@ async function logout() {
                 <PerceptionWidget :perception="user.activeCharacter.value.perception" class="w-12 h-12" />
                 <ArmorClassWidget :armor="user.activeCharacter.value.armor" class="w-12 h-12" />
             </div>
-        </header>
+        </div>
         <!-- /Navbar -->
+
         <!-- Page content here -->
-        <div class="content-height">
+        <div class="top-16 bot-16 h-dvh overflow-hidden">
             <slot />
         </div>
+        
         <!--  Bottom navbar  -->
-        <footer class="sticky bottom-0 btm-nav min-h-16 lg:hidden">
+        <div class="sticky bottom-0 btm-nav min-h-16 lg:hidden">
             <RouterLink active-class="active text-info" to="/combat" class="fill-neutral-500">
                 <CombatIcon />
             </RouterLink>
@@ -124,14 +125,11 @@ async function logout() {
             <RouterLink active-class="active text-info" to="/chat">
                 <ChatIcon />
             </RouterLink>
-        </footer>
+        </div>
         <!--  /Bottom navbar  -->
     </div>
-    <!-- /Mobile layout -->
 </template>
 
 <style scoped>
-.content-height {
-    height: calc(100% - 128px);
-}
+
 </style>
