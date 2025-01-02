@@ -73,14 +73,18 @@ async function sendMessage() {
             <ChatMessageView v-for="item in messages.list" :key="item.id" :message="item" />
         </div>
         <div class="border-t-2 py-2">
-            <form @submit.prevent="sendMessage" class="flex gap-2 mx-2">
+            <form @submit.prevent="sendMessage" class="flex flex-row gap-2 mx-2">
                 <CommandInput v-model="message" :commands="slashCommands" class="w-full" />
-                <button type="submit" class="btn">
-                    <v-icon icon="mdi-send" />
+                <button type="submit" class="btn btn-circle btn-primary text-white dark:text-neutral">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 -960 960 960"
+                        fill="currentColor">
+                        <path
+                            d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" />
+                    </svg>
                 </button>
             </form>
         </div>
-        
+
     </div>
 </template>
 

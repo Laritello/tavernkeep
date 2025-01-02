@@ -1,27 +1,13 @@
 <template>
     <div>
-        <div class="input input-bordered dropdown dropdown-top dropdown-end w-full">
-            <input
-                type="text"
-                v-model="query"
-                tabindex="0"
-                ref="textInput"
-                @input="updateSuggestions"
-                @keydown.tab.prevent="tryToCompleteSuggestion"
-                class="input w-full"
-                placeholder="Type here..."
-            />
-            <ul
-                v-show="showSuggestions"
-                tabindex="0"
-                class="absolute dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded w-full"
-            >
-                <li
-                    v-for="suggestion in suggestions"
-                    :key="suggestion.name"
-                    @click="selectSuggestion(suggestion)"
-                    class="p-2"
-                >
+        <div class="dropdown dropdown-top dropdown-end w-full form-control">
+            <textarea type="text" v-model="query" tabindex="0" ref="textInput" @input="updateSuggestions"
+                @keydown.tab.prevent="tryToCompleteSuggestion" class="textarea w-full border rounded-xl" 
+                placeholder="Type here..."></textarea>
+            <ul v-show="showSuggestions" tabindex="0"
+                class="absolute dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded w-full">
+                <li v-for="suggestion in suggestions" :key="suggestion.name" @click="selectSuggestion(suggestion)"
+                    class="p-2">
                     <div class="flex flex-col items-start">
                         <h1 class="text-xl">{{ suggestion.name }}</h1>
                         <p class="text-sm font-thin text-slate-400">{{ suggestion.description }}</p>
