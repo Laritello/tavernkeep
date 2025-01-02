@@ -32,9 +32,10 @@ defineProps<{
 }
 .dice {
     aspect-ratio: 1;
+    fill: currentColor;
 }
 
-.d20 {
+/* .d20 {
     fill: #d84040;
 }
 
@@ -54,5 +55,5 @@ defineProps<{
 }
 .d4 {
     fill: #524e4c;
-}
+} */
 </style>

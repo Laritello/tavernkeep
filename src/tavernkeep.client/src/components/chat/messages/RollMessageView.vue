@@ -1,24 +1,28 @@
 <template>
-    <div class="rounded bg-[#460c084b] divide-y">
-        <div class="flex justify-between px-2 pt-1">
+    <div class="rounded-3xl bg-neutral relative">
+        <div class="flex justify-between px-2 pt-1 text-neutral-content">
             <div>{{ message.sender.login }}</div>
             <div>{{ message.rollType }}</div>
-            <div class="text-xs font-light opacity-50">{{ formatDate(message.created) }}</div>
         </div>
         <div>
-            <ul class="grid grid-cols-10 px-2 my-2">
+            <ul class="grid grid-cols-10 px-2 my-2 text-neutral-content">
                 <template v-for="result in message.result.results" :key="result.value">
                     <li>
                         <DiceIcon :die="result.type" :value="result.value" class="w-8" />
                     </li>
                 </template>
-                <li v-if="message.result.modifier" class="text-2xl font-thin">
+                <li v-if="message.result.modifier" class="text-2xl font-thin text-neutral-content">
                     {{ message.result.modifier > 0 ? '+' + message.result.modifier : message.result.modifier }}
                 </li>
             </ul>
         </div>
-        <div class="flex text-3xl justify-center p-4">
+        <div class="flex text-3xl justify-center p-4 text-neutral-content">
             <span :data-tip="message.expression" class="tooltip">{{ message.result.value }}</span>
+        </div>
+        <div class="avatar placeholder absolute bottom-0 right-0">
+            <div class="bg-neutral text-neutral-content w-10 rounded-full border-2 border-white">
+                <span>{{ message.sender.login.slice(0, 2) }}</span>
+            </div>
         </div>
     </div>
 </template>
