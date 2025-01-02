@@ -5,10 +5,10 @@ import { RollType } from '@/contracts/enums/RollType';
 // Components
 import UserSelector from './UserSelector.vue';
 import ChatMessageView from './messages/ChatMessageView.vue';
-import CommandInput from './CommandInput.vue';
 import { useMessages } from '@/stores/messages';
 import { useUsers } from '@/stores/users';
 import { useSession } from '@/composables/useSession';
+import ChatInputView from './ChatInputView.vue';
 
 const messages = useMessages();
 
@@ -60,6 +60,10 @@ async function sendMessage() {
         await messages.createRollMessage(expression, rollType);
     } else {
         const privateMessageRecipient = selectedUserId.value || undefined;
+        if (message.value.length == 0) {
+            return;
+        }
+
         await messages.createMessage(message.value, privateMessageRecipient);
     }
 
@@ -69,22 +73,22 @@ async function sendMessage() {
 
 <template>
     <div class="flex flex-col h-full">
-        <div v-chat-scroll="{ always: false, smooth: true }" class="w-full grow max-h-full overflow-y-auto px-2 mb-2">
+        <div v-chat-scroll="{ always: false, smooth: true }" class="w-full grow max-h-full overflow-y-auto px-2">
             <ChatMessageView v-for="item in messages.list" :key="item.id" :message="item" />
         </div>
-        <div class="border-t-2 py-2">
-            <form @submit.prevent="sendMessage" class="flex flex-row gap-2 mx-2">
-                <CommandInput v-model="message" :commands="slashCommands" class="w-full" />
-                <button type="submit" class="btn btn-circle btn-primary text-white dark:text-neutral">
+
+        <form @submit.prevent="sendMessage" class="flex flex-row mb-1">
+            <ChatInputView v-model:content="message" :commands="slashCommands" class="w-full" />
+            <div class="p-1">
+                <button type="submit" class="btn btn-md btn-circle btn-primary text-white shadow-lg dark:text-neutral mt-1">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 -960 960 960"
                         fill="currentColor">
                         <path
                             d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" />
                     </svg>
                 </button>
-            </form>
-        </div>
-
+            </div>
+        </form>
     </div>
 </template>
 
