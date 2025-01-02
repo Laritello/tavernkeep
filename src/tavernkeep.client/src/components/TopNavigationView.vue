@@ -25,7 +25,7 @@ const user = useCurrentUserAccount();
                     class="min-w-40 h-6" />
             </div>
             <div class="avatar">
-                <div class="w-16 rounded-full">
+                <div class="w-16 rounded-full border-2 border-primary">
                     <img alt="Tailwind CSS Navbar component"
                         src="https://www.fantasyflightgames.com/media/ffg_content/dark-heresy/images/WH_Pushed-to-the-Limit_HRF_090918_IFS.jpg" />
                 </div>
