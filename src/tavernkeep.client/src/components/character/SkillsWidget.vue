@@ -23,9 +23,13 @@ import type { Skill } from '@/contracts/character';
 import SkillView from './SkillView.vue';
 import SkillsEditDialog from '@/components/dialogs/SkillsEditDialog.vue';
 import { useModal } from '@/composables/useModal';
-import { SkillType } from '@/contracts/enums';
+import { Proficiency, SkillType } from '@/contracts/enums';
 
 const { skills } = defineProps<{ skills: Record<SkillType, Skill> }>();
+
+const emits = defineEmits<{
+    onChange: [value: Record<SkillType, Proficiency>]
+}>();
 
 async function showEditSkillsDialog() {
     const modal = useModal();
@@ -36,7 +40,7 @@ async function showEditSkillsDialog() {
     if(result.action === 'result') {
         // TODO: update skills in api
         console.log(result.payload);
-        
+        emits('onChange', { ...result.payload });
     }
 }
 </script>

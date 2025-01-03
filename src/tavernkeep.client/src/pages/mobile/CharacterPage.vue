@@ -5,6 +5,12 @@ import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import SavingThrowsWidgetView from '@/components/character/SavingThrowsWidgetView.vue';
 import { onMounted } from 'vue';
 
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
+import type { Proficiency, SavingThrowType, SkillType } from '@/contracts/enums';
+
+const api: AxiosApiClient = ApiClientFactory.createApiClient();
+
 const user = useCurrentUserAccount();
 const character = user.activeCharacter;
 
@@ -21,6 +27,18 @@ const sections: Section[] = [
     { link: '#spells', header: 'Spells' },
     { link: '#inventory', header: 'Inventory' },
 ]
+
+async function updateSkills(proficiencies: Record<SkillType, Proficiency>) {
+    if (character.value != null) {
+        await api.editSkills(character.value?.id, proficiencies);
+    }
+}
+
+async function updateSavingThrows(proficiencies: Record<SavingThrowType, Proficiency>) {
+    if (character.value != null) {
+        await api.editSavingThrows(character.value?.id, proficiencies);
+    }
+}
 
 onMounted(() => {
     updateSection();
@@ -81,7 +99,8 @@ function updateSection() {
 <template>
     <div v-if="character !== undefined" class="flex flex-col max-h-full max-h-full">
         <!--Header-->
-        <div class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar lg:hidden" id="sections-bar">
+        <div class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar lg:hidden"
+            id="sections-bar">
             <a v-for="section in sections" :key="section.link" v-bind:href="section.link"
                 class="py-1 px-4 pb-0 grow text-nowrap tracking-tight border-b-2 select-none">{{ section.header }}</a>
         </div>
@@ -90,8 +109,8 @@ function updateSection() {
         <div v-on:scroll="updateSection"
             class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar bg-base-200">
             <AbilitiesWidget id="attributes" :abilities="character.abilities" />
-            <SavingThrowsWidgetView id="saving-throws" :savingThrows="character.savingThrows" />
-            <SkillsWidget id="skills" :skills="character.skills" />
+            <SavingThrowsWidgetView id="saving-throws" :savingThrows="character.savingThrows" @onChange="updateSavingThrows" />
+            <SkillsWidget id="skills" :skills="character.skills" @onChange="updateSkills" />
         </div>
     </div>
     <div v-else>No selected character</div>

@@ -157,23 +157,17 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async editSkill(characterId: string, type: SkillType, proficiency: Proficiency): Promise<Skill> {
-        const response = await this.client.patch<Skill>(`characters/${characterId}/skill`, {
-            type: type,
-            proficiency: proficiency,
+    async editSkills(characterId: string, proficiencies: Record<SkillType, Proficiency>): Promise<Skill> {
+        const response = await this.client.patch<Skill>(`characters/${characterId}/skills`, {
+            proficiencies: proficiencies,
         });
 
         return getPayloadOrThrow(response);
     }
 
-    async editSavingThrow(
-        characterId: string,
-        type: SavingThrowType,
-        proficiency: Proficiency
-    ): Promise<SavingThrowType> {
-        const response = await this.client.patch<Skill>(`characters/${characterId}/saving-throw`, {
-            type: type,
-            proficiency: proficiency,
+    async editSavingThrows(characterId: string, proficiencies: Record<SavingThrowType, Proficiency>): Promise<SavingThrowType> {
+        const response = await this.client.patch<Skill>(`characters/${characterId}/saving-throws`, {
+            proficiencies: proficiencies,
         });
 
         return getPayloadOrThrow(response);

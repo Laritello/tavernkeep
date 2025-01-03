@@ -55,7 +55,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.ReturnsAsync(character);
 
 			var request = new EditSavingThrowCommand(owner.Id, characterId, type, proficiency);
-			var handler = new EditSavingThrowCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var response = await handler.Handle(request, CancellationToken.None);
 
@@ -81,7 +81,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.ReturnsAsync(character);
 
 			var request = new EditSavingThrowCommand(master.Id, characterId, SavingThrowType.Fortitude, proficiency);
-			var handler = new EditSavingThrowCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var response = await handler.Handle(request, CancellationToken.None);
 
@@ -100,7 +100,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.ReturnsAsync(character);
 
 			var request = new EditSavingThrowCommand(owner.Id, characterId, SavingThrowType.Fortitude, proficiency);
-			var handler = new EditSavingThrowCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("User with specified ID doesn't exist."));
@@ -118,7 +118,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.ReturnsAsync(owner);
 
 			var request = new EditSavingThrowCommand(owner.Id, characterId, SavingThrowType.Fortitude, proficiency);
-			var handler = new EditSavingThrowCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("Character with specified ID doesn't exist."));
@@ -140,7 +140,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.ReturnsAsync(character);
 
 			var request = new EditSavingThrowCommand(initiatorId, characterId, SavingThrowType.Fortitude, proficiency);
-			var handler = new EditSavingThrowCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<InsufficientPermissionException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("You do not have the necessary permissions to perform this operation."));
