@@ -25,9 +25,6 @@ import SavingThrowsEditDialog from '@/components/dialogs/edit/SavingThrowsEditDi
 
 const { savingThrows } = defineProps<{ savingThrows: Record<string, SavingThrow> }>();
 
-const emits = defineEmits<{
-    onChange: [value: Record<SavingThrowType, Proficiency>]
-}>();
 
 async function showEditSavingThrowsDialog() {
     const modal = useModal();
@@ -36,7 +33,8 @@ async function showEditSavingThrowsDialog() {
     });
 
     if(result.action === 'result') {
-        emits('onChange', { ...result.payload });
+        // TODO: update saves in api
+        console.log(result.payload);
     }
 }
 </script>

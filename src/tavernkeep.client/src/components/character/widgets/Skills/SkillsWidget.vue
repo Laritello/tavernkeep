@@ -36,9 +36,10 @@ async function showEditSkillsDialog() {
     const result = await modal.show(SkillsEditDialog, {
         skills,
     });
-    
+
     if(result.action === 'result') {
-        emits('onChange', { ...result.payload });
+        // TODO: update skills in api
+        console.log(result.payload);
     }
 }
 </script>
