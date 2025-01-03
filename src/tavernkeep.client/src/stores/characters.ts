@@ -13,7 +13,6 @@ export const useCharacters = defineStore('characters', () => {
     const dictionary = reactive<Characters>({});
 
     CharacterHub.connection.on('OnCharacterEdited', (character: Character) => {
-        console.log(character);
         Object.assign(dictionary[character.id], character);
     });
 

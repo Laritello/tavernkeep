@@ -29,21 +29,21 @@ const { character } = defineProps<{
 async function showEditAbilityDialog(ability: Ability) {
     const result = await modal.show(AbilityEditDialog, { ability });
     if (result.action === 'result') {
-        client.editAbility(character.id, ability.type, result.payload.score);
+        client.editAbilities(character.id, ability.type, result.payload.score);
     }
 }
 
 async function showEditSkillDialog(skill: Skill) {
     const result = await modal.show(ProficiencyEditDialog, { proficiency: skill.proficiency });
     if (result.action === 'result') {
-        await client.editSkill(character.id, skill.type, result.payload.value);
+        await client.editSkills(character.id, skill.type, result.payload.value);
     }
 }
 
 async function showSavingThrowEditDialog(savingThrow: SavingThrow) {
     const result = await modal.show(ProficiencyEditDialog, { proficiency: savingThrow.proficiency });
     if (result.action === 'result') {
-        await client.editSavingThrow(character.id, savingThrow.type, result.payload.value);
+        await client.editSavingThrows(character.id, savingThrow.type, result.payload.value);
     }
 }
 

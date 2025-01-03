@@ -99,26 +99,24 @@ namespace Tavernkeep.Server.Controllers
 		/// Change ability of the character.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
-		/// <param name="request">The ability edit request.</param>
-		/// <returns>Changed ability.</returns>
+		/// <param name="request">Dictionary with updated scores.</param>
 		[Authorize]
-		[HttpPatch("{characterId}/ability")]
-		public async Task<Ability> EditCharacterAbilityAsync([FromRoute] Guid characterId, [FromBody] EditAbilityRequest request)
+		[HttpPatch("{characterId}/abilities")]
+		public async Task EditCharacterAbilitiesAsync([FromRoute] Guid characterId, [FromBody] EditAbilitiesRequest request)
 		{
-			return await mediator.Send(new EditAbilityCommand(HttpContext.GetUserId(), characterId, request.Type, request.Score));
+			await mediator.Send(new EditAbilitiesCommand(HttpContext.GetUserId(), characterId, request.Scores));
 		}
 
 		/// <summary>
-		/// Change skill of the character.
+		/// Change skills of the character.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
-		/// <param name="request">The skill edit request.</param>
-		/// <returns>Changed skill.</returns>
+		/// <param name="request">Dictionary with updated proficiencies.</param>
 		[Authorize]
-		[HttpPatch("{characterId}/skill")]
-		public async Task<Skill> EditCharacterSkillAsync([FromRoute] Guid characterId, [FromBody] EditSkillRequest request)
+		[HttpPatch("{characterId}/skills")]
+		public async Task EditCharacterSkillsAsync([FromRoute] Guid characterId, [FromBody] EditSkillsRequest request)
 		{
-			return await mediator.Send(new EditSkillCommand(HttpContext.GetUserId(), characterId, request.Type, request.Proficiency));
+			await mediator.Send(new EditSkillsCommand(HttpContext.GetUserId(), characterId, request.Proficiencies));
 		}
 
 		/// <summary>
@@ -138,13 +136,12 @@ namespace Tavernkeep.Server.Controllers
 		/// Change saving throw of the character.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
-		/// <param name="request">The skill edit request.</param>
-		/// <returns>Changed saving throw.</returns>
+		/// <param name="request">Dictionary with updated proficiencies.</param>
 		[Authorize]
-		[HttpPatch("{characterId}/saving-throw")]
-		public async Task<SavingThrow> EditCharacterSavingThrowAsync([FromRoute] Guid characterId, [FromBody] EditSavingThrowRequest request)
+		[HttpPatch("{characterId}/saving-throws")]
+		public async Task EditCharacterSavingThrowsAsync([FromRoute] Guid characterId, [FromBody] EditSavingThrowsRequest request)
 		{
-			return await mediator.Send(new EditSavingThrowCommand(HttpContext.GetUserId(), characterId, request.Type, request.Proficiency));
+			await mediator.Send(new EditSavingThrowsCommand(HttpContext.GetUserId(), characterId, request.Proficiencies));
 		}
 
 		/// <summary>

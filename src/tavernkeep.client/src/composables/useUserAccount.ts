@@ -19,24 +19,23 @@ export const useUserAccount = (id: MaybeRef<string | undefined>) => {
 
     const assignCharacter = async (characterId: MaybeRef<string>) => {
         if (!user.value) {
-            console.log('No user selected');
             return;
         }
+        
         await charactersStore.assignUserToCharacter(user.value.id, unref(characterId));
     };
 
     const setActiveCharacter = async (characterId: MaybeRef<string>) => {
         if (!user.value) {
-            console.log('No user selected');
             return;
         }
+
         user.value.activeCharacterId = unref(characterId);
         await users.setActiveCharacter(user.value.id, user.value.activeCharacterId);
     };
 
     const createCharacter = async (name: string) => {
         if (!user.value) {
-            console.log('No user selected');
             return;
         }
 
@@ -45,7 +44,6 @@ export const useUserAccount = (id: MaybeRef<string | undefined>) => {
 
     const deleteCharacter = async (characterId: MaybeRef<string>) => {
         if (!user.value) {
-            console.log('No user selected');
             return;
         }
 

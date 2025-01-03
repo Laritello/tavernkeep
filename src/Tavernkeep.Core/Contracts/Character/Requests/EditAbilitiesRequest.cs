@@ -5,16 +5,11 @@ namespace Tavernkeep.Core.Contracts.Character.Requests
 	/// <summary>
 	/// Represents a request to edit the ability of a character.
 	/// </summary>
-	public class EditAbilityRequest
+	public class EditAbilitiesRequest
 	{
 		/// <summary>
-		/// The type of the ability.
+		/// The updated scores.
 		/// </summary>
-		public AbilityType Type { get; set; } = default!;
-
-		/// <summary>
-		/// The score of the ability.
-		/// </summary>
-		public int Score { get; set; } = default!;
+		public Dictionary<AbilityType, int> Scores { get; set; } = default!;
 	}
 }
