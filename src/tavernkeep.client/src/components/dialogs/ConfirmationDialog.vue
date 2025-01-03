@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import type { DialogResultCallback } from '@/composables/useModal';
+
+const { closeModal, caption, message } = defineProps<{
+    caption: string;
+    message: string;
+    closeModal: DialogResultCallback;
+}>();
+
+function confirm(choice: 'confirm' | 'reject') {
+    closeModal({ action: choice });
+}
+</script>
+
 <template>
     <dialog class="modal">
         <div class="modal-box">
@@ -12,16 +26,3 @@
         </div>
     </dialog>
 </template>
-<script setup lang="ts">
-import type { DialogResultCallback } from '@/composables/useModal';
-
-const { closeModal, caption, message } = defineProps<{
-    caption: string;
-    message: string;
-    closeModal: DialogResultCallback;
-}>();
-
-function confirm(choice: 'confirm' | 'reject') {
-    closeModal({ action: choice });
-}
-</script>
