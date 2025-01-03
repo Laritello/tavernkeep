@@ -7,7 +7,7 @@
 </template>
 <script setup lang="ts">
 import type { SavingThrow } from '@/contracts/character';
-import ProficiencyComponent from './ProficiencyComponent.vue';
+import ProficiencyComponent from '@/components/character/ProficiencyComponent.vue';
 
 const { savingThrow } = defineProps<{ savingThrow: SavingThrow }>();
 </script>

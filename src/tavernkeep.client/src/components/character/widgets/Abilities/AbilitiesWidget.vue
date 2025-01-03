@@ -10,15 +10,15 @@
         </div>
 
         <div class="grid grid-cols-3 md:grid-cols-6">
-            <AbilityView v-for="ability in abilities" :ability="ability" :key="ability.type" />
+            <AbilitiesWidgetItem v-for="ability in abilities" :ability="ability" :key="ability.type" />
         </div>
     </div>
 </template>
 <script setup lang="ts">
 import type { Ability } from '@/contracts/character';
-
-import AbilityView from './AbilityView.vue';
 import type { AbilityType } from '@/contracts/enums';
+import AbilitiesWidgetItem from './AbilitiesWidgetItem.vue';
+
 
 const { abilities } = defineProps<{ abilities: Record<AbilityType, Ability> }>();
 </script>

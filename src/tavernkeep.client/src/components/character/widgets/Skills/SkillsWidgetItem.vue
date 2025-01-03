@@ -22,14 +22,15 @@
 
         <p class="grow select-none">{{ skill.type }}</p>
         <ProficiencyComponent :proficiency="skill.proficiency" />
-        <p class="border-2 rounded-md w-12 text-center active:bg-gray-400 select-none" @click="emit('roll', skill)">{{
-            skill.bonus }}</p>
+        <p class="border-2 rounded-md w-12 text-center active:bg-gray-400 select-none" @click="emit('roll', skill)">
+            {{ skill.bonus }}
+        </p>
     </div>
 </template>
 
 <script lang="ts" setup>
 import type { Skill } from '@/contracts/character';
-import ProficiencyComponent from './ProficiencyComponent.vue';
+import ProficiencyComponent from '@/components/character/ProficiencyComponent.vue';
 
 const { skill } = defineProps<{
     skill: Skill;

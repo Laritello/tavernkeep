@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import SkillsWidget from '@/components/character/SkillsWidget.vue';
-import AbilitiesWidget from '@/components/character/AbilitiesWidget.vue';
-import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
-import SavingThrowsWidgetView from '@/components/character/SavingThrowsWidgetView.vue';
 import { onMounted } from 'vue';
+import AbilitiesWidget from '@/components/character/widgets/Abilities/AbilitiesWidget.vue';
+import SavingThrowsWidget from '@/components/character/widgets/SavingThrows/SavingThrowsWidget.vue';
+import SkillsWidget from '@/components/character/widgets/Skills/SkillsWidget.vue';
+
+import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 
 const user = useCurrentUserAccount();
 const character = user.activeCharacter;
@@ -32,6 +33,7 @@ onMounted(() => {
 */
 function updateSection() {
     // Collect all required elements
+    // TODO: use vue refs instead
     let headers = document.querySelectorAll('h2');
     let navigation = document.querySelectorAll('#sections-bar a');
 
@@ -41,7 +43,7 @@ function updateSection() {
         return;
     }
 
-    // Find first header that hasn't reach the border
+    // Find first header that hasn't reached the border
     let border = sectionBar!.getBoundingClientRect().bottom;
     let start = headers.item(0).getBoundingClientRect().top;
     let sectionIndex = 0;
@@ -79,7 +81,7 @@ function updateSection() {
 </script>
 
 <template>
-    <div v-if="character !== undefined" class="flex flex-col max-h-full max-h-full">
+    <div v-if="character !== undefined" class="flex flex-col max-h-full">
         <!--Header-->
         <div class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar lg:hidden" id="sections-bar">
             <a v-for="section in sections" :key="section.link" v-bind:href="section.link"
@@ -90,7 +92,7 @@ function updateSection() {
         <div v-on:scroll="updateSection"
             class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar bg-base-200">
             <AbilitiesWidget id="attributes" :abilities="character.abilities" />
-            <SavingThrowsWidgetView id="saving-throws" :savingThrows="character.savingThrows" />
+            <SavingThrowsWidget id="saving-throws" :savingThrows="character.savingThrows" />
             <SkillsWidget id="skills" :skills="character.skills" />
         </div>
     </div>
