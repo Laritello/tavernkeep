@@ -34,7 +34,7 @@ function updateSkill(skill: Skill) {
         <div class="modal-box">
             <h3 class="font-bold text-lg">Edit skills</h3>
             <form @submit.prevent="confirm" method="dialog" class="space-x-2">
-                <div class="flex flex-col p-2 w-full">
+                <div class="flex flex-col w-full">
                     <div class="flex flex-col">
                         <SkillEditView v-for="skill in Object.values(currentSkills)" :skill="skill" :key="skill.type" @onChange="updateSkill" />
                     </div>
