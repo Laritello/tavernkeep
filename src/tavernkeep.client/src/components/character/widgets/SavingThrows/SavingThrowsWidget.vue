@@ -22,8 +22,12 @@ import type { SavingThrow } from '@/contracts/character';
 import SavingThrowWidgetItem from './SavingThrowWidgetItem.vue';
 import { useModal } from '@/composables/useModal';
 import SavingThrowsEditDialog from '@/components/dialogs/edit/SavingThrowsEditDialog.vue';
+import { Proficiency } from '@/contracts/enums';
 
 const { savingThrows } = defineProps<{ savingThrows: Record<string, SavingThrow> }>();
+const emits = defineEmits< {
+    changed: [value: Record<string, Proficiency>]
+}>();
 
 
 async function showEditSavingThrowsDialog() {
@@ -33,8 +37,7 @@ async function showEditSavingThrowsDialog() {
     });
 
     if(result.action === 'result') {
-        // TODO: update saves in api
-        console.log(result.payload);
+        emits('changed', result.payload);
     }
 }
 </script>

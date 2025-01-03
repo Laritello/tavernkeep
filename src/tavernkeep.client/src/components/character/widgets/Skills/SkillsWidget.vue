@@ -27,8 +27,8 @@ import { Proficiency, SkillType } from '@/contracts/enums';
 
 const { skills } = defineProps<{ skills: Record<SkillType, Skill> }>();
 
-const emits = defineEmits<{
-    onChange: [value: Record<SkillType, Proficiency>]
+const emits = defineEmits< {
+    changed: [value: Record<string, Proficiency>]
 }>();
 
 async function showEditSkillsDialog() {
@@ -38,8 +38,7 @@ async function showEditSkillsDialog() {
     });
 
     if(result.action === 'result') {
-        // TODO: update skills in api
-        console.log(result.payload);
+        emits('changed', result.payload);
     }
 }
 </script>

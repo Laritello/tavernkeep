@@ -8,7 +8,7 @@ import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
-import type { Proficiency, SavingThrowType, SkillType } from '@/contracts/enums';
+import type { Proficiency, SkillType } from '@/contracts/enums';
 
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
@@ -30,14 +30,14 @@ const sections: Section[] = [
 ]
 
 async function updateSkills(proficiencies: Record<SkillType, Proficiency>) {
-    if (character.value != null) {
-        await api.editSkills(character.value?.id, proficiencies);
+    if (character.value !== undefined) {
+        await api.editSkills(character.value.id, proficiencies);
     }
 }
 
-async function updateSavingThrows(proficiencies: Record<SavingThrowType, Proficiency>) {
-    if (character.value != null) {
-        await api.editSavingThrows(character.value?.id, proficiencies);
+async function updateSavingThrows(proficiencies: Record<string, Proficiency>) {
+    if (character.value !== undefined) {
+        await api.editSavingThrows(character.value.id, proficiencies);
     }
 }
 
@@ -111,8 +111,8 @@ function updateSection() {
         <div v-on:scroll="updateSection"
             class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar bg-base-200">
             <AbilitiesWidget id="attributes" :abilities="character.abilities" />
-            <SavingThrowsWidget id="saving-throws" :savingThrows="character.savingThrows" />
-            <SkillsWidget id="skills" :skills="character.skills" />
+            <SavingThrowsWidget id="saving-throws" :savingThrows="character.savingThrows" @changed="updateSavingThrows" />
+            <SkillsWidget id="skills" :skills="character.skills" @changed="updateSkills" />
         </div>
     </div>
     <div v-else>No selected character</div>
