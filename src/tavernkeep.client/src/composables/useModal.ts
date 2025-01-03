@@ -1,33 +1,25 @@
-import { ref, markRaw, shallowRef } from 'vue';
+import { ref, markRaw, shallowRef, type VNodeProps, type AllowedComponentProps, type Component } from 'vue';
 
 type Payload<TResult = undefined> = TResult extends undefined
     ? { action: 'confirm' | 'reject' }
     : { action: 'result'; payload: TResult };
 
-type DialogComponent = {
-    new (...args: unknown[]): {
-        $props: {
-            [key: string]: unknown;
-            closeModal: (result: Payload) => void;
-        };
-    };
-};
+type ModalProps<C extends Component> = C extends new (...args: any) => any
+    ? Omit<InstanceType<C>['$props'], keyof VNodeProps | keyof AllowedComponentProps>
+    : never;
 
-type ModalProps<T extends DialogComponent> = InstanceType<T>['$props'];
-type DialogResult<T extends DialogComponent> = ModalProps<T>['closeModal'] extends (result: infer R) => void
-    ? R
-    : unknown;
+type DialogResult<T extends Component> = ModalProps<T>['closeModal'] extends (result: infer R) => void ? R : unknown;
 
 export type DialogResultCallback<TResult = undefined> = TResult extends undefined
     ? (payload: Payload) => void
     : (payload: Payload | Payload<TResult>) => void;
 
-const component = shallowRef<DialogComponent>();
+const component = shallowRef<Component>();
 const props = ref();
 const isOpen = ref(false);
 
 export function useModal() {
-    function show<C extends DialogComponent>(modalComponent: C, componentProps?: Omit<ModalProps<C>, 'closeModal'>) {
+    function show<C extends Component>(modalComponent: C, componentProps?: Omit<ModalProps<C>, 'closeModal'>) {
         return new Promise<DialogResult<C>>((resolve) => {
             component.value = markRaw(modalComponent);
             props.value = {
@@ -46,6 +38,5 @@ export function useModal() {
         props,
         isOpen,
         show,
-        // showWithResult,
     };
 }
