@@ -38,8 +38,6 @@ async function showEditSkillsDialog() {
     });
     
     if(result.action === 'result') {
-        // TODO: update skills in api
-        console.log(result.payload);
         emits('onChange', { ...result.payload });
     }
 }

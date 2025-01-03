@@ -1,19 +1,10 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-
-import { useAuth } from '@/composables/useAuth';
-import { useSession } from '@/composables/useSession';
-import { useModal } from '@/composables/useModal';
-import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
 import HealthBar from '@/components/character/HealthBar.vue';
 
-import { UserRole } from '@/contracts/enums';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import ArmorClassWidget from '@/components/character/ArmorClassWidget.vue';
 import PerceptionWidget from '@/components/character/PerceptionWidget.vue';
 
-const session = useSession();
-const router = useRouter();
 const user = useCurrentUserAccount();
 </script>
 

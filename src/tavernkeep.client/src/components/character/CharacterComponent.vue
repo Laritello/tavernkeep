@@ -29,7 +29,7 @@ const { character } = defineProps<{
 async function showEditAbilityDialog(ability: Ability) {
     const result = await modal.show(AbilityEditDialog, { ability });
     if (result.action === 'result') {
-        client.editAbility(character.id, ability.type, result.payload.score);
+        client.editAbilities(character.id, ability.type, result.payload.score);
     }
 }
 

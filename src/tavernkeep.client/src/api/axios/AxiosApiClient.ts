@@ -148,16 +148,15 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async editAbility(characterId: string, type: AbilityType, score: number): Promise<Ability> {
-        const response = await this.client.patch<Ability>(`characters/${characterId}/ability`, {
-            type: type,
-            score: score,
+    async editAbilities(characterId: string, scores: Record<AbilityType, number>): Promise<void> {
+        const response = await this.client.patch<Ability>(`characters/${characterId}/abilities`, {
+            scores: scores,
         });
 
         return getPayloadOrThrow(response);
     }
 
-    async editSkills(characterId: string, proficiencies: Record<SkillType, Proficiency>): Promise<Skill> {
+    async editSkills(characterId: string, proficiencies: Record<SkillType, Proficiency>): Promise<void> {
         const response = await this.client.patch<Skill>(`characters/${characterId}/skills`, {
             proficiencies: proficiencies,
         });
@@ -165,7 +164,7 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async editSavingThrows(characterId: string, proficiencies: Record<SavingThrowType, Proficiency>): Promise<SavingThrowType> {
+    async editSavingThrows(characterId: string, proficiencies: Record<SavingThrowType, Proficiency>): Promise<void> {
         const response = await this.client.patch<Skill>(`characters/${characterId}/saving-throws`, {
             proficiencies: proficiencies,
         });

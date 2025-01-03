@@ -30,7 +30,6 @@ const { conditions, closeModal } = defineProps<{
 var selected: Condition | undefined = undefined;
 
 async function save() {
-    console.log(selected);
     if (selected === undefined) {
         closeModal({ action: 'reject' });
         return;

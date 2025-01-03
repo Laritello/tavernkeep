@@ -99,13 +99,12 @@ namespace Tavernkeep.Server.Controllers
 		/// Change ability of the character.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
-		/// <param name="request">The ability edit request.</param>
-		/// <returns>Changed ability.</returns>
+		/// <param name="request">Dictionary with updated scores.</param>
 		[Authorize]
-		[HttpPatch("{characterId}/ability")]
-		public async Task<Ability> EditCharacterAbilityAsync([FromRoute] Guid characterId, [FromBody] EditAbilityRequest request)
+		[HttpPatch("{characterId}/abilities")]
+		public async Task EditCharacterAbilitiesAsync([FromRoute] Guid characterId, [FromBody] EditAbilitiesRequest request)
 		{
-			return await mediator.Send(new EditAbilityCommand(HttpContext.GetUserId(), characterId, request.Type, request.Score));
+			await mediator.Send(new EditAbilitiesCommand(HttpContext.GetUserId(), characterId, request.Scores));
 		}
 
 		/// <summary>
