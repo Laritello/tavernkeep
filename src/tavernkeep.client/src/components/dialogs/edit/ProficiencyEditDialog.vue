@@ -29,10 +29,10 @@ function cancel() {
 
 <template>
     <dialog class="modal">
-        <div class="modal-box">
+        <div class="modal-box overflow-y-hidden">
             <h3 class="font-bold text-lg">{{ caption }}</h3>
-            <form @submit.prevent="confirm" method="dialog" class="space-x-2">
-                <ProficiencyListEdit v-model="currentItems" />
+            <ProficiencyListEdit v-model="currentItems" class="modal-content" />
+            <form @submit.prevent="confirm" method="dialog">
                 <div class="modal-action">
                     <button class="btn btn-success w-24" type="submit">Save</button>
                     <button @click="cancel" class="btn w-24" type="button">Cancel</button>
@@ -41,3 +41,10 @@ function cancel() {
         </div>
     </dialog>
 </template>
+
+<style>
+.modal-content {
+    max-height: calc(100dvh - 15em);
+    overflow-y: auto;
+}
+</style>

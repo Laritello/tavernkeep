@@ -13,7 +13,7 @@
         <div v-if="message.isPrivate" class="chat-footer opacity-50">
             <div class="private">
                 <span class="body-1 font-weight-light mr-1">Private for {{ message.recipient?.login }}</span>
-                <v-icon size="x-small" icon="mdi-eye"></v-icon>
+                <span>👁‍</span>
             </div>
         </div>
     </div>
