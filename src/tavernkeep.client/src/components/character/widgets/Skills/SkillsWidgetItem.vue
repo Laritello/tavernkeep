@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row items-center p-1 gap-x-2 border-b-2">
+    <div class="flex flex-row items-center p-1 gap-x-2 border-b-2 border-base-300">
 
         <label class="swap">
             <!-- this hidden checkbox controls the state -->
@@ -22,7 +22,8 @@
 
         <p class="grow select-none">{{ skill.type }}</p>
         <ProficiencyComponent :proficiency="skill.proficiency" />
-        <p class="border-2 rounded-md w-12 text-center active:bg-gray-400 select-none" @click="emit('roll', skill)">
+        <p class="border-2 border-base-300 rounded-md w-12 text-center font-bold active:bg-gray-400 select-none"
+            @click="emit('roll', skill)">
             {{ skill.bonus }}
         </p>
     </div>

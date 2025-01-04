@@ -1,7 +1,7 @@
 <template>
-    <div class="box-border flex flex-col m-2 p-2 border-2 rounded-lg red">
+    <div class="box-border border-base-300 flex flex-col m-2 p-1 border-2 rounded-lg red">
         <p class="text-3xl font-extrabold text-center select-none">{{ savingThrow.bonus }}</p>
-        <p class="text-sm font-light text-center select-none">{{ savingThrow.type }}</p>
+        <p class="text-sm text-center select-none">{{ savingThrow.type }}</p>
         <ProficiencyComponent class="place-self-center" :proficiency="savingThrow.proficiency"/>
     </div>
 </template>

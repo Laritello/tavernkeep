@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div class="btm-nav btm-nav-m border-t-2">
+    <div class="btm-nav btm-nav-m border-t-2 border-base-300">
         <RouterLink active-class="text-primary border-t-transparent" to="/combat">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
                 <path
