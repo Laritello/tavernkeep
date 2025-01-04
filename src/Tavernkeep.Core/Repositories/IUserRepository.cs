@@ -6,5 +6,6 @@ namespace Tavernkeep.Core.Repositories
 	{
 		Task<List<User>> GetAllUsersAsync(CancellationToken cancellationToken = default);
 		Task<User?> GetUserByLoginAsync(string login, CancellationToken cancellationToken = default);
+		Task<User?> GetDetailsAsync(Guid id, CancellationToken cancellationToken = default);
 	}
 }

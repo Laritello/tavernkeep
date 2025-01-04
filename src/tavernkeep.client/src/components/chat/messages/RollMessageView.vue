@@ -19,8 +19,11 @@
         <div class="flex text-3xl justify-center p-4 text-neutral-content">
             <span :data-tip="message.expression" class="tooltip">{{ message.result.value }}</span>
         </div>
-        <div class="avatar placeholder absolute bottom-0 right-0">
-            <div class="bg-neutral text-neutral-content w-10 rounded-full border-2 border-white">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="absolute top-0 right-0 w-12 h-12">
+            <circle cx="5" cy="5" r="5" fill="oklch(var(--b1))" />
+        </svg>
+        <div class="avatar placeholder absolute top-0 right-0">
+            <div class="bg-neutral text-neutral-content w-10">
                 <span>{{ message.sender.login.slice(0, 2) }}</span>
             </div>
         </div>
@@ -42,4 +45,6 @@ function formatDate(dateString: Date): string {
     return `${hours}:${minutes}:${seconds}`;
 }
 </script>
-<style scoped></style>
+<style scoped>
+.cutout {}
+</style>

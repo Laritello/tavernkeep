@@ -13,6 +13,11 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 			return AsQueryable().Include(x => x.Characters).Include(x => x.ActiveCharacter).ToListAsync(cancellationToken);
 		}
 
+		public Task<User?> GetDetailsAsync(Guid id, CancellationToken cancellationToken = default)
+		{
+			return AsQueryable().Where(x => x.Id == id).Include(x => x.ActiveCharacter).Include(x => x.Characters).FirstOrDefaultAsync(cancellationToken);
+		}
+
 		public Task<User?> GetUserByLoginAsync(string login, CancellationToken cancellationToken = default)
 		{
 			return AsQueryable().Where(x => x.Login == login).FirstOrDefaultAsync(cancellationToken);

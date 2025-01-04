@@ -16,7 +16,7 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice
 	{
 		public async Task<RollMessage> Handle(RollCustomDiceCommand request, CancellationToken cancellationToken)
 		{
-			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
+			var initiator = await userRepository.GetDetailsAsync(request.InitiatorId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("Initiator with specified ID doesn't exist.");
 
 			var roll = diceService.Roll(request.Expression);
@@ -33,7 +33,7 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice
 			messageRepository.Save(message);
 
 			await messageRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueMessageAsync(message);
+			await notificationService.QueueMessageAsync(message, cancellationToken);
 
 			return message;
 		}
