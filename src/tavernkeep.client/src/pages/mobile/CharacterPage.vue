@@ -8,7 +8,8 @@ import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
-import { AbilityType, type Proficiency, type SkillType } from '@/contracts/enums';
+import { AbilityType, RollType, type Proficiency, type SkillType } from '@/contracts/enums';
+import type { Skill } from '@/contracts/character';
 
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
@@ -43,6 +44,13 @@ async function updateSkills(proficiencies: Record<SkillType, Proficiency>) {
 async function updateSavingThrows(proficiencies: Record<string, Proficiency>) {
     if (character.value !== undefined) {
         await api.editSavingThrows(character.value.id, proficiencies);
+    }
+}
+
+// TODO: Longtap for private roll or toggle somewhere for the roll type
+async function rollSkillCheck(skillType: SkillType) {
+    if (character.value !== undefined) {
+        await api.performSkillCheck(character.value.id, skillType, RollType.Public);
     }
 }
 
@@ -109,15 +117,17 @@ function updateSection() {
         <div class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar lg:hidden"
             id="sections-bar">
             <a v-for="section in sections" :key="section.link" v-bind:href="section.link"
-                class="py-1 px-4 pb-0 grow text-nowrap tracking-tight border-b-2 border-base-300 select-none">{{ section.header }}</a>
+                class="py-1 px-4 pb-0 grow text-nowrap tracking-tight border-b-2 border-base-300 select-none">{{
+                section.header }}</a>
         </div>
 
         <!--Character Sheet Content-->
         <div v-on:scroll="updateSection"
             class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar bg-base-200">
-            <AbilitiesWidget id="attributes" :abilities="character.abilities"  @changed="updateAbilities" />
-            <SavingThrowsWidget id="saving-throws" :savingThrows="character.savingThrows" @changed="updateSavingThrows" />
-            <SkillsWidget id="skills" :skills="character.skills" @changed="updateSkills" />
+            <AbilitiesWidget id="attributes" :abilities="character.abilities" @changed="updateAbilities" />
+            <SavingThrowsWidget id="saving-throws" :savingThrows="character.savingThrows"
+                @changed="updateSavingThrows" />
+            <SkillsWidget id="skills" :skills="character.skills" @changed="updateSkills" @roll="(type) => rollSkillCheck(type)" />
         </div>
     </div>
     <div v-else>No selected character</div>

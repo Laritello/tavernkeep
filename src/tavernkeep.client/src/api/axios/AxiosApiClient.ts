@@ -210,6 +210,16 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
+    async performSkillCheck(characterId: string, skillType: SkillType, rollType: RollType): Promise<Message> {
+        const response = await this.client.post<Message>('roll/skill', {
+            characterId: characterId,
+            skillType: skillType,
+            rollType: rollType,
+        });
+
+        return getPayloadOrThrow(response);
+    }
+
     async getConditions(): Promise<Condition[]> {
         const response = await this.client.get<Condition[]>('conditions');
 
