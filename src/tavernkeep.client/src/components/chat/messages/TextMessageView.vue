@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="chat-header">
-            {{ message.sender.login }}
+            {{ message.displayName }}
             <time class="text-xs opacity-50">{{ formatDate(message.created) }}</time>
         </div>
         <div class="chat-bubble">{{ message.text }}</div>

@@ -13,6 +13,10 @@ namespace Tavernkeep.Core.Entities.Messages
 		#endregion
 
 		#region Properties
+		/// <summary>
+		/// Displayed name as a sender.
+		/// </summary>
+		public string DisplayName { get; set; } = default!;
 		public Guid SenderId { get; set; }
 		public User Sender { get; set; } = default!;
 		public DateTime Created { get; set; }

@@ -10,6 +10,7 @@ namespace Tavernkeep.Core.Contracts.Chat.Dtos
 	public abstract class MessageDto
 	{
 		public Guid Id { get; set; }
+		public string DisplayName { get; set; } = default!;
 		public UserDto Sender { get; set; } = default!;
 		public DateTime Created { get; set; }
 	}

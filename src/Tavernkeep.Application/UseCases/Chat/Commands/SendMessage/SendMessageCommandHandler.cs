@@ -18,7 +18,7 @@ namespace Tavernkeep.Application.UseCases.Chat.Commands.SendMessage
 			if (string.IsNullOrEmpty(request.Text))
 				throw new BusinessLogicException("Text of the message cannot be empty.");
 
-			var sender = await userRepository.FindAsync(request.SenderId, cancellationToken: cancellationToken)
+			var sender = await userRepository.GetDetailsAsync(request.SenderId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("Sender with specified ID not found.");
 
 			var recipient = request.RecipientId != null
@@ -27,6 +27,7 @@ namespace Tavernkeep.Application.UseCases.Chat.Commands.SendMessage
 
 			TextMessage message = new()
 			{
+				DisplayName = sender.ActiveCharacter is not null ? sender.ActiveCharacter.Name : sender.Login,
 				SenderId = sender.Id,
 				Sender = sender,
 				RecipientId = recipient?.Id,
@@ -38,7 +39,7 @@ namespace Tavernkeep.Application.UseCases.Chat.Commands.SendMessage
 			messageRepository.Save(message);
 
 			await messageRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueMessageAsync(message);
+			await notificationService.QueueMessageAsync(message, cancellationToken);
 
 			return message;
 		}

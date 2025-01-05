@@ -4,6 +4,7 @@ import type { Skill } from '@/contracts/character';
 
 export interface Message {
     id: string;
+    displayName:string;
     sender: User;
     created: Date;
     $type: string;

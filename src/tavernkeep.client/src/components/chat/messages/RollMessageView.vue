@@ -2,7 +2,7 @@
     <div class="chat" :class="{ 'chat-end': alignRight, 'chat-start': !alignRight, }">
         <!--Hack to make it align with headers in other messages-->
         <div class="chat-header" :class="{ 'mr-10': alignRight, 'ml-10': !alignRight, }">
-            {{ message.sender.login }}
+            {{ message.displayName }}
             <time class="text-xs opacity-50">{{ formatDate(message.created) }}</time>
         </div>
         <div class="roll-bubble rounded-3xl bg-neutral relative col-span-2 justify-items-center">

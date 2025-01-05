@@ -28,6 +28,7 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
 
 			SkillRollMessage message = new()
 			{
+				DisplayName = initiator.ActiveCharacter is not null ? initiator.ActiveCharacter.Name : initiator.Login,
 				Sender = initiator,
 				Created = DateTime.UtcNow,
 				RollType = request.RollType,
