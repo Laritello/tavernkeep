@@ -2,7 +2,7 @@ import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
-import type { User, Message, Character } from '@/entities';
+import type { User, Message, Character, SkillRollMessage } from '@/entities';
 import type { Ability, Skill, Lore, Perception } from '@/contracts/character';
 import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowType } from '@/contracts/enums';
 import type { Condition } from '@/entities/Condition';
@@ -210,7 +210,7 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async performSkillCheck(characterId: string, skillType: SkillType, rollType: RollType): Promise<Message> {
+    async performSkillCheck(characterId: string, skillType: SkillType, rollType: RollType): Promise<SkillRollMessage> {
         const response = await this.client.post<Message>('roll/skill', {
             characterId: characterId,
             skillType: skillType,
