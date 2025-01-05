@@ -18,6 +18,7 @@ namespace Tavernkeep.Application.Services
 		{
 			while (!cancellationToken.IsCancellationRequested)
 			{
+				// TODO: How to gracefully stop background services?
 				await Task.Delay(delay, cancellationToken);
 				await PurgeExpiredTokensAsync();
 			}

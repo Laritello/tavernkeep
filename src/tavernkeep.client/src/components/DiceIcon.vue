@@ -1,8 +1,8 @@
 <template>
     <div class="tooltip" :data-tip="die">
-        <component v-if="dice.has(die)" :is="dice.get(die)" class="dice" :class="[die]" />
+        <component v-if="dice.has(die)" :is="dice.get(die)" class="dice" />
         <div v-else class="bg-slate-500 outline outline-1 size-6 m-2 rounded pt-[2px] text-center">?</div>
-        <div v-if="value !== undefined" class="text-center">{{ value }}</div>
+        <div v-if="value !== undefined" class="text-center text-sm">{{ value }}</div>
     </div>
 </template>
 <script setup lang="ts">
@@ -21,39 +21,20 @@ const dice = new Map<string, string>([
     ['d6', d6],
     ['d4', d4],
 ]);
+
 defineProps<{
     die: string;
     value?: number;
 }>();
+
 </script>
 <style scoped>
 .text-shadow {
     text-shadow: #000000 0px 0 5px;
 }
+
 .dice {
     aspect-ratio: 1;
     fill: currentColor;
 }
-
-/* .d20 {
-    fill: #d84040;
-}
-
-.d12 {
-    fill: #d88440;
-}
-
-.d10 {
-    fill: #4057d8;
-}
-
-.d8 {
-    fill: #d8bc40;
-}
-.d6 {
-    fill: #a040d8;
-}
-.d4 {
-    fill: #524e4c;
-} */
 </style>

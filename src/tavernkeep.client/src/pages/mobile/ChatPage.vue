@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import ChatComponent from "@/components/chat/ChatComponent.vue";
-
 </script>
 
 <template>
-    <ChatComponent  />
+    <ChatComponent />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
