@@ -6,6 +6,7 @@ import type { User, Message, Character, SkillRollMessage } from '@/entities';
 import type { Ability, Skill, Lore, Perception } from '@/contracts/character';
 import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowType } from '@/contracts/enums';
 import type { Condition } from '@/entities/Condition';
+import type { SavingThrowRollMessage } from '@/entities/Message';
 
 export class AxiosApiClient {
     client: AxiosInstance;
@@ -214,6 +215,16 @@ export class AxiosApiClient {
         const response = await this.client.post<Message>('roll/skill', {
             characterId: characterId,
             skillType: skillType,
+            rollType: rollType,
+        });
+
+        return getPayloadOrThrow(response);
+    }
+
+    async performSavingThrow(characterId: string, savingThrowType: SavingThrowType, rollType: RollType): Promise<SavingThrowRollMessage> {
+        const response = await this.client.post<Message>('roll/saving-throw', {
+            characterId: characterId,
+            savingThrowType: savingThrowType,
             rollType: rollType,
         });
 

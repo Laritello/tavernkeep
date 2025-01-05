@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-import { type Message, type SkillRollMessage } from '@/entities/Message';
+import { type Message, type SavingThrowRollMessage, type SkillRollMessage } from '@/entities/Message';
 
 import TextMessageView from './TextMessageView.vue';
 import RollMessageView from './RollMessageView.vue';
@@ -20,6 +20,7 @@ function getComponentByType(message: Message) {
             return TextMessageView;
         case 'RollMessage':
         case 'SkillRollMessage':
+        case 'SavingThrowRollMessage':
             return RollMessageView;
         default:
             return `div`;
@@ -37,6 +38,11 @@ function getParametersByType(message: Message) {
             return {
                 header: 'Check',
                 subHeader: (message as SkillRollMessage).skill.type
+            };
+        case 'SavingThrowRollMessage':
+            return {
+                header: 'Save',
+                subHeader: (message as SavingThrowRollMessage).savingThrow.type
             };
         default:
             return {};

@@ -1,6 +1,6 @@
 import type { RollType } from '@/contracts/enums';
 import type { User } from './User';
-import type { Skill } from '@/contracts/character';
+import type { SavingThrow, Skill } from '@/contracts/character';
 
 export interface Message {
     id: string;
@@ -24,6 +24,10 @@ export interface RollMessage extends Message {
 
 export interface SkillRollMessage extends RollMessage {
     skill: Skill;
+}
+
+export interface SavingThrowRollMessage extends RollMessage {
+    savingThrow: SavingThrow;
 }
 
 export interface RollResult {

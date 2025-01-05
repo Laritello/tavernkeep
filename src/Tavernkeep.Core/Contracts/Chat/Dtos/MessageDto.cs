@@ -7,7 +7,7 @@ namespace Tavernkeep.Core.Contracts.Chat.Dtos
 	[JsonDerivedType(typeof(TextMessageDto), typeDiscriminator: nameof(TextMessage))]
 	[JsonDerivedType(typeof(RollMessageDto), typeDiscriminator: nameof(RollMessage))]
 	[JsonDerivedType(typeof(SkillRollMessageDto), typeDiscriminator: nameof(SkillRollMessage))]
-	[JsonDerivedType(typeof(SavingThrowRollMessageDto), typeDiscriminator: nameof(SavingThrowRollMessageDto))]
+	[JsonDerivedType(typeof(SavingThrowRollMessageDto), typeDiscriminator: nameof(SavingThrowRollMessage))]
 	public abstract class MessageDto
 	{
 		public Guid Id { get; set; }
