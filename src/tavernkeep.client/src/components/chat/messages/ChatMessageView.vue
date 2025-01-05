@@ -27,11 +27,28 @@ function getComponentByType(message: Message) {
             return `div`;
     }
 }
+
+function getParametersByType(message: Message) {
+    switch (message.$type) {
+        case 'RollMessage':
+            return {
+                header: 'Custom',
+                subHeader: 'Roll'
+            };
+        case 'SkillRollMessage':
+        return {
+                header: 'Check',
+                subHeader: 'Roll'
+            };
+        default:
+            return {};
+    }
+}
 </script>
 
 <template>
     <div class="pb-2 w-full">
-        <component :is="getComponentByType(message)" :message="message" :align-right="isUserSender">
+        <component :is="getComponentByType(message)" :message="message" :align-right="isUserSender" :rollMessageParameters="getParametersByType(message)">
             Unknown message type: {{ message.$type }}
         </component>
     </div>
