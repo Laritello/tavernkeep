@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-import { type Message } from '@/entities/Message';
+import { type Message, type SkillRollMessage } from '@/entities/Message';
 
 import TextMessageView from './TextMessageView.vue';
 import RollMessageView from './RollMessageView.vue';
@@ -20,9 +20,8 @@ function getComponentByType(message: Message) {
         case 'TextMessage':
             return TextMessageView;
         case 'RollMessage':
-            return RollMessageView;
         case 'SkillRollMessage':
-            return SkillRollMessageView;
+            return RollMessageView;
         default:
             return `div`;
     }
@@ -36,9 +35,9 @@ function getParametersByType(message: Message) {
                 subHeader: 'Roll'
             };
         case 'SkillRollMessage':
-        return {
+            return {
                 header: 'Check',
-                subHeader: 'Roll'
+                subHeader: (message as SkillRollMessage).skill.type
             };
         default:
             return {};
@@ -48,7 +47,8 @@ function getParametersByType(message: Message) {
 
 <template>
     <div class="pb-2 w-full">
-        <component :is="getComponentByType(message)" :message="message" :align-right="isUserSender" :rollMessageParameters="getParametersByType(message)">
+        <component :is="getComponentByType(message)" :message="message" :align-right="isUserSender"
+            :rollMessageParameters="getParametersByType(message)">
             Unknown message type: {{ message.$type }}
         </component>
     </div>
