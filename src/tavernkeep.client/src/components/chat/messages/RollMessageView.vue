@@ -45,7 +45,7 @@
             </div>
 
             <!--Dice notation for the roll-->
-            <DiceExpression class="mt-3 min-w-60 max-w-60 pb-1" :expression="message.expression" />
+            <DiceExpression class="my-3 min-w-60 max-w-60" :expression="message.expression" />
 
             <!--Show more toggle-->
             <label class="swap swap-rotate">

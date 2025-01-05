@@ -13,7 +13,6 @@ const parsedExpression = computed(() => {
     const matches = expression.matchAll(regex);
     const parsedParts = [];
     for (const match of matches) {
-        console.log(match);
         if (match[2] == 'd') {
             // It's a dice roll (e.g., 3d6)
             parsedParts.push({

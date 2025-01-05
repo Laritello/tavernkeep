@@ -30,7 +30,6 @@ const sections: Section[] = [
 ]
 
 async function updateAbilities(scores: Record<AbilityType, number>) {
-    console.log(scores);
     if (character.value !== undefined) {
         await api.editAbilities(character.value.id, scores);
     }
