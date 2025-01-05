@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice;
+using Tavernkeep.Application.UseCases.Roll.Commands.RollSavingThrow;
 using Tavernkeep.Application.UseCases.Roll.Commands.RollSkill;
 using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
@@ -43,6 +44,19 @@ namespace Tavernkeep.Server.Controllers
 		public async Task<MessageDto> RollSkillAsync([FromBody] RollSkillRequest request)
 		{
 			var message = await mediator.Send(new RollSkillCommand(HttpContext.GetUserId(), request.CharacterId, request.SkillType, request.RollType));
+			return mapper.Map<MessageDto>(message);
+		}
+
+		/// <summary>
+		/// Roll a saving throw for the character.
+		/// </summary>
+		/// <param name="request">The request with roll parameters.</param>
+		/// <returns><see cref="SavingThrowRollMessageDto"/> containing the result of the roll.</returns>
+		[Authorize]
+		[HttpPost("saving-throw")]
+		public async Task<MessageDto> RollSavingThrowAsync([FromBody] RollSavingThrowRequest request)
+		{
+			var message = await mediator.Send(new RollSavingThrowCommand(HttpContext.GetUserId(), request.CharacterId, request.SavingThrowType, request.RollType));
 			return mapper.Map<MessageDto>(message);
 		}
 	}

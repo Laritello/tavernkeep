@@ -18,9 +18,11 @@ namespace Tavernkeep.Application.Mapping.Profiles
 			CreateMap<TextMessage, TextMessageDto>();
 
 			CreateMap<RollMessage, RollMessageDto>()
-				.Include<SkillRollMessage, SkillRollMessageDto>();
+				.Include<SkillRollMessage, SkillRollMessageDto>()
+				.Include<SavingThrowRollMessage, SavingThrowRollMessageDto>();
 
 			CreateMap<SkillRollMessage, SkillRollMessageDto>();
+			CreateMap<SavingThrowRollMessage, SavingThrowRollMessageDto>();
 		}
 	}
 }
