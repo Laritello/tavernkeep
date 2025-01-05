@@ -5,7 +5,6 @@ import { type Message, type SkillRollMessage } from '@/entities/Message';
 
 import TextMessageView from './TextMessageView.vue';
 import RollMessageView from './RollMessageView.vue';
-import SkillRollMessageView from './SkillRollMessageView.vue';
 import { useSession } from '@/composables/useSession';
 
 const { message } = defineProps<{
