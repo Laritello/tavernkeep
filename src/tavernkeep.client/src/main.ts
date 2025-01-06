@@ -1,5 +1,7 @@
 import './assets/main.css';
 import '@mdi/font/css/materialdesignicons.css';
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 import { createApp } from 'vue';
 import App from './App.vue';
@@ -17,6 +19,11 @@ const pinia = createPinia();
 app.use(pinia);
 app.use(router);
 app.use(VueChatScroll);
+app.use(Toast, {
+    transition: "Vue-Toastification__bounce",
+    maxToasts: 3,
+    newestOnTop: true
+});
 
 useAppState();
 

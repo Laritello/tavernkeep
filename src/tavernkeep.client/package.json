@@ -22,6 +22,7 @@
         "typescript-cookie": "^1.0.6",
         "vue": "^3.5.3",
         "vue-router": "^4.2.5",
+        "vue-toastification": "^2.0.0-rc.5",
         "vue3-chat-scroll": "^0.2.0",
         "vuetify": "^3.5.3"
     },
@@ -41,6 +42,6 @@
         "typescript": "~5.3.0",
         "vite": "latest",
         "vite-svg-loader": "^5.1.0",
-        "vue-tsc": "^1.8.25"
+        "vue-tsc": "^2.2.0"
     }
 }
