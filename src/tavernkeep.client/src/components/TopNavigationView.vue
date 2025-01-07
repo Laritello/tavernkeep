@@ -1,12 +1,33 @@
 <script setup lang="ts">
 import HealthBar from '@/components/character/HealthBar.vue';
 
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
+
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import ArmorClassWidget from '@/components/character/ArmorClassWidget.vue';
 import PerceptionWidget from '@/components/character/PerceptionWidget.vue';
 import HeroPoints from './character/HeroPoints.vue';
+import { useModal } from '@/composables/useModal';
+import ConditionApplyDialog from '@/components/dialogs/ConditionApplyDialog.vue';
+
+const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
 const user = useCurrentUserAccount();
+const modal = useModal();
+
+async function showConditionApplyDialog() {
+    if (user.activeCharacter.value !== undefined) {
+        const result = await modal.show(ConditionApplyDialog, { 
+            conditions: await api.getConditions(), 
+            active: user.activeCharacter.value.conditions 
+        });
+
+        if (result.action === 'result') {
+            await api.applyCondition(user.activeCharacter.value.id, result.payload.name, result.payload.level);
+        }
+    }
+}
 </script>
 
 <template>
@@ -62,7 +83,8 @@ const user = useCurrentUserAccount();
                     <PerceptionWidget :perception="user.activeCharacter.value.perception" class="w-12" />
                     <ArmorClassWidget :armor="user.activeCharacter.value.armor" class="w-12" />
                 </div>
-                <button class="btn btn-xs btn-outline uppercase">Conditions</button>
+                <button class="btn btn-xs btn-outline uppercase"
+                    v-on:click="showConditionApplyDialog">Conditions</button>
             </div>
         </div>
     </div>
