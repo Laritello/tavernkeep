@@ -12,7 +12,7 @@ export class RefreshHttpClient extends DefaultHttpClient {
             const refreshResult = await session.refresh();
             if (refreshResult.status === 'error') throw Error('Refresh failed');
             const token = refreshResult.accessToken;
-            request.headers = { ...request.headers, Autorization: `Bearer ${token}` };
+            request.headers = { ...request.headers, Authorization: `Bearer ${token}` };
         }
 
         return super.send(request);
