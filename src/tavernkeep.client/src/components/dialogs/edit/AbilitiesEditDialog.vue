@@ -38,13 +38,13 @@ function decrease(ability: Ability) {
         <div class="modal-box">
             <h3 class="font-bold text-lg">Attributes edit</h3>
             <form @submit.prevent="confirm" method="dialog" class="space-x-2">
-                <div class="grid grid-cols-3 md:grid-cols-6">
+                <div class="grid grid-cols-3">
                     <template v-for="ability in currentItems" :key="ability.type">
                         <div class="box-border flex flex-col m-2 p-2 border-2 rounded-lg">
                             <div class="flex flex-row input input-bordered text-3xl font-extrabold select-none justify-center max-w-full">
                                 <input type="number" 
                                        v-model.number="ability.score" 
-                                       class="max-w-12 text-end" />
+                                       class="max-w-12 text-center" />
                                 <div class="flex flex-col">
                                     <div class="btn btn-ghost btn-xs btn-square max-w-4"
                                          @click="increase(ability)">
