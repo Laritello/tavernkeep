@@ -26,13 +26,13 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 
 		#region Methods
 
-		public Condition ToCondition()
+		public Condition ToCondition(int level = 1)
 		{
 			return new Condition()
 			{
 				Name = Name,
 				HasLevels = HasLevels,
-				Level = Level,
+				Level = level,
 				Related = Related,
 				Modifiers = Modifiers
 			};
