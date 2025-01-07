@@ -3,16 +3,17 @@ import { ref, computed } from 'vue';
 import { useSwipe } from '@vueuse/core';
 import type { Ability } from '@/contracts/character';
 
-const { ability, max, min, swipeSensitivity } = withDefaults(defineProps<{
+const { 
+    ability, 
+    max = Number.MAX_VALUE, 
+    min = Number.MIN_VALUE, 
+    swipeSensitivity = 0.9 
+} = defineProps<{
     ability: Ability;
     max?: number;
     min?: number;
     swipeSensitivity?: number;
-}>(), {
-    max: Number.MAX_VALUE,
-    min: Number.MIN_VALUE,
-    swipeSensitivity: 0.9,
-});
+}>();
 
 const emits = defineEmits<{
     changed: [value: number];
