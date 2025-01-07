@@ -7,6 +7,7 @@ import { useModal } from '@/composables/useModal';
 import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
 
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
+import LanguageSwitcher from '@/components/shared/LanguageSwitcher.vue';
 const router = useRouter();
 
 // Change the theme dynamically
@@ -56,6 +57,8 @@ async function logout() {
             </svg>
             Dark
         </button>
+        
+        <LanguageSwitcher />
 
         <div class="divider px-4"></div>
 

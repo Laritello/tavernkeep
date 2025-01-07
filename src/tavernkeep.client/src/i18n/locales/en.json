@@ -1,0 +1,14 @@
+﻿{
+    "locale": {
+        "en": "English",
+        "ru": "Russian"
+    },
+    "character": {
+        "attributes": "Attributes",
+        "savingThrows": "Saving Throws",
+        "skills": "Skills",
+        "attacks": "Attacks",
+        "spells": "Spells",
+        "inventory": "Inventory"
+    }
+}

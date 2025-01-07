@@ -1,0 +1,14 @@
+﻿{
+    "locale": {
+        "en": "Английский",
+        "ru": "Русский"
+    },
+    "character": {
+        "attributes": "Характеристики",
+        "savingThrows": "Спасброски",
+        "skills": "Навыки",
+        "attacks": "Атаки",
+        "spells": "Заклинания",
+        "inventory": "Снаряжение"
+    }
+}
