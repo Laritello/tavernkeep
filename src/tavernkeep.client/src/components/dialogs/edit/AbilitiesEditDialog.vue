@@ -19,6 +19,18 @@ function confirm() {
 function cancel() {
     closeModal({ action: 'reject' });
 }
+
+function increase(ability: Ability) {
+    if (ability.score >= 20) return;
+    ability.score++;
+}
+
+function decrease(ability: Ability) {
+    if (ability.score <= 8) return;
+    ability.score--;
+}
+
+
 </script>
 
 <template>
@@ -28,8 +40,22 @@ function cancel() {
             <form @submit.prevent="confirm" method="dialog" class="space-x-2">
                 <div class="grid grid-cols-3 md:grid-cols-6">
                     <template v-for="ability in currentItems" :key="ability.type">
-                        <div class="box-border flex flex-col m-2 p-2 border-2 rounded-lg red">
-                            <input v-model.number="ability.score" class="input input-bordered text-3xl font-extrabold text-center select-none" />
+                        <div class="box-border flex flex-col m-2 p-2 border-2 rounded-lg">
+                            <div class="flex flex-row input input-bordered text-3xl font-extrabold select-none p-0">
+                                <input type="number" 
+                                       v-model.number="ability.score" 
+                                       class="max-w-12 text-end" />
+                                <div class="flex flex-col">
+                                    <div class="btn btn-ghost btn-xs btn-square"
+                                         @click="increase(ability)">
+                                        <span class="mdi mdi-chevron-up"></span>
+                                    </div>
+                                    <div class="btn btn-ghost btn-xs btn-square"
+                                         @click="decrease(ability)">
+                                        <span class="mdi mdi-chevron-down"></span>
+                                    </div>
+                                </div>
+                            </div>
                             <p class="text-sm font-light text-center select-none">{{ ability.type }}</p>
                         </div>
                     </template>
