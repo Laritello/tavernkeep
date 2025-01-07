@@ -47,7 +47,7 @@
             </div>
 
             <div class="modal-action">
-                <button class="btn btn-success w-24" type="submit">Save</button>
+                <button @click="save" class="btn btn-success w-24" type="submit">Save</button>
                 <button @click="cancel" class="btn w-24" type="button">Cancel</button>
             </div>
         </div>
@@ -55,18 +55,17 @@
 </template>
 <script setup lang="ts">
 import { type DialogResultCallback } from '@/composables/useModal';
+import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
 import type { Condition } from '@/entities';
 import { ref } from 'vue';
 
 const { active, conditions, closeModal } = defineProps<{
     conditions: Condition[];
     active: Condition[];
-    closeModal: DialogResultCallback<Condition>;
+    closeModal: DialogResultCallback<ConditionShortDto[]>;
 }>();
 
 const currentActive = ref<Condition[]>([...active]);
-
-var selected: Condition | undefined = undefined;
 
 function addCondition(condition: Condition) {
     if (currentActive.value.find((e) => e.name == condition.name) !== undefined) {
@@ -95,12 +94,9 @@ function increaseLevel(condition: Condition) {
 }
 
 async function save() {
-    if (selected === undefined) {
-        closeModal({ action: 'reject' });
-        return;
-    }
-
-    closeModal({ action: 'result', payload: selected });
+    closeModal({
+        action: 'result', payload: currentActive.value.map(x => ({ name: x.name, level: x.level }))
+    });
 }
 
 function cancel() {

@@ -16,7 +16,7 @@ const api: AxiosApiClient = ApiClientFactory.createApiClient();
 const user = useCurrentUserAccount();
 const modal = useModal();
 
-async function showConditionApplyDialog() {
+async function showConditionEditDialog() {
     if (user.activeCharacter.value !== undefined) {
         const result = await modal.show(ConditionApplyDialog, { 
             conditions: await api.getConditions(), 
@@ -24,7 +24,7 @@ async function showConditionApplyDialog() {
         });
 
         if (result.action === 'result') {
-            await api.applyCondition(user.activeCharacter.value.id, result.payload.name, result.payload.level);
+            await api.editConditions(user.activeCharacter.value.id, result.payload);
         }
     }
 }
@@ -84,7 +84,7 @@ async function showConditionApplyDialog() {
                     <ArmorClassWidget :armor="user.activeCharacter.value.armor" class="w-12" />
                 </div>
                 <button class="btn btn-xs btn-outline uppercase"
-                    v-on:click="showConditionApplyDialog">Conditions</button>
+                    v-on:click="showConditionEditDialog">Conditions</button>
             </div>
         </div>
     </div>

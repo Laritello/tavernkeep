@@ -7,6 +7,7 @@ import type { Ability, Skill, Lore, Perception } from '@/contracts/character';
 import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowType } from '@/contracts/enums';
 import type { Condition } from '@/entities/Condition';
 import type { SavingThrowRollMessage } from '@/entities/Message';
+import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
 
 export class AxiosApiClient {
     client: AxiosInstance;
@@ -150,7 +151,7 @@ export class AxiosApiClient {
     }
 
     async editAbilities(characterId: string, scores: Record<AbilityType, number>): Promise<void> {
-        const response = await this.client.patch<Ability>(`characters/${characterId}/abilities`, {
+        const response = await this.client.patch(`characters/${characterId}/abilities`, {
             scores: scores,
         });
 
@@ -158,7 +159,7 @@ export class AxiosApiClient {
     }
 
     async editSkills(characterId: string, proficiencies: Record<SkillType, Proficiency>): Promise<void> {
-        const response = await this.client.patch<Skill>(`characters/${characterId}/skills`, {
+        const response = await this.client.patch(`characters/${characterId}/skills`, {
             proficiencies: proficiencies,
         });
 
@@ -166,7 +167,7 @@ export class AxiosApiClient {
     }
 
     async editSavingThrows(characterId: string, proficiencies: Record<SavingThrowType, Proficiency>): Promise<void> {
-        const response = await this.client.patch<Skill>(`characters/${characterId}/saving-throws`, {
+        const response = await this.client.patch(`characters/${characterId}/saving-throws`, {
             proficiencies: proficiencies,
         });
 
@@ -199,7 +200,7 @@ export class AxiosApiClient {
     }
 
     async deleteMessage(messageId: string): Promise<void> {
-        const response = await this.client.delete<Message[]>(`chat/${messageId}`);
+        const response = await this.client.delete(`chat/${messageId}`);
         return getPayloadOrThrow(response);
     }
 
@@ -242,6 +243,14 @@ export class AxiosApiClient {
             characterId: characterId,
             conditionName: conditionName,
             conditionLevel: conditionLevel,
+        });
+
+        return getPayloadOrThrow(response);
+    }
+
+    async editConditions(characterId: string, conditions: ConditionShortDto[]): Promise<void> {
+        const response = await this.client.patch(`conditions/${characterId}`, {
+            conditions: conditions,
         });
 
         return getPayloadOrThrow(response);
