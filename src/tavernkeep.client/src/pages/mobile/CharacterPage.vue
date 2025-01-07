@@ -54,15 +54,13 @@ async function rollSkillCheck(skillType: SkillType) {
     if (character.value !== undefined) {
         const message = await api.performSkillCheck(character.value.id, skillType, RollType.Public);
         const toast = useToast();
-        toast.success({
+        toast({
             component: SkillCheckResultToast,
             props: {
                 message
             }
         }, {
-            timeout: 5000,
-            showCloseButtonOnHover: false,
-            closeButton: false,
+            toastClassName: 'skill-check-toast',
         });
     }
 }
@@ -77,9 +75,7 @@ async function rollSavingThrow(savingThrow: SavingThrowType) {
                 message
             }
         }, {
-            timeout: 5000,
-            showCloseButtonOnHover: false,
-            closeButton: false,
+            toastClassName: 'saving-throw-toast',
         });
     }
 }

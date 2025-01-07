@@ -2,6 +2,7 @@ import './assets/main.css';
 import '@mdi/font/css/materialdesignicons.css';
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import D20Icon from '@/assets/dice/d20-grey.svg';
 
 import { createApp } from 'vue';
 import App from './App.vue';
@@ -22,7 +23,15 @@ app.use(VueChatScroll);
 app.use(Toast, {
     transition: "Vue-Toastification__bounce",
     maxToasts: 3,
-    newestOnTop: true
+    newestOnTop: true,
+    toastDefaults: {
+        default: {
+            timeout: 5000,
+            showCloseButtonOnHover: false,
+            closeButton: false,
+            icon: D20Icon,
+        }
+    }
 });
 
 useAppState();
