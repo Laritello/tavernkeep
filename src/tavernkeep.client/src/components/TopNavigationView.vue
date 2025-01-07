@@ -18,9 +18,9 @@ const modal = useModal();
 
 async function showConditionEditDialog() {
     if (user.activeCharacter.value !== undefined) {
-        const result = await modal.show(ConditionApplyDialog, { 
-            conditions: await api.getConditions(), 
-            active: user.activeCharacter.value.conditions 
+        const result = await modal.show(ConditionApplyDialog, {
+            conditions: await api.getConditions(),
+            active: user.activeCharacter.value.conditions
         });
 
         if (result.action === 'result') {
@@ -83,8 +83,14 @@ async function showConditionEditDialog() {
                     <PerceptionWidget :perception="user.activeCharacter.value.perception" class="w-12" />
                     <ArmorClassWidget :armor="user.activeCharacter.value.armor" class="w-12" />
                 </div>
-                <button class="btn btn-xs btn-outline uppercase"
-                    v-on:click="showConditionEditDialog">Conditions</button>
+                <button class="btn btn-xs btn-outline uppercase px-0" v-on:click="showConditionEditDialog">
+                    <div class="flex flex-row">
+                        <p class="tracking-tighter">
+                            <span>Conditions</span>
+                            <span v-if="user.activeCharacter.value.conditions.length > 0" class="ml-1">{{ user.activeCharacter.value.conditions.length }}</span>
+                        </p>
+                    </div>
+                </button>
             </div>
         </div>
     </div>

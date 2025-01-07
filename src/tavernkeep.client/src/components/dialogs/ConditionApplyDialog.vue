@@ -3,8 +3,8 @@
         <div class="modal-box">
             <h3 class="font-bold text-lg">Edit conditions</h3>
 
-            <h4 v-if="active.length > 0" class="font-bold text-base">Active</h4>
-            <div v-if="active.length > 0" class="flex flex-col max-h-36 overflow-y-auto scroll-smooth">
+            <h4 v-if="currentActive.length > 0" class="font-bold text-base">Active</h4>
+            <div v-if="currentActive.length > 0" class="flex flex-col max-h-36 overflow-y-auto scroll-smooth">
                 <div v-for="condition in currentActive" :key="condition.name"
                     class="flex flex-row border-base-200 border-b-2 p-1 align-items-center">
                     <p class="flex-1 self-center">{{ condition.name }}</p>
