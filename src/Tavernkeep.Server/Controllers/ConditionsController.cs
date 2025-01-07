@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Conditions.Commands.ApplyCondition;
+using Tavernkeep.Application.UseCases.Conditions.Commands.EditConditions;
 using Tavernkeep.Application.UseCases.Conditions.Commands.RemoveCondition;
 using Tavernkeep.Application.UseCases.Conditions.Queries.GetCondition;
 using Tavernkeep.Application.UseCases.Conditions.Queries.GetConditions;
@@ -58,6 +59,18 @@ namespace Tavernkeep.Server.Controllers
 		{
 			var character = await mediator.Send(new ApplyConditionCommand(HttpContext.GetUserId(), request.CharacterId, request.ConditionName, request.ConditionLevel));
 			return mapper.Map<CharacterDto>(character);
+		}
+
+		/// <summary>
+		/// Apply condition to the character.
+		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
+		/// <param name="request">The request.</param>
+		[Authorize]
+		[HttpPatch("{characterId}")]
+		public async Task EditConditionsAsync([FromRoute] Guid characterId, [FromBody] EditConditionsRequest request)
+		{
+			await mediator.Send(new EditConditionsCommand(HttpContext.GetUserId(), characterId, request.Conditions));
 		}
 
 		/// <summary>

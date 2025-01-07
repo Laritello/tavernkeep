@@ -5,15 +5,15 @@ const { health } = defineProps<{ health: Health }>();
 </script>
 
 <template>
-    <div v-bind:class="health.temporary > 0 ? 'w-full bg-neutral rounded-r-xl border-2 border-sky-500' : 'w-full bg-neutral rounded-r-xl'">
+    <div class="flex bg-neutral rounded-[10px] w-full relative" v-bind:class="health.temporary > 0 ? 'border-2 border-sky-500' : ''">
         <!-- Current health -->
-        <div class="bg-red-700 h-full rounded-xl" :style="{ width: `${(health.current / health.max) * 100}%` }"></div>
+        <div class="bg-red-700 rounded-[8px] h-full" :style="{ width: `${(health.current / health.max) * 100}%` }"></div>
         <!-- Text label -->
-        <div class="absolute inset-0 left-8 font-bold text-white flex flex-row text-xs self-center">
-            <p>{{ health.current }} / {{ health.max }}</p>
-            <p v-if="health.temporary > 0" style="white-space: pre-wrap;">{{ ` + ` }}</p>
-            <p v-if="health.temporary > 0">{{ `${health.temporary}` }}</p>
-        </div>
+        <p class="absolute inset-0 font-bold text-white text-xs text-center">
+            <span class="align-middle">{{ health.current }} / {{ health.max }}</span>
+            <span class="align-middle" v-if="health.temporary > 0" style="white-space: pre-wrap;">{{ ` + ` }}</span>
+            <span class="align-middle" v-if="health.temporary > 0">{{ `${health.temporary}` }}</span>
+        </p>
     </div>
 </template>
 

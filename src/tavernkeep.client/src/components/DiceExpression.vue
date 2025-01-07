@@ -48,20 +48,20 @@ const parsedExpression = computed(() => {
 </script>
 
 <template>
-    <div class="flex flex-row flex-wrap justify-center items-center">
+    <div class="flex flex-row flex-wrap justify-center ">
         <!-- Loop through parsed parts to render them -->
-        <div v-for="(part, index) in parsedExpression" :key="index">
+        <div v-for="(part, index) in parsedExpression" :key="index" class="flex items-stretch">
             <!-- If it's a dice roll -->
             <template v-if="part.type === 'dice'">
                 <div class="flex flex-row items-center">
-                    <span v-if="part && part.count && part.count > '1'" class="text-sm font-semibold">{{ part.count }}</span>
+                    <span v-if="part && part.count && part.count > '1'" class="text-sm font-semibold align-middle">{{ part.count }}</span>
                     <DiceIcon class="w-6" :die="`d${part.sides}`" />
                 </div>
             </template>
 
             <!-- If it's a operation or number -->
             <template v-else>
-                <span class="text-sm font-semibold">{{ part.value }}</span>
+                <p class="text-sm font-semibold self-center">{{ part.value }}</p>
             </template>
         </div>
     </div>

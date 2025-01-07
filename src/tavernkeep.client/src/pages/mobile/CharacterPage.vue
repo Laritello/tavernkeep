@@ -16,6 +16,7 @@ import SavingThrowResultToast from '@/components/toasts/SavingThrowResultToast.v
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
 const user = useCurrentUserAccount();
+
 const character = user.activeCharacter;
 
 interface Section {
@@ -79,6 +80,8 @@ async function rollSavingThrow(savingThrow: SavingThrowType) {
         });
     }
 }
+
+
 
 onMounted(() => {
     updateSection();
