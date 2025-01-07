@@ -3,16 +3,22 @@ import { ref, computed } from 'vue';
 import { useSwipe } from '@vueuse/core';
 import type { Ability } from '@/contracts/character';
 
-const { ability } = defineProps<{
+const { ability, max, min, swipeSensitivity } = withDefaults(defineProps<{
     ability: Ability;
-}>();
+    max?: number;
+    min?: number;
+    swipeSensitivity?: number;
+}>(), {
+    max: Number.MAX_VALUE,
+    min: Number.MIN_VALUE,
+    swipeSensitivity: 0.9,
+});
 
 const emits = defineEmits<{
     changed: [value: number];
 }>();
 
 const internalScore = ref(ability.score);
-
 const swipeInput = ref<HTMLDivElement>();
 
 
@@ -23,27 +29,25 @@ const { lengthY } = useSwipe(swipeInput, {
     onSwipeStart() {
         startScore = internalScore.value;
     },
+    
     onSwipe() {
-        const amount = (lengthY.value / height.value) * 0.9;
-        if(startScore + amount >= 21 || startScore + amount < 8) {
-            return;
-        }
-
-        emits('changed', Math.floor(startScore + amount));
-        internalScore.value = Math.floor(startScore + amount);
+        const amount = (lengthY.value / height.value) * swipeSensitivity;
+        internalScore.value = Math.round(Math.min(Math.max(startScore + amount, min), max));
+    },
+    
+    onSwipeEnd() {
+        const amount = (lengthY.value / height.value) * swipeSensitivity;
+        const result = Math.round(Math.min(Math.max(startScore + amount, min), max));
+        
+        emits('changed', result);
+        internalScore.value = result;
     },
 });
 
-function increase(amount: number) {
-    if (internalScore.value >= 20) return;
-    emits('changed', internalScore.value + amount);
-    internalScore.value += amount;
-}
-
-function decrease(amount: number) {
-    if (internalScore.value <= 8) return;
-    emits('changed', internalScore.value - amount);
-    internalScore.value -= amount;
+function change(amount: number) {
+    const result = Math.min(Math.max(internalScore.value + amount, min), max);
+    internalScore.value = result;
+    emits('changed', result);
 }
 </script>
 
@@ -55,11 +59,11 @@ function decrease(amount: number) {
                class="max-w-12 text-center" />
         <div class="flex flex-col">
             <div class="btn btn-ghost btn-xs btn-square max-w-4"
-                 @click="increase(1)">
+                 @click="change(1)">
                 <span class="mdi mdi-chevron-up"></span>
             </div>
             <div class="btn btn-ghost btn-xs btn-square max-w-4"
-                 @click="decrease(1)">
+                 @click="change(-1)">
                 <span class="mdi mdi-chevron-down"></span>
             </div>
         </div>

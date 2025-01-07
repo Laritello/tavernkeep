@@ -34,6 +34,9 @@ function cancel() {
                     <template v-for="ability in currentItems" :key="ability.type">
                         <div class="box-border flex flex-col m-2 p-2 border-2 rounded-lg">
                             <SwipeNumericInput :ability="ability"
+                                               :max="20"
+                                               :min="8"
+                                               :swipe-sensitivity="0.9"
                                                @changed="(value) => currentItems[ability.type].score = value" />
                             <p class="text-sm font-light text-center select-none">{{ ability.type }}</p>
                         </div>
