@@ -41,16 +41,16 @@ function decrease(ability: Ability) {
                 <div class="grid grid-cols-3 md:grid-cols-6">
                     <template v-for="ability in currentItems" :key="ability.type">
                         <div class="box-border flex flex-col m-2 p-2 border-2 rounded-lg">
-                            <div class="flex flex-row input input-bordered text-3xl font-extrabold select-none p-0">
+                            <div class="flex flex-row input input-bordered text-3xl font-extrabold select-none justify-center max-w-full">
                                 <input type="number" 
                                        v-model.number="ability.score" 
                                        class="max-w-12 text-end" />
                                 <div class="flex flex-col">
-                                    <div class="btn btn-ghost btn-xs btn-square"
+                                    <div class="btn btn-ghost btn-xs btn-square max-w-4"
                                          @click="increase(ability)">
                                         <span class="mdi mdi-chevron-up"></span>
                                     </div>
-                                    <div class="btn btn-ghost btn-xs btn-square"
+                                    <div class="btn btn-ghost btn-xs btn-square max-w-4"
                                          @click="decrease(ability)">
                                         <span class="mdi mdi-chevron-down"></span>
                                     </div>
