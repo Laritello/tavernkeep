@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
+import { useToast } from "vue-toastification";
 import AbilitiesWidget from '@/components/character/widgets/Abilities/AbilitiesWidget.vue';
 import SavingThrowsWidget from '@/components/character/widgets/SavingThrows/SavingThrowsWidget.vue';
 import SkillsWidget from '@/components/character/widgets/Skills/SkillsWidget.vue';
@@ -9,6 +10,8 @@ import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import { AbilityType, RollType, SavingThrowType, type Proficiency, type SkillType } from '@/contracts/enums';
+import SkillCheckResultToast from '@/components/toasts/SkillCheckResultToast.vue';
+import SavingThrowResultToast from '@/components/toasts/SavingThrowResultToast.vue';
 
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
@@ -49,13 +52,31 @@ async function updateSavingThrows(proficiencies: Record<string, Proficiency>) {
 // TODO: Longtap for private roll or toggle somewhere for the roll type
 async function rollSkillCheck(skillType: SkillType) {
     if (character.value !== undefined) {
-        await api.performSkillCheck(character.value.id, skillType, RollType.Public);
+        const message = await api.performSkillCheck(character.value.id, skillType, RollType.Public);
+        const toast = useToast();
+        toast({
+            component: SkillCheckResultToast,
+            props: {
+                message
+            }
+        }, {
+            toastClassName: 'skill-check-toast',
+        });
     }
 }
 
 async function rollSavingThrow(savingThrow: SavingThrowType) {
     if (character.value !== undefined) {
-        await api.performSavingThrow(character.value.id, savingThrow, RollType.Public);
+        const message = await api.performSavingThrow(character.value.id, savingThrow, RollType.Public);
+        const toast = useToast();
+        toast({
+            component: SavingThrowResultToast,
+            props: {
+                message
+            }
+        }, {
+            toastClassName: 'saving-throw-toast',
+        });
     }
 }
 

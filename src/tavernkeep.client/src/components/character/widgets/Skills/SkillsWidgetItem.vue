@@ -3,7 +3,7 @@
 
         <label class="swap">
             <!-- this hidden checkbox controls the state -->
-            <input type="checkbox" />
+            <input type="checkbox" name="input-skill-pin" />
 
             <!--If favourite disabled-->
             <svg xmlns="http://www.w3.org/2000/svg" class="swap-off w-4 h-4" viewBox="0 -960 960 960"
