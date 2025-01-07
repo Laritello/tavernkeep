@@ -4,10 +4,10 @@ import TopNavigationView from '@/components/TopNavigationView.vue';
 </script>
 
 <template>
-    <div class="flex flex-col h-full">
+    <div class="flex flex-col">
         <TopNavigationView class="sticky top-0" />
 
-        <div class="h-dvh overflow-hidden">
+        <div class="h-full overflow-hidden">
             <slot />
         </div>
 
