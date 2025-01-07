@@ -2,6 +2,7 @@
 import type { Ability } from '@/contracts/character';
 import { type AbilityType } from '@/contracts/enums';
 import type { DialogResultCallback } from '@/composables/useModal';
+import SwipeNumericInput from '@/components/shared/SwipeNumericInput.vue';
 
 
 const { abilities, closeModal } = defineProps<{ 
@@ -9,7 +10,10 @@ const { abilities, closeModal } = defineProps<{
     closeModal: DialogResultCallback<Record<AbilityType, Ability>> 
 }>();
 
-const currentItems = { ...abilities };
+const currentItems = Object.values(abilities).reduce((acc, ability) => {
+    acc[ability.type] = { ...ability };
+    return acc;
+}, {} as Record<AbilityType, Ability>);
 
 function confirm() {
     const payload = currentItems;
@@ -19,18 +23,6 @@ function confirm() {
 function cancel() {
     closeModal({ action: 'reject' });
 }
-
-function increase(ability: Ability) {
-    if (ability.score >= 20) return;
-    ability.score++;
-}
-
-function decrease(ability: Ability) {
-    if (ability.score <= 8) return;
-    ability.score--;
-}
-
-
 </script>
 
 <template>
@@ -41,21 +33,8 @@ function decrease(ability: Ability) {
                 <div class="grid grid-cols-3">
                     <template v-for="ability in currentItems" :key="ability.type">
                         <div class="box-border flex flex-col m-2 p-2 border-2 rounded-lg">
-                            <div class="flex flex-row input input-bordered text-3xl font-extrabold select-none justify-center max-w-full">
-                                <input type="number" 
-                                       v-model.number="ability.score" 
-                                       class="max-w-12 text-center" />
-                                <div class="flex flex-col">
-                                    <div class="btn btn-ghost btn-xs btn-square max-w-4"
-                                         @click="increase(ability)">
-                                        <span class="mdi mdi-chevron-up"></span>
-                                    </div>
-                                    <div class="btn btn-ghost btn-xs btn-square max-w-4"
-                                         @click="decrease(ability)">
-                                        <span class="mdi mdi-chevron-down"></span>
-                                    </div>
-                                </div>
-                            </div>
+                            <SwipeNumericInput :ability="ability"
+                                               @changed="(value) => currentItems[ability.type].score = value" />
                             <p class="text-sm font-light text-center select-none">{{ ability.type }}</p>
                         </div>
                     </template>
