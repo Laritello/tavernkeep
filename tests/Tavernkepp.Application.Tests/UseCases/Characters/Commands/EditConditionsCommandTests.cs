@@ -2,24 +2,46 @@
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditAbilities;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Specifications;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditConditions;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
-	public class EditAbilitiesCommandTests
+	internal class EditConditionsCommandTests
 	{
 		private readonly Guid characterId = Guid.NewGuid();
 
 		private readonly User owner;
 		private readonly User master;
 
+		private readonly List<ConditionTemplate> conditions = 
+		[
+			new() 
+			{ 
+				Id = "pf2e:condition:blinded",
+				Name = "Blinded", 
+				HasLevels = false, 
+				Modifiers = 
+				[
+					new() 
+					{ 
+						Targets = [ModifierTarget.Perception], 
+						Value = 4, 
+						IsBonus = false 
+					}
+				] 
+			}
+		];
+
 		private Character character = default!;
 
-		public EditAbilitiesCommandTests()
+
+		public EditConditionsCommandTests()
 		{
 			owner = new User("owner", "owner", UserRole.Player) { Id = Guid.NewGuid() };
 			master = new User("master", "master", UserRole.Master) { Id = Guid.NewGuid() };
@@ -34,21 +56,18 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				Name = "Demo",
 				Owner = owner
 			};
+
+			character.Wisdom.Score = 16;
+			character.Perception.Proficiency = Proficiency.Trained;
 		}
 
 		[Test]
-		[TestCase(AbilityType.Strength)]
-		[TestCase(AbilityType.Dexterity)]
-		[TestCase(AbilityType.Constitution)]
-		[TestCase(AbilityType.Intelligence)]
-		[TestCase(AbilityType.Wisdom)]
-		[TestCase(AbilityType.Charisma)]
-		public async Task EditAbilitiesCommand_Success(AbilityType type)
+		public async Task EditConditionsCommand_Success()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
 			var mockNotificationService = new Mock<INotificationService>();
-			var newScore = 12;
 
 			mockUserRepository
 				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()!))
@@ -56,22 +75,32 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			mockCharacterRepository
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
+			mockConditionMetadataRepository
+				.Setup(repo => repo.GetConditionAsync("Blinded", It.IsAny<CancellationToken>()))
+				.ReturnsAsync(conditions[0]);
 
-			var request = new EditAbilitiesCommand(owner.Id, characterId, new() { { type, newScore } });
-			var handler = new EditAbilitiesCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			int basePerception = character.Perception.Bonus;
+
+			var request = new EditConditionsCommand(owner.Id, characterId, [new() { Name = "Blinded" }]);
+			var handler = new EditConditionsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionMetadataRepository.Object, mockNotificationService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
-			Assert.That(character.GetAbility(type).Score, Is.EqualTo(newScore));
+			Assert.Multiple(() =>
+			{
+				Assert.That(character.Conditions, Has.Count.EqualTo(1));
+				Assert.That(character.Conditions.FirstOrDefault(x => x.Name == "Blinded"), Is.Not.Null);
+				Assert.That(character.Perception.Bonus, Is.EqualTo(basePerception - 4));
+			});
 		}
 
 		[Test]
-		public async Task EditAbilitiesCommand_Success_Master()
+		public async Task EditConditionsCommand_Success_Master()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
 			var mockNotificationService = new Mock<INotificationService>();
-			var newScore = 12;
 
 			mockUserRepository
 				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
@@ -79,29 +108,39 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			mockCharacterRepository
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
+			mockConditionMetadataRepository
+				.Setup(repo => repo.GetConditionAsync("Blinded", It.IsAny<CancellationToken>()))
+				.ReturnsAsync(conditions[0]);
 
-			var request = new EditAbilitiesCommand(master.Id, characterId, new() { { AbilityType.Strength, newScore } });
-			var handler = new EditAbilitiesCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			int basePerception = character.Perception.Bonus;
+
+			var request = new EditConditionsCommand(master.Id, characterId, [new() { Name = "Blinded" }]);
+			var handler = new EditConditionsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionMetadataRepository.Object, mockNotificationService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
-			Assert.That(character.Strength.Score, Is.EqualTo(newScore));
+			Assert.Multiple(() =>
+			{
+				Assert.That(character.Conditions, Has.Count.EqualTo(1));
+				Assert.That(character.Conditions.FirstOrDefault(x => x.Name == "Blinded"), Is.Not.Null);
+				Assert.That(character.Perception.Bonus, Is.EqualTo(basePerception - 4));
+			});
 		}
 
 		[Test]
-		public void EditAbilitiesCommand_InitiatorNotFound()
+		public void EditConditionsCommand_InitiatorNotFound()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
 			var mockNotificationService = new Mock<INotificationService>();
-			var newScore = 12;
 
 			mockCharacterRepository
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditAbilitiesCommand(owner.Id, characterId, new() { { AbilityType.Strength, newScore } });
-			var handler = new EditAbilitiesCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new EditConditionsCommand(owner.Id, characterId, [new() { Name = "Blinded" }]);
+			var handler = new EditConditionsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionMetadataRepository.Object, mockNotificationService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()
@@ -109,19 +148,19 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		}
 
 		[Test]
-		public void EditAbilitiesCommand_CharacterNotFound()
+		public void EditConditionsCommand_CharacterNotFound()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
 			var mockNotificationService = new Mock<INotificationService>();
-			var newScore = 12;
 
 			mockUserRepository
 				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
-			var request = new EditAbilitiesCommand(owner.Id, characterId, new() { { AbilityType.Strength, newScore } });
-			var handler = new EditAbilitiesCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new EditConditionsCommand(owner.Id, characterId, [new() { Name = "Blinded" }]);
+			var handler = new EditConditionsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionMetadataRepository.Object, mockNotificationService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()
@@ -129,12 +168,12 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		}
 
 		[Test]
-		public void EditAbilitiesCommand_NotEnoughPermissions()
+		public void EditConditionsCommand_NotEnoughPermissions()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
 			var mockNotificationService = new Mock<INotificationService>();
-			var newScore = 12;
 			var initiatorId = Guid.NewGuid();
 
 			mockUserRepository
@@ -144,8 +183,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditAbilitiesCommand(initiatorId, characterId, new() { { AbilityType.Strength, newScore } });
-			var handler = new EditAbilitiesCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new EditConditionsCommand(initiatorId, characterId, [new() { Name = "Blinded" }]);
+			var handler = new EditConditionsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionMetadataRepository.Object, mockNotificationService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<InsufficientPermissionException>()
