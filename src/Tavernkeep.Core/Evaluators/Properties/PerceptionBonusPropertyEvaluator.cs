@@ -11,7 +11,7 @@ namespace Tavernkeep.Core.Evaluators.Properties
 	{
 		private readonly Perception _perception = perception;
 		private readonly Character _character = perception.Owner;
-		private readonly IValueEvaluator<int> _modifierEvaluator = new ModifierEvaluator(perception.Owner, ModifierTarget.Perception);
+		private readonly ModifierEvaluator _modifierEvaluator = new(perception.Owner, ModifierTarget.Perception);
 
 		public int Value => Calculate();
 
