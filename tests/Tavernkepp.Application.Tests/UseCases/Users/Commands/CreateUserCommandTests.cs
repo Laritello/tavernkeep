@@ -14,7 +14,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 
 		public CreateUserCommandTests()
 		{
-			
+
 		}
 
 		[Test]

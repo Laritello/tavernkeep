@@ -1,14 +1,13 @@
 ﻿using Moq;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Application.UseCases.Characters.Commands.EditAbilities;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditConditions;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Specifications;
-using Tavernkeep.Application.UseCases.Characters.Commands.EditConditions;
-using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
@@ -19,22 +18,22 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		private readonly User owner;
 		private readonly User master;
 
-		private readonly List<ConditionTemplate> conditions = 
+		private readonly List<ConditionTemplate> conditions =
 		[
-			new() 
-			{ 
+			new()
+			{
 				Id = "pf2e:condition:blinded",
-				Name = "Blinded", 
-				HasLevels = false, 
-				Modifiers = 
+				Name = "Blinded",
+				HasLevels = false,
+				Modifiers =
 				[
-					new() 
-					{ 
-						Targets = [ModifierTarget.Perception], 
-						Value = 4, 
-						IsBonus = false 
+					new()
+					{
+						Targets = [ModifierTarget.Perception],
+						Value = 4,
+						IsBonus = false
 					}
-				] 
+				]
 			}
 		];
 

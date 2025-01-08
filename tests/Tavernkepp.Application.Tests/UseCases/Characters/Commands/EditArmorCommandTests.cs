@@ -165,7 +165,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var request = new EditArmorCommand(owner.Id, characterId, ArmorType.Unarmored, 1, false, 0, []);
 			var handler = new EditArmorCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None), 
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()
 				.With.Message.EqualTo("Character with specified ID doesn't exist."));
 		}

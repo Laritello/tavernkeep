@@ -4,7 +4,7 @@ namespace Tavernkeep.Core.Contracts.Structures
 {
 	public class EquippedArmor
 	{
-		public EquippedArmor() 
+		public EquippedArmor()
 		{
 			Type = ArmorType.Unarmored;
 			Bonus = 0;
