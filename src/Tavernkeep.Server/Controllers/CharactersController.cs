@@ -149,12 +149,11 @@ namespace Tavernkeep.Server.Controllers
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The armor proficiency edit request.</param>
-		/// <returns>Changed armor proficiencies.</returns>
 		[Authorize]
 		[HttpPatch("{characterId}/armor-proficiency")]
-		public async Task<ArmorProficiencies> EditCharacterArmorProficiencyThrowAsync([FromRoute] Guid characterId, [FromBody] EditArmorProficiencyRequest request)
+		public async Task EditCharacterArmorProficiencyThrowAsync([FromRoute] Guid characterId, [FromBody] EditArmorProficiencyRequest request)
 		{
-			return await mediator.Send(new EditArmorProficiencyCommand(HttpContext.GetUserId(), characterId, request.Type, request.Proficiency));
+			await mediator.Send(new EditArmorProficiencyCommand(HttpContext.GetUserId(), characterId, request.Type, request.Proficiency));
 		}
 
 		/// <summary>

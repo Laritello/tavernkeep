@@ -11,9 +11,9 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditArmor
 		IUserRepository userRepository,
 		ICharacterRepository characterRepository,
 		INotificationService notificationService
-		) : IRequestHandler<EditArmorProficiencyCommand, ArmorProficiencies>
+		) : IRequestHandler<EditArmorProficiencyCommand>
 	{
-		public async Task<ArmorProficiencies> Handle(EditArmorProficiencyCommand request, CancellationToken cancellationToken)
+		public async Task Handle(EditArmorProficiencyCommand request, CancellationToken cancellationToken)
 		{
 			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
@@ -29,8 +29,6 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditArmor
 			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);
 			await notificationService.QueueCharacterNotificationAsync(character, cancellationToken);
-
-			return character.Armor.Proficiencies;
 		}
 	}
 }

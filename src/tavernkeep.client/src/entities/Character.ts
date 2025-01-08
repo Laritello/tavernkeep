@@ -2,7 +2,7 @@ import type { Ability, Health, Lore, Perception, Skill } from '@/contracts/chara
 import type { AbilityType, SavingThrowType, SkillType } from '@/contracts/enums';
 import type { Condition } from './Condition';
 import type { SavingThrow } from '@/contracts/character/SavingThrow';
-import type { ArmorClass } from '../contracts/character/ArmorClass';
+import type { Armor } from '../contracts/character/Armor';
 
 export interface Character {
     id: string;
@@ -18,7 +18,7 @@ export interface Character {
     abilities: Record<AbilityType, Ability>;
     skills: Record<SkillType, Skill>;
     savingThrows: Record<SavingThrowType, SavingThrow>;
-    armor: ArmorClass;
+    armor: Armor;
 
     lores: Lore[];
     conditions: Condition[];

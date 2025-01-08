@@ -7,16 +7,20 @@ using Tavernkeep.Core.Extensions;
 
 namespace Tavernkeep.Core.Evaluators.Properties
 {
-	public class ArmorClassPropertyEvaluator(ArmorClass armorClass) : IValueEvaluator<int>
+	public class ArmorClassPropertyEvaluator(Armor armorClass) : IValueEvaluator<int>
 	{
-		private readonly ArmorClass _armorClass = armorClass;
+		private readonly Armor _armorClass = armorClass;
 		private readonly Character _character = armorClass.Owner;
-		private readonly IValueEvaluator<int> _modifierEvaluator = new ModifierEvaluator(armorClass.Owner, ModifierTarget.ArmorClass);
+		private readonly ModifierEvaluator _modifierEvaluator = new(armorClass.Owner, ModifierTarget.ArmorClass);
 		public int Value => Calculate();
 
 		public int Calculate()
 		{
-			return 10 + _character.Dexterity.Modifier + _armorClass.Proficiencies[ArmorType.Unarmored].GetProficiencyBonus(_character) + _modifierEvaluator.Value;
+			int dexterityBonus = _armorClass.Equipped.HasDexterityCap 
+				? Math.Min(_character.Dexterity.Modifier, _armorClass.Equipped.DexterityCap) 
+				: _character.Dexterity.Modifier;
+
+			return 10 + dexterityBonus + _armorClass.Proficiencies[_armorClass.Equipped.Type].GetProficiencyBonus(_character) + _modifierEvaluator.Value;
 		}
 	}
 }

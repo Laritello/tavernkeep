@@ -1,28 +1,29 @@
 ﻿using System.Text.Json.Serialization;
-using Tavernkeep.Core.Contracts.Interfaces;
+using Tavernkeep.Core.Contracts.Structures;
 using Tavernkeep.Core.Evaluators.Properties;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
-	public class ArmorClass
+	public class Armor
 	{
 		#region Backing fields
 
-		private IValueEvaluator<int>? _armorClassEvaluator;
+		private ArmorClassPropertyEvaluator? _armorClassEvaluator;
 
 		#endregion
 
 		#region Constructors
 
-		public ArmorClass()
+		public Armor()
 		{
 
 		}
 
-		public ArmorClass(Character character)
+		public Armor(Character character)
 		{
 			Owner = character;
 			Proficiencies = new();
+			Equipped = new();
 		}
 
 		#endregion
@@ -32,6 +33,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 		[JsonIgnore]
 		public Character Owner { get; set; } = default!;
 		public ArmorProficiencies Proficiencies { get; set; }
+		public EquippedArmor Equipped { get; set; }
 		public int Class
 		{
 			get

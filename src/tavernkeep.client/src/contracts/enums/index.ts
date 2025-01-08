@@ -5,3 +5,4 @@ export { RollType } from './RollType';
 export { SkillType } from './SkillType';
 export { UserRole } from './UserRole';
 export { SavingThrowType } from './SavingThrowType';
+export { ArmorType } from './ArmorType';

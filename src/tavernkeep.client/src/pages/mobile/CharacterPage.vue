@@ -12,6 +12,7 @@ import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import { AbilityType, RollType, SavingThrowType, type Proficiency, type SkillType } from '@/contracts/enums';
 import SkillCheckResultToast from '@/components/toasts/SkillCheckResultToast.vue';
 import SavingThrowResultToast from '@/components/toasts/SavingThrowResultToast.vue';
+import ArmorWidget from '@/components/character/widgets/Armor/ArmorWidget.vue';
 
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
@@ -28,6 +29,7 @@ const sections: Section[] = [
     { link: '#attributes', header: 'Attributes' },
     { link: '#saving-throws', header: 'Saving Throws' },
     { link: '#skills', header: 'Skills' },
+    { link: '#armor', header: 'Armor' },
     { link: '#attacks', header: 'Attacks' },
     { link: '#spells', header: 'Spells' },
     { link: '#inventory', header: 'Inventory' },
@@ -158,6 +160,7 @@ function updateSection() {
                 @roll="(type) => rollSavingThrow(type)" />
             <SkillsWidget id="skills" :skills="character.skills" @changed="updateSkills"
                 @roll="(type) => rollSkillCheck(type)" />
+            <ArmorWidget id="armor" :armor="character.armor" />
         </div>
     </div>
     <div v-else>No selected character</div>

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tavernkeep.Infrastructure.Data.Context;
 
@@ -10,9 +11,11 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    partial class SessionContextModelSnapshot : ModelSnapshot
+    [Migration("20250108074131_ArmorConfiguratio")]
+    partial class ArmorConfiguratio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -942,6 +945,21 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.WithOwner("Owner")
                                 .HasForeignKey("OwnerId");
 
+                            b1.OwnsOne("System.Collections.Generic.Dictionary<Tavernkeep.Core.Contracts.Enums.ArmorType, Tavernkeep.Core.Contracts.Enums.Proficiency>", "Proficiencies", b2 =>
+                                {
+                                    b2.Property<Guid>("ArmorOwnerId")
+                                        .HasColumnType("TEXT");
+
+                                    b2.HasKey("ArmorOwnerId");
+
+                                    b2.ToTable("Characters");
+
+                                    b2.ToJson("Proficiencies");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("ArmorOwnerId");
+                                });
+
                             b1.OwnsOne("Tavernkeep.Core.Contracts.Structures.EquippedArmor", "Equipped", b2 =>
                                 {
                                     b2.Property<Guid>("ArmorOwnerId")
@@ -963,30 +981,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                                     b2.ToTable("Characters");
 
-                                    b2.WithOwner()
-                                        .HasForeignKey("ArmorOwnerId");
-                                });
-
-                            b1.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.ArmorProficiencies", "Proficiencies", b2 =>
-                                {
-                                    b2.Property<Guid>("ArmorOwnerId")
-                                        .HasColumnType("TEXT");
-
-                                    b2.Property<int>("Heavy")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.Property<int>("Light")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.Property<int>("Medium")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.Property<int>("Unarmored")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.HasKey("ArmorOwnerId");
-
-                                    b2.ToTable("Characters");
+                                    b2.ToJson("Equipped");
 
                                     b2.WithOwner()
                                         .HasForeignKey("ArmorOwnerId");

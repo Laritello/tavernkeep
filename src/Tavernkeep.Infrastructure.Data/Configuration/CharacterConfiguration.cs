@@ -18,6 +18,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
 			builder.OwnsOne(c => c.Armor, b =>
 			{
 				b.OwnsOne(a => a.Proficiencies);
+				b.OwnsOne(a => a.Equipped);
 				b.ToJson();
 			});
 
