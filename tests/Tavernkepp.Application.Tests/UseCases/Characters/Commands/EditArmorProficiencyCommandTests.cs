@@ -51,8 +51,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditArmorProficiencyCommand(owner.Id, characterId, ArmorType.Unarmored, proficiency);
-			var handler = new EditArmorProficiencyCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new EditArmorCommand(owner.Id, characterId, ArmorType.Unarmored, proficiency);
+			var handler = new EditArmorCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var response = await handler.Handle(request, CancellationToken.None);
 
@@ -77,8 +77,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditArmorProficiencyCommand(master.Id, characterId, type, proficiency);
-			var handler = new EditArmorProficiencyCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new EditArmorCommand(master.Id, characterId, type, proficiency);
+			var handler = new EditArmorCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var response = await handler.Handle(request, CancellationToken.None);
 
@@ -96,8 +96,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditArmorProficiencyCommand(owner.Id, characterId, ArmorType.Unarmored, proficiency);
-			var handler = new EditArmorProficiencyCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new EditArmorCommand(owner.Id, characterId, ArmorType.Unarmored, proficiency);
+			var handler = new EditArmorCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("User with specified ID doesn't exist."));
@@ -114,8 +114,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
-			var request = new EditArmorProficiencyCommand(owner.Id, characterId, ArmorType.Unarmored, proficiency);
-			var handler = new EditArmorProficiencyCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new EditArmorCommand(owner.Id, characterId, ArmorType.Unarmored, proficiency);
+			var handler = new EditArmorCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("Character with specified ID doesn't exist."));
@@ -136,8 +136,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditArmorProficiencyCommand(initiatorId, characterId, ArmorType.Unarmored, proficiency);
-			var handler = new EditArmorProficiencyCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new EditArmorCommand(initiatorId, characterId, ArmorType.Unarmored, proficiency);
+			var handler = new EditArmorCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<InsufficientPermissionException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("You do not have the necessary permissions to perform this operation."));

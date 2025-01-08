@@ -48,7 +48,6 @@ function cancel() {
                 </select>
             </label>
 
-
             <div class="flex flex-row gap-2">
                 <label class="form-control w-full max-w-xs">
                     <div class="label">

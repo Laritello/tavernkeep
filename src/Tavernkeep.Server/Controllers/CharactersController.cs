@@ -145,15 +145,15 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Change armor proficiency of the character.
+		/// Change armor settings and proficiencies of the character.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The armor proficiency edit request.</param>
 		[Authorize]
-		[HttpPatch("{characterId}/armor-proficiency")]
-		public async Task EditCharacterArmorProficiencyThrowAsync([FromRoute] Guid characterId, [FromBody] EditArmorProficiencyRequest request)
+		[HttpPatch("{characterId}/armor")]
+		public async Task EditCharacterArmorAsync([FromRoute] Guid characterId, [FromBody] EditArmorRequest request)
 		{
-			await mediator.Send(new EditArmorProficiencyCommand(HttpContext.GetUserId(), characterId, request.Type, request.Proficiency));
+			await mediator.Send(new EditArmorCommand(HttpContext.GetUserId(), characterId, request.Type, request.Bonus, request.HasDexterityCap, request.DexterityCap, request.Proficiencies));
 		}
 
 		/// <summary>
