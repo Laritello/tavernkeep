@@ -1,20 +1,18 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.UseCases.Conditions.Commands.ApplyCondition
+namespace Tavernkeep.Application.UseCases.Characters.Commands.EditAbilities
 {
-	public class ApplyConditionCommandHandler(
+	public class EditAbilitiesCommandHandler(
 		IUserRepository userRepository,
 		ICharacterRepository characterRepository,
-		IConditionMetadataRepository conditionRepository,
 		INotificationService notificationService
-		) : IRequestHandler<ApplyConditionCommand, Character>
+		) : IRequestHandler<EditAbilitiesCommand>
 	{
-		public async Task<Character> Handle(ApplyConditionCommand request, CancellationToken cancellationToken)
+		public async Task Handle(EditAbilitiesCommand request, CancellationToken cancellationToken)
 		{
 			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
@@ -25,28 +23,15 @@ namespace Tavernkeep.Application.UseCases.Conditions.Commands.ApplyCondition
 			if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)
 				throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
 
-			if (character.Conditions.Any(x => x.Name == request.ConditionName))
+			foreach (var key in request.Scores.Keys)
 			{
-				var condition = character.Conditions.First(x => x.Name == request.ConditionName);
-
-				if (condition.HasLevels)
-				{
-					condition.Level = request.ConditionLevel ?? 1;
-				}
-			}
-			else
-			{
-				var conditionMetadata = await conditionRepository.GetConditionAsync(request.ConditionName, cancellationToken)
-					?? throw new BusinessLogicException("Condition with specified name doesn't exist.");
-
-				var condition = conditionMetadata.ToCondition();
-				character.Conditions.Add(condition);
+				var ability = character.GetAbility(key);
+				ability.Score = request.Scores[key];
 			}
 
+			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);
 			await notificationService.QueueCharacterNotificationAsync(character, cancellationToken);
-
-			return character;
 		}
 	}
 }

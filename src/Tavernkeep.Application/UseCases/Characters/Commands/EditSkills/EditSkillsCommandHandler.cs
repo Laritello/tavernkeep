@@ -4,15 +4,15 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.UseCases.Characters.Commands.EditAbility
+namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSkills
 {
-	public class EditAbilitiesCommandHandler(
+	public class EditSkillsCommandHandler(
 		IUserRepository userRepository,
 		ICharacterRepository characterRepository,
 		INotificationService notificationService
-		) : IRequestHandler<EditAbilitiesCommand>
+		) : IRequestHandler<EditSkillsCommand>
 	{
-		public async Task Handle(EditAbilitiesCommand request, CancellationToken cancellationToken)
+		public async Task Handle(EditSkillsCommand request, CancellationToken cancellationToken)
 		{
 			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
@@ -23,10 +23,10 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditAbility
 			if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)
 				throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
 
-			foreach (var key in request.Scores.Keys)
+			foreach (var key in request.Proficiencies.Keys)
 			{
-				var ability = character.GetAbility(key);
-				ability.Score = request.Scores[key];
+				var skill = character.GetSkill(key);
+				skill.Proficiency = request.Proficiencies[key];
 			}
 
 			characterRepository.Save(character);

@@ -41,8 +41,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var request = new DeleteUserCommand(user.Id);
 			var handler = new DeleteUserCommandHandler(mockUserRepository.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("User with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("User with specified ID doesn't exist."));
 		}
 	}
 }

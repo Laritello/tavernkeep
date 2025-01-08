@@ -21,7 +21,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		private readonly User owner;
 		private readonly User master;
 
-		private Character character;
+		private Character character = default!;
 
 		public EditHealthCommandTests()
 		{
@@ -108,8 +108,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, maxHealth, tempHealth);
 			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("User with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("User with specified ID doesn't exist."));
 		}
 
 		[Test]
@@ -129,8 +130,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, -1, tempHealth);
 			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo($"{nameof(request.Max)} can't be below zero."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo($"{nameof(request.Max)} can't be below zero."));
 		}
 
 		[Test]
@@ -150,8 +152,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var request = new EditHealthCommand(owner.Id, characterId, -1, maxHealth, tempHealth);
 			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo($"{nameof(request.Current)} can't be below zero."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo($"{nameof(request.Current)} can't be below zero."));
 		}
 
 		[Test]
@@ -171,8 +174,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, maxHealth, -1);
 			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo($"{nameof(request.Temporary)} can't be below zero."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo($"{nameof(request.Temporary)} can't be below zero."));
 		}
 
 		[Test]
@@ -189,8 +193,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, maxHealth, tempHealth);
 			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Character with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Character with specified ID doesn't exist."));
 		}
 
 		[Test]
@@ -211,8 +216,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var request = new EditHealthCommand(initiatorId, characterId, currentHealth, maxHealth, tempHealth);
 			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<InsufficientPermissionException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("You do not have the necessary permissions to perform this operation."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<InsufficientPermissionException>()
+				.With.Message.EqualTo("You do not have the necessary permissions to perform this operation."));
 		}
 	}
 }

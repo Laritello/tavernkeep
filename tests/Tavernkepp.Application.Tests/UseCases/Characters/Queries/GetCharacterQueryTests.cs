@@ -56,8 +56,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Queries
 			var request = new GetCharacterQuery(characterId);
 			var handler = new GetCharacterQueryHandler(mockCharacterService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex?.Message, Is.EqualTo("No character with provided ID found."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("No character with provided ID found."));
 		}
 	}
 }

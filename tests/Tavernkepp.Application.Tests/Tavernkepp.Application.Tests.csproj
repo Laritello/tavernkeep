@@ -41,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="UseCases\Conditions\Commands\" />
     <Folder Include="UseCases\Conditions\Queries\" />
   </ItemGroup>
 

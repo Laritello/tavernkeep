@@ -63,8 +63,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 			var request = new CreateAuthenticationTokenCommand(string.Empty, correctPassword);
 			var handler = new CreateAuthenticationTokenCommandHandler(mockUserRepository.Object, mockTokenRepository.Object, mockAuthTokenService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("No user login provided."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("No user login provided."));
 		}
 
 		[Test]
@@ -81,8 +82,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 			var request = new CreateAuthenticationTokenCommand(wrongLogin, correctPassword);
 			var handler = new CreateAuthenticationTokenCommandHandler(mockUserRepository.Object, mockTokenRepository.Object, mockAuthTokenService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("User with provided login not found."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("User with provided login not found."));
 		}
 
 		[Test]
@@ -99,8 +101,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 			var request = new CreateAuthenticationTokenCommand(correctLogin, wrongPassword);
 			var handler = new CreateAuthenticationTokenCommandHandler(mockUserRepository.Object, mockTokenRepository.Object, mockAuthTokenService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Passwords do not match."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Passwords do not match."));
 		}
 	}
 }

@@ -16,8 +16,8 @@ namespace Tavernkeep.Core.Evaluators.Properties
 
 		public int Calculate()
 		{
-			int dexterityBonus = _armorClass.Equipped.HasDexterityCap 
-				? Math.Min(_character.Dexterity.Modifier, _armorClass.Equipped.DexterityCap) 
+			int dexterityBonus = _armorClass.Equipped.HasDexterityCap
+				? Math.Min(_character.Dexterity.Modifier, _armorClass.Equipped.DexterityCap)
 				: _character.Dexterity.Modifier;
 
 			return 10 + dexterityBonus + _armorClass.Proficiencies[_armorClass.Equipped.Type].GetProficiencyBonus(_character) + _modifierEvaluator.Value;

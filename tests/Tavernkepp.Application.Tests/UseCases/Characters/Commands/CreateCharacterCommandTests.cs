@@ -64,8 +64,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var request = new CreateCharacterCommand(userId, name, ancestryId, backgroundId, classId);
 			var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterService.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Owner with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Owner with specified ID doesn't exist."));
 		}
 	}
 }
