@@ -18,7 +18,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Lores.Commands
 		private readonly User master;
 		private readonly Lore lore;
 
-		private Character character;
+		private Character character = default!;
 
 		public DeleteLoreCommandTests()
 		{
@@ -95,8 +95,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Lores.Commands
 			var request = new DeleteLoreCommand(owner.Id, character.Id, loreTopic);
 			var handler = new DeleteLoreCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("User with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("User with specified ID doesn't exist."));
 		}
 
 		[Test]
@@ -112,8 +113,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Lores.Commands
 			var request = new DeleteLoreCommand(owner.Id, character.Id, loreTopic);
 			var handler = new DeleteLoreCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Character with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Character with specified ID doesn't exist."));
 		}
 
 		[Test]
@@ -135,8 +137,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Lores.Commands
 			var request = new DeleteLoreCommand(owner.Id, character.Id, loreTopic);
 			var handler = new DeleteLoreCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Character does not have lore skill with this topic."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Character does not have lore skill with this topic."));
 		}
 
 		[Test]
@@ -157,8 +160,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Lores.Commands
 			var request = new DeleteLoreCommand(initiatorId, character.Id, loreTopic);
 			var handler = new DeleteLoreCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
 
-			var ex = Assert.ThrowsAsync<InsufficientPermissionException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("You do not have the necessary permissions to perform this operation."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<InsufficientPermissionException>()
+				.With.Message.EqualTo("You do not have the necessary permissions to perform this operation."));
 		}
 	}
 }

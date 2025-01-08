@@ -67,8 +67,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 			var request = new RollCustomDiceCommand(initiator.Id, RollType.Public, rollExpression);
 			var handler = new RollCustomDiceCommandHandler(mockDiceService.Object, mockUserRepository.Object, mockMessageRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Initiator with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Initiator with specified ID doesn't exist."));
 		}
 	}
 }

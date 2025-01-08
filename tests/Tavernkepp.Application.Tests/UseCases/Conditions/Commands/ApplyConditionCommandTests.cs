@@ -124,8 +124,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Conditions.Commands
 			var request = new ApplyConditionCommand(owner.Id, characterId, conditionName, 1);
 			var handler = new ApplyConditionCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("User with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("User with specified ID doesn't exist."));
 		}
 
 		[Test]
@@ -147,8 +148,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Conditions.Commands
 			var request = new ApplyConditionCommand(owner.Id, characterId, conditionName, 1);
 			var handler = new ApplyConditionCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Character with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Character with specified ID doesn't exist."));
 		}
 
 		[Test]
@@ -171,8 +173,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Conditions.Commands
 			var request = new ApplyConditionCommand(initiatorId, characterId, conditionName, 1);
 			var handler = new ApplyConditionCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<InsufficientPermissionException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("You do not have the necessary permissions to perform this operation."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<InsufficientPermissionException>()
+				.With.Message.EqualTo("You do not have the necessary permissions to perform this operation."));
 		}
 
 		[Test]
@@ -194,8 +197,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Conditions.Commands
 			var request = new ApplyConditionCommand(owner.Id, characterId, conditionName, 1);
 			var handler = new ApplyConditionCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Condition with specified name doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Condition with specified name doesn't exist."));
 		}
 	}
 }

@@ -50,8 +50,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Queries
 			var request = new GetUserQuery(user.Id);
 			var handler = new GetUserQueryHandler(mockUserRepository.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("User with specified ID not found."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("User with specified ID not found."));
 		}
 	}
 }

@@ -43,8 +43,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var request = new CreateUserCommand(string.Empty, password, UserRole.Player);
 			var handler = new CreateUserCommandHandler(mockUserRepository.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex?.Message, Is.EqualTo("User can't have an empty login."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("User can't have an empty login."));
 		}
 
 		[Test]
@@ -55,8 +56,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var request = new CreateUserCommand(login, string.Empty, UserRole.Player);
 			var handler = new CreateUserCommandHandler(mockUserRepository.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex?.Message, Is.EqualTo("User can't have an empty password."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("User can't have an empty password."));
 		}
 	}
 }

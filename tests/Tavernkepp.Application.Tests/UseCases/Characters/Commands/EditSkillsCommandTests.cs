@@ -111,8 +111,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var request = new EditSkillsCommand(owner.Id, characterId, new() { { SkillType.Acrobatics, proficiency } });
 			var handler = new EditSkillsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("User with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("User with specified ID doesn't exist."));
 		}
 
 		[Test]
@@ -129,8 +130,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var request = new EditSkillsCommand(owner.Id, characterId, new() { { SkillType.Acrobatics, proficiency } });
 			var handler = new EditSkillsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Character with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Character with specified ID doesn't exist."));
 		}
 
 		[Test]
@@ -151,8 +153,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var request = new EditSkillsCommand(initiatorId, characterId, new() { { SkillType.Acrobatics, proficiency } });
 			var handler = new EditSkillsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<InsufficientPermissionException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("You do not have the necessary permissions to perform this operation."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<InsufficientPermissionException>()
+				.With.Message.EqualTo("You do not have the necessary permissions to perform this operation."));
 		}
 	}
 }

@@ -120,8 +120,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var request = new SetActiveCharacterCommand(owner.Id, owner.Id, character.Id);
 			var handler = new SetActiveCharacterCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Initiator with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Initiator with specified ID doesn't exist."));
 		}
 
 		[Test]
@@ -141,8 +142,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var request = new SetActiveCharacterCommand(master.Id, owner.Id, character.Id);
 			var handler = new SetActiveCharacterCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("User with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("User with specified ID doesn't exist."));
 		}
 
 		[Test]
@@ -158,8 +160,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var request = new SetActiveCharacterCommand(owner.Id, owner.Id, character.Id);
 			var handler = new SetActiveCharacterCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Character with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Character with specified ID doesn't exist."));
 		}
 
 		[Test]
@@ -185,8 +188,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var request = new SetActiveCharacterCommand(master.Id, owner.Id, character.Id);
 			var handler = new SetActiveCharacterCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Character cannot be set as active character for the user that is not his owner."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Character cannot be set as active character for the user that is not his owner."));
 		}
 
 		[Test]
@@ -210,8 +214,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 			var request = new SetActiveCharacterCommand(master.Id, owner.Id, character.Id);
 			var handler = new SetActiveCharacterCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object);
 
-			var ex = Assert.ThrowsAsync<InsufficientPermissionException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("You do not have the necessary permissions to perform this operation."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<InsufficientPermissionException>()
+				.With.Message.EqualTo("You do not have the necessary permissions to perform this operation."));
 		}
 	}
 }

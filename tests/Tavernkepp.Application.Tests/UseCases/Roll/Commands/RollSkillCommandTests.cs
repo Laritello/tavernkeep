@@ -91,8 +91,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 			var request = new RollSkillCommand(initiator.Id, character.Id, SkillType.Arcana, RollType.Public);
 			var handler = new RollSkillCommandHandler(mockDiceService.Object, mockUserRepository.Object, mockCharacterRepository.Object, mockMessageRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Initiator with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Initiator with specified ID doesn't exist."));
 		}
 
 		[Test]
@@ -118,8 +119,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 			var request = new RollSkillCommand(initiator.Id, character.Id, SkillType.Arcana, RollType.Public);
 			var handler = new RollSkillCommandHandler(mockDiceService.Object, mockUserRepository.Object, mockCharacterRepository.Object, mockMessageRepository.Object, mockNotificationService.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Character with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Character with specified ID doesn't exist."));
 		}
 	}
 }
