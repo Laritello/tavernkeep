@@ -18,7 +18,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		private readonly User owner;
 		private readonly User master;
 
-		private Character character;
+		private Character character = default!;
 
 		public EditSkillCommandTests()
 		{
@@ -51,12 +51,12 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSkillCommand(owner.Id, characterId, SkillType.Acrobatics, proficiency);
+			var request = new EditSkillsCommand(owner.Id, characterId, new() { { SkillType.Acrobatics, proficiency } });
 			var handler = new EditSkillsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
-			var response = await handler.Handle(request, CancellationToken.None);
+			await handler.Handle(request, CancellationToken.None);
 
-			Assert.That(response.Proficiency, Is.EqualTo(proficiency));
+			Assert.That(character.Acrobatics.Proficiency, Is.EqualTo(proficiency));
 		}
 
 		[Test]
@@ -89,16 +89,12 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSkillCommand(master.Id, characterId, type, proficiency);
+			var request = new EditSkillsCommand(master.Id, characterId, new() { { type, proficiency } });
 			var handler = new EditSkillsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
-			var response = await handler.Handle(request, CancellationToken.None);
+			await handler.Handle(request, CancellationToken.None);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(response.Type, Is.EqualTo(type));
-				Assert.That(response.Proficiency, Is.EqualTo(proficiency));
-			});
+			Assert.That(character.GetSkill(type).Proficiency, Is.EqualTo(proficiency));
 		}
 
 		[Test]
@@ -112,7 +108,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSkillCommand(owner.Id, characterId, SkillType.Acrobatics, proficiency);
+			var request = new EditSkillsCommand(owner.Id, characterId, new() { { SkillType.Acrobatics, proficiency } });
 			var handler = new EditSkillsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
@@ -130,7 +126,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
-			var request = new EditSkillCommand(owner.Id, characterId, SkillType.Acrobatics, proficiency);
+			var request = new EditSkillsCommand(owner.Id, characterId, new() { { SkillType.Acrobatics, proficiency } });
 			var handler = new EditSkillsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
@@ -152,7 +148,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSkillCommand(initiatorId, characterId, SkillType.Acrobatics, proficiency);
+			var request = new EditSkillsCommand(initiatorId, characterId, new() { { SkillType.Acrobatics, proficiency } });
 			var handler = new EditSkillsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<InsufficientPermissionException>(async () => await handler.Handle(request, CancellationToken.None));
