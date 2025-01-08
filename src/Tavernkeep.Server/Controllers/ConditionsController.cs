@@ -2,15 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Tavernkeep.Application.UseCases.Conditions.Commands.ApplyCondition;
-using Tavernkeep.Application.UseCases.Conditions.Commands.EditConditions;
-using Tavernkeep.Application.UseCases.Conditions.Commands.RemoveCondition;
 using Tavernkeep.Application.UseCases.Conditions.Queries.GetCondition;
 using Tavernkeep.Application.UseCases.Conditions.Queries.GetConditions;
-using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Conditions.Dtos;
-using Tavernkeep.Core.Contracts.Conditions.Request;
-using Tavernkeep.Server.Extensions;
 
 namespace Tavernkeep.Server.Controllers
 {
@@ -46,44 +40,6 @@ namespace Tavernkeep.Server.Controllers
 		{
 			var condition = await mediator.Send(new GetConditionQuery(name));
 			return mapper.Map<ConditionTemplateDto>(condition);
-		}
-
-		/// <summary>
-		/// Apply condition to the character.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		/// <returns>Updated character.</returns>
-		[Authorize]
-		[HttpPost("apply")]
-		public async Task<CharacterDto> ApplyConditionAsync([FromBody] ApplyConditionRequest request)
-		{
-			var character = await mediator.Send(new ApplyConditionCommand(HttpContext.GetUserId(), request.CharacterId, request.ConditionName, request.ConditionLevel));
-			return mapper.Map<CharacterDto>(character);
-		}
-
-		/// <summary>
-		/// Apply condition to the character.
-		/// </summary>
-		/// <param name="characterId">Character ID to target.</param>
-		/// <param name="request">The request.</param>
-		[Authorize]
-		[HttpPatch("{characterId}")]
-		public async Task EditConditionsAsync([FromRoute] Guid characterId, [FromBody] EditConditionsRequest request)
-		{
-			await mediator.Send(new EditConditionsCommand(HttpContext.GetUserId(), characterId, request.Conditions));
-		}
-
-		/// <summary>
-		/// Remove condition from the character.
-		/// </summary>
-		/// <param name="request">The request.</param>
-		/// <returns>Updated character.</returns>
-		[Authorize]
-		[HttpDelete("remove")]
-		public async Task<CharacterDto> RemoveConditionAsync([FromBody] RemoveConditionRequest request)
-		{
-			var character = await mediator.Send(new RemoveConditionCommand(HttpContext.GetUserId(), request.CharacterId, request.ConditionName));
-			return mapper.Map<CharacterDto>(character);
 		}
 	}
 }

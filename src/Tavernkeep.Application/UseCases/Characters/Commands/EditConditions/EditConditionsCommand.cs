@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Contracts.Conditions.Dtos;
 
-namespace Tavernkeep.Application.UseCases.Conditions.Commands.EditConditions
+namespace Tavernkeep.Application.UseCases.Characters.Commands.EditConditions
 {
 	public class EditConditionsCommand(Guid initiatorId, Guid characterId, List<ConditionShortDto> conditions) : IRequest
 	{

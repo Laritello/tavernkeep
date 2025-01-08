@@ -1,20 +1,19 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.UseCases.Conditions.Commands.ApplyCondition
+namespace Tavernkeep.Application.UseCases.Characters.Commands.EditConditions
 {
-	public class ApplyConditionCommandHandler(
+	public class EditConditionsCommandHandler(
 		IUserRepository userRepository,
 		ICharacterRepository characterRepository,
 		IConditionMetadataRepository conditionRepository,
 		INotificationService notificationService
-		) : IRequestHandler<ApplyConditionCommand, Character>
+		) : IRequestHandler<EditConditionsCommand>
 	{
-		public async Task<Character> Handle(ApplyConditionCommand request, CancellationToken cancellationToken)
+		public async Task Handle(EditConditionsCommand request, CancellationToken cancellationToken)
 		{
 			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
@@ -25,28 +24,28 @@ namespace Tavernkeep.Application.UseCases.Conditions.Commands.ApplyCondition
 			if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)
 				throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
 
-			if (character.Conditions.Any(x => x.Name == request.ConditionName))
-			{
-				var condition = character.Conditions.First(x => x.Name == request.ConditionName);
+			// TODO: Switch to dictionary under the hood
+			character.Conditions.RemoveAll(x => !request.Conditions.Any(c => c.Name == x.Name));
 
-				if (condition.HasLevels)
+			foreach (var condition in request.Conditions)
+			{
+				var characterCondition = character.Conditions.FirstOrDefault(x => x.Name == condition.Name);
+
+				if (characterCondition is not null)
 				{
-					condition.Level = request.ConditionLevel ?? 1;
+					characterCondition.Level = condition.Level;
 				}
-			}
-			else
-			{
-				var conditionMetadata = await conditionRepository.GetConditionAsync(request.ConditionName, cancellationToken)
-					?? throw new BusinessLogicException("Condition with specified name doesn't exist.");
+				else
+				{
+					var conditionMetadata = await conditionRepository.GetConditionAsync(condition.Name, cancellationToken)
+						?? throw new BusinessLogicException("Condition with specified name doesn't exist.");
 
-				var condition = conditionMetadata.ToCondition();
-				character.Conditions.Add(condition);
+					character.Conditions.Add(conditionMetadata.ToCondition(condition.Level));
+				}
 			}
 
 			await characterRepository.CommitAsync(cancellationToken);
 			await notificationService.QueueCharacterNotificationAsync(character, cancellationToken);
-
-			return character;
 		}
 	}
 }

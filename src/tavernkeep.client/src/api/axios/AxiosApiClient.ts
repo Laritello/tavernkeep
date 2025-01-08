@@ -182,8 +182,16 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async editArmor(characterId: string, type: ArmorType, bonus: number, hasDexterityCap: boolean, dexterityCap: number, proficiencies: Record<ArmorType, Proficiency>): Promise<Perception> {
-        const response = await this.client.patch<Perception>(`characters/${characterId}/armor`, {
+    async editConditions(characterId: string, conditions: ConditionShortDto[]): Promise<void> {
+        const response = await this.client.patch(`characters/${characterId}/conditions`, {
+            conditions: conditions,
+        });
+
+        return getPayloadOrThrow(response);
+    }
+
+    async editArmor(characterId: string, type: ArmorType, bonus: number, hasDexterityCap: boolean, dexterityCap: number, proficiencies: Record<ArmorType, Proficiency>): Promise<void> {
+        const response = await this.client.patch(`characters/${characterId}/armor`, {
             type: type,
             bonus: bonus,
             hasDexterityCap: hasDexterityCap,
@@ -246,35 +254,6 @@ export class AxiosApiClient {
 
     async getConditions(): Promise<Condition[]> {
         const response = await this.client.get<Condition[]>('conditions');
-
-        return getPayloadOrThrow(response);
-    }
-
-    async applyCondition(characterId: string, conditionName: string, conditionLevel: number): Promise<Character> {
-        const response = await this.client.post<Character>('conditions/apply', {
-            characterId: characterId,
-            conditionName: conditionName,
-            conditionLevel: conditionLevel,
-        });
-
-        return getPayloadOrThrow(response);
-    }
-
-    async editConditions(characterId: string, conditions: ConditionShortDto[]): Promise<void> {
-        const response = await this.client.patch(`conditions/${characterId}`, {
-            conditions: conditions,
-        });
-
-        return getPayloadOrThrow(response);
-    }
-
-    async removeCondition(characterId: string, conditionName: string): Promise<Character> {
-        const response = await this.client.delete<Character>('conditions/remove', {
-            data: {
-                characterId: characterId,
-                conditionName: conditionName,
-            },
-        });
 
         return getPayloadOrThrow(response);
     }

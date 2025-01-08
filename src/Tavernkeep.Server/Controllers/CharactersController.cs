@@ -7,6 +7,7 @@ using Tavernkeep.Application.UseCases.Characters.Commands.CreateCharacter;
 using Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditAbilities;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditArmor;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditConditions;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditHealth;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditPerception;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrows;
@@ -154,6 +155,18 @@ namespace Tavernkeep.Server.Controllers
 		public async Task EditArmorAsync([FromRoute] Guid characterId, [FromBody] EditArmorRequest request)
 		{
 			await mediator.Send(new EditArmorCommand(HttpContext.GetUserId(), characterId, request.Type, request.Bonus, request.HasDexterityCap, request.DexterityCap, request.Proficiencies));
+		}
+
+		/// <summary>
+		/// Change condition applied to the character.
+		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
+		/// <param name="request">The request, containing applied conditions.</param>
+		[Authorize]
+		[HttpPatch("{characterId}/conditions")]
+		public async Task EditConditionsAsync([FromRoute] Guid characterId, [FromBody] EditConditionsRequest request)
+		{
+			await mediator.Send(new EditConditionsCommand(HttpContext.GetUserId(), characterId, request.Conditions));
 		}
 
 		/// <summary>
