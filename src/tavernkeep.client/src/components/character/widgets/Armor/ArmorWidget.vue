@@ -52,7 +52,8 @@ async function showEditAbilitiesDialog() {
                 </div>
                 <div class="box-border border-base-300 flex flex-col p-1 px-3 border-2 rounded-lg w-24">
                     <p class="text-sm text-center select-none">Cap</p>
-                    <p class="text-xl font-extrabold text-center select-none">{{ armor.equipped.hasDexterityCap ? armor.equipped.dexterityCap : '-' }}</p>
+                    <p class="text-xl font-extrabold text-center select-none">{{ armor.equipped.hasDexterityCap ?
+                        armor.equipped.dexterityCap : '-' }}</p>
                 </div>
             </div>
         </div>
@@ -60,12 +61,17 @@ async function showEditAbilitiesDialog() {
         <div class="divider divider-neutral mb-1">PROFICIENCIES</div>
 
         <div class="flex flex-col">
-            <div v-for="type in types" :key="type">
-                <div class="flex flex-row items-center p-1 gap-x-2 border-b-2 border-base-300">
-                    <p class="grow select-none">{{ type }}</p>
-                    <ProficiencyComponent :proficiency="armor.proficiencies[type]" />
-                </div>
+            <div v-for="type in types" :key="type"
+                class="flex flex-row items-center p-1 gap-x-2 border-b-2 border-base-300 proficiency-item">
+                <p class="grow select-none">{{ type }}</p>
+                <ProficiencyComponent :proficiency="armor.proficiencies[type]" />
             </div>
         </div>
     </div>
 </template>
+
+<style scoped>
+.proficiency-item:last-child {
+    border: none;
+}
+</style>
