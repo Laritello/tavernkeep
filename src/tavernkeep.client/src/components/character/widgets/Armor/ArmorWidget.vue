@@ -3,6 +3,7 @@ import type { Armor } from '@/contracts/character';
 import { ArmorType } from '@/contracts/enums';
 import { useModal } from '@/composables/useModal';
 import ProficiencyComponent from '../../ProficiencyComponent.vue';
+import ArmorEditDialog from '@/components/dialogs/edit/ArmorEditDialog.vue';
 
 const { armor } = defineProps<{
     armor: Armor
@@ -12,13 +13,13 @@ const types: ArmorType[] = [ArmorType.Unarmored, ArmorType.Light, ArmorType.Medi
 
 async function showEditAbilitiesDialog() {
     const modal = useModal();
-    // const result = await modal.show(AbilitiesEditDialog, {
-    //     abilities,
-    // });
+    const result = await modal.show(ArmorEditDialog, {
+        armor,
+    });
 
-    // if (result.action !== 'result') {
-    //     return;
-    // }
+    if (result.action !== 'result') {
+        return;
+    }
 
     // const resultAbilities = {} as Record<AbilityType, number>;
     // for (const ability of Object.values(result.payload)) {
@@ -42,17 +43,18 @@ async function showEditAbilitiesDialog() {
 
         <div class="flex flex-col">
             <div class="flex flex-row gap-1">
-                <div class="box-border border-base-300 flex flex-col p-1 px-3 border-2 rounded-lg w-24">
+                <div class="box-border border-base-300 flex flex-col p-1 px-3 border-2 rounded-lg w-20">
                     <p class="text-sm text-center select-none">Bonus</p>
-                    <p class="text-xl font-extrabold text-center select-none">{{ armor.equipped.bonus }}</p>
+                    <p class="text-lg font-extrabold text-center select-none">{{ armor.equipped.bonus }}</p>
                 </div>
                 <div class="flex-1 box-border border-base-300 flex flex-col p-1 px-3 border-2 rounded-lg">
                     <p class="text-sm text-center select-none">Type</p>
-                    <p class="text-xl font-extrabold text-center select-none">{{ armor.equipped.type }}</p>
+                    <p class="text-lg font-extrabold text-center select-none uppercase tracking-tighter">{{
+                        armor.equipped.type }}</p>
                 </div>
-                <div class="box-border border-base-300 flex flex-col p-1 px-3 border-2 rounded-lg w-24">
+                <div class="box-border border-base-300 flex flex-col p-1 px-3 border-2 rounded-lg w-20">
                     <p class="text-sm text-center select-none">Cap</p>
-                    <p class="text-xl font-extrabold text-center select-none">{{ armor.equipped.hasDexterityCap ?
+                    <p class="text-lg font-extrabold text-center select-none">{{ armor.equipped.hasDexterityCap ?
                         armor.equipped.dexterityCap : '-' }}</p>
                 </div>
             </div>
