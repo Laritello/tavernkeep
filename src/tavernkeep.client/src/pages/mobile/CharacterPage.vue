@@ -11,7 +11,8 @@ import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import { AbilityType, RollType, SavingThrowType, type Proficiency, type SkillType } from '@/contracts/enums';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
-
+import ArmorWidget from '@/components/character/widgets/Armor/ArmorWidget.vue';
+import type { Armor } from '@/contracts/character';
 
 const { t } = useI18n();
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
@@ -26,6 +27,13 @@ interface Section {
 }
 
 const sections: Section[] = [
+    { link: '#attributes', header: 'Attributes' },
+    { link: '#saving-throws', header: 'Saving Throws' },
+    { link: '#skills', header: 'Skills' },
+    { link: '#armor', header: 'Armor' },
+    { link: '#attacks', header: 'Attacks' },
+    { link: '#spells', header: 'Spells' },
+    { link: '#inventory', header: 'Inventory' },
     { link: '#attributes', header: t('character.attributes') },
     { link: '#saving-throws', header: t('character.savingThrows') },
     { link: '#skills', header: t('character.skills') },
@@ -48,6 +56,13 @@ async function updateSkills(proficiencies: Record<SkillType, Proficiency>) {
 async function updateSavingThrows(proficiencies: Record<string, Proficiency>) {
     if (character.value !== undefined) {
         await api.editSavingThrows(character.value.id, proficiencies);
+    }
+}
+
+async function updateArmor(armor: Armor) {
+    if (character.value !== undefined) {
+        let equipped = armor.equipped;
+        await api.editArmor(character.value.id, equipped.type, equipped.bonus, equipped.hasDexterityCap, equipped.dexterityCap, armor.proficiencies);
     }
 }
 
@@ -159,6 +174,7 @@ function updateSection() {
                 @roll="(type) => rollSavingThrow(type)" />
             <SkillsWidget id="skills" :skills="character.skills" @changed="updateSkills"
                 @roll="(type) => rollSkillCheck(type)" />
+            <ArmorWidget id="armor" :armor="character.armor" @changed="updateArmor"/>
         </div>
     </div>
     <div v-else>No selected character</div>

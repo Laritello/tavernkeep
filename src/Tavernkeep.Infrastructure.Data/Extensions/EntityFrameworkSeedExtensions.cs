@@ -78,7 +78,7 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 					Name = "Roland Engreen",
 					Ancestry = "Human",
 					Class = "Psychic",
-					Level = 6
+					Level = 6,
 				};
 
 				character.Health.Max = 56;

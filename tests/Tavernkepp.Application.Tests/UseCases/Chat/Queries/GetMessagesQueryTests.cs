@@ -78,8 +78,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Queries
 			var request = new GetMessagesQuery(initiator.Id, 0, 20);
 			var handler = new GetMessagesQueryHandler(mockUserRepository.Object, mockMessageRepository.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("User with specified ID doesn't exist."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("User with specified ID doesn't exist."));
 		}
 	}
 }

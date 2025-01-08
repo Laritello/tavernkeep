@@ -61,7 +61,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 
 		public int Level { get; set; }
 		public Health Health { get; set; }
-		public ArmorClass Armor { get; set; }
+		public Armor Armor { get; set; }
 		public List<Condition> Conditions { get; set; }
 
 		public Ability Strength { get; set; }

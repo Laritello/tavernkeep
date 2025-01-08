@@ -54,8 +54,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
 			var request = new DeleteMessageCommand(message.Id);
 			var handler = new DeleteMessageCommandHandler(mockMessageRepository.Object);
 
-			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
-			Assert.That(ex.Message, Is.EqualTo("Message not found."));
+			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
+				Throws.TypeOf<BusinessLogicException>()
+				.With.Message.EqualTo("Message not found."));
 		}
 	}
 }

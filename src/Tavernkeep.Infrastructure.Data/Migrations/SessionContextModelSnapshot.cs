@@ -928,7 +928,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.Navigation("Owner");
                         });
 
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.ArmorClass", "Armor", b1 =>
+                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Armor", "Armor", b1 =>
                         {
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
@@ -942,9 +942,34 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                             b1.WithOwner("Owner")
                                 .HasForeignKey("OwnerId");
 
+                            b1.OwnsOne("Tavernkeep.Core.Contracts.Structures.EquippedArmor", "Equipped", b2 =>
+                                {
+                                    b2.Property<Guid>("ArmorOwnerId")
+                                        .HasColumnType("TEXT");
+
+                                    b2.Property<int>("Bonus")
+                                        .HasColumnType("INTEGER");
+
+                                    b2.Property<int>("DexterityCap")
+                                        .HasColumnType("INTEGER");
+
+                                    b2.Property<bool>("HasDexterityCap")
+                                        .HasColumnType("INTEGER");
+
+                                    b2.Property<int>("Type")
+                                        .HasColumnType("INTEGER");
+
+                                    b2.HasKey("ArmorOwnerId");
+
+                                    b2.ToTable("Characters");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("ArmorOwnerId");
+                                });
+
                             b1.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.ArmorProficiencies", "Proficiencies", b2 =>
                                 {
-                                    b2.Property<Guid>("ArmorClassOwnerId")
+                                    b2.Property<Guid>("ArmorOwnerId")
                                         .HasColumnType("TEXT");
 
                                     b2.Property<int>("Heavy")
@@ -959,13 +984,16 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                     b2.Property<int>("Unarmored")
                                         .HasColumnType("INTEGER");
 
-                                    b2.HasKey("ArmorClassOwnerId");
+                                    b2.HasKey("ArmorOwnerId");
 
                                     b2.ToTable("Characters");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("ArmorClassOwnerId");
+                                        .HasForeignKey("ArmorOwnerId");
                                 });
+
+                            b1.Navigation("Equipped")
+                                .IsRequired();
 
                             b1.Navigation("Owner");
 

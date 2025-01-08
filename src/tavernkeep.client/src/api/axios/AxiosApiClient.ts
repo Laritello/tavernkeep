@@ -4,7 +4,7 @@ import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import type { User, Message, Character, SkillRollMessage } from '@/entities';
 import type { Ability, Skill, Lore, Perception } from '@/contracts/character';
-import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowType } from '@/contracts/enums';
+import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowType, ArmorType } from '@/contracts/enums';
 import type { Condition } from '@/entities/Condition';
 import type { SavingThrowRollMessage } from '@/entities/Message';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
@@ -182,6 +182,26 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
+    async editConditions(characterId: string, conditions: ConditionShortDto[]): Promise<void> {
+        const response = await this.client.patch(`characters/${characterId}/conditions`, {
+            conditions: conditions,
+        });
+
+        return getPayloadOrThrow(response);
+    }
+
+    async editArmor(characterId: string, type: ArmorType, bonus: number, hasDexterityCap: boolean, dexterityCap: number, proficiencies: Record<ArmorType, Proficiency>): Promise<void> {
+        const response = await this.client.patch(`characters/${characterId}/armor`, {
+            type: type,
+            bonus: bonus,
+            hasDexterityCap: hasDexterityCap,
+            dexterityCap: dexterityCap,
+            proficiencies: proficiencies
+        });
+
+        return getPayloadOrThrow(response);
+    }
+
     async sendMessage(content: string, recipientId?: string): Promise<Message> {
         const response = await this.client.post<Message>('chat/message', {
             recipientId: recipientId,
@@ -234,35 +254,6 @@ export class AxiosApiClient {
 
     async getConditions(): Promise<Condition[]> {
         const response = await this.client.get<Condition[]>('conditions');
-
-        return getPayloadOrThrow(response);
-    }
-
-    async applyCondition(characterId: string, conditionName: string, conditionLevel: number): Promise<Character> {
-        const response = await this.client.post<Character>('conditions/apply', {
-            characterId: characterId,
-            conditionName: conditionName,
-            conditionLevel: conditionLevel,
-        });
-
-        return getPayloadOrThrow(response);
-    }
-
-    async editConditions(characterId: string, conditions: ConditionShortDto[]): Promise<void> {
-        const response = await this.client.patch(`conditions/${characterId}`, {
-            conditions: conditions,
-        });
-
-        return getPayloadOrThrow(response);
-    }
-
-    async removeCondition(characterId: string, conditionName: string): Promise<Character> {
-        const response = await this.client.delete<Character>('conditions/remove', {
-            data: {
-                characterId: characterId,
-                conditionName: conditionName,
-            },
-        });
 
         return getPayloadOrThrow(response);
     }

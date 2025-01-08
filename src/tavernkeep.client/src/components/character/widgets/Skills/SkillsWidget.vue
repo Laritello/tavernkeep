@@ -11,7 +11,7 @@
         </div>
 
         <div class="flex flex-col">
-            <SkillsWidgetItem v-for="skill in skills" :skill="skill" :key="skill.type"
+            <SkillsWidgetItem v-for="skill in skills" :skill="skill" :key="skill.type" class="skill-item"
                 @roll="(value) => $emit('roll', value.type)" />
         </div>
     </div>
@@ -42,3 +42,9 @@ async function showEditSkillsDialog() {
     }
 }
 </script>
+
+<style scoped>
+.skill-item:last-child {
+    border:none;
+}
+</style>

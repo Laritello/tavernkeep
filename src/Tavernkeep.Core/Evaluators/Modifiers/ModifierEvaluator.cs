@@ -30,7 +30,7 @@ namespace Tavernkeep.Core.Evaluators.Modifiers
 				var activeBonus = conditionModifiers.Where(x => x.Type == _type && x.IsBonus).MaxBy(x => x.Value);
 				var activePenalty = conditionModifiers.Where(x => x.Type == _type && x.IsPenalty).MaxBy(x => x.Value);
 
-				var totalBonus = (activeBonus != null ? activeBonus.Value : 0) + (activePenalty != null ? activePenalty.Value : 0);
+				var totalBonus = (activeBonus != null ? activeBonus.Value : 0) - (activePenalty != null ? activePenalty.Value : 0);
 
 				return totalBonus;
 			}
