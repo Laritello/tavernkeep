@@ -10,7 +10,7 @@ using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
-	internal class EditArmorProficiencyCommandTests
+	internal class EditArmorCommandTests
 	{
 		private readonly Guid characterId = Guid.NewGuid();
 
@@ -19,7 +19,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 
 		private Character character = default!;
 
-		public EditArmorProficiencyCommandTests()
+		public EditArmorCommandTests()
 		{
 			owner = new User("owner", "owner", UserRole.Player) { Id = Guid.NewGuid() };
 			master = new User("master", "master", UserRole.Master) { Id = Guid.NewGuid() };
@@ -47,7 +47,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		}
 
 		[Test]
-		public async Task EditArmorProficiencyCommand_Success()
+		public async Task EditArmorCommand_Success()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
@@ -92,7 +92,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[TestCase(ArmorType.Light)]
 		[TestCase(ArmorType.Medium)]
 		[TestCase(ArmorType.Heavy)]
-		public async Task EditArmorProficiencyCommand_Success_Master(ArmorType type)
+		public async Task EditArmorCommand_Success_Master(ArmorType type)
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();

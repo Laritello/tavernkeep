@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Characters.Commands.AssignUser;
 using Tavernkeep.Application.UseCases.Characters.Commands.CreateCharacter;
 using Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter;
-using Tavernkeep.Application.UseCases.Characters.Commands.EditAbility;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditAbilities;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditArmor;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditHealth;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditPerception;
-using Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrow;
-using Tavernkeep.Application.UseCases.Characters.Commands.EditSkill;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrows;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditSkills;
 using Tavernkeep.Application.UseCases.Characters.Commands.ModifyHealth;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
@@ -102,7 +102,7 @@ namespace Tavernkeep.Server.Controllers
 		/// <param name="request">Dictionary with updated scores.</param>
 		[Authorize]
 		[HttpPatch("{characterId}/abilities")]
-		public async Task EditCharacterAbilitiesAsync([FromRoute] Guid characterId, [FromBody] EditAbilitiesRequest request)
+		public async Task EditAbilitiesAsync([FromRoute] Guid characterId, [FromBody] EditAbilitiesRequest request)
 		{
 			await mediator.Send(new EditAbilitiesCommand(HttpContext.GetUserId(), characterId, request.Scores));
 		}
@@ -114,7 +114,7 @@ namespace Tavernkeep.Server.Controllers
 		/// <param name="request">Dictionary with updated proficiencies.</param>
 		[Authorize]
 		[HttpPatch("{characterId}/skills")]
-		public async Task EditCharacterSkillsAsync([FromRoute] Guid characterId, [FromBody] EditSkillsRequest request)
+		public async Task EditSkillsAsync([FromRoute] Guid characterId, [FromBody] EditSkillsRequest request)
 		{
 			await mediator.Send(new EditSkillsCommand(HttpContext.GetUserId(), characterId, request.Proficiencies));
 		}
@@ -127,7 +127,7 @@ namespace Tavernkeep.Server.Controllers
 		/// <returns>Changed perception.</returns>
 		[Authorize]
 		[HttpPatch("{characterId}/perception")]
-		public async Task<Perception> EditCharacterPerceptionAsync([FromRoute] Guid characterId, [FromBody] EditPerceptionRequest request)
+		public async Task<Perception> EditPerceptionAsync([FromRoute] Guid characterId, [FromBody] EditPerceptionRequest request)
 		{
 			return await mediator.Send(new EditPerceptionCommand(HttpContext.GetUserId(), characterId, request.Proficiency));
 		}
@@ -139,7 +139,7 @@ namespace Tavernkeep.Server.Controllers
 		/// <param name="request">Dictionary with updated proficiencies.</param>
 		[Authorize]
 		[HttpPatch("{characterId}/saving-throws")]
-		public async Task EditCharacterSavingThrowsAsync([FromRoute] Guid characterId, [FromBody] EditSavingThrowsRequest request)
+		public async Task EditSavingThrowsAsync([FromRoute] Guid characterId, [FromBody] EditSavingThrowsRequest request)
 		{
 			await mediator.Send(new EditSavingThrowsCommand(HttpContext.GetUserId(), characterId, request.Proficiencies));
 		}
@@ -151,7 +151,7 @@ namespace Tavernkeep.Server.Controllers
 		/// <param name="request">The armor proficiency edit request.</param>
 		[Authorize]
 		[HttpPatch("{characterId}/armor")]
-		public async Task EditCharacterArmorAsync([FromRoute] Guid characterId, [FromBody] EditArmorRequest request)
+		public async Task EditArmorAsync([FromRoute] Guid characterId, [FromBody] EditArmorRequest request)
 		{
 			await mediator.Send(new EditArmorCommand(HttpContext.GetUserId(), characterId, request.Type, request.Bonus, request.HasDexterityCap, request.DexterityCap, request.Proficiencies));
 		}
@@ -164,7 +164,7 @@ namespace Tavernkeep.Server.Controllers
 		/// <returns>Changed health.</returns>
 		[Authorize]
 		[HttpPatch("{characterId}/health")]
-		public async Task<Health> EditCharacterHealthAsync([FromRoute] Guid characterId, [FromBody] EditHealthRequest request)
+		public async Task<Health> EditHealthAsync([FromRoute] Guid characterId, [FromBody] EditHealthRequest request)
 		{
 			return await mediator.Send(new EditHealthCommand(HttpContext.GetUserId(), characterId, request.Current, request.Max, request.Temporary));
 		}
@@ -177,7 +177,7 @@ namespace Tavernkeep.Server.Controllers
 		/// <returns>Modified health.</returns>
 		[Authorize]
 		[HttpPatch("{characterId}/health-modify")]
-		public async Task<Health> ModifyCharacterHealthAsync([FromRoute] Guid characterId, [FromBody] ModifyHealthRequest request)
+		public async Task<Health> ModifyHealthAsync([FromRoute] Guid characterId, [FromBody] ModifyHealthRequest request)
 		{
 			return await mediator.Send(new ModifyHealthCommand(HttpContext.GetUserId(), characterId, request.Change));
 		}

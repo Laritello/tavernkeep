@@ -1,6 +1,6 @@
 ﻿using Moq;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Application.UseCases.Characters.Commands.EditSkill;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrows;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
@@ -10,7 +10,7 @@ using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
-	public class EditSkillCommandTests
+	public class EditSavingThrowsCommandTests
 	{
 		private readonly Guid characterId = Guid.NewGuid();
 		private readonly Proficiency proficiency = Proficiency.Trained;
@@ -18,9 +18,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		private readonly User owner;
 		private readonly User master;
 
-		private Character character = default!;
+		private Character character;
 
-		public EditSkillCommandTests()
+		public EditSavingThrowsCommandTests()
 		{
 			owner = new User("owner", "owner", UserRole.Player) { Id = Guid.NewGuid() };
 			master = new User("master", "master", UserRole.Master) { Id = Guid.NewGuid() };
@@ -38,7 +38,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		}
 
 		[Test]
-		public async Task EditSkillCommand_Success()
+		[TestCase(SavingThrowType.Fortitude)]
+		[TestCase(SavingThrowType.Reflex)]
+		[TestCase(SavingThrowType.Will)]
+		public async Task EditSavingThrowsCommand_Success(SavingThrowType type)
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
@@ -51,32 +54,16 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSkillsCommand(owner.Id, characterId, new() { { SkillType.Acrobatics, proficiency } });
-			var handler = new EditSkillsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new EditSavingThrowsCommand(owner.Id, characterId, new() { { type, proficiency } });
+			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
-			Assert.That(character.Acrobatics.Proficiency, Is.EqualTo(proficiency));
+			Assert.That(character.GetSavingThrow(type).Proficiency, Is.EqualTo(proficiency));
 		}
 
 		[Test]
-		[TestCase(SkillType.Acrobatics)]
-		[TestCase(SkillType.Arcana)]
-		[TestCase(SkillType.Athletics)]
-		[TestCase(SkillType.Crafting)]
-		[TestCase(SkillType.Deception)]
-		[TestCase(SkillType.Diplomacy)]
-		[TestCase(SkillType.Intimidation)]
-		[TestCase(SkillType.Medicine)]
-		[TestCase(SkillType.Nature)]
-		[TestCase(SkillType.Occultism)]
-		[TestCase(SkillType.Performance)]
-		[TestCase(SkillType.Religion)]
-		[TestCase(SkillType.Society)]
-		[TestCase(SkillType.Stealth)]
-		[TestCase(SkillType.Survival)]
-		[TestCase(SkillType.Thievery)]
-		public async Task EditSkillCommand_Success_Master(SkillType type)
+		public async Task EditSavingThrowsCommand_Success_Master()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
@@ -89,16 +76,16 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSkillsCommand(master.Id, characterId, new() { { type, proficiency } });
-			var handler = new EditSkillsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new EditSavingThrowsCommand(master.Id, characterId, new() { { SavingThrowType.Fortitude, proficiency } });
+			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
-			Assert.That(character.GetSkill(type).Proficiency, Is.EqualTo(proficiency));
+			Assert.That(character.Fortitude.Proficiency, Is.EqualTo(proficiency));
 		}
 
 		[Test]
-		public void EditSkillCommand_InitiatorNotFound()
+		public void EditSavingThrowsCommand_InitiatorNotFound()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
@@ -108,15 +95,15 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSkillsCommand(owner.Id, characterId, new() { { SkillType.Acrobatics, proficiency } });
-			var handler = new EditSkillsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new EditSavingThrowsCommand(owner.Id, characterId, new() { { SavingThrowType.Fortitude, proficiency } });
+			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("User with specified ID doesn't exist."));
 		}
 
 		[Test]
-		public void EditSkillCommand_CharacterNotFound()
+		public void EditSavingThrowsCommand_CharacterNotFound()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
@@ -126,15 +113,15 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
-			var request = new EditSkillsCommand(owner.Id, characterId, new() { { SkillType.Acrobatics, proficiency } });
-			var handler = new EditSkillsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new EditSavingThrowsCommand(owner.Id, characterId, new() { { SavingThrowType.Fortitude, proficiency } });
+			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<BusinessLogicException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("Character with specified ID doesn't exist."));
 		}
 
 		[Test]
-		public void EditSkillCommand_NotEnoughPermissions()
+		public void EditSavingThrowsCommand_NotEnoughPermissions()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
@@ -148,8 +135,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSkillsCommand(initiatorId, characterId, new() { { SkillType.Acrobatics, proficiency } });
-			var handler = new EditSkillsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new EditSavingThrowsCommand(initiatorId, characterId, new() { { SavingThrowType.Fortitude, proficiency } });
+			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			var ex = Assert.ThrowsAsync<InsufficientPermissionException>(async () => await handler.Handle(request, CancellationToken.None));
 			Assert.That(ex.Message, Is.EqualTo("You do not have the necessary permissions to perform this operation."));

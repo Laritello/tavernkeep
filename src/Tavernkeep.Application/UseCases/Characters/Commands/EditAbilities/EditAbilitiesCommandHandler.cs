@@ -4,7 +4,7 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.UseCases.Characters.Commands.EditAbility
+namespace Tavernkeep.Application.UseCases.Characters.Commands.EditAbilities
 {
 	public class EditAbilitiesCommandHandler(
 		IUserRepository userRepository,

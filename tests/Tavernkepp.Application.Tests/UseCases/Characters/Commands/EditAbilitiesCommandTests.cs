@@ -1,6 +1,6 @@
 ﻿using Moq;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Application.UseCases.Characters.Commands.EditAbility;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditAbilities;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
@@ -10,7 +10,7 @@ using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
-	public class EditAbilityCommandTests
+	public class EditAbilitiesCommandTests
 	{
 		private readonly Guid characterId = Guid.NewGuid();
 
@@ -19,7 +19,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 
 		private Character character;
 
-		public EditAbilityCommandTests()
+		public EditAbilitiesCommandTests()
 		{
 			owner = new User("owner", "owner", UserRole.Player) { Id = Guid.NewGuid() };
 			master = new User("master", "master", UserRole.Master) { Id = Guid.NewGuid() };
@@ -43,7 +43,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[TestCase(AbilityType.Intelligence)]
 		[TestCase(AbilityType.Wisdom)]
 		[TestCase(AbilityType.Charisma)]
-		public async Task EditAbilityCommand_Success(AbilityType type)
+		public async Task EditAbilitiesCommand_Success(AbilityType type)
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
@@ -66,7 +66,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		}
 
 		[Test]
-		public async Task EditAbilityCommand_Success_Master()
+		public async Task EditAbilitiesCommand_Success_Master()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
@@ -89,7 +89,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		}
 
 		[Test]
-		public void EditAbilityCommand_InitiatorNotFound()
+		public void EditAbilitiesCommand_InitiatorNotFound()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
@@ -108,7 +108,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		}
 
 		[Test]
-		public void EditAbilityCommand_CharacterNotFound()
+		public void EditAbilitiesCommand_CharacterNotFound()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
@@ -127,7 +127,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		}
 
 		[Test]
-		public void EditAbilityCommand_NotEnoughPermissions()
+		public void EditAbilitiesCommand_NotEnoughPermissions()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();

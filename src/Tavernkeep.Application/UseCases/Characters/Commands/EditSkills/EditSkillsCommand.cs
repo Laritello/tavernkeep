@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Contracts.Enums;
 
-namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSkill
+namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSkills
 {
 	public class EditSkillsCommand(Guid initiatorId, Guid characterId, Dictionary<SkillType, Proficiency> proficiencies) : IRequest
 	{

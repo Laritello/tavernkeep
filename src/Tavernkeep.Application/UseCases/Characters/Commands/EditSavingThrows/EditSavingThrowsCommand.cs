@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Core.Contracts.Enums;
 
-namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrow
+namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrows
 {
 	public class EditSavingThrowsCommand(Guid initiatorId, Guid characterId, Dictionary<SavingThrowType, Proficiency> proficiencies) : IRequest
 	{
