@@ -9,6 +9,10 @@ const { armor } = defineProps<{
     armor: Armor
 }>();
 
+const emits = defineEmits<{
+    changed: [value: Armor],
+}>();
+
 const types: ArmorType[] = [ArmorType.Unarmored, ArmorType.Light, ArmorType.Medium, ArmorType.Heavy];
 
 async function showEditAbilitiesDialog() {
@@ -21,11 +25,7 @@ async function showEditAbilitiesDialog() {
         return;
     }
 
-    // const resultAbilities = {} as Record<AbilityType, number>;
-    // for (const ability of Object.values(result.payload)) {
-    //     resultAbilities[ability.type] = ability.score;
-    // }
-    //emits('changed', resultAbilities);
+    emits('changed', result.payload);
 }
 </script>
 

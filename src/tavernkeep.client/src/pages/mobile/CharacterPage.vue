@@ -13,6 +13,7 @@ import { AbilityType, RollType, SavingThrowType, type Proficiency, type SkillTyp
 import SkillCheckResultToast from '@/components/toasts/SkillCheckResultToast.vue';
 import SavingThrowResultToast from '@/components/toasts/SavingThrowResultToast.vue';
 import ArmorWidget from '@/components/character/widgets/Armor/ArmorWidget.vue';
+import type { Armor } from '@/contracts/character';
 
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
@@ -49,6 +50,13 @@ async function updateSkills(proficiencies: Record<SkillType, Proficiency>) {
 async function updateSavingThrows(proficiencies: Record<string, Proficiency>) {
     if (character.value !== undefined) {
         await api.editSavingThrows(character.value.id, proficiencies);
+    }
+}
+
+async function updateArmor(armor: Armor) {
+    if (character.value !== undefined) {
+        let equipped = armor.equipped;
+        await api.editArmor(character.value.id, equipped.type, equipped.bonus, equipped.hasDexterityCap, equipped.dexterityCap, armor.proficiencies);
     }
 }
 
@@ -160,7 +168,7 @@ function updateSection() {
                 @roll="(type) => rollSavingThrow(type)" />
             <SkillsWidget id="skills" :skills="character.skills" @changed="updateSkills"
                 @roll="(type) => rollSkillCheck(type)" />
-            <ArmorWidget id="armor" :armor="character.armor" />
+            <ArmorWidget id="armor" :armor="character.armor" @changed="updateArmor"/>
         </div>
     </div>
     <div v-else>No selected character</div>

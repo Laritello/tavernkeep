@@ -4,7 +4,7 @@ import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import type { User, Message, Character, SkillRollMessage } from '@/entities';
 import type { Ability, Skill, Lore, Perception } from '@/contracts/character';
-import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowType } from '@/contracts/enums';
+import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowType, ArmorType } from '@/contracts/enums';
 import type { Condition } from '@/entities/Condition';
 import type { SavingThrowRollMessage } from '@/entities/Message';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
@@ -177,6 +177,18 @@ export class AxiosApiClient {
     async editPerception(characterId: string, proficiency: Proficiency): Promise<Perception> {
         const response = await this.client.patch<Perception>(`characters/${characterId}/perception`, {
             proficiency: proficiency,
+        });
+
+        return getPayloadOrThrow(response);
+    }
+
+    async editArmor(characterId: string, type: ArmorType, bonus: number, hasDexterityCap: boolean, dexterityCap: number, proficiencies: Record<ArmorType, Proficiency>): Promise<Perception> {
+        const response = await this.client.patch<Perception>(`characters/${characterId}/armor`, {
+            type: type,
+            bonus: bonus,
+            hasDexterityCap: hasDexterityCap,
+            dexterityCap: dexterityCap,
+            proficiencies: proficiencies
         });
 
         return getPayloadOrThrow(response);

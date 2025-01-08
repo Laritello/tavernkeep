@@ -9,7 +9,7 @@ import type { Armor } from '@/contracts/character';
 
 const { closeModal, armor } = defineProps<{
     armor: Armor;
-    closeModal: DialogResultCallback<Record<string, Proficiency>>;
+    closeModal: DialogResultCallback<Armor>;
 }>();
 
 const types: ArmorType[] = [ArmorType.Unarmored, ArmorType.Light, ArmorType.Medium, ArmorType.Heavy];
@@ -21,10 +21,20 @@ const hasCap = ref<boolean>(armor.equipped.hasDexterityCap);
 const cap = ref<number>(armor.equipped.dexterityCap);
 
 function confirm() {
-    const payload = {} as Record<string, Proficiency>;
+    const payload = {} as Armor;
+    payload.equipped = {
+        type: type.value,
+        bonus: bonus.value,
+        hasDexterityCap: hasCap.value,
+        dexterityCap: cap.value
+    };
+
+    payload.proficiencies = {} as Record<ArmorType, Proficiency>;
+    
     for (const item of currentItems.value) {
-        payload[item.name] = item.proficiency;
+        payload.proficiencies[item.name as ArmorType] = item.proficiency;
     }
+
     closeModal({ action: 'result', payload });
 }
 
