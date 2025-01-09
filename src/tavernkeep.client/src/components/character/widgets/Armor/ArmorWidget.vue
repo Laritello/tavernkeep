@@ -62,13 +62,19 @@ async function showEditAbilitiesDialog() {
             </div>
         </div>
 
-        <div class="divider divider-neutral mb-1 uppercase">{{ t('widgets.armor.proficiencies') }}</div>
-
-        <div class="flex flex-col">
-            <div v-for="type in types" :key="type"
-                class="flex flex-row items-center p-1 gap-x-2 border-b-2 border-base-300 proficiency-item">
-                <p class="grow select-none">{{ t(`pf.armor.${type.toLowerCase()}`) }}</p>
-                <ProficiencyComponent :proficiency="armor.proficiencies[type]" />
+        <div class="collapse">
+            <input type="checkbox" />
+            <div class="collapse-title text-md font-medium px-5 pb-0">
+                <div class="divider">Proficiencies</div>
+            </div>
+            <div class="collapse-content">
+                <div class="flex flex-col">
+                    <div v-for="type in types" :key="type"
+                         class="flex flex-row items-center p-1 gap-x-2 border-b-2 border-base-300 proficiency-item">
+                        <p class="grow select-none">{{ type }}</p>
+                        <ProficiencyComponent :proficiency="armor.proficiencies[type]" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
