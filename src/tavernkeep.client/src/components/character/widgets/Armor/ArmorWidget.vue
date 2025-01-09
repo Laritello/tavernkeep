@@ -60,9 +60,11 @@ async function showEditAbilitiesDialog() {
             </div>
         </div>
 
-        <div class="collapse collapse-arrow mt-2">
+        <div class="collapse">
             <input type="checkbox" />
-            <div class="collapse-title text-xl font-medium">PROFICIENCIES</div>
+            <div class="collapse-title text-md font-medium px-5 pb-0">
+                <div class="divider divider-neutral">Proficiencies</div>
+            </div>
             <div class="collapse-content">
                 <div class="flex flex-col">
                     <div v-for="type in types" :key="type"
