@@ -65,7 +65,7 @@ async function showEditAbilitiesDialog() {
         <div class="collapse">
             <input type="checkbox" />
             <div class="collapse-title text-md font-medium px-5 pb-0">
-                <div class="divider">Proficiencies</div>
+                <div class="divider uppercase">{{ t('widgets.armor.proficiencies') }}</div>
             </div>
             <div class="collapse-content">
                 <div class="flex flex-col">
