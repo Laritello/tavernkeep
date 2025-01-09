@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import type { Ability } from '@/contracts/character';
-import { type AbilityType, Proficiency } from '@/contracts/enums';
+import { type AbilityType } from '@/contracts/enums';
 import AbilitiesWidgetItem from './AbilitiesWidgetItem.vue';
 import { useModal } from '@/composables/useModal';
 import AbilitiesEditDialog from '@/components/dialogs/edit/AbilitiesEditDialog.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const emits = defineEmits<{
     changed: [value: Record<AbilityType, number>]
@@ -34,7 +37,7 @@ async function showEditAbilitiesDialog() {
 <template>
     <div class="bg-base-100 border-2 border-base-300 rounded-xl border-inherit flex flex-col p-2 w-full lg:max-w-md">
         <div class="flex flex-row justify-center items-center">
-            <h2 class="mr-1 text-lg font-semibold select-none">Attributes</h2>
+            <h2 class="mr-1 text-lg font-semibold select-none">{{ t('sections.attributes') }}</h2>
             <button class="btn btn-sm btn-circle btn-ghost" @click="showEditAbilitiesDialog()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 -960 960 960">
                     <path

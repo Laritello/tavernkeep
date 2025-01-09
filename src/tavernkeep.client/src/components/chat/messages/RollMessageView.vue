@@ -28,14 +28,14 @@
             <div class="flex flex-col">
                 <p class="text-center uppercase leading-3">
                     <span class="text-md font-bold tracking-wide" :class="{
-                        'custom': rollMessageParameters.header == 'Custom',
-                        'skill-check': rollMessageParameters.header == 'Check',
-                        'saving-throw': rollMessageParameters.header == 'Save',
+                        'custom': rollMessageParameters.type == RollMessageType.Custom,
+                        'skill-check': rollMessageParameters.type == RollMessageType.Skill,
+                        'saving-throw': rollMessageParameters.type == RollMessageType.SavingThrow,
                     }">
-                        {{ rollMessageParameters.header }}
+                        {{ t(`chat.rollMessages.headers.${rollMessageParameters.type.toLowerCase()}`) }}
                     </span>
                     <br />
-                    <span class="text-xs font-normal tracking-wide">{{ rollMessageParameters.subHeader }}</span>
+                    <span class="text-xs font-normal tracking-wide">{{ getSubHeader(rollMessageParameters.type) }}</span>
                 </p>
             </div>
 
@@ -76,14 +76,17 @@
     </div>
 </template>
 <script setup lang="ts">
-import { RollType } from '@/contracts/enums';
+import { RollMessageType, RollType } from '@/contracts/enums';
 import type { RollMessage } from '@/entities/Message';
 import DiceExpression from '@/components/DiceExpression.vue';
 import { ref } from 'vue';
 import DiceIcon from '@/components/DiceIcon.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 interface RollMessageParameters {
-    header: string;
+    type: RollMessageType;
     subHeader: string;
 }
 
@@ -101,6 +104,17 @@ function formatDate(dateString: Date): string {
     const minutes = date.getMinutes().toString().padStart(2, '0');
 
     return `${hours}:${minutes}`;
+}
+
+function getSubHeader(type: RollMessageType): string {
+    switch (type) {
+        case RollMessageType.Custom:
+            return t('chat.rollMessages.subHeaders.custom');
+        case RollMessageType.Skill:
+            return t(`pf.skills.${rollMessageParameters.subHeader.toLowerCase()}`);
+        case RollMessageType.SavingThrow:
+            return t(`pf.savingThrows.${rollMessageParameters.subHeader.toLowerCase()}`);
+    }
 }
 </script>
 <style scoped>

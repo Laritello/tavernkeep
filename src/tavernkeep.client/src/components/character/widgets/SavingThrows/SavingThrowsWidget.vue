@@ -1,7 +1,7 @@
 <template>
     <div class="bg-base-100 border-2 border-base-300 rounded-xl border-inherit flex flex-col p-2 w-full lg:max-w-md">
         <div class="flex flex-row justify-center items-center">
-            <h2 class="mr-1 text-lg font-semibold select-none">Saving Throws</h2>
+            <h2 class="mr-1 text-lg font-semibold select-none">{{ t('sections.savingThrows') }}</h2>
             <button class="btn btn-sm btn-circle btn-ghost" @click="showEditSavingThrowsDialog()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 -960 960 960">
                     <path
@@ -23,6 +23,9 @@ import SavingThrowWidgetItem from './SavingThrowWidgetItem.vue';
 import { useModal } from '@/composables/useModal';
 import SavingThrowsEditDialog from '@/components/dialogs/edit/SavingThrowsEditDialog.vue';
 import { Proficiency, SavingThrowType } from '@/contracts/enums';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const { savingThrows } = defineProps<{ savingThrows: Record<string, SavingThrow> }>();
 const emits = defineEmits<{

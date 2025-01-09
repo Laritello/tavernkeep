@@ -6,6 +6,9 @@ import type { DialogResultCallback } from '@/composables/useModal';
 import type { ProficiencyEditItemType } from '@/components/character/shared/ProficiencyListEdit';
 import ProficiencyListEdit from '@/components/character/shared/ProficiencyListEdit/ProficiencyListEdit.vue';
 import type { Armor } from '@/contracts/character';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const { closeModal, armor } = defineProps<{
     armor: Armor;
@@ -46,44 +49,44 @@ function cancel() {
 <template>
     <dialog class="modal">
         <div class="modal-box overflow-y-hidden">
-            <h3 class="font-bold text-lg">Edit armor</h3>
+            <h3 class="font-bold text-lg">{{ t('widgets.armor.editDialog.header') }}</h3>
 
             <label class="form-control w-full max-w-xs">
                 <div class="label">
-                    <span class="label-text">Type</span>
+                    <span class="label-text">{{ t('widgets.armor.type') }}</span>
                 </div>
                 <select class="select select-bordered" v-model="type">
-                    <option disabled selected>Pick one</option>
-                    <option v-for="type in types" :key="type">{{ type }}</option>
+                    <option disabled selected>{{ t('widgets.armor.editDialog.pickOne') }}</option>
+                    <option v-for="type in types" :key="type" :value="type">{{ t(`pf.armor.${type.toLowerCase()}`) }}</option>
                 </select>
             </label>
 
             <div class="flex flex-row gap-2">
                 <label class="form-control w-full max-w-xs">
                     <div class="label">
-                        <span class="label-text">Bonus</span>
+                        <span class="label-text">{{ t('widgets.armor.bonus') }}</span>
                     </div>
-                    <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"
+                    <input type="text" class="input input-bordered w-full max-w-xs"
                         v-model="bonus" />
                 </label>
 
                 <label class="form-control w-full max-w-xs">
                     <div class="label">
-                        <span class="label-text">Dexterity cap</span>
+                        <span class="label-text text-clip text-nowrap">{{ t('widgets.armor.dexterityCap') }}</span>
                         <input type="checkbox" class="toggle toggle-xs" v-model="hasCap" />
                     </div>
-                    <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"
+                    <input type="text" class="input input-bordered w-full max-w-xs"
                         v-bind:disabled="!hasCap" v-model="cap" />
                 </label>
             </div>
 
             <div class="divider divider-neutral"></div>
 
-            <ProficiencyListEdit v-model="currentItems" class="modal-content" />
+            <ProficiencyListEdit locale-prefix="pf.armor." v-model="currentItems" class="modal-content" />
             <form @submit.prevent="confirm" method="dialog">
                 <div class="modal-action">
-                    <button class="btn btn-success w-24" type="submit">Save</button>
-                    <button @click="cancel" class="btn w-24" type="button">Cancel</button>
+                    <button class="btn btn-success w-24" type="submit">{{ t("actions.save") }}</button>
+                    <button @click="cancel" class="btn w-24" type="button">{{ t("actions.cancel") }}</button>
                 </div>
             </form>
         </div>

@@ -5,10 +5,14 @@ import { Proficiency } from '@/contracts/enums';
 import type { DialogResultCallback } from '@/composables/useModal';
 import type { ProficiencyEditItemType } from '@/components/character/shared/ProficiencyListEdit';
 import ProficiencyListEdit from '@/components/character/shared/ProficiencyListEdit/ProficiencyListEdit.vue';
+import { useI18n } from 'vue-i18n';
 
-const { closeModal, items } = defineProps<{
+const { t } = useI18n();
+
+const { closeModal, items, localePrefix } = defineProps<{
     caption: string;
     items: ProficiencyEditItemType[];
+    localePrefix: string;
     closeModal: DialogResultCallback<Record<string, Proficiency>>;
 }>();
 
@@ -31,11 +35,11 @@ function cancel() {
     <dialog class="modal">
         <div class="modal-box overflow-y-hidden">
             <h3 class="font-bold text-lg">{{ caption }}</h3>
-            <ProficiencyListEdit v-model="currentItems" class="modal-content" />
+            <ProficiencyListEdit :locale-prefix="localePrefix" v-model="currentItems" class="modal-content" />
             <form @submit.prevent="confirm" method="dialog">
                 <div class="modal-action">
-                    <button class="btn btn-success w-24" type="submit">Save</button>
-                    <button @click="cancel" class="btn w-24" type="button">Cancel</button>
+                    <button class="btn btn-success w-24" type="submit">{{ t('actions.save') }}</button>
+                    <button @click="cancel" class="btn w-24" type="button">{{ t('actions.cancel') }}</button>
                 </div>
             </form>
         </div>

@@ -1,14 +1,112 @@
 ﻿{
     "locale": {
-        "en": "Английский",
+        "en": "English",
         "ru": "Русский"
     },
-    "character": {
+    "actions": {
+        "save": "Сохранить",
+        "cancel": "Отмена"
+    },
+    "sections": {
         "attributes": "Характеристики",
         "savingThrows": "Спасброски",
         "skills": "Навыки",
+        "armor": "Броня",
         "attacks": "Атаки",
         "spells": "Заклинания",
         "inventory": "Снаряжение"
+    },
+    "widgets": {
+        "attributes": {
+            "editDialog": {
+                "header": "Редактирование характеристик"
+            }
+        },
+        "savingThrows": {
+            "editDialog": {
+                "header": "Редактирование спасбросков"
+            }
+        },
+        "skills": {
+            "editDialog": {
+                "header": "Редактирование навыков"
+            }
+        },
+        "armor": {
+            "bonus": "Бонус",
+            "type": "Тип",
+            "cap": "М. Лов.",
+            "dexterityCap": "Макс. ловкость",
+            "proficiencies": "Мастерство",
+            "editDialog": {
+                "header": "Редактирование брони",
+                "pickOne": "Выбери одно"
+            }
+        },
+        "conditions": {
+            "conditions": "Состояния"
+        }
+    },
+    "pf": {
+        "attributes": {
+            "strength": "Сила",
+            "dexterity": "Ловкость",
+            "constitution": "Выносливость",
+            "intelligence": "Интеллект",
+            "wisdom": "Мудрость",
+            "charisma": "Харизма"
+        },
+        "savingThrows": {
+            "fortitude": "Стойкость",
+            "reflex": "Рефлекс",
+            "will": "Воля"
+        },
+        "skills": {
+            "acrobatics": "Акробатика",
+            "arcana": "Аркана",
+            "athletics": "Атлетика",
+            "crafting": "Ремесло",
+            "deception": "Обман",
+            "diplomacy": "Дипломатия",
+            "intimidation": "Запугивание",
+            "medicine": "Медицина",
+            "nature": "Природа",
+            "occultism": "Оккультизм",
+            "performance": "Выступление",
+            "religion": "Религия",
+            "society": "Общество",
+            "stealth": "Скрытность",
+            "survival": "Выживание",
+            "thievery": "Вороство"
+        },
+        "armor": {
+            "unarmored": "Без брони",
+            "light": "Легкая",
+            "medium": "Средняя",
+            "heavy": "Тяжёлая"
+        }
+    },
+    "chat": {
+        "rollMessages": {
+            "headers": {
+                "skill": "Проверка",
+                "savingthrow": "Спасбросок",
+                "custom": "Пользовательский"
+            },
+            "subHeaders": {
+                "custom": "Бросок"
+            }
+        }
+    },
+    "settings": {
+        "themes": {
+            "header": "Темы",
+            "light": "Светлая",
+            "dark": "Тёмная"
+        },
+        "language": {
+            "header": "Язык"
+        },
+        "logout" : "Выйти"
     }
 }

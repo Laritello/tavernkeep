@@ -27,19 +27,13 @@ interface Section {
 }
 
 const sections: Section[] = [
-    { link: '#attributes', header: 'Attributes' },
-    { link: '#saving-throws', header: 'Saving Throws' },
-    { link: '#skills', header: 'Skills' },
-    { link: '#armor', header: 'Armor' },
-    { link: '#attacks', header: 'Attacks' },
-    { link: '#spells', header: 'Spells' },
-    { link: '#inventory', header: 'Inventory' },
-    { link: '#attributes', header: t('character.attributes') },
-    { link: '#saving-throws', header: t('character.savingThrows') },
-    { link: '#skills', header: t('character.skills') },
-    { link: '#attacks', header: t('character.attacks')},
-    { link: '#spells', header: t('character.spells') },
-    { link: '#inventory', header: t('character.inventory') },
+    { link: '#attributes', header: t('sections.attributes') },
+    { link: '#saving-throws', header: t('sections.savingThrows') },
+    { link: '#skills', header: t('sections.skills') },
+    { link: '#armor', header: t('sections.armor') },
+    { link: '#attacks', header: t('sections.attacks')},
+    { link: '#spells', header: t('sections.spells') },
+    { link: '#inventory', header: t('sections.inventory') },
 ]
 
 async function updateAbilities(scores: Record<AbilityType, number>) {

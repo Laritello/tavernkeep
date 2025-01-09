@@ -4,6 +4,9 @@ import { ArmorType } from '@/contracts/enums';
 import { useModal } from '@/composables/useModal';
 import ProficiencyComponent from '../../ProficiencyComponent.vue';
 import ArmorEditDialog from '@/components/dialogs/edit/ArmorEditDialog.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const { armor } = defineProps<{
     armor: Armor
@@ -32,7 +35,7 @@ async function showEditAbilitiesDialog() {
 <template>
     <div class="bg-base-100 border-2 border-base-300 rounded-xl border-inherit flex flex-col p-2 w-full lg:max-w-md">
         <div class="flex flex-row justify-center items-center">
-            <h2 class="mr-1 text-lg font-semibold select-none">Armor</h2>
+            <h2 class="mr-1 text-lg font-semibold select-none">{{ t('sections.armor') }}</h2>
             <button class="btn btn-sm btn-circle btn-ghost" @click="showEditAbilitiesDialog()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 -960 960 960">
                     <path
@@ -44,28 +47,27 @@ async function showEditAbilitiesDialog() {
         <div class="flex flex-col">
             <div class="flex flex-row gap-1">
                 <div class="box-border border-base-300 flex flex-col p-1 px-3 border-2 rounded-lg w-20">
-                    <p class="text-sm text-center select-none">Bonus</p>
+                    <p class="text-sm text-center select-none">{{ t('widgets.armor.bonus') }}</p>
                     <p class="text-lg font-extrabold text-center select-none">{{ armor.equipped.bonus }}</p>
                 </div>
                 <div class="flex-1 box-border border-base-300 flex flex-col p-1 px-3 border-2 rounded-lg">
-                    <p class="text-sm text-center select-none">Type</p>
-                    <p class="text-lg font-extrabold text-center select-none uppercase tracking-tighter">{{
-                        armor.equipped.type }}</p>
+                    <p class="text-sm text-center select-none">{{ t('widgets.armor.type') }}</p>
+                    <p class="text-lg font-extrabold text-center select-none uppercase tracking-tight">{{ t(`pf.armor.${armor.equipped.type.toLowerCase()}`) }}</p>
                 </div>
                 <div class="box-border border-base-300 flex flex-col p-1 px-3 border-2 rounded-lg w-20">
-                    <p class="text-sm text-center select-none">Cap</p>
+                    <p class="text-sm text-center select-none">{{ t('widgets.armor.cap') }}</p>
                     <p class="text-lg font-extrabold text-center select-none">{{ armor.equipped.hasDexterityCap ?
                         armor.equipped.dexterityCap : '-' }}</p>
                 </div>
             </div>
         </div>
 
-        <div class="divider divider-neutral mb-1">PROFICIENCIES</div>
+        <div class="divider divider-neutral mb-1 uppercase">{{ t('widgets.armor.proficiencies') }}</div>
 
         <div class="flex flex-col">
             <div v-for="type in types" :key="type"
                 class="flex flex-row items-center p-1 gap-x-2 border-b-2 border-base-300 proficiency-item">
-                <p class="grow select-none">{{ type }}</p>
+                <p class="grow select-none">{{ t(`pf.armor.${type.toLowerCase()}`) }}</p>
                 <ProficiencyComponent :proficiency="armor.proficiencies[type]" />
             </div>
         </div>

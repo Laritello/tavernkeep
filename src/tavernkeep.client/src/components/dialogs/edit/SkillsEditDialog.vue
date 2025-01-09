@@ -3,6 +3,9 @@ import { type DialogResultCallback } from '@/composables/useModal';
 import type { Skill } from '@/contracts/character';
 import { Proficiency, SkillType } from '@/contracts/enums';
 import ProficiencyEditDialog from '@/components/dialogs/edit/ProficiencyEditDialog.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 type ReturnType = Record<string, Proficiency>;
 const { closeModal, skills } = defineProps<{
@@ -16,5 +19,5 @@ const convertedSkills = Object
 </script>
 
 <template>
-    <ProficiencyEditDialog caption="Edit skills" :items="convertedSkills" :closeModal="closeModal" />
+    <ProficiencyEditDialog :caption="t('widgets.skills.editDialog.header')" localePrefix="pf.skills." :items="convertedSkills" :closeModal="closeModal" />
 </template>

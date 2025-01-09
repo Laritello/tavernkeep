@@ -1,14 +1,112 @@
 ﻿{
     "locale": {
         "en": "English",
-        "ru": "Russian"
+        "ru": "Русский"
     },
-    "character": {
+    "actions": {
+        "save": "Save",
+        "cancel": "Cancel"
+    },
+    "sections": {
         "attributes": "Attributes",
         "savingThrows": "Saving Throws",
         "skills": "Skills",
+        "armor": "Armor",
         "attacks": "Attacks",
         "spells": "Spells",
         "inventory": "Inventory"
+    },
+    "widgets": {
+        "attributes": {
+            "editDialog": {
+                "header": "Edit attributes"
+            }
+        },
+        "savingThrows": {
+            "editDialog": {
+                "header": "Edit saving throws"
+            }
+        },
+        "skills": {
+            "editDialog": {
+                "header": "Edit skills"
+            }
+        },
+        "armor": {
+            "bonus": "Bonus",
+            "type": "Type",
+            "cap": "Cap",
+            "dexterityCap": "Dexterity cap",
+            "proficiencies": "Proficiencies",
+            "editDialog": {
+                "header": "Edit armor",
+                "pickOne": "Pick one"
+            }
+        },
+        "conditions": {
+            "conditions": "Conditions"
+        }
+    },
+    "pf": {
+        "attributes": {
+            "strength": "Strength",
+            "dexterity": "Dexterity",
+            "constitution": "Constitution",
+            "intelligence": "Intelligence",
+            "wisdom": "Wisdom",
+            "charisma": "Charisma"
+        },
+        "savingThrows": {
+            "fortitude": "Fortitude",
+            "reflex": "Reflex",
+            "will": "Will"
+        },
+        "skills": {
+            "acrobatics": "Acrobatics",
+            "arcana": "Arcana",
+            "athletics": "Athletics",
+            "crafting": "Crafting",
+            "deception": "Deception",
+            "diplomacy": "Diplomacy",
+            "intimidation": "Intimidation",
+            "medicine": "Medicine",
+            "nature": "Nature",
+            "occultism": "Occultism",
+            "performance": "Performance",
+            "religion": "Religion",
+            "society": "Society",
+            "stealth": "Stealth",
+            "survival": "Survival",
+            "thievery": "Thievery"
+        },
+        "armor": {
+            "unarmored": "Unarmored",
+            "light": "Light",
+            "medium": "Medium",
+            "heavy": "Heavy"
+        }
+    },
+    "chat": {
+        "rollMessages": {
+            "headers": {
+                "skill": "Check",
+                "savingthrow": "Save",
+                "custom": "Custom"
+            },
+            "subHeaders": {
+                "custom": "Roll"
+            }
+        }
+    },
+    "settings": {
+        "themes": {
+            "header": "Themes",
+            "light": "Light",
+            "dark": "Dark"
+        },
+        "language": {
+            "header": "Language"
+        },
+        "logout" : "Logout"
     }
 }
