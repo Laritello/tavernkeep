@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useToast } from "vue-toastification";
+import { useI18n } from 'vue-i18n';
 import AbilitiesWidget from '@/components/character/widgets/Abilities/AbilitiesWidget.vue';
 import SavingThrowsWidget from '@/components/character/widgets/SavingThrows/SavingThrowsWidget.vue';
 import SkillsWidget from '@/components/character/widgets/Skills/SkillsWidget.vue';
-
-import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
-
-import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
-import { AbilityType, RollType, SavingThrowType, type Proficiency, type SkillType } from '@/contracts/enums';
 import SkillCheckResultToast from '@/components/toasts/SkillCheckResultToast.vue';
 import SavingThrowResultToast from '@/components/toasts/SavingThrowResultToast.vue';
+import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
+import { AbilityType, RollType, SavingThrowType, type Proficiency, type SkillType } from '@/contracts/enums';
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import ArmorWidget from '@/components/character/widgets/Armor/ArmorWidget.vue';
 import type { Armor } from '@/contracts/character';
 
+const { t } = useI18n();
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
 const user = useCurrentUserAccount();
@@ -27,13 +27,13 @@ interface Section {
 }
 
 const sections: Section[] = [
-    { link: '#attributes', header: 'Attributes' },
-    { link: '#saving-throws', header: 'Saving Throws' },
-    { link: '#skills', header: 'Skills' },
-    { link: '#armor', header: 'Armor' },
-    { link: '#attacks', header: 'Attacks' },
-    { link: '#spells', header: 'Spells' },
-    { link: '#inventory', header: 'Inventory' },
+    { link: '#attributes', header: t('sections.attributes') },
+    { link: '#saving-throws', header: t('sections.savingThrows') },
+    { link: '#skills', header: t('sections.skills') },
+    { link: '#armor', header: t('sections.armor') },
+    { link: '#attacks', header: t('sections.attacks')},
+    { link: '#spells', header: t('sections.spells') },
+    { link: '#inventory', header: t('sections.inventory') },
 ]
 
 async function updateAbilities(scores: Record<AbilityType, number>) {

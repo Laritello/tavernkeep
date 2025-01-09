@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 interface Suggestion {
     name: string;
@@ -86,7 +89,7 @@ function tryToCompleteSuggestion() {
         TODO: After entering the command from the suggestion menu caret doesn't move to the last symbol.
         -->
         <span class="w-full border rounded-3xl p-2 px-3 pt-3 min-h-12 max-h-24 overflow-y-auto shadow bg-base-100"
-            placeholder='Enter text here...' contenteditable="plaintext-only" type="text" tabindex="0"
+            :placeholder='t("chat.input.placeholder")' contenteditable="plaintext-only" type="text" tabindex="0"
             ref="editableSpan" @input="processInput" @keydown.enter="handleEnter"
             @keydown.tab.prevent="tryToCompleteSuggestion" />
 

@@ -3,6 +3,9 @@ import { type DialogResultCallback } from '@/composables/useModal';
 import type { SavingThrow } from '@/contracts/character';
 import { Proficiency, SavingThrowType } from '@/contracts/enums';
 import ProficiencyEditDialog from '@/components/dialogs/edit/ProficiencyEditDialog.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 type ReturnType = Record<string, Proficiency>;
 const { closeModal, savingThrows } = defineProps<{
@@ -16,5 +19,5 @@ const convertedSavingThrows = Object
 </script>
 
 <template>
-    <ProficiencyEditDialog caption="Edit saving throws" :items="convertedSavingThrows" :closeModal="closeModal" />
+    <ProficiencyEditDialog :caption="t('widgets.savingThrows.editDialog.header')" localePrefix="pf.savingThrows." :items="convertedSavingThrows" :closeModal="closeModal" />
 </template>

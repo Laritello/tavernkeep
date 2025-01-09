@@ -10,6 +10,9 @@ import PerceptionWidget from '@/components/character/PerceptionWidget.vue';
 import HeroPoints from './character/HeroPoints.vue';
 import { useModal } from '@/composables/useModal';
 import ConditionApplyDialog from '@/components/dialogs/ConditionApplyDialog.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
@@ -86,7 +89,7 @@ async function showConditionEditDialog() {
                 <button class="btn btn-xs btn-outline uppercase px-0" v-on:click="showConditionEditDialog">
                     <div class="flex flex-row">
                         <p class="tracking-tighter">
-                            <span>Conditions</span>
+                            <span>{{ t('widgets.conditions.conditions') }}</span>
                             <span v-if="user.activeCharacter.value.conditions.length > 0" class="ml-1">{{ user.activeCharacter.value.conditions.length }}</span>
                         </p>
                     </div>

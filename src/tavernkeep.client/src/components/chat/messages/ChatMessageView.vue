@@ -6,6 +6,7 @@ import { type Message, type SavingThrowRollMessage, type SkillRollMessage } from
 import TextMessageView from './TextMessageView.vue';
 import RollMessageView from './RollMessageView.vue';
 import { useSession } from '@/composables/useSession';
+import { RollMessageType } from '@/contracts/enums';
 
 const { message } = defineProps<{
     message: Message;
@@ -31,17 +32,17 @@ function getParametersByType(message: Message) {
     switch (message.$type) {
         case 'RollMessage':
             return {
-                header: 'Custom',
+                type: RollMessageType.Custom,
                 subHeader: 'Roll'
             };
         case 'SkillRollMessage':
             return {
-                header: 'Check',
+                type: RollMessageType.Skill,
                 subHeader: (message as SkillRollMessage).skill.type
             };
         case 'SavingThrowRollMessage':
             return {
-                header: 'Save',
+                type: RollMessageType.SavingThrow,
                 subHeader: (message as SavingThrowRollMessage).savingThrow.type
             };
         default:

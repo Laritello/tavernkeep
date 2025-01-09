@@ -20,7 +20,7 @@
             </svg>
         </label>
 
-        <p class="grow select-none">{{ skill.type }}</p>
+        <p class="grow select-none">{{ t(`pf.skills.${skill.type.toLowerCase()}`) }}</p>
         <ProficiencyComponent :proficiency="skill.proficiency" />
         <p class="border-2 border-base-300 rounded-md w-12 text-center font-bold active:bg-gray-400 select-none"
             @click="emit('roll', skill)">
@@ -32,6 +32,9 @@
 <script lang="ts" setup>
 import type { Skill } from '@/contracts/character';
 import ProficiencyComponent from '@/components/character/ProficiencyComponent.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const { skill } = defineProps<{
     skill: Skill;
