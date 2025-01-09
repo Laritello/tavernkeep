@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import translation from '@/i18n/translation';
 import ChatHub from '@/api/hubs/ChatHub';
 import CharacterHub from '@/api/hubs/CharacterHub';
 
@@ -41,6 +42,11 @@ export const useAppState = defineStore('appState', () => {
     }
 
     async function initialize() {
+        // apply locale
+        const locale = translation.guessDefaultLocale();
+        translation.switchLanguage(locale);
+        
+        // start hubs and fetch initial data
         const fetchPromise = fetch().then(() => console.info('[AppStore] Initial data fetched'));
         const startHubsPromise = startHubs().then(() => console.info('[AppStore] Hubs started'));
         Promise.all([fetchPromise, startHubsPromise])

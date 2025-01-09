@@ -2,7 +2,6 @@
 
 export default {
     get supportedLocales(): string[] {
-        console.log(import.meta.env);
         return import.meta.env.VITE_SUPPORTED_LOCALES.split(",")
     },
 
@@ -14,7 +13,7 @@ export default {
         return i18n.global.locale.value;
     },
     
-    get defaultLocale() {
+    get defaultLocale(): string {
         return import.meta.env.VITE_DEFAULT_LOCALE
     },
     
@@ -44,8 +43,30 @@ export default {
 
         return null;
     },
+
+    guessDefaultLocale(): string {
+        // try to load from local storage
+        const userPersistedLocale = this.getPersistedLocale();
+        if(userPersistedLocale) {
+            return userPersistedLocale;
+        }
+        
+        // try to load from browser settings
+        const userPreferredLocale = this.getUserLocale();
+        if (this.isLocaleSupported(userPreferredLocale.locale)) {
+            return userPreferredLocale.locale;
+        }
+        
+        // check is locale supported
+        if (this.isLocaleSupported(userPreferredLocale.localeNoRegion)) {
+            return userPreferredLocale.localeNoRegion;
+        }
+        
+        // fallback to default locale
+        return this.defaultLocale;
+    },
     
-    async switchLanguage(newLocale: string) {
+    switchLanguage(newLocale: string) {
         if(document === null) return;
         this.currentLocale = newLocale;
         document.querySelector("html")?.setAttribute("lang", newLocale);
