@@ -60,13 +60,17 @@ async function showEditAbilitiesDialog() {
             </div>
         </div>
 
-        <div class="divider divider-neutral mb-1">PROFICIENCIES</div>
-
-        <div class="flex flex-col">
-            <div v-for="type in types" :key="type"
-                class="flex flex-row items-center p-1 gap-x-2 border-b-2 border-base-300 proficiency-item">
-                <p class="grow select-none">{{ type }}</p>
-                <ProficiencyComponent :proficiency="armor.proficiencies[type]" />
+        <div class="collapse collapse-arrow mt-2">
+            <input type="checkbox" />
+            <div class="collapse-title text-xl font-medium">PROFICIENCIES</div>
+            <div class="collapse-content">
+                <div class="flex flex-col">
+                    <div v-for="type in types" :key="type"
+                         class="flex flex-row items-center p-1 gap-x-2 border-b-2 border-base-300 proficiency-item">
+                        <p class="grow select-none">{{ type }}</p>
+                        <ProficiencyComponent :proficiency="armor.proficiencies[type]" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
