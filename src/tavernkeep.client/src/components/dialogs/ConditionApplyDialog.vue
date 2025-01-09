@@ -1,9 +1,9 @@
 <template>
     <dialog class="modal">
         <div class="modal-box">
-            <h3 class="font-bold text-lg">Edit conditions</h3>
+            <h3 class="font-bold text-lg">{{ t('widgets.conditions.editDialog.header') }}</h3>
 
-            <h4 v-if="currentActive.length > 0" class="font-bold text-base">Active</h4>
+            <h4 v-if="currentActive.length > 0" class="font-bold text-base">{{ t('widgets.conditions.editDialog.active') }}</h4>
             <div v-if="currentActive.length > 0" class="flex flex-col max-h-36 overflow-y-auto scroll-smooth">
                 <div v-for="condition in currentActive" :key="condition.name"
                     class="flex flex-row border-base-200 border-b-2 p-1 align-items-center">
@@ -32,7 +32,7 @@
                     </button>
                 </div>
             </div>
-            <h4 class="font-bold text-base p-1">Available</h4>
+            <h4 class="font-bold text-base p-1">{{ t('widgets.conditions.editDialog.available') }}</h4>
             <div class="flex flex-col max-h-72 overflow-y-auto scroll-smooth">
                 <div v-for="condition in conditions.filter(c => !currentActive.some(x => x.name === c.name))"
                     :key="condition.name" class="flex flex-row border-base-200 border-b-2 p-1 align-items-center">
@@ -47,8 +47,8 @@
             </div>
 
             <div class="modal-action">
-                <button @click="save" class="btn btn-success w-24" type="submit">Save</button>
-                <button @click="cancel" class="btn w-24" type="button">Cancel</button>
+                <button @click="save" class="btn btn-success w-24" type="submit">{{ t('actions.save') }}</button>
+                <button @click="cancel" class="btn w-24" type="button">{{ t('actions.cancel') }}</button>
             </div>
         </div>
     </dialog>
@@ -58,6 +58,9 @@ import { type DialogResultCallback } from '@/composables/useModal';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
 import type { Condition } from '@/entities';
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const { active, conditions, closeModal } = defineProps<{
     conditions: Condition[];

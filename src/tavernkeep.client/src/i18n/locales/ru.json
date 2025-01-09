@@ -44,7 +44,12 @@
             }
         },
         "conditions": {
-            "conditions": "Состояния"
+            "conditions": "Состояния",
+            "editDialog": {
+                "header": "Редактирование состояний",
+                "active": "Активные",
+                "available": "Доступные"
+            }
         }
     },
     "pf": {
@@ -96,6 +101,9 @@
             "subHeaders": {
                 "custom": "Бросок"
             }
+        },
+        "input": {
+            "placeholder": "Напишите сообщение..."
         }
     },
     "settings": {
@@ -107,6 +115,6 @@
         "language": {
             "header": "Язык"
         },
-        "logout" : "Выйти"
+        "logout": "Выйти"
     }
 }

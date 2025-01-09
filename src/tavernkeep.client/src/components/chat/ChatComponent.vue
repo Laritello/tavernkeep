@@ -3,7 +3,6 @@ import { computed, ref } from 'vue';
 import { RollType } from '@/contracts/enums/RollType';
 
 // Components
-import UserSelector from './UserSelector.vue';
 import ChatMessageView from './messages/ChatMessageView.vue';
 import { useMessages } from '@/stores/messages';
 import { useUsers } from '@/stores/users';

@@ -44,7 +44,12 @@
             }
         },
         "conditions": {
-            "conditions": "Conditions"
+            "conditions": "Conditions",
+            "editDialog": {
+                "header": "Edit conditions",
+                "active": "Active",
+                "available": "Available"
+            }
         }
     },
     "pf": {
@@ -96,6 +101,9 @@
             "subHeaders": {
                 "custom": "Roll"
             }
+        },
+        "input": {
+            "placeholder": "Write a message..."
         }
     },
     "settings": {
