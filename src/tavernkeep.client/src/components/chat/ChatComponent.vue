@@ -14,6 +14,7 @@ const messages = useMessages();
 const message = ref('');
 const selectedUserId = ref<string>();
 
+// TODO: Restore this feature
 const listOfMessageRecepient = computed(() => {
     const session = useSession();
     const users = useUsers();

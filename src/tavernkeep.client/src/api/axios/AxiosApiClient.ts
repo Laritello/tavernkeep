@@ -3,7 +3,7 @@ import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import type { User, Message, Character, SkillRollMessage } from '@/entities';
-import type { Ability, Skill, Lore, Perception } from '@/contracts/character';
+import type { Lore, Perception } from '@/contracts/character';
 import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowType, ArmorType } from '@/contracts/enums';
 import type { Condition } from '@/entities/Condition';
 import type { SavingThrowRollMessage } from '@/entities/Message';
