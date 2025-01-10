@@ -202,6 +202,12 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
+    async performLongRest(characterId: string): Promise<void> {
+        // TODO: Toast notification for successfull long rest
+        const response = await this.client.patch(`characters/${characterId}/long-rest`);
+        return getPayloadOrThrow(response);
+    }
+
     async sendMessage(content: string, recipientId?: string): Promise<Message> {
         const response = await this.client.post<Message>('chat/message', {
             recipientId: recipientId,

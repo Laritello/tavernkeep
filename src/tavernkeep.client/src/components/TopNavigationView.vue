@@ -31,6 +31,12 @@ async function showConditionEditDialog() {
         }
     }
 }
+
+async function performLongRest() {
+    if (user.activeCharacter.value !== undefined) {
+        await api.performLongRest(user.activeCharacter.value.id);
+    }
+}
 </script>
 
 <template>
@@ -53,7 +59,7 @@ async function showConditionEditDialog() {
 
                     <!--Long rest button-->
                     <div class="w-12">
-                        <div class="flex items-center justify-center relative">
+                        <div class="flex items-center justify-center relative" @click="performLongRest">
                             <svg class="w=full h-full" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor">
                                 <path
@@ -90,7 +96,8 @@ async function showConditionEditDialog() {
                     <div class="flex flex-row">
                         <p class="tracking-tighter">
                             <span>{{ t('widgets.conditions.conditions') }}</span>
-                            <span v-if="user.activeCharacter.value.conditions.length > 0" class="ml-1">{{ user.activeCharacter.value.conditions.length }}</span>
+                            <span v-if="user.activeCharacter.value.conditions.length > 0" class="ml-1">{{
+                                user.activeCharacter.value.conditions.length }}</span>
                         </p>
                     </div>
                 </button>

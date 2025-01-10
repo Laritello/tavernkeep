@@ -13,6 +13,7 @@ using Tavernkeep.Application.UseCases.Characters.Commands.EditPerception;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrows;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditSkills;
 using Tavernkeep.Application.UseCases.Characters.Commands.ModifyHealth;
+using Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
 using Tavernkeep.Core.Contracts.Character.Dtos;
@@ -97,7 +98,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Change ability of the character.
+		/// Change ability scores.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">Dictionary with updated scores.</param>
@@ -109,7 +110,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Change skills of the character.
+		/// Change skills proficiencies.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">Dictionary with updated proficiencies.</param>
@@ -121,7 +122,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Change perception of the character.
+		/// Change perception proficiency.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The perception edit request.</param>
@@ -134,7 +135,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Change saving throw of the character.
+		/// Change saving throw proficiencies.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">Dictionary with updated proficiencies.</param>
@@ -146,7 +147,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Change armor settings and proficiencies of the character.
+		/// Change armor settings and proficiencies.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The armor proficiency edit request.</param>
@@ -158,7 +159,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Change condition applied to the character.
+		/// Change applied condition.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The request, containing applied conditions.</param>
@@ -170,7 +171,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Change health of the character.
+		/// Change health parameters.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The health edit request.</param>
@@ -183,7 +184,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Apply heal or damage to the character.
+		/// Apply heal or damage.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The health modify request.</param>
@@ -193,6 +194,17 @@ namespace Tavernkeep.Server.Controllers
 		public async Task<Health> ModifyHealthAsync([FromRoute] Guid characterId, [FromBody] ModifyHealthRequest request)
 		{
 			return await mediator.Send(new ModifyHealthCommand(HttpContext.GetUserId(), characterId, request.Change));
+		}
+
+		/// <summary>
+		/// Perform long rest.
+		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
+		[Authorize]
+		[HttpPatch("{characterId}/long-rest")]
+		public async Task PerofrmLongRestAsync([FromRoute] Guid characterId)
+		{
+			await mediator.Send(new PerformLongRestCommand(HttpContext.GetUserId(), characterId));
 		}
 	}
 }
