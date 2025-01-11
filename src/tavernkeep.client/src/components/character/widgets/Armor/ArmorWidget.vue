@@ -61,6 +61,22 @@ async function showEditAbilitiesDialog() {
                         armor.equipped.dexterityCap : '-' }}</p>
                 </div>
             </div>
+
+            <div class="collapse">
+                <input type="checkbox" />
+                <div class="collapse-title text-md font-medium px-5 pb-0">
+                    <div class="divider uppercase">{{ t('widgets.armor.proficiencies') }}</div>
+                </div>
+                <div class="collapse-content">
+                    <div class="flex flex-col">
+                        <div v-for="type in types" :key="type"
+                            class="flex flex-row items-center p-1 gap-x-2 border-b-2 border-base-300 proficiency-item">
+                            <p class="grow select-none">{{ t(`pf.armor.${type.toLowerCase()}`) }}</p>
+                            <ProficiencyComponent :proficiency="armor.proficiencies[type]" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>

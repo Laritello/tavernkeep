@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { ArmorClass } from '@/contracts/character';
+import type { Armor } from '@/contracts/character';
 
 defineProps<{
-    armor: ArmorClass;
+    armor: Armor;
 }>();
 </script>
 
