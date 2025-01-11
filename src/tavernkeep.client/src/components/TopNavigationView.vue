@@ -124,7 +124,7 @@ async function toggleDetails() {
 
             <div class="transition-all overflow-hidden  ease-in-out duration-300"
                 :class="{ 'max-h-screen': !collapsed, 'max-h-0': collapsed }">
-                <div class="flex flex-row pb-1">
+                <div class="flex flex-row">
                     <div class="flex flex-col border border-t-0 rounded-b-lg conditions-list w-24 mb-1">
 
                     </div>
@@ -133,7 +133,7 @@ async function toggleDetails() {
                         <p class="text-xs text-center leading-3">{{ user.activeCharacter.value.ancestry }} {{
                             user.activeCharacter.value.class }} {{ user.activeCharacter.value.level }}</p>
                     </div>
-                    <div class="flex-none w-24">
+                    <div class="flex-none w-24 pt-1">
                         <div v-if="user.activeCharacter.value !== undefined" class="flex flex-row">
                             <PerceptionWidget :perception="user.activeCharacter.value.perception" class="w-12" />
                             <ArmorClassWidget :armor="user.activeCharacter.value.armor" class="w-12" />
@@ -143,7 +143,7 @@ async function toggleDetails() {
             </div>
 
             <button class="btn btn-xs btn-ghost uppercase" @click="toggleDetails">
-                Details
+                {{ collapsed ? t("topNavigation.details") : t("topNavigation.hide") }}
             </button>
         </div>
     </div>

@@ -16,6 +16,10 @@
         "spells": "Заклинания",
         "inventory": "Снаряжение"
     },
+    "topNavigation": {
+        "details": "Подробности",
+        "hide": "Спрятать"
+    },
     "widgets": {
         "attributes": {
             "editDialog": {

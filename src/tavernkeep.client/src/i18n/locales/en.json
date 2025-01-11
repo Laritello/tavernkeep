@@ -16,6 +16,10 @@
         "spells": "Spells",
         "inventory": "Inventory"
     },
+    "topNavigation": {
+        "details": "Details",
+        "hide": "Hide"
+    },
     "widgets": {
         "attributes": {
             "editDialog": {
