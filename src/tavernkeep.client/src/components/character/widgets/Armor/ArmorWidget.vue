@@ -52,28 +52,13 @@ async function showEditAbilitiesDialog() {
                 </div>
                 <div class="flex-1 box-border border-base-300 flex flex-col p-1 px-3 border-2 rounded-lg">
                     <p class="text-sm text-center select-none">{{ t('widgets.armor.type') }}</p>
-                    <p class="text-lg font-extrabold text-center select-none uppercase tracking-tight">{{ t(`pf.armor.${armor.equipped.type.toLowerCase()}`) }}</p>
+                    <p class="text-lg font-extrabold text-center select-none uppercase tracking-tight">{{
+                        t(`pf.armor.${armor.equipped.type.toLowerCase()}`) }}</p>
                 </div>
                 <div class="box-border border-base-300 flex flex-col p-1 px-3 border-2 rounded-lg w-20">
                     <p class="text-sm text-center select-none">{{ t('widgets.armor.cap') }}</p>
                     <p class="text-lg font-extrabold text-center select-none">{{ armor.equipped.hasDexterityCap ?
                         armor.equipped.dexterityCap : '-' }}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="collapse">
-            <input type="checkbox" />
-            <div class="collapse-title text-md font-medium px-5 pb-0">
-                <div class="divider uppercase">{{ t('widgets.armor.proficiencies') }}</div>
-            </div>
-            <div class="collapse-content">
-                <div class="flex flex-col">
-                    <div v-for="type in types" :key="type"
-                         class="flex flex-row items-center p-1 gap-x-2 border-b-2 border-base-300 proficiency-item">
-                        <p class="grow select-none">{{ t(`pf.armor.${type.toLowerCase()}`) }}</p>
-                        <ProficiencyComponent :proficiency="armor.proficiencies[type]" />
-                    </div>
                 </div>
             </div>
         </div>

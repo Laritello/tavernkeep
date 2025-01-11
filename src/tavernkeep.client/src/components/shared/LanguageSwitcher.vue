@@ -14,7 +14,7 @@ const switchLanguage = async (event: any) => {
 
 <template>
     <label class="form-control w-full px-4">
-        <select class="select select-bordered" @change="switchLanguage">
+        <select name="language-toggle" class="select select-bordered" @change="switchLanguage">
             <option v-for="supportedLocale in supportedLocales" :key="`locale-${supportedLocale}`"
                 :value="supportedLocale" :selected="locale === supportedLocale">
                 {{ t(`locale.${supportedLocale}`) }}

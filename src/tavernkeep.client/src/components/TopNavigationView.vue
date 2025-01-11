@@ -11,6 +11,7 @@ import HeroPoints from './character/HeroPoints.vue';
 import { useModal } from '@/composables/useModal';
 import ConditionApplyDialog from '@/components/dialogs/ConditionApplyDialog.vue';
 import { useI18n } from 'vue-i18n';
+import { ref } from 'vue';
 
 const { t } = useI18n();
 
@@ -37,15 +38,22 @@ async function performLongRest() {
         await api.performLongRest(user.activeCharacter.value.id);
     }
 }
+
+const collapsed = ref(true);
+
+async function toggleDetails() {
+    collapsed.value = !collapsed.value;
+}
 </script>
 
 <template>
-    <div class="navbar bg-base-100 z-10 min-h-fit border-b-2 border-base-300">
+    <div class="navbar bg-base-100 z-10 min-h-fit border-b-2 border-base-300 py-0">
         <div class="flex flex-col w-full items-stretch">
-            <div v-if="user.activeCharacter.value !== undefined">
+            <!-- <div v-if="user.activeCharacter.value !== undefined">
                 <p class="text-sm text-center leading-4 font-semibold">{{ user.activeCharacter.value.name }}</p>
-                <p class="text-xs text-center leading-3">{{ user.activeCharacter.value.ancestry }} {{ user.activeCharacter.value.class }} {{ user.activeCharacter.value.level }}</p>
-            </div>
+                <p class="text-xs text-center leading-3">{{ user.activeCharacter.value.ancestry }} {{
+                    user.activeCharacter.value.class }} {{ user.activeCharacter.value.level }}</p>
+            </div> -->
             <div class="flex flex-row mt-1">
                 <div class="flex-none w-24">
                     <div class="flex flex-col gap-1">
@@ -76,7 +84,17 @@ async function performLongRest() {
                                 </div>
                             </div>
                         </div>
-                        <HeroPoints class="flex-none" />
+                        <button v-if="user.activeCharacter.value !== undefined"
+                            class="btn btn-xs btn-outline uppercase px-0" :class="{ 'rounded-b-none': !collapsed }"
+                            v-on:click="showConditionEditDialog">
+                            <div class="flex flex-row">
+                                <p class="tracking-tighter">
+                                    <span>{{ t('widgets.conditions.conditions') }}</span>
+                                    <span v-if="user.activeCharacter.value.conditions.length > 0" class="ml-1">{{
+                                        user.activeCharacter.value.conditions.length }}</span>
+                                </p>
+                            </div>
+                        </button>
                     </div>
                 </div>
 
@@ -99,20 +117,40 @@ async function performLongRest() {
                             <PerceptionWidget :perception="user.activeCharacter.value.perception" class="w-12" />
                             <ArmorClassWidget :armor="user.activeCharacter.value.armor" class="w-12" />
                         </div>
-                        <button class="btn btn-xs btn-outline uppercase px-0" v-on:click="showConditionEditDialog">
-                            <div class="flex flex-row">
-                                <p class="tracking-tighter">
-                                    <span>{{ t('widgets.conditions.conditions') }}</span>
-                                    <span v-if="user.activeCharacter.value.conditions.length > 0" class="ml-1">{{
-                                        user.activeCharacter.value.conditions.length }}</span>
-                                </p>
-                            </div>
-                        </button>
+                        <HeroPoints class="flex-none" />
                     </div>
                 </div>
             </div>
+
+            <div class="transition-all overflow-hidden  ease-in-out duration-300"
+                :class="{ 'max-h-screen': !collapsed, 'max-h-0': collapsed }">
+                <div class="flex flex-row pb-1">
+                    <div class="flex flex-col border border-t-0 rounded-b-lg conditions-list w-24 mb-1">
+
+                    </div>
+                    <div v-if="user.activeCharacter.value !== undefined" class="flex flex-col flex-1 pt-1">
+                        <p class="text-sm text-center leading-4 font-semibold">{{ user.activeCharacter.value.name }}</p>
+                        <p class="text-xs text-center leading-3">{{ user.activeCharacter.value.ancestry }} {{
+                            user.activeCharacter.value.class }} {{ user.activeCharacter.value.level }}</p>
+                    </div>
+                    <div class="flex-none w-24">
+                        <div v-if="user.activeCharacter.value !== undefined" class="flex flex-row">
+                            <PerceptionWidget :perception="user.activeCharacter.value.perception" class="w-12" />
+                            <ArmorClassWidget :armor="user.activeCharacter.value.armor" class="w-12" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-xs btn-ghost uppercase" @click="toggleDetails">
+                Details
+            </button>
         </div>
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.conditions-list {
+    border-color: currentColor;
+}
+</style>

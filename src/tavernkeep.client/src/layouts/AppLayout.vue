@@ -11,7 +11,7 @@ import TopNavigationView from '@/components/TopNavigationView.vue';
             <slot />
         </div>
 
-        <BottomNavigationView class="sticky bottom-0 lg:hidden" />
+        <BottomNavigationView class="sticky bottom-0 min-h-12 max-h-12 lg:hidden" />
     </div>
 </template>
 
