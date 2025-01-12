@@ -5,3 +5,4 @@ export type { Lore } from './Lore';
 export type { Perception } from './Perception';
 export type { Armor } from './Armor';
 export type { SavingThrow } from './SavingThrow';
+export type { Speed } from './Speed';

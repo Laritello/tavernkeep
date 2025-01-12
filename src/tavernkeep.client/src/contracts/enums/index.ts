@@ -3,6 +3,7 @@ export { MessageType } from './MessageType';
 export { Proficiency } from './Proficiency';
 export { RollType } from './RollType';
 export { SkillType } from './SkillType';
+export { SpeedType } from './SpeedType';
 export { UserRole } from './UserRole';
 export { SavingThrowType } from './SavingThrowType';
 export { ArmorType } from './ArmorType';
