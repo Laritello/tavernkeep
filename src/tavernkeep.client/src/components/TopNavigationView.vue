@@ -4,13 +4,14 @@ import HealthBar from '@/components/character/HealthBar.vue';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
-import PerceptionIcon from '@/components/character/PerceptionIcon.vue';
-import ArmorClassIcon from '@/components/character/ArmorClassIcon.vue';
+import PerceptionBadge from '@/components/character/badges/PerceptionBadge.vue';
+import ArmorClassBadge from '@/components/character/badges/ArmorClassBadge.vue';
 import HeroPoints from './character/HeroPoints.vue';
 import { useModal } from '@/composables/useModal';
 import ConditionApplyDialog from '@/components/dialogs/ConditionApplyDialog.vue';
 import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
+import SpeedBadge from './character/badges/SpeedBadge.vue';
 
 
 const { t } = useI18n();
@@ -114,8 +115,8 @@ async function toggleDetails() {
                 <div class="flex-none w-24">
                     <div class="flex flex-col gap-1">
                         <div class="flex flex-row">
-                            <PerceptionIcon :perception="user.activeCharacter.value.perception" class="w-12" />
-                            <ArmorClassIcon :armor="user.activeCharacter.value.armor" class="w-12" />
+                            <PerceptionBadge :perception="user.activeCharacter.value.perception" class="w-12" />
+                            <ArmorClassBadge :armor="user.activeCharacter.value.armor" class="w-12" />
                         </div>
                         <HeroPoints class="flex-none" />
                     </div>
@@ -142,8 +143,8 @@ async function toggleDetails() {
                     </div>
                     <div class="flex-none w-24 pt-1">
                         <div class="flex flex-row">
-                            <PerceptionIcon :perception="user.activeCharacter.value.perception" class="w-12" />
-                            <ArmorClassIcon :armor="user.activeCharacter.value.armor" class="w-12" />
+                            <SpeedBadge :speed="user.activeCharacter.value.speeds.Walk" class="w-12" />
+                            <ArmorClassBadge :armor="user.activeCharacter.value.armor" class="w-12" />
                         </div>
                     </div>
                 </div>
