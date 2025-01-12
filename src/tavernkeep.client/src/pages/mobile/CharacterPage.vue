@@ -32,6 +32,7 @@ const sections: Section[] = [
     { link: '#saving-throws', header: t('sections.savingThrows') },
     { link: '#skills', header: t('sections.skills') },
     { link: '#armor', header: t('sections.armor') },
+    { link: '#speeds', header: t('sections.speeds') },
     { link: '#attacks', header: t('sections.attacks')},
     { link: '#spells', header: t('sections.spells') },
     { link: '#inventory', header: t('sections.inventory') },
