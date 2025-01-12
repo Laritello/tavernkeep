@@ -3,15 +3,15 @@ import HealthBar from '@/components/character/HealthBar.vue';
 
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
-
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
-import ArmorClassWidget from '@/components/character/ArmorClassWidget.vue';
-import PerceptionWidget from '@/components/character/PerceptionWidget.vue';
+import PerceptionIcon from '@/components/character/PerceptionIcon.vue';
+import ArmorClassIcon from '@/components/character/ArmorClassIcon.vue';
 import HeroPoints from './character/HeroPoints.vue';
 import { useModal } from '@/composables/useModal';
 import ConditionApplyDialog from '@/components/dialogs/ConditionApplyDialog.vue';
 import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
+
 
 const { t } = useI18n();
 
@@ -48,13 +48,9 @@ async function toggleDetails() {
 
 <template>
     <div class="navbar bg-base-100 z-10 min-h-fit border-b-2 border-base-300 py-0">
-        <div class="flex flex-col w-full items-stretch">
-            <!-- <div v-if="user.activeCharacter.value !== undefined">
-                <p class="text-sm text-center leading-4 font-semibold">{{ user.activeCharacter.value.name }}</p>
-                <p class="text-xs text-center leading-3">{{ user.activeCharacter.value.ancestry }} {{
-                    user.activeCharacter.value.class }} {{ user.activeCharacter.value.level }}</p>
-            </div> -->
+        <div v-if="user.activeCharacter.value !== undefined" class="flex flex-col w-full items-stretch">
             <div class="flex flex-row mt-1">
+                <!--Left side-->
                 <div class="flex-none w-24">
                     <div class="flex flex-col gap-1">
                         <div class="flex flex-row">
@@ -84,20 +80,23 @@ async function toggleDetails() {
                                 </div>
                             </div>
                         </div>
-                        <button v-if="user.activeCharacter.value !== undefined"
-                            class="btn btn-xs btn-outline uppercase px-0" :class="{ 'rounded-b-none': !collapsed }"
+
+                        <!--Conditions button-->
+                        <button class="btn btn-xs btn-outline uppercase px-0" :class="{ 'rounded-b-none': !collapsed }"
                             v-on:click="showConditionEditDialog">
                             <div class="flex flex-row">
                                 <p class="tracking-tighter">
                                     <span>{{ t('widgets.conditions.conditions') }}</span>
-                                    <span v-if="user.activeCharacter.value.conditions.length > 0" class="ml-1">{{
-                                        user.activeCharacter.value.conditions.length }}</span>
+                                    <span v-if="user.activeCharacter.value.conditions.length > 0" class="ml-1">
+                                        {{ user.activeCharacter.value.conditions.length }}
+                                    </span>
                                 </p>
                             </div>
                         </button>
                     </div>
                 </div>
 
+                <!--Center-->
                 <div class="flex flex-col flex-1 h-full gap-1">
                     <div class="avatar self-center">
                         <div class="w-12 rounded-full border-2 border-primary">
@@ -105,17 +104,18 @@ async function toggleDetails() {
                                 src="https://www.fantasyflightgames.com/media/ffg_content/dark-heresy/images/WH_Pushed-to-the-Limit_HRF_090918_IFS.jpg" />
                         </div>
                     </div>
-                    <div class="self-stretch px-2" v-if="user.activeCharacter.value !== undefined">
+                    <div class="self-stretch px-2">
                         <HealthBar @click="() => console.log('Health edit')" :health="user.activeCharacter.value.health"
                             class="h-6" />
                     </div>
                 </div>
 
-                <div v-if="user.activeCharacter.value !== undefined" class="flex-none w-24">
+                <!--Right side-->
+                <div class="flex-none w-24">
                     <div class="flex flex-col gap-1">
                         <div class="flex flex-row">
-                            <PerceptionWidget :perception="user.activeCharacter.value.perception" class="w-12" />
-                            <ArmorClassWidget :armor="user.activeCharacter.value.armor" class="w-12" />
+                            <PerceptionIcon :perception="user.activeCharacter.value.perception" class="w-12" />
+                            <ArmorClassIcon :armor="user.activeCharacter.value.armor" class="w-12" />
                         </div>
                         <HeroPoints class="flex-none" />
                     </div>
@@ -126,17 +126,24 @@ async function toggleDetails() {
                 :class="{ 'max-h-screen': !collapsed, 'max-h-0': collapsed }">
                 <div class="flex flex-row">
                     <div class="flex flex-col border border-t-0 rounded-b-lg conditions-list w-24 mb-1">
-
+                        <div v-if="user.activeCharacter.value.conditions.length > 0" class="px-1 overflow-auto">
+                            <p v-for="item in user.activeCharacter.value.conditions" :key="item.name" class="text-xs leading-4">
+                                {{ item.name }}{{ item.hasLevels ? ` ${item.level}` : '' }}
+                            </p>
+                        </div>
                     </div>
-                    <div v-if="user.activeCharacter.value !== undefined" class="flex flex-col flex-1 pt-1">
+                    <div class="flex flex-col flex-1 pt-1">
                         <p class="text-sm text-center leading-4 font-semibold">{{ user.activeCharacter.value.name }}</p>
-                        <p class="text-xs text-center leading-3">{{ user.activeCharacter.value.ancestry }} {{
-                            user.activeCharacter.value.class }} {{ user.activeCharacter.value.level }}</p>
+                        <p class="text-xs text-center leading-3">
+                            {{ user.activeCharacter.value.ancestry }}
+                            {{ user.activeCharacter.value.class }}
+                            {{ user.activeCharacter.value.level }}
+                        </p>
                     </div>
                     <div class="flex-none w-24 pt-1">
-                        <div v-if="user.activeCharacter.value !== undefined" class="flex flex-row">
-                            <PerceptionWidget :perception="user.activeCharacter.value.perception" class="w-12" />
-                            <ArmorClassWidget :armor="user.activeCharacter.value.armor" class="w-12" />
+                        <div class="flex flex-row">
+                            <PerceptionIcon :perception="user.activeCharacter.value.perception" class="w-12" />
+                            <ArmorClassIcon :armor="user.activeCharacter.value.armor" class="w-12" />
                         </div>
                     </div>
                 </div>
