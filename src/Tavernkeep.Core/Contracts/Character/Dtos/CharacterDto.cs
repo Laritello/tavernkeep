@@ -19,6 +19,7 @@ namespace Tavernkeep.Core.Contracts.Character.Dtos
 		public Dictionary<SkillType, Skill> Skills { get; set; } = default!;
 		public Perception Perception { get; set; } = default!;
 		public Dictionary<SavingThrowType, SavingThrow> SavingThrows { get; set; } = default!;
+		public Dictionary<SpeedType, Speed> Speeds { get; set; } = default!;
 		public List<Lore> Lores { get; set; } = default!;
 		public List<Condition> Conditions { get; set; } = default!;
 	}

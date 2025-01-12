@@ -57,6 +57,17 @@ namespace Tavernkeep.Application.Mapping.Profiles
 							{ SavingThrowType.Fortitude, src.Fortitude },
 							{ SavingThrowType.Reflex, src.Reflex },
 							{ SavingThrowType.Will, src.Will },
+						}))
+				.ForMember(
+					dest => dest.Speeds,
+					opt => opt.MapFrom(src =>
+						new Dictionary<SpeedType, Speed>()
+						{
+							{ SpeedType.Walk, src.Walk },
+							{ SpeedType.Burrow, src.Burrow },
+							{ SpeedType.Climb, src.Climb },
+							{ SpeedType.Fly, src.Fly },
+							{ SpeedType.Swim, src.Swim },
 						}));
 		}
 	}

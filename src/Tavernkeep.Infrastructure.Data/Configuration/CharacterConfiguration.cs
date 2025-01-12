@@ -54,6 +54,12 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
 			builder.OwnsJson(c => c.Reflex);
 			builder.OwnsJson(c => c.Will);
 
+			builder.OwnsJson(c => c.Walk);
+			builder.OwnsJson(c => c.Burrow);
+			builder.OwnsJson(c => c.Climb);
+			builder.OwnsJson(c => c.Fly);
+			builder.OwnsJson(c => c.Swim);
+
 			builder.OwnsMany(c => c.Conditions, b =>
 			{
 				b.ToJson();

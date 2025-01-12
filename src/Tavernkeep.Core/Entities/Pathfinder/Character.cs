@@ -41,6 +41,12 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 			Reflex = new(this, AbilityType.Dexterity, SavingThrowType.Reflex);
 			Will = new(this, AbilityType.Wisdom, SavingThrowType.Will);
 
+			Walk = new(this, SpeedType.Walk, true);
+			Burrow = new(this, SpeedType.Burrow);
+			Climb = new(this, SpeedType.Climb);
+			Fly = new(this, SpeedType.Fly);
+			Swim = new(this, SpeedType.Swim);
+
 			Health = new(this);
 			Armor = new(this);
 
@@ -95,6 +101,12 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		public SavingThrow Fortitude { get; set; }
 		public SavingThrow Reflex { get; set; }
 		public SavingThrow Will { get; set; }
+
+		public Speed Walk { get; set; }
+		public Speed Burrow { get; set; }
+		public Speed Climb { get; set; }
+		public Speed Fly { get; set; }
+		public Speed Swim { get; set; }
 
 		#endregion
 

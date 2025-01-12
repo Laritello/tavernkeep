@@ -6,9 +6,9 @@ namespace Tavernkeep.Core.Evaluators.Modifiers
 {
 	public class ModifierEvaluator(Character character, ModifierTarget target) : IValueEvaluator<int>
 	{
-		private readonly IValueEvaluator<int> _circumstanceModifierEvaluator = new TypeModifierEvaluator(character, target, ModifierType.Circumstance);
-		private readonly IValueEvaluator<int> _statusModifierEvaluator = new TypeModifierEvaluator(character, target, ModifierType.Status);
-		private readonly IValueEvaluator<int> _itemModifierEvaluator = new TypeModifierEvaluator(character, target, ModifierType.Item);
+		private readonly TypeModifierEvaluator _circumstanceModifierEvaluator = new(character, target, ModifierType.Circumstance);
+		private readonly TypeModifierEvaluator _statusModifierEvaluator = new(character, target, ModifierType.Status);
+		private readonly TypeModifierEvaluator _itemModifierEvaluator = new(character, target, ModifierType.Item);
 
 		public int Value => _statusModifierEvaluator.Value + _circumstanceModifierEvaluator.Value + _itemModifierEvaluator.Value;
 

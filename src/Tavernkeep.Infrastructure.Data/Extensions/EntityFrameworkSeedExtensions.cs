@@ -109,6 +109,8 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 				character.Society.Proficiency = Proficiency.Trained;
 				character.Stealth.Proficiency = Proficiency.Trained;
 
+				character.Walk.Base = 30;
+
 				context.Set<Character>().Add(character);
 				context.SaveChanges();
 

@@ -44,7 +44,7 @@ namespace Tavernkeep.Core.Contracts.Enums
 		DifficultyClass,
 
 		// Speeds
-		Speed,
+		WalkSpeed,
 		BurrowSpeed,
 		ClimbSpeed,
 		FlySpeed,

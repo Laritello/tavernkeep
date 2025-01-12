@@ -46,8 +46,10 @@ namespace Tavernkeep.Core.Extensions
 			return (int)proficiency + (proficiency > Proficiency.Untrained ? owner.Level : 0);
 		}
 
-		public static ModifierTarget ToTarget(this SkillType type) => (ModifierTarget)(int)type;
+		public static ModifierTarget ToTarget(this SkillType type) => (ModifierTarget)((int)type + (int)ModifierTarget.Acrobatics);
 
-		public static ModifierTarget ToTarget(this SavingThrowType type) => (ModifierTarget)(int)type + 17;
+		public static ModifierTarget ToTarget(this SavingThrowType type) => (ModifierTarget)((int)type + (int)ModifierTarget.Fortitude);
+
+		public static ModifierTarget ToTarget(this SpeedType type) => (ModifierTarget)((int)type + (int)ModifierTarget.WalkSpeed);
 	}
 }
