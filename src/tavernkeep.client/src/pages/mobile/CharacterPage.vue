@@ -13,6 +13,7 @@ import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import ArmorWidget from '@/components/character/widgets/Armor/ArmorWidget.vue';
 import type { Armor } from '@/contracts/character';
+import SpeedsWidget from '@/components/character/widgets/Speeds/SpeedsWidget.vue';
 
 const { t } = useI18n();
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
@@ -169,6 +170,7 @@ function updateSection() {
             <SkillsWidget id="skills" :skills="character.skills" @changed="updateSkills"
                 @roll="(type) => rollSkillCheck(type)" />
             <ArmorWidget id="armor" :armor="character.armor" @changed="updateArmor"/>
+            <SpeedsWidget id="speeds" :speeds="character.speeds" />
         </div>
     </div>
     <div v-else>No selected character</div>

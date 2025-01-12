@@ -12,6 +12,7 @@
         "savingThrows": "Saving Throws",
         "skills": "Skills",
         "armor": "Armor",
+        "speeds": "Speeds",
         "attacks": "Attacks",
         "spells": "Spells",
         "inventory": "Inventory"
@@ -93,6 +94,13 @@
             "light": "Light",
             "medium": "Medium",
             "heavy": "Heavy"
+        },
+        "speeds": {
+            "walk": "Walk",
+            "burrow": "Burrow",
+            "climb": "Climb",
+            "fly": "Fly",
+            "swim": "Swim"
         }
     },
     "chat": {
