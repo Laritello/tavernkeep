@@ -8,6 +8,7 @@ using Tavernkeep.Application.UseCases.Characters.Commands.EditAbilities;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditArmor;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditConditions;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditHealth;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditInformation;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditPerception;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrows;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditSkills;
@@ -79,6 +80,18 @@ namespace Tavernkeep.Server.Controllers
 		{
 			var character = await mediator.Send(new GetCharacterQuery(characterId));
 			return mapper.Map<CharacterDto>(character);
+		}
+
+		/// <summary>
+		/// Change general information.
+		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
+		/// <param name="information">Updated information abouth the character.</param>
+		[Authorize]
+		[HttpPatch("{characterId}/information")]
+		public async Task EditInformationAsync([FromRoute] Guid characterId, [FromBody] CharacterInformationEditDto information)
+		{
+			await mediator.Send(new EditInformationCommand(HttpContext.GetUserId(), characterId, information));
 		}
 
 		/// <summary>
