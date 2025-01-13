@@ -3,14 +3,14 @@ using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.UseCases.Characters.Commands.AssignUser
+namespace Tavernkeep.Application.UseCases.Users.Commands.AssignCharacterToUser
 {
-	public class AssignUserCommandHandler(
+	public class AssignCharacterToUserCommandHandler(
 		IUserRepository userRepository,
 		ICharacterRepository characterRepository
-		) : IRequestHandler<AssignUserCommand, Character>
+		) : IRequestHandler<AssignCharacterToUserCommand, Character>
 	{
-		public async Task<Character> Handle(AssignUserCommand request, CancellationToken cancellationToken)
+		public async Task<Character> Handle(AssignCharacterToUserCommand request, CancellationToken cancellationToken)
 		{
 			var character = await characterRepository.FindAsync(request.CharacterId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("Character with specified ID doesn't exist.");

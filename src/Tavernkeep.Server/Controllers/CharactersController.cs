@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Tavernkeep.Application.UseCases.Characters.Commands.AssignUser;
 using Tavernkeep.Application.UseCases.Characters.Commands.CreateCharacter;
 using Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditAbilities;
@@ -19,10 +18,8 @@ using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
 using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Character.Requests;
-using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Server.Extensions;
-using Tavernkeep.Server.Middleware;
 
 namespace Tavernkeep.Server.Controllers
 {
@@ -69,20 +66,6 @@ namespace Tavernkeep.Server.Controllers
 		public async Task DeleteCharacterAsync([FromRoute] Guid characterId)
 		{
 			await mediator.Send(new DeleteCharacterCommand(HttpContext.GetUserId(), characterId));
-		}
-
-		/// <summary>
-		/// Assign user to the character.
-		/// </summary>
-		/// <param name="request">Request for assigning user to the character.</param>
-		/// <returns>Updated character.</returns>
-		[Authorize]
-		[RequiresRole(UserRole.Master)]
-		[HttpPatch("assign")]
-		public async Task<CharacterDto> AssignUserToCharacterAsync([FromBody] AssignUserRequest request)
-		{
-			var character = await mediator.Send(new AssignUserCommand(request.CharacterId, request.UserId));
-			return mapper.Map<CharacterDto>(character);
 		}
 
 		/// <summary>
