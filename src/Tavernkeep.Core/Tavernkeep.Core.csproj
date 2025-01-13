@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Contracts\Conditions\Request\**" />
+    <EmbeddedResource Remove="Contracts\Conditions\Request\**" />
+    <None Remove="Contracts\Conditions\Request\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0" />
@@ -14,10 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tavernkeep.Shared\Tavernkeep.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Contracts\Conditions\Request\" />
   </ItemGroup>
 
 </Project>

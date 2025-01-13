@@ -12,6 +12,7 @@ using Tavernkeep.Application.UseCases.Characters.Commands.EditHealth;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditPerception;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrows;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditSkills;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditSpeeds;
 using Tavernkeep.Application.UseCases.Characters.Commands.ModifyHealth;
 using Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
@@ -156,6 +157,18 @@ namespace Tavernkeep.Server.Controllers
 		public async Task EditArmorAsync([FromRoute] Guid characterId, [FromBody] EditArmorRequest request)
 		{
 			await mediator.Send(new EditArmorCommand(HttpContext.GetUserId(), characterId, request.Type, request.Bonus, request.HasDexterityCap, request.DexterityCap, request.Proficiencies));
+		}
+
+		/// <summary>
+		/// Change speeds.
+		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
+		/// <param name="request">The armor proficiency edit request.</param>
+		[Authorize]
+		[HttpPatch("{characterId}/speeds")]
+		public async Task EditSpeedAsync([FromRoute] Guid characterId, [FromBody] EditSpeedsRequest request)
+		{
+			await mediator.Send(new EditSpeedsCommand(HttpContext.GetUserId(), characterId, request.Speeds));
 		}
 
 		/// <summary>

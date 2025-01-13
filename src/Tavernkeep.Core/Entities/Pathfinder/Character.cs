@@ -161,6 +161,19 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 			};
 		}
 
+		public Speed GetSpeed(SpeedType type)
+		{
+			return type switch
+			{
+				SpeedType.Walk => Walk,
+				SpeedType.Burrow => Burrow,
+				SpeedType.Climb => Climb,
+				SpeedType.Fly => Fly,
+				SpeedType.Swim => Swim,
+				_ => throw new NotImplementedException(),
+			};
+		}
+
 		public void AddCondition(Condition condition)
 		{
 			Conditions.Add(condition);
