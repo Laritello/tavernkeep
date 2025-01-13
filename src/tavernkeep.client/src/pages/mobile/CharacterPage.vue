@@ -8,12 +8,13 @@ import SkillsWidget from '@/components/character/widgets/Skills/SkillsWidget.vue
 import SkillCheckResultToast from '@/components/toasts/SkillCheckResultToast.vue';
 import SavingThrowResultToast from '@/components/toasts/SavingThrowResultToast.vue';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
-import { AbilityType, RollType, SavingThrowType, type Proficiency, type SkillType } from '@/contracts/enums';
+import { AbilityType, RollType, SavingThrowType, SpeedType, type Proficiency, type SkillType } from '@/contracts/enums';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import ArmorWidget from '@/components/character/widgets/Armor/ArmorWidget.vue';
 import type { Armor } from '@/contracts/character';
 import SpeedsWidget from '@/components/character/widgets/Speeds/SpeedsWidget.vue';
+import type { SpeedEditDto } from '@/contracts/dtos';
 
 const { t } = useI18n();
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
@@ -33,7 +34,7 @@ const sections: Section[] = [
     { link: '#skills', header: t('sections.skills') },
     { link: '#armor', header: t('sections.armor') },
     { link: '#speeds', header: t('sections.speeds') },
-    { link: '#attacks', header: t('sections.attacks')},
+    { link: '#attacks', header: t('sections.attacks') },
     { link: '#spells', header: t('sections.spells') },
     { link: '#inventory', header: t('sections.inventory') },
 ]
@@ -52,6 +53,12 @@ async function updateSkills(proficiencies: Record<SkillType, Proficiency>) {
 async function updateSavingThrows(proficiencies: Record<string, Proficiency>) {
     if (character.value !== undefined) {
         await api.editSavingThrows(character.value.id, proficiencies);
+    }
+}
+
+async function updateSpeeds(speeds: Record<SpeedType, SpeedEditDto>) {
+    if (character.value !== undefined) {
+        await api.editSpeeds(character.value.id, speeds);
     }
 }
 
@@ -170,8 +177,8 @@ function updateSection() {
                 @roll="(type) => rollSavingThrow(type)" />
             <SkillsWidget id="skills" :skills="character.skills" @changed="updateSkills"
                 @roll="(type) => rollSkillCheck(type)" />
-            <ArmorWidget id="armor" :armor="character.armor" @changed="updateArmor"/>
-            <SpeedsWidget id="speeds" :speeds="character.speeds" />
+            <ArmorWidget id="armor" :armor="character.armor" @changed="updateArmor" />
+            <SpeedsWidget id="speeds" :speeds="character.speeds" @changed="updateSpeeds" />
         </div>
     </div>
     <div v-else>No selected character</div>

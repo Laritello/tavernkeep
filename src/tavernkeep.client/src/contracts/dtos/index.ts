@@ -1,0 +1,1 @@
+export type { SpeedEditDto } from './SpeedEditDto.ts';

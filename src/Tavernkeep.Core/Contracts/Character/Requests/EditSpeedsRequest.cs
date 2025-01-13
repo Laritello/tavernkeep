@@ -5,6 +5,6 @@ namespace Tavernkeep.Core.Contracts.Character.Requests
 {
 	public class EditSpeedsRequest
 	{
-		public Dictionary<SpeedType, EditSpeedDto> Speeds { get; set; } = default!;
+		public Dictionary<SpeedType, SpeedEditDto> Speeds { get; set; } = default!;
 	}
 }

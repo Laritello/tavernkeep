@@ -55,6 +55,11 @@
                 "active": "Active",
                 "available": "Available"
             }
+        },
+        "speeds": {
+            "editDialog": {
+                "header": "Edit speeds"
+            }
         }
     },
     "pf": {
@@ -127,6 +132,6 @@
         "language": {
             "header": "Language"
         },
-        "logout" : "Logout"
+        "logout": "Logout"
     }
 }

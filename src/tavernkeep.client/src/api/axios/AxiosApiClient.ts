@@ -4,10 +4,11 @@ import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import type { User, Message, Character, SkillRollMessage } from '@/entities';
 import type { Lore, Perception } from '@/contracts/character';
-import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowType, ArmorType } from '@/contracts/enums';
+import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowType, ArmorType, SpeedType } from '@/contracts/enums';
 import type { Condition } from '@/entities/Condition';
 import type { SavingThrowRollMessage } from '@/entities/Message';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
+import type { SpeedEditDto } from '@/contracts/dtos';
 
 export class AxiosApiClient {
     client: AxiosInstance;
@@ -169,6 +170,14 @@ export class AxiosApiClient {
     async editSavingThrows(characterId: string, proficiencies: Record<SavingThrowType, Proficiency>): Promise<void> {
         const response = await this.client.patch(`characters/${characterId}/saving-throws`, {
             proficiencies: proficiencies,
+        });
+
+        return getPayloadOrThrow(response);
+    }
+
+    async editSpeeds(characterId: string, speeds: Record<SpeedType, SpeedEditDto>): Promise<void> {
+        const response = await this.client.patch(`characters/${characterId}/speeds`, {
+            speeds: speeds,
         });
 
         return getPayloadOrThrow(response);
