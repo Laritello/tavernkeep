@@ -117,6 +117,7 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
+    // TODO: This method need to be updated. API method moved to the user controller
     async assignUserToCharacter(characterId: string, userId: string): Promise<Character> {
         const response = await this.client.patch<Character>('characters/assign', {
             characterId: characterId,

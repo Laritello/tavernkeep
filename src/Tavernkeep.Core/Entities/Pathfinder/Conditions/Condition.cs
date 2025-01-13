@@ -34,10 +34,10 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 				switch (modifier.Scaling)
 				{
 					case ModifierScaling.ConditionLeveled:
-						modifier.Value = modifier.IsBonus ? Level : -Level;
+						modifier.Value = Level;
 						break;
 					case ModifierScaling.CharacterLeveled:
-						modifier.Value = (modifier.IsBonus ? Level : -Level) * character.Level;
+						modifier.Value = Level * character.Level;
 						break;
 				}
 			}

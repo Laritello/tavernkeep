@@ -10,7 +10,7 @@ namespace Tavernkeep.Core.Evaluators.Properties
 	{
 		private readonly Skill _skill = skill;
 		private readonly Character _character = skill.Owner;
-		private readonly IValueEvaluator<int> _modifierEvaluator = new ModifierEvaluator(skill.Owner, skill.Type.ToTarget());
+		private readonly ModifierEvaluator _modifierEvaluator = new(skill.Owner, skill.Type.ToTarget());
 
 		public int Value => Calculate();
 
