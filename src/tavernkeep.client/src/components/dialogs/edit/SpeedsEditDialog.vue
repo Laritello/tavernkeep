@@ -36,7 +36,7 @@ function cancel() {
 <template>
     <dialog class="modal">
         <div class="modal-box overflow-y-hidden">
-            <h3 class="font-bold text-lg">{{ t('widgets.speeds.editDialog.header') }}</h3>
+            <h3 class="font-bold text-lg">{{ t('dialogs.speedsEdit.header') }}</h3>
 
             <div class="flex flex-col gap-1">
                 <div v-for="item in convertedSpeeds" :key="item.type">

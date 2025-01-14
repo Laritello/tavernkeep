@@ -30,7 +30,7 @@ function cancel() {
 <template>
     <dialog class="modal">
         <div class="modal-box">
-            <h3 class="font-bold text-lg">{{ t('widgets.attributes.editDialog.header') }}</h3>
+            <h3 class="font-bold text-lg">{{ t('dialogs.abilitiesEdit.header') }}</h3>
             <form @submit.prevent="confirm" method="dialog" class="space-x-2">
                 <div class="grid grid-cols-3">
                     <template v-for="ability in currentItems" :key="ability.type">

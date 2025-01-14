@@ -22,47 +22,43 @@
         "hide": "Спрятать"
     },
     "widgets": {
-        "attributes": {
-            "editDialog": {
-                "header": "Редактирование характеристик"
-            }
-        },
-        "savingThrows": {
-            "editDialog": {
-                "header": "Редактирование спасбросков"
-            }
-        },
-        "skills": {
-            "editDialog": {
-                "header": "Редактирование навыков"
-            }
-        },
+        "attributes": {},
+        "savingThrows": {},
+        "skills": {},
         "armor": {
             "bonus": "Бонус",
             "type": "Тип",
             "cap": "М. Лов.",
             "dexterityCap": "Макс. ловкость",
-            "proficiencies": "Мастерство",
-            "editDialog": {
-                "header": "Редактирование брони",
-                "pickOne": "Выбери одно"
-            }
+            "proficiencies": "Мастерство"
         },
         "conditions": {
-            "conditions": "Состояния",
-            "editDialog": {
-                "header": "Редактирование состояний",
-                "active": "Активные",
-                "available": "Доступные"
-            }
+            "conditions": "Состояния"
         },
-        "speeds": {
-            "editDialog": {
-                "header": "Редактирование скоростей"
-            }
-        }
+        "speeds": {}
     },
     "dialogs": {
+        "abilitiesEdit": {
+            "header": "Редактирование характеристик"
+        },
+        "savingThrowsEdit": {
+            "header": "Редактирование спасбросков"
+        },
+        "skillsEdit": {
+            "header": "Редактирование навыков"
+        },
+        "armorEdit": {
+            "header": "Редактирование брони",
+            "pickOne": "Выбери одно"
+        },
+        "conditionsEdit": {
+            "header": "Редактирование состояний",
+            "active": "Активные",
+            "available": "Доступные"
+        },
+        "speedsEdit": {
+            "header": "Редактирование скоростей"
+        },
         "informationEdit": {
             "header": "Редактирование информации",
             "name": "Имя",

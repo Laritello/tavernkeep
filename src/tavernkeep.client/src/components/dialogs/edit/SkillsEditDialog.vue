@@ -19,5 +19,5 @@ const convertedSkills = Object
 </script>
 
 <template>
-    <ProficiencyEditDialog :caption="t('widgets.skills.editDialog.header')" localePrefix="pf.skills." :items="convertedSkills" :closeModal="closeModal" />
+    <ProficiencyEditDialog :caption="t('dialogs.skillsEdit.header')" localePrefix="pf.skills." :items="convertedSkills" :closeModal="closeModal" />
 </template>

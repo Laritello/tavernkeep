@@ -49,14 +49,14 @@ function cancel() {
 <template>
     <dialog class="modal">
         <div class="modal-box overflow-y-hidden">
-            <h3 class="font-bold text-lg">{{ t('widgets.armor.editDialog.header') }}</h3>
+            <h3 class="font-bold text-lg">{{ t('dialogs.armorEdit.header') }}</h3>
 
             <label class="form-control w-full max-w-xs">
                 <div class="label">
                     <span class="label-text">{{ t('widgets.armor.type') }}</span>
                 </div>
                 <select class="select select-bordered" v-model="type">
-                    <option disabled selected>{{ t('widgets.armor.editDialog.pickOne') }}</option>
+                    <option disabled selected>{{ t('dialogs.armorEdit.pickOne') }}</option>
                     <option v-for="type in types" :key="type" :value="type">{{ t(`pf.armor.${type.toLowerCase()}`) }}</option>
                 </select>
             </label>

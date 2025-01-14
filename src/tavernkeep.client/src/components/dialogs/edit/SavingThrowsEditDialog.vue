@@ -19,5 +19,5 @@ const convertedSavingThrows = Object
 </script>
 
 <template>
-    <ProficiencyEditDialog :caption="t('widgets.savingThrows.editDialog.header')" localePrefix="pf.savingThrows." :items="convertedSavingThrows" :closeModal="closeModal" />
+    <ProficiencyEditDialog :caption="t('dialogs.savingThrowsEdit.header')" localePrefix="pf.savingThrows." :items="convertedSavingThrows" :closeModal="closeModal" />
 </template>

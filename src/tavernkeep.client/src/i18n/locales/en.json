@@ -22,47 +22,43 @@
         "hide": "Hide"
     },
     "widgets": {
-        "attributes": {
-            "editDialog": {
-                "header": "Edit attributes"
-            }
-        },
-        "savingThrows": {
-            "editDialog": {
-                "header": "Edit saving throws"
-            }
-        },
-        "skills": {
-            "editDialog": {
-                "header": "Edit skills"
-            }
-        },
+        "attributes": {},
+        "savingThrows": {},
+        "skills": {},
         "armor": {
             "bonus": "Bonus",
             "type": "Type",
             "cap": "Cap",
             "dexterityCap": "Dexterity cap",
-            "proficiencies": "Proficiencies",
-            "editDialog": {
-                "header": "Edit armor",
-                "pickOne": "Pick one"
-            }
+            "proficiencies": "Proficiencies"
         },
         "conditions": {
-            "conditions": "Conditions",
-            "editDialog": {
-                "header": "Edit conditions",
-                "active": "Active",
-                "available": "Available"
-            }
+            "conditions": "Conditions"
         },
-        "speeds": {
-            "editDialog": {
-                "header": "Edit speeds"
-            }
-        }
+        "speeds": {}
     },
     "dialogs": {
+        "abilitiesEdit": {
+            "header": "Edit attributes"
+        },
+        "savingThrowsEdit": {
+            "header": "Edit saving throws"
+        },
+        "skillsEdit": {
+            "header": "Edit skills"
+        },
+        "armorEdit": {
+            "header": "Edit armor",
+            "pickOne": "Pick one"
+        },
+        "conditionsEdit": {
+            "header": "Edit conditions",
+            "active": "Active",
+            "available": "Available"
+        },
+        "speedsEdit": {
+            "header": "Edit speeds"
+        },
         "informationEdit": {
             "header": "Edit information",
             "name": "Name",
