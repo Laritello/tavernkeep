@@ -6,9 +6,9 @@ import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import PerceptionBadge from '@/components/character/badges/PerceptionBadge.vue';
 import ArmorClassBadge from '@/components/character/badges/ArmorClassBadge.vue';
+import ConditionsEditDialog from '@/components/dialogs/ConditionsEditDialog.vue';
 import HeroPoints from './character/HeroPoints.vue';
 import { useModal } from '@/composables/useModal';
-import ConditionApplyDialog from '@/components/dialogs/ConditionApplyDialog.vue';
 import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 import SpeedBadge from './character/badges/SpeedBadge.vue';
@@ -23,7 +23,7 @@ const modal = useModal();
 
 async function showConditionEditDialog() {
     if (user.activeCharacter.value !== undefined) {
-        const result = await modal.show(ConditionApplyDialog, {
+        const result = await modal.show(ConditionsEditDialog, {
             conditions: await api.getConditions(),
             active: user.activeCharacter.value.conditions
         });
