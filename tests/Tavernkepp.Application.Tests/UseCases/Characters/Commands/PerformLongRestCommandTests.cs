@@ -7,6 +7,7 @@ using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest;
 using Tavernkeep.Core.Specifications;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
@@ -47,6 +48,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockConditionsRepository = new Mock<IConditionMetadataRepository>();
 			var mockNotificationService = new Mock<INotificationService>();
 
 			character.Level = level;
@@ -64,9 +66,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			mockCharacterRepository
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
+			
 
-			var request = new PerformLongRestCommand(owner.Id, characterId);
-			var handler = new PerformLongRestCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new PerformLongRestCommand(owner.Id, characterId, false, false);
+			var handler = new PerformLongRestCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionsRepository.Object, mockNotificationService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
@@ -77,10 +80,82 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		}
 
 		[Test]
+		public async Task PerformLongRestCommand_Success_NoComfort()
+		{
+			var mockUserRepository = new Mock<IUserRepository>();
+			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockConditionsRepository = new Mock<IConditionMetadataRepository>();
+			var mockNotificationService = new Mock<INotificationService>();
+
+			character.Level = 6;
+			character.Constitution.Score = 14;
+
+			character.Health.Temporary = 0;
+			character.Health.Max = 100;
+			character.Health.Current = 18;
+
+			mockUserRepository
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
+				.ReturnsAsync(owner);
+			mockCharacterRepository
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+				.ReturnsAsync(character);
+
+
+			var request = new PerformLongRestCommand(owner.Id, characterId, true, false);
+			var handler = new PerformLongRestCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionsRepository.Object, mockNotificationService.Object);
+
+			await handler.Handle(request, CancellationToken.None);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(character.Health.Current, Is.EqualTo(24));
+			});
+		}
+
+		[Test]
+		public async Task PerformLongRestCommand_Success_InArmor()
+		{
+			var mockUserRepository = new Mock<IUserRepository>();
+			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockConditionsRepository = new Mock<IConditionMetadataRepository>();
+			var mockNotificationService = new Mock<INotificationService>();
+
+			character.Level = 6;
+			character.Constitution.Score = 14;
+
+			character.Health.Temporary = 0;
+			character.Health.Max = 100;
+			character.Health.Current = 18;
+
+			mockUserRepository
+				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
+				.ReturnsAsync(owner);
+			mockCharacterRepository
+				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+				.ReturnsAsync(character);
+			mockConditionsRepository
+				.Setup(repo => repo.GetConditionAsync("Fatigued", It.IsAny<CancellationToken>()))
+				.ReturnsAsync(new ConditionTemplate() { Name = "Fatigued" });
+
+			var request = new PerformLongRestCommand(owner.Id, characterId, false, true);
+			var handler = new PerformLongRestCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionsRepository.Object, mockNotificationService.Object);
+
+			await handler.Handle(request, CancellationToken.None);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(character.Health.Current, Is.EqualTo(30));
+				Assert.That(character.Conditions.Any(c => c.Name == "Fatigued"));
+			});
+		}
+
+		[Test]
 		public async Task PerformLongRestCommand_Success_Master()
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockConditionsRepository = new Mock<IConditionMetadataRepository>();
 			var mockNotificationService = new Mock<INotificationService>();
 
 			character.Level = 6;
@@ -97,8 +172,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new PerformLongRestCommand(master.Id, characterId);
-			var handler = new PerformLongRestCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new PerformLongRestCommand(master.Id, characterId, false, false);
+			var handler = new PerformLongRestCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionsRepository.Object, mockNotificationService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
@@ -110,14 +185,15 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockConditionsRepository = new Mock<IConditionMetadataRepository>();
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockCharacterRepository
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new PerformLongRestCommand(owner.Id, characterId);
-			var handler = new PerformLongRestCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new PerformLongRestCommand(owner.Id, characterId, false, false);
+			var handler = new PerformLongRestCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionsRepository.Object, mockNotificationService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()
@@ -129,14 +205,15 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockConditionsRepository = new Mock<IConditionMetadataRepository>();
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
 				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
-			var request = new PerformLongRestCommand(owner.Id, characterId);
-			var handler = new PerformLongRestCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new PerformLongRestCommand(owner.Id, characterId, false, false);
+			var handler = new PerformLongRestCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionsRepository.Object, mockNotificationService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()
@@ -148,6 +225,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
+			var mockConditionsRepository = new Mock<IConditionMetadataRepository>();
 			var mockNotificationService = new Mock<INotificationService>();
 			var initiatorId = Guid.NewGuid();
 
@@ -158,8 +236,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new PerformLongRestCommand(initiatorId, characterId);
-			var handler = new PerformLongRestCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var request = new PerformLongRestCommand(initiatorId, characterId, false, false);
+			var handler = new PerformLongRestCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionsRepository.Object, mockNotificationService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<InsufficientPermissionException>()

@@ -209,11 +209,13 @@ namespace Tavernkeep.Server.Controllers
 		/// Perform long rest.
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
+		/// <param name="restWithoutComfort">Reduces healing by half if true.</param>
+		/// <param name="sleepInArmor">Applies fatigue condition if true.</param>
 		[Authorize]
 		[HttpPatch("{characterId}/long-rest")]
-		public async Task PerofrmLongRestAsync([FromRoute] Guid characterId)
+		public async Task PerofrmLongRestAsync([FromRoute] Guid characterId, [FromQuery] bool restWithoutComfort, [FromQuery] bool sleepInArmor)
 		{
-			await mediator.Send(new PerformLongRestCommand(HttpContext.GetUserId(), characterId));
+			await mediator.Send(new PerformLongRestCommand(HttpContext.GetUserId(), characterId, restWithoutComfort, sleepInArmor));
 		}
 	}
 }

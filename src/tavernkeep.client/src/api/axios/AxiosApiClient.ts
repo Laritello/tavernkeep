@@ -218,9 +218,14 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async performLongRest(characterId: string): Promise<void> {
+    async performLongRest(characterId: string, noComfort: boolean, inArmor: boolean): Promise<void> {
         // TODO: Toast notification for successfull long rest
-        const response = await this.client.patch(`characters/${characterId}/long-rest`);
+        const response = await this.client.patch(`characters/${characterId}/long-rest`, null, {
+            params: {
+                restWithoutComfort: noComfort,
+                sleepInArmor: inArmor
+            }
+        });
         return getPayloadOrThrow(response);
     }
 

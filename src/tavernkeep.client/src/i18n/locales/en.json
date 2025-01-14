@@ -65,6 +65,12 @@
             "level": "Level",
             "ancestry": "Ancestry",
             "class": "Class"
+        },
+        "longRest": {
+            "header": "Rest",
+            "noComfort": "Rest without comfort",
+            "inArmor": "Sleep in armor",
+            "rest": "Rest"
         }
     },
     "pf": {

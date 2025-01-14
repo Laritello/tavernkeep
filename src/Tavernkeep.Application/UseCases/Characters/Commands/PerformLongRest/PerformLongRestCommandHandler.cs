@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
@@ -9,6 +10,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest
 	public class PerformLongRestCommandHandler(
 		IUserRepository userRepository,
 		ICharacterRepository characterRepository,
+		IConditionMetadataRepository conditionRepository,
 		INotificationService notificationService
 		) : IRequestHandler<PerformLongRestCommand>
 	{
@@ -28,11 +30,29 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest
 			 * The character loses the fatigued condition.
 			 * The character reduces the severity of the doomed and drained conditions by 1.
 			 * Most spellcasters need to rest before they regain their spells for the day.
+			 * 
+			 * If rests without comfort - only half of HP are restored. If sleeps in armor - apply fatigued.
 			*/
 
-			character.Health.Current += character.Constitution.Modifier * character.Level;
-			character.Conditions.RemoveAll(x => x.Name == "Fatigued");
+			character.Health.Current += request.RestWithoutComfort 
+				? character.Constitution.Modifier * character.Level / 2
+				: character.Constitution.Modifier * character.Level;
 
+			if (request.SleepInArmor)
+			{
+				if (!character.Conditions.Any(x => x.Name == "Fatigued"))
+				{
+					var conditionMetadata = await conditionRepository.GetConditionAsync("Fatigued", cancellationToken)
+						?? throw new BusinessLogicException("Condition with specified name doesn't exist.");
+
+					character.Conditions.Add(conditionMetadata.ToCondition());
+				}
+			}
+			else
+			{
+				character.Conditions.RemoveAll(x => x.Name == "Fatigued");
+			}
+			
 			// Using to list call, because we might want to delete condition for the collection
 			// and this will lead to an error. Performance hit is negligible since rarely character has more than 2-3 conditions
 			// at once.

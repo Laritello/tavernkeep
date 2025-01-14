@@ -13,6 +13,7 @@ import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 import SpeedBadge from './character/badges/SpeedBadge.vue';
 import InformationEditDialog from './dialogs/edit/InformationEditDialog.vue';
+import LongRestDialog from './dialogs/LongRestDialog.vue';
 
 
 const { t } = useI18n();
@@ -21,6 +22,16 @@ const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
 const user = useCurrentUserAccount();
 const modal = useModal();
+
+async function showLongRestDialog() {
+    if (user.activeCharacter.value !== undefined) {
+        const result = await modal.show(LongRestDialog);
+
+        if (result.action === 'result') {
+            await api.performLongRest(user.activeCharacter.value.id, result.payload.noComfort, result.payload.inArmor);
+        }
+    }
+}
 
 async function showInformationEditDialog() {
     if (user.activeCharacter.value !== undefined) {
@@ -44,12 +55,6 @@ async function showConditionEditDialog() {
         if (result.action === 'result') {
             await api.editConditions(user.activeCharacter.value.id, result.payload);
         }
-    }
-}
-
-async function performLongRest() {
-    if (user.activeCharacter.value !== undefined) {
-        await api.performLongRest(user.activeCharacter.value.id);
     }
 }
 
@@ -83,7 +88,7 @@ async function toggleDetails() {
 
                             <!--Long rest button-->
                             <div class="w-12">
-                                <div class="flex items-center justify-center relative" @click="performLongRest">
+                                <div class="flex items-center justify-center relative" @click="showLongRestDialog">
                                     <svg class="w=full h-full" viewBox="0 -960 960 960"
                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor">
                                         <path
