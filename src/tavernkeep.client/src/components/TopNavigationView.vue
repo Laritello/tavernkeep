@@ -24,7 +24,6 @@ const user = useCurrentUserAccount();
 const modal = useModal();
 
 async function updateHeroPoints(amount: number) {
-    console.log(amount);
     if (user.activeCharacter.value !== undefined) {
         await api.editHeroPoints(user.activeCharacter.value.id, amount);
     }
