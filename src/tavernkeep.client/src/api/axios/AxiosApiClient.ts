@@ -158,6 +158,15 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
+    async editHeroPoints(characterId: string, amount: number): Promise<void> {
+        const response = await this.client.patch(`characters/${characterId}/hero-points`, null, {
+            params: {
+                amount: amount,
+            }
+        });
+        return getPayloadOrThrow(response);
+    }
+
     async editAbilities(characterId: string, scores: Record<AbilityType, number>): Promise<void> {
         const response = await this.client.patch(`characters/${characterId}/abilities`, {
             scores: scores,

@@ -12,6 +12,8 @@ namespace Tavernkeep.Core.Contracts.Character.Dtos
 		public string Class { get; set; } = default!;
 		public string Ancestry { get; set; } = default!;
 
+		public int HeroPoints { get; set; } = 1;
+
 		public int Level { get; set; } = 1;
 		public Health Health { get; set; } = default!;
 		public ArmorDto Armor { get; set; } = default!;

@@ -11,6 +11,8 @@ export interface Character {
     ancestry: string;
     ownerId: string;
 
+    heroPoints: number;
+
     level: number;
 
     health: Health;

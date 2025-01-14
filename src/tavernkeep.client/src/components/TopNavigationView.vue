@@ -23,6 +23,13 @@ const api: AxiosApiClient = ApiClientFactory.createApiClient();
 const user = useCurrentUserAccount();
 const modal = useModal();
 
+async function updateHeroPoints(amount: number) {
+    console.log(amount);
+    if (user.activeCharacter.value !== undefined) {
+        await api.editHeroPoints(user.activeCharacter.value.id, amount);
+    }
+}
+
 async function showLongRestDialog() {
     if (user.activeCharacter.value !== undefined) {
         const result = await modal.show(LongRestDialog);
@@ -75,7 +82,8 @@ async function toggleDetails() {
                         <div class="flex flex-row">
                             <!--Settings button-->
                             <div class="w-12">
-                                <div class="flex items-center justify-center relative" @click="showInformationEditDialog">
+                                <div class="flex items-center justify-center relative"
+                                    @click="showInformationEditDialog">
                                     <svg class="w=full h-full" viewBox="0 -960 960 960"
                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor">
                                         <path
@@ -136,7 +144,7 @@ async function toggleDetails() {
                             <PerceptionBadge :perception="user.activeCharacter.value.perception" class="w-12" />
                             <ArmorClassBadge :armor="user.activeCharacter.value.armor" class="w-12" />
                         </div>
-                        <HeroPoints class="flex-none" />
+                        <HeroPoints class="flex-none" :amount="user.activeCharacter.value.heroPoints" @changed="updateHeroPoints" />
                     </div>
                 </div>
             </div>
@@ -146,7 +154,8 @@ async function toggleDetails() {
                 <div class="flex flex-row">
                     <div class="flex flex-col border border-t-0 rounded-b-lg conditions-list w-24 mb-1">
                         <div v-if="user.activeCharacter.value.conditions.length > 0" class="px-1 overflow-auto">
-                            <p v-for="item in user.activeCharacter.value.conditions" :key="item.name" class="text-xs leading-4">
+                            <p v-for="item in user.activeCharacter.value.conditions" :key="item.name"
+                                class="text-xs leading-4">
                                 {{ item.name }}{{ item.hasLevels ? ` ${item.level}` : '' }}
                             </p>
                         </div>

@@ -52,6 +52,8 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 
 			Perception = new(this);
 
+			HeroPoints = 1;
+
 			Conditions = [];
 			Lores = [];
 		}
@@ -64,6 +66,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		public string Name { get; set; } = default!;
 		public string Class { get; set; } = default!;
 		public string Ancestry { get; set; } = default!;
+		public int HeroPoints { get; set; }
 
 		public int Level { get; set; }
 		public Health Health { get; set; }

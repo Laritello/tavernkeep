@@ -8,6 +8,7 @@ using Tavernkeep.Application.UseCases.Characters.Commands.EditAbilities;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditArmor;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditConditions;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditHealth;
+using Tavernkeep.Application.UseCases.Characters.Commands.EditHeroPoints;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditInformation;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditPerception;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrows;
@@ -92,6 +93,18 @@ namespace Tavernkeep.Server.Controllers
 		public async Task EditInformationAsync([FromRoute] Guid characterId, [FromBody] CharacterInformationEditDto information)
 		{
 			await mediator.Send(new EditInformationCommand(HttpContext.GetUserId(), characterId, information));
+		}
+
+		/// <summary>
+		/// Change hero points amount.
+		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
+		/// <param name="amount">New hero points amount.</param>
+		[Authorize]
+		[HttpPatch("{characterId}/hero-points")]
+		public async Task EditHeroPointsAsync([FromRoute] Guid characterId, [FromQuery] int amount)
+		{
+			await mediator.Send(new EditHeroPointsCommand(HttpContext.GetUserId(), characterId, amount));
 		}
 
 		/// <summary>
