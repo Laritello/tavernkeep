@@ -8,7 +8,7 @@ import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowTyp
 import type { Condition } from '@/entities/Condition';
 import type { SavingThrowRollMessage } from '@/entities/Message';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
-import type { SpeedEditDto } from '@/contracts/dtos';
+import type { CharacterInformationEditDto, SpeedEditDto } from '@/contracts/dtos';
 
 export class AxiosApiClient {
     client: AxiosInstance;
@@ -148,6 +148,12 @@ export class AxiosApiClient {
 
     async deleteLore(characterId: string, topic: string): Promise<void> {
         const response = await this.client.delete('lore/' + characterId, { params: { topic: topic } });
+
+        return getPayloadOrThrow(response);
+    }
+
+    async editInformation(characterId: string, information: CharacterInformationEditDto): Promise<void> {
+        const response = await this.client.patch(`characters/${characterId}/information`, information);
 
         return getPayloadOrThrow(response);
     }

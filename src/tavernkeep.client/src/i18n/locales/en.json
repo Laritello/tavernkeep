@@ -62,6 +62,15 @@
             }
         }
     },
+    "dialogs": {
+        "informationEdit": {
+            "header": "Edit information",
+            "name": "Name",
+            "level": "Level",
+            "ancestry": "Ancestry",
+            "class": "Class"
+        }
+    },
     "pf": {
         "attributes": {
             "strength": "Strength",

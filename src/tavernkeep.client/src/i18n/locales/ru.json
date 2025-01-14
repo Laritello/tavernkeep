@@ -62,6 +62,15 @@
             }
         }
     },
+    "dialogs": {
+        "informationEdit": {
+            "header": "Редактирование информации",
+            "name": "Имя",
+            "level": "Уровень",
+            "ancestry": "Родословная",
+            "class": "Класс"
+        }
+    },
     "pf": {
         "attributes": {
             "strength": "Сила",

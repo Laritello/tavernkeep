@@ -12,6 +12,7 @@ import { useModal } from '@/composables/useModal';
 import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 import SpeedBadge from './character/badges/SpeedBadge.vue';
+import InformationEditDialog from './dialogs/edit/InformationEditDialog.vue';
 
 
 const { t } = useI18n();
@@ -20,6 +21,18 @@ const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
 const user = useCurrentUserAccount();
 const modal = useModal();
+
+async function showInformationEditDialog() {
+    if (user.activeCharacter.value !== undefined) {
+        const result = await modal.show(InformationEditDialog, {
+            character: user.activeCharacter.value
+        });
+
+        if (result.action === 'result') {
+            await api.editInformation(user.activeCharacter.value.id, result.payload);
+        }
+    }
+}
 
 async function showConditionEditDialog() {
     if (user.activeCharacter.value !== undefined) {
@@ -57,7 +70,7 @@ async function toggleDetails() {
                         <div class="flex flex-row">
                             <!--Settings button-->
                             <div class="w-12">
-                                <div class="flex items-center justify-center relative">
+                                <div class="flex items-center justify-center relative" @click="showInformationEditDialog">
                                     <svg class="w=full h-full" viewBox="0 -960 960 960"
                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor">
                                         <path
