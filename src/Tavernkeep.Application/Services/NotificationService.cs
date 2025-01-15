@@ -5,8 +5,10 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Channels;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyCharacterEdited;
+using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyMessageDeleted;
 using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyRollMessage;
 using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyTextMessage;
+using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Entities.Pathfinder;
 
@@ -25,8 +27,12 @@ namespace Tavernkeep.Application.Services
 	{
 		private readonly Channel<object> _queue = Channel.CreateUnbounded<object>();
 
-		public ValueTask QueueMessageAsync(Message message, CancellationToken cancellationToken = default) => _queue.Writer.WriteAsync(message, cancellationToken);
-		public ValueTask QueueCharacterNotificationAsync(Character notification, CancellationToken cancellationToken = default) => _queue.Writer.WriteAsync(notification, cancellationToken);
+		public ValueTask QueueMessageAsync(Message message, CancellationToken cancellationToken = default) 
+			=> _queue.Writer.WriteAsync(message, cancellationToken);
+		public ValueTask QueueDeleteMessageAsync(Message message, CancellationToken cancellationToken = default) 
+			=> _queue.Writer.WriteAsync(new MessageDeletedDto() { Id = message.Id }, cancellationToken);
+		public ValueTask QueueCharacterNotificationAsync(Character notification, CancellationToken cancellationToken = default) 
+			=> _queue.Writer.WriteAsync(notification, cancellationToken);
 
 		protected override async Task ExecuteAsync(CancellationToken cancellationToken)
 		{
@@ -50,6 +56,10 @@ namespace Tavernkeep.Application.Services
 
 						case Character character:
 							await mediator.Send(new NotifyCharacterEditedQuery(character), cancellationToken);
+							break;
+
+						case MessageDeletedDto messageDeleted:
+							await mediator.Send(new NotifyMessageDeletedQuery(messageDeleted), cancellationToken);
 							break;
 
 						default:

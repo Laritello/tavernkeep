@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Chat.Commands.DeleteMessage
 {
-	public class DeleteMessageCommandHandler(IMessageRepository messageRepository) : IRequestHandler<DeleteMessageCommand>
+	public class DeleteMessageCommandHandler(IMessageRepository messageRepository, INotificationService notificationService) : IRequestHandler<DeleteMessageCommand>
 	{
 		public async Task Handle(DeleteMessageCommand request, CancellationToken cancellationToken)
 		{
@@ -13,6 +14,7 @@ namespace Tavernkeep.Application.UseCases.Chat.Commands.DeleteMessage
 
 			messageRepository.Remove(message);
 			await messageRepository.CommitAsync(cancellationToken);
+			await notificationService.QueueDeleteMessageAsync(message, cancellationToken);
 		}
 	}
 }
