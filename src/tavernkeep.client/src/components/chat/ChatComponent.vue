@@ -154,11 +154,9 @@ async function sendMessage() {
             v-if="havePermissionToDelete()" />
         <ContextMenuItem 
             v-if="havePermissionToDelete()" 
-            label="Delete" 
+            label="Delete"
+            icon="mdi mdi-delete text-lg text-red-600"
             @click="deleteMessage()">
-            <template #icon>
-                <span class="mdi mdi-delete text-lg text-red-600"></span>
-            </template>
         </ContextMenuItem>
     </ContextMenu>
 </template>
