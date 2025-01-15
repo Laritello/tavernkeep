@@ -1,8 +1,8 @@
 ﻿<script setup lang="ts">
 import { ref } from 'vue';
 import { VueScrollPicker } from 'vue-scroll-picker';
+import 'vue-scroll-picker/lib/style.css';
 import type { DialogResultCallback } from '@/composables/useModal';
-import "vue-scroll-picker/lib/style.css";
 const generateArray = (start: number, end: number): number[] => {
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 };
@@ -46,11 +46,21 @@ function cancel() {
     <dialog class="modal">
         <div class="modal-box">
             <h3 class="font-bold text-lg">{{ $t('dialogs.healthEdit.header') }}</h3>
-            <form method="dialog" class="space-x-2">
-                <VueScrollPicker v-model="selected" :options="options" />
-                <div class="modal-action">
-                    <button @click="applyCurrent()" class="btn btn-success w-24" type="submit">Apply</button>
-                    <button @click="applyTemporary()" :disabled="selected < 0" class="btn btn-success w-24" type="submit">Temporary</button>
+            <form method="dialog" class="space-x-2 justify-items-center">
+                <VueScrollPicker v-model="selected" :options="options" class="text-2xl max-w-32" />
+                <div class="modal-action justify-center">
+                    <button type="button" 
+                            @click="applyCurrent()"
+                            class="btn w-24"
+                            :class="{ 'btn-success': selected >= 0, 'btn-error': selected < 0 }">
+                        {{ selected >= 0 ? 'Heal' : 'Damage' }}
+                    </button>
+                    <button type="button"
+                            @click="applyTemporary()"
+                            class="btn btn-info w-24"
+                            :class="{ 'btn-disabled': selected < 0 }">
+                        Temporary
+                    </button>
                     <button @click="cancel" class="btn w-24" type="button">{{ $t('actions.cancel') }}</button>
                 </div>
             </form>
@@ -58,6 +68,27 @@ function cancel() {
     </dialog>
 </template>
 
-<style src="vue-scroll-picker/lib/style.css">
 
+<style>
+.vue-scroll-picker-layer-top {
+    box-sizing: border-box;
+    @apply bg-gradient-to-b from-base-100 from-10% to-base-100/70;
+    @apply border-b border-base-content/30;
+    top: 0;
+    height: calc(50% - 1em);
+    cursor: pointer;
+}
+
+.vue-scroll-picker-layer-bottom {
+    @apply bg-gradient-to-t from-base-100 from-10% to-base-100/70;
+    @apply border-t border-base-content/30;
+    bottom: 0;
+    height: calc(50% - 1em);
+    cursor: pointer;
+}
+
+.vue-scroll-picker-item {
+    @apply text-base-content;
+    
+}
 </style>
