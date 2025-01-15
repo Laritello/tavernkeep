@@ -71,6 +71,9 @@
             "noComfort": "Rest without comfort",
             "inArmor": "Sleep in armor",
             "rest": "Rest"
+        },
+        "healthEdit": {
+            "header": "Edit health"
         }
     },
     "pf": {
