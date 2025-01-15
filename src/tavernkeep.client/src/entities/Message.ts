@@ -7,26 +7,30 @@ export interface Message {
     displayName:string;
     sender: User;
     created: Date;
-    $type: string;
+    $type: 'TextMessage' | 'RollMessage' | 'SkillRollMessage' | 'SavingThrowRollMessage';
 }
 
 export interface TextMessage extends Message {
+    $type: 'TextMessage';
     text: string;
     isPrivate: boolean;
     recipient?: User;
 }
 
 export interface RollMessage extends Message {
+    $type: 'RollMessage' | 'SkillRollMessage' | 'SavingThrowRollMessage';
     result: RollResult;
     rollType: RollType;
     expression: string;
 }
 
 export interface SkillRollMessage extends RollMessage {
+    $type: 'SkillRollMessage'
     skill: Skill;
 }
 
 export interface SavingThrowRollMessage extends RollMessage {
+    $type: 'SavingThrowRollMessage'
     savingThrow: SavingThrow;
 }
 

@@ -5,6 +5,7 @@ import { useMessages } from '@/stores/messages';
 import { useUsers } from '@/stores/users';
 import { useSession } from '@/composables/useSession';
 import { useModal } from '@/composables/useModal';
+import { useClipboard } from '@vueuse/core'
 
 // Components
 import ChatMessageView from './messages/ChatMessageView.vue';
@@ -12,9 +13,11 @@ import ChatInputView from './ChatInputView.vue';
 import { ContextMenu, ContextMenuItem, ContextMenuSeparator } from '@imengyu/vue3-context-menu'
 import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
 import { UserRole } from '@/contracts/enums';
+import type { Message, TextMessage } from '@/entities';
 
 const session = useSession();
 const messages = useMessages();
+
 
 const message = ref('');
 const selectedUserId = ref<string>();
@@ -24,7 +27,7 @@ const contextMenuOptions = reactive({
     minWidth: 230,
     x: 0,
     y: 0,
-    messageId: '',
+    message: undefined as Message | undefined,
     theme: 'default ' + localStorage.getItem("theme"),
 });
 
@@ -54,21 +57,30 @@ const slashCommands = [
     },
 ];
 
-function onContextMenu(e : MouseEvent, messageId: string) {
+function onContextMenu(e : MouseEvent, message: Message) {
     contextMenuShown.value = true;
     contextMenuOptions.x = e.clientX;
     contextMenuOptions.y = e.clientY;
-    contextMenuOptions.messageId = messageId;
+    contextMenuOptions.message = message;
 }
 
-async function deleteMessage(messageId: string) {
+function copyMessageText() {
+    const { copy } = useClipboard();
+    if (contextMenuOptions.message!.$type === 'TextMessage') {
+        const message = contextMenuOptions.message! as TextMessage;
+        copy(message.text);
+    }
+}
+
+async function deleteMessage() {
     const modal = useModal();
     const result = await modal.show(ConfirmationDialog, {
         caption: 'Delete message',
         message: 'Are you sure you want to delete this message?',
     });
     if (result.action !== 'confirm') return;
-    await messages.deleteMessage(messageId);
+    const message = contextMenuOptions.message!;
+    await messages.deleteMessage(message.id);
 }
 
 function havePermissionToDelete() {
@@ -111,7 +123,8 @@ async function sendMessage() {
             <ChatMessageView 
                 v-for="item in messages.list" :key="item.id" 
                 :message="item" 
-                @contextmenu.prevent="onContextMenu($event, item.id)" />
+                @contextmenu.prevent="onContextMenu($event, item)"
+                class="select-none"/>
         </div>
 
         <form @submit.prevent="sendMessage" class="flex flex-row mb-1">
@@ -132,13 +145,17 @@ async function sendMessage() {
         :options="contextMenuOptions"
     >
         <!-- TODO: add reply feature -->
-        <ContextMenuItem label="Reply" @click="console.log('Reply item click')" />
+        <!--<ContextMenuItem label="Reply" @click="console.log('Reply item click')" />-->
+        <ContextMenuItem 
+            v-if="contextMenuOptions.message?.$type === 'TextMessage'" 
+            label="Copy" 
+            @click="copyMessageText()" />
         <ContextMenuSeparator 
             v-if="havePermissionToDelete()" />
         <ContextMenuItem 
             v-if="havePermissionToDelete()" 
             label="Delete" 
-            @click="deleteMessage(contextMenuOptions.messageId)">
+            @click="deleteMessage()">
             <template #icon>
                 <span class="mdi mdi-delete text-lg text-red-600"></span>
             </template>
