@@ -1,5 +1,7 @@
 import './assets/main.css';
 import '@mdi/font/css/materialdesignicons.css';
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
+import ContextMenu from '@imengyu/vue3-context-menu'
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import D20Icon from '@/assets/dice/d20-grey.svg';
@@ -22,6 +24,7 @@ app.use(pinia);
 app.use(router);
 app.use(i18n);
 app.use(VueChatScroll);
+app.use(ContextMenu);
 app.use(Toast, {
     transition: "Vue-Toastification__bounce",
     maxToasts: 3,

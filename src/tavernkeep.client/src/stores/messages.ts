@@ -13,6 +13,10 @@ export const useMessages = defineStore('messages.store', () => {
         appendMessage(msg);
     });
 
+    ChatHub.connection.on('DeleteMessage', async (msg: Message) => {
+        messageList.value = messageList.value.filter(m => m.id !== msg.id);
+    });
+
     const messageList = ref<Message[]>([]);
     const list = computed(() => messageList.value);
 

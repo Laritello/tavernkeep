@@ -1,22 +1,35 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { ref, computed, reactive } from 'vue';
 import { RollType } from '@/contracts/enums/RollType';
-
-// Components
-import ChatMessageView from './messages/ChatMessageView.vue';
 import { useMessages } from '@/stores/messages';
 import { useUsers } from '@/stores/users';
 import { useSession } from '@/composables/useSession';
-import ChatInputView from './ChatInputView.vue';
+import { useModal } from '@/composables/useModal';
 
+// Components
+import ChatMessageView from './messages/ChatMessageView.vue';
+import ChatInputView from './ChatInputView.vue';
+import { ContextMenu, ContextMenuItem, ContextMenuSeparator } from '@imengyu/vue3-context-menu'
+import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
+import { UserRole } from '@/contracts/enums';
+
+const session = useSession();
 const messages = useMessages();
 
 const message = ref('');
 const selectedUserId = ref<string>();
+const contextMenuShown = ref(false);
+const contextMenuOptions = reactive({
+    zIndex: 3,
+    minWidth: 230,
+    x: 0,
+    y: 0,
+    messageId: '',
+    theme: 'default ' + localStorage.getItem("theme"),
+});
 
 // TODO: Restore this feature
 const listOfMessageRecepient = computed(() => {
-    const session = useSession();
     const users = useUsers();
     if (!session.isAuthenticated) return [];
 
@@ -40,6 +53,27 @@ const slashCommands = [
         description: 'Same as /roll but result will be seen only by GM and you',
     },
 ];
+
+function onContextMenu(e : MouseEvent, messageId: string) {
+    contextMenuShown.value = true;
+    contextMenuOptions.x = e.clientX;
+    contextMenuOptions.y = e.clientY;
+    contextMenuOptions.messageId = messageId;
+}
+
+async function deleteMessage(messageId: string) {
+    const modal = useModal();
+    const result = await modal.show(ConfirmationDialog, {
+        caption: 'Delete message',
+        message: 'Are you sure you want to delete this message?',
+    });
+    if (result.action !== 'confirm') return;
+    await messages.deleteMessage(messageId);
+}
+
+function havePermissionToDelete() {
+    return session.havePermissions([UserRole.Master, UserRole.Moderator])
+}
 
 async function sendMessage() {
     if (message.value.startsWith('/')) {
@@ -74,7 +108,10 @@ async function sendMessage() {
 <template>
     <div class="flex flex-col h-full">
         <div v-chat-scroll="{ always: false, smooth: true }" class="w-full grow max-h-full overflow-y-auto px-2">
-            <ChatMessageView v-for="item in messages.list" :key="item.id" :message="item" />
+            <ChatMessageView 
+                v-for="item in messages.list" :key="item.id" 
+                :message="item" 
+                @contextmenu.prevent="onContextMenu($event, item.id)" />
         </div>
 
         <form @submit.prevent="sendMessage" class="flex flex-row mb-1">
@@ -90,6 +127,23 @@ async function sendMessage() {
             </div>
         </form>
     </div>
+    <ContextMenu
+        v-model:show="contextMenuShown"
+        :options="contextMenuOptions"
+    >
+        <!-- TODO: add reply feature -->
+        <ContextMenuItem label="Reply" @click="console.log('Reply item click')" />
+        <ContextMenuSeparator 
+            v-if="havePermissionToDelete()" />
+        <ContextMenuItem 
+            v-if="havePermissionToDelete()" 
+            label="Delete" 
+            @click="deleteMessage(contextMenuOptions.messageId)">
+            <template #icon>
+                <span class="mdi mdi-delete text-lg text-red-600"></span>
+            </template>
+        </ContextMenuItem>
+    </ContextMenu>
 </template>
 
 <style scoped></style>
