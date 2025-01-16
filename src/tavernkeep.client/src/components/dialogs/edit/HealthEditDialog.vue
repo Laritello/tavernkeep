@@ -7,7 +7,7 @@ const generateArray = (start: number, end: number): number[] => {
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 };
 
-const options = generateArray(-100, 100).map(number => ({
+const options = generateArray(-100, 100).reverse().map(number => ({
     name: number.toString(),
     value: number,
 }));
