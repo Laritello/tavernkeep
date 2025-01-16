@@ -3,7 +3,7 @@ import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import type { User, Message, Character, SkillRollMessage } from '@/entities';
-import type { Lore, Perception } from '@/contracts/character';
+import type { Health, Lore, Perception } from '@/contracts/character';
 import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowType, ArmorType, SpeedType } from '@/contracts/enums';
 import type { Condition } from '@/entities/Condition';
 import type { SavingThrowRollMessage } from '@/entities/Message';
@@ -291,6 +291,19 @@ export class AxiosApiClient {
     async getConditions(): Promise<Condition[]> {
         const response = await this.client.get<Condition[]>('conditions');
 
+        return getPayloadOrThrow(response);
+    }
+
+    async editHealth(characterId: string, health: Health): Promise<Health> {
+        const response = await this.client.patch(`characters/${characterId}/health`, health);
+        return getPayloadOrThrow(response);
+    }
+    
+    /*
+     * @param amount: positive number to heal, negative number to damage
+     */
+    async applyHealOrDamage(characterId: string, amount: number): Promise<Health> {
+        const response = await this.client.patch(`characters/${characterId}/health-modify`, { change: amount });
         return getPayloadOrThrow(response);
     }
 }

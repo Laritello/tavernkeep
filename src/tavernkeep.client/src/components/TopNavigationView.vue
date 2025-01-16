@@ -14,6 +14,7 @@ import { ref } from 'vue';
 import SpeedBadge from './character/badges/SpeedBadge.vue';
 import InformationEditDialog from './dialogs/edit/InformationEditDialog.vue';
 import LongRestDialog from './dialogs/LongRestDialog.vue';
+import HealthEditDialog from '@/components/dialogs/edit/HealthEditDialog.vue';
 
 
 const { t } = useI18n();
@@ -60,6 +61,30 @@ async function showConditionEditDialog() {
 
         if (result.action === 'result') {
             await api.editConditions(user.activeCharacter.value.id, result.payload);
+        }
+    }
+}
+
+async function showHealthEditDialog() {
+    if (user.activeCharacter.value !== undefined) {
+        const result = await modal.show(HealthEditDialog);
+
+        if (result.action !== 'result') {
+            return;
+        }
+
+        const currentHealth = user.activeCharacter.value.health;
+        switch (result.payload.type) {
+            case 'current':
+                await api.applyHealOrDamage(user.activeCharacter.value.id, result.payload.amount);
+                break;
+
+            case 'temporary':
+                await api.editHealth(user.activeCharacter.value.id, {
+                    ...currentHealth,
+                    temporary: result.payload.amount
+                });
+                break;
         }
     }
 }
@@ -131,7 +156,7 @@ async function toggleDetails() {
                         </div>
                     </div>
                     <div class="self-stretch px-2">
-                        <HealthBar @click="() => console.log('Health edit')" :health="user.activeCharacter.value.health"
+                        <HealthBar @click="showHealthEditDialog" :health="user.activeCharacter.value.health"
                             class="h-6" />
                     </div>
                 </div>

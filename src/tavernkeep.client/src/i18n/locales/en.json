@@ -71,6 +71,12 @@
             "noComfort": "Rest without comfort",
             "inArmor": "Sleep in armor",
             "rest": "Rest"
+        },
+        "healthEdit": {
+            "header": "Edit health",
+            "damage": "Damage",
+            "heal": "Heal",
+            "temporary": "Temporary HP"
         }
     },
     "pf": {
