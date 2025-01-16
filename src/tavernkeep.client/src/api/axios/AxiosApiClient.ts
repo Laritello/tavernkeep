@@ -298,6 +298,14 @@ export class AxiosApiClient {
         const response = await this.client.patch(`characters/${characterId}/health`, health);
         return getPayloadOrThrow(response);
     }
+    
+    /*
+     * @param amount: positive number to heal, negative number to damage
+     */
+    async applyHealOrDamage(characterId: string, amount: number): Promise<Health> {
+        const response = await this.client.patch(`characters/${characterId}/health-modify`, { change: amount });
+        return getPayloadOrThrow(response);
+    }
 }
 
 function getPayloadOrThrow<T>(response: AxiosResponse): T {
