@@ -76,17 +76,12 @@ async function showHealthEditDialog() {
         const currentHealth = user.activeCharacter.value.health;
         switch (result.payload.type) {
             case 'current':
-                await api.editHealth(user.activeCharacter.value.id, {
-                    current: currentHealth.current + result.payload.amount,
-                    max: currentHealth.max,
-                    temporary: currentHealth.temporary
-                });
+                await api.applyHealOrDamage(user.activeCharacter.value.id, result.payload.amount);
                 break;
 
             case 'temporary':
                 await api.editHealth(user.activeCharacter.value.id, {
-                    current: currentHealth.current,
-                    max: currentHealth.max,
+                    ...currentHealth,
                     temporary: result.payload.amount
                 });
                 break;
