@@ -47,19 +47,23 @@ function cancel() {
         <div class="modal-box">
             <h3 class="font-bold text-lg">{{ $t('dialogs.healthEdit.header') }}</h3>
             <form method="dialog" class="space-x-2 justify-items-center">
-                <VueScrollPicker v-model="selected" :options="options" class="text-2xl max-w-32" />
+                <VueScrollPicker 
+                    v-model="selected" 
+                    :options="options" 
+                    class="text-2xl max-w-32"
+                    :class="{ 'border-red-600/30': selected < 0, 'border-green-600/30': selected > 0 }" />
                 <div class="modal-action justify-center">
                     <button type="button" 
                             @click="applyCurrent()"
                             class="btn w-24"
                             :class="{ 'btn-success': selected >= 0, 'btn-error': selected < 0 }">
-                        {{ selected >= 0 ? 'Heal' : 'Damage' }}
+                        {{ $t(`dialogs.healthEdit.${selected >= 0 ? 'heal' : 'damage'}`) }}
                     </button>
                     <button type="button"
                             @click="applyTemporary()"
                             class="btn btn-info w-24"
                             :class="{ 'btn-disabled': selected < 0 }">
-                        Temporary
+                        {{ $t('dialogs.healthEdit.temporary') }}
                     </button>
                     <button @click="cancel" class="btn w-24" type="button">{{ $t('actions.cancel') }}</button>
                 </div>
@@ -89,6 +93,5 @@ function cancel() {
 
 .vue-scroll-picker-item {
     @apply text-base-content;
-    
 }
 </style>

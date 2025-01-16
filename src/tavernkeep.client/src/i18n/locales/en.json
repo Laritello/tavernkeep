@@ -73,7 +73,10 @@
             "rest": "Rest"
         },
         "healthEdit": {
-            "header": "Edit health"
+            "header": "Edit health",
+            "damage": "Damage",
+            "heal": "Heal",
+            "temporary": "Temporary HP"
         }
     },
     "pf": {
