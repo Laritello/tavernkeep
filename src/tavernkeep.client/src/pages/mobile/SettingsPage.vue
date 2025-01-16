@@ -5,8 +5,11 @@ import { useModal } from '@/composables/useModal';
 import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
 import LanguageSwitcher from '@/components/shared/LanguageSwitcher.vue';
 import { useI18n } from 'vue-i18n';
+import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 
 const router = useRouter();
+const user = useCurrentUserAccount();
+
 const { t } = useI18n();
 
 // Change the theme dynamically
@@ -40,6 +43,39 @@ async function logout() {
 
 <template>
     <div class="flex flex-col h-full pt-2">
+        <p class="font-semibold px-4 text-slate-500 uppercase">{{ t('settings.characters.header') }}</p>
+
+        <div class="flex flex-col px-4">
+            <div v-for="character in user.characters.value" :key="character.id" class="my-2">
+                <div class="flex flex-row gap-2 border border-slate-500 rounded-xl p-2">
+                    <div class="avatar">
+                        <div class="w-14 h-14 rounded-xl">
+                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col flex-1 align-middle justify-center">
+                        <div class="text-lg font-semibold leading-none">{{ character.name }}</div>
+                        <div class="text-sm font-semithin">{{ character.ancestry }} {{ character.class }}</div>
+                    </div>
+
+                    <div class="dropdown dropdown-left self-center">
+                        <button tabindex="0" class="btn btn-circle btn-ghost">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 -960 960 960"
+                                fill="currentColor">
+                                <path
+                                    d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
+                            </svg>
+                        </button>
+                        <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow border border-base-200">
+                            <li><a>Select character as active</a></li>
+                            <li><a>Delete character</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <p class="font-semibold px-4 text-slate-500 uppercase">{{ t('settings.themes.header') }}</p>
 
         <button v-on:click="setLight" class="btn btn-ghost justify-start">

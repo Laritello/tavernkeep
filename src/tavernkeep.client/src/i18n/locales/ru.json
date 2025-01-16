@@ -141,6 +141,9 @@
         }
     },
     "settings": {
+        "characters": {
+            "header": "Персонажи"
+        },
         "themes": {
             "header": "Темы",
             "light": "Светлая",

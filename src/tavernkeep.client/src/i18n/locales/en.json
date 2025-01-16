@@ -141,6 +141,9 @@
         }
     },
     "settings": {
+        "characters": {
+            "header": "Characters"
+        },
         "themes": {
             "header": "Themes",
             "light": "Light",
