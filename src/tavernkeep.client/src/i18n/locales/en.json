@@ -142,7 +142,8 @@
     },
     "settings": {
         "characters": {
-            "header": "Characters"
+            "header": "Characters",
+            "create": "Create new"
         },
         "themes": {
             "header": "Themes",
