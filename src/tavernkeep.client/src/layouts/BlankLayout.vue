@@ -19,6 +19,10 @@ const route = useRoute();
 const title = route.meta.title;
 
 function goBack() {
-    router.go(-1); // Navigate back to the previous page
+    if (window.history.state.back === null) {
+        router.push({ path: '/' });
+    } else {
+        router.back();
+    }
 }
 </script>
