@@ -5,15 +5,16 @@ import { useMessages } from '@/stores/messages';
 import { useUsers } from '@/stores/users';
 import { useSession } from '@/composables/useSession';
 import { useModal } from '@/composables/useModal';
-import { useClipboard } from '@vueuse/core'
+import { useClipboard } from '@vueuse/core';
+import { UserRole } from '@/contracts/enums';
+import type { Message, TextMessage } from '@/entities';
 
 // Components
 import ChatMessageView from './messages/ChatMessageView.vue';
 import ChatInputView from './ChatInputView.vue';
 import { ContextMenu, ContextMenuItem, ContextMenuSeparator } from '@imengyu/vue3-context-menu'
 import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
-import { UserRole } from '@/contracts/enums';
-import type { Message, TextMessage } from '@/entities';
+import FloatingDiceButton from '@/components/shared/FloatingDiceButton/FloatingDiceButton.vue';
 
 const session = useSession();
 const messages = useMessages();
@@ -159,6 +160,7 @@ async function sendMessage() {
             @click="deleteMessage()">
         </ContextMenuItem>
     </ContextMenu>
+    <FloatingDiceButton />
 </template>
 
 <style scoped></style>
