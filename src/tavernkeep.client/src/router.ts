@@ -11,6 +11,7 @@ import CharacterPage from './pages/mobile/CharacterPage.vue';
 import ChatPage from './pages/mobile/ChatPage.vue';
 import CombatPage from '@/pages/mobile/CombatPage.vue';
 import SettingsPage from './pages/mobile/SettingsPage.vue';
+import CreateCharacterPage from '@/pages/mobile/CreateCharacterPage.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -50,6 +51,15 @@ const routes: RouteRecordRaw[] = [
         meta: {
             layout: 'AppLayout',
             protected: true,
+        },
+    },
+    {
+        path: '/characters/create',
+        component: CreateCharacterPage,
+        meta: {
+            layout: 'BlankLayout',
+            protected: true,
+            title: 'Create Character'
         },
     },
     {

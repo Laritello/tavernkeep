@@ -43,7 +43,12 @@ async function logout() {
 
 <template>
     <div class="flex flex-col h-full pt-2">
-        <p class="font-semibold px-4 text-slate-500 uppercase">{{ t('settings.characters.header') }}</p>
+        <div class="flex flex-row justify-between items-center">
+            <h1 class="font-semibold px-4 text-slate-500 uppercase">{{ t('settings.characters.header') }}</h1>
+            <button class="btn btn-outline btn-xs mx-4" @click="router.push('/characters/create')">
+                Create new
+            </button>
+        </div>
 
         <div class="flex flex-col px-4">
             <div v-for="character in user.characters.value" :key="character.id" class="my-2">
