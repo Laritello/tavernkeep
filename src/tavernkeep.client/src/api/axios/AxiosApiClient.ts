@@ -4,7 +4,7 @@ import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import type { User, Message, Character, SkillRollMessage } from '@/entities';
 import type { Health, Lore, Perception } from '@/contracts/character';
-import { UserRole, AbilityType, Proficiency, SkillType, RollType, SavingThrowType, ArmorType, SpeedType } from '@/contracts/enums';
+import { UserRole, Proficiency, RollType, ArmorType, SpeedType } from '@/contracts/enums';
 import type { Condition } from '@/entities/Condition';
 import type { SavingThrowRollMessage } from '@/entities/Message';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
@@ -167,7 +167,7 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async editAbilities(characterId: string, scores: Record<AbilityType, number>): Promise<void> {
+    async editAbilities(characterId: string, scores: Record<string, number>): Promise<void> {
         const response = await this.client.patch(`characters/${characterId}/abilities`, {
             scores: scores,
         });
@@ -175,7 +175,7 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async editSkills(characterId: string, proficiencies: Record<SkillType, Proficiency>): Promise<void> {
+    async editSkills(characterId: string, proficiencies: Record<string, Proficiency>): Promise<void> {
         const response = await this.client.patch(`characters/${characterId}/skills`, {
             proficiencies: proficiencies,
         });
@@ -183,7 +183,7 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async editSavingThrows(characterId: string, proficiencies: Record<SavingThrowType, Proficiency>): Promise<void> {
+    async editSavingThrows(characterId: string, proficiencies: Record<string, Proficiency>): Promise<void> {
         const response = await this.client.patch(`characters/${characterId}/saving-throws`, {
             proficiencies: proficiencies,
         });
@@ -268,7 +268,7 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async performSkillCheck(characterId: string, skillType: SkillType, rollType: RollType): Promise<SkillRollMessage> {
+    async performSkillCheck(characterId: string, skillType: string, rollType: RollType): Promise<SkillRollMessage> {
         const response = await this.client.post<Message>('roll/skill', {
             characterId: characterId,
             skillType: skillType,
@@ -278,7 +278,7 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async performSavingThrow(characterId: string, savingThrowType: SavingThrowType, rollType: RollType): Promise<SavingThrowRollMessage> {
+    async performSavingThrow(characterId: string, savingThrowType: string, rollType: RollType): Promise<SavingThrowRollMessage> {
         const response = await this.client.post<Message>('roll/saving-throw', {
             characterId: characterId,
             savingThrowType: savingThrowType,

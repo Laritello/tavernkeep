@@ -8,7 +8,7 @@ import SkillsWidget from '@/components/character/widgets/Skills/SkillsWidget.vue
 import SkillCheckResultToast from '@/components/toasts/SkillCheckResultToast.vue';
 import SavingThrowResultToast from '@/components/toasts/SavingThrowResultToast.vue';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
-import { AbilityType, RollType, SavingThrowType, SpeedType, type Proficiency, type SkillType } from '@/contracts/enums';
+import { RollType, SpeedType, type Proficiency } from '@/contracts/enums';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import ArmorWidget from '@/components/character/widgets/Armor/ArmorWidget.vue';
@@ -39,12 +39,12 @@ const sections: Section[] = [
     { link: '#inventory', header: t('sections.inventory') },
 ]
 
-async function updateAbilities(scores: Record<AbilityType, number>) {
+async function updateAbilities(scores: Record<string, number>) {
     if (character.value !== undefined) {
         await api.editAbilities(character.value.id, scores);
     }
 }
-async function updateSkills(proficiencies: Record<SkillType, Proficiency>) {
+async function updateSkills(proficiencies: Record<string, Proficiency>) {
     if (character.value !== undefined) {
         await api.editSkills(character.value.id, proficiencies);
     }
@@ -70,7 +70,7 @@ async function updateArmor(armor: Armor) {
 }
 
 // TODO: Longtap for private roll or toggle somewhere for the roll type
-async function rollSkillCheck(skillType: SkillType) {
+async function rollSkillCheck(skillType: string) {
     if (character.value !== undefined) {
         const message = await api.performSkillCheck(character.value.id, skillType, RollType.Public);
         const toast = useToast();
@@ -85,7 +85,7 @@ async function rollSkillCheck(skillType: SkillType) {
     }
 }
 
-async function rollSavingThrow(savingThrow: SavingThrowType) {
+async function rollSavingThrow(savingThrow: string) {
     if (character.value !== undefined) {
         const message = await api.performSavingThrow(character.value.id, savingThrow, RollType.Public);
         const toast = useToast();
@@ -99,8 +99,6 @@ async function rollSavingThrow(savingThrow: SavingThrowType) {
         });
     }
 }
-
-
 
 onMounted(() => {
     updateSection();

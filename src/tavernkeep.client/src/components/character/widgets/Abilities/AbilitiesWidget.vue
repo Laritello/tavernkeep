@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Ability } from '@/contracts/character';
-import { type AbilityType } from '@/contracts/enums';
 import AbilitiesWidgetItem from './AbilitiesWidgetItem.vue';
 import { useModal } from '@/composables/useModal';
 import AbilitiesEditDialog from '@/components/dialogs/edit/AbilitiesEditDialog.vue';
@@ -9,11 +8,11 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 const emits = defineEmits<{
-    changed: [value: Record<AbilityType, number>]
+    changed: [value: Record<string, number>]
 }>();
 
 const { abilities } = defineProps<{
-    abilities: Record<AbilityType, Ability>
+    abilities: Record<string, Ability>
 }>();
 
 async function showEditAbilitiesDialog() {
@@ -26,9 +25,9 @@ async function showEditAbilitiesDialog() {
         return;
     }
 
-    const resultAbilities = {} as Record<AbilityType, number>;
+    const resultAbilities = {} as Record<string, number>;
     for (const ability of Object.values(result.payload)) {
-        resultAbilities[ability.type] = ability.score;
+        resultAbilities[ability.name] = ability.score;
     }
     emits('changed', resultAbilities);
 }
@@ -47,7 +46,7 @@ async function showEditAbilitiesDialog() {
         </div>
 
         <div class="grid grid-cols-3 md:grid-cols-6">
-            <AbilitiesWidgetItem v-for="ability in abilities" :ability="ability" :key="ability.type" />
+            <AbilitiesWidgetItem v-for="ability in abilities" :ability="ability" :key="ability.name" />
         </div>
     </div>
 </template>

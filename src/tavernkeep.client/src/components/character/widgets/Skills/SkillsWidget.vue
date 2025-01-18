@@ -11,8 +11,8 @@
         </div>
 
         <div class="flex flex-col">
-            <SkillsWidgetItem v-for="skill in skills" :skill="skill" :key="skill.type" class="skill-item"
-                @roll="(value) => $emit('roll', value.type)" />
+            <SkillsWidgetItem v-for="skill in skills" :skill="skill" :key="skill.name" class="skill-item"
+                @roll="(value) => $emit('roll', value.name)" />
         </div>
     </div>
 </template>
@@ -22,16 +22,16 @@ import type { Skill } from '@/contracts/character';
 import SkillsWidgetItem from './SkillsWidgetItem.vue';
 import SkillsEditDialog from '@/components/dialogs/edit/SkillsEditDialog.vue';
 import { useModal } from '@/composables/useModal';
-import { Proficiency, SkillType } from '@/contracts/enums';
+import { Proficiency } from '@/contracts/enums';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const { skills } = defineProps<{ skills: Record<SkillType, Skill> }>();
+const { skills } = defineProps<{ skills: Record<string, Skill> }>();
 
 const emits = defineEmits<{
     changed: [value: Record<string, Proficiency>],
-    roll: [value: SkillType]
+    roll: [value: string]
 }>();
 
 async function showEditSkillsDialog() {

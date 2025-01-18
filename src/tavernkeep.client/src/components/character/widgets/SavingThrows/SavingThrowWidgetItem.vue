@@ -1,7 +1,7 @@
 <template>
     <div class="box-border border-base-300 flex flex-col m-2 p-1 border-2 rounded-lg red active:bg-gray-400" @click="emit('roll', savingThrow)">
         <p class="text-3xl font-extrabold text-center select-none">{{ savingThrow.bonus }}</p>
-        <p class="text-xs text-center select-none">{{ t(`pf.savingThrows.${savingThrow.type.toLowerCase()}`) }}</p>
+        <p class="text-xs text-center select-none">{{ t(`pf.savingThrows.${savingThrow.name.toLowerCase()}`) }}</p>
         <ProficiencyComponent class="place-self-center" :proficiency="savingThrow.proficiency" />
     </div>
 </template>

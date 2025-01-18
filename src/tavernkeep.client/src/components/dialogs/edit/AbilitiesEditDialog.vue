@@ -1,6 +1,5 @@
 ﻿<script setup lang="ts">
 import type { Ability } from '@/contracts/character';
-import { type AbilityType } from '@/contracts/enums';
 import type { DialogResultCallback } from '@/composables/useModal';
 import SwipeNumericInput from '@/components/shared/SwipeNumericInput.vue';
 import { useI18n } from 'vue-i18n';
@@ -8,14 +7,14 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 const { abilities, closeModal } = defineProps<{ 
-    abilities: Record<AbilityType, Ability>, 
-    closeModal: DialogResultCallback<Record<AbilityType, Ability>> 
+    abilities: Record<string, Ability>, 
+    closeModal: DialogResultCallback<Record<string, Ability>> 
 }>();
 
 const currentItems = Object.values(abilities).reduce((acc, ability) => {
-    acc[ability.type] = { ...ability };
+    acc[ability.name] = { ...ability };
     return acc;
-}, {} as Record<AbilityType, Ability>);
+}, {} as Record<string, Ability>);
 
 function confirm() {
     const payload = currentItems;
@@ -39,8 +38,8 @@ function cancel() {
                                                :max="20"
                                                :min="8"
                                                :swipe-sensitivity="0.9"
-                                               @changed="(value) => currentItems[ability.type].score = value" />
-                            <p class="text-sm font-light text-center select-none">{{ t(`pf.attributes.${ability.type.toLowerCase()}`) }}</p>
+                                               @changed="(value) => currentItems[ability.name].score = value" />
+                            <p class="text-sm font-light text-center select-none">{{ t(`pf.attributes.${ability.name.toLowerCase()}`) }}</p>
                         </div>
                     </template>
                 </div>

@@ -19,7 +19,12 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 		}
 		public async Task<Character?> GetFullCharacterAsync(Guid id, CancellationToken cancellationToken = default)
 		{
-			return await AsQueryable().Where(x => x.Id == id).Include(x => x.Owner).FirstOrDefaultAsync(cancellationToken);
+			return await AsQueryable().Where(x => x.Id == id)
+				.Include(x => x.Owner)
+				.Include(x => x.Abilities)
+				.Include(x => x.Skills).ThenInclude(x => x.Ability)
+				.Include(x => x.SavingThrows).ThenInclude(x => x.Ability)
+				.FirstOrDefaultAsync(cancellationToken);
 		}
 	}
 }

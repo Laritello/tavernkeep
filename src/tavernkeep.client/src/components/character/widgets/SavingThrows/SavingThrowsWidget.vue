@@ -12,7 +12,7 @@
 
         <div class="grid grid-cols-3">
             <SavingThrowWidgetItem v-for="savingThrow in savingThrows" :savingThrow="savingThrow"
-                :key="savingThrow.type" @roll="(value) => $emit('roll', value.type)" />
+                :key="savingThrow.name" @roll="(value) => $emit('roll', value.name)" />
         </div>
     </div>
 </template>
@@ -22,7 +22,7 @@ import type { SavingThrow } from '@/contracts/character';
 import SavingThrowWidgetItem from './SavingThrowWidgetItem.vue';
 import { useModal } from '@/composables/useModal';
 import SavingThrowsEditDialog from '@/components/dialogs/edit/SavingThrowsEditDialog.vue';
-import { Proficiency, SavingThrowType } from '@/contracts/enums';
+import { Proficiency } from '@/contracts/enums';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -30,7 +30,7 @@ const { t } = useI18n();
 const { savingThrows } = defineProps<{ savingThrows: Record<string, SavingThrow> }>();
 const emits = defineEmits<{
     changed: [value: Record<string, Proficiency>],
-    roll: [value: SavingThrowType]
+    roll: [value: string]
 }>();
 
 
