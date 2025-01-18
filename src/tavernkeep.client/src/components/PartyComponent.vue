@@ -1,7 +1,7 @@
 <template>
     <v-sheet class="mx-auto pa-2 h-full overflow-auto">
         <CharacterComponent
-            v-for="character in charactersStore.characters"
+            v-for="character in charactersStore.all"
             :key="character.id"
             :character="character"
         />

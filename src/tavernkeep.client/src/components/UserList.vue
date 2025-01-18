@@ -2,7 +2,7 @@
     <v-sheet class="mx-auto pa-2">
         <div class="text-h6">Users</div>
         <v-list>
-            <v-list-item v-for="user in usersStore.list" :key="user.id" v-bind:title="user.login">
+            <v-list-item v-for="user in usersStore.dictionary" :key="user.id" v-bind:title="user.login">
                 <template v-slot:append>
                     <v-btn size="small" variant="text" icon="mdi-square-edit-outline" @click="editDialog = true" />
                     <v-btn size="small" variant="text" icon="mdi-delete" @click="usersStore.deleteUser(user.id)" />
