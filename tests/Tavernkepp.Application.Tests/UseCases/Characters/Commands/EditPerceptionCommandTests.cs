@@ -29,12 +29,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[SetUp]
 		public void SetUp()
 		{
-			character = new Character()
-			{
-				Id = characterId,
-				Name = "Demo",
-				Owner = owner
-			};
+			character = CharacterGenerator.Generate(characterId, owner);
 		}
 
 		[Test]

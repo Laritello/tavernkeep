@@ -85,29 +85,124 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 				character.Health.Current = 13;
 				character.Health.Temporary = 5;
 
-				character.Strength.Score = 10;
-				character.Dexterity.Score = 12;
-				character.Constitution.Score = 14;
-				character.Intelligence.Score = 18;
-				character.Wisdom.Score = 12;
-				character.Charisma.Score = 19;
+				character.Abilities =
+				[
+					new("Strength", 10) { Owner = character },
+					new("Dexterity", 12) { Owner = character },
+					new("Constitution", 14) { Owner = character },
+					new("Intelligence", 18) { Owner = character },
+					new("Wisdom", 12) { Owner = character },
+					new("Charisma", 19) { Owner = character }
+				];
 
-				character.Fortitude.Proficiency = Proficiency.Trained;
-				character.Reflex.Proficiency = Proficiency.Expert;
-				character.Will.Proficiency = Proficiency.Expert;
+				character.SavingThrows =
+				[
+					new("Fortitude", Proficiency.Trained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Constitution"]
+					},
+					new("Reflex", Proficiency.Expert)
+					{
+						Owner = character,
+						Ability = character.Abilities["Dexterity"]
+					},
+					new("Will", Proficiency.Expert) 
+					{ 
+						Owner = character, 
+						Ability = character.Abilities["Wisdom"]
+					}
+				];
 
-				character.Perception.Proficiency = Proficiency.Expert;
+				character.Skills =
+				[
+					new("Acrobatics", Proficiency.Trained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Dexterity"]
+					},
+					new("Arcana", Proficiency.Trained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Intelligence"]
+					},
+					new("Athletics", Proficiency.Untrained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Strength"]
+					},
+					new("Crafting", Proficiency.Untrained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Intelligence"]
+					},
+					new("Deception", Proficiency.Trained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Charisma"]
+					},
+					new("Diplomacy", Proficiency.Expert)
+					{
+						Owner = character,
+						Ability = character.Abilities["Charisma"]
+					},
+					new("Intimidation", Proficiency.Trained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Charisma"]
+					},
+					new("Medicine", Proficiency.Untrained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Wisdom"]
+					},
+					new("Nature", Proficiency.Untrained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Wisdom"]
+					},
+					new("Occultism", Proficiency.Expert)
+					{
+						Owner = character,
+						Ability = character.Abilities["Intelligence"]
+					},
+					new("Performance", Proficiency.Expert)
+					{
+						Owner = character,
+						Ability = character.Abilities["Charisma"]
+					},
+					new("Religion", Proficiency.Trained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Wisdom"]
+					},
+					new("Society", Proficiency.Trained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Intelligence"]
+					},
+					new("Stealth", Proficiency.Trained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Dexterity"]
+					},
+					new("Survival", Proficiency.Untrained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Wisdom"]
+					},
+					new("Thievery", Proficiency.Untrained)
+					{
+						Owner = character,
+						Ability = character.Abilities["Dexterity"]
+					},
 
-				character.Acrobatics.Proficiency = Proficiency.Trained;
-				character.Arcana.Proficiency = Proficiency.Trained;
-				character.Deception.Proficiency = Proficiency.Trained;
-				character.Diplomacy.Proficiency = Proficiency.Expert;
-				character.Intimidation.Proficiency = Proficiency.Trained;
-				character.Occultism.Proficiency = Proficiency.Expert;
-				character.Performance.Proficiency = Proficiency.Trained;
-				character.Religion.Proficiency = Proficiency.Trained;
-				character.Society.Proficiency = Proficiency.Trained;
-				character.Stealth.Proficiency = Proficiency.Trained;
+					new("Perception", Proficiency.Expert)
+					{
+						Owner = character,
+						Ability = character.Abilities["Wisdom"]
+					},
+				];
 
 				character.Walk.Base = 30;
 

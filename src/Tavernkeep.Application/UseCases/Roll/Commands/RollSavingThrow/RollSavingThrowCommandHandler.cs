@@ -23,7 +23,7 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSavingThrow
 			var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
 				?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
 
-			var savingThrow = character.GetSavingThrow(request.SavingThrowType);
+			var savingThrow = character.SavingThrows[request.SavingThrowType];
 			var roll = diceService.Roll(bonus: savingThrow.Bonus);
 
 			SavingThrowRollMessage message = new()

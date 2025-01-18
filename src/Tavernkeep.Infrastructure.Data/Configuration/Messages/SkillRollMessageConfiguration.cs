@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tavernkeep.Core.Entities.Messages;
-using Tavernkeep.Infrastructure.Data.Extensions;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration.Messages
 {
@@ -9,7 +8,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.Messages
 	{
 		public void Configure(EntityTypeBuilder<SkillRollMessage> builder)
 		{
-			builder.OwnsJson(m => m.Skill);
+			builder.OwnsOne(m => m.Skill, b => b.ToJson());
 		}
 	}
 }

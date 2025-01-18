@@ -29,12 +29,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[SetUp]
 		public void SetUp()
 		{
-			character = new Character()
-			{
-				Id = characterId,
-				Name = "Demo",
-				Owner = owner,
-			};
+			character = CharacterGenerator.Generate(characterId, owner);
 		}
 
 		[Test]
@@ -52,7 +47,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			character.Level = level;
-			character.Constitution.Score = constitutionScore;
+			character.Abilities["Constitution"].Score = constitutionScore;
 
 			character.Health.Temporary = 0;
 			character.Health.Max = 100;
@@ -88,7 +83,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			character.Level = 6;
-			character.Constitution.Score = 14;
+			character.Abilities["Constitution"].Score = 14;
 
 			character.Health.Temporary = 0;
 			character.Health.Max = 100;
@@ -122,7 +117,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			character.Level = 6;
-			character.Constitution.Score = 14;
+			character.Abilities["Constitution"].Score = 14;
 
 			character.Health.Temporary = 0;
 			character.Health.Max = 100;
@@ -159,7 +154,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			character.Level = 6;
-			character.Constitution.Score = 14;
+			character.Abilities["Constitution"].Score = 14;
 
 			character.Health.Temporary = 0;
 			character.Health.Max = 100;

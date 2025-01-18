@@ -25,7 +25,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditAbilities
 
 			foreach (var key in request.Scores.Keys)
 			{
-				var ability = character.GetAbility(key);
+				var ability = character.Abilities[key];
 				ability.Score = request.Scores[key];
 			}
 

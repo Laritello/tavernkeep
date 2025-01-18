@@ -10,13 +10,13 @@ namespace Tavernkeep.Core.Evaluators.Properties
 	{
 		private readonly SavingThrow _savingThrow = savingThrow;
 		private readonly Character _character = savingThrow.Owner;
-		private readonly IValueEvaluator<int> _modifierEvaluator = new ModifierEvaluator(savingThrow.Owner, savingThrow.Type.ToTarget());
+		private readonly ModifierEvaluator _modifierEvaluator = new(savingThrow.Owner, savingThrow.Name);
 
 		public int Value => Calculate();
 
 		private int Calculate()
 		{
-			return _character.GetSavingThrowAbility(_savingThrow.Type).Modifier + _savingThrow.Proficiency.GetProficiencyBonus(_character) + _modifierEvaluator.Value;
+			return _savingThrow.Ability.Modifier + _savingThrow.Proficiency.GetProficiencyBonus(_character) + _modifierEvaluator.Value;
 		}
 	}
 }

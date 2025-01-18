@@ -13,7 +13,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 {
 	public class RollSkillCommandTests
 	{
-		private readonly SkillType skill = SkillType.Arcana;
+		private readonly string skill = "Arcana";
 		private readonly int rollResult = 15;
 		private readonly User initiator;
 		private readonly Character character;
@@ -25,11 +25,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 				Id = Guid.NewGuid(),
 			};
 
-			character = new()
-			{
-				Id = Guid.NewGuid(),
-				Owner = initiator,
-			};
+			character = CharacterGenerator.Generate();
 		}
 
 		[Test]
@@ -50,7 +46,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 				.ReturnsAsync(character);
 
 			mockDiceService
-				.Setup(service => service.Roll(character.GetSkill(skill).Bonus, false))
+				.Setup(service => service.Roll(character.Skills[skill].Bonus, false))
 				.Returns(new DiceResult()
 				{
 					Value = rollResult
@@ -62,8 +58,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 			var result = await handler.Handle(request, CancellationToken.None);
 			Assert.Multiple(() =>
 			{
-				Assert.That(result.Skill.Type, Is.EqualTo(skill));
-				Assert.That(result.Skill.Bonus, Is.EqualTo(character.GetSkill(skill).Bonus));
+				Assert.That(result.Skill.Name, Is.EqualTo(skill));
+				Assert.That(result.Skill.Bonus, Is.EqualTo(character.Skills[skill].Bonus));
 				Assert.That(result.Result.Value, Is.EqualTo(rollResult));
 			});
 		}
@@ -78,7 +74,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 			var mockNotificationService = new Mock<INotificationService>();
 
 			mockDiceService
-				.Setup(service => service.Roll(character.Arcana.Bonus, false))
+				.Setup(service => service.Roll(character.Skills[skill].Bonus, false))
 				.Returns(new DiceResult()
 				{
 					Value = rollResult
@@ -88,7 +84,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(character.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new RollSkillCommand(initiator.Id, character.Id, SkillType.Arcana, RollType.Public);
+			var request = new RollSkillCommand(initiator.Id, character.Id, skill, RollType.Public);
 			var handler = new RollSkillCommandHandler(mockDiceService.Object, mockUserRepository.Object, mockCharacterRepository.Object, mockMessageRepository.Object, mockNotificationService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
@@ -110,13 +106,13 @@ namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 				.ReturnsAsync(initiator);
 
 			mockDiceService
-				.Setup(service => service.Roll(character.Arcana.Bonus, false))
+				.Setup(service => service.Roll(character.Skills[skill].Bonus, false))
 				.Returns(new DiceResult()
 				{
 					Value = rollResult
 				});
 
-			var request = new RollSkillCommand(initiator.Id, character.Id, SkillType.Arcana, RollType.Public);
+			var request = new RollSkillCommand(initiator.Id, character.Id, skill, RollType.Public);
 			var handler = new RollSkillCommandHandler(mockDiceService.Object, mockUserRepository.Object, mockCharacterRepository.Object, mockMessageRepository.Object, mockNotificationService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),

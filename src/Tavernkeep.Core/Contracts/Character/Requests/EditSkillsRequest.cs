@@ -10,6 +10,6 @@ namespace Tavernkeep.Core.Contracts.Character.Requests
 		/// <summary>
 		/// The updated proficiencies.
 		/// </summary>
-		public Dictionary<SkillType, Proficiency> Proficiencies { get; set; } = [];
+		public Dictionary<string, Proficiency> Proficiencies { get; set; } = [];
 	}
 }

@@ -5,7 +5,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Modifiers
 {
 	public class Modifier
 	{
-		public List<ModifierTarget> Targets { get; set; } = [];
+		public List<string> Targets { get; set; } = [];
 		[JsonConverter(typeof(JsonStringEnumConverter))]
 		public ModifierScaling Scaling { get; set; }
 		[JsonConverter(typeof(JsonStringEnumConverter))]

@@ -139,7 +139,7 @@ namespace Tavernkeep.Server.Controllers
 		/// <returns>Changed perception.</returns>
 		[Authorize]
 		[HttpPatch("{characterId}/perception")]
-		public async Task<Perception> EditPerceptionAsync([FromRoute] Guid characterId, [FromBody] EditPerceptionRequest request)
+		public async Task<Skill> EditPerceptionAsync([FromRoute] Guid characterId, [FromBody] EditPerceptionRequest request)
 		{
 			return await mediator.Send(new EditPerceptionCommand(HttpContext.GetUserId(), characterId, request.Proficiency));
 		}

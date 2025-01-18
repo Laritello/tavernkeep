@@ -1,21 +1,19 @@
-﻿using System.Text.Json.Serialization;
-using Tavernkeep.Core.Contracts.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using Tavernkeep.Core.Interfaces;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
-	public class Ability
+	[Table("CharacterAbility")]
+	public class Ability : INamedProperty
 	{
 		#region Constructors
 
-		public Ability()
+		public Ability(string name, int score)
 		{
-
-		}
-
-		public Ability(Character owner, AbilityType type)
-		{
-			Owner = owner;
-			Type = type;
+			Name = name;
+			Score = score;
 		}
 
 		#endregion
@@ -23,8 +21,11 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 		#region Properties
 
 		[JsonIgnore]
-		public Character Owner { get; set; } = default!;
-		public AbilityType Type { get; set; }
+		[Key, Column(Order = 0)]
+		public required Character Owner { get; set; }
+
+		[Key, Column(Order = 1)]
+		public string Name { get; set; }
 		public int Score { get; set; }
 		public int Modifier => (Score - 10) / 2;
 

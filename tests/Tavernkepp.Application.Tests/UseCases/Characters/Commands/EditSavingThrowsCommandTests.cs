@@ -29,19 +29,14 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[SetUp]
 		public void SetUp()
 		{
-			character = new Character()
-			{
-				Id = characterId,
-				Name = "Demo",
-				Owner = owner
-			};
+			character = CharacterGenerator.Generate(characterId, owner);
 		}
 
 		[Test]
-		[TestCase(SavingThrowType.Fortitude)]
-		[TestCase(SavingThrowType.Reflex)]
-		[TestCase(SavingThrowType.Will)]
-		public async Task EditSavingThrowsCommand_Success(SavingThrowType type)
+		[TestCase("Fortitude")]
+		[TestCase("Reflex")]
+		[TestCase("Will")]
+		public async Task EditSavingThrowsCommand_Success(string type)
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterRepository = new Mock<ICharacterRepository>();
@@ -59,7 +54,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 
 			await handler.Handle(request, CancellationToken.None);
 
-			Assert.That(character.GetSavingThrow(type).Proficiency, Is.EqualTo(proficiency));
+			Assert.That(character.SavingThrows[type].Proficiency, Is.EqualTo(proficiency));
 		}
 
 		[Test]
@@ -76,12 +71,12 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSavingThrowsCommand(master.Id, characterId, new() { { SavingThrowType.Fortitude, proficiency } });
+			var request = new EditSavingThrowsCommand(master.Id, characterId, new() { { "Fortitude", proficiency } });
 			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
-			Assert.That(character.Fortitude.Proficiency, Is.EqualTo(proficiency));
+			Assert.That(character.SavingThrows["Fortitude"].Proficiency, Is.EqualTo(proficiency));
 		}
 
 		[Test]
@@ -95,7 +90,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSavingThrowsCommand(owner.Id, characterId, new() { { SavingThrowType.Fortitude, proficiency } });
+			var request = new EditSavingThrowsCommand(owner.Id, characterId, new() { { "Fortitude", proficiency } });
 			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
@@ -114,7 +109,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(owner);
 
-			var request = new EditSavingThrowsCommand(owner.Id, characterId, new() { { SavingThrowType.Fortitude, proficiency } });
+			var request = new EditSavingThrowsCommand(owner.Id, characterId, new() { { "Fortitude", proficiency } });
 			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
@@ -137,7 +132,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSavingThrowsCommand(initiatorId, characterId, new() { { SavingThrowType.Fortitude, proficiency } });
+			var request = new EditSavingThrowsCommand(initiatorId, characterId, new() { { "Fortitude", proficiency } });
 			var handler = new EditSavingThrowsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
