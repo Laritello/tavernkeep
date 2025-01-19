@@ -142,7 +142,8 @@
     },
     "settings": {
         "characters": {
-            "header": "Персонажи"
+            "header": "Персонажи",
+            "create": "Создать нового"
         },
         "themes": {
             "header": "Темы",
