@@ -20,10 +20,11 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		#region Constructors
 
-		public Skill(string name, Proficiency proficiency)
+		public Skill(string name, Proficiency proficiency, SkillType type)
 		{
 			Name = name;
 			Proficiency = proficiency;
+			Type = type;
 		}
 
 		#endregion
@@ -36,6 +37,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		[Key, Column(Order = 1)]
 		public string Name { get; set; }
+		public SkillType Type { get; set; }
 
 		public required Ability Ability { get; set; }
 
