@@ -17,10 +17,10 @@ namespace Tavernkeep.Core.Contracts.Character.Dtos
 		public int Level { get; set; } = 1;
 		public Health Health { get; set; } = default!;
 		public ArmorDto Armor { get; set; } = default!;
-		public Dictionary<string, AbilityDto> Abilities { get; set; } = default!;
-		public Dictionary<string, SkillDto> Skills { get; set; } = default!;
+		public required ICollection<AbilityDto> Abilities { get; set; }
+		public required ICollection<SkillDto> Skills { get; set; }
+		public required ICollection<SavingThrowDto> SavingThrows { get; set; }
 		public SkillDto Perception { get; set; } = default!;
-		public Dictionary<string, SavingThrowDto> SavingThrows { get; set; } = default!;
 		public Dictionary<SpeedType, Speed> Speeds { get; set; } = default!;
 		public List<Condition> Conditions { get; set; } = default!;
 	}

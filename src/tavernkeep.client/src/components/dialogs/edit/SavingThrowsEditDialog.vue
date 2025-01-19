@@ -9,7 +9,7 @@ const { t } = useI18n();
 
 type ReturnType = Record<string, Proficiency>;
 const { closeModal, savingThrows } = defineProps<{
-    savingThrows: Record<string, SavingThrow>;
+    savingThrows: SavingThrow[];
     closeModal: DialogResultCallback<ReturnType>;
 }>();
 

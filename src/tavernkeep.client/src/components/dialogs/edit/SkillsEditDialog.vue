@@ -9,7 +9,7 @@ const { t } = useI18n();
 
 type ReturnType = Record<string, Proficiency>;
 const { closeModal, skills } = defineProps<{
-    skills: Record<string, Skill>;
+    skills: Skill[];
     closeModal: DialogResultCallback<ReturnType>;
 }>();
 

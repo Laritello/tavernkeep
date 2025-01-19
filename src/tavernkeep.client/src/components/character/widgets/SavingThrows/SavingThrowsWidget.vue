@@ -27,7 +27,7 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const { savingThrows } = defineProps<{ savingThrows: Record<string, SavingThrow> }>();
+const { savingThrows } = defineProps<{ savingThrows: SavingThrow[] }>();
 const emits = defineEmits<{
     changed: [value: Record<string, Proficiency>],
     roll: [value: string]

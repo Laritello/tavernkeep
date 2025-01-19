@@ -12,7 +12,7 @@ const emits = defineEmits<{
 }>();
 
 const { abilities } = defineProps<{
-    abilities: Record<string, Ability>
+    abilities: Ability[]
 }>();
 
 async function showEditAbilitiesDialog() {
@@ -25,11 +25,7 @@ async function showEditAbilitiesDialog() {
         return;
     }
 
-    const resultAbilities = {} as Record<string, number>;
-    for (const ability of Object.values(result.payload)) {
-        resultAbilities[ability.name] = ability.score;
-    }
-    emits('changed', resultAbilities);
+    emits('changed', result.payload);
 }
 </script>
 

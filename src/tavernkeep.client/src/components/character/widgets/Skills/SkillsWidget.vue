@@ -27,7 +27,7 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const { skills } = defineProps<{ skills: Record<string, Skill> }>();
+const { skills } = defineProps<{ skills: Skill[] }>();
 
 const emits = defineEmits<{
     changed: [value: Record<string, Proficiency>],

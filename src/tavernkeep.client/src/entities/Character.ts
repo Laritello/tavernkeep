@@ -17,9 +17,9 @@ export interface Character {
 
     health: Health;
     perception: Perception;
-    abilities: Record<string, Ability>;
-    skills: Record<string, Skill>;
-    savingThrows: Record<string, SavingThrow>;
+    abilities: Ability[];
+    skills: Skill[];
+    savingThrows: SavingThrow[];
     speeds: Record<SpeedType, Speed>;
     armor: Armor;
 
