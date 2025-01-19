@@ -14,6 +14,7 @@ namespace Tavernkeep.Application.Mapping.Profiles
 		public CharacterProfile()
 		{
 			CreateMap<Character, CharacterDto>()
+				.ForMember(dest => dest.Skills, opt => opt.MapFrom(src => src.Skills.Where(x => x.Name != "Perception")))
 				.ForMember(dest => dest.Perception, opt => opt.MapFrom(src => src.Skills["Perception"]))
 				.ForMember(
 					dest => dest.Speeds,

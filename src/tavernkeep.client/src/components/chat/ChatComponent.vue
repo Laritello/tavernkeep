@@ -131,7 +131,7 @@ async function sendMessage() {
         <form @submit.prevent="sendMessage" class="flex flex-row mb-1">
             <ChatInputView v-model:content="message" :commands="slashCommands" class="w-full" />
             <div class="p-1">
-                <button type="submit" class="btn btn-md btn-circle btn-primary text-white shadow-lg dark:text-neutral mt-1">
+                <button type="submit" class="btn btn-md btn-circle btn-primary shadow-lg mt-1">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 -960 960 960"
                         fill="currentColor">
                         <path
