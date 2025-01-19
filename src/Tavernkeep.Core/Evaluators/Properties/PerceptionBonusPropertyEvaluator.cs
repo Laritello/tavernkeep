@@ -11,13 +11,13 @@ namespace Tavernkeep.Core.Evaluators.Properties
 	{
 		private readonly Perception _perception = perception;
 		private readonly Character _character = perception.Owner;
-		private readonly ModifierEvaluator _modifierEvaluator = new(perception.Owner, ModifierTarget.Perception);
+		private readonly ModifierEvaluator _modifierEvaluator = new(perception.Owner, "Perception");
 
 		public int Value => Calculate();
 
 		private int Calculate()
 		{
-			return _character.Wisdom.Modifier + _perception.Proficiency.GetProficiencyBonus(_character) + _modifierEvaluator.Value;
+			return _character.Abilities["Wisdom"].Modifier + _perception.Proficiency.GetProficiencyBonus(_character) + _modifierEvaluator.Value;
 		}
 	}
 }

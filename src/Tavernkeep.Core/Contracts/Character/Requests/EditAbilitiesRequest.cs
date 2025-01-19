@@ -1,6 +1,4 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
-
-namespace Tavernkeep.Core.Contracts.Character.Requests
+﻿namespace Tavernkeep.Core.Contracts.Character.Requests
 {
 	/// <summary>
 	/// Represents a request to edit the ability of a character.
@@ -10,6 +8,6 @@ namespace Tavernkeep.Core.Contracts.Character.Requests
 		/// <summary>
 		/// The updated scores.
 		/// </summary>
-		public Dictionary<AbilityType, int> Scores { get; set; } = default!;
+		public Dictionary<string, int> Scores { get; set; } = default!;
 	}
 }

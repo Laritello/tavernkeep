@@ -1,12 +1,16 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Snapshots;
 using Tavernkeep.Core.Evaluators.Properties;
+using Tavernkeep.Core.Interfaces;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
-	public class SavingThrow
+	[Table("CharacterSavingThrow")]
+	public class SavingThrow : INamedProperty
 	{
 		#region Backing fields
 
@@ -16,16 +20,10 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		#region Constructors
 
-		public SavingThrow()
+		public SavingThrow(string name, Proficiency proficiency)
 		{
-
-		}
-
-		public SavingThrow(Character owner, AbilityType baseAbility, SavingThrowType type)
-		{
-			Owner = owner;
-			BaseAbility = baseAbility;
-			Type = type;
+			Name = name;
+			Proficiency = proficiency;
 		}
 
 		#endregion
@@ -33,10 +31,16 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 		#region Properties
 
 		[JsonIgnore]
-		public Character Owner { get; set; } = default!;
-		public AbilityType BaseAbility { get; set; }
-		public SavingThrowType Type { get; set; }
+		[Key, Column(Order = 0)]
+		public required Character Owner { get; set; }
+
+		[Key, Column(Order = 1)]
+		public string Name { get; set; }
+
+		public required Ability Ability { get; set; }
+
 		public Proficiency Proficiency { get; set; }
+
 		public int Bonus
 		{
 			get
@@ -50,15 +54,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		#region Methods
 
-		public SavingThrowSnapshot AsSnapshot()
-		{
-			return new()
-			{
-				Type = Type,
-				Proficiency = Proficiency,
-				Bonus = Bonus
-			};
-		}
+		public SavingThrowSnapshot AsSnapshot() => new(Name, Proficiency, Bonus);
 
 		#endregion
 	}

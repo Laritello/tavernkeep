@@ -25,7 +25,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSkills
 
 			foreach (var key in request.Proficiencies.Keys)
 			{
-				var skill = character.GetSkill(key);
+				var skill = character.Skills[key];
 				skill.Proficiency = request.Proficiencies[key];
 			}
 

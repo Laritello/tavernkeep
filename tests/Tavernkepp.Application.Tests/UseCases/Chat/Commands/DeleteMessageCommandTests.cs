@@ -1,4 +1,5 @@
 ﻿using Moq;
+using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Chat.Commands.DeleteMessage;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
@@ -35,13 +36,13 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
 		public async Task DeleteMessageCommand_Success()
 		{
 			var mockMessageRepository = new Mock<IMessageRepository>();
-
+			var mockNotificationService = new Mock<INotificationService>();
 			mockMessageRepository
 				.Setup(repo => repo.FindAsync(message.Id, It.IsAny<ISpecification<Message>>(), It.IsAny<CancellationToken>()))
 				.ReturnsAsync(message);
 
 			var request = new DeleteMessageCommand(message.Id);
-			var handler = new DeleteMessageCommandHandler(mockMessageRepository.Object);
+			var handler = new DeleteMessageCommandHandler(mockMessageRepository.Object, mockNotificationService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 		}
@@ -50,9 +51,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
 		public void DeleteMessageCommand_MessageNotFound()
 		{
 			var mockMessageRepository = new Mock<IMessageRepository>();
+			var mockNotificationService = new Mock<INotificationService>();
 
 			var request = new DeleteMessageCommand(message.Id);
-			var handler = new DeleteMessageCommandHandler(mockMessageRepository.Object);
+			var handler = new DeleteMessageCommandHandler(mockMessageRepository.Object, mockNotificationService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()

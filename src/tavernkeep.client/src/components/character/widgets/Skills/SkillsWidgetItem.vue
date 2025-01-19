@@ -20,7 +20,7 @@
             </svg>
         </label>
 
-        <p class="grow select-none">{{ t(`pf.skills.${skill.type.toLowerCase()}`) }}</p>
+        <p class="grow select-none">{{ t(`pf.skills.${skill.name.toLowerCase()}`) }}</p>
         <ProficiencyComponent :proficiency="skill.proficiency" />
         <p class="border-2 border-base-300 rounded-md w-12 text-center font-bold active:bg-gray-400 select-none"
             @click="emit('roll', skill)">

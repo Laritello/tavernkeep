@@ -29,7 +29,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				[
 					new()
 					{
-						Targets = [ModifierTarget.Perception],
+						Targets = ["Perception"],
 						Value = 4,
 						IsBonus = false
 					}
@@ -49,15 +49,10 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[SetUp]
 		public void SetUp()
 		{
-			character = new Character()
-			{
-				Id = characterId,
-				Name = "Demo",
-				Owner = owner
-			};
+			character = CharacterGenerator.Generate(characterId, owner);
 
-			character.Wisdom.Score = 16;
-			character.Perception.Proficiency = Proficiency.Trained;
+			character.Abilities["Wisdom"].Score = 16;
+			character.Skills["Perception"].Proficiency = Proficiency.Trained;
 		}
 
 		[Test]
@@ -78,7 +73,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetConditionAsync("Blinded", It.IsAny<CancellationToken>()))
 				.ReturnsAsync(conditions[0]);
 
-			int basePerception = character.Perception.Bonus;
+			int basePerception = character.Skills["Perception"].Bonus;
 
 			var request = new EditConditionsCommand(owner.Id, characterId, [new() { Name = "Blinded" }]);
 			var handler = new EditConditionsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionMetadataRepository.Object, mockNotificationService.Object);
@@ -89,7 +84,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			{
 				Assert.That(character.Conditions, Has.Count.EqualTo(1));
 				Assert.That(character.Conditions.FirstOrDefault(x => x.Name == "Blinded"), Is.Not.Null);
-				Assert.That(character.Perception.Bonus, Is.EqualTo(basePerception - 4));
+				Assert.That(character.Skills["Perception"].Bonus, Is.EqualTo(basePerception - 4));
 			});
 		}
 
@@ -111,7 +106,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(repo => repo.GetConditionAsync("Blinded", It.IsAny<CancellationToken>()))
 				.ReturnsAsync(conditions[0]);
 
-			int basePerception = character.Perception.Bonus;
+			int basePerception = character.Skills["Perception"].Bonus;
 
 			var request = new EditConditionsCommand(master.Id, characterId, [new() { Name = "Blinded" }]);
 			var handler = new EditConditionsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockConditionMetadataRepository.Object, mockNotificationService.Object);
@@ -122,7 +117,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			{
 				Assert.That(character.Conditions, Has.Count.EqualTo(1));
 				Assert.That(character.Conditions.FirstOrDefault(x => x.Name == "Blinded"), Is.Not.Null);
-				Assert.That(character.Perception.Bonus, Is.EqualTo(basePerception - 4));
+				Assert.That(character.Skills["Perception"].Bonus, Is.EqualTo(basePerception - 4));
 			});
 		}
 

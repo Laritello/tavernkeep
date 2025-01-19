@@ -29,48 +29,48 @@ const { character } = defineProps<{
 async function showEditAbilityDialog(ability: Ability) {
     const result = await modal.show(AbilityEditDialog, { ability });
     if (result.action === 'result') {
-        client.editAbilities(character.id, ability.type, result.payload.score);
+        //client.editAbilities(character.id, ability.name, result.payload.score);
     }
 }
 
 async function showEditSkillDialog(skill: Skill) {
     const result = await modal.show(ProficiencyEditDialog, { proficiency: skill.proficiency });
-    if (result.action === 'result') {
-        await client.editSkills(character.id, skill.type, result.payload.value);
-    }
+    // if (result.action === 'result') {
+    //     await client.editSkills(character.id, skill.type, result.payload.value);
+    // }
 }
 
 async function showSavingThrowEditDialog(savingThrow: SavingThrow) {
     const result = await modal.show(ProficiencyEditDialog, { proficiency: savingThrow.proficiency });
-    if (result.action === 'result') {
-        await client.editSavingThrows(character.id, savingThrow.type, result.payload.value);
-    }
+    // if (result.action === 'result') {
+    //     await client.editSavingThrows(character.id, savingThrow.type, result.payload.value);
+    // }
 }
 
 async function showPerceptionEditDialog(perception: Perception) {
     const result = await modal.show(ProficiencyEditDialog, { proficiency: perception.proficiency });
-    if (result.action === 'result') {
-        await client.editPerception(character.id, result.payload.value);
-    }
+    // if (result.action === 'result') {
+    //     await client.editPerception(character.id, result.payload.value);
+    // }
 }
 
 async function showConditionApplyDialog() {
     const result = await modal.show(ConditionApplyDialog, { conditions: await client.getConditions() });
-    if (result.action === 'result') {
-        await client.applyCondition(character.id, result.payload.name, result.payload.level);
-    }
+    // if (result.action === 'result') {
+    //     await client.applyCondition(character.id, result.payload.name, result.payload.level);
+    // }
 }
 
 async function removeCondition(condition: Condition) {
-    await client.removeCondition(character.id, condition.name);
+    //await client.removeCondition(character.id, condition.name);
 }
 
 async function increaseCondtionLevel(condition: Condition) {
-    await client.applyCondition(character.id, condition.name, condition.level + 1);
+    //await client.applyCondition(character.id, condition.name, condition.level + 1);
 }
 
 async function decreaseCondtionLevel(condition: Condition) {
-    await client.applyCondition(character.id, condition.name, condition.level - 1);
+    //await client.applyCondition(character.id, condition.name, condition.level - 1);
 }
 </script>
 <template>

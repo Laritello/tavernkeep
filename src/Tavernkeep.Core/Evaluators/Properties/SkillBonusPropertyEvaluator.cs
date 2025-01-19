@@ -10,13 +10,13 @@ namespace Tavernkeep.Core.Evaluators.Properties
 	{
 		private readonly Skill _skill = skill;
 		private readonly Character _character = skill.Owner;
-		private readonly ModifierEvaluator _modifierEvaluator = new(skill.Owner, skill.Type.ToTarget());
+		private readonly ModifierEvaluator _modifierEvaluator = new(skill.Owner, skill.Name);
 
 		public int Value => Calculate();
 
 		private int Calculate()
 		{
-			return _character.GetSkillAbility(_skill.Type).Modifier + _skill.Proficiency.GetProficiencyBonus(_character) + _modifierEvaluator.Value;
+			return _skill.Ability.Modifier + _skill.Proficiency.GetProficiencyBonus(_character) + _modifierEvaluator.Value;
 		}
 	}
 }

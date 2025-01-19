@@ -11,14 +11,16 @@ namespace Tavernkeep.Core.Evaluators.Properties
 	{
 		private readonly Armor _armorClass = armorClass;
 		private readonly Character _character = armorClass.Owner;
-		private readonly ModifierEvaluator _modifierEvaluator = new(armorClass.Owner, ModifierTarget.ArmorClass);
+		private readonly ModifierEvaluator _modifierEvaluator = new(armorClass.Owner, "ArmorClass");
 		public int Value => Calculate();
 
 		public int Calculate()
 		{
+			var dexterity = _character.Abilities["Dexterity"];
+
 			int dexterityBonus = _armorClass.Equipped.HasDexterityCap
-				? Math.Min(_character.Dexterity.Modifier, _armorClass.Equipped.DexterityCap)
-				: _character.Dexterity.Modifier;
+				? Math.Min(dexterity.Modifier, _armorClass.Equipped.DexterityCap)
+				: dexterity.Modifier;
 
 			return 10 + dexterityBonus + _armorClass.Proficiencies[_armorClass.Equipped.Type].GetProficiencyBonus(_character) + _modifierEvaluator.Value;
 		}

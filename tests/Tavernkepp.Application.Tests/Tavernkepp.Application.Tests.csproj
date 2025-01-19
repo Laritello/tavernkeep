@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UseCases\Conditions\**" />
+    <EmbeddedResource Remove="UseCases\Conditions\**" />
+    <None Remove="UseCases\Conditions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\Conditions.en-UK.json" />
   </ItemGroup>
 
@@ -38,11 +44,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Tavernkeep.Application\Tavernkeep.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UseCases\Conditions\Commands\" />
-    <Folder Include="UseCases\Conditions\Queries\" />
   </ItemGroup>
 
 </Project>

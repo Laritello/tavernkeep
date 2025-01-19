@@ -1,7 +1,5 @@
-import type { AbilityType } from '@/contracts/enums';
-
 export interface Ability {
-    type: AbilityType;
+    name: string;
     score: number;
     modifier: number;
 }

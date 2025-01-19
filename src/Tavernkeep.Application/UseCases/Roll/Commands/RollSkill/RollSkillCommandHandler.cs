@@ -23,7 +23,7 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
 			var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
 				?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
 
-			var skill = character.GetSkill(request.SkillType);
+			var skill = character.Skills[request.SkillType];
 			var roll = diceService.Roll(bonus: skill.Bonus);
 
 			SkillRollMessage message = new()

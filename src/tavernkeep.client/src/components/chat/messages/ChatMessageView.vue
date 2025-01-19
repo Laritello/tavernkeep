@@ -38,12 +38,12 @@ function getParametersByType(message: Message) {
         case 'SkillRollMessage':
             return {
                 type: RollMessageType.Skill,
-                subHeader: (message as SkillRollMessage).skill.type
+                subHeader: (message as SkillRollMessage).skill.name
             };
         case 'SavingThrowRollMessage':
             return {
                 type: RollMessageType.SavingThrow,
-                subHeader: (message as SavingThrowRollMessage).savingThrow.type
+                subHeader: (message as SavingThrowRollMessage).savingThrow.name
             };
         default:
             return {};

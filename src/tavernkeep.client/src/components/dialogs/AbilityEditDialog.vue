@@ -4,12 +4,12 @@
             <h3 class="font-bold text-lg">Edit ability</h3>
             <form @submit.prevent="save" method="dialog" class="space-x-2">
                 <label class="form-control w-full max-w-md">
-                    <span class="label label-text">{{ ability.type }}</span>
+                    <span class="label label-text">{{ ability.name }}</span>
                     <input
                         ref="input"
                         v-model.number="score"
                         type="text"
-                        :placeholder="ability.type"
+                        :placeholder="ability.name"
                         required
                         class="input input-bordered outline-2 outline-slate-400 outline w-full max-w-md"
                     />
@@ -43,7 +43,7 @@ watchEffect(() => {
 const score = ref(ability.score);
 
 function save() {
-    const payload = { type: ability.type, score: score.value, modifier: ability.modifier };
+    const payload = { name: ability.name, score: score.value, modifier: ability.modifier };
     closeModal({ action: 'result', payload });
 }
 

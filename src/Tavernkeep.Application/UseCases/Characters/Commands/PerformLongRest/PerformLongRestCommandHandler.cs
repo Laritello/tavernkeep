@@ -33,10 +33,11 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest
 			 * 
 			 * If rests without comfort - only half of HP are restored. If sleeps in armor - apply fatigued.
 			*/
+			var constitution = character.Abilities["Constitution"];
 
 			character.Health.Current += request.RestWithoutComfort 
-				? character.Constitution.Modifier * character.Level / 2
-				: character.Constitution.Modifier * character.Level;
+				? constitution.Modifier * character.Level / 2
+				: constitution.Modifier * character.Level;
 
 			if (request.SleepInArmor)
 			{
