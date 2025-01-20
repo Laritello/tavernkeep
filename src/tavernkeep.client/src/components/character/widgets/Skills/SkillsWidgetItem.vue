@@ -20,7 +20,7 @@
             </svg>
         </label>
 
-        <p class="grow select-none">{{ t(`pf.skills.${skill.name.toLowerCase()}`) }}</p>
+        <p class="grow select-none">{{ getSkillName(skill) }}</p>
         <ProficiencyComponent :proficiency="skill.proficiency" />
         <p class="border-2 border-base-300 rounded-md w-12 text-center font-bold active:bg-gray-400 select-none"
             @click="emit('roll', skill)">
@@ -33,6 +33,7 @@
 import type { Skill } from '@/contracts/character';
 import ProficiencyComponent from '@/components/character/ProficiencyComponent.vue';
 import { useI18n } from 'vue-i18n';
+import { SkillType } from '@/contracts/enums';
 
 const { t } = useI18n();
 
@@ -43,5 +44,14 @@ const { skill } = defineProps<{
 const emit = defineEmits<{
     roll: [Skill];
 }>();
+
+function getSkillName(skill: Skill): string {
+    switch (skill.type) {
+        case SkillType.Basic: return t(`pf.skills.${skill.name.toLowerCase()}`);
+        case SkillType.Lore: return `${t('widgets.skills.lore')}: ${skill.name}`;
+    }
+
+    return skill.name;
+}
 </script>
 <style></style>

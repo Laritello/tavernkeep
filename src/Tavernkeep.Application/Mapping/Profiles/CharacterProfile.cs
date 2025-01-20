@@ -30,6 +30,8 @@ namespace Tavernkeep.Application.Mapping.Profiles
 
 			CreateMap<Ability, AbilityDto>();
 			CreateMap<Skill, SkillDto>();
+			CreateMap<Skill, SkillShortDto>();
+
 			CreateMap<SavingThrow, SavingThrowDto>();
 		}
 	}

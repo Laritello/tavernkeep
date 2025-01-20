@@ -56,88 +56,94 @@ namespace Tavernkepp.Application.Tests
 
 			character.Skills =
 			[
-				new("Acrobatics", Proficiency.Trained)
+				new("Acrobatics", Proficiency.Trained, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Dexterity"]
 				},
-				new("Arcana", Proficiency.Trained)
+				new("Arcana", Proficiency.Trained, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Intelligence"]
 				},
-				new("Athletics", Proficiency.Untrained)
+				new("Athletics", Proficiency.Untrained, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Strength"]
 				},
-				new("Crafting", Proficiency.Untrained)
+				new("Crafting", Proficiency.Untrained, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Intelligence"]
 				},
-				new("Deception", Proficiency.Trained)
+				new("Deception", Proficiency.Trained, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Charisma"]
 				},
-				new("Diplomacy", Proficiency.Expert)
+				new("Diplomacy", Proficiency.Expert, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Charisma"]
 				},
-				new("Intimidation", Proficiency.Trained)
+				new("Intimidation", Proficiency.Trained, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Charisma"]
 				},
-				new("Medicine", Proficiency.Untrained)
+				new("Medicine", Proficiency.Untrained, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Wisdom"]
 				},
-				new("Nature", Proficiency.Untrained)
+				new("Nature", Proficiency.Untrained, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Wisdom"]
 				},
-				new("Occultism", Proficiency.Expert)
+				new("Occultism", Proficiency.Expert, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Intelligence"]
 				},
-				new("Performance", Proficiency.Expert)
+				new("Performance", Proficiency.Expert, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Charisma"]
 				},
-				new("Religion", Proficiency.Trained)
+				new("Religion", Proficiency.Trained, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Wisdom"]
 				},
-				new("Society", Proficiency.Trained)
+				new("Society", Proficiency.Trained, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Intelligence"]
 				},
-				new("Stealth", Proficiency.Trained)
+				new("Stealth", Proficiency.Trained, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Dexterity"]
 				},
-				new("Survival", Proficiency.Untrained)
+				new("Survival", Proficiency.Untrained, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Wisdom"]
 				},
-				new("Thievery", Proficiency.Untrained)
+				new("Thievery", Proficiency.Untrained, SkillType.Basic)
 				{
 					Owner = character,
 					Ability = character.Abilities["Dexterity"]
 				},
 
-				new("Perception", Proficiency.Expert)
+				new("Academia", Proficiency.Trained, SkillType.Lore)
+				{
+					Owner = character,
+					Ability = character.Abilities["Intelligence"]
+				},
+
+				new("Perception", Proficiency.Expert, SkillType.Perception)
 				{
 					Owner = character,
 					Ability = character.Abilities["Wisdom"]

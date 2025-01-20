@@ -5,7 +5,7 @@
 		Basic,
 		Lore,
 		Custom,
-		Perception,
-		Armor
+		SavingThrow,
+		Perception
 	}
 }
