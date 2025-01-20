@@ -164,6 +164,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Property<int>("Proficiency")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Name");
 
                     b.HasIndex("AbilityName");

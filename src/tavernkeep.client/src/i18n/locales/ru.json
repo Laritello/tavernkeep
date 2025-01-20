@@ -24,7 +24,9 @@
     "widgets": {
         "attributes": {},
         "savingThrows": {},
-        "skills": {},
+        "skills": {
+            "lore": "Знание"
+        },
         "armor": {
             "bonus": "Бонус",
             "type": "Тип",

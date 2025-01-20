@@ -11,7 +11,7 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    [Migration("20250118190536_Initial")]
+    [Migration("20250120203837_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -165,6 +165,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Proficiency")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Name");

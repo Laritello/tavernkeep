@@ -137,6 +137,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Type = table.Column<int>(type: "INTEGER", nullable: false),
                     AbilityName = table.Column<string>(type: "TEXT", nullable: true),
                     Proficiency = table.Column<int>(type: "INTEGER", nullable: false)
                 },
