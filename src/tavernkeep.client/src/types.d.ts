@@ -7,6 +7,7 @@ declare module 'vue-router' {
         allowedRoles?: UserRole[];
         errorMessage?: string;
         layout?: 'AppLayout' | 'BlankLayout';
+        title?: string;
     }
 }
 
