@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header class="flex items-center bg-base-200 shadow-md">
+        <header class="sticky top-0 flex items-center bg-base-200 shadow-md">
             <button @click="goBack"
                     class="btn btn-circle btn-ghost btn-md">
                 <span class="mdi mdi-arrow-left text-xl"></span>
