@@ -20,7 +20,6 @@ using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
 using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Character.Requests;
-using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Server.Extensions;
 
 namespace Tavernkeep.Server.Controllers

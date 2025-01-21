@@ -23,7 +23,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHealth
 			character.Health.Current = request.Current;
 			character.Health.Temporary = request.Temporary;
 
-			await characterService.SaveCharacter(character,cancellationToken);
+			await characterService.SaveCharacter(character, cancellationToken);
 		}
 	}
 }

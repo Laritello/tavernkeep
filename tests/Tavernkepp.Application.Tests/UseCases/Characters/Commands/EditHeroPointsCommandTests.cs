@@ -1,10 +1,10 @@
 ﻿using Moq;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditHeroPoints;
+using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Exceptions;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {

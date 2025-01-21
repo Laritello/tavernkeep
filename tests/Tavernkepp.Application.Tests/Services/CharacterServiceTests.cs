@@ -1,18 +1,12 @@
 ﻿using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter;
+using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Application.Services;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
-using Tavernkeep.Application.Services;
 using Tavernkeep.Core.Specifications;
-using Tavernkeep.Application.Interfaces;
 
 namespace Tavernkepp.Application.Tests.Services
 {

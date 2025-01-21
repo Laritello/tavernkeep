@@ -24,7 +24,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest
 			*/
 			var constitution = character.Abilities["Constitution"];
 
-			character.Health.Current += request.RestWithoutComfort 
+			character.Health.Current += request.RestWithoutComfort
 				? constitution.Modifier * character.Level / 2
 				: constitution.Modifier * character.Level;
 
@@ -42,7 +42,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest
 			{
 				character.Conditions.RemoveAll(x => x.Name == "Fatigued");
 			}
-			
+
 			// Using to list call, because we might want to delete condition for the collection
 			// and this will lead to an error. Performance hit is negligible since rarely character has more than 2-3 conditions
 			// at once.

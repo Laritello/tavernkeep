@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHeroPoints
 {

@@ -1,6 +1,4 @@
-﻿using MediatR;
-using System.Threading;
-using Tavernkeep.Application.Interfaces;
+﻿using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
@@ -11,7 +9,7 @@ namespace Tavernkeep.Application.Services
 {
 	// TODO: Optimize and refactor!!!
 	public class CharacterService(
-		ICharacterRepository characterRepository, 
+		ICharacterRepository characterRepository,
 		IUserRepository userRepository,
 		INotificationService notificationService) : ICharacterService
 	{

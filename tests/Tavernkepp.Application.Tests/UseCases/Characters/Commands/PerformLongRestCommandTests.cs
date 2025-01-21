@@ -1,13 +1,11 @@
 ﻿using Moq;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
 using Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest;
-using Tavernkeep.Core.Specifications;
+using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
+using Tavernkeep.Core.Repositories;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
@@ -56,7 +54,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			character.Health.Current = currentHealth;
 
 			var calculatedNewHealth = currentHealth + level * ((constitutionScore - 10) / 2);
-			
+
 			var request = new PerformLongRestCommand(owner.Id, characterId, false, false);
 			var handler = new PerformLongRestCommandHandler(mockCharacterService.Object, mockConditionRepository.Object);
 
