@@ -11,7 +11,7 @@ const { localePrefix } = defineProps<{
 </script>
 
 <template>
-    <div class="flex flex-col w-full">
+    <div class="flex flex-col">
         <div class="flex flex-col">
             <ProficiencyListEditItem v-for="(item, index) in items" :key="item.name" :item="item" :locale-prefix="localePrefix" @updated="(newValue) => items[index] = newValue" />
         </div>
