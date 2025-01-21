@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Custom.Commands.AddCustomSkill;
 using Tavernkeep.Application.UseCases.Custom.Commands.DeleteCustomSkill;
+using Tavernkeep.Application.UseCases.Custom.Commands.EditCustomSkill;
 using Tavernkeep.Core.Contracts.Character.Requests;
 using Tavernkeep.Server.Extensions;
 
@@ -27,6 +28,20 @@ namespace Tavernkeep.Server.Controllers
 		public async Task AddCustomSkill([FromQuery] Guid characterId, [FromBody] AddCustomSkillRequest request)
 		{
 			await mediator.Send(new AddCustomSkillCommand(HttpContext.GetUserId(), characterId, request.Name, request.BaseAbility, request.Type));
+		}
+
+		/// <summary>
+		/// Edit custom skill.
+		/// </summary>
+		/// <param name="characterId">Character ID to target.</param>
+		/// <param name="oldName">Old skill name.</param>
+		/// <param name="newName">New skill name.</param>
+		/// <returns>Modified health.</returns>
+		[Authorize]
+		[HttpPut("skill")]
+		public async Task EditCustomSkill([FromQuery] Guid characterId, [FromQuery] string oldName, [FromQuery] string newName)
+		{
+			await mediator.Send(new EditCustomSkillCommand(HttpContext.GetUserId(), characterId, oldName, newName));
 		}
 
 		/// <summary>
