@@ -88,16 +88,16 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 name: "CharacterAncestry",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Health = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CharacterAncestry", x => x.Name);
+                    table.PrimaryKey("PK_CharacterAncestry", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CharacterAncestry_Character_OwnerId",
-                        column: x => x.OwnerId,
+                        name: "FK_CharacterAncestry_Character_Id",
+                        column: x => x.Id,
                         principalTable: "Character",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -107,16 +107,16 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 name: "CharacterClass",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
                     HealthPerLevel = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CharacterClass", x => x.Name);
+                    table.PrimaryKey("PK_CharacterClass", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CharacterClass_Character_OwnerId",
-                        column: x => x.OwnerId,
+                        name: "FK_CharacterClass_Character_Id",
+                        column: x => x.Id,
                         principalTable: "Character",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -210,18 +210,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 name: "IX_CharacterAbility_OwnerId",
                 table: "CharacterAbility",
                 column: "OwnerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CharacterAncestry_OwnerId",
-                table: "CharacterAncestry",
-                column: "OwnerId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CharacterClass_OwnerId",
-                table: "CharacterClass",
-                column: "OwnerId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CharacterSkill_AbilityName",

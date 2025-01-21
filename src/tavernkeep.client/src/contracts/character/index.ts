@@ -6,3 +6,5 @@ export type { Perception } from './Perception';
 export type { Armor } from './Armor';
 export type { SavingThrow } from './SavingThrow';
 export type { Speed } from './Speed';
+export type { Ancestry } from './Ancestry';
+export type { Class } from './Class';

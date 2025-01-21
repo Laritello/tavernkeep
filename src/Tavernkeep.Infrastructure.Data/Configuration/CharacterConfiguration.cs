@@ -17,13 +17,11 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
 
 			builder.HasOne(c => c.Class)
 				.WithOne(c => c.Owner)
-				.HasForeignKey<Class>("OwnerId")
-				.IsRequired();
+				.HasForeignKey<Class>(c => c.Id);
 
 			builder.HasOne(c => c.Ancestry)
 				.WithOne(a => a.Owner)
-				.HasForeignKey<Ancestry>("OwnerId")
-				.IsRequired();
+				.HasForeignKey<Ancestry>(a => a.Id);
 
 			builder.HasOne(c => c.Owner)
 				.WithMany(u => u.Characters)

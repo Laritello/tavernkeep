@@ -61,7 +61,7 @@ async function logout() {
 
                     <div class="flex flex-col flex-1 align-middle justify-center">
                         <div class="text-lg font-semibold leading-none">{{ character.name }}</div>
-                        <div class="text-sm font-semithin">{{ character.ancestry }} {{ character.class }}</div>
+                        <div class="text-sm font-semithin">{{ character.ancestry.name }} {{ character.class.name }}</div>
                     </div>
 
                     <div class="dropdown dropdown-left self-center">

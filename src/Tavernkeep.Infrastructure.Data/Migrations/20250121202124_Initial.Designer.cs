@@ -11,7 +11,7 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    [Migration("20250121195101_Initial")]
+    [Migration("20250121202124_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -126,40 +126,34 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Ancestry", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT")
-                        .HasColumnOrder(1);
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Health")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("OwnerId")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Name");
-
-                    b.HasIndex("OwnerId")
-                        .IsUnique();
+                    b.HasKey("Id");
 
                     b.ToTable("CharacterAncestry");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Class", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT")
-                        .HasColumnOrder(1);
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("HealthPerLevel")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("OwnerId")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Name");
-
-                    b.HasIndex("OwnerId")
-                        .IsUnique();
+                    b.HasKey("Id");
 
                     b.ToTable("CharacterClass");
                 });
@@ -765,7 +759,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Owner")
                         .WithOne("Ancestry")
-                        .HasForeignKey("Tavernkeep.Core.Entities.Pathfinder.Properties.Ancestry", "OwnerId")
+                        .HasForeignKey("Tavernkeep.Core.Entities.Pathfinder.Properties.Ancestry", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -776,7 +770,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Owner")
                         .WithOne("Class")
-                        .HasForeignKey("Tavernkeep.Core.Entities.Pathfinder.Properties.Class", "OwnerId")
+                        .HasForeignKey("Tavernkeep.Core.Entities.Pathfinder.Properties.Class", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

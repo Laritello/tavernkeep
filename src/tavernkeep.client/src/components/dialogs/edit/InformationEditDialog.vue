@@ -11,7 +11,7 @@ const { character, closeModal } = defineProps<{
     closeModal: DialogResultCallback<CharacterInformationEditDto>
 }>();
 
-const information = { name: character.name, ancestry: character.ancestry, class: character.class, level: character.level } as CharacterInformationEditDto;
+const information = { name: character.name, ancestry: character.ancestry.name, class: character.class.name, level: character.level } as CharacterInformationEditDto;
 
 function confirm() {
     const payload = information;
