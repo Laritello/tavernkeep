@@ -50,19 +50,14 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[TestCase(SpeedType.Swim, true, 50)]
 		public async Task EditSavingThrowsCommand_Success(SpeedType type, bool active, int baseValue)
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(owner);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditSpeedsCommand(owner.Id, characterId, new() { { type, new() { Active = active, Base = baseValue } } });
-			var handler = new EditSpeedsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditSpeedsCommandHandler(mockCharacterService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
@@ -76,19 +71,14 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[Test]
 		public async Task EditSavingThrowsCommand_Success_Master()
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(master);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditSpeedsCommand(master.Id, characterId, new() { { SpeedType.Fly, new() { Active = true, Base = 40 } } });
-			var handler = new EditSpeedsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditSpeedsCommandHandler(mockCharacterService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
@@ -97,67 +87,6 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				Assert.That(character.GetSpeed(SpeedType.Fly).Active, Is.EqualTo(true));
 				Assert.That(character.GetSpeed(SpeedType.Fly).Base, Is.EqualTo(40));
 			});
-		}
-
-		[Test]
-		public void EditSavingThrowsCommand_InitiatorNotFound()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
-			var request = new EditSpeedsCommand(owner.Id, characterId, new() { { SpeedType.Walk, new() { Active = true, Base = 40 } } });
-			var handler = new EditSpeedsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<BusinessLogicException>()
-				.With.Message.EqualTo("User with specified ID doesn't exist."));
-		}
-
-		[Test]
-		public void EditSavingThrowsCommand_CharacterNotFound()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(owner);
-
-			var request = new EditSpeedsCommand(owner.Id, characterId, new() { { SpeedType.Walk, new() { Active = true, Base = 40 } } });
-			var handler = new EditSpeedsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<BusinessLogicException>()
-				.With.Message.EqualTo("Character with specified ID doesn't exist."));
-		}
-
-		[Test]
-		public void EditSavingThrowsCommand_NotEnoughPermissions()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-			var initiatorId = Guid.NewGuid();
-
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(initiatorId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(new User(string.Empty, string.Empty, UserRole.Player));
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
-			var request = new EditSpeedsCommand(initiatorId, characterId, new() { { SpeedType.Walk, new() { Active = true, Base = 40 } } });
-			var handler = new EditSpeedsCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<InsufficientPermissionException>()
-				.With.Message.EqualTo("You do not have the necessary permissions to perform this operation."));
 		}
 	}
 }

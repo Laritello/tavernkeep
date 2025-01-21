@@ -45,122 +45,51 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[TestCase(10, 15, 10)]
 		public async Task ModifyHealthCommand_Success(int change, int newCurrent, int newTemporary)
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
+			var mockCharacterService = new Mock<ICharacterService>();
+
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
+				.ReturnsAsync(character);
 
 			character.Health.Temporary = 10;
 			character.Health.Max = 15;
 			character.Health.Current = 8;
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(owner);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
 			var request = new ModifyHealthCommand(owner.Id, characterId, change);
-			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new ModifyHealthCommandHandler(mockCharacterService.Object);
 
-			var response = await handler.Handle(request, CancellationToken.None);
+			await handler.Handle(request, CancellationToken.None);
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(response.Current, Is.EqualTo(newCurrent));
-				Assert.That(response.Temporary, Is.EqualTo(newTemporary));
+				Assert.That(character.Health.Current, Is.EqualTo(newCurrent));
+				Assert.That(character.Health.Temporary, Is.EqualTo(newTemporary));
 			});
 		}
 
 		[Test]
 		public async Task ModifyHealthCommand_Success_Master()
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
+			var mockCharacterService = new Mock<ICharacterService>();
+
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
+				.ReturnsAsync(character);
 
 			character.Health.Temporary = 4;
 			character.Health.Max = 10;
 			character.Health.Current = 10;
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(master);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
 			var request = new ModifyHealthCommand(master.Id, characterId, -10);
-			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new ModifyHealthCommandHandler(mockCharacterService.Object);
 
-			var response = await handler.Handle(request, CancellationToken.None);
+			await handler.Handle(request, CancellationToken.None);
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(response.Current, Is.EqualTo(4));
-				Assert.That(response.Temporary, Is.EqualTo(0));
+				Assert.That(character.Health.Current, Is.EqualTo(4));
+				Assert.That(character.Health.Temporary, Is.EqualTo(0));
 			});
-		}
-
-		[Test]
-		public void ModifyHealthCommand_InitiatorNotFound()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
-			var request = new ModifyHealthCommand(owner.Id, characterId, -10);
-			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<BusinessLogicException>()
-				.With.Message.EqualTo("User with specified ID doesn't exist."));
-		}
-
-		[Test]
-		public void ModifyHealthCommand_CharacterNotFound()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(owner);
-
-			var request = new ModifyHealthCommand(owner.Id, characterId, -10);
-			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<BusinessLogicException>()
-				.With.Message.EqualTo("Character with specified ID doesn't exist."));
-		}
-
-		[Test]
-		public void ModifyHealthCommand_NotEnoughPermissions()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-			var initiatorId = Guid.NewGuid();
-
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(initiatorId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(new User(string.Empty, string.Empty, UserRole.Player));
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
-			var request = new ModifyHealthCommand(initiatorId, characterId, -10);
-			var handler = new ModifyHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<InsufficientPermissionException>()
-				.With.Message.EqualTo("You do not have the necessary permissions to perform this operation."));
 		}
 	}
 }

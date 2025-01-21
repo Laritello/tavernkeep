@@ -4,9 +4,6 @@ using Tavernkeep.Application.UseCases.Characters.Commands.EditAbilities;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
@@ -40,20 +37,16 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[TestCase("Charisma")]
 		public async Task EditAbilitiesCommand_Success(string type)
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-			var newScore = 12;
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()!))
-				.ReturnsAsync(owner);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
+			var newScore = 12;
+
 			var request = new EditAbilitiesCommand(owner.Id, characterId, new() { { type, newScore } });
-			var handler = new EditAbilitiesCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditAbilitiesCommandHandler(mockCharacterService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
@@ -63,88 +56,20 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[Test]
 		public async Task EditAbilitiesCommand_Success_Master()
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-			var newScore = 12;
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(master);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
+			var newScore = 12;
+
 			var request = new EditAbilitiesCommand(master.Id, characterId, new() { { "Strength", newScore } });
-			var handler = new EditAbilitiesCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditAbilitiesCommandHandler(mockCharacterService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
 			Assert.That(character.Abilities["Strength"].Score, Is.EqualTo(newScore));
-		}
-
-		[Test]
-		public void EditAbilitiesCommand_InitiatorNotFound()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-			var newScore = 12;
-
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
-			var request = new EditAbilitiesCommand(owner.Id, characterId, new() { { "Strength", newScore } });
-			var handler = new EditAbilitiesCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<BusinessLogicException>()
-				.With.Message.EqualTo("User with specified ID doesn't exist."));
-		}
-
-		[Test]
-		public void EditAbilitiesCommand_CharacterNotFound()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-			var newScore = 12;
-
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(owner);
-
-			var request = new EditAbilitiesCommand(owner.Id, characterId, new() { { "Strength", newScore } });
-			var handler = new EditAbilitiesCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<BusinessLogicException>()
-				.With.Message.EqualTo("Character with specified ID doesn't exist."));
-		}
-
-		[Test]
-		public void EditAbilitiesCommand_NotEnoughPermissions()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-			var newScore = 12;
-			var initiatorId = Guid.NewGuid();
-
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(initiatorId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(new User(string.Empty, string.Empty, UserRole.Player));
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
-			var request = new EditAbilitiesCommand(initiatorId, characterId, new() { { "Strength", newScore } });
-			var handler = new EditAbilitiesCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<InsufficientPermissionException>()
-				.With.Message.EqualTo("You do not have the necessary permissions to perform this operation."));
 		}
 	}
 }

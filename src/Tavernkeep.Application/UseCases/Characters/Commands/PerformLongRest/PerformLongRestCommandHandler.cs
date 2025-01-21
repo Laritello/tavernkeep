@@ -1,29 +1,18 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest
 {
 	public class PerformLongRestCommandHandler(
-		IUserRepository userRepository,
-		ICharacterRepository characterRepository,
-		IConditionMetadataRepository conditionRepository,
-		INotificationService notificationService
+		ICharacterService characterService,
+		IConditionMetadataRepository conditionRepository
 		) : IRequestHandler<PerformLongRestCommand>
 	{
 		public async Task Handle(PerformLongRestCommand request, CancellationToken cancellationToken)
 		{
-			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
-				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
-
-			var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
-				?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
-
-			if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)
-				throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
+			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			/*
 			 * The character regains Hit Points equal to their Constitution modifier (minimum 1) multiplied by their level. 
@@ -69,9 +58,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest
 				}
 			}
 
-			characterRepository.Save(character);
-			await characterRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueCharacterNotificationAsync(character, cancellationToken);
+			await characterService.SaveCharacter(character, cancellationToken);
 		}
 	}
 }

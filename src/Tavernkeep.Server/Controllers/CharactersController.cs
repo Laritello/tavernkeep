@@ -136,12 +136,11 @@ namespace Tavernkeep.Server.Controllers
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The perception edit request.</param>
-		/// <returns>Changed perception.</returns>
 		[Authorize]
 		[HttpPatch("{characterId}/perception")]
-		public async Task<Skill> EditPerceptionAsync([FromRoute] Guid characterId, [FromBody] EditPerceptionRequest request)
+		public async Task EditPerceptionAsync([FromRoute] Guid characterId, [FromBody] EditPerceptionRequest request)
 		{
-			return await mediator.Send(new EditPerceptionCommand(HttpContext.GetUserId(), characterId, request.Proficiency));
+			await mediator.Send(new EditPerceptionCommand(HttpContext.GetUserId(), characterId, request.Proficiency));
 		}
 
 		/// <summary>
@@ -197,12 +196,11 @@ namespace Tavernkeep.Server.Controllers
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The health edit request.</param>
-		/// <returns>Changed health.</returns>
 		[Authorize]
 		[HttpPatch("{characterId}/health")]
-		public async Task<Health> EditHealthAsync([FromRoute] Guid characterId, [FromBody] EditHealthRequest request)
+		public async Task EditHealthAsync([FromRoute] Guid characterId, [FromBody] EditHealthRequest request)
 		{
-			return await mediator.Send(new EditHealthCommand(HttpContext.GetUserId(), characterId, request.Current, request.Max, request.Temporary));
+			await mediator.Send(new EditHealthCommand(HttpContext.GetUserId(), characterId, request.Current, request.Max, request.Temporary));
 		}
 
 		/// <summary>
@@ -210,12 +208,11 @@ namespace Tavernkeep.Server.Controllers
 		/// </summary>
 		/// <param name="characterId">Character ID to target.</param>
 		/// <param name="request">The health modify request.</param>
-		/// <returns>Modified health.</returns>
 		[Authorize]
 		[HttpPatch("{characterId}/health-modify")]
-		public async Task<Health> ModifyHealthAsync([FromRoute] Guid characterId, [FromBody] ModifyHealthRequest request)
+		public async Task ModifyHealthAsync([FromRoute] Guid characterId, [FromBody] ModifyHealthRequest request)
 		{
-			return await mediator.Send(new ModifyHealthCommand(HttpContext.GetUserId(), characterId, request.Change));
+			await mediator.Send(new ModifyHealthCommand(HttpContext.GetUserId(), characterId, request.Change));
 		}
 
 		/// <summary>

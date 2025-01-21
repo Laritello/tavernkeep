@@ -1,28 +1,18 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.EditConditions
 {
 	public class EditConditionsCommandHandler(
-		IUserRepository userRepository,
-		ICharacterRepository characterRepository,
-		IConditionMetadataRepository conditionRepository,
-		INotificationService notificationService
+		ICharacterService characterService,
+		IConditionMetadataRepository conditionRepository
 		) : IRequestHandler<EditConditionsCommand>
 	{
 		public async Task Handle(EditConditionsCommand request, CancellationToken cancellationToken)
 		{
-			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
-				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
-
-			var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
-				?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
-
-			if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)
-				throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
+			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			// TODO: Switch to dictionary under the hood
 			character.Conditions.RemoveAll(x => !request.Conditions.Any(c => c.Name == x.Name));
@@ -44,8 +34,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditConditions
 				}
 			}
 
-			await characterRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueCharacterNotificationAsync(character, cancellationToken);
+			await characterService.SaveCharacter(character, cancellationToken);
 		}
 	}
 }

@@ -42,21 +42,16 @@ namespace Tavernkepp.Application.Tests.UseCases.Custom.Commands
 		[TestCase("Lore", null, SkillType.Lore)]
 		public async Task AddCustomSkillCommand_Success(string name, string? baseAbility, SkillType type)
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
+			var mockCharacterService = new Mock<ICharacterService>();
+
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
+				.ReturnsAsync(character);
 
 			int skillsAmount = character.Skills.Count;
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()!))
-				.ReturnsAsync(owner);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
 			var request = new AddCustomSkillCommand(owner.Id, characterId, name, baseAbility, type);
-			var handler = new AddCustomSkillCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new AddCustomSkillCommandHandler(mockCharacterService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
@@ -72,22 +67,16 @@ namespace Tavernkepp.Application.Tests.UseCases.Custom.Commands
 		[TestCase("Lore", null, SkillType.Lore)]
 		public async Task AddCustomSkillCommand_Success_Master(string name, string? baseAbility, SkillType type)
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(master);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			int skillsAmount = character.Skills.Count;
 
 			var request = new AddCustomSkillCommand(master.Id, characterId, name, baseAbility, type);
-			var handler = new AddCustomSkillCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new AddCustomSkillCommandHandler(mockCharacterService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
@@ -99,89 +88,16 @@ namespace Tavernkepp.Application.Tests.UseCases.Custom.Commands
 		}
 
 		[Test]
-		public void AddCustomSkillCommand_InitiatorNotFound()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-
-			int skillsAmount = character.Skills.Count;
-
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
-			var request = new AddCustomSkillCommand(master.Id, characterId, "Custom", "Intelligence", SkillType.Custom);
-			var handler = new AddCustomSkillCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<BusinessLogicException>()
-				.With.Message.EqualTo("User with specified ID doesn't exist."));
-		}
-
-		[Test]
-		public void AddCustomSkillCommand_CharacterNotFound()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(owner);
-
-			var request = new AddCustomSkillCommand(owner.Id, characterId, "Custom", "Intelligence", SkillType.Custom);
-			var handler = new AddCustomSkillCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<BusinessLogicException>()
-				.With.Message.EqualTo("Character with specified ID doesn't exist."));
-		}
-
-		[Test]
-		public void AddCustomSkillCommand_NotEnoughPermissions()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-			var initiatorId = Guid.NewGuid();
-
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(initiatorId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(new User(string.Empty, string.Empty, UserRole.Player));
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
-			var request = new AddCustomSkillCommand(initiatorId, characterId, "Custom", "Intelligence", SkillType.Custom);
-			var handler = new AddCustomSkillCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<InsufficientPermissionException>()
-				.With.Message.EqualTo("You do not have the necessary permissions to perform this operation."));
-		}
-
-		[Test]
 		public void AddCustomSkillCommand_InvalidType()
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-			var initiatorId = Guid.NewGuid();
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(initiatorId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(new User(string.Empty, string.Empty, UserRole.Player));
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new AddCustomSkillCommand(owner.Id, characterId, "Custom", "Intelligence", SkillType.Basic);
-			var handler = new AddCustomSkillCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new AddCustomSkillCommandHandler(mockCharacterService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()
@@ -191,21 +107,14 @@ namespace Tavernkepp.Application.Tests.UseCases.Custom.Commands
 		[Test]
 		public void AddCustomSkillCommand_HasSameName()
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-			var initiatorId = Guid.NewGuid();
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()!))
-				.ReturnsAsync(owner);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new AddCustomSkillCommand(owner.Id, characterId, "Arcana", "Intelligence", SkillType.Custom);
-			var handler = new AddCustomSkillCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new AddCustomSkillCommandHandler(mockCharacterService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()
@@ -215,21 +124,14 @@ namespace Tavernkepp.Application.Tests.UseCases.Custom.Commands
 		[Test]
 		public void AddCustomSkillCommand_InvalidBaseAblity()
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-			var initiatorId = Guid.NewGuid();
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()!))
-				.ReturnsAsync(owner);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new AddCustomSkillCommand(owner.Id, characterId, "Custom", "Wrong", SkillType.Custom);
-			var handler = new AddCustomSkillCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new AddCustomSkillCommandHandler(mockCharacterService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()
