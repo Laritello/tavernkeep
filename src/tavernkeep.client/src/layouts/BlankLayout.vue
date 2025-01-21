@@ -1,12 +1,12 @@
 <template>
-    <div>
-        <header class="sticky top-0 flex items-center bg-base-200 shadow-md">
-            <button @click="goBack"
-                    class="btn btn-circle btn-ghost btn-md">
-                <span class="mdi mdi-arrow-left text-xl"></span>
-            </button>
-            <h1 class="mx-2 text-xl font-semibold">{{ title }}</h1>
-        </header>
+    <header class="sticky top-0 flex items-center bg-base-200 shadow-md">
+        <button @click="goBack"
+                class="btn btn-circle btn-ghost btn-md">
+            <span class="mdi mdi-arrow-left text-xl"></span>
+        </button>
+        <h1 class="mx-2 text-xl font-semibold">{{ title }}</h1>
+    </header>
+    <div class="container mx-auto p-4">
         <slot />
     </div>
 </template>
