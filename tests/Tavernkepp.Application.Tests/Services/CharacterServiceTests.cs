@@ -15,14 +15,12 @@ namespace Tavernkepp.Application.Tests.Services
 		private readonly Guid characterId = Guid.NewGuid();
 
 		private readonly User owner;
-		private readonly User master;
 
 		private Character character = default!;
 
 		public CharacterServiceTests()
 		{
 			owner = new User("owner", "owner", UserRole.Player) { Id = Guid.NewGuid() };
-			master = new User("master", "master", UserRole.Master) { Id = Guid.NewGuid() };
 		}
 
 		[SetUp]
