@@ -12,6 +12,7 @@ import ChatPage from './pages/mobile/ChatPage.vue';
 import CombatPage from '@/pages/mobile/CombatPage.vue';
 import SettingsPage from './pages/mobile/SettingsPage.vue';
 import CreateCharacterPage from '@/pages/mobile/CreateCharacterPage.vue';
+import SkillsEditPage from '@/pages/mobile/edit/SkillsEditPage.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -60,6 +61,15 @@ const routes: RouteRecordRaw[] = [
             layout: 'BlankLayout',
             protected: true,
             title: 'Create Character'
+        },
+    },
+    {
+        path: '/character/skills/edit',
+        component: SkillsEditPage,
+        meta: {
+            layout: 'BlankLayout',
+            protected: true,
+            title: 'Edit character skills'
         },
     },
     {
