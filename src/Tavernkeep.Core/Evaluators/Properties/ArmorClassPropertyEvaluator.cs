@@ -1,5 +1,4 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Contracts.Interfaces;
+﻿using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Evaluators.Modifiers;

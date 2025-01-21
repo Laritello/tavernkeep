@@ -27,11 +27,11 @@ namespace Tavernkeep.Application.Services
 	{
 		private readonly Channel<object> _queue = Channel.CreateUnbounded<object>();
 
-		public ValueTask QueueMessageAsync(Message message, CancellationToken cancellationToken = default) 
+		public ValueTask QueueMessageAsync(Message message, CancellationToken cancellationToken = default)
 			=> _queue.Writer.WriteAsync(message, cancellationToken);
-		public ValueTask QueueDeleteMessageAsync(Message message, CancellationToken cancellationToken = default) 
+		public ValueTask QueueDeleteMessageAsync(Message message, CancellationToken cancellationToken = default)
 			=> _queue.Writer.WriteAsync(new MessageDeletedDto() { Id = message.Id }, cancellationToken);
-		public ValueTask QueueCharacterNotificationAsync(Character notification, CancellationToken cancellationToken = default) 
+		public ValueTask QueueCharacterNotificationAsync(Character notification, CancellationToken cancellationToken = default)
 			=> _queue.Writer.WriteAsync(notification, cancellationToken);
 
 		protected override async Task ExecuteAsync(CancellationToken cancellationToken)
