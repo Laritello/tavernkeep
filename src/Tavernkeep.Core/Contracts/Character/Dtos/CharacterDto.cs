@@ -9,8 +9,9 @@ namespace Tavernkeep.Core.Contracts.Character.Dtos
 		public Guid Id { get; set; }
 		public Guid OwnerId { get; set; }
 		public string Name { get; set; } = default!;
-		public string Class { get; set; } = default!;
-		public string Ancestry { get; set; } = default!;
+
+		public AncestryDto Ancestry { get; set; } = default!;
+		public ClassDto Class { get; set; } = default!;
 
 		public int HeroPoints { get; set; } = 1;
 

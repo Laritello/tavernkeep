@@ -48,11 +48,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Class = table.Column<string>(type: "TEXT", nullable: false),
-                    Ancestry = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false, defaultValue: "Unknown character"),
                     HeroPoints = table.Column<int>(type: "INTEGER", nullable: false),
-                    Level = table.Column<int>(type: "INTEGER", nullable: false),
+                    Level = table.Column<int>(type: "INTEGER", nullable: false, defaultValue: 1),
                     Armor = table.Column<string>(type: "TEXT", nullable: false),
                     Burrow = table.Column<string>(type: "TEXT", nullable: false),
                     Climb = table.Column<string>(type: "TEXT", nullable: false),
@@ -80,6 +78,44 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     table.PrimaryKey("PK_CharacterAbility", x => x.Name);
                     table.ForeignKey(
                         name: "FK_CharacterAbility_Character_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "Character",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CharacterAncestry",
+                columns: table => new
+                {
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Health = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterAncestry", x => x.Name);
+                    table.ForeignKey(
+                        name: "FK_CharacterAncestry_Character_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "Character",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CharacterClass",
+                columns: table => new
+                {
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    HealthPerLevel = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterClass", x => x.Name);
+                    table.ForeignKey(
+                        name: "FK_CharacterClass_Character_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "Character",
                         principalColumn: "Id",
@@ -176,6 +212,18 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CharacterAncestry_OwnerId",
+                table: "CharacterAncestry",
+                column: "OwnerId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CharacterClass_OwnerId",
+                table: "CharacterClass",
+                column: "OwnerId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CharacterSkill_AbilityName",
                 table: "CharacterSkill",
                 column: "AbilityName");
@@ -221,6 +269,12 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Character_Users_OwnerId",
                 table: "Character");
+
+            migrationBuilder.DropTable(
+                name: "CharacterAncestry");
+
+            migrationBuilder.DropTable(
+                name: "CharacterClass");
 
             migrationBuilder.DropTable(
                 name: "CharacterSkill");

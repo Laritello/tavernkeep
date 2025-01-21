@@ -30,9 +30,13 @@ namespace Tavernkeep.Application.Mapping.Profiles
 						}));
 
 			CreateMap<Ability, AbilityDto>();
+
 			CreateMap<Skill, SkillDto>();
 			CreateMap<Skill, SkillShortDto>();
 			CreateMap<Skill, SavingThrowDto>();
+
+			CreateMap<Ancestry, AncestryDto>();
+			CreateMap<Class, ClassDto>();
 		}
 	}
 }

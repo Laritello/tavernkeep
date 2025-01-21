@@ -1,19 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-using Tavernkeep.Core.Interfaces;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
-	[Table("CharacterAbility")]
-	public class Ability : INamedProperty
+	[Table("CharacterClass")]
+	public class Class
 	{
 		#region Constructors
 
-		public Ability(string name, int score)
+		public Class(string name, int healthPerLevel)
 		{
 			Name = name;
-			Score = score;
+			HealthPerLevel = healthPerLevel;
 		}
 
 		#endregion
@@ -25,8 +24,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		[Key, Column(Order = 1)]
 		public string Name { get; set; }
-		public int Score { get; set; }
-		public int Modifier => (Score - 10) / 2;
+		public int HealthPerLevel { get; set; }
 
 		#endregion
 	}

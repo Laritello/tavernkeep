@@ -10,8 +10,8 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditInformation
 			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			character.Name = request.Information.Name;
-			character.Ancestry = request.Information.Ancestry;
-			character.Class = request.Information.Class;
+			character.Ancestry.Name = request.Information.Ancestry;
+			character.Class.Name = request.Information.Class;
 			character.Level = request.Information.Level;
 
 			await characterService.SaveCharacter(character, cancellationToken);

@@ -31,7 +31,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 			Heavy = heavy;
 		}
 
-		[JsonIgnore]
 		public Proficiency this[ArmorType type]
 		{
 			get

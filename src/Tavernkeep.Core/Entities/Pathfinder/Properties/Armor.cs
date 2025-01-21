@@ -30,7 +30,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		#region Properties
 
-		[JsonIgnore]
 		public Character Owner { get; set; } = default!;
 		public ArmorProficiencies Proficiencies { get; set; }
 		public EquippedArmor Equipped { get; set; }

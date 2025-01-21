@@ -76,9 +76,17 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 					Id = Guid.NewGuid(),
 					Owner = context.Set<User>().First(),
 					Name = "Roland Engreen",
-					Ancestry = "Human",
-					Class = "Psychic",
 					Level = 6,
+				};
+
+				character.Ancestry = new("Half-Elf", 6)
+				{
+					Owner = character,
+				};
+
+				character.Class = new("Psychic", 8)
+				{
+					Owner = character
 				};
 
 				character.Health.Max = 56;
