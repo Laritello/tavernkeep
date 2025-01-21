@@ -183,6 +183,28 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
+    async createCustomSkill(characterId: string, type: string, baseAbility: string, name: string ): Promise<void> {
+        const response = await this.client.post(`custom/skill`, {
+            type,
+            baseAbility,
+            name,
+        }, {
+            params: {
+                characterId,
+            }
+        });
+
+        return getPayloadOrThrow(response);
+    }
+
+    async createBasicSkill(characterId: string, baseAbility: string, name: string ): Promise<void> {
+        return this.createCustomSkill(characterId, 'Basic', baseAbility, name);
+    }
+
+    async createLoreSkill(characterId: string, name: string ): Promise<void> {
+        return this.createCustomSkill(characterId, 'Lore', 'Intelligence', name);
+    }
+
     async editSavingThrows(characterId: string, proficiencies: Record<string, Proficiency>): Promise<void> {
         const response = await this.client.patch(`characters/${characterId}/saving-throws`, {
             proficiencies: proficiencies,

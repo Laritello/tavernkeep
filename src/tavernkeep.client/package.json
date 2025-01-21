@@ -12,6 +12,7 @@
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
     },
     "dependencies": {
+        "@douxcode/vue-spring-bottom-sheet": "^1.2.1",
         "@imengyu/vue3-context-menu": "^1.4.4",
         "@intlify/unplugin-vue-i18n": "^6.0.3",
         "@mdi/font": "^7.4.47",
