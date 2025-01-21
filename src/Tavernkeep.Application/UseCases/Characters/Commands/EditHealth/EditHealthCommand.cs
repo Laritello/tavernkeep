@@ -1,9 +1,8 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHealth
 {
-	public class EditHealthCommand(Guid initiatorId, Guid characterId, int current, int max, int temporary) : IRequest<Health>
+	public class EditHealthCommand(Guid initiatorId, Guid characterId, int current, int max, int temporary) : IRequest
 	{
 		public Guid InitiatorId { get; set; } = initiatorId;
 		public Guid CharacterId { get; set; } = characterId;

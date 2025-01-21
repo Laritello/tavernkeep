@@ -4,9 +4,6 @@ using Tavernkeep.Application.UseCases.Characters.Commands.EditPerception;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
@@ -35,106 +32,35 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[Test]
 		public async Task EditPerceptionCommand_Success()
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(owner);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditPerceptionCommand(owner.Id, characterId, proficiency);
-			var handler = new EditPerceptionCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditPerceptionCommandHandler(mockCharacterService.Object);
 
-			var response = await handler.Handle(request, CancellationToken.None);
+			await handler.Handle(request, CancellationToken.None);
 
-			Assert.That(response.Proficiency, Is.EqualTo(proficiency));
+			Assert.That(character.Skills["Perception"].Proficiency, Is.EqualTo(proficiency));
 		}
 
 		[Test]
 		public async Task EditPerceptionCommand_Success_Master()
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(master);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditPerceptionCommand(master.Id, characterId, proficiency);
-			var handler = new EditPerceptionCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditPerceptionCommandHandler(mockCharacterService.Object);
 
-			var response = await handler.Handle(request, CancellationToken.None);
+			await handler.Handle(request, CancellationToken.None);
 
-			Assert.That(response.Proficiency, Is.EqualTo(proficiency));
-		}
-
-		[Test]
-		public void EditPerceptionCommand_InitiatorNotFound()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
-			var request = new EditPerceptionCommand(owner.Id, characterId, proficiency);
-			var handler = new EditPerceptionCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<BusinessLogicException>()
-				.With.Message.EqualTo("User with specified ID doesn't exist."));
-		}
-
-		[Test]
-		public void EditPerceptionCommand_CharacterNotFound()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(owner);
-
-			var request = new EditPerceptionCommand(owner.Id, characterId, proficiency);
-			var handler = new EditPerceptionCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<BusinessLogicException>()
-				.With.Message.EqualTo("Character with specified ID doesn't exist."));
-		}
-
-		[Test]
-		public void EditPerceptionCommand_NotEnoughPermissions()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-			var initiatorId = Guid.NewGuid();
-
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(initiatorId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(new User(string.Empty, string.Empty, UserRole.Player));
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
-			var request = new EditPerceptionCommand(initiatorId, characterId, proficiency);
-			var handler = new EditPerceptionCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<InsufficientPermissionException>()
-				.With.Message.EqualTo("You do not have the necessary permissions to perform this operation."));
+			Assert.That(character.Skills["Perception"].Proficiency, Is.EqualTo(proficiency));
 		}
 	}
 }

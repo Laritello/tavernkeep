@@ -5,8 +5,6 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {
@@ -43,92 +41,58 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[Test]
 		public async Task EditHealthCommand_Success()
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(owner);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, maxHealth, tempHealth);
-			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditHealthCommandHandler(mockCharacterService.Object);
 
-			var response = await handler.Handle(request, CancellationToken.None);
+			await handler.Handle(request, CancellationToken.None);
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(response.Current, Is.EqualTo(currentHealth));
-				Assert.That(response.Max, Is.EqualTo(maxHealth));
-				Assert.That(response.Temporary, Is.EqualTo(tempHealth));
+				Assert.That(character.Health.Current, Is.EqualTo(currentHealth));
+				Assert.That(character.Health.Max, Is.EqualTo(maxHealth));
+				Assert.That(character.Health.Temporary, Is.EqualTo(tempHealth));
 			});
 		}
 
 		[Test]
 		public async Task EditHealthCommand_Success_Master()
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(master.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(master);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditHealthCommand(master.Id, characterId, currentHealth, maxHealth, tempHealth);
-			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditHealthCommandHandler(mockCharacterService.Object);
 
-			var response = await handler.Handle(request, CancellationToken.None);
+			await handler.Handle(request, CancellationToken.None);
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(response.Current, Is.EqualTo(currentHealth));
-				Assert.That(response.Max, Is.EqualTo(maxHealth));
-				Assert.That(response.Temporary, Is.EqualTo(tempHealth));
+				Assert.That(character.Health.Current, Is.EqualTo(currentHealth));
+				Assert.That(character.Health.Max, Is.EqualTo(maxHealth));
+				Assert.That(character.Health.Temporary, Is.EqualTo(tempHealth));
 			});
-		}
-
-		[Test]
-		public void EditHealthCommand_InitiatorNotFound()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
-			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, maxHealth, tempHealth);
-			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<BusinessLogicException>()
-				.With.Message.EqualTo("User with specified ID doesn't exist."));
 		}
 
 		[Test]
 		public void EditHealthCommand_NegativeMaxHealth()
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(owner);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, -1, tempHealth);
-			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditHealthCommandHandler(mockCharacterService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()
@@ -138,19 +102,14 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[Test]
 		public void EditHealthCommand_NegativeCurrentHealth()
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(owner);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditHealthCommand(owner.Id, characterId, -1, maxHealth, tempHealth);
-			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditHealthCommandHandler(mockCharacterService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()
@@ -160,65 +119,18 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[Test]
 		public void EditHealthCommand_NegativeTemporaryHealth()
 		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
+			var mockCharacterService = new Mock<ICharacterService>();
 
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(owner);
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
+			mockCharacterService
+				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, maxHealth, -1);
-			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
+			var handler = new EditHealthCommandHandler(mockCharacterService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()
 				.With.Message.EqualTo($"{nameof(request.Temporary)} can't be below zero."));
-		}
-
-		[Test]
-		public void EditHealthCommand_CharacterNotFound()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(owner.Id, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(owner);
-
-			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, maxHealth, tempHealth);
-			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<BusinessLogicException>()
-				.With.Message.EqualTo("Character with specified ID doesn't exist."));
-		}
-
-		[Test]
-		public void EditHealthCommand_NotEnoughPermissions()
-		{
-			var mockUserRepository = new Mock<IUserRepository>();
-			var mockCharacterRepository = new Mock<ICharacterRepository>();
-			var mockNotificationService = new Mock<INotificationService>();
-			var initiatorId = Guid.NewGuid();
-
-			mockUserRepository
-				.Setup(repo => repo.FindAsync(initiatorId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
-				.ReturnsAsync(new User(string.Empty, string.Empty, UserRole.Player));
-			mockCharacterRepository
-				.Setup(repo => repo.GetFullCharacterAsync(characterId, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
-			var request = new EditHealthCommand(initiatorId, characterId, currentHealth, maxHealth, tempHealth);
-			var handler = new EditHealthCommandHandler(mockUserRepository.Object, mockCharacterRepository.Object, mockNotificationService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<InsufficientPermissionException>()
-				.With.Message.EqualTo("You do not have the necessary permissions to perform this operation."));
 		}
 	}
 }

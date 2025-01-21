@@ -1,37 +1,18 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder.Properties;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.EditPerception
 {
-	public class EditPerceptionCommandHandler(
-		IUserRepository userRepository,
-		ICharacterRepository characterRepository,
-		INotificationService notificationService
-		) : IRequestHandler<EditPerceptionCommand, Skill>
+	public class EditPerceptionCommandHandler(ICharacterService characterService) : IRequestHandler<EditPerceptionCommand>
 	{
-		public async Task<Skill> Handle(EditPerceptionCommand request, CancellationToken cancellationToken)
+		public async Task Handle(EditPerceptionCommand request, CancellationToken cancellationToken)
 		{
-			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
-				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
-
-			var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
-				?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
-
-			if (character.Owner.Id != request.InitiatorId && initiator.Role != UserRole.Master)
-				throw new InsufficientPermissionException("You do not have the necessary permissions to perform this operation.");
+			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			var perception = character.Skills["Perception"];
 			perception.Proficiency = request.Proficiency;
 
-			characterRepository.Save(character);
-			await characterRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueCharacterNotificationAsync(character, cancellationToken);
-
-			return perception;
+			await characterService.SaveCharacter(character, cancellationToken);
 		}
 	}
 }
