@@ -23,10 +23,6 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
 				.WithOne(s => s.Owner)
 				.IsRequired();
 
-			builder.HasMany(c => c.SavingThrows)
-				.WithOne(s => s.Owner)
-				.IsRequired();
-
 			builder.Property(c => c.Name).IsRequired();
 
 			builder.OwnsJson(c => c.Health);

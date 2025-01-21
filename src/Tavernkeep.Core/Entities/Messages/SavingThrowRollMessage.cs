@@ -12,7 +12,7 @@ namespace Tavernkeep.Core.Entities.Messages
 
 		#region Properties
 
-		public SavingThrowSnapshot SavingThrow { get; set; } = default!;
+		public SkillSnapshot SavingThrow { get; set; } = default!;
 
 		#endregion
 	}

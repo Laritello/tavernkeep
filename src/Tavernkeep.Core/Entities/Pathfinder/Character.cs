@@ -16,7 +16,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		{
 			Abilities = [];
 			Skills = [];
-			SavingThrows = [];
 
 			Walk = new(this, SpeedType.Walk, true);
 			Burrow = new(this, SpeedType.Burrow);
@@ -49,7 +48,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 
 		public EntityCollection<Ability> Abilities { get; set; }
 		public EntityCollection<Skill> Skills { get; set; }
-		public EntityCollection<SavingThrow> SavingThrows { get; set; }
 
 		public Speed Walk { get; set; }
 		public Speed Burrow { get; set; }

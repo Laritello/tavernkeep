@@ -25,7 +25,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSavingThrows
 
 			foreach (var key in request.Proficiencies.Keys)
 			{
-				var savingThrow = character.SavingThrows[key];
+				var savingThrow = character.Skills[key];
 				savingThrow.Proficiency = request.Proficiencies[key];
 			}
 

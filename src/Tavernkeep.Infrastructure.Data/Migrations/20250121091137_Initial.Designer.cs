@@ -11,7 +11,7 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    [Migration("20250120203837_Initial")]
+    [Migration("20250121091137_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -126,30 +126,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("CharacterAbility");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.SavingThrow", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT")
-                        .HasColumnOrder(1);
-
-                    b.Property<string>("AbilityName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Proficiency")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Name");
-
-                    b.HasIndex("AbilityName");
-
-                    b.HasIndex("OwnerId");
-
-                    b.ToTable("CharacterSavingThrow");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", b =>
@@ -749,23 +725,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.SavingThrow", b =>
-                {
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", "Ability")
-                        .WithMany()
-                        .HasForeignKey("AbilityName");
-
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Owner")
-                        .WithMany("SavingThrows")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ability");
-
-                    b.Navigation("Owner");
-                });
-
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", b =>
                 {
                     b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", "Ability")
@@ -856,7 +815,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.SavingThrowRollMessage", b =>
                 {
-                    b.OwnsOne("Tavernkeep.Core.Entities.Snapshots.SavingThrowSnapshot", "SavingThrow", b1 =>
+                    b.OwnsOne("Tavernkeep.Core.Entities.Snapshots.SkillSnapshot", "SavingThrow", b1 =>
                         {
                             b1.Property<Guid>("SavingThrowRollMessageId")
                                 .HasColumnType("TEXT");
@@ -919,8 +878,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Character", b =>
                 {
                     b.Navigation("Abilities");
-
-                    b.Navigation("SavingThrows");
 
                     b.Navigation("Skills");
                 });

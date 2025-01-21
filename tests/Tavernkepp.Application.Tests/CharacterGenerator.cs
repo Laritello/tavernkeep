@@ -35,25 +35,6 @@ namespace Tavernkepp.Application.Tests
 				new("Charisma", 19) { Owner = character }
 			];
 
-			character.SavingThrows =
-			[
-				new("Fortitude", Proficiency.Trained)
-				{
-					Owner = character,
-					Ability = character.Abilities["Constitution"]
-				},
-				new("Reflex", Proficiency.Expert)
-				{
-					Owner = character,
-					Ability = character.Abilities["Dexterity"]
-				},
-				new("Will", Proficiency.Expert)
-				{
-					Owner = character,
-					Ability = character.Abilities["Wisdom"]
-				}
-			];
-
 			character.Skills =
 			[
 				new("Acrobatics", Proficiency.Trained, SkillType.Basic)
@@ -141,6 +122,22 @@ namespace Tavernkepp.Application.Tests
 				{
 					Owner = character,
 					Ability = character.Abilities["Intelligence"]
+				},
+
+				new("Fortitude", Proficiency.Trained, SkillType.SavingThrow)
+				{
+					Owner = character,
+					Ability = character.Abilities["Constitution"]
+				},
+				new("Reflex", Proficiency.Expert, SkillType.SavingThrow)
+				{
+					Owner = character,
+					Ability = character.Abilities["Dexterity"]
+				},
+				new("Will", Proficiency.Expert, SkillType.SavingThrow)
+				{
+					Owner = character,
+					Ability = character.Abilities["Wisdom"]
 				},
 
 				new("Perception", Proficiency.Expert, SkillType.Perception)

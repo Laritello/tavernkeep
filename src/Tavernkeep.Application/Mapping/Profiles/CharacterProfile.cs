@@ -15,6 +15,7 @@ namespace Tavernkeep.Application.Mapping.Profiles
 		{
 			CreateMap<Character, CharacterDto>()
 				.ForMember(dest => dest.Skills, opt => opt.MapFrom(src => src.Skills.Where(x => x.Type == SkillType.Basic || x.Type == SkillType.Lore || x.Type == SkillType.Custom)))
+				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Skills.Where(x => x.Type == SkillType.SavingThrow)))
 				.ForMember(dest => dest.Perception, opt => opt.MapFrom(src => src.Skills["Perception"]))
 				.ForMember(
 					dest => dest.Speeds,
@@ -31,8 +32,7 @@ namespace Tavernkeep.Application.Mapping.Profiles
 			CreateMap<Ability, AbilityDto>();
 			CreateMap<Skill, SkillDto>();
 			CreateMap<Skill, SkillShortDto>();
-
-			CreateMap<SavingThrow, SavingThrowDto>();
+			CreateMap<Skill, SavingThrowDto>();
 		}
 	}
 }

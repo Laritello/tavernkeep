@@ -107,31 +107,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CharacterSavingThrow",
-                columns: table => new
-                {
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    AbilityName = table.Column<string>(type: "TEXT", nullable: true),
-                    Proficiency = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CharacterSavingThrow", x => x.Name);
-                    table.ForeignKey(
-                        name: "FK_CharacterSavingThrow_CharacterAbility_AbilityName",
-                        column: x => x.AbilityName,
-                        principalTable: "CharacterAbility",
-                        principalColumn: "Name");
-                    table.ForeignKey(
-                        name: "FK_CharacterSavingThrow_Character_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "Character",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CharacterSkill",
                 columns: table => new
                 {
@@ -201,16 +176,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CharacterSavingThrow_AbilityName",
-                table: "CharacterSavingThrow",
-                column: "AbilityName");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CharacterSavingThrow_OwnerId",
-                table: "CharacterSavingThrow",
-                column: "OwnerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CharacterSkill_AbilityName",
                 table: "CharacterSkill",
                 column: "AbilityName");
@@ -256,9 +221,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Character_Users_OwnerId",
                 table: "Character");
-
-            migrationBuilder.DropTable(
-                name: "CharacterSavingThrow");
 
             migrationBuilder.DropTable(
                 name: "CharacterSkill");

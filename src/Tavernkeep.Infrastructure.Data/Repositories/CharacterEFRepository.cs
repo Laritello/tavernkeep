@@ -14,7 +14,6 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 				.Include(x => x.Owner)
 				.Include(x => x.Abilities)
 				.Include(x => x.Skills).ThenInclude(x => x.Ability)
-				.Include(x => x.SavingThrows).ThenInclude(x => x.Ability)
 				.ToListAsync(cancellationToken);
 		}
 		public async Task<Character?> GetFullCharacterAsync(Guid id, CancellationToken cancellationToken = default)
@@ -23,7 +22,6 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 				.Include(x => x.Owner)
 				.Include(x => x.Abilities)
 				.Include(x => x.Skills).ThenInclude(x => x.Ability)
-				.Include(x => x.SavingThrows).ThenInclude(x => x.Ability)
 				.FirstOrDefaultAsync(cancellationToken);
 		}
 	}

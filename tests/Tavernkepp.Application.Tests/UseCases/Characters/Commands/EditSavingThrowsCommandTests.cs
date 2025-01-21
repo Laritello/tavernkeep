@@ -54,7 +54,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 
 			await handler.Handle(request, CancellationToken.None);
 
-			Assert.That(character.SavingThrows[type].Proficiency, Is.EqualTo(proficiency));
+			Assert.That(character.Skills[type].Proficiency, Is.EqualTo(proficiency));
 		}
 
 		[Test]
@@ -76,7 +76,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 
 			await handler.Handle(request, CancellationToken.None);
 
-			Assert.That(character.SavingThrows["Fortitude"].Proficiency, Is.EqualTo(proficiency));
+			Assert.That(character.Skills["Fortitude"].Proficiency, Is.EqualTo(proficiency));
 		}
 
 		[Test]
