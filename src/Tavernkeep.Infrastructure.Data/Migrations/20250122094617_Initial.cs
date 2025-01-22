@@ -56,7 +56,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Climb = table.Column<string>(type: "TEXT", nullable: false),
                     Conditions = table.Column<string>(type: "TEXT", nullable: true),
                     Fly = table.Column<string>(type: "TEXT", nullable: false),
-                    Health = table.Column<string>(type: "TEXT", nullable: false),
                     Swim = table.Column<string>(type: "TEXT", nullable: false),
                     Walk = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -116,6 +115,25 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     table.PrimaryKey("PK_CharacterClass", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CharacterClass_Character_Id",
+                        column: x => x.Id,
+                        principalTable: "Character",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CharacterHealth",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Current = table.Column<int>(type: "INTEGER", nullable: false),
+                    Temporary = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterHealth", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CharacterHealth_Character_Id",
                         column: x => x.Id,
                         principalTable: "Character",
                         principalColumn: "Id",
@@ -263,6 +281,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "CharacterClass");
+
+            migrationBuilder.DropTable(
+                name: "CharacterHealth");
 
             migrationBuilder.DropTable(
                 name: "CharacterSkill");

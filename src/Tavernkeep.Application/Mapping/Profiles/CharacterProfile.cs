@@ -35,6 +35,8 @@ namespace Tavernkeep.Application.Mapping.Profiles
 			CreateMap<Skill, SkillShortDto>();
 			CreateMap<Skill, SavingThrowDto>();
 
+			CreateMap<Health, HealthDto>();
+
 			CreateMap<Ancestry, AncestryDto>();
 			CreateMap<Class, ClassDto>();
 		}

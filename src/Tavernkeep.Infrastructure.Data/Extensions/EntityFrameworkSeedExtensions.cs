@@ -89,10 +89,6 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 					Owner = character
 				};
 
-				character.Health.Max = 56;
-				character.Health.Current = 13;
-				character.Health.Temporary = 5;
-
 				character.Abilities =
 				[
 					new("Strength", 10) { Owner = character },
@@ -208,6 +204,13 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 						Ability = character.Abilities["Wisdom"]
 					},
 				];
+
+				character.Health = new()
+				{
+					Owner = character,
+					Current = 13,
+					Temporary = 5
+				};
 
 				character.Walk.Base = 30;
 

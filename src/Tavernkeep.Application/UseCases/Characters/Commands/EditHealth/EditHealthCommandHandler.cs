@@ -19,7 +19,6 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHealth
 
 			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
 
-			character.Health.Max = request.Max;
 			character.Health.Current = request.Current;
 			character.Health.Temporary = request.Temporary;
 
