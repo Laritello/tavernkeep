@@ -25,12 +25,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[SetUp]
 		public void SetUp()
 		{
-			character = new Character()
-			{
-				Id = characterId,
-				Name = "Demo",
-				Owner = owner,
-			};
+			character = CharacterGenerator.Generate(characterId, owner);
 		}
 
 		[Test]
@@ -39,7 +34,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[TestCase(-12, 6, 0)]
 		[TestCase(0, 8, 10)]
 		[TestCase(2, 10, 10)]
-		[TestCase(10, 15, 10)]
+		[TestCase(10, 18, 10)]
 		public async Task ModifyHealthCommand_Success(int change, int newCurrent, int newTemporary)
 		{
 			var mockCharacterService = new Mock<ICharacterService>();
@@ -49,7 +44,6 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.ReturnsAsync(character);
 
 			character.Health.Temporary = 10;
-			character.Health.Max = 15;
 			character.Health.Current = 8;
 
 			var request = new ModifyHealthCommand(owner.Id, characterId, change);
@@ -74,7 +68,6 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.ReturnsAsync(character);
 
 			character.Health.Temporary = 4;
-			character.Health.Max = 10;
 			character.Health.Current = 10;
 
 			var request = new ModifyHealthCommand(master.Id, characterId, -10);

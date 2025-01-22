@@ -13,7 +13,6 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		private readonly Guid characterId = Guid.NewGuid();
 
 		private readonly int currentHealth = 0;
-		private readonly int maxHealth = 100;
 		private readonly int tempHealth = 15;
 
 		private readonly User owner;
@@ -30,12 +29,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		[SetUp]
 		public void SetUp()
 		{
-			character = new Character()
-			{
-				Id = characterId,
-				Name = "Demo",
-				Owner = owner
-			};
+			character = CharacterGenerator.Generate(characterId, owner);
 		}
 
 		[Test]
@@ -47,7 +41,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, maxHealth, tempHealth);
+			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, tempHealth);
 			var handler = new EditHealthCommandHandler(mockCharacterService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
@@ -55,7 +49,6 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			Assert.Multiple(() =>
 			{
 				Assert.That(character.Health.Current, Is.EqualTo(currentHealth));
-				Assert.That(character.Health.Max, Is.EqualTo(maxHealth));
 				Assert.That(character.Health.Temporary, Is.EqualTo(tempHealth));
 			});
 		}
@@ -69,7 +62,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditHealthCommand(master.Id, characterId, currentHealth, maxHealth, tempHealth);
+			var request = new EditHealthCommand(master.Id, characterId, currentHealth, tempHealth);
 			var handler = new EditHealthCommandHandler(mockCharacterService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
@@ -77,26 +70,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			Assert.Multiple(() =>
 			{
 				Assert.That(character.Health.Current, Is.EqualTo(currentHealth));
-				Assert.That(character.Health.Max, Is.EqualTo(maxHealth));
 				Assert.That(character.Health.Temporary, Is.EqualTo(tempHealth));
 			});
-		}
-
-		[Test]
-		public void EditHealthCommand_NegativeMaxHealth()
-		{
-			var mockCharacterService = new Mock<ICharacterService>();
-
-			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
-				.ReturnsAsync(character);
-
-			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, -1, tempHealth);
-			var handler = new EditHealthCommandHandler(mockCharacterService.Object);
-
-			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
-				Throws.TypeOf<BusinessLogicException>()
-				.With.Message.EqualTo($"{nameof(request.Max)} can't be below zero."));
 		}
 
 		[Test]
@@ -108,7 +83,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditHealthCommand(owner.Id, characterId, -1, maxHealth, tempHealth);
+			var request = new EditHealthCommand(owner.Id, characterId, -1, tempHealth);
 			var handler = new EditHealthCommandHandler(mockCharacterService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
@@ -125,7 +100,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, maxHealth, -1);
+			var request = new EditHealthCommand(owner.Id, characterId, currentHealth, -1);
 			var handler = new EditHealthCommandHandler(mockCharacterService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),

@@ -16,8 +16,6 @@ namespace Tavernkepp.Application.Tests
 				Id = guid ?? Guid.NewGuid(),
 				Owner = owner ?? new("User", string.Empty, UserRole.Player) { Id = Guid.NewGuid() },
 				Name = "Roland Engreen",
-				Ancestry = "Human",
-				Class = "Psychic",
 				Level = 6,
 			};
 

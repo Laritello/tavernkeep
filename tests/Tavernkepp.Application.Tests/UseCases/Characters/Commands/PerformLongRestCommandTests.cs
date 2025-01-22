@@ -50,7 +50,6 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			character.Abilities["Constitution"].Score = constitutionScore;
 
 			character.Health.Temporary = 0;
-			character.Health.Max = 100;
 			character.Health.Current = currentHealth;
 
 			var calculatedNewHealth = currentHealth + level * ((constitutionScore - 10) / 2);
@@ -80,7 +79,6 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			character.Abilities["Constitution"].Score = 14;
 
 			character.Health.Temporary = 0;
-			character.Health.Max = 100;
 			character.Health.Current = 18;
 
 			var request = new PerformLongRestCommand(owner.Id, characterId, true, false);
@@ -112,7 +110,6 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			character.Abilities["Constitution"].Score = 14;
 
 			character.Health.Temporary = 0;
-			character.Health.Max = 100;
 			character.Health.Current = 18;
 
 			var request = new PerformLongRestCommand(owner.Id, characterId, false, true);
@@ -141,7 +138,6 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			character.Abilities["Constitution"].Score = 14;
 
 			character.Health.Temporary = 0;
-			character.Health.Max = 100;
 			character.Health.Current = 18;
 
 			var request = new PerformLongRestCommand(master.Id, characterId, false, false);

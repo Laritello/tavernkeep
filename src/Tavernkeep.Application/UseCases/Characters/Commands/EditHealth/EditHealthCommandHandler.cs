@@ -8,9 +8,6 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHealth
 	{
 		public async Task Handle(EditHealthCommand request, CancellationToken cancellationToken)
 		{
-			if (request.Max < 0)
-				throw new BusinessLogicException($"{nameof(request.Max)} can't be below zero.");
-
 			if (request.Current < 0)
 				throw new BusinessLogicException($"{nameof(request.Current)} can't be below zero.");
 
