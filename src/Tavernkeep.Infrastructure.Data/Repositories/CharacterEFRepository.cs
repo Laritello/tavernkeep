@@ -12,6 +12,9 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 		{
 			return await AsQueryable()
 				.Include(x => x.Owner)
+				.Include(x => x.Ancestry)
+				.Include(x => x.Class)
+				.Include(x => x.Health)
 				.Include(x => x.Abilities)
 				.Include(x => x.Skills).ThenInclude(x => x.Ability)
 				.ToListAsync(cancellationToken);
@@ -20,6 +23,9 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 		{
 			return await AsQueryable().Where(x => x.Id == id)
 				.Include(x => x.Owner)
+				.Include(x => x.Ancestry)
+				.Include(x => x.Class)
+				.Include(x => x.Health)
 				.Include(x => x.Abilities)
 				.Include(x => x.Skills).ThenInclude(x => x.Ability)
 				.FirstOrDefaultAsync(cancellationToken);

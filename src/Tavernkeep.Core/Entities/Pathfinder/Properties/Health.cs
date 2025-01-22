@@ -1,30 +1,20 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Tavernkeep.Core.Evaluators.Properties;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
+	[Table("CharacterHealth")]
 	public class Health
 	{
 		#region Backing fields
 
 		private int _current;
 		private int _temporary;
+		private MaxHealthPropertyEvaluator? _maxHealthEvaluator;
 
 		#endregion
 
-		#region Constructors
-		public Health()
-		{
-
-		}
-
-		public Health(Character owner)
-		{
-			Owner = owner;
-		}
-
-		#endregion
-
-		[JsonIgnore]
+		public Guid Id { get; set; }
 		public Character Owner { get; set; } = default!;
 
 		public int Current
@@ -33,7 +23,14 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 			set => _current = Math.Clamp(value, 0, Max);
 		}
 
-		public int Max { get; set; }
+		public int Max
+		{
+			get
+			{
+				_maxHealthEvaluator ??= new MaxHealthPropertyEvaluator(this);
+				return _maxHealthEvaluator.Value;
+			}
+		}
 
 		public int Temporary
 		{

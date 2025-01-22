@@ -187,8 +187,8 @@ async function toggleDetails() {
                     <div class="flex flex-col flex-1 pt-1">
                         <p class="text-sm text-center leading-4 font-semibold">{{ user.activeCharacter.value.name }}</p>
                         <p class="text-xs text-center leading-3">
-                            {{ user.activeCharacter.value.ancestry }}
-                            {{ user.activeCharacter.value.class }}
+                            {{ user.activeCharacter.value.ancestry.name }}
+                            {{ user.activeCharacter.value.class.name }}
                             {{ user.activeCharacter.value.level }}
                         </p>
                     </div>

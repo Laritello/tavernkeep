@@ -20,7 +20,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		#region Properties
 
-		[JsonIgnore]
 		[Key, Column(Order = 0)]
 		public required Character Owner { get; set; }
 

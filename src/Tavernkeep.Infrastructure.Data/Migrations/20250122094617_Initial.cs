@@ -48,17 +48,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Class = table.Column<string>(type: "TEXT", nullable: false),
-                    Ancestry = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false, defaultValue: "Unknown character"),
                     HeroPoints = table.Column<int>(type: "INTEGER", nullable: false),
-                    Level = table.Column<int>(type: "INTEGER", nullable: false),
+                    Level = table.Column<int>(type: "INTEGER", nullable: false, defaultValue: 1),
                     Armor = table.Column<string>(type: "TEXT", nullable: false),
                     Burrow = table.Column<string>(type: "TEXT", nullable: false),
                     Climb = table.Column<string>(type: "TEXT", nullable: false),
                     Conditions = table.Column<string>(type: "TEXT", nullable: true),
                     Fly = table.Column<string>(type: "TEXT", nullable: false),
-                    Health = table.Column<string>(type: "TEXT", nullable: false),
                     Swim = table.Column<string>(type: "TEXT", nullable: false),
                     Walk = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -81,6 +78,63 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     table.ForeignKey(
                         name: "FK_CharacterAbility_Character_OwnerId",
                         column: x => x.OwnerId,
+                        principalTable: "Character",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CharacterAncestry",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Health = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterAncestry", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CharacterAncestry_Character_Id",
+                        column: x => x.Id,
+                        principalTable: "Character",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CharacterClass",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    HealthPerLevel = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterClass", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CharacterClass_Character_Id",
+                        column: x => x.Id,
+                        principalTable: "Character",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CharacterHealth",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Current = table.Column<int>(type: "INTEGER", nullable: false),
+                    Temporary = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterHealth", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CharacterHealth_Character_Id",
+                        column: x => x.Id,
                         principalTable: "Character",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -221,6 +275,15 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Character_Users_OwnerId",
                 table: "Character");
+
+            migrationBuilder.DropTable(
+                name: "CharacterAncestry");
+
+            migrationBuilder.DropTable(
+                name: "CharacterClass");
+
+            migrationBuilder.DropTable(
+                name: "CharacterHealth");
 
             migrationBuilder.DropTable(
                 name: "CharacterSkill");

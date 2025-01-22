@@ -16,14 +16,18 @@ namespace Tavernkepp.Application.Tests
 				Id = guid ?? Guid.NewGuid(),
 				Owner = owner ?? new("User", string.Empty, UserRole.Player) { Id = Guid.NewGuid() },
 				Name = "Roland Engreen",
-				Ancestry = "Human",
-				Class = "Psychic",
 				Level = 6,
 			};
 
-			character.Health.Max = 56;
-			character.Health.Current = 13;
-			character.Health.Temporary = 5;
+			character.Ancestry = new("Half-Elf", 6)
+			{
+				Owner = character,
+			};
+
+			character.Class = new("Psychic", 8)
+			{
+				Owner = character
+			};
 
 			character.Abilities =
 			[
@@ -146,6 +150,13 @@ namespace Tavernkepp.Application.Tests
 					Ability = character.Abilities["Wisdom"]
 				},
 			];
+
+			character.Health = new()
+			{
+				Owner = character,
+				Current = 13,
+				Temporary = 5
+			};
 
 			character.Walk.Base = 30;
 

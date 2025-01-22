@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Snapshots;
@@ -31,7 +30,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		#region Properties
 
-		[JsonIgnore]
 		[Key, Column(Order = 0)]
 		public required Character Owner { get; set; }
 

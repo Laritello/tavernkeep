@@ -23,7 +23,6 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 			Fly = new(this, SpeedType.Fly);
 			Swim = new(this, SpeedType.Swim);
 
-			Health = new(this);
 			Armor = new(this);
 
 			HeroPoints = 1;
@@ -37,12 +36,14 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		public User Owner { get; set; } = default!;
 
 		public string Name { get; set; } = default!;
-		public string Class { get; set; } = default!;
-		public string Ancestry { get; set; } = default!;
+
+		public Class Class { get; set; } = default!;
+		public Ancestry Ancestry { get; set; } = default!;
+
 		public int HeroPoints { get; set; }
 
 		public int Level { get; set; }
-		public Health Health { get; set; }
+		public Health Health { get; set; } = default!;
 		public Armor Armor { get; set; }
 		public List<Condition> Conditions { get; set; }
 

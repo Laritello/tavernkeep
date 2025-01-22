@@ -76,14 +76,18 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 					Id = Guid.NewGuid(),
 					Owner = context.Set<User>().First(),
 					Name = "Roland Engreen",
-					Ancestry = "Human",
-					Class = "Psychic",
 					Level = 6,
 				};
 
-				character.Health.Max = 56;
-				character.Health.Current = 13;
-				character.Health.Temporary = 5;
+				character.Ancestry = new("Half-Elf", 6)
+				{
+					Owner = character,
+				};
+
+				character.Class = new("Psychic", 8)
+				{
+					Owner = character
+				};
 
 				character.Abilities =
 				[
@@ -200,6 +204,13 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 						Ability = character.Abilities["Wisdom"]
 					},
 				];
+
+				character.Health = new()
+				{
+					Owner = character,
+					Current = 13,
+					Temporary = 5
+				};
 
 				character.Walk.Base = 30;
 
