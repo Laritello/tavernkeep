@@ -6,8 +6,6 @@ import { SkillType } from '@/contracts/enums';
 
 import BottomSheet from '@douxcode/vue-spring-bottom-sheet';
 
-
-
 // Refs
 const menu = ref<InstanceType<typeof BottomSheet>>();
 const selectedSkillType = ref<SkillType>(SkillType.Custom);
@@ -17,18 +15,18 @@ const currentSkillName = ref<string>('');
 async function create() {
     const api = ApiClientFactory.createApiClient();
     const { activeCharacter } = useCurrentUserAccount();
-    if(!activeCharacter.value) {
+    if (!activeCharacter.value) {
         throw new Error('No active character');
     }
-    
+
     const skillName = currentSkillName.value.trim();
     const skillType = selectedSkillType.value;
     let baseAbility = selectedBaseAbility.value;
-    
+
     if (skillType === SkillType.Lore) {
         baseAbility = 'Intelligence';
     }
-    
+
     await api.createSkill(activeCharacter.value.id, skillType, baseAbility, skillName);
     menu.value?.close();
 }
@@ -67,12 +65,12 @@ defineExpose({
                     <span class="label-text text-xs">Base ability</span>
                 </label>
                 <select v-model="selectedBaseAbility" class="select select-bordered">
-                    <option value="Strength" selected>Strength</option>
-                    <option value="Dexterity">Dexterity</option>
-                    <option value="Constitution">Constitution</option>
-                    <option value="Intelligence">Intelligence</option>
-                    <option value="Wisdom">Wisdom</option>
-                    <option value="Charisma">Charisma</option>
+                    <option value="Strength" selected>{{ $t('pf.attributes.strength') }}</option>
+                    <option value="Dexterity">{{ $t('pf.attributes.dexterity') }}</option>
+                    <option value="Constitution">{{ $t('pf.attributes.constitution') }}</option>
+                    <option value="Intelligence">{{ $t('pf.attributes.intelligence') }}</option>
+                    <option value="Wisdom">{{ $t('pf.attributes.wisdom') }}</option>
+                    <option value="Charisma">{{ $t('pf.attributes.charisma') }}</option>
                 </select>
             </label>
             <label class="form-control w-full">
@@ -84,16 +82,14 @@ defineExpose({
                     <input v-model="currentSkillName" type="text" class="grow" placeholder="Name" required />
                 </label>
             </label>
-            <button type="submit" class="btn btn-success bg-base">
-                Create
-            </button>
+            <button type="submit" class="btn btn-success bg-base">Create</button>
         </form>
     </BottomSheet>
 </template>
 
 <style>
-[data-theme="dark"] {
-    --vsbs-background: oklch(25.3267% 0.015896 252.417568);
-    --vsbs-border-color: oklch(23.2607% 0.013807 253.100675);
+[data-theme='dark'] {
+    --vsbs-background: oklch(25.3267% 0.015896 252.417568); /* base-100 */
+    --vsbs-border-color: oklch(23.2607% 0.013807 253.100675); /* base-200 */
 }
 </style>
