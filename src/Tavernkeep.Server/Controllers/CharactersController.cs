@@ -199,7 +199,7 @@ namespace Tavernkeep.Server.Controllers
 		[HttpPatch("{characterId}/health")]
 		public async Task EditHealthAsync([FromRoute] Guid characterId, [FromBody] EditHealthRequest request)
 		{
-			await mediator.Send(new EditHealthCommand(HttpContext.GetUserId(), characterId, request.Current, request.Max, request.Temporary));
+			await mediator.Send(new EditHealthCommand(HttpContext.GetUserId(), characterId, request.Current, request.Temporary));
 		}
 
 		/// <summary>
