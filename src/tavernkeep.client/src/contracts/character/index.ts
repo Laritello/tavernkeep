@@ -8,3 +8,4 @@ export type { SavingThrow } from './SavingThrow';
 export type { Speed } from './Speed';
 export type { Ancestry } from './Ancestry';
 export type { Class } from './Class';
+export type { BaseSkill } from './BaseSkill';

@@ -1,8 +1,8 @@
 ﻿<script setup lang="ts">
-import type { ProficiencyEditItemType } from './ProficiencyEditItemType';
+import type { BaseSkill } from '@/contracts/character';
 import ProficiencyListEditItem from './ProficiencyListEditItem.vue';
 
-const items = defineModel<ProficiencyEditItemType[]>({ required: true });
+const items = defineModel<BaseSkill[]>({ required: true });
 
 const { localePrefix } = defineProps<{
     localePrefix: string
@@ -13,7 +13,10 @@ const { localePrefix } = defineProps<{
 <template>
     <div class="flex flex-col">
         <div class="flex flex-col">
-            <ProficiencyListEditItem v-for="(item, index) in items" :key="item.name" :item="item" :locale-prefix="localePrefix" @updated="(newValue) => items[index] = newValue" />
+            <ProficiencyListEditItem v-for="(item, index) in items" :key="item.name" 
+                                     :item="item" 
+                                     :locale-prefix="localePrefix" 
+                                     @updated="(newValue) => items[index] = newValue" class="hover:bg-base-200" />
         </div>
     </div>
 </template>
