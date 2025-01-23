@@ -4,7 +4,7 @@ import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import type { User, Message, Character, SkillRollMessage } from '@/entities';
 import type { Health, Lore, Perception } from '@/contracts/character';
-import { UserRole, Proficiency, RollType, ArmorType, SpeedType } from '@/contracts/enums';
+import { UserRole, Proficiency, RollType, ArmorType, SpeedType, SkillType } from '@/contracts/enums';
 import type { Condition } from '@/entities/Condition';
 import type { SavingThrowRollMessage } from '@/entities/Message';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
@@ -183,7 +183,7 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async createCustomSkill(characterId: string, type: string, baseAbility: string, name: string ): Promise<void> {
+    async createSkill(characterId: string, type: SkillType, baseAbility: string, name: string ): Promise<void> {
         const response = await this.client.post(`custom/skill`, {
             type,
             baseAbility,
@@ -197,12 +197,12 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async createBasicSkill(characterId: string, baseAbility: string, name: string ): Promise<void> {
-        return this.createCustomSkill(characterId, 'Basic', baseAbility, name);
+    async createCustomSkill(characterId: string, baseAbility: string, name: string ): Promise<void> {
+        return this.createSkill(characterId, SkillType.Custom, baseAbility, name);
     }
 
     async createLoreSkill(characterId: string, name: string ): Promise<void> {
-        return this.createCustomSkill(characterId, 'Lore', 'Intelligence', name);
+        return this.createSkill(characterId, SkillType.Lore, 'Intelligence', name);
     }
 
     async editSavingThrows(characterId: string, proficiencies: Record<string, Proficiency>): Promise<void> {

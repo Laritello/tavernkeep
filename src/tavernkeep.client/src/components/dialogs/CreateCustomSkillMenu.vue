@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
+import { SkillType } from '@/contracts/enums';
 
 import BottomSheet from '@douxcode/vue-spring-bottom-sheet';
 
@@ -9,7 +10,7 @@ import BottomSheet from '@douxcode/vue-spring-bottom-sheet';
 
 // Refs
 const menu = ref<InstanceType<typeof BottomSheet>>();
-const selectedSkillType = ref<string>('Basic');
+const selectedSkillType = ref<SkillType>(SkillType.Custom);
 const selectedBaseAbility = ref<string>('Intelligence');
 const currentSkillName = ref<string>('');
 
@@ -24,17 +25,17 @@ async function create() {
     const skillType = selectedSkillType.value;
     let baseAbility = selectedBaseAbility.value;
     
-    if (skillType === 'Lore') {
+    if (skillType === SkillType.Lore) {
         baseAbility = 'Intelligence';
     }
     
-    await api.createCustomSkill(activeCharacter.value.id, skillType, baseAbility, skillName);
+    await api.createSkill(activeCharacter.value.id, skillType, baseAbility, skillName);
     menu.value?.close();
 }
 
 function resetToDefault() {
-    selectedSkillType.value = 'Basic';
-    selectedBaseAbility.value = 'Intelligence';
+    selectedSkillType.value = SkillType.Custom;
+    selectedBaseAbility.value = 'Strength';
     currentSkillName.value = '';
 }
 
@@ -53,33 +54,33 @@ defineExpose({
         <form @submit.prevent="create" method="dialog" class="flex flex-col gap-2 mb-4">
             <label class="form-control w-full">
                 <label class="label">
-                    <span class="label-text text-xs">Select skill type</span>
+                    <span class="label-text text-xs">Skill type</span>
                 </label>
                 <select v-model="selectedSkillType" class="select select-bordered">
-                    <option value="Basic" selected>Basic</option>
-                    <option value="Lore">Lore</option>
+                    <option :value="SkillType.Custom" selected>{{ SkillType.Custom.toString() }}</option>
+                    <option :value="SkillType.Lore">{{ SkillType.Lore.toString() }}</option>
                 </select>
             </label>
 
-            <label v-if="selectedSkillType === 'Basic'" class="form-control w-full">
+            <label v-if="selectedSkillType === SkillType.Custom" class="form-control w-full">
                 <label class="label">
-                    <span class="label-text text-xs">Select base ability</span>
+                    <span class="label-text text-xs">Base ability</span>
                 </label>
                 <select v-model="selectedBaseAbility" class="select select-bordered">
-                    <option value="Strength">Strength</option>
+                    <option value="Strength" selected>Strength</option>
                     <option value="Dexterity">Dexterity</option>
                     <option value="Constitution">Constitution</option>
-                    <option value="Intelligence" selected>Intelligence</option>
+                    <option value="Intelligence">Intelligence</option>
                     <option value="Wisdom">Wisdom</option>
                     <option value="Charisma">Charisma</option>
                 </select>
             </label>
             <label class="form-control w-full">
                 <label class="label">
-                    <span class="label-text text-xs">Enter skill name</span>
+                    <span class="label-text text-xs">Skill name</span>
                 </label>
                 <label class="input input-bordered flex items-center gap-2">
-                    <template v-if="selectedSkillType === 'Lore'">Lore:</template>
+                    <template v-if="selectedSkillType === SkillType.Lore">Lore:</template>
                     <input v-model="currentSkillName" type="text" class="grow" placeholder="Name" required />
                 </label>
             </label>
@@ -93,5 +94,6 @@ defineExpose({
 <style>
 [data-theme="dark"] {
     --vsbs-background: oklch(25.3267% 0.015896 252.417568);
+    --vsbs-border-color: oklch(23.2607% 0.013807 253.100675);
 }
 </style>
