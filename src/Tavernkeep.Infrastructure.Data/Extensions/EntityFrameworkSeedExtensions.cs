@@ -40,7 +40,7 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 			{
 				context.Set<User>().Add(new("admin", "admin", UserRole.Master)
 				{
-					Id = Guid.NewGuid()
+					Id = Guid.Parse("6d3dcfcd-7d87-4b91-8245-c4dba656d2c2")
 				});
 			}
 
@@ -73,7 +73,7 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 			{
 				var character = new Character()
 				{
-					Id = Guid.NewGuid(),
+					Id = Guid.Parse("3e9b543b-6d90-4a3b-9072-d6afc3726531"),
 					Owner = context.Set<User>().First(),
 					Name = "Roland Engreen",
 					Level = 6,
