@@ -1,19 +1,18 @@
-import './assets/main.css';
+import ContextMenu from '@imengyu/vue3-context-menu';
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css';
 import '@mdi/font/css/materialdesignicons.css';
-import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
-import ContextMenu from '@imengyu/vue3-context-menu'
-import Toast from "vue-toastification";
-import "vue-toastification/dist/index.css";
+import { createPinia } from 'pinia';
+import { createApp } from 'vue';
+// @ts-expect-error no types defined
+import VueChatScroll from 'vue3-chat-scroll';
+import Toast from 'vue-toastification';
+import 'vue-toastification/dist/index.css';
+
 import D20Icon from '@/assets/dice/d20-grey.svg';
 
-import { createApp } from 'vue';
-import i18n from "./i18n"
 import App from './App.vue';
-
-import { createPinia } from 'pinia';
-// @ts-ignore
-import VueChatScroll from 'vue3-chat-scroll';
-
+import './assets/main.css';
+import i18n from './i18n';
 // Router
 import { router } from './router';
 import { useAppState } from './stores/appState';
@@ -26,7 +25,7 @@ app.use(i18n);
 app.use(VueChatScroll);
 app.use(ContextMenu);
 app.use(Toast, {
-    transition: "Vue-Toastification__bounce",
+    transition: 'Vue-Toastification__bounce',
     maxToasts: 3,
     newestOnTop: true,
     toastDefaults: {
@@ -35,8 +34,8 @@ app.use(Toast, {
             showCloseButtonOnHover: false,
             closeButton: false,
             icon: D20Icon,
-        }
-    }
+        },
+    },
 });
 
 useAppState();

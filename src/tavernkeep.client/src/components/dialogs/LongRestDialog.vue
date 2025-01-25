@@ -13,7 +13,7 @@ const { closeModal } = defineProps<{
 }>();
 
 function confirm() {
-    let payload = { inArmor: inArmor.value, noComfort: noComfort.value };
+    const payload = { inArmor: inArmor.value, noComfort: noComfort.value };
     closeModal({ action: 'result', payload });
 }
 
