@@ -23,7 +23,7 @@ const content = defineModel<string>("content", {
 // Process the content on input
 const processInput = (event: Event): void => {
     const target = event.target as HTMLSpanElement;
-    let message = sanitize(target.innerText);
+    const message = sanitize(target.innerText);
 
     content.value = message; // Update the content state with the text inside the span
 

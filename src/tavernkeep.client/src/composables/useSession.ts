@@ -67,7 +67,7 @@ export const useSession = () => {
         return sessionData.accessToken;
     };
 
-    const havePermissions = (requiredRoles?: UserRole[]): Boolean => {
+    const havePermissions = (requiredRoles?: UserRole[]): boolean => {
         const role = sessionData.userRole ?? undefined;
         if (role === undefined) return false;
         if (requiredRoles === undefined) return true;

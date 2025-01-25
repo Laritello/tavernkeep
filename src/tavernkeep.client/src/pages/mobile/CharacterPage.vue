@@ -64,7 +64,7 @@ async function updateSpeeds(speeds: Record<SpeedType, SpeedEditDto>) {
 
 async function updateArmor(armor: Armor) {
     if (character.value !== undefined) {
-        let equipped = armor.equipped;
+        const equipped = armor.equipped;
         await api.editArmor(character.value.id, equipped.type, equipped.bonus, equipped.hasDexterityCap, equipped.dexterityCap, armor.proficiencies);
     }
 }
@@ -111,23 +111,23 @@ onMounted(() => {
 function updateSection() {
     // Collect all required elements
     // TODO: use vue refs instead
-    let headers = document.querySelectorAll('h2');
-    let navigation = document.querySelectorAll('#sections-bar a');
+    const headers = document.querySelectorAll('h2');
+    const navigation = document.querySelectorAll('#sections-bar a');
 
-    let sectionBar = document.querySelector('#sections-bar');
+    const sectionBar = document.querySelector('#sections-bar');
 
     if (sectionBar == undefined) {
         return;
     }
 
     // Find first header that hasn't reached the border
-    let border = sectionBar!.getBoundingClientRect().bottom;
-    let start = headers.item(0).getBoundingClientRect().top;
+    const border = sectionBar!.getBoundingClientRect().bottom;
+    const start = headers.item(0).getBoundingClientRect().top;
     let sectionIndex = 0;
 
     if (border > start) {
         for (let i = 1; i < headers.length; i++) {
-            let rect = headers.item(i).getBoundingClientRect();
+            const rect = headers.item(i).getBoundingClientRect();
             if (rect.top > border) {
                 sectionIndex = i;
                 break;
@@ -142,7 +142,7 @@ function updateSection() {
 
     // If header is not close enough to the border, we're still looking at previous section
     sectionIndex = (sectionIndex == 0 || (headers.item(sectionIndex).getBoundingClientRect().top - border) <= 60) ? sectionIndex : sectionIndex - 1;
-    let target = headers.item(sectionIndex).innerText;
+    const target = headers.item(sectionIndex).innerText;
 
     // Update styleclass for each navigation button
     navigation.forEach((element) => {

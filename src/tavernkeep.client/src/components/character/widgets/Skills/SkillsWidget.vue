@@ -8,44 +8,38 @@
         </div>
 
         <div class="flex flex-col">
-            <SkillsWidgetItem v-for="skill in skills" :skill="skill" :key="skill.name" class="skill-item"
-                @roll="(value) => $emit('roll', value.name)" />
+            <SkillsWidgetItem
+                v-for="skill in skills"
+                :skill="skill"
+                :key="skill.name"
+                class="skill-item"
+                @roll="(value) => $emit('roll', value.name)"
+            />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import type { Skill } from '@/contracts/character';
-import SkillsWidgetItem from './SkillsWidgetItem.vue';
-import SkillsEditDialog from '@/components/dialogs/edit/SkillsEditDialog.vue';
-import { useModal } from '@/composables/useModal';
-import { Proficiency } from '@/contracts/enums';
 import { useI18n } from 'vue-i18n';
+
 import GearIcon from '@/components/icons/GearIcon.vue';
+import type { Skill } from '@/contracts/character';
+import { Proficiency } from '@/contracts/enums';
+
+import SkillsWidgetItem from './SkillsWidgetItem.vue';
 
 const { t } = useI18n();
 
 const { skills } = defineProps<{ skills: Skill[] }>();
 
-const emits = defineEmits<{
-    changed: [value: Record<string, Proficiency>],
-    roll: [value: string]
+defineEmits<{
+    changed: [value: Record<string, Proficiency>];
+    roll: [value: string];
 }>();
-
-async function showEditSkillsDialog() {
-    const modal = useModal();
-    const result = await modal.show(SkillsEditDialog, {
-        skills,
-    });
-
-    if (result.action === 'result') {
-        emits('changed', result.payload);
-    }
-}
 </script>
 
 <style scoped>
 .skill-item:last-child {
-    border:none;
+    border: none;
 }
 </style>

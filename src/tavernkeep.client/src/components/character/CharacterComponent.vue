@@ -1,23 +1,20 @@
 <script setup lang="ts">
-import type { Ability, Perception, Skill, SavingThrow } from '@/contracts/character';
-import type { Character } from '@/entities/Character';
-
-import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import { useModal } from '@/composables/useModal';
-
+import AbilitiesWidget from '@/components/character/AbilitiesWidget.vue';
 import CharacterHeaderView from '@/components/character/CharacterHeaderView.vue';
 import ConditionsView from '@/components/character/ConditionsView.vue';
-import AbilitiesWidget from '@/components/character/AbilitiesWidget.vue';
 import SkillsWidget from '@/components/character/SkillsWidget.vue';
-import SavingThrowsView from './SavingThrowsView.vue';
+import AbilityEditDialog from '@/components/dialogs/AbilityEditDialog.vue';
+import ProficiencyEditDialog from '@/components/dialogs/ProficiencyEditDialog.vue';
+import { useModal } from '@/composables/useModal';
+import type { Ability, Perception, Skill, SavingThrow } from '@/contracts/character';
+import type { Condition } from '@/entities';
+import type { Character } from '@/entities/Character';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
+
+import ConditionApplyDialog from '../dialogs/ConditionApplyDialog.vue';
 import ArmorClassWidget from './ArmorClassWidget.vue';
 import PerceptionWidget from './PerceptionWidget.vue';
-
-import ProficiencyEditDialog from '@/components/dialogs/ProficiencyEditDialog.vue';
-import AbilityEditDialog from '@/components/dialogs/AbilityEditDialog.vue';
-import ConditionApplyDialog from '../dialogs/ConditionApplyDialog.vue';
-import type { Condition } from '@/entities';
-
+import SavingThrowsView from './SavingThrowsView.vue';
 
 const client = ApiClientFactory.createApiClient();
 const modal = useModal();
@@ -65,11 +62,11 @@ async function removeCondition(condition: Condition) {
     //await client.removeCondition(character.id, condition.name);
 }
 
-async function increaseCondtionLevel(condition: Condition) {
+async function increaseConditionLevel(condition: Condition) {
     //await client.applyCondition(character.id, condition.name, condition.level + 1);
 }
 
-async function decreaseCondtionLevel(condition: Condition) {
+async function decreaseConditionLevel(condition: Condition) {
     //await client.applyCondition(character.id, condition.name, condition.level - 1);
 }
 </script>
@@ -89,8 +86,8 @@ async function decreaseCondtionLevel(condition: Condition) {
                     :conditions="character.conditions"
                     @addCondition="showConditionApplyDialog"
                     @removeCondition="removeCondition"
-                    @increaseConditionLevel="increaseCondtionLevel"
-                    @decreaseConditionLevel="decreaseCondtionLevel"
+                    @increaseConditionLevel="increaseConditionLevel"
+                    @decreaseConditionLevel="decreaseConditionLevel"
                 />
             </div>
         </div>

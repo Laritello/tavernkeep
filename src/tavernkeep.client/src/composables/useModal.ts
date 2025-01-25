@@ -4,7 +4,7 @@ type Payload<TResult = undefined> = TResult extends undefined
     ? { action: 'confirm' | 'reject' }
     : { action: 'result'; payload: TResult };
 
-type ModalProps<C extends Component> = C extends new (...args: any) => any
+type ModalProps<C extends Component> = C extends new (...args: unknown[]) => unknown
     ? Omit<InstanceType<C>['$props'], keyof VNodeProps | keyof AllowedComponentProps>
     : never;
 

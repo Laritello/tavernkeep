@@ -1,8 +1,17 @@
-import { useSession } from '@/composables/useSession';
 import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
+import { useSession } from '@/composables/useSession';
+
+type AxiosResponseConfig = InternalAxiosRequestConfig & { isRetry: boolean };
+type AxiosResponseError = {
+    config: AxiosResponseConfig;
+    response: {
+        status: number;
+    };
+};
+
 export default (axiosClient: AxiosInstance) => {
-    const response = async (error: any) => {
+    const response = async (error: AxiosResponseError) => {
         const {
             config: originalRequest,
             response: { status },
@@ -18,14 +27,13 @@ export default (axiosClient: AxiosInstance) => {
             throw new Error('Unable to refresh access token: ' + refreshResult.message);
         }
 
-        const authorization = `Bearer ${refreshResult.accessToken}`;
-        originalRequest.headers.Authorization = authorization;
+        originalRequest.headers.Authorization = `Bearer ${refreshResult.accessToken}`;
 
         originalRequest.isRetry = true;
         return axiosClient(originalRequest);
     };
 
-    const request = async (config: InternalAxiosRequestConfig & { isRetry?: boolean }) => {
+    const request = async (config: AxiosResponseConfig) => {
         if (config.url?.startsWith('authentication') || config.isRetry) return config;
 
         let accessToken;
