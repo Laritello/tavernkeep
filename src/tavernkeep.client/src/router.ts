@@ -11,8 +11,8 @@ import CharacterPage from './pages/mobile/CharacterPage.vue';
 import ChatPage from './pages/mobile/ChatPage.vue';
 import CombatPage from '@/pages/mobile/CombatPage.vue';
 import SettingsPage from './pages/mobile/SettingsPage.vue';
-import CreateCharacterPage from '@/pages/mobile/CreateCharacterPage.vue';
 import SkillsEditPage from '@/pages/mobile/edit/SkillsEditPage.vue';
+import BuilderPage from './pages/mobile/BuilderPage.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -55,8 +55,8 @@ const routes: RouteRecordRaw[] = [
         },
     },
     {
-        path: '/characters/create',
-        component: CreateCharacterPage,
+        path: '/characters/build',
+        component: BuilderPage,
         meta: {
             layout: 'BlankLayout',
             protected: true,
