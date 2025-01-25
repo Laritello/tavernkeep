@@ -14,12 +14,13 @@ import ChatMessageView from './messages/ChatMessageView.vue';
 import ChatInputView from './ChatInputView.vue';
 import { ContextMenu, ContextMenuItem, ContextMenuSeparator } from '@imengyu/vue3-context-menu'
 import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
-import FloatingDiceButton from '@/components/shared/FloatingDiceButton/FloatingDiceButton.vue';
+import DiceRollerButton from '@/components/shared/DiceRoller/DiceRollerButton.vue';
+import DiceRollerMenu from '@/components/shared/DiceRoller/DiceRollerMenu.vue';
 
 const session = useSession();
 const messages = useMessages();
 
-
+const diceRollerMenuRef = ref<InstanceType<typeof DiceRollerMenu>>();
 const message = ref('');
 const selectedUserId = ref<string>();
 const contextMenuShown = ref(false);
@@ -131,13 +132,14 @@ async function sendMessage() {
         <form @submit.prevent="sendMessage" class="flex flex-row mb-1">
             <ChatInputView v-model:content="message" :commands="slashCommands" class="w-full" />
             <div class="p-1">
-                <button type="submit" class="btn btn-md btn-circle btn-primary shadow-lg mt-1">
+                <button v-if="!!message.trim()" type="submit" class="btn btn-md btn-circle btn-primary shadow-lg mt-1">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 -960 960 960"
                         fill="currentColor">
                         <path
                             d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" />
                     </svg>
                 </button>
+                <DiceRollerButton v-else @click="diceRollerMenuRef?.open()" class="btn btn-md btn-circle btn-primary shadow-lg mt-1" />
             </div>
         </form>
     </div>
@@ -160,7 +162,7 @@ async function sendMessage() {
             @click="deleteMessage()">
         </ContextMenuItem>
     </ContextMenu>
-    <FloatingDiceButton />
+    <DiceRollerMenu ref="diceRollerMenuRef" />
 </template>
 
 <style scoped></style>
