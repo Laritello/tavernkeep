@@ -6,11 +6,13 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { shallowRef, provide, type Component, onMounted } from 'vue';
-import layouts from '@/layouts';
-import ModalsProvider from './components/dialogs/ModalsProvider.vue';
 import { themeChange } from 'theme-change';
+import { shallowRef, provide, type Component, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+
+import layouts from '@/layouts';
+
+import ModalsProvider from './components/dialogs/ModalsProvider.vue';
 
 const layout = shallowRef<Component>();
 const router = useRouter();
@@ -22,8 +24,7 @@ router.afterEach((to) => {
 
 onMounted(() => {
     themeChange(true);
-})
-
+});
 </script>
 
 <style scoped></style>
