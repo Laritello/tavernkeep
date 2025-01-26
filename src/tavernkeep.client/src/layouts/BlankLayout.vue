@@ -6,7 +6,7 @@
             </button>
             <div>
             <h1 class="mx-2 text-xl font-semibold">{{ header.title }}</h1>
-            <h2 class="mx-2 text-xs font-semibold">{{ header.subtitle }}</h2>
+            <h2 class="mx-2 text-base-content/50 text-xs font-normal">{{ header.subtitle }}</h2>
         </div>
         </div>
 

@@ -1,37 +1,40 @@
 <template>
     <div class="flex flex-col h-full p-2">
         <div class="flex-1">
-            <component :is="currentStage">
+            <component :is="currentStage?.display">
                 Unknown stage
             </component>
         </div>
 
-        <div class="flex justify-between">
-            <button class="btn">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        <div class="grid grid-cols-2">
+            <button v-if="previousStage !== undefined" class="btn justify-self-start" @click="moveToPreviousStage">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 -960 960 960">
+                    <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
                 </svg>
+
                 <div class="flex flex-col items-start">
-                    <span class="text-base-content/50 hidden text-xs font-normal md:block">Back</span>
-                    <span>General</span>
+                    <span class="text-base-content/50 text-xs font-normal md:block">Back</span>
+                    <span>{{ previousStage.name }}</span>
                 </div>
             </button>
-            <button class="btn btn-neutral">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+
+            <button v-if="nextStage !== undefined" class="btn btn-neutral justify-self-end col-start-2"
+                @click="moveToNextStage">
+                <div class="flex flex-col items-end">
+                    <span class="text-base-content/50 text-xs font-normal md:block">Next</span>
+                    <span>{{ nextStage.name }}</span>
+                </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 -960 960 960">
+                    <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
                 </svg>
-                Neutral
             </button>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, type Component } from 'vue';
+import { computed, ref, watch, type Component } from 'vue';
 import CharacterBuilderStageAbilities from './stages/CharacterBuilderStageAbilities.vue';
 import CharacterBuilderStageGeneral from './stages/CharacterBuilderStageGeneral.vue';
 import CharacterBuilderStageSavingThrows from './stages/CharacterBuilderStageSavingThrows.vue';
@@ -43,31 +46,56 @@ interface Stage {
     display: Component;
 }
 
-const stages: Stage[] =
-    [
-        {
-            order: 1,
-            name: "General",
-            display: CharacterBuilderStageGeneral
-        },
-        {
-            order: 2,
-            name: "Abilities",
-            display: CharacterBuilderStageAbilities
-        },
-        {
-            order: 3,
-            name: "Skills",
-            display: CharacterBuilderStageSkills
-        },
-        {
-            order: 4,
-            name: "Saving Throws",
-            display: CharacterBuilderStageSavingThrows
-        },
-    ]
+const stages: Stage[] = [
+    {
+        order: 1,
+        name: "General",
+        display: CharacterBuilderStageGeneral
+    },
+    {
+        order: 2,
+        name: "Abilities",
+        display: CharacterBuilderStageAbilities
+    },
+    {
+        order: 3,
+        name: "Skills",
+        display: CharacterBuilderStageSkills
+    },
+    {
+        order: 4,
+        name: "Saving Throws",
+        display: CharacterBuilderStageSavingThrows
+    },
+]
 
-const currentStep = ref<number>(1);
-const currentStage = computed(() => stages.find(x => x.order === currentStep.value)?.display);
+const currentStageIndex = ref<number>(1);
+const currentStage = computed(() => stages.find(x => x.order === currentStageIndex.value));
+const previousStage = computed(() => stages.find(x => x.order === (currentStageIndex.value - 1)));
+const nextStage = computed(() => stages.find(x => x.order === (currentStageIndex.value + 1)));
+
+const emits = defineEmits<{
+    updatedStage: [value: string | undefined]
+}>();
+
+watch(currentStage, (newValue) => {
+    emits('updatedStage', newValue?.name);
+});
+
+function moveToPreviousStage() {
+    if (currentStageIndex.value == 1) {
+        return;
+    }
+
+    currentStageIndex.value = currentStageIndex.value - 1;
+}
+
+function moveToNextStage() {
+    if (currentStageIndex.value == stages.length) {
+        return;
+    }
+
+    currentStageIndex.value = currentStageIndex.value + 1;
+}
 
 </script>
