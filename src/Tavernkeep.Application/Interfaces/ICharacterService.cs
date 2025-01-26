@@ -18,6 +18,13 @@ namespace Tavernkeep.Application.Interfaces
 		public Task<Character> CreateCharacterAsync(User owner, string name, string ancestryId, string backgroundId, string classId, CancellationToken cancellationToken);
 
 		/// <summary>
+		/// Creates a new character template with default values.
+		/// </summary>
+		/// <param name="cancellationToken">A token to cancel the operation.</param>
+		/// <returns></returns>
+		public Task<Character> CreateCharacterTemplateAsync(CancellationToken cancellationToken);
+
+		/// <summary>
 		/// Saves or updates an existing character in the database.
 		/// </summary>
 		/// <param name="character">The character to save or update.</param>

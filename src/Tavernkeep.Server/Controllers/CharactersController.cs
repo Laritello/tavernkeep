@@ -18,6 +18,7 @@ using Tavernkeep.Application.UseCases.Characters.Commands.ModifyHealth;
 using Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
+using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacterTemplate;
 using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Character.Requests;
 using Tavernkeep.Server.Extensions;
@@ -80,6 +81,18 @@ namespace Tavernkeep.Server.Controllers
 		{
 			var character = await mediator.Send(new GetCharacterQuery(characterId));
 			return mapper.Map<CharacterDto>(character);
+		}
+
+		/// <summary>
+		/// Fetch character template.
+		/// </summary>
+		/// <returns>Specified character.</returns>
+		[Authorize]
+		[HttpGet("template")]
+		public async Task<CharacterTemplateDto> GetCharacterTemplateAsync()
+		{
+			var character = await mediator.Send(new GetCharacterTemplateQuery());
+			return mapper.Map<CharacterTemplateDto>(character);
 		}
 
 		/// <summary>

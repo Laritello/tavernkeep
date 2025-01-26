@@ -29,6 +29,22 @@ namespace Tavernkeep.Application.Mapping.Profiles
 							{ SpeedType.Swim, src.Swim },
 						}));
 
+			CreateMap<Character, CharacterTemplateDto>()
+				.ForMember(dest => dest.Skills, opt => opt.MapFrom(src => src.Skills.Where(x => x.Type == SkillType.Basic || x.Type == SkillType.Lore || x.Type == SkillType.Custom)))
+				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Skills.Where(x => x.Type == SkillType.SavingThrow)))
+				.ForMember(dest => dest.Perception, opt => opt.MapFrom(src => src.Skills["Perception"]))
+				.ForMember(
+					dest => dest.Speeds,
+					opt => opt.MapFrom(src =>
+						new Dictionary<SpeedType, Speed>()
+						{
+							{ SpeedType.Walk, src.Walk },
+							{ SpeedType.Burrow, src.Burrow },
+							{ SpeedType.Climb, src.Climb },
+							{ SpeedType.Fly, src.Fly },
+							{ SpeedType.Swim, src.Swim },
+						}));
+
 			CreateMap<Ability, AbilityDto>();
 
 			CreateMap<Skill, SkillDto>();
