@@ -86,7 +86,7 @@ namespace Tavernkeep.Server.Controllers
 		/// <summary>
 		/// Fetch character template.
 		/// </summary>
-		/// <returns>Specified character.</returns>
+		/// <returns>Basic character template.</returns>
 		[Authorize]
 		[HttpGet("template")]
 		public async Task<CharacterTemplateDto> GetCharacterTemplateAsync()

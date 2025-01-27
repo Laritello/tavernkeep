@@ -61,7 +61,8 @@ async function logout() {
 
                     <div class="flex flex-col flex-1 align-middle justify-center">
                         <div class="text-lg font-semibold leading-none">{{ character.name }}</div>
-                        <div class="text-sm font-semithin">{{ character.ancestry.name }} {{ character.class.name }}</div>
+                        <div class="text-sm font-semithin">{{ character.ancestry.name }} {{ character.class.name }}
+                        </div>
                     </div>
 
                     <div class="dropdown dropdown-left self-center">
@@ -72,7 +73,8 @@ async function logout() {
                                     d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
                             </svg>
                         </button>
-                        <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow border border-base-200">
+                        <ul tabindex="0"
+                            class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow border border-base-200">
                             <li><a>Select character as active</a></li>
                             <li><a>Delete character</a></li>
                         </ul>

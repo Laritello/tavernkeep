@@ -102,6 +102,11 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
+    async getCharacterTemplate() : Promise<Character> {
+        const response = await this.client.get<Character>('characters/template');
+        return getPayloadOrThrow(response);
+    }
+
     async createCharacter(ownerId: string, name: string): Promise<Character> {
         const response = await this.client.post<Character>('characters', { ownerId, name });
         return getPayloadOrThrow(response);

@@ -5,8 +5,8 @@
                 <span class="mdi mdi-arrow-left text-xl"></span>
             </button>
             <div>
-            <h1 class="mx-2 text-xl font-semibold">{{ header.title }}</h1>
-            <h2 class="mx-2 text-base-content/50 text-xs font-normal">{{ header.subtitle }}</h2>
+            <h1 class="mx-2 text-xl font-semibold leading-4">{{ header.title }}</h1>
+            <h2 class="mx-2 text-base-content/50 text-xs font-normal leading-4">{{ header.subtitle }}</h2>
         </div>
         </div>
 

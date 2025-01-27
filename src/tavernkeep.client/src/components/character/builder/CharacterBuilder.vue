@@ -1,12 +1,12 @@
 <template>
     <div class="flex flex-col h-full p-2">
-        <div class="flex-1">
-            <component :is="currentStage?.display">
+        <div class="h-full overflow-y-auto">
+            <component :is="currentStage?.display" :character="character">
                 Unknown stage
             </component>
         </div>
 
-        <div class="grid grid-cols-2">
+        <div class="grid grid-cols-2 pt-2">
             <button v-if="previousStage !== undefined" class="btn justify-self-start" @click="moveToPreviousStage">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 -960 960 960">
                     <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
@@ -39,6 +39,8 @@ import CharacterBuilderStageAbilities from './stages/CharacterBuilderStageAbilit
 import CharacterBuilderStageGeneral from './stages/CharacterBuilderStageGeneral.vue';
 import CharacterBuilderStageSavingThrows from './stages/CharacterBuilderStageSavingThrows.vue';
 import CharacterBuilderStageSkills from './stages/CharacterBuilderStageSkills.vue';
+import type { Character } from '@/entities';
+import CharacterBuilderStageWelcome from './stages/CharacterBuilderStageWelcome.vue';
 
 interface Stage {
     order: number;
@@ -49,21 +51,26 @@ interface Stage {
 const stages: Stage[] = [
     {
         order: 1,
+        name: "Welcome",
+        display: CharacterBuilderStageWelcome
+    },
+    {
+        order: 2,
         name: "General",
         display: CharacterBuilderStageGeneral
     },
     {
-        order: 2,
+        order: 3,
         name: "Abilities",
         display: CharacterBuilderStageAbilities
     },
     {
-        order: 3,
+        order: 4,
         name: "Skills",
         display: CharacterBuilderStageSkills
     },
     {
-        order: 4,
+        order: 5,
         name: "Saving Throws",
         display: CharacterBuilderStageSavingThrows
     },
@@ -76,6 +83,10 @@ const nextStage = computed(() => stages.find(x => x.order === (currentStageIndex
 
 const emits = defineEmits<{
     updatedStage: [value: string | undefined]
+}>();
+
+const { character } = defineProps<{
+    character: Character
 }>();
 
 watch(currentStage, (newValue) => {

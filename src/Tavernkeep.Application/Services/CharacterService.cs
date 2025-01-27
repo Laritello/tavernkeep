@@ -138,12 +138,6 @@ namespace Tavernkeep.Application.Services
 					Ability = character.Abilities["Dexterity"]
 				},
 
-				new("Academia", Proficiency.Untrained, SkillType.Lore)
-				{
-					Owner = character,
-					Ability = character.Abilities["Intelligence"]
-				},
-
 				new("Fortitude", Proficiency.Untrained, SkillType.SavingThrow)
 				{
 					Owner = character,
