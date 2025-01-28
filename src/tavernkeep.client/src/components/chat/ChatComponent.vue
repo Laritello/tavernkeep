@@ -10,6 +10,7 @@ import { useModal } from '@/composables/useModal';
 import { useSession } from '@/composables/useSession';
 import { UserRole } from '@/contracts/enums';
 import { RollType } from '@/contracts/enums/RollType';
+import { vAutoScroll } from '@/directives/vAutoScroll.ts';
 import type { Message, TextMessage } from '@/entities';
 import { useMessages } from '@/stores/messages';
 
@@ -121,7 +122,7 @@ async function sendMessage() {
 
 <template>
     <div class="flex flex-col h-full">
-        <div v-chat-scroll="{ always: false, smooth: true }" class="w-full grow max-h-full overflow-y-auto px-2">
+        <div v-auto-scroll="{ behavior: 'smooth', threshold: 160 }" class="w-full grow max-h-full overflow-y-auto px-2">
             <ChatMessageView
                 v-for="item in messages.list"
                 :key="item.id"
