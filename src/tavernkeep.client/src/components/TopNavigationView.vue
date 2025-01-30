@@ -108,8 +108,7 @@ async function toggleDetails() {
                         <div class="flex flex-row">
                             <!--Settings button-->
                             <div class="w-12">
-                                <!-- <div class="flex items-center justify-center relative" @click="showInformationEditDialog"> -->
-                                <div class="flex items-center justify-center relative" @click="router.push('/characters/build')">
+                                <div class="flex items-center justify-center relative" @click="showInformationEditDialog">
                                     <svg class="w=full h-full" viewBox="0 -960 960 960"
                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor">
                                         <path
