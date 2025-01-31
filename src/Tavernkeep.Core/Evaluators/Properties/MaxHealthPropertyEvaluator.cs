@@ -1,6 +1,6 @@
 ﻿using Tavernkeep.Core.Contracts.Interfaces;
-using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Evaluators.Modifiers;
 
 namespace Tavernkeep.Core.Evaluators.Properties
@@ -14,7 +14,7 @@ namespace Tavernkeep.Core.Evaluators.Properties
 
 		private int Calculate()
 		{
-			return _character.Ancestry.Health + _character.Class.HealthPerLevel * _character.Level + 
+			return _character.Ancestry.Health + _character.Class.HealthPerLevel * _character.Level +
 				_character.Abilities["Constitution"].Modifier * _character.Level + _modifierEvaluator.Value;
 		}
 	}

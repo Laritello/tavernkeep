@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using Tavernkeep.Core.Contracts.Structures;
+﻿using Tavernkeep.Core.Contracts.Structures;
 using Tavernkeep.Core.Evaluators.Properties;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
