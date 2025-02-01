@@ -34,7 +34,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 				HasLevels = HasLevels,
 				Level = level,
 				Related = Related,
-				Modifiers = Modifiers
+				Modifiers = Modifiers.Select(x => x.Copy()).ToList() // EF Tracking issue temporary fix
 			};
 		}
 

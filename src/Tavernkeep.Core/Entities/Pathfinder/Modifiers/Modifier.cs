@@ -13,5 +13,17 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Modifiers
 		public int Value { get; set; }
 		public bool IsBonus { get; set; }
 		public bool IsPenalty => !IsBonus;
+
+		public Modifier Copy()
+		{
+			return new Modifier
+			{
+				Targets = [.. Targets],
+				Scaling = Scaling,
+				Type = Type,
+				Value = Value,
+				IsBonus = IsBonus
+			};
+		}
 	}
 }
