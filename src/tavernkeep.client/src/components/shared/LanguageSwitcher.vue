@@ -1,15 +1,12 @@
 ﻿<script setup lang="ts">
-import { useI18n } from 'vue-i18n';
+import { useI18n, type LocaleType } from '@/i18n/useI18n.ts';
 
-import translation from '@/i18n/translation';
-
-const { t, locale } = useI18n();
-const supportedLocales = translation.supportedLocales;
+const { t, locale, availableLocales, changeLocale } = useI18n();
 
 const switchLanguage = async (event: Event) => {
     const target = event.target as HTMLSelectElement;
-    const newLocale = target.value;
-    translation.switchLanguage(newLocale);
+    const newLocale = target.value as LocaleType;
+    changeLocale(newLocale);
 };
 </script>
 
@@ -17,7 +14,7 @@ const switchLanguage = async (event: Event) => {
     <label class="form-control w-full px-4">
         <select name="language-toggle" class="select select-bordered" @change="switchLanguage">
             <option
-                v-for="supportedLocale in supportedLocales"
+                v-for="supportedLocale in availableLocales"
                 :key="`locale-${supportedLocale}`"
                 :value="supportedLocale"
                 :selected="locale === supportedLocale"
