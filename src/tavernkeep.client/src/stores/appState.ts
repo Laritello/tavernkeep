@@ -5,6 +5,7 @@ import CharacterHub from '@/api/hubs/CharacterHub';
 import ChatHub from '@/api/hubs/ChatHub';
 import { useAuth } from '@/composables/useAuth';
 import { useSession } from '@/composables/useSession';
+import { useTheme } from '@/composables/useTheme.ts';
 import { useI18n } from '@/i18n/useI18n.ts';
 import { useCharacters } from '@/stores/characters';
 import { useMessages } from '@/stores/messages';
@@ -44,6 +45,9 @@ export const useAppState = defineStore('appState', () => {
     async function initialize() {
         // apply locale
         useI18n(true);
+
+        // apply theme
+        useTheme();
 
         // start hubs and fetch initial data
         const fetchPromise = fetch().then(() => console.info('[AppStore] Initial data fetched'));

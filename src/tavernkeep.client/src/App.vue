@@ -6,8 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { themeChange } from 'theme-change';
-import { shallowRef, provide, type Component, onMounted } from 'vue';
+import { shallowRef, provide, type Component } from 'vue';
 import { useRouter } from 'vue-router';
 
 import layouts from '@/layouts';
@@ -20,10 +19,6 @@ provide('app:layout', layout);
 
 router.afterEach((to) => {
     layout.value = layouts[to.meta.layout || 'BlankLayout'];
-});
-
-onMounted(() => {
-    themeChange(true);
 });
 </script>
 
