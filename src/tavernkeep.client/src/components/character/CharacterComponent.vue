@@ -84,10 +84,10 @@ async function decreaseConditionLevel(condition: Condition) {
                 <SavingThrowsView :saving-throws="character.savingThrows" @edit="showSavingThrowEditDialog" />
                 <ConditionsView
                     :conditions="character.conditions"
-                    @addCondition="showConditionApplyDialog"
-                    @removeCondition="removeCondition"
-                    @increaseConditionLevel="increaseConditionLevel"
-                    @decreaseConditionLevel="decreaseConditionLevel"
+                    @add-condition="showConditionApplyDialog"
+                    @remove-condition="removeCondition"
+                    @increase-condition-level="increaseConditionLevel"
+                    @decrease-condition-level="decreaseConditionLevel"
                 />
             </div>
         </div>

@@ -57,7 +57,7 @@ function getParametersByType(message: Message) {
             :is="getComponentByType(message)"
             :message="message"
             :align-right="isUserSender"
-            :rollMessageParameters="getParametersByType(message)"
+            :roll-message-parameters="getParametersByType(message)"
         >
             Unknown message type: {{ message.$type }}
         </component>

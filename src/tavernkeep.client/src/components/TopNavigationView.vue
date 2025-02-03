@@ -150,7 +150,7 @@ async function toggleDetails() {
                         <button
                             class="btn btn-xs btn-outline uppercase px-0"
                             :class="{ 'rounded-b-none': !collapsed }"
-                            v-on:click="showConditionEditDialog"
+                            @click="showConditionEditDialog"
                         >
                             <div class="flex flex-row">
                                 <p class="tracking-tighter">
@@ -176,9 +176,9 @@ async function toggleDetails() {
                     </div>
                     <div class="self-stretch px-2">
                         <HealthBar
-                            @click="showHealthEditDialog"
                             :health="user.activeCharacter.value.health"
                             class="h-6"
+                            @click="showHealthEditDialog"
                         />
                     </div>
                 </div>

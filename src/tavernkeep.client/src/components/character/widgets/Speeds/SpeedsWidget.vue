@@ -47,7 +47,7 @@ async function showEditSpeedsDialog() {
         </div>
 
         <div class="flex flex-row flex-wrap justify-center">
-            <SpeedsWidgetItem v-for="speed in speeds" :speed="speed" :key="speed.type" class="w-20" />
+            <SpeedsWidgetItem v-for="speed in speeds" :key="speed.type" :speed="speed" class="w-20" />
         </div>
     </div>
 </template>

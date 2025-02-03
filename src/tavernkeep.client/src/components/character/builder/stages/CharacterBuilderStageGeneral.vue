@@ -9,14 +9,14 @@
                 <div class="label">
                     <span class="label-text">{{ t('builder.stages.general.character.name') }}</span>
                 </div>
-                <input type="text" placeholder="Unknown hero" class="input input-bordered w-full" v-model="name" />
+                <input v-model="name" type="text" placeholder="Unknown hero" class="input input-bordered w-full" />
             </label>
 
             <label class="form-control w-full">
                 <div class="label">
                     <span class="label-text">{{ t('builder.stages.general.character.level') }}</span>
                 </div>
-                <input type="text" placeholder="Unknown hero" class="input input-bordered w-full" v-model="level" />
+                <input v-model="level" type="text" placeholder="Unknown hero" class="input input-bordered w-full" />
             </label>
         </div>
 
@@ -29,7 +29,7 @@
                 <div class="label">
                     <span class="label-text">{{ t('builder.stages.general.ancestry.name') }}</span>
                 </div>
-                <input type="text" placeholder="Type here" class="input input-bordered w-full" v-model="ancestryName" />
+                <input v-model="ancestryName" type="text" placeholder="Type here" class="input input-bordered w-full" />
             </label>
 
             <label class="form-control w-full">
@@ -37,10 +37,10 @@
                     <span class="label-text">{{ t('builder.stages.general.ancestry.health') }}</span>
                 </div>
                 <input
+                    v-model="ancestryHealth"
                     type="text"
                     placeholder="Type here"
                     class="input input-bordered w-full"
-                    v-model="ancestryHealth"
                 />
             </label>
         </div>
@@ -54,7 +54,7 @@
                 <div class="label">
                     <span class="label-text">{{ t('builder.stages.general.class.name') }}</span>
                 </div>
-                <input type="text" placeholder="Type here" class="input input-bordered w-full" v-model="className" />
+                <input v-model="className" type="text" placeholder="Type here" class="input input-bordered w-full" />
             </label>
 
             <label class="form-control w-full">

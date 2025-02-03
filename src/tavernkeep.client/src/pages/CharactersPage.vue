@@ -46,9 +46,9 @@ const isActiveCharacter = (id: string) => id === currentUser.value?.activeCharac
                 <div class="w-24">{{ character.name }}</div>
                 <div class="flex items-center flex-1 justify-end">
                     <button
-                        @click="setActiveCharacter(character.id)"
                         :disabled="isActiveCharacter(character.id)"
                         class="btn btn-sm btn-active"
+                        @click="setActiveCharacter(character.id)"
                     >
                         Set active
                     </button>
@@ -79,7 +79,7 @@ const isActiveCharacter = (id: string) => id === currentUser.value?.activeCharac
     <div class="space-y-4 px-2 py-4 h-full overflow-auto">
         <div class="space-y-2 bg-base-300 shadow shadow-gray-950 rounded p-2">
             <div class="text-lg">Create character</div>
-            <form @submit.prevent="createCharacter(characterNameRef)" class="flex space-x-2">
+            <form class="flex space-x-2" @submit.prevent="createCharacter(characterNameRef)">
                 <label class="input input-bordered flex grow items-center gap-2">
                     <!-- prettier-ignore -->
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70" ><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>

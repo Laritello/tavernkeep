@@ -61,7 +61,7 @@
             <!--Show more toggle-->
             <label class="swap swap-rotate">
                 <!-- this hidden checkbox controls the state -->
-                <input type="checkbox" name="input-roll-toggle" v-model="rollsClosed" />
+                <input v-model="rollsClosed" type="checkbox" name="input-roll-toggle" />
 
                 <!-- sun icon -->
                 <svg class="swap-on h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">

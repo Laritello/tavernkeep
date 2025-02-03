@@ -14,8 +14,8 @@
         <div class="grid grid-cols-3">
             <SavingThrowWidgetItem
                 v-for="savingThrow in savingThrows"
-                :savingThrow="savingThrow"
                 :key="savingThrow.name"
+                :saving-throw="savingThrow"
                 @roll="(value) => $emit('roll', value.name)"
             />
         </div>

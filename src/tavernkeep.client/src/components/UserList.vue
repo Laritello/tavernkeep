@@ -2,8 +2,8 @@
     <v-sheet class="mx-auto pa-2">
         <div class="text-h6">Users</div>
         <v-list>
-            <v-list-item v-for="user in usersStore.dictionary" :key="user.id" v-bind:title="user.login">
-                <template v-slot:append>
+            <v-list-item v-for="user in usersStore.dictionary" :key="user.id" :title="user.login">
+                <template #append>
                     <v-btn size="small" variant="text" icon="mdi-square-edit-outline" @click="editDialog = true" />
                     <v-btn size="small" variant="text" icon="mdi-delete" @click="usersStore.deleteUser(user.id)" />
                 </template>
@@ -14,7 +14,7 @@
     <v-dialog v-model="editDialog" width="auto">
         <v-card max-width="400" prepend-icon="mdi-square-edit-outline" title="User edit">
             <UserEdit v-model="editUserModel" />
-            <template v-slot:actions>
+            <template #actions>
                 <v-btn class="ms-auto" text="Edit" @click="editDialog = false"></v-btn>
             </template>
         </v-card>

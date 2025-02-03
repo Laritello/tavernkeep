@@ -61,23 +61,23 @@ defineExpose({
         <div class="menu flex flex-row gap-4">
             <div class="flex flex-row gap-1">
                 <DiceRollerMenuItem
-                    ref="buttons"
                     v-for="button in actionButtons"
-                    :dice="button.dice"
+                    ref="buttons"
                     :key="button.dice"
+                    :dice="button.dice"
                 />
             </div>
             <div class="flex flex-row gap-2 items-center">
                 {{ t('diceRoller.modifier') }}:
-                <button @click="modifier--" class="btn btn-circle btn-error btn-sm">-</button>
+                <button class="btn btn-circle btn-error btn-sm" @click="modifier--">-</button>
                 <input
                     v-model="modifier"
                     class="input input-bordered input-sm text-center w-16"
                     :placeholder="t('diceRoller.modifier')"
                 />
-                <button @click="modifier++" class="btn btn-circle btn-success btn-sm">+</button>
+                <button class="btn btn-circle btn-success btn-sm" @click="modifier++">+</button>
             </div>
-            <button @click="rollDice()" class="btn btn-outline btn-circle btn-md">{{ t('diceRoller.roll') }}</button>
+            <button class="btn btn-outline btn-circle btn-md" @click="rollDice()">{{ t('diceRoller.roll') }}</button>
         </div>
     </BottomSheet>
 </template>

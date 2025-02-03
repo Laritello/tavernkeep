@@ -45,7 +45,7 @@ async function showEditAbilitiesDialog() {
         </div>
 
         <div class="grid grid-cols-3 md:grid-cols-6">
-            <AbilitiesWidgetItem v-for="ability in abilities" :ability="ability" :key="ability.name" />
+            <AbilitiesWidgetItem v-for="ability in abilities" :key="ability.name" :ability="ability" />
         </div>
     </div>
 </template>

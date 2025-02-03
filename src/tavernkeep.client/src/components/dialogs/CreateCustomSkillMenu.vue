@@ -49,7 +49,7 @@ defineExpose({
         <template #header>
             <h1 class="text-lg font-semibold">Create custom skill</h1>
         </template>
-        <form @submit.prevent="create" method="dialog" class="flex flex-col gap-2 mb-4">
+        <form method="dialog" class="flex flex-col gap-2 mb-4" @submit.prevent="create">
             <label class="form-control w-full">
                 <label class="label">
                     <span class="label-text text-xs">Skill type</span>

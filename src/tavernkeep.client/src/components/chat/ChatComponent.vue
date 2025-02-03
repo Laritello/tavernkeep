@@ -129,12 +129,12 @@ async function sendMessage() {
                 v-for="item in messages.list"
                 :key="item.id"
                 :message="item"
-                @contextmenu.prevent="onContextMenu($event, item)"
                 class="select-none"
+                @contextmenu.prevent="onContextMenu($event, item)"
             />
         </div>
 
-        <form @submit.prevent="sendMessage" class="flex flex-row mb-1">
+        <form class="flex flex-row mb-1" @submit.prevent="sendMessage">
             <ChatInputView v-model:content="message" :commands="slashCommands" class="w-full" />
             <div class="p-1">
                 <button v-if="!!message.trim()" type="submit" class="btn btn-md btn-circle btn-primary shadow-lg mt-1">
@@ -151,8 +151,8 @@ async function sendMessage() {
                 </button>
                 <DiceRollerButton
                     v-else
-                    @click="diceRollerMenuRef?.open()"
                     class="btn btn-md btn-circle btn-primary shadow-lg mt-1"
+                    @click="diceRollerMenuRef?.open()"
                 />
             </div>
         </form>

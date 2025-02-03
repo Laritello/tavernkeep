@@ -27,25 +27,25 @@ function cancel() {
     <dialog class="modal">
         <div class="modal-box">
             <h3 class="font-bold text-lg">{{ t('dialogs.longRest.header') }}</h3>
-            <form @submit.prevent="confirm" method="dialog">
+            <form method="dialog" @submit.prevent="confirm">
                 <div class="flex flex-col gap-1">
                     <label class="label cursor-pointer">
                         <span class="label-text">{{ t('dialogs.longRest.noComfort') }}</span>
-                        <input type="checkbox" class="checkbox" v-model="noComfort" />
+                        <input v-model="noComfort" type="checkbox" class="checkbox" />
                     </label>
 
                     <label class="label cursor-pointer">
                         <span class="label-text">{{ t('dialogs.longRest.inArmor') }}</span>
-                        <input type="checkbox" class="checkbox" v-model="inArmor" />
+                        <input v-model="inArmor" type="checkbox" class="checkbox" />
                     </label>
                 </div>
             </form>
             <div class="modal-action">
                 <form method="dialog" class="space-x-2">
-                    <button @click="confirm" class="btn btn-success w-24" type="button">
+                    <button class="btn btn-success w-24" type="button" @click="confirm">
                         {{ t('dialogs.longRest.rest') }}
                     </button>
-                    <button @click="cancel" class="btn w-24" type="button">{{ t('actions.cancel') }}</button>
+                    <button class="btn w-24" type="button" @click="cancel">{{ t('actions.cancel') }}</button>
                 </form>
             </div>
         </div>

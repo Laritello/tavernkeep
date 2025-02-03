@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col h-full">
         <div class="sticky top-0 flex items-center bg-base-200 shadow-md">
-            <button @click="goBack" class="btn btn-circle btn-ghost btn-md">
+            <button class="btn btn-circle btn-ghost btn-md" @click="goBack">
                 <span class="mdi mdi-arrow-left text-xl"></span>
             </button>
             <div>

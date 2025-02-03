@@ -10,8 +10,8 @@
         <div class="flex flex-col">
             <SkillsWidgetItem
                 v-for="skill in skills"
-                :skill="skill"
                 :key="skill.name"
+                :skill="skill"
                 class="skill-item"
                 @roll="(value) => $emit('roll', value.name)"
             />

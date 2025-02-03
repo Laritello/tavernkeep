@@ -2,11 +2,11 @@
     <Teleport to="#modal">
         <Transition name="fade">
             <component
-                v-if="modal.isOpen.value"
                 :is="modal.component.value"
+                v-if="modal.isOpen.value"
                 v-bind="{ ...modal.props.value }"
-                @click="onClick"
                 class="modal-open"
+                @click="onClick"
             />
         </Transition>
     </Teleport>

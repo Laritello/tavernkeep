@@ -57,7 +57,7 @@ function cancel() {
                 <div class="label">
                     <span class="label-text">{{ t('widgets.armor.type') }}</span>
                 </div>
-                <select class="select select-bordered" v-model="type">
+                <select v-model="type" class="select select-bordered">
                     <option disabled selected>{{ t('dialogs.armorEdit.pickOne') }}</option>
                     <option v-for="type in types" :key="type" :value="type">
                         {{ t(`pf.armor.${type.toLowerCase()}`) }}
@@ -70,30 +70,30 @@ function cancel() {
                     <div class="label">
                         <span class="label-text">{{ t('widgets.armor.bonus') }}</span>
                     </div>
-                    <input type="text" class="input input-bordered w-full max-w-xs" v-model="bonus" />
+                    <input v-model="bonus" type="text" class="input input-bordered w-full max-w-xs" />
                 </label>
 
                 <label class="form-control w-full max-w-xs">
                     <div class="label">
                         <span class="label-text text-clip text-nowrap">{{ t('widgets.armor.dexterityCap') }}</span>
-                        <input type="checkbox" class="toggle toggle-xs" v-model="hasCap" />
+                        <input v-model="hasCap" type="checkbox" class="toggle toggle-xs" />
                     </div>
                     <input
+                        v-model="cap"
                         type="text"
                         class="input input-bordered w-full max-w-xs"
-                        v-bind:disabled="!hasCap"
-                        v-model="cap"
+                        :disabled="!hasCap"
                     />
                 </label>
             </div>
 
             <div class="divider divider-neutral"></div>
 
-            <ProficiencyListEdit locale-prefix="pf.armor." v-model="currentItems" class="modal-content" />
-            <form @submit.prevent="confirm" method="dialog">
+            <ProficiencyListEdit v-model="currentItems" locale-prefix="pf.armor." class="modal-content" />
+            <form method="dialog" @submit.prevent="confirm">
                 <div class="modal-action">
                     <button class="btn btn-success w-24" type="submit">{{ t('actions.save') }}</button>
-                    <button @click="cancel" class="btn w-24" type="button">{{ t('actions.cancel') }}</button>
+                    <button class="btn w-24" type="button" @click="cancel">{{ t('actions.cancel') }}</button>
                 </div>
             </form>
         </div>

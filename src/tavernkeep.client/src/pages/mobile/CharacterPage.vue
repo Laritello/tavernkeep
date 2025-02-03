@@ -178,13 +178,13 @@ function updateSection() {
     <div v-if="character !== undefined" class="flex flex-col max-h-full">
         <!--Header-->
         <div
-            class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar lg:hidden"
             id="sections-bar"
+            class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar lg:hidden"
         >
             <a
                 v-for="section in sections"
                 :key="section.link"
-                v-bind:href="section.link"
+                :href="section.link"
                 class="py-1 px-4 pb-0 grow text-nowrap tracking-tight border-b-2 border-base-300 select-none"
                 >{{ section.header }}</a
             >
@@ -192,13 +192,13 @@ function updateSection() {
 
         <!--Character Sheet Content-->
         <div
-            v-on:scroll="updateSection"
             class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar bg-base-200"
+            @scroll="updateSection"
         >
             <AbilitiesWidget id="attributes" :abilities="character.abilities" @changed="updateAbilities" />
             <SavingThrowsWidget
                 id="saving-throws"
-                :savingThrows="character.savingThrows"
+                :saving-throws="character.savingThrows"
                 @changed="updateSavingThrows"
                 @roll="(type) => rollSavingThrow(type)"
             />

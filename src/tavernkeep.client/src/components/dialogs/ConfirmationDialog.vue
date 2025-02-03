@@ -19,8 +19,8 @@ function confirm(choice: 'confirm' | 'reject') {
             <p class="py-4">{{ message }}</p>
             <div class="modal-action">
                 <form method="dialog" class="space-x-2">
-                    <button @click="confirm('confirm')" class="btn btn-error w-24" type="button">Yes</button>
-                    <button @click="confirm('reject')" class="btn w-24" type="button">No</button>
+                    <button class="btn btn-error w-24" type="button" @click="confirm('confirm')">Yes</button>
+                    <button class="btn w-24" type="button" @click="confirm('reject')">No</button>
                 </form>
             </div>
         </div>

@@ -33,13 +33,13 @@ onMounted(() => {
 </script>
 
 <template>
-    <ProficiencyListEdit locale-prefix="pf.skills." v-model="characterSkills" />
+    <ProficiencyListEdit v-model="characterSkills" locale-prefix="pf.skills." />
     <div class="flex justify-end mt-4">
         <button class="btn btn-sm btn-secondary btn-outline" @click="createCustomSkillMenu?.open()">
             Add custom skill
         </button>
     </div>
-    <form @submit.prevent="save" class="sticky bottom-4 right-2">
+    <form class="sticky bottom-4 right-2" @submit.prevent="save">
         <div class="modal-action">
             <button class="btn btn-circle btn-secondary" type="submit">
                 <span class="mdi mdi-account-edit text-lg"></span>

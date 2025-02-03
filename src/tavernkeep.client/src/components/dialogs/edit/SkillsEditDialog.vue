@@ -24,8 +24,8 @@ const convertedSkills = Object.values(skills).map((item) => ({
 <template>
     <ProficiencyEditDialog
         :caption="t('dialogs.skillsEdit.header')"
-        localePrefix="pf.skills."
+        locale-prefix="pf.skills."
         :items="convertedSkills"
-        :closeModal="closeModal"
+        :close-modal="closeModal"
     />
 </template>

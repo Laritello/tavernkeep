@@ -36,7 +36,7 @@
                             </svg>
                         </span>
                     </div>
-                    <button class="btn btn-sm btn-outline btn-circle btn-error" v-on:click="removeCondition(condition)">
+                    <button class="btn btn-sm btn-outline btn-circle btn-error" @click="removeCondition(condition)">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 -960 960 960"
@@ -58,7 +58,7 @@
                     class="flex flex-row border-base-200 border-b-2 p-1 align-items-center"
                 >
                     <p class="flex-1 self-center">{{ condition.name }}</p>
-                    <button class="btn btn-sm btn-outline btn-circle text-primary" v-on:click="addCondition(condition)">
+                    <button class="btn btn-sm btn-outline btn-circle text-primary" @click="addCondition(condition)">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 -960 960 960"
@@ -72,8 +72,8 @@
             </div>
 
             <div class="modal-action">
-                <button @click="save" class="btn btn-success w-24" type="submit">{{ t('actions.save') }}</button>
-                <button @click="cancel" class="btn w-24" type="button">{{ t('actions.cancel') }}</button>
+                <button class="btn btn-success w-24" type="submit" @click="save">{{ t('actions.save') }}</button>
+                <button class="btn w-24" type="button" @click="cancel">{{ t('actions.cancel') }}</button>
             </div>
         </div>
     </dialog>

@@ -62,10 +62,10 @@ defineExpose({ count, dice, reset });
                 {{ count }}
             </span>
             <button
+                class="btn btn-md btn-success btn-circle"
                 @click="onClickOrTap"
                 @click.right.prevent="onRightClick"
                 @contextmenu.prevent="onLongTap"
-                class="btn btn-md btn-success btn-circle"
             >
                 <Component :is="diceIconComponent" class="fill-current size-8" />
             </button>

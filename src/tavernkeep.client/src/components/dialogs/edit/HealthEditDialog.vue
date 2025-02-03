@@ -58,21 +58,21 @@ function cancel() {
                 <div class="modal-action justify-center">
                     <button
                         type="button"
-                        @click="applyCurrent()"
                         class="btn w-24"
                         :class="{ 'btn-success': selected >= 0, 'btn-error': selected < 0 }"
+                        @click="applyCurrent()"
                     >
                         {{ $t(`dialogs.healthEdit.${selected >= 0 ? 'heal' : 'damage'}`) }}
                     </button>
                     <button
                         type="button"
-                        @click="applyTemporary()"
                         class="btn btn-info w-24"
                         :class="{ 'btn-disabled': selected < 0 }"
+                        @click="applyTemporary()"
                     >
                         {{ $t('dialogs.healthEdit.temporary') }}
                     </button>
-                    <button @click="cancel" class="btn w-24" type="button">{{ $t('actions.cancel') }}</button>
+                    <button class="btn w-24" type="button" @click="cancel">{{ $t('actions.cancel') }}</button>
                 </div>
             </form>
         </div>

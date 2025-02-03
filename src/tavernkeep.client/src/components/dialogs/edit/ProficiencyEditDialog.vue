@@ -35,11 +35,11 @@ function cancel() {
     <dialog class="modal">
         <div class="modal-box overflow-y-hidden">
             <h3 class="font-bold text-lg">{{ caption }}</h3>
-            <ProficiencyListEdit :locale-prefix="localePrefix" v-model="currentItems" class="modal-content" />
-            <form @submit.prevent="confirm" method="dialog">
+            <ProficiencyListEdit v-model="currentItems" :locale-prefix="localePrefix" class="modal-content" />
+            <form method="dialog" @submit.prevent="confirm">
                 <div class="modal-action">
                     <button class="btn btn-success w-24" type="submit">{{ t('actions.save') }}</button>
-                    <button @click="cancel" class="btn w-24" type="button">{{ t('actions.cancel') }}</button>
+                    <button class="btn w-24" type="button" @click="cancel">{{ t('actions.cancel') }}</button>
                 </div>
             </form>
         </div>

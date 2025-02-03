@@ -44,22 +44,22 @@ function cancel() {
                             <span class="label-text text-clip text-nowrap">{{
                                 t(`pf.speeds.${item.type.toLowerCase()}`)
                             }}</span>
-                            <input type="checkbox" class="toggle toggle-xs" v-model="item.active" />
+                            <input v-model="item.active" type="checkbox" class="toggle toggle-xs" />
                         </div>
                         <input
+                            v-model="item.base"
                             type="text"
                             class="input input-bordered w-full max-w-xs"
-                            v-bind:disabled="!item.active"
-                            v-model="item.base"
+                            :disabled="!item.active"
                         />
                     </label>
                 </div>
             </div>
 
-            <form @submit.prevent="confirm" method="dialog">
+            <form method="dialog" @submit.prevent="confirm">
                 <div class="modal-action">
                     <button class="btn btn-success w-24" type="submit">{{ t('actions.save') }}</button>
-                    <button @click="cancel" class="btn w-24" type="button">{{ t('actions.cancel') }}</button>
+                    <button class="btn w-24" type="button" @click="cancel">{{ t('actions.cancel') }}</button>
                 </div>
             </form>
         </div>

@@ -66,7 +66,7 @@ async function deleteUser(id: string) {
     <div class="space-y-4 px-2 py-4 h-full overflow-auto">
         <div class="space-y-2 bg-base-300 shadow shadow-gray-950 rounded p-2">
             <div class="text-lg">Create character</div>
-            <form @submit.prevent="createCharacter" class="flex space-x-2">
+            <form class="flex space-x-2" @submit.prevent="createCharacter">
                 <label class="input input-bordered flex min-w-64 items-center gap-2">
                     <!-- prettier-ignore -->
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70" ><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
@@ -85,7 +85,7 @@ async function deleteUser(id: string) {
                 <input type="submit" value="Create new" class="btn btn-active justify-end" />
             </form>
         </div>
-        <form @submit.prevent="createUser" class="space-y-2 bg-base-300 shadow shadow-gray-950 rounded p-2">
+        <form class="space-y-2 bg-base-300 shadow shadow-gray-950 rounded p-2" @submit.prevent="createUser">
             <div class="text-lg">Create user</div>
             <label class="input input-bordered flex items-center gap-2">
                 <!-- prettier-ignore -->
@@ -145,14 +145,14 @@ async function deleteUser(id: string) {
                         <div class="flex items-center flex-1 justify-end">
                             <UserSelector
                                 v-model="character.ownerId"
-                                @update:modelValue="(userId) => assign(character.id, userId)"
                                 :users="Object.values(users.dictionary)"
                                 class="pr-3"
+                                @update:model-value="(userId) => assign(character.id, userId)"
                             />
                             <button
-                                @click="setActiveCharacter(user.id, character.id)"
                                 :disabled="character.id === user.activeCharacterId"
                                 class="btn btn-sm btn-active"
+                                @click="setActiveCharacter(user.id, character.id)"
                             >
                                 Set active
                             </button>

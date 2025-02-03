@@ -35,7 +35,7 @@ function cancel() {
     <dialog class="modal">
         <div class="modal-box">
             <h3 class="font-bold text-lg">{{ t('dialogs.abilitiesEdit.header') }}</h3>
-            <form @submit.prevent="confirm" method="dialog" class="space-x-2">
+            <form method="dialog" class="space-x-2" @submit.prevent="confirm">
                 <div class="grid grid-cols-3">
                     <template v-for="ability in currentItems" :key="ability.type">
                         <div class="box-border flex flex-col m-2 p-2 border-2 rounded-lg">
@@ -54,7 +54,7 @@ function cancel() {
                 </div>
                 <div class="modal-action">
                     <button class="btn btn-success w-24" type="submit">{{ t('actions.save') }}</button>
-                    <button @click="cancel" class="btn w-24" type="button">{{ t('actions.cancel') }}</button>
+                    <button class="btn w-24" type="button" @click="cancel">{{ t('actions.cancel') }}</button>
                 </div>
             </form>
         </div>

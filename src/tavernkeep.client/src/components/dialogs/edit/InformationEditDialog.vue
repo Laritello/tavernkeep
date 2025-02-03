@@ -33,17 +33,17 @@ function cancel() {
     <dialog class="modal">
         <div class="modal-box">
             <h3 class="font-bold text-lg">{{ t('dialogs.informationEdit.header') }}</h3>
-            <form @submit.prevent="confirm" method="dialog" class="space-x-2">
+            <form method="dialog" class="space-x-2" @submit.prevent="confirm">
                 <div class="flex flex-col gap-1">
                     <label class="form-control w-full max-w-xs">
                         <div class="label">
                             <span class="label-text">{{ t('dialogs.informationEdit.name') }}</span>
                         </div>
                         <input
+                            v-model="information.name"
                             type="text"
                             placeholder="Type here"
                             class="input input-bordered w-full max-w-xs"
-                            v-model="information.name"
                         />
                     </label>
 
@@ -52,10 +52,10 @@ function cancel() {
                             <span class="label-text">{{ t('dialogs.informationEdit.level') }}</span>
                         </div>
                         <input
+                            v-model="information.level"
                             type="text"
                             placeholder="Type here"
                             class="input input-bordered w-full max-w-xs"
-                            v-model="information.level"
                         />
                     </label>
 
@@ -64,10 +64,10 @@ function cancel() {
                             <span class="label-text">{{ t('dialogs.informationEdit.ancestry') }}</span>
                         </div>
                         <input
+                            v-model="information.ancestry"
                             type="text"
                             placeholder="Type here"
                             class="input input-bordered w-full max-w-xs"
-                            v-model="information.ancestry"
                         />
                     </label>
 
@@ -76,16 +76,16 @@ function cancel() {
                             <span class="label-text">{{ t('dialogs.informationEdit.class') }}</span>
                         </div>
                         <input
+                            v-model="information.class"
                             type="text"
                             placeholder="Type here"
                             class="input input-bordered w-full max-w-xs"
-                            v-model="information.class"
                         />
                     </label>
                 </div>
                 <div class="modal-action">
                     <button class="btn btn-success w-24" type="submit">{{ t('actions.save') }}</button>
-                    <button @click="cancel" class="btn w-24" type="button">{{ t('actions.cancel') }}</button>
+                    <button class="btn w-24" type="button" @click="cancel">{{ t('actions.cancel') }}</button>
                 </div>
             </form>
         </div>

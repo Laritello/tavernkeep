@@ -24,8 +24,8 @@ const convertedSavingThrows = Object.values(savingThrows).map((s) => ({
 <template>
     <ProficiencyEditDialog
         :caption="t('dialogs.savingThrowsEdit.header')"
-        localePrefix="pf.savingThrows."
+        locale-prefix="pf.savingThrows."
         :items="convertedSavingThrows"
-        :closeModal="closeModal"
+        :close-modal="closeModal"
     />
 </template>

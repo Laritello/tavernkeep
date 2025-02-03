@@ -2,7 +2,7 @@
     <dialog class="modal">
         <div class="modal-box">
             <h3 class="font-bold text-lg">Edit ability</h3>
-            <form @submit.prevent="save" method="dialog" class="space-x-2">
+            <form method="dialog" class="space-x-2" @submit.prevent="save">
                 <label class="form-control w-full max-w-md">
                     <span class="label label-text">{{ ability.name }}</span>
                     <input
@@ -16,7 +16,7 @@
                 </label>
                 <div class="modal-action">
                     <button class="btn btn-success w-24" type="submit">Save</button>
-                    <button @click="cancel" class="btn w-24" type="button">Cancel</button>
+                    <button class="btn w-24" type="button" @click="cancel">Cancel</button>
                 </div>
             </form>
         </div>
