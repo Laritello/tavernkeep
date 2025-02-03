@@ -4,7 +4,9 @@ import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import { RollType } from '@/contracts/enums';
 import DiceRollerMenuItem from './DiceRollerMenuItem.vue';
 import BottomSheet from '@douxcode/vue-spring-bottom-sheet'
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const api = ApiClientFactory.createApiClient();
 type diceType = 'd4' | 'd6' | 'd8' | 'd10' | 'd12' | 'd20';
 const actionButtons = [
@@ -51,7 +53,7 @@ defineExpose({
     <BottomSheet ref="menu" @closed="resetToDefault">
         <template #header>
             <div class="flex flex-row justify-between items-center">
-                <h1 class="text-xl font-semibold">Dice roller</h1>
+                <h1 class="text-xl font-semibold">{{ t('diceRoller.header') }}</h1>
             </div>
         </template>
         <div class="menu flex flex-row gap-4">
@@ -64,12 +66,12 @@ defineExpose({
                 />
             </div>
             <div class="flex flex-row gap-2 items-center">
-                Modifier:
+                {{ t('diceRoller.modifier') }}:
                 <button @click="modifier--" class="btn btn-circle btn-error btn-sm">-</button>
-                <input v-model="modifier" class="input input-bordered input-sm text-center w-16" placeholder="Modifier" />
+                <input v-model="modifier" class="input input-bordered input-sm text-center w-16" :placeholder="t('diceRoller.modifier')" />
                 <button @click="modifier++" class="btn btn-circle btn-success btn-sm">+</button>
             </div>
-            <button @click="rollDice()" class="btn btn-outline btn-circle btn-md">Roll</button>
+            <button @click="rollDice()" class="btn btn-outline btn-circle btn-md">{{ t('diceRoller.roll') }}</button>
         </div>
     </BottomSheet>
 </template>

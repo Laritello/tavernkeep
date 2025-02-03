@@ -32,7 +32,7 @@ async function logout() {
     <div class="flex flex-col h-full pt-2">
         <div class="flex flex-row justify-between items-center">
             <h1 class="font-semibold px-4 text-slate-500 uppercase">{{ t('settings.characters.header') }}</h1>
-            <button class="btn btn-outline btn-xs mx-4" @click="router.push('/characters/build')">
+            <button class="btn btn-outline btn-xs mx-4 uppercase" @click="router.push('/characters/build')">
                 {{ $t('settings.characters.create') }}
             </button>
         </div>
@@ -70,8 +70,8 @@ async function logout() {
                             tabindex="0"
                             class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow border border-base-200"
                         >
-                            <li><a>Select character as active</a></li>
-                            <li><a>Delete character</a></li>
+                            <li><a>{{ t('settings.characters.setActive') }}</a></li>
+                            <li><a class="text-red-600">{{ t('settings.characters.delete') }}</a></li>
                         </ul>
                     </div>
                 </div>
