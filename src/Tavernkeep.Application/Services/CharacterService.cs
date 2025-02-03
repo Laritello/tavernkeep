@@ -21,6 +21,7 @@ namespace Tavernkeep.Application.Services
 			{
 				Owner = owner,
 				Name = characterData.Name,
+				Level = characterData.Level,
 			};
 
 			character.Ancestry = new(characterData.Ancestry.Name, characterData.Ancestry.Health)

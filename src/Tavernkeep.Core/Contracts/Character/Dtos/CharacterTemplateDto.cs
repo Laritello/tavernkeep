@@ -1,7 +1,4 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder.Properties;
-
-namespace Tavernkeep.Core.Contracts.Character.Dtos
+﻿namespace Tavernkeep.Core.Contracts.Character.Dtos
 {
 	/// <summary>
 	/// <see cref="CharacterTemplateDto"/> is a data transfer object used to provide default values for character creation and to capture user-customized character attributes for submission to the server.
@@ -9,6 +6,7 @@ namespace Tavernkeep.Core.Contracts.Character.Dtos
 	public class CharacterTemplateDto
 	{
 		public string Name { get; set; } = default!;
+		public int Level { get; set; }
 
 		public AncestryDto Ancestry { get; set; } = default!;
 		public ClassDto Class { get; set; } = default!;
