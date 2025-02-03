@@ -4,9 +4,11 @@ import { watch } from 'vue';
 import { i18n, type LocaleType } from '@/i18n';
 
 export const useI18n = (initialize = false) => {
-    const userLanguageAndLocale = window.navigator.language.split('-');
-    const userPreferredLanguage: LocaleType = userLanguageAndLocale[0] || import.meta.env.VITE_DEFAULT_LOCALE;
-    const locale = useLocalStorage<LocaleType>('tavernkeep.locale', userPreferredLanguage);
+    const userPreferredLanguage = window.navigator.language.split('-')[0];
+    const defaultLanguage: LocaleType = i18n.global.availableLocales.includes(userPreferredLanguage)
+        ? userPreferredLanguage
+        : import.meta.env.VITE_DEFAULT_LOCALE;
+    const locale = useLocalStorage<LocaleType>('tavernkeep.locale', defaultLanguage);
 
     if (initialize) {
         i18n.global.locale.value = locale.value;
