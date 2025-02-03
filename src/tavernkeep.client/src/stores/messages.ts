@@ -13,7 +13,7 @@ export const useMessages = defineStore('messages.store', () => {
         appendMessage(msg);
     });
 
-    ChatHub.connection.on('DeleteMessage', async (msg: Message) => {
+    ChatHub.connection.on('DeleteMessage', (msg: Message) => {
         const index = messageList.value.findIndex((m) => m.id === msg.id);
         if (index !== -1) {
             messageList.value.splice(index, 1);

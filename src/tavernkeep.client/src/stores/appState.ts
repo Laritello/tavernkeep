@@ -52,7 +52,7 @@ export const useAppState = defineStore('appState', () => {
         // start hubs and fetch initial data
         const fetchPromise = fetch().then(() => console.info('[AppStore] Initial data fetched'));
         const startHubsPromise = startHubs().then(() => console.info('[AppStore] Hubs started'));
-        Promise.all([fetchPromise, startHubsPromise])
+        return Promise.all([fetchPromise, startHubsPromise])
             .catch((e) => {
                 const auth = useAuth();
                 auth.logout();
