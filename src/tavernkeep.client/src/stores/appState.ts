@@ -1,14 +1,15 @@
 import { defineStore } from 'pinia';
-import translation from '@/i18n/translation';
-import ChatHub from '@/api/hubs/ChatHub';
-import CharacterHub from '@/api/hubs/CharacterHub';
+import { ref, watch } from 'vue';
 
+import CharacterHub from '@/api/hubs/CharacterHub';
+import ChatHub from '@/api/hubs/ChatHub';
+import { useAuth } from '@/composables/useAuth';
 import { useSession } from '@/composables/useSession';
-import { useUsers } from '@/stores/users';
+import { useTheme } from '@/composables/useTheme.ts';
+import { useI18n } from '@/i18n/useI18n.ts';
 import { useCharacters } from '@/stores/characters';
 import { useMessages } from '@/stores/messages';
-import { ref, watch } from 'vue';
-import { useAuth } from '@/composables/useAuth';
+import { useUsers } from '@/stores/users';
 
 export const useAppState = defineStore('appState', () => {
     const session = useSession();
@@ -43,9 +44,11 @@ export const useAppState = defineStore('appState', () => {
 
     async function initialize() {
         // apply locale
-        const locale = translation.guessDefaultLocale();
-        translation.switchLanguage(locale);
-        
+        useI18n(true);
+
+        // apply theme
+        useTheme();
+
         // start hubs and fetch initial data
         const fetchPromise = fetch().then(() => console.info('[AppStore] Initial data fetched'));
         const startHubsPromise = startHubs().then(() => console.info('[AppStore] Hubs started'));

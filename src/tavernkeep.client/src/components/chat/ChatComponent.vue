@@ -8,8 +8,10 @@ import DiceRollerButton from '@/components/shared/DiceRoller/DiceRollerButton.vu
 import DiceRollerMenu from '@/components/shared/DiceRoller/DiceRollerMenu.vue';
 import { useModal } from '@/composables/useModal';
 import { useSession } from '@/composables/useSession';
+import { useTheme } from '@/composables/useTheme.ts';
 import { UserRole } from '@/contracts/enums';
 import { RollType } from '@/contracts/enums/RollType';
+import { vAutoScroll } from '@/directives/vAutoScroll.ts';
 import type { Message, TextMessage } from '@/entities';
 import { useMessages } from '@/stores/messages';
 
@@ -20,6 +22,7 @@ import ChatMessageView from './messages/ChatMessageView.vue';
 const session = useSession();
 const messages = useMessages();
 
+const { isDark } = useTheme();
 const diceRollerMenuRef = ref<InstanceType<typeof DiceRollerMenu>>();
 const message = ref('');
 const selectedUserId = ref<string>();
@@ -30,7 +33,7 @@ const contextMenuOptions = reactive({
     x: 0,
     y: 0,
     message: undefined as Message | undefined,
-    theme: 'default ' + localStorage.getItem('theme'),
+    theme: `default ${isDark.value ? 'dark' : ''}`,
 });
 
 // TODO: Restore this feature
@@ -121,7 +124,7 @@ async function sendMessage() {
 
 <template>
     <div class="flex flex-col h-full">
-        <div v-chat-scroll="{ always: false, smooth: true }" class="w-full grow max-h-full overflow-y-auto px-2">
+        <div v-auto-scroll="{ behavior: 'smooth', threshold: 160 }" class="w-full grow max-h-full overflow-y-auto px-2">
             <ChatMessageView
                 v-for="item in messages.list"
                 :key="item.id"

@@ -2,7 +2,7 @@ import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
 import { useSession } from '@/composables/useSession';
 
-type AxiosResponseConfig = InternalAxiosRequestConfig & { isRetry: boolean };
+type AxiosResponseConfig = InternalAxiosRequestConfig & { isRetry?: boolean };
 type AxiosResponseError = {
     config: AxiosResponseConfig;
     response: {

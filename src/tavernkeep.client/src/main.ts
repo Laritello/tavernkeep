@@ -3,8 +3,6 @@ import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css';
 import '@mdi/font/css/materialdesignicons.css';
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
-// @ts-expect-error no types defined
-import VueChatScroll from 'vue3-chat-scroll';
 import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
 
@@ -22,7 +20,6 @@ const pinia = createPinia();
 app.use(pinia);
 app.use(router);
 app.use(i18n);
-app.use(VueChatScroll);
 app.use(ContextMenu);
 app.use(Toast, {
     transition: 'Vue-Toastification__bounce',
