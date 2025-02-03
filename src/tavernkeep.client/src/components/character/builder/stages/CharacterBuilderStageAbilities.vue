@@ -1,10 +1,10 @@
 <template>
     <div class="flex flex-col items-center content-stretch">
-        <label v-for="ability in abilities" :key="ability.name" class="form-control w-full max-w-xs">
+        <label v-for="ability in abilities" :key="ability.name" class="form-control w-full">
             <div class="label">
                 <span class="label-text">{{ t(`pf.attributes.${ability.name.toLowerCase()}`) }}</span>
             </div>
-            <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"
+            <input type="text" placeholder="Type here" class="input input-bordered w-full"
                 v-model="ability.score" />
         </label>
     </div>

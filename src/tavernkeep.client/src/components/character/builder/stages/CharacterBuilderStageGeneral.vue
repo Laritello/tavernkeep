@@ -1,49 +1,64 @@
 <template>
-    <div class="flex flex-col items-center content-stretch">
-        <h1 class="font-semibold text-slate-500 uppercase self-start">Character</h1>
+    <div class="flex flex-col items-stretch content-stretch gap-6">
+        <div>
+            <h1 class="font-semibold text-slate-500 uppercase self-start px-1">{{
+                t('builder.stages.general.character.header') }}</h1>
 
-        <label class="form-control w-full max-w-xs">
-            <div class="label">
-                <span class="label-text">Name</span>
-            </div>
-            <input type="text" placeholder="Unknown hero" class="input input-bordered w-full max-w-xs" v-model="name" />
-        </label>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">{{ t('builder.stages.general.character.name') }}</span>
+                </div>
+                <input type="text" placeholder="Unknown hero" class="input input-bordered w-full" v-model="name" />
+            </label>
 
-        <h1 class="font-semibold mt-4 text-slate-500 uppercase self-start">Ancestry</h1>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">{{ t('builder.stages.general.character.level') }}</span>
+                </div>
+                <input type="text" placeholder="Unknown hero" class="input input-bordered w-full" v-model="level" />
+            </label>
+        </div>
 
-        <label class="form-control w-full max-w-xs">
-            <div class="label">
-                <span class="label-text">Name</span>
-            </div>
-            <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"
-                v-model="ancestryName" />
-        </label>
+        <div>
+            <h1 class="font-semibold text-slate-500 uppercase self-start px-1">{{
+                t('builder.stages.general.ancestry.header') }}</h1>
 
-        <label class="form-control w-full max-w-xs">
-            <div class="label">
-                <span class="label-text">Health</span>
-            </div>
-            <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"
-                v-model="ancestryHealth" />
-        </label>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">{{ t('builder.stages.general.ancestry.name') }}</span>
+                </div>
+                <input type="text" placeholder="Type here" class="input input-bordered w-full" v-model="ancestryName" />
+            </label>
 
-        <h1 class="font-semibold mt-4 text-slate-500 uppercase self-start">Class</h1>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">{{ t('builder.stages.general.ancestry.health') }}</span>
+                </div>
+                <input type="text" placeholder="Type here" class="input input-bordered w-full"
+                    v-model="ancestryHealth" />
+            </label>
 
-        <label class="form-control w-full max-w-xs">
-            <div class="label">
-                <span class="label-text">Name</span>
-            </div>
-            <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"
-                v-model="className" />
-        </label>
+        </div>
 
-        <label class="form-control w-full max-w-xs">
-            <div class="label">
-                <span class="label-text">Health per level</span>
-            </div>
-            <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"
-                v-model="classHealthPerLevel" />
-        </label>
+        <div>
+            <h1 class="font-semibold text-slate-500 uppercase self-start px-1">{{
+                t('builder.stages.general.class.header') }}</h1>
+
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">{{ t('builder.stages.general.class.name') }}</span>
+                </div>
+                <input type="text" placeholder="Type here" class="input input-bordered w-full" v-model="className" />
+            </label>
+
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">{{ t('builder.stages.general.class.healthPerLevel') }}</span>
+                </div>
+                <input type="text" placeholder="Type here" class="input input-bordered w-full"
+                    v-model="classHealthPerLevel" />
+            </label>
+        </div>
     </div>
 </template>
 
@@ -51,12 +66,16 @@
 import type { Ancestry, Class } from '@/contracts/character';
 import type { Character } from '@/entities';
 import { ref, watch, type Ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const { character } = defineProps<{
     character: Character
 }>();
 
+const { t } = useI18n();
+
 const name: Ref<string> = ref(character.name);
+const level: Ref<number> = ref(character.level);
 
 const ancestryName: Ref<string> = ref(character.ancestry.name);
 const ancestryHealth: Ref<number> = ref(character.ancestry.health);
@@ -69,6 +88,7 @@ const emits = defineEmits<{
 }>();
 
 watch(name, () => emits("update", { key: "name", value: name.value }));
+watch(level, () => emits("update", { key: "level", value: level.value }));
 
 watch(ancestryName, () => emits("update", { key: "ancestry", value: { name: ancestryName.value, health: ancestryHealth.value } as Ancestry }));
 watch(ancestryHealth, () => emits("update", { key: "ancestry", value: { name: ancestryName.value, health: ancestryHealth.value } as Ancestry }));

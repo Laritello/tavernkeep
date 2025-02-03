@@ -13,16 +13,16 @@
                 </svg>
 
                 <div class="flex flex-col items-start">
-                    <span class="text-xs font-normal md:block">Back</span>
-                    <span>{{ previousStage.name }}</span>
+                    <span class="text-xs font-normal md:block">{{ t('builder.actions.back') }}</span>
+                    <span>{{ t(`builder.stages.${previousStage.name}.name`) }}</span>
                 </div>
             </button>
 
             <button v-if="nextStage !== undefined" class="btn btn-neutral justify-self-end col-start-2"
                 @click="moveToNextStage">
                 <div class="flex flex-col items-end">
-                    <span class="text-xs font-normal md:block">Next</span>
-                    <span>{{ nextStage.name }}</span>
+                    <span class="text-xs font-normal md:block">{{ t('builder.actions.next') }}</span>
+                    <span>{{ t(`builder.stages.${nextStage.name}.name`) }}</span>
                 </div>
 
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 -960 960 960">
@@ -33,7 +33,7 @@
             <button v-if="nextStage == undefined" class="btn btn-primary justify-self-end col-start-2"
                 @click="createCharacter">
                 <div class="flex flex-col items-end">
-                    <span>Create</span>
+                    <span>{{ t('builder.actions.create') }}</span>
                 </div>
 
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 -960 960 960">
@@ -53,6 +53,9 @@ import CharacterBuilderStageSavingThrows from './stages/CharacterBuilderStageSav
 import CharacterBuilderStageSkills from './stages/CharacterBuilderStageSkills.vue';
 import type { Character } from '@/entities';
 import CharacterBuilderStageWelcome from './stages/CharacterBuilderStageWelcome.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 interface Stage {
     order: number;
@@ -63,27 +66,27 @@ interface Stage {
 const stages: Stage[] = [
     {
         order: 1,
-        name: "Welcome",
+        name: "welcome",
         display: CharacterBuilderStageWelcome
     },
     {
         order: 2,
-        name: "General",
+        name: "general",
         display: CharacterBuilderStageGeneral
     },
     {
         order: 3,
-        name: "Abilities",
+        name: "abilities",
         display: CharacterBuilderStageAbilities
     },
     {
         order: 4,
-        name: "Skills",
+        name: "skills",
         display: CharacterBuilderStageSkills
     },
     {
         order: 5,
-        name: "Saving Throws",
+        name: "savingThrows",
         display: CharacterBuilderStageSavingThrows
     },
 ]
