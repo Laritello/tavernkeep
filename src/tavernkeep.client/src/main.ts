@@ -10,8 +10,7 @@ import D20Icon from '@/assets/dice/d20-grey.svg';
 
 import App from './App.vue';
 import './assets/main.css';
-import i18n from './i18n';
-// Router
+import { i18n } from './i18n';
 import { router } from './router';
 import { useAppState } from './stores/appState';
 
