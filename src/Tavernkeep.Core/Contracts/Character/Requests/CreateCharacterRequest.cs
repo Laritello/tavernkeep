@@ -1,8 +1,11 @@
-﻿namespace Tavernkeep.Core.Contracts.Character.Requests
+﻿using Tavernkeep.Core.Contracts.Character.Dtos;
+
+namespace Tavernkeep.Core.Contracts.Character.Requests
 {
 	/// <summary>
 	/// Represents a request to create a character.
 	/// </summary>
+	[Obsolete]
 	public class CreateCharacterRequest
 	{
 		/// <summary>
@@ -11,12 +14,8 @@
 		public Guid OwnerId { get; set; }
 
 		/// <summary>
-		/// The name of the character.
+		/// The character DTO.
 		/// </summary>
-		public string Name { get; set; } = default!;
-
-		public string AncestryId { get; set; } = default!;
-		public string BackgroundId { get; set; } = default!;
-		public string ClassId { get; set; } = default!;
+		public CharacterTemplateDto Character { get; set; } = default!;
 	}
 }

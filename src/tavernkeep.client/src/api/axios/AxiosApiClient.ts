@@ -3,7 +3,7 @@ import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import type { User, Message, Character, SkillRollMessage } from '@/entities';
-import type { Health, Lore, Perception } from '@/contracts/character';
+import type { Health, Perception } from '@/contracts/character';
 import { UserRole, Proficiency, RollType, ArmorType, SpeedType, SkillType } from '@/contracts/enums';
 import type { Condition } from '@/entities/Condition';
 import type { SavingThrowRollMessage } from '@/entities/Message';
@@ -102,13 +102,13 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async getCharacterTemplate() : Promise<Character> {
+    async getCharacterTemplate(): Promise<Character> {
         const response = await this.client.get<Character>('characters/template');
         return getPayloadOrThrow(response);
     }
 
-    async createCharacter(ownerId: string, name: string): Promise<Character> {
-        const response = await this.client.post<Character>('characters', { ownerId, name });
+    async createCharacter(character: Character): Promise<Character> {
+        const response = await this.client.post<Character>('characters', character);
         return getPayloadOrThrow(response);
     }
 
@@ -128,32 +128,6 @@ export class AxiosApiClient {
             characterId: characterId,
             userId: userId,
         });
-        return getPayloadOrThrow(response);
-    }
-
-    async createLore(characterId: string, topic: string, proficiency: Proficiency): Promise<Lore> {
-        const response = await this.client.post<Lore>('lore', {
-            characterId: characterId,
-            topic: topic,
-            proficiency: proficiency,
-        });
-
-        return getPayloadOrThrow(response);
-    }
-
-    async editLore(characterId: string, topic: string, proficiency: Proficiency): Promise<Lore> {
-        const response = await this.client.patch<Lore>('lore', {
-            characterId: characterId,
-            topic: topic,
-            proficiency: proficiency,
-        });
-
-        return getPayloadOrThrow(response);
-    }
-
-    async deleteLore(characterId: string, topic: string): Promise<void> {
-        const response = await this.client.delete('lore/' + characterId, { params: { topic: topic } });
-
         return getPayloadOrThrow(response);
     }
 
@@ -188,7 +162,7 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async createSkill(characterId: string, type: SkillType, baseAbility: string, name: string ): Promise<void> {
+    async createSkill(characterId: string, type: SkillType, baseAbility: string, name: string): Promise<void> {
         const response = await this.client.post(`custom/skill`, {
             type,
             baseAbility,
@@ -202,11 +176,11 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async createCustomSkill(characterId: string, baseAbility: string, name: string ): Promise<void> {
+    async createCustomSkill(characterId: string, baseAbility: string, name: string): Promise<void> {
         return this.createSkill(characterId, SkillType.Custom, baseAbility, name);
     }
 
-    async createLoreSkill(characterId: string, name: string ): Promise<void> {
+    async createLoreSkill(characterId: string, name: string): Promise<void> {
         return this.createSkill(characterId, SkillType.Lore, 'Intelligence', name);
     }
 
@@ -325,7 +299,7 @@ export class AxiosApiClient {
         const response = await this.client.patch(`characters/${characterId}/health`, health);
         return getPayloadOrThrow(response);
     }
-    
+
     /*
      * @param amount: positive number to heal, negative number to damage
      */

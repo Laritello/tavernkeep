@@ -16,6 +16,5 @@ namespace Tavernkeep.Core.Contracts.Character.Dtos
 		public required ICollection<SkillDto> Skills { get; set; }
 		public required ICollection<SavingThrowDto> SavingThrows { get; set; }
 		public SkillShortDto Perception { get; set; } = default!;
-		public Dictionary<SpeedType, Speed> Speeds { get; set; } = default!;
 	}
 }
