@@ -16,8 +16,8 @@ const { commands } = defineProps<{
 const suggestions = ref<Suggestion[]>([]);
 const showSuggestions = ref<boolean>(false);
 const editableSpan = ref<HTMLInputElement | null>();
-const content = defineModel<string>("content", {
-    default: "",
+const content = defineModel<string>('content', {
+    default: '',
 });
 
 // Process the content on input
@@ -32,7 +32,7 @@ const processInput = (event: Event): void => {
 
 // Handle Enter key to prevent default behavior
 const handleEnter = (event: KeyboardEvent): void => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
         event.preventDefault();
         // Optionally, trigger an action (e.g., submit)
     }
@@ -54,8 +54,8 @@ onMounted(() => {
 
 // Span doesn't want to remove <br> when message is deleted completele, so we force it.
 function sanitize(text: string): string {
-    if (text.trim() === "") {
-        return "";
+    if (text.trim() === '') {
+        return '';
     }
     return text;
 }
