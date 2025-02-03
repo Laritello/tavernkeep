@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { onMounted, ref, type Ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+
 import CharacterBuilder from '@/components/character/builder/CharacterBuilder.vue';
 import type { Character } from '@/entities';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import { useCharacters } from '@/stores/characters';
 import { useHeaderStore } from '@/stores/header';
-import { onMounted, ref, type Ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
 
 const { t } = useI18n();
 const characters = useCharacters();
@@ -28,7 +29,7 @@ function updateStage(stageName: string | undefined) {
 
 function updateCharacter({ key, value }: { key: keyof Character; value: unknown }) {
     (template.value[key] as typeof value) = value;
-};
+}
 
 async function create() {
     const character = await characters.createCharacter(template.value);
@@ -40,8 +41,12 @@ async function create() {
 </script>
 
 <template>
-    <CharacterBuilder v-on:updated-stage="updateStage" :character="template" @create="create"
-        @update-character="updateCharacter" />
+    <CharacterBuilder
+        :character="template"
+        @updated-stage="updateStage"
+        @update-character="updateCharacter"
+        @create="create"
+    />
 </template>
 
 <style scoped></style>
