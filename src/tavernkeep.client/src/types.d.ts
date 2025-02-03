@@ -1,4 +1,5 @@
 import 'vue-router';
+
 import { UserRole } from '@/contracts/enums';
 
 declare module 'vue-router' {
@@ -10,6 +11,13 @@ declare module 'vue-router' {
         title?: string;
     }
 }
+
+export type KeyValue<T> = {
+    [P in keyof T]: {
+        key: P;
+        value: T[P];
+    };
+}[keyof T];
 
 // To ensure it is treated as a module, add at least one `export` statement
 export {};

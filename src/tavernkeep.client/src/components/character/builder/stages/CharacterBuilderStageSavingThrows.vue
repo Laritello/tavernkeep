@@ -1,23 +1,25 @@
 <template>
-    <ProficiencyListEdit locale-prefix="pf.savingThrows." v-model="savingThrows" @updated="update" />
+    <ProficiencyListEdit v-model="savingThrows" locale-prefix="pf.savingThrows." @updated="update" />
 </template>
 
 <script setup lang="ts">
+import type { BaseSkill, SavingThrow } from '@/contracts/character';
 import type { Character } from '@/entities';
+import type { KeyValue } from '@/types';
+
 import ProficiencyListEdit from '../../shared/ProficiencyListEdit/ProficiencyListEdit.vue';
-import type { BaseSkill } from '@/contracts/character';
 
 const { character } = defineProps<{
-    character: Character
+    character: Character;
 }>();
 
 const savingThrows = [...character.savingThrows];
 
 const emits = defineEmits<{
-    update: [value: { key: keyof Character; value: unknown }]
+    update: [value: KeyValue<Character>];
 }>();
 
 function update(skills: BaseSkill[]) {
-    emits("update", { key: "savingThrows", value: skills });
+    emits('update', { key: 'savingThrows', value: skills as SavingThrow[] });
 }
 </script>

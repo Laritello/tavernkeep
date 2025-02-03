@@ -4,30 +4,30 @@
             <div class="label">
                 <span class="label-text">{{ t(`pf.attributes.${ability.name.toLowerCase()}`) }}</span>
             </div>
-            <input type="text" placeholder="Type here" class="input input-bordered w-full"
-                v-model="ability.score" />
+            <input v-model="ability.score" type="text" placeholder="Type here" class="input input-bordered w-full" />
         </label>
     </div>
 </template>
 
 <script setup lang="ts">
-import type { Ability } from '@/contracts/character';
-import type { Character } from '@/entities';
 import { watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+
+import type { Ability } from '@/contracts/character';
+import type { Character } from '@/entities';
+import type { KeyValue } from '@/types';
 
 const { t } = useI18n();
 
 const { character } = defineProps<{
-    character: Character
+    character: Character;
 }>();
 
 const abilities: Ability[] = [...character.abilities];
 
 const emits = defineEmits<{
-    update: [value: { key: keyof Character; value: unknown }]
+    update: [value: KeyValue<Character>];
 }>();
 
 watch(abilities, () => emits('update', { key: 'abilities', value: abilities }));
-
 </script>
