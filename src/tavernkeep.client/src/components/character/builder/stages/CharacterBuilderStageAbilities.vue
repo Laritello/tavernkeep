@@ -11,7 +11,9 @@
 </template>
 
 <script setup lang="ts">
+import type { Ability } from '@/contracts/character';
 import type { Character } from '@/entities';
+import { watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -20,7 +22,12 @@ const { character } = defineProps<{
     character: Character
 }>();
 
-const abilities = Object
-    .values(character.abilities)
-    .map(item => ({ name: item.name.toString(), score: item.score }));
+const abilities: Ability[] = [...character.abilities];
+
+const emits = defineEmits<{
+    update: [value: { key: keyof Character; value: unknown }]
+}>();
+
+watch(abilities, () => emits('update', { key: 'abilities', value: abilities }));
+
 </script>

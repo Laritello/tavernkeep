@@ -48,8 +48,9 @@
 </template>
 
 <script setup lang="ts">
+import type { Ancestry, Class } from '@/contracts/character';
 import type { Character } from '@/entities';
-import { ref, type Ref } from 'vue';
+import { ref, watch, type Ref } from 'vue';
 
 const { character } = defineProps<{
     character: Character
@@ -62,5 +63,17 @@ const ancestryHealth: Ref<number> = ref(character.ancestry.health);
 
 const className: Ref<string> = ref(character.class.name);
 const classHealthPerLevel: Ref<number> = ref(character.class.healthPerLevel);
+
+const emits = defineEmits<{
+    update: [value: { key: keyof Character; value: unknown }]
+}>();
+
+watch(name, () => emits("update", { key: "name", value: name.value }));
+
+watch(ancestryName, () => emits("update", { key: "ancestry", value: { name: ancestryName.value, health: ancestryHealth.value } as Ancestry }));
+watch(ancestryHealth, () => emits("update", { key: "ancestry", value: { name: ancestryName.value, health: ancestryHealth.value } as Ancestry }));
+
+watch(className, () => emits("update", { key: "class", value: { name: className.value, healthPerLevel: classHealthPerLevel.value } as Class }));
+watch(classHealthPerLevel, () => emits("update", { key: "class", value: { name: className.value, healthPerLevel: classHealthPerLevel.value } as Class }));
 
 </script>

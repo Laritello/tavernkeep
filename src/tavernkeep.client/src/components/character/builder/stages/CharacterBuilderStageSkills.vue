@@ -1,5 +1,5 @@
 <template>
-    <ProficiencyListEdit locale-prefix="pf.skills." v-model="skills" />
+    <ProficiencyListEdit locale-prefix="pf.skills." v-model="skills" @updated="update"/>
 </template>
 
 <script setup lang="ts">
@@ -11,7 +11,13 @@ const { character } = defineProps<{
     character: Character
 }>();
 
-const skills = Object
-    .values(character.skills)
-    .map(item => ({ name: item.name.toString(), proficiency: item.proficiency, type: item.type } as BaseSkill));
+const skills = [...character.skills];
+
+const emits = defineEmits<{
+    update: [value: { key: keyof Character; value: unknown }]
+}>();
+
+function update(skills: BaseSkill[]) {
+    emits("update", { key: "skills", value: skills });
+}
 </script>

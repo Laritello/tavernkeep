@@ -15,8 +15,6 @@ import SpeedBadge from './character/badges/SpeedBadge.vue';
 import InformationEditDialog from './dialogs/edit/InformationEditDialog.vue';
 import LongRestDialog from './dialogs/LongRestDialog.vue';
 import HealthEditDialog from '@/components/dialogs/edit/HealthEditDialog.vue';
-import { useRouter } from 'vue-router';
-
 
 const { t } = useI18n();
 
@@ -24,7 +22,6 @@ const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
 const user = useCurrentUserAccount();
 const modal = useModal();
-const router = useRouter();
 
 async function updateHeroPoints(amount: number) {
     if (user.activeCharacter.value !== undefined) {
@@ -108,7 +105,8 @@ async function toggleDetails() {
                         <div class="flex flex-row">
                             <!--Settings button-->
                             <div class="w-12">
-                                <div class="flex items-center justify-center relative" @click="showInformationEditDialog">
+                                <div class="flex items-center justify-center relative"
+                                    @click="showInformationEditDialog">
                                     <svg class="w=full h-full" viewBox="0 -960 960 960"
                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor">
                                         <path
@@ -169,7 +167,8 @@ async function toggleDetails() {
                             <PerceptionBadge :perception="user.activeCharacter.value.perception" class="w-12" />
                             <ArmorClassBadge :armor="user.activeCharacter.value.armor" class="w-12" />
                         </div>
-                        <HeroPoints class="flex-none" :amount="user.activeCharacter.value.heroPoints" @changed="updateHeroPoints" />
+                        <HeroPoints class="flex-none" :amount="user.activeCharacter.value.heroPoints"
+                            @changed="updateHeroPoints" />
                     </div>
                 </div>
             </div>
