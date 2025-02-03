@@ -26,6 +26,7 @@
 
 <script setup lang="ts">
 import type { Condition } from '@/entities';
+
 const { conditions } = defineProps<{
     conditions: Condition[];
 }>();

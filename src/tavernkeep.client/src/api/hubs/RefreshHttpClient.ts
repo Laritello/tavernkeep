@@ -1,5 +1,6 @@
-import { useSession } from '@/composables/useSession';
 import { DefaultHttpClient, type HttpRequest, HttpResponse } from '@microsoft/signalr';
+
+import { useSession } from '@/composables/useSession';
 
 export class RefreshHttpClient extends DefaultHttpClient {
     constructor() {

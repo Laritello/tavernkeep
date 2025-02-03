@@ -1,8 +1,9 @@
-import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import { computed } from 'vue';
-import type { UserRole } from '@/contracts/enums';
-import { useSessionLocalStorage } from '@/stores/sessionLocalStorage';
 import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
+
+import type { UserRole } from '@/contracts/enums';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
+import { useSessionLocalStorage } from '@/stores/sessionLocalStorage';
 
 type RefreshSuccess = {
     status: 'ok';

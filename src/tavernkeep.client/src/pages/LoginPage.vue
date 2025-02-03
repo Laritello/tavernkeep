@@ -27,9 +27,10 @@
 </template>
 
 <script setup lang="ts">
-import { useAuth, type UserCredentials } from '@/composables/useAuth';
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
+
+import { useAuth, type UserCredentials } from '@/composables/useAuth';
 
 const auth = useAuth();
 const router = useRouter();

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-import { Proficiency } from '@/contracts/enums';
-import type { DialogResultCallback } from '@/composables/useModal';
 import type { ProficiencyEditItemType } from '@/components/character/shared/ProficiencyListEdit';
 import ProficiencyListEdit from '@/components/character/shared/ProficiencyListEdit/ProficiencyListEdit.vue';
-import { useI18n } from 'vue-i18n';
+import type { DialogResultCallback } from '@/composables/useModal';
+import { Proficiency } from '@/contracts/enums';
 
 const { t } = useI18n();
 

@@ -6,12 +6,12 @@
     </div>
 </template>
 <script setup lang="ts">
-import d20 from '@/assets/dice/d20-grey.svg';
-import d12 from '@/assets/dice/d12-grey.svg';
-import d10 from '@/assets/dice/d10-grey.svg';
-import d8 from '@/assets/dice/d8-grey.svg';
-import d6 from '@/assets/dice/d6-grey.svg';
 import d4 from '@/assets/dice/d4-grey.svg';
+import d6 from '@/assets/dice/d6-grey.svg';
+import d8 from '@/assets/dice/d8-grey.svg';
+import d10 from '@/assets/dice/d10-grey.svg';
+import d12 from '@/assets/dice/d12-grey.svg';
+import d20 from '@/assets/dice/d20-grey.svg';
 
 const dice = new Map<string, string>([
     ['d20', d20],
@@ -26,7 +26,6 @@ defineProps<{
     die: string;
     value?: number;
 }>();
-
 </script>
 <style scoped>
 .text-shadow {

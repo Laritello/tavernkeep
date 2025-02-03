@@ -1,10 +1,10 @@
-import { reactive } from 'vue';
 import { defineStore } from 'pinia';
+import { reactive } from 'vue';
 
-import type { Character } from '@/entities/Character';
-import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import CharacterHub from '@/api/hubs/CharacterHub';
+import type { Character } from '@/entities/Character';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
 
 type Characters = Record<string, Character>;
 

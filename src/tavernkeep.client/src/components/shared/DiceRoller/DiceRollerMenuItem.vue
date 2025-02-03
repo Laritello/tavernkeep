@@ -1,6 +1,6 @@
 ﻿<script setup lang="ts">
-import { ref, defineAsyncComponent } from 'vue';
 import { breakpointsTailwind, useBreakpoints } from '@vueuse/core';
+import { ref, defineAsyncComponent } from 'vue';
 
 const breakpoints = useBreakpoints(breakpointsTailwind);
 const isDesktop = breakpoints.greater('lg');

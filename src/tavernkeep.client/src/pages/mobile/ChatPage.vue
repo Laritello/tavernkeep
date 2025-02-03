@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ChatComponent from "@/components/chat/ChatComponent.vue";
+import ChatComponent from '@/components/chat/ChatComponent.vue';
 </script>
 
 <template>

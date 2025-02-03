@@ -1,8 +1,9 @@
-import type { UserRole } from '@/contracts/enums';
 import { StorageSerializers, useStorage } from '@vueuse/core';
 import { jwtDecode } from 'jwt-decode';
 import { defineStore } from 'pinia';
 import { computed } from 'vue';
+
+import type { UserRole } from '@/contracts/enums';
 
 export type SessionStorageData = {
     accessToken: string;

@@ -13,6 +13,7 @@
 </template>
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted } from 'vue';
+
 import { useModal } from '@/composables/useModal';
 
 const modal = useModal();

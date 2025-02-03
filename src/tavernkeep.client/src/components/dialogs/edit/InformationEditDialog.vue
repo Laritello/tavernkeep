@@ -1,17 +1,23 @@
 <script setup lang="ts">
-import type { DialogResultCallback } from '@/composables/useModal';
 import { useI18n } from 'vue-i18n';
-import type { Character } from '@/entities';
+
+import type { DialogResultCallback } from '@/composables/useModal';
 import type { CharacterInformationEditDto } from '@/contracts/dtos';
+import type { Character } from '@/entities';
 
 const { t } = useI18n();
 
 const { character, closeModal } = defineProps<{
-    character: Character,
-    closeModal: DialogResultCallback<CharacterInformationEditDto>
+    character: Character;
+    closeModal: DialogResultCallback<CharacterInformationEditDto>;
 }>();
 
-const information = { name: character.name, ancestry: character.ancestry.name, class: character.class.name, level: character.level } as CharacterInformationEditDto;
+const information = {
+    name: character.name,
+    ancestry: character.ancestry.name,
+    class: character.class.name,
+    level: character.level,
+} as CharacterInformationEditDto;
 
 function confirm() {
     const payload = information;
@@ -33,32 +39,48 @@ function cancel() {
                         <div class="label">
                             <span class="label-text">{{ t('dialogs.informationEdit.name') }}</span>
                         </div>
-                        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"
-                            v-model="information.name" />
+                        <input
+                            type="text"
+                            placeholder="Type here"
+                            class="input input-bordered w-full max-w-xs"
+                            v-model="information.name"
+                        />
                     </label>
 
                     <label class="form-control w-full max-w-xs">
                         <div class="label">
                             <span class="label-text">{{ t('dialogs.informationEdit.level') }}</span>
                         </div>
-                        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"
-                            v-model="information.level" />
+                        <input
+                            type="text"
+                            placeholder="Type here"
+                            class="input input-bordered w-full max-w-xs"
+                            v-model="information.level"
+                        />
                     </label>
 
                     <label class="form-control w-full max-w-xs">
                         <div class="label">
                             <span class="label-text">{{ t('dialogs.informationEdit.ancestry') }}</span>
                         </div>
-                        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"
-                            v-model="information.ancestry" />
+                        <input
+                            type="text"
+                            placeholder="Type here"
+                            class="input input-bordered w-full max-w-xs"
+                            v-model="information.ancestry"
+                        />
                     </label>
 
                     <label class="form-control w-full max-w-xs">
                         <div class="label">
                             <span class="label-text">{{ t('dialogs.informationEdit.class') }}</span>
                         </div>
-                        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"
-                            v-model="information.class" />
+                        <input
+                            type="text"
+                            placeholder="Type here"
+                            class="input input-bordered w-full max-w-xs"
+                            v-model="information.class"
+                        />
                     </label>
                 </div>
                 <div class="modal-action">
@@ -68,7 +90,6 @@ function cancel() {
             </form>
         </div>
     </dialog>
-
 </template>
 
 <style scoped></style>

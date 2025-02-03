@@ -1,8 +1,9 @@
 import type { Ability, Ancestry, Class, Health, Lore, Perception, Skill, Speed } from '@/contracts/character';
-import type { SpeedType } from '@/contracts/enums';
-import type { Condition } from './Condition';
 import type { SavingThrow } from '@/contracts/character/SavingThrow';
+import type { SpeedType } from '@/contracts/enums';
+
 import type { Armor } from '../contracts/character/Armor';
+import type { Condition } from './Condition';
 
 export interface Character {
     id: string;

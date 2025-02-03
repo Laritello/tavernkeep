@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
 import { type DialogResultCallback } from '@/composables/useModal';
 import type { Speed } from '@/contracts/character';
-import { SpeedType } from '@/contracts/enums';
-import { useI18n } from 'vue-i18n';
-import { ref } from 'vue';
 import type { SpeedEditDto } from '@/contracts/dtos';
+import { SpeedType } from '@/contracts/enums';
 
 const { t } = useI18n();
 
@@ -14,9 +15,7 @@ const { closeModal, speeds } = defineProps<{
     closeModal: DialogResultCallback<ReturnType>;
 }>();
 
-const convertedSpeeds = ref(Object
-    .values(speeds)
-    .map(s => ({ type: s.type, active: s.active, base: s.base })));
+const convertedSpeeds = ref(Object.values(speeds).map((s) => ({ type: s.type, active: s.active, base: s.base })));
 
 function confirm() {
     const payload = {} as Record<SpeedType, SpeedEditDto>;
@@ -42,11 +41,17 @@ function cancel() {
                 <div v-for="item in convertedSpeeds" :key="item.type">
                     <label class="form-control w-full max-w-xs">
                         <div class="label">
-                            <span class="label-text text-clip text-nowrap">{{ t(`pf.speeds.${item.type.toLowerCase()}`) }}</span>
+                            <span class="label-text text-clip text-nowrap">{{
+                                t(`pf.speeds.${item.type.toLowerCase()}`)
+                            }}</span>
                             <input type="checkbox" class="toggle toggle-xs" v-model="item.active" />
                         </div>
-                        <input type="text" class="input input-bordered w-full max-w-xs" v-bind:disabled="!item.active"
-                            v-model="item.base" />
+                        <input
+                            type="text"
+                            class="input input-bordered w-full max-w-xs"
+                            v-bind:disabled="!item.active"
+                            v-model="item.base"
+                        />
                     </label>
                 </div>
             </div>

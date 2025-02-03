@@ -88,15 +88,29 @@ function tryToCompleteSuggestion() {
         <!--
         TODO: After entering the command from the suggestion menu caret doesn't move to the last symbol.
         -->
-        <span class="w-full border rounded-3xl p-2 px-3 pt-3 min-h-12 max-h-24 overflow-y-auto shadow bg-base-100"
-            :placeholder='t("chat.input.placeholder")' contenteditable="plaintext-only" type="text" tabindex="0"
-            ref="editableSpan" @input="processInput" @keydown.enter="handleEnter"
-            @keydown.tab.prevent="tryToCompleteSuggestion" />
+        <span
+            class="w-full border rounded-3xl p-2 px-3 pt-3 min-h-12 max-h-24 overflow-y-auto shadow bg-base-100"
+            :placeholder="t('chat.input.placeholder')"
+            contenteditable="plaintext-only"
+            type="text"
+            tabindex="0"
+            ref="editableSpan"
+            @input="processInput"
+            @keydown.enter="handleEnter"
+            @keydown.tab.prevent="tryToCompleteSuggestion"
+        />
 
-        <ul v-show="showSuggestions" tabindex="0"
-            class="menu dropdown-content bg-base-100 rounded-box z-[1] mt-4 w-full border p-2 shadow">
-            <li v-for="suggestion in suggestions" :key="suggestion.name" @click="selectSuggestion(suggestion)"
-                class="p-1">
+        <ul
+            v-show="showSuggestions"
+            tabindex="0"
+            class="menu dropdown-content bg-base-100 rounded-box z-[1] mt-4 w-full border p-2 shadow"
+        >
+            <li
+                v-for="suggestion in suggestions"
+                :key="suggestion.name"
+                @click="selectSuggestion(suggestion)"
+                class="p-1"
+            >
                 <div class="flex flex-col items-start">
                     <h1 class="text-lg">{{ suggestion.name }}</h1>
                     <p class="text-sm font-thin text-slate-400">{{ suggestion.description }}</p>

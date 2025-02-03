@@ -16,6 +16,4 @@ const { message } = defineProps<{ message: SkillRollMessage }>();
     </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

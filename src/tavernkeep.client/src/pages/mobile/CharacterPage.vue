@@ -1,20 +1,21 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useToast } from "vue-toastification";
 import { useI18n } from 'vue-i18n';
+import { useToast } from 'vue-toastification';
+
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import AbilitiesWidget from '@/components/character/widgets/Abilities/AbilitiesWidget.vue';
+import ArmorWidget from '@/components/character/widgets/Armor/ArmorWidget.vue';
 import SavingThrowsWidget from '@/components/character/widgets/SavingThrows/SavingThrowsWidget.vue';
 import SkillsWidget from '@/components/character/widgets/Skills/SkillsWidget.vue';
-import SkillCheckResultToast from '@/components/toasts/SkillCheckResultToast.vue';
-import SavingThrowResultToast from '@/components/toasts/SavingThrowResultToast.vue';
-import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
-import { RollType, SpeedType, type Proficiency } from '@/contracts/enums';
-import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
-import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import ArmorWidget from '@/components/character/widgets/Armor/ArmorWidget.vue';
-import type { Armor } from '@/contracts/character';
 import SpeedsWidget from '@/components/character/widgets/Speeds/SpeedsWidget.vue';
+import SavingThrowResultToast from '@/components/toasts/SavingThrowResultToast.vue';
+import SkillCheckResultToast from '@/components/toasts/SkillCheckResultToast.vue';
+import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
+import type { Armor } from '@/contracts/character';
 import type { SpeedEditDto } from '@/contracts/dtos';
+import { RollType, SpeedType, type Proficiency } from '@/contracts/enums';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
 
 const { t } = useI18n();
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
@@ -37,7 +38,7 @@ const sections: Section[] = [
     { link: '#attacks', header: t('sections.attacks') },
     { link: '#spells', header: t('sections.spells') },
     { link: '#inventory', header: t('sections.inventory') },
-]
+];
 
 async function updateAbilities(scores: Record<string, number>) {
     if (character.value !== undefined) {
@@ -65,7 +66,14 @@ async function updateSpeeds(speeds: Record<SpeedType, SpeedEditDto>) {
 async function updateArmor(armor: Armor) {
     if (character.value !== undefined) {
         const equipped = armor.equipped;
-        await api.editArmor(character.value.id, equipped.type, equipped.bonus, equipped.hasDexterityCap, equipped.dexterityCap, armor.proficiencies);
+        await api.editArmor(
+            character.value.id,
+            equipped.type,
+            equipped.bonus,
+            equipped.hasDexterityCap,
+            equipped.dexterityCap,
+            armor.proficiencies
+        );
     }
 }
 
@@ -74,14 +82,17 @@ async function rollSkillCheck(skillType: string) {
     if (character.value !== undefined) {
         const message = await api.performSkillCheck(character.value.id, skillType, RollType.Public);
         const toast = useToast();
-        toast({
-            component: SkillCheckResultToast,
-            props: {
-                message
+        toast(
+            {
+                component: SkillCheckResultToast,
+                props: {
+                    message,
+                },
+            },
+            {
+                toastClassName: 'skill-check-toast',
             }
-        }, {
-            toastClassName: 'skill-check-toast',
-        });
+        );
     }
 }
 
@@ -89,14 +100,17 @@ async function rollSavingThrow(savingThrow: string) {
     if (character.value !== undefined) {
         const message = await api.performSavingThrow(character.value.id, savingThrow, RollType.Public);
         const toast = useToast();
-        toast({
-            component: SavingThrowResultToast,
-            props: {
-                message
+        toast(
+            {
+                component: SavingThrowResultToast,
+                props: {
+                    message,
+                },
+            },
+            {
+                toastClassName: 'saving-throw-toast',
             }
-        }, {
-            toastClassName: 'saving-throw-toast',
-        });
+        );
     }
 }
 
@@ -106,8 +120,8 @@ onMounted(() => {
 
 // TODO: scroll navigation bar to the selected tab
 /*
-* Update section based on scrolled content.
-*/
+ * Update section based on scrolled content.
+ */
 function updateSection() {
     // Collect all required elements
     // TODO: use vue refs instead
@@ -141,7 +155,10 @@ function updateSection() {
     }
 
     // If header is not close enough to the border, we're still looking at previous section
-    sectionIndex = (sectionIndex == 0 || (headers.item(sectionIndex).getBoundingClientRect().top - border) <= 60) ? sectionIndex : sectionIndex - 1;
+    sectionIndex =
+        sectionIndex == 0 || headers.item(sectionIndex).getBoundingClientRect().top - border <= 60
+            ? sectionIndex
+            : sectionIndex - 1;
     const target = headers.item(sectionIndex).innerText;
 
     // Update styleclass for each navigation button
@@ -160,21 +177,37 @@ function updateSection() {
 <template>
     <div v-if="character !== undefined" class="flex flex-col max-h-full">
         <!--Header-->
-        <div class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar lg:hidden"
-            id="sections-bar">
-            <a v-for="section in sections" :key="section.link" v-bind:href="section.link"
-                class="py-1 px-4 pb-0 grow text-nowrap tracking-tight border-b-2 border-base-300 select-none">{{
-                    section.header }}</a>
+        <div
+            class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar lg:hidden"
+            id="sections-bar"
+        >
+            <a
+                v-for="section in sections"
+                :key="section.link"
+                v-bind:href="section.link"
+                class="py-1 px-4 pb-0 grow text-nowrap tracking-tight border-b-2 border-base-300 select-none"
+                >{{ section.header }}</a
+            >
         </div>
 
         <!--Character Sheet Content-->
-        <div v-on:scroll="updateSection"
-            class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar bg-base-200">
+        <div
+            v-on:scroll="updateSection"
+            class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar bg-base-200"
+        >
             <AbilitiesWidget id="attributes" :abilities="character.abilities" @changed="updateAbilities" />
-            <SavingThrowsWidget id="saving-throws" :savingThrows="character.savingThrows" @changed="updateSavingThrows"
-                @roll="(type) => rollSavingThrow(type)" />
-            <SkillsWidget id="skills" :skills="character.skills" @changed="updateSkills"
-                @roll="(type) => rollSkillCheck(type)" />
+            <SavingThrowsWidget
+                id="saving-throws"
+                :savingThrows="character.savingThrows"
+                @changed="updateSavingThrows"
+                @roll="(type) => rollSavingThrow(type)"
+            />
+            <SkillsWidget
+                id="skills"
+                :skills="character.skills"
+                @changed="updateSkills"
+                @roll="(type) => rollSkillCheck(type)"
+            />
             <ArmorWidget id="armor" :armor="character.armor" @changed="updateArmor" />
             <SpeedsWidget id="speeds" :speeds="character.speeds" @changed="updateSpeeds" />
         </div>
@@ -192,7 +225,6 @@ function updateSection() {
 .no-scrollbar {
     /* IE and Edge */
     -ms-overflow-style: none;
-
 
     /* Firefox */
     scrollbar-width: none;

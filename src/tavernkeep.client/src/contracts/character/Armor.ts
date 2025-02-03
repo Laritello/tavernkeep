@@ -1,4 +1,4 @@
-import type { ArmorType, Proficiency } from "../enums";
+import type { ArmorType, Proficiency } from '../enums';
 
 export interface Armor {
     class: number;

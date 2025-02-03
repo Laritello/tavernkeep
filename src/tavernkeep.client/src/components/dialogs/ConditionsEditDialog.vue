@@ -3,43 +3,68 @@
         <div class="modal-box">
             <h3 class="font-bold text-lg">{{ t('dialogs.conditionsEdit.header') }}</h3>
 
-            <h4 v-if="currentActive.length > 0" class="font-bold text-base">{{ t('dialogs.conditionsEdit.active') }}</h4>
+            <h4 v-if="currentActive.length > 0" class="font-bold text-base">
+                {{ t('dialogs.conditionsEdit.active') }}
+            </h4>
             <div v-if="currentActive.length > 0" class="flex flex-col max-h-36 overflow-y-auto scroll-smooth">
-                <div v-for="condition in currentActive" :key="condition.name"
-                    class="flex flex-row border-base-200 border-b-2 p-1 align-items-center">
+                <div
+                    v-for="condition in currentActive"
+                    :key="condition.name"
+                    class="flex flex-row border-base-200 border-b-2 p-1 align-items-center"
+                >
                     <p class="flex-1 self-center">{{ condition.name }}</p>
                     <div v-if="condition.hasLevels" class="flex flex-row items-center mr-2">
                         <span class="btn btn-sm btn-circle btn-ghost" @click="decreaseLevel(condition)">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 -960 960 960"
-                                fill="currentColor">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="w-8 h-8"
+                                viewBox="0 -960 960 960"
+                                fill="currentColor"
+                            >
                                 <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
                             </svg>
                         </span>
                         <p>{{ condition.level }}</p>
-                        <span class="btn btn-sm btn-circle btn-ghost " @click="increaseLevel(condition)">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 -960 960 960"
-                                fill="currentColor">
+                        <span class="btn btn-sm btn-circle btn-ghost" @click="increaseLevel(condition)">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="w-8 h-8"
+                                viewBox="0 -960 960 960"
+                                fill="currentColor"
+                            >
                                 <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
                             </svg>
                         </span>
                     </div>
                     <button class="btn btn-sm btn-outline btn-circle btn-error" v-on:click="removeCondition(condition)">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-4 h-4"
-                            fill="currentColor">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 -960 960 960"
+                            class="w-4 h-4"
+                            fill="currentColor"
+                        >
                             <path
-                                d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                                d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                            />
                         </svg>
                     </button>
                 </div>
             </div>
             <h4 class="font-bold text-base p-1">{{ t('dialogs.conditionsEdit.available') }}</h4>
             <div class="flex flex-col max-h-72 overflow-y-auto scroll-smooth">
-                <div v-for="condition in conditions.filter(c => !currentActive.some(x => x.name === c.name))"
-                    :key="condition.name" class="flex flex-row border-base-200 border-b-2 p-1 align-items-center">
+                <div
+                    v-for="condition in conditions.filter((c) => !currentActive.some((x) => x.name === c.name))"
+                    :key="condition.name"
+                    class="flex flex-row border-base-200 border-b-2 p-1 align-items-center"
+                >
                     <p class="flex-1 self-center">{{ condition.name }}</p>
                     <button class="btn btn-sm btn-outline btn-circle text-primary" v-on:click="addCondition(condition)">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-4 h-4"
-                            fill="currentColor">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 -960 960 960"
+                            class="w-4 h-4"
+                            fill="currentColor"
+                        >
                             <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
                         </svg>
                     </button>
@@ -54,11 +79,12 @@
     </dialog>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
 import { type DialogResultCallback } from '@/composables/useModal';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
 import type { Condition } from '@/entities';
-import { ref } from 'vue';
-import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
@@ -98,7 +124,8 @@ function increaseLevel(condition: Condition) {
 
 async function save() {
     closeModal({
-        action: 'result', payload: currentActive.value.map(x => ({ name: x.name, level: x.level }))
+        action: 'result',
+        payload: currentActive.value.map((x) => ({ name: x.name, level: x.level })),
     });
 }
 

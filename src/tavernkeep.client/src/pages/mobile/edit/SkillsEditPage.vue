@@ -1,15 +1,15 @@
 ﻿<script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount'
-import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import { Proficiency } from '@/contracts/enums';
 
 import ProficiencyListEdit from '@/components/character/shared/ProficiencyListEdit/ProficiencyListEdit.vue';
 import CreateCustomSkillMenu from '@/components/dialogs/CreateCustomSkillMenu.vue';
+import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
+import { Proficiency } from '@/contracts/enums';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import { useHeaderStore } from '@/stores/header';
 
 const { activeCharacter } = useCurrentUserAccount();
-const characterSkills = computed(() => activeCharacter.value ? [...activeCharacter.value.skills] : []);
+const characterSkills = computed(() => (activeCharacter.value ? [...activeCharacter.value.skills] : []));
 const createCustomSkillMenu = ref<InstanceType<typeof CreateCustomSkillMenu>>();
 const header = useHeaderStore();
 
@@ -28,7 +28,7 @@ async function save() {
 }
 
 onMounted(() => {
-    header.setHeader("Edit skills");
+    header.setHeader('Edit skills');
 });
 </script>
 

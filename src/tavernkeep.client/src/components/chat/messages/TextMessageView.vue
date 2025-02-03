@@ -1,5 +1,5 @@
 <template>
-    <div class="chat" :class="{ 'chat-end': alignRight, 'chat-start': !alignRight, }">
+    <div class="chat" :class="{ 'chat-end': alignRight, 'chat-start': !alignRight }">
         <div class="chat-image avatar placeholder">
             <div class="bg-neutral text-neutral-content w-10 rounded-full">
                 <span>{{ message.sender.login.slice(0, 2) }}</span>

@@ -70,8 +70,12 @@ async function logout() {
                             tabindex="0"
                             class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow border border-base-200"
                         >
-                            <li><a>{{ t('settings.characters.setActive') }}</a></li>
-                            <li><a class="text-red-600">{{ t('settings.characters.delete') }}</a></li>
+                            <li>
+                                <a>{{ t('settings.characters.setActive') }}</a>
+                            </li>
+                            <li>
+                                <a class="text-red-600">{{ t('settings.characters.delete') }}</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

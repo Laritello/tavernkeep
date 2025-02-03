@@ -1,11 +1,11 @@
-import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
 
-import ChatHub from '@/api/hubs/ChatHub';
-import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
-import type { Message } from '@/entities/Message';
+import ChatHub from '@/api/hubs/ChatHub';
 import type { RollType } from '@/contracts/enums/RollType';
+import type { Message } from '@/entities/Message';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
 
 export const useMessages = defineStore('messages.store', () => {
     const api: AxiosApiClient = ApiClientFactory.createApiClient();
@@ -14,7 +14,7 @@ export const useMessages = defineStore('messages.store', () => {
     });
 
     ChatHub.connection.on('DeleteMessage', async (msg: Message) => {
-        const index = messageList.value.findIndex(m => m.id === msg.id);
+        const index = messageList.value.findIndex((m) => m.id === msg.id);
         if (index !== -1) {
             messageList.value.splice(index, 1);
         }

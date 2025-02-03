@@ -1,6 +1,9 @@
 import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { RefreshHttpClient } from './RefreshHttpClient';
+
 import { useSession } from '@/composables/useSession';
+
+import { RefreshHttpClient } from './RefreshHttpClient';
+
 class ChatHub {
     private baseURL = 'http://' + window.location.hostname + ':5207/api/';
 

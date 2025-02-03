@@ -24,6 +24,7 @@
 </template>
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue';
+
 import { useModal, type DialogResultCallback } from '@/composables/useModal';
 import type { Ability } from '@/contracts/character';
 

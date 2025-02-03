@@ -5,9 +5,9 @@
                 <span class="mdi mdi-arrow-left text-xl"></span>
             </button>
             <div>
-            <h1 class="mx-2 text-xl font-semibold leading-4">{{ header.title }}</h1>
-            <h2 class="mx-2 text-base-content/50 text-xs font-normal leading-4">{{ header.subtitle }}</h2>
-        </div>
+                <h1 class="mx-2 text-xl font-semibold leading-4">{{ header.title }}</h1>
+                <h2 class="mx-2 text-base-content/50 text-xs font-normal leading-4">{{ header.subtitle }}</h2>
+            </div>
         </div>
 
         <div class="h-dvh overflow-hidden">
@@ -18,6 +18,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+
 import { useHeaderStore } from '@/stores/header';
 
 const header = useHeaderStore();

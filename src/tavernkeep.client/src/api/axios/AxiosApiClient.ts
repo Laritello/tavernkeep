@@ -1,14 +1,15 @@
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
-import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
-import type { User, Message, Character, SkillRollMessage } from '@/entities';
 import type { Health, Perception } from '@/contracts/character';
-import { UserRole, Proficiency, RollType, ArmorType, SpeedType, SkillType } from '@/contracts/enums';
-import type { Condition } from '@/entities/Condition';
-import type { SavingThrowRollMessage } from '@/entities/Message';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
 import type { CharacterInformationEditDto, SpeedEditDto } from '@/contracts/dtos';
+import { UserRole, Proficiency, RollType, ArmorType, SpeedType, SkillType } from '@/contracts/enums';
+import type { User, Message, Character, SkillRollMessage } from '@/entities';
+import type { Condition } from '@/entities/Condition';
+import type { SavingThrowRollMessage } from '@/entities/Message';
+
+import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 
 export class AxiosApiClient {
     client: AxiosInstance;
@@ -141,7 +142,7 @@ export class AxiosApiClient {
         const response = await this.client.patch(`characters/${characterId}/hero-points`, null, {
             params: {
                 amount: amount,
-            }
+            },
         });
         return getPayloadOrThrow(response);
     }
@@ -163,15 +164,19 @@ export class AxiosApiClient {
     }
 
     async createSkill(characterId: string, type: SkillType, baseAbility: string, name: string): Promise<void> {
-        const response = await this.client.post(`custom/skill`, {
-            type,
-            baseAbility,
-            name,
-        }, {
-            params: {
-                characterId,
+        const response = await this.client.post(
+            `custom/skill`,
+            {
+                type,
+                baseAbility,
+                name,
+            },
+            {
+                params: {
+                    characterId,
+                },
             }
-        });
+        );
 
         return getPayloadOrThrow(response);
     }
@@ -216,13 +221,20 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async editArmor(characterId: string, type: ArmorType, bonus: number, hasDexterityCap: boolean, dexterityCap: number, proficiencies: Record<ArmorType, Proficiency>): Promise<void> {
+    async editArmor(
+        characterId: string,
+        type: ArmorType,
+        bonus: number,
+        hasDexterityCap: boolean,
+        dexterityCap: number,
+        proficiencies: Record<ArmorType, Proficiency>
+    ): Promise<void> {
         const response = await this.client.patch(`characters/${characterId}/armor`, {
             type: type,
             bonus: bonus,
             hasDexterityCap: hasDexterityCap,
             dexterityCap: dexterityCap,
-            proficiencies: proficiencies
+            proficiencies: proficiencies,
         });
 
         return getPayloadOrThrow(response);
@@ -233,8 +245,8 @@ export class AxiosApiClient {
         const response = await this.client.patch(`characters/${characterId}/long-rest`, null, {
             params: {
                 restWithoutComfort: noComfort,
-                sleepInArmor: inArmor
-            }
+                sleepInArmor: inArmor,
+            },
         });
         return getPayloadOrThrow(response);
     }
@@ -279,7 +291,11 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async performSavingThrow(characterId: string, savingThrowType: string, rollType: RollType): Promise<SavingThrowRollMessage> {
+    async performSavingThrow(
+        characterId: string,
+        savingThrowType: string,
+        rollType: RollType
+    ): Promise<SavingThrowRollMessage> {
         const response = await this.client.post<Message>('roll/saving-throw', {
             characterId: characterId,
             savingThrowType: savingThrowType,

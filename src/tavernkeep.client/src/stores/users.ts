@@ -1,11 +1,11 @@
-import { computed, reactive, type MaybeRef, unref } from 'vue';
 import { defineStore } from 'pinia';
+import { computed, reactive, type MaybeRef, unref } from 'vue';
 
-import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
-import type { User } from '@/entities/User';
-import type { UserRole } from '@/contracts/enums/UserRole';
 import { useSession } from '@/composables/useSession';
+import type { UserRole } from '@/contracts/enums/UserRole';
+import type { User } from '@/entities/User';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
 
 type Users = Record<string, User>;
 

@@ -1,6 +1,7 @@
+import { computed, unref, type MaybeRef } from 'vue';
+
 import { useCharacters } from '@/stores/characters';
 import { useUsers } from '@/stores/users';
-import { computed, unref, type MaybeRef } from 'vue';
 
 export const useUserAccount = (id: MaybeRef<string | undefined>) => {
     const users = useUsers();
@@ -21,7 +22,7 @@ export const useUserAccount = (id: MaybeRef<string | undefined>) => {
         if (!user.value) {
             return;
         }
-        
+
         await charactersStore.assignUserToCharacter(user.value.id, unref(characterId));
     };
 

@@ -16,6 +16,4 @@ const { message } = defineProps<{ message: SavingThrowRollMessage }>();
     </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -3,5 +3,5 @@ export enum SkillType {
     Lore = 'Lore',
     Custom = 'Custom',
     SavingThrow = 'SavingThrow',
-    Perception = 'Perception'
+    Perception = 'Perception',
 }

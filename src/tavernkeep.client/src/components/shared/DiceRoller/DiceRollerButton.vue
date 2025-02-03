@@ -1,5 +1,6 @@
 ﻿<script setup lang="ts">
 import { ref } from 'vue';
+
 import D20 from '@/assets/dice/d20-grey.svg';
 
 const open = ref(false);

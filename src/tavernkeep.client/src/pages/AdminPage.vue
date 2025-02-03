@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
-import { UserRole } from '@/contracts/enums/UserRole';
+
 import UserSelector from '@/components/chat/UserSelector.vue';
 import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
-
-import { useUsers } from '@/stores/users';
-import { useCharacters } from '@/stores/characters';
 import { useModal } from '@/composables/useModal';
+import { UserRole } from '@/contracts/enums/UserRole';
+import { useCharacters } from '@/stores/characters';
+import { useUsers } from '@/stores/users';
 
 const users = useUsers();
 const characters = useCharacters();

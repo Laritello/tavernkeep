@@ -5,8 +5,9 @@
     </div>
 </template>
 <script setup lang="ts">
-import type { Speed } from '@/contracts/character';
 import { useI18n } from 'vue-i18n';
+
+import type { Speed } from '@/contracts/character';
 
 const { t } = useI18n();
 

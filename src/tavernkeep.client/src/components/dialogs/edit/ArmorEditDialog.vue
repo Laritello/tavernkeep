@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-import { ArmorType, Proficiency } from '@/contracts/enums';
-import type { DialogResultCallback } from '@/composables/useModal';
 import type { ProficiencyEditItemType } from '@/components/character/shared/ProficiencyListEdit';
 import ProficiencyListEdit from '@/components/character/shared/ProficiencyListEdit/ProficiencyListEdit.vue';
+import type { DialogResultCallback } from '@/composables/useModal';
 import type { Armor } from '@/contracts/character';
-import { useI18n } from 'vue-i18n';
+import { ArmorType, Proficiency } from '@/contracts/enums';
 
 const { t } = useI18n();
 
@@ -16,7 +16,9 @@ const { closeModal, armor } = defineProps<{
 }>();
 
 const types: ArmorType[] = [ArmorType.Unarmored, ArmorType.Light, ArmorType.Medium, ArmorType.Heavy];
-const currentItems = ref<ProficiencyEditItemType[]>(Object.entries(armor.proficiencies).map(k => ({ name: k[0].toString(), proficiency: k[1], userBonus: 0 })));
+const currentItems = ref<ProficiencyEditItemType[]>(
+    Object.entries(armor.proficiencies).map((k) => ({ name: k[0].toString(), proficiency: k[1], userBonus: 0 }))
+);
 
 const type = ref<ArmorType>(armor.equipped.type);
 const bonus = ref<number>(armor.equipped.bonus);
@@ -29,11 +31,11 @@ function confirm() {
         type: type.value,
         bonus: bonus.value,
         hasDexterityCap: hasCap.value,
-        dexterityCap: cap.value
+        dexterityCap: cap.value,
     };
 
     payload.proficiencies = {} as Record<ArmorType, Proficiency>;
-    
+
     for (const item of currentItems.value) {
         payload.proficiencies[item.name as ArmorType] = item.proficiency;
     }
@@ -57,7 +59,9 @@ function cancel() {
                 </div>
                 <select class="select select-bordered" v-model="type">
                     <option disabled selected>{{ t('dialogs.armorEdit.pickOne') }}</option>
-                    <option v-for="type in types" :key="type" :value="type">{{ t(`pf.armor.${type.toLowerCase()}`) }}</option>
+                    <option v-for="type in types" :key="type" :value="type">
+                        {{ t(`pf.armor.${type.toLowerCase()}`) }}
+                    </option>
                 </select>
             </label>
 
@@ -66,8 +70,7 @@ function cancel() {
                     <div class="label">
                         <span class="label-text">{{ t('widgets.armor.bonus') }}</span>
                     </div>
-                    <input type="text" class="input input-bordered w-full max-w-xs"
-                        v-model="bonus" />
+                    <input type="text" class="input input-bordered w-full max-w-xs" v-model="bonus" />
                 </label>
 
                 <label class="form-control w-full max-w-xs">
@@ -75,8 +78,12 @@ function cancel() {
                         <span class="label-text text-clip text-nowrap">{{ t('widgets.armor.dexterityCap') }}</span>
                         <input type="checkbox" class="toggle toggle-xs" v-model="hasCap" />
                     </div>
-                    <input type="text" class="input input-bordered w-full max-w-xs"
-                        v-bind:disabled="!hasCap" v-model="cap" />
+                    <input
+                        type="text"
+                        class="input input-bordered w-full max-w-xs"
+                        v-bind:disabled="!hasCap"
+                        v-model="cap"
+                    />
                 </label>
             </div>
 
@@ -85,8 +92,8 @@ function cancel() {
             <ProficiencyListEdit locale-prefix="pf.armor." v-model="currentItems" class="modal-content" />
             <form @submit.prevent="confirm" method="dialog">
                 <div class="modal-action">
-                    <button class="btn btn-success w-24" type="submit">{{ t("actions.save") }}</button>
-                    <button @click="cancel" class="btn w-24" type="button">{{ t("actions.cancel") }}</button>
+                    <button class="btn btn-success w-24" type="submit">{{ t('actions.save') }}</button>
+                    <button @click="cancel" class="btn w-24" type="button">{{ t('actions.cancel') }}</button>
                 </div>
             </form>
         </div>

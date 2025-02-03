@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
 import { Proficiency } from '@/contracts/enums';
+
 const proficiencies = [
     { name: 'Untrained', value: Proficiency.Untrained },
     { name: 'Trained', value: Proficiency.Trained },

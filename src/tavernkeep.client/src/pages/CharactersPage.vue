@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useModal } from '@/composables/useModal';
+
 import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
+import { useModal } from '@/composables/useModal';
 
 const userAccount = useCurrentUserAccount();
 
