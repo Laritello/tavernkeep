@@ -68,13 +68,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 name: "CharacterAbility",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
                     Score = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CharacterAbility", x => x.Name);
+                    table.PrimaryKey("PK_CharacterAbility", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CharacterAbility_Character_OwnerId",
                         column: x => x.OwnerId,
@@ -164,20 +165,22 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 name: "CharacterSkill",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
-                    AbilityName = table.Column<string>(type: "TEXT", nullable: true),
+                    AbilityId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Proficiency = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CharacterSkill", x => x.Name);
+                    table.PrimaryKey("PK_CharacterSkill", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CharacterSkill_CharacterAbility_AbilityName",
-                        column: x => x.AbilityName,
+                        name: "FK_CharacterSkill_CharacterAbility_AbilityId",
+                        column: x => x.AbilityId,
                         principalTable: "CharacterAbility",
-                        principalColumn: "Name");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CharacterSkill_Character_OwnerId",
                         column: x => x.OwnerId,
@@ -230,9 +233,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CharacterSkill_AbilityName",
+                name: "IX_CharacterSkill_AbilityId",
                 table: "CharacterSkill",
-                column: "AbilityName");
+                column: "AbilityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CharacterSkill_OwnerId",
