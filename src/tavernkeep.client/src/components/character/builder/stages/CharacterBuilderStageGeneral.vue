@@ -87,13 +87,13 @@ const emits = defineEmits<{
     update: [value: { key: keyof Character; value: unknown }]
 }>();
 
-watch(name, () => emits("update", { key: "name", value: name.value }));
-watch(level, () => emits("update", { key: "level", value: level.value }));
+watch(name, () => emits('update', { key: 'name', value: name.value }));
+watch(level, () => emits('update', { key: 'level', value: level.value }));
 
-watch(ancestryName, () => emits("update", { key: "ancestry", value: { name: ancestryName.value, health: ancestryHealth.value } as Ancestry }));
-watch(ancestryHealth, () => emits("update", { key: "ancestry", value: { name: ancestryName.value, health: ancestryHealth.value } as Ancestry }));
+watch(ancestryName, () => emits('update', { key: 'ancestry', value: { name: ancestryName.value, health: ancestryHealth.value } as Ancestry }));
+watch(ancestryHealth, () => emits('update', { key: 'ancestry', value: { name: ancestryName.value, health: ancestryHealth.value } as Ancestry }));
 
-watch(className, () => emits("update", { key: "class", value: { name: className.value, healthPerLevel: classHealthPerLevel.value } as Class }));
-watch(classHealthPerLevel, () => emits("update", { key: "class", value: { name: className.value, healthPerLevel: classHealthPerLevel.value } as Class }));
+watch(className, () => emits('update', { key: 'class', value: { name: className.value, healthPerLevel: classHealthPerLevel.value } as Class }));
+watch(classHealthPerLevel, () => emits('update', { key: 'class', value: { name: className.value, healthPerLevel: classHealthPerLevel.value } as Class }));
 
 </script>

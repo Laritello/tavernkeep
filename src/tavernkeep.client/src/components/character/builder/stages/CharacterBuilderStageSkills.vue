@@ -18,6 +18,6 @@ const emits = defineEmits<{
 }>();
 
 function update(skills: BaseSkill[]) {
-    emits("update", { key: "skills", value: skills });
+    emits('update', { key: 'skills', value: skills });
 }
 </script>

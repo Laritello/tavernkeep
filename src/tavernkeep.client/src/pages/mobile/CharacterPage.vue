@@ -121,7 +121,7 @@ function updateSection() {
     }
 
     // Find first header that hasn't reached the border
-    const border = sectionBar!.getBoundingClientRect().bottom;
+    const border = sectionBar.getBoundingClientRect().bottom;
     const start = headers.item(0).getBoundingClientRect().top;
     let sectionIndex = 0;
 
@@ -147,11 +147,11 @@ function updateSection() {
     // Update styleclass for each navigation button
     navigation.forEach((element) => {
         if (element.innerHTML == target) {
-            element.classList.add("text-primary");
-            element.classList.add("active");
+            element.classList.add('text-primary');
+            element.classList.add('active');
         } else {
-            element.classList.remove("text-primary");
-            element.classList.remove("active");
+            element.classList.remove('text-primary');
+            element.classList.remove('active');
         }
     });
 }

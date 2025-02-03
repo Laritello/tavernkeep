@@ -66,27 +66,27 @@ interface Stage {
 const stages: Stage[] = [
     {
         order: 1,
-        name: "welcome",
+        name: 'welcome',
         display: CharacterBuilderStageWelcome
     },
     {
         order: 2,
-        name: "general",
+        name: 'general',
         display: CharacterBuilderStageGeneral
     },
     {
         order: 3,
-        name: "abilities",
+        name: 'abilities',
         display: CharacterBuilderStageAbilities
     },
     {
         order: 4,
-        name: "skills",
+        name: 'skills',
         display: CharacterBuilderStageSkills
     },
     {
         order: 5,
-        name: "savingThrows",
+        name: 'savingThrows',
         display: CharacterBuilderStageSavingThrows
     },
 ]
