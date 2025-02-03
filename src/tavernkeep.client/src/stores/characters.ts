@@ -25,9 +25,9 @@ export const useCharacters = defineStore('characters', () => {
         Object.assign(dictionary, characters);
     }
 
-    async function createCharacter(ownerId: string, name: string): Promise<Character> {
-        const character = await api.createCharacter(ownerId, name);
-        dictionary[character.id] = character;
+    async function createCharacter(character: Character): Promise<Character> {
+        const createdCharacter = await api.createCharacter(character);
+        dictionary[character.id] = createdCharacter;
 
         return character;
     }

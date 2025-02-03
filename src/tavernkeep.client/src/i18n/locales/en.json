@@ -156,5 +156,47 @@
             "header": "Language"
         },
         "logout": "Logout"
+    },
+    "builder": {
+        "header": "Create character",
+        "actions": {
+            "back": "Back",
+            "next": "Next",
+            "create": "Create"
+        },
+        "stages": {
+            "welcome": {
+                "name": "Welcome",
+                "contentHeader": "Welcome to the character builder!",
+                "contentMain": "This constructor provides access to only some parameters. All the rest can be filled in using the character sheet."
+            },
+            "general": {
+                "name": "General",
+                "character": {
+                    "header": "Character",
+                    "name": "Name",
+                    "level": "Level"
+                },
+                "ancestry": {
+                    "header": "Ancestry",
+                    "name": "Name",
+                    "health": "Health"
+                },
+                "class": {
+                    "header": "Class",
+                    "name": "Name",
+                    "healthPerLevel": "Health per level"
+                }
+            },
+            "abilities": {
+                "name": "Abilities"
+            },
+            "skills": {
+                "name": "Skills"
+            },
+            "savingThrows": {
+                "name": "Saving Throws"
+            }
+        }
     }
 }

@@ -8,15 +8,23 @@ const { localePrefix } = defineProps<{
     localePrefix: string
 }>();
 
+const emits = defineEmits<{
+    updated: [value: BaseSkill[]]
+}>();
+
+function update(index: number, value: BaseSkill) {
+    items.value[index] = value;
+    emits('updated', items.value);
+}
+
 </script>
 
 <template>
     <div class="flex flex-col">
         <div class="flex flex-col">
-            <ProficiencyListEditItem v-for="(item, index) in items" :key="item.name" 
-                                     :item="item" 
-                                     :locale-prefix="localePrefix" 
-                                     @updated="(newValue) => items[index] = newValue" class="hover:bg-base-200" />
+            <ProficiencyListEditItem v-for="(item, index) in items" :key="item.name" :item="item"
+                :locale-prefix="localePrefix" @updated="(newValue) => update(index, newValue)"
+                class="hover:bg-base-200" />
         </div>
     </div>
 </template>

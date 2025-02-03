@@ -16,7 +16,6 @@ import InformationEditDialog from './dialogs/edit/InformationEditDialog.vue';
 import LongRestDialog from './dialogs/LongRestDialog.vue';
 import HealthEditDialog from '@/components/dialogs/edit/HealthEditDialog.vue';
 
-
 const { t } = useI18n();
 
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
@@ -168,7 +167,8 @@ async function toggleDetails() {
                             <PerceptionBadge :perception="user.activeCharacter.value.perception" class="w-12" />
                             <ArmorClassBadge :armor="user.activeCharacter.value.armor" class="w-12" />
                         </div>
-                        <HeroPoints class="flex-none" :amount="user.activeCharacter.value.heroPoints" @changed="updateHeroPoints" />
+                        <HeroPoints class="flex-none" :amount="user.activeCharacter.value.heroPoints"
+                            @changed="updateHeroPoints" />
                     </div>
                 </div>
             </div>

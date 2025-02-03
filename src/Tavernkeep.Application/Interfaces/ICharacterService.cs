@@ -1,4 +1,5 @@
-﻿using Tavernkeep.Core.Entities;
+﻿using Tavernkeep.Core.Contracts.Character.Dtos;
+using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkeep.Application.Interfaces
@@ -9,13 +10,17 @@ namespace Tavernkeep.Application.Interfaces
 		/// Creates a new character with the specified details and associates it with the given owner.
 		/// </summary>
 		/// <param name="owner">The user who owns the character.</param>
-		/// <param name="name">The name of the character.</param>
-		/// <param name="ancestryId">The ID of the character's ancestry.</param>
-		/// <param name="backgroundId">The ID of the character's background.</param>
-		/// <param name="classId">The ID of the character's class.</param>
+		/// <param name="characterData">The <see cref="CharacterTemplateDto"/> with filled properties.</param>
 		/// <param name="cancellationToken">A token to cancel the operation.</param>
 		/// <returns>A task representing the newly created character.</returns>
-		public Task<Character> CreateCharacterAsync(User owner, string name, string ancestryId, string backgroundId, string classId, CancellationToken cancellationToken);
+		public Task<Character> CreateCharacterAsync(User owner, CharacterTemplateDto characterData, CancellationToken cancellationToken);
+
+		/// <summary>
+		/// Creates a new character template with default values.
+		/// </summary>
+		/// <param name="cancellationToken">A token to cancel the operation.</param>
+		/// <returns></returns>
+		public Task<Character> CreateCharacterTemplateAsync(CancellationToken cancellationToken);
 
 		/// <summary>
 		/// Saves or updates an existing character in the database.

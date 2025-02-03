@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
@@ -9,6 +9,7 @@ using Tavernkeep.Core.Interfaces;
 namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 {
 	[Table("CharacterSkill")]
+	[PrimaryKey(nameof(Id))]
 	public class Skill : INamedProperty
 	{
 		#region Backing fields
@@ -30,10 +31,9 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		#region Properties
 
-		[Key, Column(Order = 0)]
+		public Guid Id { get; set; }
 		public required Character Owner { get; set; }
 
-		[Key, Column(Order = 1)]
 		public string Name { get; set; }
 		public SkillType Type { get; set; }
 

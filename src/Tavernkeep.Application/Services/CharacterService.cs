@@ -1,7 +1,9 @@
 ﻿using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
@@ -13,18 +15,298 @@ namespace Tavernkeep.Application.Services
 		IUserRepository userRepository,
 		INotificationService notificationService) : ICharacterService
 	{
-		public async Task<Character> CreateCharacterAsync(User owner, string name, string ancestryId, string backgroundId, string classId, CancellationToken cancellationToken = default)
+		public async Task<Character> CreateCharacterAsync(User owner, CharacterTemplateDto characterData, CancellationToken cancellationToken = default)
 		{
 			Character character = new()
 			{
 				Owner = owner,
-				Name = name,
+				Name = characterData.Name,
+				Level = characterData.Level,
 			};
+
+			character.Ancestry = new(characterData.Ancestry.Name, characterData.Ancestry.Health)
+			{
+				Owner = character,
+			};
+
+			character.Class = new(characterData.Class.Name, characterData.Class.HealthPerLevel)
+			{
+				Owner = character
+			};
+
+			character.Abilities = [.. characterData.Abilities.Select(x => new Ability(x.Name, x.Score) { Owner = character })];
+
+			character.Skills =
+			[
+				new("Acrobatics", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Dexterity"]
+				},
+				new("Arcana", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Intelligence"]
+				},
+				new("Athletics", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Strength"]
+				},
+				new("Crafting", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Intelligence"]
+				},
+				new("Deception", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Charisma"]
+				},
+				new("Diplomacy", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Charisma"]
+				},
+				new("Intimidation", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Charisma"]
+				},
+				new("Medicine", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Wisdom"]
+				},
+				new("Nature", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Wisdom"]
+				},
+				new("Occultism", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Intelligence"]
+				},
+				new("Performance", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Charisma"]
+				},
+				new("Religion", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Wisdom"]
+				},
+				new("Society", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Intelligence"]
+				},
+				new("Stealth", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Dexterity"]
+				},
+				new("Survival", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Wisdom"]
+				},
+				new("Thievery", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Dexterity"]
+				},
+
+				new("Fortitude", Proficiency.Untrained, SkillType.SavingThrow)
+				{
+					Owner = character,
+					Ability = character.Abilities["Constitution"]
+				},
+				new("Reflex", Proficiency.Untrained, SkillType.SavingThrow)
+				{
+					Owner = character,
+					Ability = character.Abilities["Dexterity"]
+				},
+				new("Will", Proficiency.Untrained, SkillType.SavingThrow)
+				{
+					Owner = character,
+					Ability = character.Abilities["Wisdom"]
+				},
+
+				new("Perception", Proficiency.Untrained, SkillType.Perception)
+				{
+					Owner = character,
+					Ability = character.Abilities["Wisdom"]
+				},
+			];
+
+			foreach (var skill in characterData.Skills)
+			{
+				character.Skills[skill.Name].Proficiency = skill.Proficiency;
+			}
+
+			foreach (var savingThrow in characterData.SavingThrows)
+			{
+				character.Skills[savingThrow.Name].Proficiency = savingThrow.Proficiency;
+			}
+
+			character.Health = new()
+			{
+				Owner = character,
+			};
+
+			character.Health.Current = character.Health.Max;
 
 			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);
 
 			return character;
+		}
+
+		public Task<Character> CreateCharacterTemplateAsync(CancellationToken cancellationToken)
+		{
+			var character = new Character()
+			{
+				Name = "Unknown hero",
+				Level = 1,
+			};
+
+			character.Ancestry = new("Human", 8)
+			{
+				Owner = character,
+			};
+
+			character.Class = new("Fighter", 10)
+			{
+				Owner = character
+			};
+
+			character.Abilities =
+			[
+				new("Strength", 10) { Owner = character },
+				new("Dexterity", 10) { Owner = character },
+				new("Constitution", 10) { Owner = character },
+				new("Intelligence", 10) { Owner = character },
+				new("Wisdom", 10) { Owner = character },
+				new("Charisma", 10) { Owner = character }
+			];
+
+			character.Skills =
+			[
+				new("Acrobatics", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Dexterity"]
+				},
+				new("Arcana", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Intelligence"]
+				},
+				new("Athletics", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Strength"]
+				},
+				new("Crafting", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Intelligence"]
+				},
+				new("Deception", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Charisma"]
+				},
+				new("Diplomacy", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Charisma"]
+				},
+				new("Intimidation", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Charisma"]
+				},
+				new("Medicine", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Wisdom"]
+				},
+				new("Nature", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Wisdom"]
+				},
+				new("Occultism", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Intelligence"]
+				},
+				new("Performance", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Charisma"]
+				},
+				new("Religion", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Wisdom"]
+				},
+				new("Society", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Intelligence"]
+				},
+				new("Stealth", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Dexterity"]
+				},
+				new("Survival", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Wisdom"]
+				},
+				new("Thievery", Proficiency.Untrained, SkillType.Basic)
+				{
+					Owner = character,
+					Ability = character.Abilities["Dexterity"]
+				},
+
+				new("Fortitude", Proficiency.Untrained, SkillType.SavingThrow)
+				{
+					Owner = character,
+					Ability = character.Abilities["Constitution"]
+				},
+				new("Reflex", Proficiency.Untrained, SkillType.SavingThrow)
+				{
+					Owner = character,
+					Ability = character.Abilities["Dexterity"]
+				},
+				new("Will", Proficiency.Untrained, SkillType.SavingThrow)
+				{
+					Owner = character,
+					Ability = character.Abilities["Wisdom"]
+				},
+
+				new("Perception", Proficiency.Untrained, SkillType.Perception)
+				{
+					Owner = character,
+					Ability = character.Abilities["Wisdom"]
+				},
+			];
+
+			character.Health = new()
+			{
+				Owner = character,
+			};
+
+			character.Walk.Base = 25;
+
+			return Task.FromResult(character);
 		}
 
 		public async Task<List<Character>> GetAllCharactersAsync(CancellationToken cancellationToken)

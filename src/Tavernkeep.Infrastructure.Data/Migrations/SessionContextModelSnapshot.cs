@@ -104,9 +104,13 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT")
-                        .HasColumnOrder(1);
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("TEXT");
@@ -114,7 +118,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Property<int>("Score")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Name");
+                    b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
 
@@ -173,11 +177,15 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT")
-                        .HasColumnOrder(1);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("AbilityName")
+                    b.Property<Guid>("AbilityId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("OwnerId")
@@ -189,9 +197,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Name");
+                    b.HasKey("Id");
 
-                    b.HasIndex("AbilityName");
+                    b.HasIndex("AbilityId");
 
                     b.HasIndex("OwnerId");
 
@@ -776,7 +784,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", "Ability")
                         .WithMany()
-                        .HasForeignKey("AbilityName");
+                        .HasForeignKey("AbilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Owner")
                         .WithMany("Skills")
