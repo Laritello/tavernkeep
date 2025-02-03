@@ -4,7 +4,8 @@ import { watch } from 'vue';
 import { i18n, type LocaleType } from '@/i18n';
 
 export const useI18n = (initialize = false) => {
-    const userPreferredLanguage: LocaleType = window.navigator.language || import.meta.env.VITE_DEFAULT_LOCALE;
+    const userLanguageAndLocale = window.navigator.language.split('-');
+    const userPreferredLanguage: LocaleType = userLanguageAndLocale[0] || import.meta.env.VITE_DEFAULT_LOCALE;
     const locale = useLocalStorage<LocaleType>('tavernkeep.locale', userPreferredLanguage);
 
     if (initialize) {
