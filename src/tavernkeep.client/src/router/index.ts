@@ -1,19 +1,17 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 
+import { useSession } from '@/composables/useSession';
 import { UserRole } from '@/contracts/enums';
+import AdminPage from '@/pages/AdminPage.vue';
+import CharactersPage from '@/pages/CharactersPage.vue';
+import ErrorPage from '@/pages/ErrorPage.vue';
+import LoginPage from '@/pages/LoginPage.vue';
+import BuilderPage from '@/pages/mobile/BuilderPage.vue';
+import CharacterPage from '@/pages/mobile/CharacterPage.vue';
+import ChatPage from '@/pages/mobile/ChatPage.vue';
 import CombatPage from '@/pages/mobile/CombatPage.vue';
+import SettingsPage from '@/pages/mobile/SettingsPage.vue';
 import SkillsEditPage from '@/pages/mobile/edit/SkillsEditPage.vue';
-
-import { useSession } from './composables/useSession';
-import AdminPage from './pages/AdminPage.vue';
-import CharactersPage from './pages/CharactersPage.vue';
-import ErrorPage from './pages/ErrorPage.vue';
-//Pages
-import LoginPage from './pages/LoginPage.vue';
-import BuilderPage from './pages/mobile/BuilderPage.vue';
-import CharacterPage from './pages/mobile/CharacterPage.vue';
-import ChatPage from './pages/mobile/ChatPage.vue';
-import SettingsPage from './pages/mobile/SettingsPage.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -59,7 +57,7 @@ const routes: RouteRecordRaw[] = [
         path: '/characters/build',
         component: BuilderPage,
         meta: {
-            layout: 'BlankLayout',
+            layout: 'HeaderLayout',
             protected: true,
             title: 'Create Character',
         },
@@ -68,7 +66,7 @@ const routes: RouteRecordRaw[] = [
         path: '/character/skills/edit',
         component: SkillsEditPage,
         meta: {
-            layout: 'BlankLayout',
+            layout: 'HeaderLayout',
             protected: true,
             title: 'Edit character skills',
         },

@@ -1,0 +1,34 @@
+<template>
+    <div class="flex flex-col h-full">
+        <div class="sticky top-0 flex items-center bg-base-200 shadow-md">
+            <button class="btn btn-circle btn-ghost btn-md" @click="goBack">
+                <span class="mdi mdi-arrow-left text-xl"></span>
+            </button>
+            <div>
+                <h1 class="mx-2 text-xl font-semibold leading-4">{{ header.title }}</h1>
+                <h2 class="mx-2 text-base-content/50 text-xs font-normal leading-4">{{ header.subtitle }}</h2>
+            </div>
+        </div>
+
+        <div class="h-dvh overflow-hidden">
+            <slot />
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+import { useHeaderStore } from '@/stores/header';
+
+const header = useHeaderStore();
+const router = useRouter();
+
+async function goBack() {
+    if (window.history.state.back === null) {
+        await router.push({ path: '/' });
+    } else {
+        router.back();
+    }
+}
+</script>
