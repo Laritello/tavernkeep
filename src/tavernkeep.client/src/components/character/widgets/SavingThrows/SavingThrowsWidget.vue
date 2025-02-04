@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-base-100 border-2 border-base-300 rounded-xl border-inherit flex flex-col p-2 w-full lg:max-w-md">
+    <div class="bg-base-100 border-2 border-base-300 rounded-xl flex flex-col p-2 w-full lg:max-w-md">
         <div class="flex flex-row justify-center items-center">
             <h2 class="mr-1 text-lg font-semibold select-none">{{ t('sections.savingThrows') }}</h2>
             <button class="btn btn-sm btn-circle btn-ghost" @click="showEditSavingThrowsDialog()">
