@@ -1,21 +1,23 @@
-﻿<script setup lang="ts">
+﻿<!--suppress ES6UnusedImports -->
+<script setup lang="ts" generic="T extends SkillLike">
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import ProficiencyComponent from '@/components/character/ProficiencyComponent.vue';
-import type { BaseSkill } from '@/contracts/character';
 import { Proficiency, SkillType } from '@/contracts/enums';
 
-const { t } = useI18n();
+import type { SkillLike } from './ProficiencyListEdit.vue';
 
 const { item, localePrefix } = defineProps<{
-    item: BaseSkill;
+    item: T;
     localePrefix: string;
 }>();
 
 const emits = defineEmits<{
-    updated: [value: BaseSkill];
+    updated: [value: T];
 }>();
+
+const { t } = useI18n();
 
 const proficiencies = [
     Proficiency.Untrained,

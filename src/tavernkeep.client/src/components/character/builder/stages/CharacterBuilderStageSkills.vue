@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import type { BaseSkill, Skill } from '@/contracts/character';
+import type { Skill } from '@/contracts/character';
 import type { Character } from '@/entities';
 import type { KeyValue } from '@/types';
 
@@ -19,7 +19,7 @@ const emits = defineEmits<{
     update: [value: KeyValue<Character>];
 }>();
 
-function update(skills: BaseSkill[]) {
-    emits('update', { key: 'skills', value: skills as Skill[] });
+function update(skills: Skill[]) {
+    emits('update', { key: 'skills', value: skills });
 }
 </script>

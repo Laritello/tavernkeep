@@ -1,4 +1,4 @@
-import type { SpeedType } from '../enums/SpeedType';
+import type { SpeedType } from '@/contracts/enums';
 
 export interface Speed {
     type: SpeedType;

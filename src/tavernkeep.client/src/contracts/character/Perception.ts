@@ -1,5 +1,8 @@
-import type { BaseSkill } from './BaseSkill';
+import type { Proficiency, SkillType } from '@/contracts/enums';
 
-export interface Perception extends BaseSkill {
+export interface Perception {
+    type: SkillType;
+    name: string;
+    proficiency: Proficiency;
     bonus: number;
 }

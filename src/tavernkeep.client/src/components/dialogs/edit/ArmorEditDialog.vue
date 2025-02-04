@@ -2,11 +2,10 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import type { ProficiencyEditItemType } from '@/components/character/shared/ProficiencyListEdit';
 import ProficiencyListEdit from '@/components/character/shared/ProficiencyListEdit/ProficiencyListEdit.vue';
 import type { DialogResultCallback } from '@/composables/useModal';
 import type { Armor } from '@/contracts/character';
-import { ArmorType, Proficiency } from '@/contracts/enums';
+import { ArmorType, Proficiency, SkillType } from '@/contracts/enums';
 
 const { t } = useI18n();
 
@@ -16,8 +15,12 @@ const { closeModal, armor } = defineProps<{
 }>();
 
 const types: ArmorType[] = [ArmorType.Unarmored, ArmorType.Light, ArmorType.Medium, ArmorType.Heavy];
-const currentItems = ref<ProficiencyEditItemType[]>(
-    Object.entries(armor.proficiencies).map((k) => ({ name: k[0].toString(), proficiency: k[1], userBonus: 0 }))
+const currentItems = ref(
+    Object.entries(armor.proficiencies).map((k) => ({
+        type: SkillType.Basic,
+        name: k[0].toString(),
+        proficiency: k[1],
+    }))
 );
 
 const type = ref<ArmorType>(armor.equipped.type);
@@ -78,12 +81,7 @@ function cancel() {
                         <span class="label-text text-clip text-nowrap">{{ t('widgets.armor.dexterityCap') }}</span>
                         <input v-model="hasCap" type="checkbox" class="toggle toggle-xs" />
                     </div>
-                    <input
-                        v-model="cap"
-                        type="text"
-                        class="input input-bordered w-full max-w-xs"
-                        :disabled="!hasCap"
-                    />
+                    <input v-model="cap" type="text" class="input input-bordered w-full max-w-xs" :disabled="!hasCap" />
                 </label>
             </div>
 

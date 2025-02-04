@@ -1,19 +1,25 @@
-﻿<script setup lang="ts">
-import type { BaseSkill } from '@/contracts/character';
+﻿<script setup lang="ts" generic="T extends SkillLike">
+import type { Proficiency, SkillType } from '@/contracts/enums';
 
 import ProficiencyListEditItem from './ProficiencyListEditItem.vue';
 
-const items = defineModel<BaseSkill[]>({ required: true });
+export type SkillLike = {
+    type: SkillType;
+    name: string;
+    proficiency: Proficiency;
+};
+
+const items = defineModel<T[]>({ required: true });
 
 const { localePrefix } = defineProps<{
     localePrefix: string;
 }>();
 
 const emits = defineEmits<{
-    updated: [value: BaseSkill[]];
+    updated: [value: T[]];
 }>();
 
-function update(index: number, value: BaseSkill) {
+function update(index: number, value: T) {
     items.value[index] = value;
     emits('updated', items.value);
 }
