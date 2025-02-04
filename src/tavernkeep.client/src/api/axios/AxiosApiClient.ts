@@ -252,7 +252,7 @@ export class AxiosApiClient {
     }
 
     async sendMessage(content: string, recipientId?: string): Promise<Message> {
-        const response = await this.client.post<Message>('chat/message', {
+        const response = await this.client.post<Message>('chat', {
             recipientId: recipientId,
             content: content,
         });
