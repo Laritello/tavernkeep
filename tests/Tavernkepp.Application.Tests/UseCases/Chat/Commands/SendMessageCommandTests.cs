@@ -1,5 +1,4 @@
 ﻿using Moq;
-using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Chat.Commands.SendMessage;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;

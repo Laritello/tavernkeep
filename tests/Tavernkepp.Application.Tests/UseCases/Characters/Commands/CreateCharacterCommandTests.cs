@@ -51,8 +51,8 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				[
 					new()
 					{
-						Name = "Acrobatics", 
-						Proficiency = Proficiency.Untrained, 
+						Name = "Acrobatics",
+						Proficiency = Proficiency.Untrained,
 						Type = SkillType.Basic
 					},
 					new()
