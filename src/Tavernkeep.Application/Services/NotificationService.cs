@@ -1,38 +1,25 @@
 ﻿using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Channels;
-using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyCharacterEdited;
-using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyMessageDeleted;
-using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyRollMessage;
-using Tavernkeep.Application.UseCases.Notifications.Queries.NotifyTextMessage;
-using Tavernkeep.Core.Contracts.Chat.Dtos;
-using Tavernkeep.Core.Entities.Messages;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Notifications;
+using Tavernkeep.Core.Services;
 
 namespace Tavernkeep.Application.Services
 {
 	/// <summary>
 	/// Handles the notification's distribution to the clients.
 	/// </summary>
-	/// <param name="serviceProvider">The <see cref="IServiceProvider"/> instance.</param>
 	/// <param name="logger">The <see cref="ILogger"/> instance.</param>
+	/// <param name="mediator">The <see cref="IMediator"/> instance.</param>
 	public class NotificationService(
-		IServiceProvider serviceProvider,
 		ILogger<NotificationService> logger,
 		IMediator mediator
 		) : BackgroundService, INotificationService
 	{
-		private readonly Channel<object> _queue = Channel.CreateUnbounded<object>();
+		private readonly Channel<IBaseNotification> _queue = Channel.CreateUnbounded<IBaseNotification>();
 
-		public ValueTask QueueMessageAsync(Message message, CancellationToken cancellationToken = default)
-			=> _queue.Writer.WriteAsync(message, cancellationToken);
-		public ValueTask QueueDeleteMessageAsync(Message message, CancellationToken cancellationToken = default)
-			=> _queue.Writer.WriteAsync(new MessageDeletedDto() { Id = message.Id }, cancellationToken);
-		public ValueTask QueueCharacterNotificationAsync(Character notification, CancellationToken cancellationToken = default)
-			=> _queue.Writer.WriteAsync(notification, cancellationToken);
+		public ValueTask Publish<T>(T notification, CancellationToken cancellationToken) where T : IBaseNotification => _queue.Writer.WriteAsync(notification, cancellationToken);
 
 		protected override async Task ExecuteAsync(CancellationToken cancellationToken)
 		{
@@ -41,30 +28,13 @@ namespace Tavernkeep.Application.Services
 				try
 				{
 					var notification = await _queue.Reader.ReadAsync(cancellationToken);
-					using var scope = serviceProvider.CreateScope();
 
-					// TODO: Switch to singular notification hub structure
-					switch (notification)
+					if (notification is not INotification)
 					{
-						case TextMessage textMessage:
-							await mediator.Send(new NotifyTextMessageQuery(textMessage), cancellationToken);
-							break;
+						throw new InvalidCastException($"The notification must implement {nameof(INotification)} intereface.");
+					}
 
-						case RollMessage rollMessage:
-							await mediator.Send(new NotifyRollMessageQuery(rollMessage), cancellationToken);
-							break;
-
-						case Character character:
-							await mediator.Send(new NotifyCharacterEditedQuery(character), cancellationToken);
-							break;
-
-						case MessageDeletedDto messageDeleted:
-							await mediator.Send(new NotifyMessageDeletedQuery(messageDeleted), cancellationToken);
-							break;
-
-						default:
-							throw new NotImplementedException($"Notification implementation for {nameof(notification)} doesn't exist.");
-					};
+					await mediator.Publish(notification, cancellationToken);
 				}
 				catch (Exception e)
 				{

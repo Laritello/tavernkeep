@@ -6,6 +6,7 @@ using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Services;
 using Tavernkeep.Core.Specifications;
 using Tavernkeep.Core.Specifications.Chat;
 

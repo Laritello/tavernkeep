@@ -4,14 +4,14 @@ using Microsoft.AspNetCore.SignalR;
 using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
 
-namespace Tavernkeep.Application.UseCases.Notifications.Queries.NotifyTextMessage
+namespace Tavernkeep.Application.UseCases.Chat.Notifications.TextMessageSent
 {
-	public class NotifyTextMessageQueryHandler(
+	public class TextMessageSentNotificationHandler(
 		IHubContext<ChatHub, IChatHub> context,
 		IMapper mapper
-		) : IRequestHandler<NotifyTextMessageQuery>
+		) : INotificationHandler<TextMessageSentNotification>
 	{
-		public async Task Handle(NotifyTextMessageQuery request, CancellationToken cancellationToken)
+		public async Task Handle(TextMessageSentNotification request, CancellationToken cancellationToken)
 		{
 			var message = mapper.Map<TextMessageDto>(request.Message);
 

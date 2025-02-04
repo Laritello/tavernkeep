@@ -1,4 +1,5 @@
 ﻿using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Application.UseCases.Characters.Notifications.CharacterEdited;
 using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
@@ -6,6 +7,7 @@ using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Services;
 
 namespace Tavernkeep.Application.Services
 {
@@ -340,7 +342,7 @@ namespace Tavernkeep.Application.Services
 		{
 			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueCharacterNotificationAsync(character, cancellationToken);
+			await notificationService.Publish(new CharacterEditedNotification(character), cancellationToken);
 		}
 
 		public async Task DeleteCharacter(Character character, CancellationToken cancellationToken)

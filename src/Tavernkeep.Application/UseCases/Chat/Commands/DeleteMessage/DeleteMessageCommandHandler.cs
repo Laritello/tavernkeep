@@ -1,7 +1,8 @@
 ﻿using MediatR;
-using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Application.UseCases.Chat.Notifications.MessageDeleted;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Services;
 
 namespace Tavernkeep.Application.UseCases.Chat.Commands.DeleteMessage
 {
@@ -14,7 +15,7 @@ namespace Tavernkeep.Application.UseCases.Chat.Commands.DeleteMessage
 
 			messageRepository.Remove(message);
 			await messageRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueDeleteMessageAsync(message, cancellationToken);
+			await notificationService.Publish(new MessageDeletedNotification(message), cancellationToken);
 		}
 	}
 }

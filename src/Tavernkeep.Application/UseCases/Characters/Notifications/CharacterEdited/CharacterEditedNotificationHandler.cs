@@ -4,14 +4,14 @@ using Microsoft.AspNetCore.SignalR;
 using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
 
-namespace Tavernkeep.Application.UseCases.Notifications.Queries.NotifyCharacterEdited
+namespace Tavernkeep.Application.UseCases.Characters.Notifications.CharacterEdited
 {
-	public class NotifyCharacterEditedQueryHandler(
+	public class CharacterEditedNotificationHandler(
 		IHubContext<CharacterHub, ICharacterHub> context,
 		IMapper mapper
-		) : IRequestHandler<NotifyCharacterEditedQuery>
+		) : INotificationHandler<CharacterEditedNotification>
 	{
-		public async Task Handle(NotifyCharacterEditedQuery request, CancellationToken cancellationToken)
+		public async Task Handle(CharacterEditedNotification request, CancellationToken cancellationToken)
 		{
 			var character = mapper.Map<CharacterDto>(request.Character);
 			await context.Clients.All.OnCharacterEdited(character);
