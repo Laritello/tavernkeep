@@ -38,7 +38,7 @@ function cancel() {
             <form method="dialog" class="space-x-2" @submit.prevent="confirm">
                 <div class="grid grid-cols-3">
                     <template v-for="ability in currentItems" :key="ability.type">
-                        <div class="box-border flex flex-col m-2 p-2 border-2 rounded-lg">
+                        <div class="box-border flex flex-col m-2 p-2 border-2 border-base-300 rounded-lg">
                             <SwipeNumericInput
                                 :ability="ability"
                                 :max="20"
