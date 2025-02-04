@@ -26,6 +26,14 @@ async function logout() {
     auth.logout();
     await router.push('/login');
 }
+
+async function deleteCharacter(characterId: string) {
+    await user.deleteCharacter(characterId);
+}
+
+async function setActiveCharacter(characterId: string) {
+    await user.setActiveCharacter(characterId);
+}
 </script>
 
 <template>
@@ -39,7 +47,10 @@ async function logout() {
 
         <div class="flex flex-col px-4">
             <div v-for="character in user.characters.value" :key="character.id" class="my-2">
-                <div class="flex flex-row gap-2 border border-slate-500 rounded-xl p-2">
+                <div
+                    class="flex flex-row gap-2 border border-slate-500 rounded-xl p-2"
+                    :class="{ 'border-2': character.id === user.activeCharacter.value?.id }"
+                >
                     <div class="avatar">
                         <div class="w-14 h-14 rounded-xl">
                             <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
@@ -54,7 +65,7 @@ async function logout() {
                     </div>
 
                     <div class="dropdown dropdown-left self-center">
-                        <button tabindex="0" class="btn btn-circle btn-ghost">
+                        <div tabindex="0" role="button" class="btn btn-circle btn-ghost">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="h-6 w-6"
@@ -65,16 +76,20 @@ async function logout() {
                                     d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z"
                                 />
                             </svg>
-                        </button>
+                        </div>
                         <ul
                             tabindex="0"
                             class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow border border-base-200"
                         >
                             <li>
-                                <a>{{ t('settings.characters.setActive') }}</a>
+                                <a @click="setActiveCharacter(character.id)">
+                                    {{ t('settings.characters.setActive') }}
+                                </a>
                             </li>
                             <li>
-                                <a class="text-red-600">{{ t('settings.characters.delete') }}</a>
+                                <a class="text-red-600" @click="deleteCharacter(character.id)">
+                                    {{ t('settings.characters.delete') }}
+                                </a>
                             </li>
                         </ul>
                     </div>
