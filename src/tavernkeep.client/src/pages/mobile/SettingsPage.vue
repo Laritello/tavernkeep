@@ -32,6 +32,9 @@ async function deleteCharacter(characterId: string) {
 }
 
 async function setActiveCharacter(characterId: string) {
+    // Blurs the active element to prevent the dropdown from staying open
+    // when switching characters. This is a temporary fix until a more permanent solution is found.
+    (document.activeElement as HTMLElement)?.blur();
     await user.setActiveCharacter(characterId);
 }
 </script>
