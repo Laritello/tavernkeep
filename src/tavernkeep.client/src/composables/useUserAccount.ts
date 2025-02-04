@@ -1,5 +1,6 @@
 import { computed, unref, type MaybeRef } from 'vue';
 
+import type { Character } from '@/entities';
 import { useCharacters } from '@/stores/characters';
 import { useUsers } from '@/stores/users';
 
@@ -35,12 +36,12 @@ export const useUserAccount = (id: MaybeRef<string | undefined>) => {
         await users.setActiveCharacter(user.value.id, user.value.activeCharacterId);
     };
 
-    const createCharacter = async (name: string) => {
+    const createCharacter = async (character: Character): Promise<Character | undefined> => {
         if (!user.value) {
             return;
         }
 
-        await charactersStore.createCharacter(user.value.id, name);
+        return await charactersStore.createCharacter(character);
     };
 
     const deleteCharacter = async (characterId: MaybeRef<string>) => {

@@ -4,13 +4,13 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import CharacterBuilder from '@/components/character/builder/CharacterBuilder.vue';
+import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount.ts';
 import type { Character } from '@/entities';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import { useCharacters } from '@/stores/characters';
 import { useHeaderStore } from '@/stores/header';
 
 const { t } = useI18n();
-const characters = useCharacters();
+const user = useCurrentUserAccount();
 const header = useHeaderStore();
 const router = useRouter();
 
@@ -32,7 +32,7 @@ function updateCharacter({ key, value }: { key: keyof Character; value: unknown 
 }
 
 async function create() {
-    const character = await characters.createCharacter(template.value);
+    const character = await user.createCharacter(template.value);
 
     if (character !== undefined) {
         await router.push('/settings');
