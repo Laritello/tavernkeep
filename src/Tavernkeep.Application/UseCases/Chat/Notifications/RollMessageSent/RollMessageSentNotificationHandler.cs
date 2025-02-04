@@ -6,15 +6,15 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
 using Tavernkeep.Infrastructure.Notifications.Storage;
 
-namespace Tavernkeep.Application.UseCases.Notifications.Queries.NotifyRollMessage
+namespace Tavernkeep.Application.UseCases.Chat.Notifications.RollMessageSent
 {
-	public class NotifyRollMessageQueryHandler(
+	public class RollMessageSentNotificationHandler(
 		IUserConnectionStorage<Guid> userStorage,
 		IHubContext<ChatHub, IChatHub> context,
 		IMapper mapper
-		) : IRequestHandler<NotifyRollMessageQuery>
+		) : INotificationHandler<RollMessageSentNotification>
 	{
-		public async Task Handle(NotifyRollMessageQuery request, CancellationToken cancellationToken)
+		public async Task Handle(RollMessageSentNotification request, CancellationToken cancellationToken)
 		{
 			var message = mapper.Map<RollMessageDto>(request.Message);
 

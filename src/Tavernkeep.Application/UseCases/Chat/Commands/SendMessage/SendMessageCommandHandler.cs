@@ -1,8 +1,9 @@
 ﻿using MediatR;
-using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Application.UseCases.Chat.Notifications.TextMessageSent;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Services;
 
 namespace Tavernkeep.Application.UseCases.Chat.Commands.SendMessage
 {
@@ -39,7 +40,7 @@ namespace Tavernkeep.Application.UseCases.Chat.Commands.SendMessage
 			messageRepository.Save(message);
 
 			await messageRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueMessageAsync(message, cancellationToken);
+			await notificationService.Publish(new TextMessageSentNotification(message), cancellationToken);
 
 			return message;
 		}

@@ -1,9 +1,11 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Extensions;
 using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Application.UseCases.Chat.Notifications.RollMessageSent;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Services;
 
 namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
 {
@@ -40,7 +42,7 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
 			messageRepository.Save(message);
 
 			await messageRepository.CommitAsync(cancellationToken);
-			await notificationService.QueueMessageAsync(message, cancellationToken);
+			await notificationService.Publish(new RollMessageSentNotification(message), cancellationToken);
 
 			return message;
 		}

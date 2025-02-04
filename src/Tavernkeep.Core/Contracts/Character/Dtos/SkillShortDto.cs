@@ -6,6 +6,6 @@ namespace Tavernkeep.Core.Contracts.Character.Dtos
 	{
 		public required string Name { get; set; }
 		public required Proficiency Proficiency { get; set; }
-		public required int Bonus { get; set; }
+		public int Bonus { get; set; }
 	}
 }

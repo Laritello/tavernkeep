@@ -1,11 +1,11 @@
 ﻿using Moq;
-using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Chat.Commands.DeleteMessage;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Messages;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
+using Tavernkeep.Core.Services;
 using Tavernkeep.Core.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Chat.Commands
