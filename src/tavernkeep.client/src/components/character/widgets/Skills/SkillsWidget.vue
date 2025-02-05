@@ -13,6 +13,7 @@
                 :key="skill.name"
                 :skill="skill"
                 class="skill-item"
+                @pin="(value) => $emit('pin', value)"
                 @roll="(value) => $emit('roll', value.name)"
             />
         </div>
@@ -35,6 +36,7 @@ const { skills } = defineProps<{ skills: Skill[] }>();
 defineEmits<{
     changed: [value: Record<string, SkillEditDto>];
     roll: [value: string];
+    pin: [value: Skill]
 }>();
 </script>
 

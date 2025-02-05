@@ -160,8 +160,6 @@ export class AxiosApiClient {
             skills: skills,
         });
 
-        console.log(response);
-
         return getPayloadOrThrow(response);
     }
 
