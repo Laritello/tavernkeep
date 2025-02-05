@@ -1,4 +1,6 @@
 ﻿using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Application.UseCases.Characters.Notifications.CharacterCreated;
+using Tavernkeep.Application.UseCases.Characters.Notifications.CharacterDeleted;
 using Tavernkeep.Application.UseCases.Characters.Notifications.CharacterEdited;
 using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
@@ -163,6 +165,7 @@ namespace Tavernkeep.Application.Services
 
 			characterRepository.Save(character);
 			await characterRepository.CommitAsync(cancellationToken);
+			await notificationService.Publish(new CharacterCreatedNotification(character), cancellationToken);
 
 			return character;
 		}
@@ -349,7 +352,7 @@ namespace Tavernkeep.Application.Services
 		{
 			characterRepository.Remove(character);
 			await characterRepository.CommitAsync(cancellationToken);
-			// TODO: Notification about character deletion
+			await notificationService.Publish(new CharacterDeletedNotification(character), cancellationToken);
 		}
 	}
 }

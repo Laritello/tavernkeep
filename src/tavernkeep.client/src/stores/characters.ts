@@ -12,8 +12,16 @@ export const useCharacters = defineStore('characters', () => {
     const api: AxiosApiClient = ApiClientFactory.createApiClient();
     const dictionary = reactive<Characters>({});
 
+    CharacterHub.connection.on('OnCharacterCreated', (character: Character) => {
+        Object.assign(dictionary[character.id], character);
+    });
+
     CharacterHub.connection.on('OnCharacterEdited', (character: Character) => {
         Object.assign(dictionary[character.id], character);
+    });
+
+    CharacterHub.connection.on('OnCharacterDeleted', (characterId: string) => {
+        console.log(characterId);
     });
 
     function get(id: string): Character {

@@ -12,9 +12,5 @@ namespace Tavernkeep.Infrastructure.Notifications.Hubs
 	}
 
 	[Authorize]
-	public class ChatHub([FromServices] IUserConnectionStorage<Guid> userStorage) : BaseHub<IChatHub>(userStorage)
-	{
-		public async Task SendMessageNotification(MessageDto message) => await Clients.All.ReceiveMessage(message);
-		public async Task DeleteMessageNotification(MessageDeletedDto message) => await Clients.All.DeleteMessage(message);
-	}
+	public class ChatHub([FromServices] IUserConnectionStorage<Guid> userStorage) : BaseHub<IChatHub>(userStorage) { }
 }
