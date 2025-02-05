@@ -23,13 +23,13 @@ namespace Tavernkeep.Application.UseCases.Chat.Notifications.RollMessageSent
 				case RollType.Public:
 				case RollType.Secret:
 					// Notify all connected recipients about the new message
-					await context.Clients.All.ReceiveMessage(message);
+					await context.Clients.All.OnMessageReceived(message);
 					break;
 
 				case RollType.Private:
 					// Notify sender about the new message
 					var senderConnections = userStorage.GetConnections(message.Sender.Id);
-					await context.Clients.Clients(senderConnections).ReceiveMessage(message);
+					await context.Clients.Clients(senderConnections).OnMessageReceived(message);
 					break;
 			}
 		}

@@ -23,8 +23,6 @@ namespace Tavernkeep.Application.Mapping.Profiles
 
 			CreateMap<SkillRollMessage, SkillRollMessageDto>();
 			CreateMap<SavingThrowRollMessage, SavingThrowRollMessageDto>();
-
-			CreateMap<Message, MessageDeletedDto>();
 		}
 	}
 }

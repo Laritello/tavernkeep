@@ -17,12 +17,12 @@ namespace Tavernkeep.Application.UseCases.Chat.Notifications.TextMessageSent
 
 			if (message.Recipient == null)
 			{
-				await context.Clients.All.ReceiveMessage(message);
+				await context.Clients.All.OnMessageReceived(message);
 			}
 			else
 			{
 				// Notify recipient about the new message
-				await context.Clients.Users(message.Recipient!.Id.ToString(), message.Sender.Id.ToString()).ReceiveMessage(message);
+				await context.Clients.Users(message.Recipient!.Id.ToString(), message.Sender.Id.ToString()).OnMessageReceived(message);
 			}
 		}
 	}

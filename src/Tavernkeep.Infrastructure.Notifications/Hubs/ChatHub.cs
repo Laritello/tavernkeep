@@ -7,8 +7,9 @@ namespace Tavernkeep.Infrastructure.Notifications.Hubs
 {
 	public interface IChatHub
 	{
-		Task ReceiveMessage(MessageDto message);
-		Task DeleteMessage(MessageDeletedDto message);
+		Task OnMessageReceived(MessageDto message);
+		Task OnMessageDeleted(Guid messageId);
+		Task OnChatDeleted();
 	}
 
 	[Authorize]

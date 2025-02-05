@@ -9,15 +9,20 @@ import { ApiClientFactory } from '@/factories/ApiClientFactory';
 
 export const useMessages = defineStore('messages.store', () => {
     const api: AxiosApiClient = ApiClientFactory.createApiClient();
-    ChatHub.connection.on('ReceiveMessage', (msg: Message) => {
-        appendMessage(msg);
+
+    ChatHub.connection.on('OnMessageReceived', (message: Message) => {
+        appendMessage(message);
     });
 
-    ChatHub.connection.on('DeleteMessage', (msg: Message) => {
-        const index = messageList.value.findIndex((m) => m.id === msg.id);
+    ChatHub.connection.on('OnMessageDeleted', (messageId: string) => {
+        const index = messageList.value.findIndex((m) => m.id === messageId);
         if (index !== -1) {
             messageList.value.splice(index, 1);
         }
+    });
+
+    ChatHub.connection.on('OnChatDeleted', () => {
+        messageList.value.splice(0, messageList.value.length);
     });
 
     const messageList = ref<Message[]>([]);
