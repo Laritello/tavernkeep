@@ -40,7 +40,7 @@ async function setActiveCharacter(characterId: string) {
 </script>
 
 <template>
-    <div class="flex flex-col h-full pt-2">
+    <div class="flex flex-col pt-2">
         <div class="flex flex-row justify-between items-center">
             <h1 class="font-semibold px-4 text-slate-500 uppercase">{{ t('settings.characters.header') }}</h1>
             <button class="btn btn-outline btn-xs mx-4 uppercase" @click="router.push('/characters/build')">
