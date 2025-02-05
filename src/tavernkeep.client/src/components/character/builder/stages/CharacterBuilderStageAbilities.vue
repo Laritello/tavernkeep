@@ -1,33 +1,21 @@
 <template>
     <div class="flex flex-col items-center content-stretch">
-        <label v-for="ability in abilities" :key="ability.name" class="form-control w-full">
-            <div class="label">
+        <label v-for="ability in template.abilities" :key="ability.name" class="form-control w-full">
+            <label class="label">
                 <span class="label-text">{{ t(`pf.attributes.${ability.name.toLowerCase()}`) }}</span>
-            </div>
-            <input v-model="ability.score" type="text" placeholder="Type here" class="input input-bordered w-full" />
+            </label>
+            <input v-model="ability.score" type="number" placeholder="Type here" class="input input-bordered w-full" />
         </label>
     </div>
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 
-import type { Ability } from '@/contracts/character';
-import type { Character } from '@/entities';
-import type { KeyValue } from '@/types';
+import { useCharacterBuilderStore } from '@/components/character/builder/stores/characterBuilderStore.ts';
 
 const { t } = useI18n();
-
-const { character } = defineProps<{
-    character: Character;
-}>();
-
-const abilities: Ability[] = [...character.abilities];
-
-const emits = defineEmits<{
-    update: [value: KeyValue<Character>];
-}>();
-
-watch(abilities, () => emits('update', { key: 'abilities', value: abilities }));
+const characterBuilderStore = useCharacterBuilderStore();
+const { template } = storeToRefs(characterBuilderStore);
 </script>

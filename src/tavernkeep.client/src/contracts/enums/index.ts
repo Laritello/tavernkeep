@@ -6,3 +6,5 @@ export { UserRole } from './UserRole';
 export { ArmorType } from './ArmorType';
 export { RollMessageType } from './RollMessageType';
 export { SkillType } from './SkillType';
+export { AncestryType } from './AncestryType.ts';
+export { ClassType } from './ClassType.ts';

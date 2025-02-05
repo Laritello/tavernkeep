@@ -6,13 +6,5 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 
-import type { Character } from '@/entities';
-
-defineProps<{
-    character: Character;
-}>();
-
-defineEmits(['update']);
-
 const { t } = useI18n();
 </script>

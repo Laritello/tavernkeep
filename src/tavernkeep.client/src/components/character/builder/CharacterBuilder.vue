@@ -1,9 +1,7 @@
 <template>
     <div class="flex flex-col h-full p-2">
         <div class="h-full overflow-y-auto">
-            <component :is="currentStage?.display" :character="character" @update="updateCharacter">
-                Unknown stage
-            </component>
+            <component :is="currentStage?.display"> Unknown stage </component>
         </div>
 
         <div class="grid grid-cols-2 pt-2">
@@ -12,10 +10,10 @@
                     <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
                 </svg>
 
-                <div class="flex flex-col items-start">
+                <label class="flex flex-col items-start">
                     <span class="text-xs font-normal md:block">{{ t('builder.actions.back') }}</span>
                     <span>{{ t(`builder.stages.${previousStage.name}.name`) }}</span>
-                </div>
+                </label>
             </button>
 
             <button
@@ -23,10 +21,10 @@
                 class="btn btn-neutral justify-self-end col-start-2"
                 @click="moveToNextStage"
             >
-                <div class="flex flex-col items-end">
+                <label class="flex flex-col items-end">
                     <span class="text-xs font-normal md:block">{{ t('builder.actions.next') }}</span>
                     <span>{{ t(`builder.stages.${nextStage.name}.name`) }}</span>
-                </div>
+                </label>
 
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 -960 960 960">
                     <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
@@ -38,9 +36,9 @@
                 class="btn btn-primary justify-self-end col-start-2"
                 @click="createCharacter"
             >
-                <div class="flex flex-col items-end">
+                <label class="flex flex-col items-end">
                     <span>{{ t('builder.actions.create') }}</span>
-                </div>
+                </label>
 
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 -960 960 960">
                     <path
@@ -57,13 +55,14 @@ import { computed, ref, watch, type Component } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import type { Character } from '@/entities';
-import type { KeyValue } from '@/types';
+import { useHeaderStore } from '@/stores/header.ts';
 
 import CharacterBuilderStageAbilities from './stages/CharacterBuilderStageAbilities.vue';
 import CharacterBuilderStageGeneral from './stages/CharacterBuilderStageGeneral.vue';
 import CharacterBuilderStageSavingThrows from './stages/CharacterBuilderStageSavingThrows.vue';
 import CharacterBuilderStageSkills from './stages/CharacterBuilderStageSkills.vue';
 import CharacterBuilderStageWelcome from './stages/CharacterBuilderStageWelcome.vue';
+import { useCharacterBuilderStore } from './stores/characterBuilderStore.ts';
 
 const { t } = useI18n();
 
@@ -107,17 +106,16 @@ const previousStage = computed(() => stages.find((x) => x.order === currentStage
 const nextStage = computed(() => stages.find((x) => x.order === currentStageIndex.value + 1));
 
 const emits = defineEmits<{
-    updatedStage: [value: string | undefined];
-    updateCharacter: [value: KeyValue<Character>];
-    create: [];
+    complete: [value: Character];
 }>();
 
-const { character } = defineProps<{
-    character: Character;
-}>();
+const header = useHeaderStore();
+const characterBuilderStore = useCharacterBuilderStore();
+characterBuilderStore.reset();
 
-watch(currentStage, (newValue) => {
-    emits('updatedStage', newValue?.name);
+header.setHeader(t('builder.header'), t(`builder.stages.welcome.name`));
+watch(currentStage, (newStage) => {
+    header.setHeader(t('builder.header'), t(`builder.stages.${newStage?.name}.name`));
 });
 
 function moveToPreviousStage() {
@@ -137,10 +135,6 @@ function moveToNextStage() {
 }
 
 function createCharacter() {
-    emits('create');
-}
-
-function updateCharacter(pair: KeyValue<Character>) {
-    emits('updateCharacter', pair);
+    emits('complete', characterBuilderStore.template as Character);
 }
 </script>

@@ -1,25 +1,13 @@
 <template>
-    <ProficiencyListEdit v-model="skills" locale-prefix="pf.skills." @updated="update" />
+    <ProficiencyListEdit v-model="template.skills" locale-prefix="pf.skills." />
 </template>
 
 <script setup lang="ts">
-import type { Skill } from '@/contracts/character';
-import type { Character } from '@/entities';
-import type { KeyValue } from '@/types';
+import { storeToRefs } from 'pinia';
 
-import ProficiencyListEdit from '../../shared/ProficiencyListEdit/ProficiencyListEdit.vue';
+import { useCharacterBuilderStore } from '@/components/character/builder/stores/characterBuilderStore.ts';
+import ProficiencyListEdit from '@/components/character/shared/ProficiencyListEdit/ProficiencyListEdit.vue';
 
-const { character } = defineProps<{
-    character: Character;
-}>();
-
-const skills = [...character.skills];
-
-const emits = defineEmits<{
-    update: [value: KeyValue<Character>];
-}>();
-
-function update(skills: Skill[]) {
-    emits('update', { key: 'skills', value: skills });
-}
+const characterBuilderStore = useCharacterBuilderStore();
+const { template } = storeToRefs(characterBuilderStore);
 </script>
