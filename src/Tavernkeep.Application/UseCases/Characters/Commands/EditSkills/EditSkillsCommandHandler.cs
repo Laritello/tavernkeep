@@ -9,10 +9,13 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSkills
 		{
 			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
 
-			foreach (var key in request.Proficiencies.Keys)
+			foreach (var key in request.Skills.Keys)
 			{
 				var skill = character.Skills[key];
-				skill.Proficiency = request.Proficiencies[key];
+				var update = request.Skills[key];
+
+				skill.Proficiency = update.Proficiency ?? skill.Proficiency;
+				skill.Pinned = update.Pinned ?? skill.Pinned;
 			}
 
 			await characterService.SaveCharacter(character, cancellationToken);

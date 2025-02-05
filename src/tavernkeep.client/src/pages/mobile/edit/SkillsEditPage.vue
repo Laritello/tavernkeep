@@ -4,9 +4,9 @@ import { ref, computed, onMounted } from 'vue';
 import ProficiencyListEdit from '@/components/character/shared/ProficiencyListEdit/ProficiencyListEdit.vue';
 import CreateCustomSkillMenu from '@/components/dialogs/CreateCustomSkillMenu.vue';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
-import { Proficiency } from '@/contracts/enums';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 import { useHeaderStore } from '@/stores/header';
+import type { SkillEditDto } from '@/contracts/dtos';
 
 const { activeCharacter } = useCurrentUserAccount();
 const characterSkills = computed(() => (activeCharacter.value ? [...activeCharacter.value.skills] : []));
@@ -18,9 +18,9 @@ async function save() {
         return;
     }
 
-    const skills = {} as Record<string, Proficiency>;
+    const skills = {} as Record<string, SkillEditDto>;
     for (const item of characterSkills.value) {
-        skills[item.name] = item.proficiency;
+        skills[item.name] = { proficiency: item.proficiency };
     }
 
     const api = ApiClientFactory.createApiClient();

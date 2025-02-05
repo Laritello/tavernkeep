@@ -13,7 +13,7 @@ import SavingThrowResultToast from '@/components/toasts/SavingThrowResultToast.v
 import SkillCheckResultToast from '@/components/toasts/SkillCheckResultToast.vue';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import type { Armor } from '@/contracts/character';
-import type { SpeedEditDto } from '@/contracts/dtos';
+import type { SkillEditDto, SpeedEditDto } from '@/contracts/dtos';
 import { RollType, SpeedType, type Proficiency } from '@/contracts/enums';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 
@@ -45,9 +45,9 @@ async function updateAbilities(scores: Record<string, number>) {
         await api.editAbilities(character.value.id, scores);
     }
 }
-async function updateSkills(proficiencies: Record<string, Proficiency>) {
+async function updateSkills(skills: Record<string, SkillEditDto>) {
     if (character.value !== undefined) {
-        await api.editSkills(character.value.id, proficiencies);
+        await api.editSkills(character.value.id, skills);
     }
 }
 

@@ -3,7 +3,7 @@ import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import type { Health, Perception } from '@/contracts/character';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
-import type { CharacterInformationEditDto, SpeedEditDto } from '@/contracts/dtos';
+import type { CharacterInformationEditDto, SkillEditDto, SpeedEditDto } from '@/contracts/dtos';
 import { UserRole, Proficiency, RollType, ArmorType, SpeedType, SkillType } from '@/contracts/enums';
 import type { User, Message, Character, SkillRollMessage } from '@/entities';
 import type { Condition } from '@/entities/Condition';
@@ -155,10 +155,12 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async editSkills(characterId: string, proficiencies: Record<string, Proficiency>): Promise<void> {
+    async editSkills(characterId: string, skills: Record<string, SkillEditDto>): Promise<void> {
         const response = await this.client.patch(`characters/${characterId}/skills`, {
-            proficiencies: proficiencies,
+            skills: skills,
         });
+
+        console.log(response);
 
         return getPayloadOrThrow(response);
     }

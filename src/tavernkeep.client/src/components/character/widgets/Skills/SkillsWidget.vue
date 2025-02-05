@@ -24,16 +24,16 @@ import { useI18n } from 'vue-i18n';
 
 import GearIcon from '@/components/icons/GearIcon.vue';
 import type { Skill } from '@/contracts/character';
-import { Proficiency } from '@/contracts/enums';
 
 import SkillsWidgetItem from './SkillsWidgetItem.vue';
+import type { SkillEditDto } from '@/contracts/dtos';
 
 const { t } = useI18n();
 
 const { skills } = defineProps<{ skills: Skill[] }>();
 
 defineEmits<{
-    changed: [value: Record<string, Proficiency>];
+    changed: [value: Record<string, SkillEditDto>];
     roll: [value: string];
 }>();
 </script>

@@ -38,7 +38,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSkillsCommand(owner.Id, characterId, new() { { "Acrobatics", proficiency } });
+			var request = new EditSkillsCommand(owner.Id, characterId, new() { { "Acrobatics", new() { Proficiency = proficiency } } });
 			var handler = new EditSkillsCommandHandler(mockCharacterService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
@@ -71,7 +71,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
-			var request = new EditSkillsCommand(master.Id, characterId, new() { { type, proficiency } });
+			var request = new EditSkillsCommand(master.Id, characterId, new() { { type, new() { Proficiency = proficiency } } });
 			var handler = new EditSkillsCommandHandler(mockCharacterService.Object);
 
 			await handler.Handle(request, CancellationToken.None);
