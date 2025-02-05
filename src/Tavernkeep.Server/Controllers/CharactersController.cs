@@ -140,7 +140,7 @@ namespace Tavernkeep.Server.Controllers
 		[HttpPatch("{characterId}/skills")]
 		public async Task EditSkillsAsync([FromRoute] Guid characterId, [FromBody] EditSkillsRequest request)
 		{
-			await mediator.Send(new EditSkillsCommand(HttpContext.GetUserId(), characterId, request.Proficiencies));
+			await mediator.Send(new EditSkillsCommand(HttpContext.GetUserId(), characterId, request.Skills));
 		}
 
 		/// <summary>

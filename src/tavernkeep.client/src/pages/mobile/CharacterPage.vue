@@ -12,8 +12,8 @@ import SpeedsWidget from '@/components/character/widgets/Speeds/SpeedsWidget.vue
 import SavingThrowResultToast from '@/components/toasts/SavingThrowResultToast.vue';
 import SkillCheckResultToast from '@/components/toasts/SkillCheckResultToast.vue';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
-import type { Armor } from '@/contracts/character';
-import type { SpeedEditDto } from '@/contracts/dtos';
+import type { Armor, Skill } from '@/contracts/character';
+import type { SkillEditDto, SpeedEditDto } from '@/contracts/dtos';
 import { RollType, SpeedType, type Proficiency } from '@/contracts/enums';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 
@@ -45,9 +45,9 @@ async function updateAbilities(scores: Record<string, number>) {
         await api.editAbilities(character.value.id, scores);
     }
 }
-async function updateSkills(proficiencies: Record<string, Proficiency>) {
+async function updateSkills(skills: Record<string, SkillEditDto>) {
     if (character.value !== undefined) {
-        await api.editSkills(character.value.id, proficiencies);
+        await api.editSkills(character.value.id, skills);
     }
 }
 
@@ -74,6 +74,15 @@ async function updateArmor(armor: Armor) {
             equipped.dexterityCap,
             armor.proficiencies
         );
+    }
+}
+
+async function toggleSkillPin(skill: Skill) {
+    if (character.value !== undefined) {
+        const skills = {} as Record<string, SkillEditDto>;
+        skills[skill.name] = { pinned: !skill.pinned };
+
+        await api.editSkills(character.value.id, skills);
     }
 }
 
@@ -177,37 +186,22 @@ function updateSection() {
 <template>
     <div v-if="character !== undefined" class="flex flex-col max-h-full">
         <!--Header-->
-        <div
-            id="sections-bar"
-            class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar lg:hidden"
-        >
-            <a
-                v-for="section in sections"
-                :key="section.link"
-                :href="section.link"
-                class="py-1 px-4 pb-0 grow text-nowrap tracking-tight border-b-2 border-base-300 select-none"
-                >{{ section.header }}</a
-            >
+        <div id="sections-bar"
+            class="sticky bg-base-100 flex flew-row flex-nowrap min-h-fit overflow-auto no-scrollbar lg:hidden">
+            <a v-for="section in sections" :key="section.link" :href="section.link"
+                class="py-1 px-4 pb-0 grow text-nowrap tracking-tight border-b-2 border-base-300 select-none">{{
+                    section.header }}</a>
         </div>
 
         <!--Character Sheet Content-->
-        <div
-            class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar bg-base-200"
-            @scroll="updateSection"
-        >
+        <div class="flex flex-col overflow-y-auto p-2 gap-2 scroll-smooth no-scrollbar bg-base-200"
+            @scroll="updateSection">
             <AbilitiesWidget id="attributes" :abilities="character.abilities" @changed="updateAbilities" />
-            <SavingThrowsWidget
-                id="saving-throws"
-                :saving-throws="character.savingThrows"
-                @changed="updateSavingThrows"
-                @roll="(type) => rollSavingThrow(type)"
-            />
-            <SkillsWidget
-                id="skills"
-                :skills="character.skills"
-                @changed="updateSkills"
-                @roll="(type) => rollSkillCheck(type)"
-            />
+            <SavingThrowsWidget id="saving-throws" :saving-throws="character.savingThrows" @changed="updateSavingThrows"
+                @roll="(type) => rollSavingThrow(type)" />
+            <SkillsWidget id="skills" :skills="character.skills" @changed="updateSkills"
+                @pin="(skill) => toggleSkillPin(skill)"
+                @roll="(type) => rollSkillCheck(type)" />
             <ArmorWidget id="armor" :armor="character.armor" @changed="updateArmor" />
             <SpeedsWidget id="speeds" :speeds="character.speeds" @changed="updateSpeeds" />
         </div>

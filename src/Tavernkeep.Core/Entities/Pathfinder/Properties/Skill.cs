@@ -36,11 +36,9 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		public string Name { get; set; }
 		public SkillType Type { get; set; }
-
 		public required Ability Ability { get; set; }
-
 		public Proficiency Proficiency { get; set; }
-
+		public bool Pinned { get; set; }
 		public int Bonus
 		{
 			get

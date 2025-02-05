@@ -11,11 +11,15 @@ namespace Tavernkeep.Application.Mapping.Profiles
 	/// </summary>
 	public class CharacterProfile : Profile
 	{
+		// Bake in expressions for mapping?
+		private readonly Func<Skill, bool> skillsAreSkills = x => x.Type == SkillType.Basic || x.Type == SkillType.Lore || x.Type == SkillType.Custom;
+		private readonly Func<Skill, bool> skillsAreSavingThrows = x => x.Type == SkillType.SavingThrow;
+
 		public CharacterProfile()
 		{
 			CreateMap<Character, CharacterDto>()
-				.ForMember(dest => dest.Skills, opt => opt.MapFrom(src => src.Skills.Where(x => x.Type == SkillType.Basic || x.Type == SkillType.Lore || x.Type == SkillType.Custom)))
-				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Skills.Where(x => x.Type == SkillType.SavingThrow)))
+				.ForMember(dest => dest.Skills, opt => opt.MapFrom(src => src.Skills.Where(skillsAreSkills).OrderByDescending(x => x.Pinned).ThenBy(x => x.Type).ThenBy(x => x.Name)))
+				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Skills.Where(skillsAreSavingThrows)))
 				.ForMember(dest => dest.Perception, opt => opt.MapFrom(src => src.Skills["Perception"]))
 				.ForMember(
 					dest => dest.Speeds,
@@ -30,8 +34,8 @@ namespace Tavernkeep.Application.Mapping.Profiles
 						}));
 
 			CreateMap<Character, CharacterTemplateDto>()
-				.ForMember(dest => dest.Skills, opt => opt.MapFrom(src => src.Skills.Where(x => x.Type == SkillType.Basic || x.Type == SkillType.Lore || x.Type == SkillType.Custom)))
-				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Skills.Where(x => x.Type == SkillType.SavingThrow)))
+				.ForMember(dest => dest.Skills, opt => opt.MapFrom(src => src.Skills.Where(skillsAreSkills).OrderBy(x => x.Pinned).ThenBy(x => x.Type).ThenBy(x => x.Name)))
+				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Skills.Where(skillsAreSavingThrows)))
 				.ForMember(dest => dest.Perception, opt => opt.MapFrom(src => src.Skills["Perception"]));
 
 			CreateMap<Ability, AbilityDto>();

@@ -1,4 +1,4 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
+﻿using Tavernkeep.Core.Contracts.Character.Dtos;
 
 namespace Tavernkeep.Core.Contracts.Character.Requests
 {
@@ -10,6 +10,6 @@ namespace Tavernkeep.Core.Contracts.Character.Requests
 		/// <summary>
 		/// The updated proficiencies.
 		/// </summary>
-		public Dictionary<string, Proficiency> Proficiencies { get; set; } = [];
+		public Dictionary<string, SkillEditDto> Skills { get; set; } = [];
 	}
 }
