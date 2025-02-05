@@ -198,7 +198,7 @@ export class CharacterTemplateFactory {
                 break;
 
             case ClassType.Wizard:
-                template.skills[2].proficiency = Proficiency.Trained;
+                template.skills[1].proficiency = Proficiency.Trained;
                 break;
 
             case ClassType.Witch:
