@@ -5,12 +5,10 @@ namespace Tavernkeep.Infrastructure.Notifications.Hubs
 {
 	public interface ICharacterHub
 	{
-		Task OnCharacterEdited(CharacterDto notification);
+		Task OnCharacterCreated(CharacterDto character);
+		Task OnCharacterEdited(CharacterDto character);
+		Task OnCharacterDeleted(Guid characterId);
 	}
 
-	public class CharacterHub : Hub<ICharacterHub>
-	{
-		public async Task SendCharacterEditedNotification(CharacterDto notification)
-			=> await Clients.All.OnCharacterEdited(notification);
-	}
+	public class CharacterHub : Hub<ICharacterHub> { }
 }
