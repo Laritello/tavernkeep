@@ -170,7 +170,8 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
                     AbilityId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Proficiency = table.Column<int>(type: "INTEGER", nullable: false)
+                    Proficiency = table.Column<int>(type: "INTEGER", nullable: false),
+                    Pinned = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -197,13 +198,12 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     DisplayName = table.Column<string>(type: "TEXT", nullable: false),
                     SenderId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Discriminator = table.Column<string>(type: "TEXT", maxLength: 34, nullable: false),
+                    Discriminator = table.Column<string>(type: "TEXT", maxLength: 21, nullable: false),
                     RollType = table.Column<string>(type: "TEXT", nullable: true),
                     Expression = table.Column<string>(type: "TEXT", nullable: true),
                     Text = table.Column<string>(type: "TEXT", nullable: true),
                     RecipientId = table.Column<Guid>(type: "TEXT", nullable: true),
                     Result = table.Column<string>(type: "TEXT", nullable: true),
-                    SavingThrow = table.Column<string>(type: "TEXT", nullable: true),
                     Skill = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>

@@ -11,8 +11,8 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    [Migration("20250205152540_PinnedSkills")]
-    partial class PinnedSkills
+    [Migration("20250206102027_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasMaxLength(34)
+                        .HasMaxLength(21)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("DisplayName")
@@ -297,15 +297,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Messages");
 
                     b.HasDiscriminator().HasValue("TextMessage");
-                });
-
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.SavingThrowRollMessage", b =>
-                {
-                    b.HasBaseType("Tavernkeep.Core.Entities.Messages.RollMessage");
-
-                    b.ToTable("Messages");
-
-                    b.HasDiscriminator().HasValue("SavingThrowRollMessage");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.SkillRollMessage", b =>
@@ -876,37 +867,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Recipient");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.SavingThrowRollMessage", b =>
-                {
-                    b.OwnsOne("Tavernkeep.Core.Entities.Snapshots.SkillSnapshot", "SavingThrow", b1 =>
-                        {
-                            b1.Property<Guid>("SavingThrowRollMessageId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Bonus")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Proficiency")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("SavingThrowRollMessageId");
-
-                            b1.ToTable("Messages");
-
-                            b1.ToJson("SavingThrow");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SavingThrowRollMessageId");
-                        });
-
-                    b.Navigation("SavingThrow")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.SkillRollMessage", b =>
                 {
                     b.OwnsOne("Tavernkeep.Core.Entities.Snapshots.SkillSnapshot", "Skill", b1 =>
@@ -922,6 +882,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("Proficiency")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
                                 .HasColumnType("INTEGER");
 
                             b1.HasKey("SkillRollMessageId");
