@@ -24,7 +24,6 @@ defineProps<{
 }>();
 
 defineEmits(['roll']);
-
 </script>
 <style>
 .align-right {
