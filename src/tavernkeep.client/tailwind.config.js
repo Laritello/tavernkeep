@@ -13,12 +13,12 @@ export default {
                 light: {
                     ...require('daisyui/src/theming/themes')['light'],
                     primary: '#29B6F6',
-                    secondary: '#66BB6A',
+                    secondary: '#efbf04',
                 },
                 dark: {
                     ...require('daisyui/src/theming/themes')['dark'],
                     primary: '#29B6F6',
-                    secondary: '#66BB6A',
+                    secondary: '#efbf04',
                 },
             },
         ],
