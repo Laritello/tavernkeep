@@ -7,7 +7,7 @@ import TopNavigationView from '@/components/TopNavigationView.vue';
     <div class="flex flex-col h-dvh">
         <TopNavigationView class="sticky top-0" />
 
-        <div class="grow overflow-y-auto">
+        <div class="grow bg-base-200 overflow-y-auto">
             <slot />
         </div>
 
