@@ -7,7 +7,7 @@ const { theme, isDark, toggleDark } = useTheme();
 </script>
 
 <template>
-    <button type="button" class="btn btn-ghost justify-start" @click="toggleDark()">
+    <button type="button" class="btn btn-ghost no-animation rounded-none justify-start" @click="toggleDark()">
         <label class="swap" :class="{ 'swap-active': isDark }">
             <!-- sun icon -->
             <svg class="swap-off size-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

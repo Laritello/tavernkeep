@@ -118,9 +118,9 @@ function toggleDetails() {
 </script>
 
 <template>
-    <div class="navbar bg-base-100 z-10 min-h-fit border-b-2 border-base-300 py-0">
+    <div class="navbar bg-base-100 z-10 min-h-fit border-b-2 border-base-300 p-0">
         <div v-if="user.activeCharacter.value !== undefined" class="flex flex-col w-full items-stretch">
-            <div class="flex flex-row mt-1">
+            <div class="flex flex-row pt-1 px-1">
                 <!--Left side-->
                 <div class="flex-none w-24">
                     <div class="flex flex-col gap-1">
@@ -195,7 +195,7 @@ function toggleDetails() {
                 </div>
             </div>
 
-            <div class="transition-all overflow-hidden ease-in-out duration-300"
+            <div class="transition-all overflow-hidden ease-in-out duration-300 px-1"
                 :class="{ 'max-h-screen': !collapsed, 'max-h-0': collapsed }">
                 <div class="flex flex-row">
                     <div class="flex flex-col border border-t-0 rounded-b-lg conditions-list w-24 mb-1">
@@ -223,7 +223,7 @@ function toggleDetails() {
                 </div>
             </div>
 
-            <button class="btn btn-xs btn-ghost uppercase" @click="toggleDetails">
+            <button class="btn btn-xs btn-ghost uppercase rounded-none no-animation" @click="toggleDetails">
                 {{ collapsed ? t('topNavigation.details') : t('topNavigation.hide') }}
             </button>
         </div>

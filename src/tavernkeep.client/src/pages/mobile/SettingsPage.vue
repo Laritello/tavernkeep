@@ -50,10 +50,8 @@ async function setActiveCharacter(characterId: string) {
 
         <div class="flex flex-col px-4">
             <div v-for="character in user.characters.value" :key="character.id" class="my-2">
-                <div
-                    class="flex flex-row gap-2 border border-slate-500 rounded-xl p-2"
-                    :class="{ 'border-2': character.id === user.activeCharacter.value?.id }"
-                >
+                <div class="flex flex-row gap-2 border border-slate-500 rounded-xl p-2"
+                    :class="{ 'border-2': character.id === user.activeCharacter.value?.id }">
                     <div class="avatar">
                         <div class="w-14 h-14 rounded-xl">
                             <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
@@ -69,21 +67,14 @@ async function setActiveCharacter(characterId: string) {
 
                     <div class="dropdown dropdown-left self-center">
                         <div tabindex="0" role="button" class="btn btn-circle btn-ghost">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6"
-                                viewBox="0 -960 960 960"
-                                fill="currentColor"
-                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 -960 960 960"
+                                fill="currentColor">
                                 <path
-                                    d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z"
-                                />
+                                    d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
                             </svg>
                         </div>
-                        <ul
-                            tabindex="0"
-                            class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow border border-base-200"
-                        >
+                        <ul tabindex="0"
+                            class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow border border-base-200">
                             <li>
                                 <a @click="setActiveCharacter(character.id)">
                                     {{ t('settings.characters.setActive') }}
@@ -109,11 +100,10 @@ async function setActiveCharacter(characterId: string) {
 
         <div class="divider px-4"></div>
 
-        <button class="btn btn-ghost justify-start text-red-600" @click.prevent="logout">
+        <button class="btn btn-ghost btn-block rounded-none justify-start text-red-600 no-animation" @click.prevent="logout">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 -960 960 960" fill="currentColor">
                 <path
-                    d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"
-                />
+                    d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
             </svg>
             {{ t('settings.logout') }}
         </button>
