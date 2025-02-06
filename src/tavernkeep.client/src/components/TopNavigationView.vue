@@ -91,7 +91,7 @@ async function showHealthEditDialog() {
 
 const collapsed = ref(true);
 
-async function toggleDetails() {
+function toggleDetails() {
     collapsed.value = !collapsed.value;
 }
 </script>
