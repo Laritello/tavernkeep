@@ -125,13 +125,14 @@
             "climb": "Карабканье",
             "fly": "Полёт",
             "swim": "Плаванье"
-        }
+        },
+        "perception": "Внимание"
     },
     "chat": {
         "rollMessages": {
             "headers": {
                 "skill": "Проверка",
-                "savingthrow": "Спасбросок",
+                "savingThrow": "Спасбросок",
                 "custom": "Пользовательский"
             },
             "subHeaders": {

@@ -1,5 +1,5 @@
-import type { SavingThrow, Skill } from '@/contracts/character';
-import type { RollType } from '@/contracts/enums';
+import type { Skill } from '@/contracts/character';
+import type { RollType, SkillType } from '@/contracts/enums';
 
 import type { User } from './User';
 
@@ -28,11 +28,7 @@ export interface RollMessage extends Message {
 export interface SkillRollMessage extends RollMessage {
     $type: 'SkillRollMessage';
     skill: Skill;
-}
-
-export interface SavingThrowRollMessage extends RollMessage {
-    $type: 'SavingThrowRollMessage';
-    savingThrow: SavingThrow;
+    type: SkillType;
 }
 
 export interface RollResult {

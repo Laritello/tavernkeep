@@ -7,7 +7,6 @@ import type { CharacterInformationEditDto, SkillEditDto, SpeedEditDto } from '@/
 import { UserRole, Proficiency, RollType, ArmorType, SpeedType, SkillType } from '@/contracts/enums';
 import type { User, Message, Character, SkillRollMessage } from '@/entities';
 import type { Condition } from '@/entities/Condition';
-import type { SavingThrowRollMessage } from '@/entities/Message';
 
 import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 
@@ -281,24 +280,10 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async performSkillCheck(characterId: string, skillType: string, rollType: RollType): Promise<SkillRollMessage> {
+    async performSkillCheck(characterId: string, skillName: string, rollType: RollType): Promise<SkillRollMessage> {
         const response = await this.client.post<Message>('roll/skill', {
             characterId: characterId,
-            skillType: skillType,
-            rollType: rollType,
-        });
-
-        return getPayloadOrThrow(response);
-    }
-
-    async performSavingThrow(
-        characterId: string,
-        savingThrowType: string,
-        rollType: RollType
-    ): Promise<SavingThrowRollMessage> {
-        const response = await this.client.post<Message>('roll/saving-throw', {
-            characterId: characterId,
-            savingThrowType: savingThrowType,
+            name: skillName,
             rollType: rollType,
         });
 

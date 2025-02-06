@@ -107,7 +107,7 @@ async function rollSkillCheck(skillType: string) {
 
 async function rollSavingThrow(savingThrow: string) {
     if (character.value !== undefined) {
-        const message = await api.performSavingThrow(character.value.id, savingThrow, RollType.Public);
+        const message = await api.performSkillCheck(character.value.id, savingThrow, RollType.Public);
         const toast = useToast();
         toast(
             {

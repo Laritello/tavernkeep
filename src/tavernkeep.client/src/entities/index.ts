@@ -5,7 +5,6 @@ export type {
     TextMessage,
     RollMessage,
     SkillRollMessage,
-    SavingThrowRollMessage,
     RollResult,
     ThrowResult,
 } from './Message';
