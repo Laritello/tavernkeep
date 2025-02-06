@@ -52,7 +52,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Properties
 
 		#region Methods
 
-		public SkillSnapshot AsSnapshot() => new(Name, Proficiency, Bonus);
+		public SkillSnapshot AsSnapshot() => new(Name, Type, Proficiency, Bonus);
 
 		#endregion
 	}

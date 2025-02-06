@@ -125,13 +125,14 @@
             "climb": "Climb",
             "fly": "Fly",
             "swim": "Swim"
-        }
+        },
+        "perception": "Perception"
     },
     "chat": {
         "rollMessages": {
             "headers": {
                 "skill": "Check",
-                "savingthrow": "Save",
+                "savingThrow": "Save",
                 "custom": "Custom"
             },
             "subHeaders": {

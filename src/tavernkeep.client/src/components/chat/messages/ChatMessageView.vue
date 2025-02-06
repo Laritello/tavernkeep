@@ -3,7 +3,7 @@ import { computed } from 'vue';
 
 import { useSession } from '@/composables/useSession';
 import { RollMessageType } from '@/contracts/enums';
-import { type Message, type SavingThrowRollMessage, type SkillRollMessage } from '@/entities/Message';
+import { type Message, type SkillRollMessage } from '@/entities/Message';
 
 import RollMessageView from './RollMessageView.vue';
 import TextMessageView from './TextMessageView.vue';
@@ -39,11 +39,7 @@ function getParametersByType(message: Message) {
             return {
                 type: RollMessageType.Skill,
                 subHeader: (message as SkillRollMessage).skill.name,
-            };
-        case 'SavingThrowRollMessage':
-            return {
-                type: RollMessageType.SavingThrow,
-                subHeader: (message as SavingThrowRollMessage).savingThrow.name,
+                skillType: (message as SkillRollMessage).skill.type,
             };
         default:
             return {};
@@ -53,12 +49,8 @@ function getParametersByType(message: Message) {
 
 <template>
     <div class="pb-2 w-full">
-        <component
-            :is="getComponentByType(message)"
-            :message="message"
-            :align-right="isUserSender"
-            :roll-message-parameters="getParametersByType(message)"
-        >
+        <component :is="getComponentByType(message)" :message="message" :align-right="isUserSender"
+            :roll-message-parameters="getParametersByType(message)">
             Unknown message type: {{ message.$type }}
         </component>
     </div>
