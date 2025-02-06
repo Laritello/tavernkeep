@@ -57,11 +57,3 @@ For the best development experience:
 ## Configuration
 
 The API base URL is configured to connect to `http://localhost:5207/api/` by default. Update the `baseURL` in `src/api/axios/AxiosApiClient.ts` to match your backend configuration.
-
-## License
-
-MIT License
-
-Copyright (c) 2024 Tavernkeep
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software.
