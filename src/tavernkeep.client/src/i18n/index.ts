@@ -1,11 +1,11 @@
-﻿import { createI18n, type I18nOptions } from 'vue-i18n';
+﻿import { createI18n } from 'vue-i18n';
 
 import en from './locales/en.json';
 import ru from './locales/ru.json';
 
 export type LocaleType = 'en' | 'ru';
 
-const options: I18nOptions = {
+const options = {
     legacy: false,
     globalInjection: true,
 
@@ -18,4 +18,4 @@ const options: I18nOptions = {
     },
 };
 
-export const i18n = createI18n<false, typeof options>(options);
+export const i18n = createI18n(options);
