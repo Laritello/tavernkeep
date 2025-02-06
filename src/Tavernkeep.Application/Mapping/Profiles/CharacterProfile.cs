@@ -14,10 +14,12 @@ namespace Tavernkeep.Application.Mapping.Profiles
 		// Bake in expressions for mapping?
 		private readonly Func<Skill, bool> skillsAreSkills = x => x.Type == SkillType.Basic || x.Type == SkillType.Lore || x.Type == SkillType.Custom;
 		private readonly Func<Skill, bool> skillsAreSavingThrows = x => x.Type == SkillType.SavingThrow;
+		private readonly List<string> abilitiesOrder = ["Strength", "Dexterity", "Intelligence", "Constitution", "Wisdom", "Charisma"];
 
 		public CharacterProfile()
 		{
 			CreateMap<Character, CharacterDto>()
+				.ForMember(dest => dest.Abilities, opt => opt.MapFrom(src => src.Abilities.OrderBy(x => abilitiesOrder.IndexOf(x.Name))))
 				.ForMember(dest => dest.Skills, opt => opt.MapFrom(src => src.Skills.Where(skillsAreSkills).OrderByDescending(x => x.Pinned).ThenBy(x => x.Type).ThenBy(x => x.Name)))
 				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Skills.Where(skillsAreSavingThrows)))
 				.ForMember(dest => dest.Perception, opt => opt.MapFrom(src => src.Skills["Perception"]))
