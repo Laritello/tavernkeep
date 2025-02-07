@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col h-full p-2">
+    <div class="flex flex-col h-full">
         <div class="h-full overflow-y-auto">
             <component :is="currentStage?.display"> Unknown stage </component>
         </div>
