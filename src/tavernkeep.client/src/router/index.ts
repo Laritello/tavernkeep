@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 
-import { useSession } from '@/composables/useSession';
 import { UserRole } from '@/contracts/enums';
 import AdminPage from '@/pages/AdminPage.vue';
 import CharactersPage from '@/pages/CharactersPage.vue';
@@ -12,6 +11,8 @@ import ChatPage from '@/pages/mobile/ChatPage.vue';
 import CombatPage from '@/pages/mobile/CombatPage.vue';
 import SettingsPage from '@/pages/mobile/SettingsPage.vue';
 import SkillsEditPage from '@/pages/mobile/edit/SkillsEditPage.vue';
+import { authorizationMiddleware } from '@/router/middleware/authorizationMiddleware.ts';
+import { loadLayoutMiddleware } from '@/router/middleware/loadLayoutMiddleware.ts';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -110,28 +111,5 @@ export const router = createRouter({
     routes,
 });
 
-router.beforeEach((to) => {
-    const session = useSession();
-
-    const protectedRoute = to.meta.protected;
-    const isLoggedIn = session.isAuthenticated.value;
-
-    // Redirect to login page if not logged in and trying to access a restricted page
-    if (protectedRoute && !isLoggedIn) {
-        return { path: '/login' };
-    }
-
-    // Redirect to home if logged in and trying to access login page
-    if (to.path === '/login' && isLoggedIn) {
-        return { path: '/' };
-    }
-
-    const allowedRoles = to.meta.allowedRoles;
-    if (allowedRoles === undefined) return;
-    const dontHavePermissions = !session.havePermissions(allowedRoles);
-
-    // Redirect to not-allowed if logged in and trying to access a page that requires a specific role
-    if (dontHavePermissions) {
-        return { path: '/not-allowed' };
-    }
-});
+router.beforeEach(authorizationMiddleware);
+router.beforeEach(loadLayoutMiddleware);
