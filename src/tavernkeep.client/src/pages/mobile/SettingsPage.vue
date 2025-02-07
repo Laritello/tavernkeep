@@ -24,7 +24,6 @@ async function logout() {
     if (modalResult.action !== 'confirm') return;
     const auth = useAuth();
     auth.logout();
-    await router.push('/login');
 }
 
 async function deleteCharacter(characterId: string) {

@@ -68,13 +68,12 @@ export const useSession = () => {
         return sessionData.accessToken;
     };
 
-    const havePermissions = (requiredRoles?: UserRole[]): boolean => {
-        const role = sessionData.userRole ?? undefined;
-        if (role === undefined) return false;
-        if (requiredRoles === undefined) return true;
+    const hasPermissions = (requiredRoles?: UserRole[]): boolean => {
+        if (!sessionData.userRole) return false;
+        if (!requiredRoles) return true;
 
-        return requiredRoles.includes(role);
+        return requiredRoles.includes(sessionData.userRole);
     };
 
-    return { userId, userRole, userLogin, isAuthenticated, isExpired, refresh, getAccessToken, havePermissions };
+    return { userId, userRole, userLogin, isAuthenticated, isExpired, refresh, getAccessToken, hasPermissions };
 };
