@@ -112,6 +112,7 @@ namespace Tavernkeep.Server.Extensions
 			services.AddSingleton<INotificationService, NotificationService>();
 
 			services.AddScoped<ICharacterService, CharacterService>();
+			services.AddScoped<IPortaitService, PortraitService>();
 
 			services.AddSingleton<IUserConnectionStorage<Guid>, UserConnectionStorage<Guid>>();
 
