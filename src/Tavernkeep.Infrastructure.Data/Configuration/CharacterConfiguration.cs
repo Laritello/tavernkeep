@@ -19,6 +19,11 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
 				.WithMany(u => u.Characters)
 				.IsRequired();
 
+			builder.HasOne(c => c.Portrait)
+				.WithOne(p => p.Owner)
+				.HasForeignKey<Portrait>(p => p.Id)
+				.IsRequired();
+
 			builder.HasOne(c => c.Class)
 				.WithOne(c => c.Owner)
 				.HasForeignKey<Class>(c => c.Id)
