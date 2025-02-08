@@ -3,6 +3,7 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import { UserRole } from '@/contracts/enums';
 import AdminPage from '@/pages/AdminPage.vue';
 import CharactersPage from '@/pages/CharactersPage.vue';
+import EncounterBuilderPage from '@/pages/EncounterBuilderPage.vue';
 import ErrorPage from '@/pages/ErrorPage.vue';
 import LoginPage from '@/pages/LoginPage.vue';
 import BuilderPage from '@/pages/mobile/BuilderPage.vue';
@@ -101,6 +102,15 @@ const routes: RouteRecordRaw[] = [
         component: AdminPage,
         meta: {
             layout: 'AppLayout',
+            protected: true,
+            allowedRoles: [UserRole.Master],
+        },
+    },
+    {
+        path: '/encounter/build',
+        component: EncounterBuilderPage,
+        meta: {
+            layout: 'BlankLayout',
             protected: true,
             allowedRoles: [UserRole.Master],
         },
