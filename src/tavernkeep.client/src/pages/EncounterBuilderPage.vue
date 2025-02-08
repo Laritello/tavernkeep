@@ -58,24 +58,24 @@
                 <div class="card-body">
                     <h2 class="card-title">Initiative Tracker</h2>
                     <div class="divider">Initiative Order</div>
-                    <draggable
+                    <VueDraggable
                         v-model="initiativeOrder"
-                        class="flex flex-col gap-2 min-h-[200px]"
-                        :animation="200"
-                        item-key="id"
+                        class="flex flex-col gap-2 min-h-52"
+                        :animation="150"
+                        @start="drag = true"
+                        @end="nextTick(() => (drag = false))"
                     >
-                        <TransitionGroup type="transition" name="flip-list">
+                        <TransitionGroup :name="!drag ? 'fade' : undefined" type="transition">
                             <InitiativeParticipantCard
                                 v-for="creature in initiativeOrder"
                                 :key="creature.id"
-                                :class="{ 'bg-accent bg-opacity-20 p-2 rounded': creature.isActive }"
                                 class="flex items-center justify-between cursor-pointer"
                                 :participant="creature"
                                 @edit="console.log('edit participant card')"
                                 @remove="removeFromInitiative(creature)"
                             />
                         </TransitionGroup>
-                    </draggable>
+                    </VueDraggable>
                     <div class="card-actions justify-end mt-4">
                         <button v-if="!isCombatActive" class="btn btn-primary" @click="startCombat">
                             Start Combat
@@ -90,12 +90,14 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { VueDraggableNext as draggable } from 'vue-draggable-next';
+import { nextTick, ref } from 'vue';
+import { VueDraggable } from 'vue-draggable-plus';
 
 import InitiativeParticipantCard from '@/components/InitiativeParticipantCard.vue';
 import { useCombatStore } from '@/stores/combat.ts';
 import type { CombatParticipant, Monster, Player } from '@/types/combat.ts';
 
+const drag = ref(false);
 const combatStore = useCombatStore();
 const { isCombatActive, currentRound, initiativeOrder, players, monsters } = storeToRefs(combatStore);
 
@@ -122,11 +124,13 @@ const nextTurn = () => {
 
 <!--suppress CssUnusedSymbol -->
 <style scoped>
-.sortable-ghost {
-    @apply bg-base-300 border-[1px] border-accent;
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.15s ease;
 }
 
-.flip-list-move {
-    transition: transform 0.3s;
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 </style>

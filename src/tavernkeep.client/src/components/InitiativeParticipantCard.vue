@@ -1,6 +1,6 @@
 <template>
     <div
-        class="card card-compact transition-all duration-200"
+        class="card card-compact"
         :class="[
             participant.isActive ? 'border-2 border-accent animate-pulse' : 'border border-base-300',
             participant.type === 'player' ? 'bg-primary bg-opacity-10' : 'bg-error bg-opacity-10',
