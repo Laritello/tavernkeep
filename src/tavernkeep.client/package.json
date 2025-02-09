@@ -13,7 +13,7 @@
         "format": "prettier --write src/"
     },
     "dependencies": {
-        "@douxcode/vue-spring-bottom-sheet": "^1.2.1",
+        "@douxcode/vue-spring-bottom-sheet": "^1.2.5",
         "@imengyu/vue3-context-menu": "^1.4.4",
         "@intlify/unplugin-vue-i18n": "^6.0.3",
         "@mdi/font": "^7.4.47",
