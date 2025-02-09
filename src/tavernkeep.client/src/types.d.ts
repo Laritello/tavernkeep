@@ -19,5 +19,8 @@ export type KeyValue<T> = {
     };
 }[keyof T];
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+export type DTO<T> = { [K in keyof T as T[K] extends Function ? never : K]: T[K] };
+
 // To ensure it is treated as a module, add at least one `export` statement
 export {};
