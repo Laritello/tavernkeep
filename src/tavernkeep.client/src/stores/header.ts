@@ -6,7 +6,7 @@ export const useHeaderStore = defineStore('header', {
         subtitle: undefined as string | undefined,
     }),
     actions: {
-        setHeader(title: string, subtitle?: string  ) {
+        setHeader(title: string, subtitle?: string) {
             this.title = title;
             this.subtitle = subtitle;
         },

@@ -12,7 +12,6 @@ import App from './App.vue';
 import './assets/main.css';
 import { i18n } from './i18n';
 import { router } from './router';
-import { useAppState } from './stores/appState';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -33,7 +32,5 @@ app.use(Toast, {
         },
     },
 });
-
-useAppState();
 
 app.mount('#app');

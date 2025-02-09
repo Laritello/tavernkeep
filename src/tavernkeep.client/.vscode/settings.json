@@ -1,0 +1,7 @@
+{
+    "css.customData": [
+        ".vscode/tailwind.json"
+    ],
+    "files.autoSave": "onFocusChange",
+    "editor.formatOnSave": true
+}

@@ -7,38 +7,53 @@
         </div>
         <div class="roll-bubble rounded-3xl bg-neutral relative col-span-2 justify-items-center">
             <!--Avatar and its border-->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="absolute -top-1 w-12 h-12"
-                :class="{ '-right-1': alignRight, '-left-1': !alignRight }">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 10 10"
+                class="absolute -top-1 w-12 h-12"
+                :class="{ '-right-1': alignRight, '-left-1': !alignRight }"
+            >
                 <circle cx="5" cy="5" r="5" fill="oklch(var(--b2))" />
             </svg>
             <div class="avatar placeholder absolute top-0" :class="{ 'right-0': alignRight, 'left-0': !alignRight }">
                 <div class="bg-neutral text-neutral-content w-10 rounded-full">
-                    <img v-if="message.characterId" alt="Character portrait" :src="`${api.baseURL}portraits/${message.characterId}`" />
-                <span v-else>{{ message.displayName.slice(0, 2) }}</span>
+                    <img
+                        v-if="message.characterId"
+                        alt="Character portrait"
+                        :src="`${api.baseURL}portraits/${message.characterId}`"
+                    />
+                    <span v-else>{{ message.displayName.slice(0, 2) }}</span>
                 </div>
             </div>
 
             <!--Tag for secret and private rolls-->
-            <div v-if="message.rollType != RollType.Public"
+            <div
+                v-if="message.rollType != RollType.Public"
                 class="absolute top-2 bg-base-100 py-1 px-2 text-xs text-neutral dark:text-neutral-content rounded-xl tracking-tighter"
-                :class="{ 'left-2': alignRight, 'right-2': !alignRight }">
+                :class="{ 'left-2': alignRight, 'right-2': !alignRight }"
+            >
                 <div>{{ message.rollType }}</div>
             </div>
 
             <!--Roll header and subheader-->
             <div class="flex flex-col">
                 <p class="text-center uppercase leading-3">
-                    <span class="text-md font-bold tracking-wide" :class="{
-                        'custom': rollMessageParameters.type == RollMessageType.Custom,
-                        'skill-check': rollMessageParameters.type == RollMessageType.Skill,
-                        'saving-throw': rollMessageParameters.type == RollMessageType.Skill && rollMessageParameters.skillType == SkillType.SavingThrow,
-                    }">
+                    <span
+                        class="text-md font-bold tracking-wide"
+                        :class="{
+                            custom: rollMessageParameters.type == RollMessageType.Custom,
+                            'skill-check': rollMessageParameters.type == RollMessageType.Skill,
+                            'saving-throw':
+                                rollMessageParameters.type == RollMessageType.Skill &&
+                                rollMessageParameters.skillType == SkillType.SavingThrow,
+                        }"
+                    >
                         {{ getHeader(rollMessageParameters.type, rollMessageParameters.skillType) }}
                     </span>
                     <br />
                     <span class="text-xs font-normal tracking-wide">{{
                         getSubHeader(rollMessageParameters.type, rollMessageParameters.skillType)
-                        }}</span>
+                    }}</span>
                 </p>
             </div>
 
@@ -70,8 +85,13 @@
             <div class="collapse" :class="{ 'collapse-close': rollsClosed, 'collapse-open': !rollsClosed }">
                 <div class="collapse-content p-0 max-w-60">
                     <div class="flex flex-row flex-wrap gap-x-1 justify-center">
-                        <DiceIcon v-for="result in message.result.results" :key="result.value" :die="result.type"
-                            :value="result.value" class="w-4" />
+                        <DiceIcon
+                            v-for="result in message.result.results"
+                            :key="result.value"
+                            :die="result.type"
+                            :value="result.value"
+                            class="w-4"
+                        />
                     </div>
                 </div>
             </div>
@@ -82,12 +102,12 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import DiceExpression from '@/components/DiceExpression.vue';
 import DiceIcon from '@/components/DiceIcon.vue';
 import { RollMessageType, RollType, SkillType } from '@/contracts/enums';
 import type { RollMessage } from '@/entities/Message';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 
 // TODO: Find a better way to pass api base URL
 const api: AxiosApiClient = ApiClientFactory.createApiClient();
@@ -142,10 +162,8 @@ function getHeader(type: RollMessageType, skillType?: SkillType) {
                 default:
                     return t('chat.rollMessages.headers.skill');
             }
-
     }
 }
-
 </script>
 <style scoped>
 .chat-end .roll-bubble {

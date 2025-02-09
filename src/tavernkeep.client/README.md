@@ -1,46 +1,59 @@
-# tavernkeep.client
+# Tavernkeep Client
 
-This template should help get you started developing with Vue 3 in Vite.
+A Vue 3 + TypeScript web application for managing tabletop RPG characters and game sessions.
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Current:
 
-## Type Support for `.vue` Imports in TS
+- Character creation and management
+- User authentication and role-based access
+- Real-time game session updates
+- Character stats tracking
+- Skill rolls and custom dice rolls
+- Condition management
+- Speed and armor type handling
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+Planned:
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+- Initiative tracker for combat management
+- Encounter builder with CR calculation
+- Monster database integration
+- Combat round automation
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+## Tech Stack
 
-## Customize configuration
+- Vue 3
+- TypeScript
+- Vite
+- Pinia for state management
+- Axios for API communication
+- SignalR for real-time updates
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## Development Setup
 
-## Project Setup
+1. Install dependencies:
+   `npm install`
 
-```sh
-npm install
-```
+2. Start development server:
+   `npm run dev`
 
-### Compile and Hot-Reload for Development
+3. Build for production:
+   `npm run build`
 
-```sh
-npm run dev
-```
+4. Run linting:
+   `npm run lint`
 
-### Type-Check, Compile and Minify for Production
+## IDE Setup
 
-```sh
-npm run build
-```
+For the best development experience:
 
-### Lint with [ESLint](https://eslint.org/)
+1. Use [VSCode](https://code.visualstudio.com/)
+2. Install [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+3. Install [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+4. Install [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+5. Disable Vetur if installed
 
-```sh
-npm run lint
-```
+## Configuration
+
+The API base URL is configured to connect to `http://localhost:5207/api/` by default. Update the `baseURL` in `src/api/axios/AxiosApiClient.ts` to match your backend configuration.
