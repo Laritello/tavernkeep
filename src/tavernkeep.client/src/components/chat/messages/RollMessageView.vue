@@ -9,11 +9,12 @@
             <!--Avatar and its border-->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="absolute -top-1 w-12 h-12"
                 :class="{ '-right-1': alignRight, '-left-1': !alignRight }">
-                <circle cx="5" cy="5" r="5" fill="oklch(var(--b1))" />
+                <circle cx="5" cy="5" r="5" fill="oklch(var(--b2))" />
             </svg>
             <div class="avatar placeholder absolute top-0" :class="{ 'right-0': alignRight, 'left-0': !alignRight }">
                 <div class="bg-neutral text-neutral-content w-10 rounded-full">
-                    <span>{{ message.sender.login.slice(0, 2) }}</span>
+                    <img v-if="message.characterId" alt="Character portrait" :src="`${api.baseURL}portraits/${message.characterId}`" />
+                <span v-else>{{ message.displayName.slice(0, 2) }}</span>
                 </div>
             </div>
 
@@ -37,7 +38,7 @@
                     <br />
                     <span class="text-xs font-normal tracking-wide">{{
                         getSubHeader(rollMessageParameters.type, rollMessageParameters.skillType)
-                    }}</span>
+                        }}</span>
                 </p>
             </div>
 
@@ -85,6 +86,11 @@ import DiceExpression from '@/components/DiceExpression.vue';
 import DiceIcon from '@/components/DiceIcon.vue';
 import { RollMessageType, RollType, SkillType } from '@/contracts/enums';
 import type { RollMessage } from '@/entities/Message';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
+
+// TODO: Find a better way to pass api base URL
+const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
 const { t } = useI18n();
 

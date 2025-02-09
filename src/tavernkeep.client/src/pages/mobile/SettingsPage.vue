@@ -8,9 +8,14 @@ import ThemeSwitcher from '@/components/shared/ThemeSwitcher.vue';
 import { useAuth } from '@/composables/useAuth';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import { useModal } from '@/composables/useModal';
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
 
 const router = useRouter();
 const user = useCurrentUserAccount();
+
+// TODO: Find a better way to pass api base URL
+const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
 const { t } = useI18n();
 
@@ -54,7 +59,7 @@ async function setActiveCharacter(characterId: string) {
                     :class="{ 'border-2': character.id === user.activeCharacter.value?.id }">
                     <div class="avatar">
                         <div class="w-14 h-14 rounded-xl">
-                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                            <img alt="Character portrait" :src="`${api.baseURL}portraits/${character.id}`" />
                         </div>
                     </div>
 

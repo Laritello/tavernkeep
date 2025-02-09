@@ -172,8 +172,7 @@ function toggleDetails() {
                 <div class="flex flex-col flex-1 h-full gap-1">
                     <div class="avatar self-center">
                         <div class="w-12 rounded-full border-2 border-primary">
-                            <img alt="Character's avatar"
-                                src="https://www.fantasyflightgames.com/media/ffg_content/dark-heresy/images/WH_Pushed-to-the-Limit_HRF_090918_IFS.jpg" />
+                            <img alt="Character portrait" :src="`${api.baseURL}portraits/${user.activeCharacter.value.id}`" />
                         </div>
                     </div>
                     <div class="self-stretch px-2">

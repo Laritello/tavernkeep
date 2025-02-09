@@ -12,7 +12,7 @@ import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 
 export class AxiosApiClient {
     client: AxiosInstance;
-    private baseURL = 'http://' + window.location.hostname + ':5207/api/';
+    baseURL = 'http://' + window.location.hostname + ':5207/api/';
 
     constructor() {
         this.client = axios.create({
