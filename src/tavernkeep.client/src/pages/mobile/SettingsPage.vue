@@ -2,13 +2,13 @@
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
 import LanguageSwitcher from '@/components/shared/LanguageSwitcher.vue';
 import ThemeSwitcher from '@/components/shared/ThemeSwitcher.vue';
 import { useAuth } from '@/composables/useAuth';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import { useModal } from '@/composables/useModal';
-import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 
 const router = useRouter();

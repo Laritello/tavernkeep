@@ -308,6 +308,19 @@ export class AxiosApiClient {
         const response = await this.client.patch(`characters/${characterId}/health-modify`, { change: amount });
         return getPayloadOrThrow(response);
     }
+
+    async updatePortrait(characterId: string, image: File): Promise<void> {
+        const data = new FormData();
+        data.append('file', image);
+
+        const response = await this.client.post(`portraits/${characterId}`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        });
+
+        return getPayloadOrThrow(response);
+    }
 }
 
 function getPayloadOrThrow<T>(response: AxiosResponse): T {
