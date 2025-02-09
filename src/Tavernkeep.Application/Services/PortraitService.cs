@@ -11,10 +11,9 @@ namespace Tavernkeep.Application.Services
 		IPortraitRepository portraitRepository
 		) : IPortaitService
 	{
-		public async Task<Portrait> GetPortraitAsync(Guid characterId, CancellationToken cancellationToken)
+		public async Task<Portrait?> GetPortraitAsync(Guid characterId, CancellationToken cancellationToken)
 		{
-			return await portraitRepository.FindAsync(characterId, cancellationToken: cancellationToken)
-				?? throw new BusinessLogicException("Portrait not found");
+			return await portraitRepository.FindAsync(characterId, cancellationToken: cancellationToken);
 		}
 
 		public async Task UpdatePortraitAsync(Guid characterId, byte[] bytes, string mimeType, CancellationToken cancellationToken)

@@ -12,7 +12,7 @@ namespace Tavernkeep.Server.Controllers
 	/// </summary>
 	/// <param name="mediator">The <see cref="IMediator"/> instance.</param>
 	[ApiController]
-	[Route("/api/[controller]")]
+	[Route("api/[controller]")]
 	public class PortraitsController(IMediator mediator) : ControllerBase
 	{
 		/// <summary>
@@ -20,7 +20,7 @@ namespace Tavernkeep.Server.Controllers
 		/// </summary>
 		/// <param name="characterId">The ID of portrait owner.</param>
 		/// <returns>Image containing the portrait of the character.</returns>
-		[Authorize]
+		[AllowAnonymous]
 		[HttpGet("{characterId}")]
 		public async Task<IActionResult> GetPortraitAsync([FromRoute] Guid characterId)
 		{
