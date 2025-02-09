@@ -1,11 +1,11 @@
-import { defineStore } from 'pinia';
+import { defineStore, acceptHMRUpdate } from 'pinia';
 import { ref, computed } from 'vue';
 
 import { Encounter, type PlayerType } from '@/entities/Encounter.ts';
 import type { EncounterConfig, Participant, SerializedEncounter } from '@/entities/Encounter.ts';
 import { useUsers } from '@/stores/users.ts';
 
-export const useEncountersStore = defineStore('encounters-manager', () => {
+export const useEncountersStore = defineStore('encounters', () => {
     // State
     const encounters = ref<Record<string, Encounter>>({});
     const currentEncounterId = ref<string | null>(null);
@@ -27,15 +27,7 @@ export const useEncountersStore = defineStore('encounters-manager', () => {
 
     // Getters
     const currentEncounter = computed(() => encounters.value[currentEncounterId.value!] ?? null);
-
-    const encounterList = computed(() =>
-        Object.values(encounters.value).map((e) => ({
-            id: e.id,
-            name: e.name,
-            participantCount: e.participants.length,
-            round: e.round,
-        }))
-    );
+    const encounterList = computed(() => Object.values(encounters.value));
 
     // Actions
     function createNewEncounter(config?: Partial<EncounterConfig>) {
@@ -61,7 +53,7 @@ export const useEncountersStore = defineStore('encounters-manager', () => {
         // TODO: Do it on server
         delete encounters.value[encounterId];
         if (currentEncounterId.value === encounterId) {
-            currentEncounterId.value = encounters.value[0]?.id || null;
+            currentEncounterId.value = encounterList.value[0]?.id || null;
         }
     }
 
@@ -85,3 +77,7 @@ export const useEncountersStore = defineStore('encounters-manager', () => {
         deleteEncounter,
     };
 });
+
+if (import.meta.hot) {
+    import.meta.hot.accept(acceptHMRUpdate(useEncountersStore, import.meta.hot));
+}

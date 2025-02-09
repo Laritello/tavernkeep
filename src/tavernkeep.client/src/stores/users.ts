@@ -6,6 +6,7 @@ import { useSession } from '@/composables/useSession';
 import type { UserRole } from '@/contracts/enums/UserRole';
 import type { User } from '@/entities/User';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
+import { useCharacters } from '@/stores/characters.ts';
 
 type Users = Record<string, User>;
 
@@ -16,6 +17,13 @@ export const useUsers = defineStore('users', () => {
         const userId = unref(id);
         return computed(() => (userId ? dictionary[userId] : undefined));
     };
+
+    const activeCharacters = computed(() => {
+        const charactersStore = useCharacters();
+        return Object.values(dictionary)
+            .filter((user) => !!user.activeCharacterId)
+            .map((user) => charactersStore.get(user.id));
+    });
 
     async function fetch() {
         const session = useSession();
@@ -47,5 +55,6 @@ export const useUsers = defineStore('users', () => {
         createUser,
         deleteUser,
         setActiveCharacter,
+        activeCharacters,
     };
 });

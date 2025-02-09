@@ -17,7 +17,7 @@ export class Encounter {
 
     constructor(config?: Partial<EncounterConfig>) {
         this.id = uuidv4();
-        this.name = config?.name || `Encounter ${this.id.slice(0, 6)}`;
+        this.name = config?.name || 'New encounter';
         this.description = config?.description || '';
         this.round = 1;
         this.participants = [];
