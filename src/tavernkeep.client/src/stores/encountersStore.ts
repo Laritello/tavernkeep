@@ -1,18 +1,18 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
 import { ref, computed } from 'vue';
 
-import { Encounter, type PlayerType } from '@/entities/Encounter.ts';
+import { Encounter } from '@/entities/Encounter.ts';
 import type { EncounterConfig, Participant, SerializedEncounter } from '@/entities/Encounter.ts';
-import { useUsers } from '@/stores/users.ts';
+import { useCharacters } from '@/stores/characters.ts';
 
 export const useEncountersStore = defineStore('encounters', () => {
     // State
     const encounters = ref<Record<string, Encounter>>({});
     const currentEncounterId = ref<string | null>(null);
-    const npcsPool = ref<Participant[]>([]);
-    const playersPool = computed<Participant[]>(() => {
-        const usersStore = useUsers();
-        return usersStore.activeCharacters.map((character): PlayerType => {
+    const bestiary = ref<Participant[]>([]);
+    const characters = computed<Participant[]>(() => {
+        const charactersStore = useCharacters();
+        return Object.values(charactersStore.all).map((character) => {
             const id = character.id;
             const name = character.name;
             return {
@@ -64,8 +64,8 @@ export const useEncountersStore = defineStore('encounters', () => {
     return {
         encounters,
         currentEncounterId,
-        playersPool,
-        npcsPool,
+        characters,
+        bestiary,
 
         currentEncounter,
         encounterList,

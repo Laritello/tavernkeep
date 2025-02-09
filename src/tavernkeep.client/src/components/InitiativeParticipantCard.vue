@@ -2,7 +2,7 @@
     <div
         class="card card-compact"
         :class="[
-            participant.isActive ? 'border-2 border-accent animate-pulse' : 'border border-base-300',
+            activeTurn ? 'border-2 border-accent animate-pulse' : 'border border-base-300',
             participant.type === 'player' ? 'bg-primary bg-opacity-10' : 'bg-error bg-opacity-10',
         ]"
     >
@@ -16,13 +16,16 @@
             <div class="flex-1">
                 <h3 class="font-bold">{{ participant.name }}</h3>
                 <div class="text-sm opacity-70">
-                    {{ participant.type === 'player' ? participant.class : participant.type }}
+                    {{ participant.type === 'player' ? participant.character.class.name : participant.type }}
                 </div>
             </div>
 
             <!-- HP Display -->
             <div class="badge badge-lg" :class="participant.type === 'player' ? 'badge-primary' : 'badge-error'">
-                HP: {{ participant.currentHp }}/{{ participant.maxHp }}
+                HP:
+                {{ participant.type === 'player' ? participant.character.health.current : participant.stats }}
+                /
+                {{ participant.type === 'player' ? participant.character.health.max : participant.stats }}
             </div>
 
             <!-- Action Buttons -->
@@ -39,14 +42,15 @@
 </template>
 
 <script setup lang="ts">
-import type { CombatParticipant } from '@/types/combat';
+import type { Participant } from '@/entities/Encounter.ts';
 
-const { participant } = defineProps<{
-    participant: CombatParticipant;
+const { participant, activeTurn } = defineProps<{
+    participant: Participant;
+    activeTurn: boolean;
 }>();
 
 defineEmits<{
-    (e: 'edit', participant: CombatParticipant): void;
+    (e: 'edit', participant: Participant): void;
     (e: 'remove', id: string): void;
 }>();
 </script>

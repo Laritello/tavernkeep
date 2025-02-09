@@ -47,6 +47,22 @@ export class Encounter {
         return encounter;
     }
 
+    public getCurrentTurnParticipant(): Participant | null {
+        if (this.currentTurnIndex === -1) {
+            return null;
+        }
+        return this.participants[this.currentTurnIndex];
+    }
+
+    public addParticipant(participant: Participant) {
+        this.participants.push(participant);
+    }
+
+    public removeParticipant(participant: Participant) {
+        const index = this.participants.indexOf(participant);
+        this.participants.splice(index, 1);
+    }
+
     public rollInitiative(participant: Participant) {
         // TODO: Implement initiative rolls
         this.saveHistoryState();
