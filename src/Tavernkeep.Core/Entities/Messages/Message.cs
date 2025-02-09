@@ -17,6 +17,7 @@ namespace Tavernkeep.Core.Entities.Messages
 		/// Displayed name as a sender.
 		/// </summary>
 		public string DisplayName { get; set; } = default!;
+		public Guid? CharacterId { get; set; }
 		public Guid SenderId { get; set; }
 		public User Sender { get; set; } = default!;
 		public DateTime Created { get; set; }

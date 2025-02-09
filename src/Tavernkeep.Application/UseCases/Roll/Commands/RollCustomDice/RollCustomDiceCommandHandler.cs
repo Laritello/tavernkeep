@@ -25,6 +25,7 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice
 
 			RollMessage message = new()
 			{
+				CharacterId = initiator.ActiveCharacter?.Id,
 				DisplayName = initiator.ActiveCharacter is not null ? initiator.ActiveCharacter.Name : initiator.Login,
 				Sender = initiator,
 				Created = DateTime.UtcNow,
