@@ -86,10 +86,3 @@ defineExpose({
         </form>
     </BottomSheet>
 </template>
-
-<style>
-[data-theme='dark'] {
-    --vsbs-background: oklch(25.3267% 0.015896 252.417568); /* base-100 */
-    --vsbs-border-color: oklch(23.2607% 0.013807 253.100675); /* base-200 */
-}
-</style>

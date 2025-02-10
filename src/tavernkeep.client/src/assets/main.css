@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-    overflow: auto !important;
+:root {
+    --vsbs-background: oklch(var(--b1)); /* base-100 */
+    --vsbs-border-color: oklch(var(--b2)); /* base-200 */
+    --vsbs-handle-background: oklch(var(--bc)/0.5); /* base-content opacity 50% */
 }
 
 /* TODO: Add more toast styles */
