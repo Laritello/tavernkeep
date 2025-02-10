@@ -48,7 +48,7 @@ async function deleteCharacter(id: string) {
         message: 'Are you sure you want to delete this character?',
     });
     if (result.action !== 'confirm') return;
-    characters.deleteCharacter(id);
+    await characters.deleteCharacter(id);
 }
 
 async function deleteUser(id: string) {
@@ -58,7 +58,7 @@ async function deleteUser(id: string) {
         message: 'Are you sure you want to delete this user?',
     });
     if (result.action !== 'confirm') return;
-    users.deleteUser(id);
+    await users.deleteUser(id);
 }
 </script>
 

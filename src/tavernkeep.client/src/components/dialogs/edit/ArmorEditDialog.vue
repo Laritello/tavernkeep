@@ -57,30 +57,30 @@ function cancel() {
             <h3 class="font-bold text-lg">{{ t('dialogs.armorEdit.header') }}</h3>
 
             <label class="form-control w-full max-w-xs">
-                <div class="label">
+                <label class="label">
                     <span class="label-text">{{ t('widgets.armor.type') }}</span>
-                </div>
+                </label>
                 <select v-model="type" class="select select-bordered">
                     <option disabled selected>{{ t('dialogs.armorEdit.pickOne') }}</option>
-                    <option v-for="type in types" :key="type" :value="type">
-                        {{ t(`pf.armor.${type.toLowerCase()}`) }}
+                    <option v-for="armorType in types" :key="armorType" :value="armorType">
+                        {{ t(`pf.armor.${armorType.toLowerCase()}`) }}
                     </option>
                 </select>
             </label>
 
             <div class="flex flex-row gap-2">
                 <label class="form-control w-full max-w-xs">
-                    <div class="label">
+                    <label class="label">
                         <span class="label-text">{{ t('widgets.armor.bonus') }}</span>
-                    </div>
+                    </label>
                     <input v-model="bonus" type="text" class="input input-bordered w-full max-w-xs" />
                 </label>
 
                 <label class="form-control w-full max-w-xs">
-                    <div class="label">
+                    <label class="label">
                         <span class="label-text text-clip text-nowrap">{{ t('widgets.armor.dexterityCap') }}</span>
                         <input v-model="hasCap" type="checkbox" class="toggle toggle-xs" />
-                    </div>
+                    </label>
                     <input v-model="cap" type="text" class="input input-bordered w-full max-w-xs" :disabled="!hasCap" />
                 </label>
             </div>
