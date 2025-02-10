@@ -99,7 +99,7 @@ async function rollSkillCheck(skillType: string) {
                 },
             },
             {
-                toastClassName: 'skill-check-toast',
+                toastClassName: 'roll-toast',
             }
         );
     }
@@ -117,7 +117,7 @@ async function rollSavingThrow(savingThrow: string) {
                 },
             },
             {
-                toastClassName: 'saving-throw-toast',
+                toastClassName: 'roll-toast',
             }
         );
     }

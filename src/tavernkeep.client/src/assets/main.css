@@ -10,15 +10,8 @@
 
 /* TODO: Add more toast styles */
 /* Toast style for skill checks */
-.Vue-Toastification__toast--default.skill-check-toast {
-    background-color: #128100;
-    border-radius: 20px;
-}
-
-/* Toast style for saving throws */
-.Vue-Toastification__toast--default.saving-throw-toast {
-    background-color: #006179;
-    border-radius: 20px;
+.Vue-Toastification__toast--default.roll-toast {
+    background-color: oklch(var(--su));
 }
 
 .Vue-Toastification__icon {
