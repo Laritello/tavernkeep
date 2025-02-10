@@ -4,6 +4,7 @@ import { UserRole } from '@/contracts/enums';
 import AdminPage from '@/pages/AdminPage.vue';
 import CharactersPage from '@/pages/CharactersPage.vue';
 import ErrorPage from '@/pages/ErrorPage.vue';
+import ImageUploadPage from '@/pages/ImageUploadPage.vue';
 import LoginPage from '@/pages/LoginPage.vue';
 import BuilderPage from '@/pages/mobile/BuilderPage.vue';
 import CharacterPage from '@/pages/mobile/CharacterPage.vue';
@@ -77,6 +78,15 @@ const routes: RouteRecordRaw[] = [
         component: SettingsPage,
         meta: {
             layout: 'AppLayout',
+            protected: true,
+        },
+    },
+    {
+        path: '/settings/avatar',
+        component: ImageUploadPage,
+        meta: {
+            layout: 'HeaderLayout',
+            title: 'Upload avatar image',
             protected: true,
         },
     },
