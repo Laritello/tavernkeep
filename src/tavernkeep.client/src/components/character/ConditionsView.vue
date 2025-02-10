@@ -30,6 +30,13 @@ import type { Condition } from '@/entities';
 const { conditions } = defineProps<{
     conditions: Condition[];
 }>();
+
+defineEmits<{
+    addCondition: [];
+    removeCondition: [Condition];
+    increaseConditionLevel: [Condition];
+    decreaseConditionLevel: [Condition];
+}>();
 </script>
 <style>
 .align-right {
