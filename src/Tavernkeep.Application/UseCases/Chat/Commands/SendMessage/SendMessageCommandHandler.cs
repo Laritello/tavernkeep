@@ -28,6 +28,7 @@ namespace Tavernkeep.Application.UseCases.Chat.Commands.SendMessage
 
 			TextMessage message = new()
 			{
+				CharacterId = sender.ActiveCharacter?.Id,
 				DisplayName = sender.ActiveCharacter is not null ? sender.ActiveCharacter.Name : sender.Login,
 				SenderId = sender.Id,
 				Sender = sender,

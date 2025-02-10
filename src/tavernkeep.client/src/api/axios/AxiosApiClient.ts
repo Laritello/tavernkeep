@@ -12,7 +12,7 @@ import AxiosAuthInterceptors from './AxiosAuthInterceptors';
 
 export class AxiosApiClient {
     client: AxiosInstance;
-    private baseURL = 'http://' + window.location.hostname + ':5207/api/';
+    baseURL = 'http://' + window.location.hostname + ':5207/api/';
 
     constructor() {
         this.client = axios.create({
@@ -306,6 +306,19 @@ export class AxiosApiClient {
      */
     async applyHealOrDamage(characterId: string, amount: number): Promise<Health> {
         const response = await this.client.patch(`characters/${characterId}/health-modify`, { change: amount });
+        return getPayloadOrThrow(response);
+    }
+
+    async updatePortrait(characterId: string, image: File): Promise<void> {
+        const data = new FormData();
+        data.append('file', image);
+
+        const response = await this.client.post(`portraits/${characterId}`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        });
+
         return getPayloadOrThrow(response);
     }
 }

@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="UseCases\Conditions\Commands\" />
+    <Folder Include="UseCases\Portraits\Notifications\" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@ import type { User } from './User';
 
 export interface Message {
     id: string;
+    characterId?: string;
     displayName: string;
     sender: User;
     created: Date;

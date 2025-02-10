@@ -2,15 +2,20 @@
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
 import LanguageSwitcher from '@/components/shared/LanguageSwitcher.vue';
 import ThemeSwitcher from '@/components/shared/ThemeSwitcher.vue';
 import { useAuth } from '@/composables/useAuth';
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
 import { useModal } from '@/composables/useModal';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
 
 const router = useRouter();
 const user = useCurrentUserAccount();
+
+// TODO: Find a better way to pass api base URL
+const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
 const { t } = useI18n();
 
@@ -55,7 +60,7 @@ async function setActiveCharacter(characterId: string) {
                 >
                     <div class="avatar">
                         <div class="w-14 h-14 rounded-xl">
-                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                            <img alt="Character portrait" :src="`${api.baseURL}portraits/${character.id}`" />
                         </div>
                     </div>
 
@@ -87,6 +92,16 @@ async function setActiveCharacter(characterId: string) {
                                 <a @click="setActiveCharacter(character.id)">
                                     {{ t('settings.characters.setActive') }}
                                 </a>
+                            </li>
+                            <li>
+                                <RouterLink
+                                    :to="{
+                                        name: 'EditCharacterPortrait',
+                                        params: { characterId: character.id },
+                                    }"
+                                >
+                                    Edit portrait
+                                </RouterLink>
                             </li>
                             <li>
                                 <a class="text-red-600" @click="deleteCharacter(character.id)">

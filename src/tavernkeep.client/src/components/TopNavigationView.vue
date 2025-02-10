@@ -190,8 +190,8 @@ function toggleDetails() {
                     <div class="avatar self-center">
                         <div class="w-12 rounded-full border-2 border-primary">
                             <img
-                                alt="Character's avatar"
-                                src="https://www.fantasyflightgames.com/media/ffg_content/dark-heresy/images/WH_Pushed-to-the-Limit_HRF_090918_IFS.jpg"
+                                alt="Character portrait"
+                                :src="`${api.baseURL}portraits/${user.activeCharacter.value.id}`"
                             />
                         </div>
                     </div>

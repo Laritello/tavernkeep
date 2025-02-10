@@ -2,7 +2,8 @@
     <div class="chat" :class="{ 'chat-end': alignRight, 'chat-start': !alignRight }">
         <div class="chat-image avatar placeholder">
             <div class="bg-neutral text-neutral-content w-10 rounded-full">
-                <span>{{ message.sender.login.slice(0, 2) }}</span>
+                <img v-if="message.characterId" alt="Character portrait" :src="`${api.baseURL}portraits/${message.characterId}`" />
+                <span v-else>{{ message.displayName.slice(0, 2) }}</span>
             </div>
         </div>
         <div class="chat-header">
@@ -19,7 +20,12 @@
     </div>
 </template>
 <script setup lang="ts">
+import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import type { TextMessage } from '@/entities/Message';
+import { ApiClientFactory } from '@/factories/ApiClientFactory';
+
+// TODO: Find a better way to pass api base URL
+const api: AxiosApiClient = ApiClientFactory.createApiClient();
 
 const { message } = defineProps<{
     message: TextMessage;

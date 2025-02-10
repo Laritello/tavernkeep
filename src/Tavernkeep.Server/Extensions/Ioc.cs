@@ -82,6 +82,7 @@ namespace Tavernkeep.Server.Extensions
 			services.AddScoped<IMessageRepository, MessageEFRepository>();
 			services.AddScoped<IRefreshTokenRepository, RefreshTokenEFRepository>();
 			services.AddScoped<IConditionMetadataRepository, ConditionMetadataEFRepository>();
+			services.AddScoped<IPortraitRepository, PortraitEFRepository>();
 
 			return services;
 		}
@@ -111,6 +112,7 @@ namespace Tavernkeep.Server.Extensions
 			services.AddSingleton<INotificationService, NotificationService>();
 
 			services.AddScoped<ICharacterService, CharacterService>();
+			services.AddScoped<IPortaitService, PortraitService>();
 
 			services.AddSingleton<IUserConnectionStorage<Guid>, UserConnectionStorage<Guid>>();
 
