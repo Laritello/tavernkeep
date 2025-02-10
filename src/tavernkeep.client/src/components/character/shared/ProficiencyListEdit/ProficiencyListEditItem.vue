@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import ProficiencyComponent from '@/components/character/ProficiencyComponent.vue';
-import { Proficiency, SkillType } from '@/contracts/enums';
+import { Proficiency, SkillDataType } from '@/contracts/enums';
 
 import type { SkillLike } from './ProficiencyListEdit.vue';
 
@@ -45,10 +45,10 @@ function decreaseProficiency() {
 
 <template>
     <div class="flex flex-row items-center p-1 gap-x-1 border-b-2 border-base-300">
-        <p v-if="item.type === SkillType.Lore" class="grow select-none">
+        <p v-if="item.type === SkillDataType.Lore" class="grow select-none">
             {{ t('widgets.skills.lore') }}: {{ item.name }}
         </p>
-        <p v-else-if="item.type === SkillType.Custom" class="grow select-none">{{ item.name }}</p>
+        <p v-else-if="item.type === SkillDataType.Custom" class="grow select-none">{{ item.name }}</p>
         <p v-else class="grow select-none">{{ t(localePrefix + item.name.toLowerCase()) }}</p>
 
         <span class="btn btn-sm btn-circle btn-ghost" @click="decreaseProficiency()">

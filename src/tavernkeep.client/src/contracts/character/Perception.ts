@@ -1,8 +1,8 @@
-import type { Proficiency, SkillType } from '@/contracts/enums';
+import type { Proficiency, SkillDataType } from '@/contracts/enums';
 
 export interface Perception {
-    type: SkillType;
-    name: string;
+    type: SkillDataType.Perception;
+    name: 'Perception';
     proficiency: Proficiency;
     bonus: number;
 }

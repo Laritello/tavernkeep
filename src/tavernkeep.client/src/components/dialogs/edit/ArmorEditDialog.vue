@@ -5,7 +5,7 @@ import { useI18n } from 'vue-i18n';
 import ProficiencyListEdit from '@/components/character/shared/ProficiencyListEdit/ProficiencyListEdit.vue';
 import type { DialogResultCallback } from '@/composables/useModal';
 import type { Armor } from '@/contracts/character';
-import { ArmorType, Proficiency, SkillType } from '@/contracts/enums';
+import { ArmorType, Proficiency, SkillDataType } from '@/contracts/enums';
 
 const { t } = useI18n();
 
@@ -17,7 +17,7 @@ const { closeModal, armor } = defineProps<{
 const types: ArmorType[] = [ArmorType.Unarmored, ArmorType.Light, ArmorType.Medium, ArmorType.Heavy];
 const currentItems = ref(
     Object.entries(armor.proficiencies).map((k) => ({
-        type: SkillType.Basic,
+        type: SkillDataType.Basic,
         name: k[0].toString(),
         proficiency: k[1],
     }))

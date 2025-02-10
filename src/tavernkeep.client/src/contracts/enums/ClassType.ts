@@ -1,10 +1,18 @@
 export enum ClassType {
+    Alchemist = 'Alchemist',
+    Barbarian = 'Barbarian',
     Bard = 'Bard',
+    Champion = 'Champion',
     Cleric = 'Cleric',
     Druid = 'Druid',
     Fighter = 'Fighter',
+    Investigator = 'Investigator',
+    Monk = 'Monk',
+    Oracle = 'Oracle',
     Ranger = 'Ranger',
     Rogue = 'Rogue',
+    Sorcerer = 'Sorcerer',
+    Swashbuckler = 'Swashbuckler',
     Witch = 'Witch',
     Wizard = 'Wizard',
 }

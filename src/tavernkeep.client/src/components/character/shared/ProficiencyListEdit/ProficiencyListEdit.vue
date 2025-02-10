@@ -1,10 +1,10 @@
 ﻿<script setup lang="ts" generic="T extends SkillLike">
-import type { Proficiency, SkillType } from '@/contracts/enums';
+import type { Proficiency, SkillDataType } from '@/contracts/enums';
 
 import ProficiencyListEditItem from './ProficiencyListEditItem.vue';
 
 export type SkillLike = {
-    type: SkillType;
+    type: SkillDataType;
     name: string;
     proficiency: Proficiency;
 };

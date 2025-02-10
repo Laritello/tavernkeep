@@ -45,7 +45,7 @@
                             'skill-check': rollMessageParameters.type == RollMessageType.Skill,
                             'saving-throw':
                                 rollMessageParameters.type == RollMessageType.Skill &&
-                                rollMessageParameters.skillType == SkillType.SavingThrow,
+                                rollMessageParameters.skillType == SkillDataType.SavingThrow,
                         }"
                     >
                         {{ getHeader(rollMessageParameters.type, rollMessageParameters.skillType) }}
@@ -105,7 +105,7 @@ import { useI18n } from 'vue-i18n';
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import DiceExpression from '@/components/DiceExpression.vue';
 import DiceIcon from '@/components/DiceIcon.vue';
-import { RollMessageType, RollType, SkillType } from '@/contracts/enums';
+import { RollMessageType, RollType, SkillDataType } from '@/contracts/enums';
 import type { RollMessage } from '@/entities/Message';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 
@@ -117,7 +117,7 @@ const { t } = useI18n();
 interface RollMessageParameters {
     type: RollMessageType;
     subHeader: string;
-    skillType?: SkillType;
+    skillType?: SkillDataType;
 }
 
 const { message, rollMessageParameters } = defineProps<{
@@ -136,28 +136,28 @@ function formatDate(dateString: Date): string {
     return `${hours}:${minutes}`;
 }
 
-function getSubHeader(type: RollMessageType, skillType?: SkillType): string {
+function getSubHeader(type: RollMessageType, skillType?: SkillDataType): string {
     switch (type) {
         case RollMessageType.Custom:
             return t('chat.rollMessages.subHeaders.custom');
         case RollMessageType.Skill:
             switch (skillType) {
-                case SkillType.SavingThrow:
+                case SkillDataType.SavingThrow:
                     return t(`pf.savingThrows.${rollMessageParameters.subHeader.toLowerCase()}`);
-                case SkillType.Perception:
+                case SkillDataType.Perception:
                     return t(`pf.perception`);
                 default:
                     return t(`pf.skills.${rollMessageParameters.subHeader.toLowerCase()}`);
             }
     }
 }
-function getHeader(type: RollMessageType, skillType?: SkillType) {
+function getHeader(type: RollMessageType, skillType?: SkillDataType) {
     switch (type) {
         case RollMessageType.Custom:
             return t(`chat.rollMessages.headers.${rollMessageParameters.type.toLowerCase()}`);
         case RollMessageType.Skill:
             switch (skillType) {
-                case SkillType.SavingThrow:
+                case SkillDataType.SavingThrow:
                     return t('chat.rollMessages.headers.savingThrow');
                 default:
                     return t('chat.rollMessages.headers.skill');

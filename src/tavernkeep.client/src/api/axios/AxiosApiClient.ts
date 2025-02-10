@@ -4,7 +4,7 @@ import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResp
 import type { Health, Perception } from '@/contracts/character';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
 import type { CharacterInformationEditDto, SkillEditDto, SpeedEditDto } from '@/contracts/dtos';
-import { UserRole, Proficiency, RollType, ArmorType, SpeedType, SkillType } from '@/contracts/enums';
+import { UserRole, Proficiency, RollType, ArmorType, SpeedType, SkillDataType } from '@/contracts/enums';
 import type { User, Message, Character, SkillRollMessage } from '@/entities';
 import type { Condition } from '@/entities/Condition';
 
@@ -162,7 +162,7 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async createSkill(characterId: string, type: SkillType, baseAbility: string, name: string): Promise<void> {
+    async createSkill(characterId: string, type: SkillDataType, baseAbility: string, name: string): Promise<void> {
         const response = await this.client.post(
             `custom/skill`,
             {
@@ -181,11 +181,11 @@ export class AxiosApiClient {
     }
 
     async createCustomSkill(characterId: string, baseAbility: string, name: string): Promise<void> {
-        return this.createSkill(characterId, SkillType.Custom, baseAbility, name);
+        return this.createSkill(characterId, SkillDataType.Custom, baseAbility, name);
     }
 
     async createLoreSkill(characterId: string, name: string): Promise<void> {
-        return this.createSkill(characterId, SkillType.Lore, 'Intelligence', name);
+        return this.createSkill(characterId, SkillDataType.Lore, 'Intelligence', name);
     }
 
     async editSavingThrows(characterId: string, proficiencies: Record<string, Proficiency>): Promise<void> {
@@ -316,7 +316,7 @@ export class AxiosApiClient {
         const response = await this.client.post(`portraits/${characterId}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-            }
+            },
         });
 
         return getPayloadOrThrow(response);

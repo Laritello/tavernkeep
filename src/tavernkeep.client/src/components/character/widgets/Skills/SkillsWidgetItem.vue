@@ -45,7 +45,7 @@ import { useI18n } from 'vue-i18n';
 
 import ProficiencyComponent from '@/components/character/ProficiencyComponent.vue';
 import type { Skill } from '@/contracts/character';
-import { SkillType } from '@/contracts/enums';
+import { SkillDataType } from '@/contracts/enums';
 
 const { t } = useI18n();
 
@@ -60,9 +60,9 @@ const emit = defineEmits<{
 
 function getSkillName(skill: Skill): string {
     switch (skill.type) {
-        case SkillType.Basic:
+        case SkillDataType.Basic:
             return t(`pf.skills.${skill.name.toLowerCase()}`);
-        case SkillType.Lore:
+        case SkillDataType.Lore:
             return `${t('widgets.skills.lore')}: ${skill.name}`;
     }
 
