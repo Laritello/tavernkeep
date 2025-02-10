@@ -94,6 +94,16 @@ async function setActiveCharacter(characterId: string) {
                                 </a>
                             </li>
                             <li>
+                                <RouterLink
+                                    :to="{
+                                        name: 'EditCharacterPortrait',
+                                        params: { characterId: character.id },
+                                    }"
+                                >
+                                    Edit portrait
+                                </RouterLink>
+                            </li>
+                            <li>
                                 <a class="text-red-600" @click="deleteCharacter(character.id)">
                                     {{ t('settings.characters.delete') }}
                                 </a>
