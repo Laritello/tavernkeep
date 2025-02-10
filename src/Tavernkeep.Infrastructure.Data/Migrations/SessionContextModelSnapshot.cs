@@ -23,6 +23,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("CharacterId")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
@@ -100,6 +103,24 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.HasKey("Name");
 
                     b.ToTable("Conditions");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Portrait", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Bytes")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.Property<string>("MimeType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Portrait");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", b =>
@@ -730,6 +751,17 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Related");
                 });
 
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Portrait", b =>
+                {
+                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Owner")
+                        .WithOne("Portrait")
+                        .HasForeignKey("Tavernkeep.Core.Entities.Pathfinder.Portrait", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", b =>
                 {
                     b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Owner")
@@ -910,6 +942,8 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.Navigation("Health")
                         .IsRequired();
+
+                    b.Navigation("Portrait");
 
                     b.Navigation("Skills");
                 });

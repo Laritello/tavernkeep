@@ -1,10 +1,11 @@
 import type { Skill } from '@/contracts/character';
-import type { RollType, SkillType } from '@/contracts/enums';
+import type { RollType, SkillDataType } from '@/contracts/enums';
 
 import type { User } from './User';
 
 export interface Message {
     id: string;
+    characterId?: string;
     displayName: string;
     sender: User;
     created: Date;
@@ -28,7 +29,7 @@ export interface RollMessage extends Message {
 export interface SkillRollMessage extends RollMessage {
     $type: 'SkillRollMessage';
     skill: Skill;
-    type: SkillType;
+    type: SkillDataType;
 }
 
 export interface RollResult {

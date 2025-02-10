@@ -1,8 +1,8 @@
-import type { Proficiency, SkillType } from '@/contracts/enums';
+import type { Proficiency, SkillDataType, SavingThrowType } from '@/contracts/enums';
 
 export interface SavingThrow {
-    type: SkillType;
-    name: string;
+    type: SkillDataType;
+    name: SavingThrowType;
     proficiency: Proficiency;
     bonus: number;
 }

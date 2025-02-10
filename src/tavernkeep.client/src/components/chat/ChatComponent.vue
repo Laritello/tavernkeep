@@ -69,11 +69,11 @@ function onContextMenu(e: MouseEvent, message: Message) {
     contextMenuOptions.message = message;
 }
 
-function copyMessageText() {
+async function copyMessageText() {
     const { copy } = useClipboard();
     if (contextMenuOptions.message!.$type === 'TextMessage') {
         const message = contextMenuOptions.message! as TextMessage;
-        copy(message.text);
+        await copy(message.text);
     }
 }
 
@@ -89,7 +89,7 @@ async function deleteMessage() {
 }
 
 function havePermissionToDelete() {
-    return session.havePermissions([UserRole.Master, UserRole.Moderator]);
+    return session.hasPermissions([UserRole.Master, UserRole.Moderator]);
 }
 
 async function sendMessage() {

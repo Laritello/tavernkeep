@@ -3,12 +3,12 @@ import BottomSheet from '@douxcode/vue-spring-bottom-sheet';
 import { ref } from 'vue';
 
 import { useCurrentUserAccount } from '@/composables/useCurrentUserAccount';
-import { SkillType } from '@/contracts/enums';
+import { SkillDataType } from '@/contracts/enums';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
 
 // Refs
 const menu = ref<InstanceType<typeof BottomSheet>>();
-const selectedSkillType = ref<SkillType>(SkillType.Custom);
+const selectedSkillType = ref<SkillDataType>(SkillDataType.Custom);
 const selectedBaseAbility = ref<string>('Intelligence');
 const currentSkillName = ref<string>('');
 
@@ -23,7 +23,7 @@ async function create() {
     const skillType = selectedSkillType.value;
     let baseAbility = selectedBaseAbility.value;
 
-    if (skillType === SkillType.Lore) {
+    if (skillType === SkillDataType.Lore) {
         baseAbility = 'Intelligence';
     }
 
@@ -32,7 +32,7 @@ async function create() {
 }
 
 function resetToDefault() {
-    selectedSkillType.value = SkillType.Custom;
+    selectedSkillType.value = SkillDataType.Custom;
     selectedBaseAbility.value = 'Strength';
     currentSkillName.value = '';
 }
@@ -55,12 +55,12 @@ defineExpose({
                     <span class="label-text text-xs">Skill type</span>
                 </label>
                 <select v-model="selectedSkillType" class="select select-bordered">
-                    <option :value="SkillType.Custom" selected>{{ SkillType.Custom.toString() }}</option>
-                    <option :value="SkillType.Lore">{{ SkillType.Lore.toString() }}</option>
+                    <option :value="SkillDataType.Custom" selected>{{ SkillDataType.Custom.toString() }}</option>
+                    <option :value="SkillDataType.Lore">{{ SkillDataType.Lore.toString() }}</option>
                 </select>
             </label>
 
-            <label v-if="selectedSkillType === SkillType.Custom" class="form-control w-full">
+            <label v-if="selectedSkillType === SkillDataType.Custom" class="form-control w-full">
                 <label class="label">
                     <span class="label-text text-xs">Base ability</span>
                 </label>
@@ -78,7 +78,7 @@ defineExpose({
                     <span class="label-text text-xs">Skill name</span>
                 </label>
                 <label class="input input-bordered flex items-center gap-2">
-                    <template v-if="selectedSkillType === SkillType.Lore">Lore:</template>
+                    <template v-if="selectedSkillType === SkillDataType.Lore">Lore:</template>
                     <input v-model="currentSkillName" type="text" class="grow" placeholder="Name" required />
                 </label>
             </label>

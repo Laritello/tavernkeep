@@ -1,8 +1,8 @@
-import type { Proficiency, SkillType } from '@/contracts/enums';
+import type { Proficiency, SkillDataType, SkillType } from '@/contracts/enums';
 
 export interface Skill {
-    type: SkillType;
-    name: string;
+    type: SkillDataType;
+    name: SkillType;
     proficiency: Proficiency;
     pinned: boolean;
     bonus: number;

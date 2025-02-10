@@ -13,7 +13,7 @@
         "format": "prettier --write src/"
     },
     "dependencies": {
-        "@douxcode/vue-spring-bottom-sheet": "^1.2.1",
+        "@douxcode/vue-spring-bottom-sheet": "^1.2.5",
         "@imengyu/vue3-context-menu": "^1.4.4",
         "@intlify/unplugin-vue-i18n": "^6.0.3",
         "@mdi/font": "^7.4.47",
@@ -26,6 +26,7 @@
         "uuid": "^11.0.5",
         "vue": "^3.5.13",
         "vue-draggable-plus": "^0.6.0",
+        "vue-advanced-cropper": "^2.8.9",
         "vue-i18n": "^10.0.5",
         "vue-router": "^4.5.0",
         "vue-scroll-picker": "^1.2.3",

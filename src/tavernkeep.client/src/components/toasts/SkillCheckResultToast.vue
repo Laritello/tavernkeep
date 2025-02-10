@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { SkillType } from '@/contracts/enums';
+import { SkillDataType } from '@/contracts/enums';
 import type { SkillRollMessage } from '@/entities';
 import { useI18n } from '@/i18n/useI18n.ts';
 
@@ -13,7 +13,7 @@ const { message } = defineProps<{ message: SkillRollMessage }>();
             <span class="text-xl font-bold">{{ t('chat.rollMessages.headers.skill') }}</span>
             <span>
                 {{
-                    message.skill.type === SkillType.Basic
+                    message.skill.type === SkillDataType.Basic
                         ? t(`pf.skills.${message.skill.name.toLowerCase()}`)
                         : message.skill.name
                 }}

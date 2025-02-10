@@ -6,6 +6,7 @@ import CharactersPage from '@/pages/CharactersPage.vue';
 import EncounterBuilderPage from '@/pages/EncounterBuilderPage.vue';
 import ErrorPage from '@/pages/ErrorPage.vue';
 import LoginPage from '@/pages/LoginPage.vue';
+import UploadPortraitPage from '@/pages/UploadPortraitPage.vue';
 import BuilderPage from '@/pages/mobile/BuilderPage.vue';
 import CharacterPage from '@/pages/mobile/CharacterPage.vue';
 import ChatPage from '@/pages/mobile/ChatPage.vue';
@@ -78,6 +79,16 @@ const routes: RouteRecordRaw[] = [
         component: SettingsPage,
         meta: {
             layout: 'AppLayout',
+            protected: true,
+        },
+    },
+    {
+        name: 'EditCharacterPortrait',
+        path: '/characters/:characterId/portrait',
+        component: UploadPortraitPage,
+        meta: {
+            layout: 'HeaderLayout',
+            title: 'Upload avatar image',
             protected: true,
         },
     },

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System.Reflection;
 using Tavernkeep.Application.Extensions;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Chat.Notifications.RollMessageSent;
@@ -30,6 +31,7 @@ namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
 
 			SkillRollMessage message = new()
 			{
+				CharacterId = character.Id,
 				DisplayName = initiator.ActiveCharacter is not null ? initiator.ActiveCharacter.Name : initiator.Login,
 				Sender = initiator,
 				Created = DateTime.UtcNow,

@@ -35,6 +35,8 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		#region Properties
 		public User Owner { get; set; } = default!;
 
+		public Portrait? Portrait { get; set; }
+
 		public string Name { get; set; } = default!;
 
 		public Class Class { get; set; } = default!;

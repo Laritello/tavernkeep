@@ -1,4 +1,4 @@
-[![GitHub license](https://img.shields.io/github/license/Laritello/osu-music)](https://github.com/Laritello/osu-music/blob/main/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/Laritello/tavernkeep)](https://github.com/Laritello/tavernkeep/blob/main/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/Laritello/tavernkeep)](https://github.com/Laritello/tavernkeep/issues)
 
 # Tavernkeep

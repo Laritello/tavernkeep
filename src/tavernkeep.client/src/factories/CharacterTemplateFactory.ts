@@ -1,4 +1,4 @@
-import { AncestryType, ArmorType, ClassType, Proficiency, SkillType, SpeedType } from '@/contracts/enums';
+import { AncestryType, ArmorType, ClassType, Proficiency, SkillDataType, SpeedType } from '@/contracts/enums';
 
 export class CharacterTemplateFactory {
     public static createCharacterTemplate(
@@ -70,9 +70,9 @@ export class CharacterTemplateFactory {
         const template = {
             class: { name: classType as string, healthPerLevel: 8 },
             savingThrows: [
-                { name: 'Fortitude', type: SkillType.SavingThrow, proficiency: Proficiency.Trained },
-                { name: 'Reflex', type: SkillType.SavingThrow, proficiency: Proficiency.Trained },
-                { name: 'Will', type: SkillType.SavingThrow, proficiency: Proficiency.Trained },
+                { name: 'Fortitude', type: SkillDataType.SavingThrow, proficiency: Proficiency.Trained },
+                { name: 'Reflex', type: SkillDataType.SavingThrow, proficiency: Proficiency.Trained },
+                { name: 'Will', type: SkillDataType.SavingThrow, proficiency: Proficiency.Trained },
             ],
             ...CharacterTemplateFactory.createPerceptionTemplate(classType),
             ...CharacterTemplateFactory.createSkillsTemplate(classType),
@@ -156,22 +156,22 @@ export class CharacterTemplateFactory {
     public static createSkillsTemplate(classType: ClassType) {
         const template = {
             skills: [
-                { name: 'Acrobatics', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 0
-                { name: 'Arcana', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 1
-                { name: 'Athletics', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 2
-                { name: 'Crafting', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 3
-                { name: 'Deception', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 4
-                { name: 'Diplomacy', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 5
-                { name: 'Intimidation', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 6
-                { name: 'Medicine', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 7
-                { name: 'Nature', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 8
-                { name: 'Occultism', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 9
-                { name: 'Performance', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 10
-                { name: 'Religion', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 11
-                { name: 'Society', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 12
-                { name: 'Stealth', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 13
-                { name: 'Survival', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, //14
-                { name: 'Thievery', type: SkillType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 15
+                { name: 'Acrobatics', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 0
+                { name: 'Arcana', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 1
+                { name: 'Athletics', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 2
+                { name: 'Crafting', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 3
+                { name: 'Deception', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 4
+                { name: 'Diplomacy', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 5
+                { name: 'Intimidation', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 6
+                { name: 'Medicine', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 7
+                { name: 'Nature', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 8
+                { name: 'Occultism', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 9
+                { name: 'Performance', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 10
+                { name: 'Religion', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 11
+                { name: 'Society', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 12
+                { name: 'Stealth', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 13
+                { name: 'Survival', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, //14
+                { name: 'Thievery', type: SkillDataType.Basic, proficiency: Proficiency.Untrained, bonus: 0 }, // 15
             ],
         };
 
@@ -261,7 +261,7 @@ export class CharacterTemplateFactory {
         return {
             perception: {
                 name: 'Perception',
-                type: SkillType.Perception,
+                type: SkillDataType.Perception,
                 proficiency: experts.includes(classType) ? Proficiency.Expert : Proficiency.Trained,
             },
         };
