@@ -3,15 +3,21 @@ import { useFileDialog } from '@vueuse/core';
 import { ref, useTemplateRef } from 'vue';
 import { Cropper, CircleStencil } from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
+import { ApiClientFactory } from '@/factories/ApiClientFactory.ts';
 import { useHeaderStore } from '@/stores/header.ts';
 
+const api = ApiClientFactory.createApiClient();
+const route = useRoute();
+const router = useRouter();
 const header = useHeaderStore();
+
 header.setHeader('Character image');
 
-const uploading = ref(false);
 const image = ref<string | null>(null);
+const error = ref<string | null>(null);
+const uploading = ref(false);
 const cropperRef = useTemplateRef('cropper');
 
 function openFile() {
@@ -34,20 +40,32 @@ function openFile() {
     open();
 }
 
+function showError(message: string) {
+    error.value = message;
+    setTimeout(() => (error.value = null), 5000);
+    uploading.value = false;
+}
+
 async function upload() {
-    const result = cropperRef.value?.getResult();
-    if (!result) {
+    uploading.value = true;
+    const { canvas } = cropperRef.value!.getResult();
+
+    if (!canvas) {
+        showError('Cropper canvas is not defined');
         return;
     }
 
-    const uploadData = result.canvas?.toDataURL('png');
-    console.log(uploadData);
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob((blob) => resolve(blob), 'image/png'));
 
-    // TODO: upload file to server
-    // TODO: handle loading progress
-    uploading.value = true;
+    if (!blob) {
+        showError('Image blob is not defined');
+        return;
+    }
 
-    const router = useRouter();
+    const file = new File([blob], 'portrait.png', { type: 'image/png' });
+    const characterId = route.params['characterId'] as string;
+
+    await api.updatePortrait(characterId, file);
     await router.push('/settings');
 }
 </script>
@@ -79,7 +97,7 @@ async function upload() {
         </figure>
         <div class="card-body items-center text-center">
             <div class="card-actions">
-                <button v-if="!!image" class="btn btn-primary" @click="upload">
+                <button v-if="!!image" class="btn btn-primary" :disabled="uploading" @click="upload">
                     <template v-if="!uploading">
                         <span class="mdi mdi-cloud-upload"></span>
                         Upload
@@ -91,6 +109,7 @@ async function upload() {
                 </button>
                 <button v-else class="btn btn-primary" @click="openFile">Open image</button>
             </div>
+            <h1 class="text-error">{{ error }}</h1>
         </div>
     </div>
 </template>

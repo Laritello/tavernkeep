@@ -4,8 +4,8 @@ import { UserRole } from '@/contracts/enums';
 import AdminPage from '@/pages/AdminPage.vue';
 import CharactersPage from '@/pages/CharactersPage.vue';
 import ErrorPage from '@/pages/ErrorPage.vue';
-import ImageUploadPage from '@/pages/ImageUploadPage.vue';
 import LoginPage from '@/pages/LoginPage.vue';
+import UploadPortraitPage from '@/pages/UploadPortraitPage.vue';
 import BuilderPage from '@/pages/mobile/BuilderPage.vue';
 import CharacterPage from '@/pages/mobile/CharacterPage.vue';
 import ChatPage from '@/pages/mobile/ChatPage.vue';
@@ -82,8 +82,9 @@ const routes: RouteRecordRaw[] = [
         },
     },
     {
-        path: '/settings/avatar',
-        component: ImageUploadPage,
+        name: 'EditCharacterPortrait',
+        path: '/characters/:characterId/portrait',
+        component: UploadPortraitPage,
         meta: {
             layout: 'HeaderLayout',
             title: 'Upload avatar image',
