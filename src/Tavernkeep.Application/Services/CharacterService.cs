@@ -17,7 +17,8 @@ namespace Tavernkeep.Application.Services
 	public class CharacterService(
 		ICharacterRepository characterRepository,
 		IUserRepository userRepository,
-		INotificationService notificationService) : ICharacterService
+		INotificationService notificationService
+		) : ICharacterService
 	{
 		public async Task<Character> CreateCharacterAsync(User owner, CharacterTemplateDto characterData, CancellationToken cancellationToken = default)
 		{

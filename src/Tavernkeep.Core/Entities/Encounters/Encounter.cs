@@ -26,7 +26,7 @@ namespace Tavernkeep.Core.Entities.Encounters
 
 		#region Properties
 
-		public required string Name { get; set; }
+		public string Name { get; set; }
 		public EncounterStatus Status { get; set; }
 		public IReadOnlyCollection<EncounterParticipant> Participants => _participants.AsReadOnly();
 
