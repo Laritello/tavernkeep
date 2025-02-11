@@ -3,6 +3,7 @@ using Tavernkeep.Core.Entities.Encounters;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Services;
+using Tavernkeep.Core.Specifications.Encounters;
 
 namespace Tavernkeep.Application.Services
 {
@@ -18,6 +19,17 @@ namespace Tavernkeep.Application.Services
 			await encounterRepository.CommitAsync(cancellationToken);
 
 			return encounter;
+		}
+
+		public async Task<ICollection<Encounter>> GetAllEncountersAsync(CancellationToken cancellationToken)
+		{
+			return await encounterRepository.GetAllEncountersAsync(cancellationToken);
+		}
+
+		public async Task<Encounter> GetEncounterAsync(Guid encounterId, CancellationToken cancellationToken)
+		{
+			return await encounterRepository.FindAsync(new EncounterFullSpecification(encounterId), cancellationToken) ??
+				throw new BusinessLogicException("Encounter not found");
 		}
 
 		public async Task UpdateEncounterStatusAsync(Guid encounterId, EncounterStatus status, CancellationToken cancellationToken)
