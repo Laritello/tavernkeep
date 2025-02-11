@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
+using Tavernkeep.Application.UseCases.Encounters.Commands.AddEncounterParticipant;
 using Tavernkeep.Application.UseCases.Encounters.Commands.CreateEncounter;
+using Tavernkeep.Application.UseCases.Encounters.Commands.RemoveEncounterParticipant;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetAllEncounters;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetEncounter;
 using Tavernkeep.Core.Contracts.Character.Dtos;
@@ -60,6 +62,28 @@ namespace Tavernkeep.Server.Controllers
 		{
 			var encounter = await mediator.Send(new CreateEncounterCommand(name));
 			return mapper.Map<EncounterDto>(encounter);
+		}
+
+		/// <summary>
+		/// Add participant to the encounter
+		/// </summary>
+		[Authorize]
+		[RequiresRole(UserRole.Master)]
+		[HttpPost("{encounterId}/participant")]
+		public async Task AddToEncounterAsync([FromRoute] Guid encounterId, [FromQuery] EncounterParticipantType type, [FromQuery] Guid entityId)
+		{
+			await mediator.Send(new AddEncounterParticipantCommand(encounterId, type, entityId));
+		}
+
+		/// <summary>
+		/// Remove participant from the encounter
+		/// </summary>
+		[Authorize]
+		[RequiresRole(UserRole.Master)]
+		[HttpDelete("{encounterId}/participant")]
+		public async Task RemoveFromEncounterAsync([FromRoute] Guid encounterId, [FromQuery] Guid participantId)
+		{
+			await mediator.Send(new RemoveEncounterParticipantCommand(encounterId, participantId));
 		}
 	}
 }
