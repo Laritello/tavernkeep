@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Tavernkeep.Application.UseCases.Encounters.Commands.RemoveParticipant
+namespace Tavernkeep.Application.UseCases.Encounters.Commands.RemoveEncounterParticipant
 {
 	public class RemoveEncounterParticipantCommandHandler : IRequestHandler<RemoveEncounterParticipantCommand>
 	{
