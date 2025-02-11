@@ -71,9 +71,9 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Find character by ID.
+		/// Fetch character by ID.
 		/// </summary>
-		/// <param name="characterId">Character ID to retrieve.</param>
+		/// <param name="characterId">Character ID to fetch.</param>
 		/// <returns>Specified character.</returns>
 		[Authorize]
 		[HttpGet("{characterId}")]
