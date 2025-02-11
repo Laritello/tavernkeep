@@ -1,5 +1,6 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Encounters;
+using Tavernkeep.Core.Entities.Encounters.Participants;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Services;
@@ -8,7 +9,8 @@ using Tavernkeep.Core.Specifications.Encounters;
 namespace Tavernkeep.Application.Services
 {
 	public class EncounterService(
-		IEncounterRepository encounterRepository
+		IEncounterRepository encounterRepository,
+		ICharacterRepository characterRepository
 		) : IEncounterService
 	{
 		public async Task<Encounter> CreateEncounterAsync(string name, CancellationToken cancellationToken)
@@ -38,6 +40,49 @@ namespace Tavernkeep.Application.Services
 				?? throw new BusinessLogicException("Encounter not found.");
 
 			encounter.Status = status;
+
+			encounterRepository.Save(encounter);
+			await encounterRepository.CommitAsync(cancellationToken);
+		}
+
+		public async Task AddParticipantAsync(Guid encounterId, EncounterParticipantType type, Guid entityId, CancellationToken cancellationToken)
+		{
+			var encounter = await encounterRepository.FindAsync(new EncounterFullSpecification(encounterId), cancellationToken: cancellationToken)
+				?? throw new BusinessLogicException("Encounter not found.");
+
+			switch (type)
+			{
+				case EncounterParticipantType.Character:
+					await AddCharacterParticipantAsync(encounter, entityId, cancellationToken);
+					break;
+				default:
+					throw new NotImplementedException();
+			}
+		}
+
+		public async Task RemoveParticipantAsync(Guid encounterId, Guid participantId, CancellationToken cancellationToken)
+		{
+			var encounter = await encounterRepository.FindAsync(new EncounterFullSpecification(encounterId), cancellationToken: cancellationToken)
+				?? throw new BusinessLogicException("Encounter not found.");
+
+			encounter.RemoveParticipant(encounter.Participants.First(x => x.Id == participantId));
+			
+			encounterRepository.Save(encounter);
+			await encounterRepository.CommitAsync(cancellationToken);
+		}
+
+		private async Task AddCharacterParticipantAsync(Encounter encounter, Guid characterId, CancellationToken cancellationToken)
+		{
+			var character = await characterRepository.GetFullCharacterAsync(characterId, cancellationToken)
+				?? throw new BusinessLogicException("Character not found");
+
+			CharacterEncounterParticipant participant = new()
+			{
+				Encounter = encounter,
+				Character = character,
+			};
+
+			encounter.AddParticipant(participant);
 
 			encounterRepository.Save(encounter);
 			await encounterRepository.CommitAsync(cancellationToken);
