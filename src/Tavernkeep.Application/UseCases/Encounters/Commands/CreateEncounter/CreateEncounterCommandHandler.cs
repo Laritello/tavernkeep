@@ -1,12 +1,14 @@
 ﻿using MediatR;
+using Tavernkeep.Core.Entities.Encounters;
+using Tavernkeep.Core.Services;
 
 namespace Tavernkeep.Application.UseCases.Encounters.Commands.CreateEncounter
 {
-	public class CreateEncounterCommandHandler : IRequestHandler<CreateEncounterCommand>
+	public class CreateEncounterCommandHandler(IEncounterService encounterService) : IRequestHandler<CreateEncounterCommand, Encounter>
 	{
-		public Task Handle(CreateEncounterCommand request, CancellationToken cancellationToken)
+		public async Task<Encounter> Handle(CreateEncounterCommand request, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			return await encounterService.CreateEncounterAsync(request.Name, cancellationToken);
 		}
 	}
 }
