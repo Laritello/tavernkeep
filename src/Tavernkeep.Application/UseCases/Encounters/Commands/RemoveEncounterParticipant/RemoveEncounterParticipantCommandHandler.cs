@@ -1,12 +1,15 @@
 ﻿using MediatR;
+using Tavernkeep.Core.Services;
 
 namespace Tavernkeep.Application.UseCases.Encounters.Commands.RemoveEncounterParticipant
 {
-	public class RemoveEncounterParticipantCommandHandler : IRequestHandler<RemoveEncounterParticipantCommand>
+	public class RemoveEncounterParticipantCommandHandler(
+		IEncounterService encounterService
+		) : IRequestHandler<RemoveEncounterParticipantCommand>
 	{
-		public Task Handle(RemoveEncounterParticipantCommand request, CancellationToken cancellationToken)
+		public async Task Handle(RemoveEncounterParticipantCommand request, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			await encounterService.RemoveParticipantAsync(request.EncounterId, request.ParticipantId, cancellationToken);
 		}
 	}
 }

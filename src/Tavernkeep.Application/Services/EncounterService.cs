@@ -30,7 +30,7 @@ namespace Tavernkeep.Application.Services
 
 		public async Task<Encounter> GetEncounterAsync(Guid encounterId, CancellationToken cancellationToken)
 		{
-			return await encounterRepository.FindAsync(new EncounterFullSpecification(encounterId), cancellationToken) ??
+			return await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken) ??
 				throw new BusinessLogicException("Encounter not found");
 		}
 

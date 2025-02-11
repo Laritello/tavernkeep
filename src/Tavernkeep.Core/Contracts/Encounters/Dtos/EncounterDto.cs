@@ -4,5 +4,6 @@
 	{
 		public Guid Id { get; set; }
 		public required string Name { get; set; }
+		public required ICollection<EncounterParticipantDto> Participants { get; set; }
 	}
 }

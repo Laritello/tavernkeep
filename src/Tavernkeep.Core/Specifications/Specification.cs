@@ -2,19 +2,12 @@
 
 namespace Tavernkeep.Core.Specifications
 {
-	public abstract class Specification<T> : ISpecification<T> where T : class
+	public abstract class Specification<T>(Expression<Func<T, bool>> criteria) : ISpecification<T> where T : class
 	{
-		protected Specification(Expression<Func<T, bool>> criteria)
-		{
-			Criteria = criteria;
-			Includes = [];
-			IncludeStrings = [];
-		}
+		public Expression<Func<T, bool>> Criteria { get; protected set; } = criteria;
+		public List<Expression<Func<T, object>>> Includes { get; protected set; } = [];
 
-		public Expression<Func<T, bool>> Criteria { get; protected set; }
-		public List<Expression<Func<T, object>>> Includes { get; protected set; }
-
-		public List<string> IncludeStrings { get; protected set; }
+		public List<string> IncludeStrings { get; protected set; } = [];
 
 		public bool IsSatisfiedBy(T @object)
 		{
