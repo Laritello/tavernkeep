@@ -114,6 +114,7 @@ namespace Tavernkeep.Server.Extensions
 
 			services.AddScoped<ICharacterService, CharacterService>();
 			services.AddScoped<IPortaitService, PortraitService>();
+			services.AddScoped<IEncounterService, EncounterService>();
 
 			services.AddSingleton<IUserConnectionStorage<Guid>, UserConnectionStorage<Guid>>();
 
