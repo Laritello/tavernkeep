@@ -39,6 +39,10 @@ export const useCharacters = defineStore('characters', () => {
         console.log(encounterId);
     });
 
+    EncounterHub.connection.on('OnEncounterLaunched', (encounterId: string) => {
+        console.log(encounterId);
+    });
+
     function get(id: string): Character {
         return dictionary[id];
     }

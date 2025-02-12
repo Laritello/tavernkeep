@@ -6,6 +6,7 @@ using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
 using Tavernkeep.Application.UseCases.Encounters.Commands.AddEncounterParticipant;
 using Tavernkeep.Application.UseCases.Encounters.Commands.CreateEncounter;
+using Tavernkeep.Application.UseCases.Encounters.Commands.EditEncounterStatus;
 using Tavernkeep.Application.UseCases.Encounters.Commands.RemoveEncounterParticipant;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetAllEncounters;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetEncounter;
@@ -84,6 +85,17 @@ namespace Tavernkeep.Server.Controllers
 		public async Task RemoveFromEncounterAsync([FromRoute] Guid encounterId, [FromQuery] Guid participantId)
 		{
 			await mediator.Send(new RemoveEncounterParticipantCommand(encounterId, participantId));
+		}
+
+		/// <summary>
+		/// Update encounter status
+		/// </summary>
+		[Authorize]
+		[RequiresRole(UserRole.Master)]
+		[HttpPatch("{encounterId}/status")]
+		public async Task UpdateEncounterStatusAsync([FromRoute] Guid encounterId, [FromQuery] EncounterStatus status)
+		{
+			await mediator.Send(new EditEncounterStatusCommand(encounterId, status));
 		}
 	}
 }

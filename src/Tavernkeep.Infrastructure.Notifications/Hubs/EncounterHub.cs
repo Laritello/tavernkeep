@@ -8,6 +8,7 @@ namespace Tavernkeep.Infrastructure.Notifications.Hubs
 		Task OnEncounterCreated(EncounterDto encounter);
 		Task OnEncounterUpdated(EncounterDto encounter);
 		Task OnEncounterDeleted(Guid encounterId);
+		Task OnEncounterLaunched(Guid encounterId);
 	}
 
 	public class EncounterHub : Hub<IEncounterHub> { }

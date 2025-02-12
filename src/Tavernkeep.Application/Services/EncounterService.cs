@@ -1,9 +1,11 @@
 ﻿using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterCreated;
+using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterLaunched;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterUpdated;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Encounters;
 using Tavernkeep.Core.Entities.Encounters.Participants;
 using Tavernkeep.Core.Exceptions;
+using Tavernkeep.Core.Extensions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Services;
 using Tavernkeep.Core.Specifications.Encounters;
@@ -43,11 +45,19 @@ namespace Tavernkeep.Application.Services
 			var encounter = await encounterRepository.FindAsync(encounterId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("Encounter not found.");
 
+			if (status.IsEarlierThan(encounter.Status))
+				throw new BusinessLogicException("Can't change encounter status to the previous status.");
+
 			encounter.Status = status;
 
 			encounterRepository.Save(encounter);
 			await encounterRepository.CommitAsync(cancellationToken);
 			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
+
+			if (encounter.Status == EncounterStatus.Initiative)
+			{
+				await notificationService.Publish(new EncounterLaunchedNotification(encounter), cancellationToken);
+			}
 		}
 
 		public async Task AddParticipantAsync(Guid encounterId, EncounterParticipantType type, Guid entityId, CancellationToken cancellationToken)
