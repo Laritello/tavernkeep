@@ -1,4 +1,6 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
+﻿using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterCreated;
+using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterUpdated;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Encounters;
 using Tavernkeep.Core.Entities.Encounters.Participants;
 using Tavernkeep.Core.Exceptions;
@@ -10,7 +12,8 @@ namespace Tavernkeep.Application.Services
 {
 	public class EncounterService(
 		IEncounterRepository encounterRepository,
-		ICharacterRepository characterRepository
+		ICharacterRepository characterRepository,
+		INotificationService notificationService
 		) : IEncounterService
 	{
 		public async Task<Encounter> CreateEncounterAsync(string name, CancellationToken cancellationToken)
@@ -19,6 +22,7 @@ namespace Tavernkeep.Application.Services
 
 			encounterRepository.Save(encounter);
 			await encounterRepository.CommitAsync(cancellationToken);
+			await notificationService.Publish(new EncounterCreatedNotification(encounter), cancellationToken);
 
 			return encounter;
 		}
@@ -43,6 +47,7 @@ namespace Tavernkeep.Application.Services
 
 			encounterRepository.Save(encounter);
 			await encounterRepository.CommitAsync(cancellationToken);
+			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
 		}
 
 		public async Task AddParticipantAsync(Guid encounterId, EncounterParticipantType type, Guid entityId, CancellationToken cancellationToken)
@@ -69,6 +74,7 @@ namespace Tavernkeep.Application.Services
 			
 			encounterRepository.Save(encounter);
 			await encounterRepository.CommitAsync(cancellationToken);
+			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
 		}
 
 		private async Task AddCharacterParticipantAsync(Encounter encounter, Guid characterId, CancellationToken cancellationToken)
@@ -86,6 +92,7 @@ namespace Tavernkeep.Application.Services
 
 			encounterRepository.Save(encounter);
 			await encounterRepository.CommitAsync(cancellationToken);
+			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
 		}
 	}
 }
