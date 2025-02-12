@@ -42,12 +42,20 @@ namespace Tavernkeep.Core.Entities.Encounters
 
 		public void AddParticipant(EncounterParticipant participant)
 		{
+			participant.Ordinal = _participants.Count;
 			_participants.Add(participant);
 		}
 
 		public void RemoveParticipant(EncounterParticipant participant)
 		{
+			int indexOf = _participants.IndexOf(participant);
 			_participants.Remove(participant);
+
+			// Update ordinal for all the participants after the deleted one
+			for (int i = indexOf; i< _participants.Count; i++)
+			{
+				_participants[i].Ordinal = indexOf;
+			}
 		}
 
 		public void OrderParticipant()
