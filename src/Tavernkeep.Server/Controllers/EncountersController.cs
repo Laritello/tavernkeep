@@ -8,6 +8,7 @@ using Tavernkeep.Application.UseCases.Encounters.Commands.AddEncounterParticipan
 using Tavernkeep.Application.UseCases.Encounters.Commands.CreateEncounter;
 using Tavernkeep.Application.UseCases.Encounters.Commands.EditEncounterStatus;
 using Tavernkeep.Application.UseCases.Encounters.Commands.RemoveEncounterParticipant;
+using Tavernkeep.Application.UseCases.Encounters.Commands.UpdateParticipantsOrdinal;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetAllEncounters;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetEncounter;
 using Tavernkeep.Core.Contracts.Character.Dtos;
@@ -86,6 +87,17 @@ namespace Tavernkeep.Server.Controllers
 		public async Task RemoveFromEncounterAsync([FromRoute] Guid encounterId, [FromRoute] Guid participantId)
 		{
 			await mediator.Send(new RemoveEncounterParticipantCommand(encounterId, participantId));
+		}
+
+		/// <summary>
+		/// Change participants ordinal
+		/// </summary>
+		[Authorize]
+		[RequiresRole(UserRole.Master)]
+		[HttpPatch("{encounterId}/ordinal")]
+		public async Task UpdateParticipantsOrdinalAsync([FromRoute] Guid encounterId, [FromBody] IList<Guid> ordinals)
+		{
+			await mediator.Send(new UpdateParticipantsOrdinalCommand(encounterId, ordinals));
 		}
 
 		/// <summary>

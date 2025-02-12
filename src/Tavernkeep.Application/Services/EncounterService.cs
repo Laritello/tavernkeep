@@ -104,5 +104,22 @@ namespace Tavernkeep.Application.Services
 			await encounterRepository.CommitAsync(cancellationToken);
 			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
 		}
+
+		public async Task UpdateParticipantsOrdinalAsync(Guid encounterId, IList<Guid> ordinals, CancellationToken cancellationToken)
+		{
+			var encounter = await encounterRepository.FindAsync(new EncounterFullSpecification(encounterId), cancellationToken: cancellationToken)
+				?? throw new BusinessLogicException("Encounter not found.");
+
+			foreach(var participant in encounter.Participants)
+			{
+				participant.Ordinal = ordinals.IndexOf(participant.Id);
+			}
+
+			encounter.OrderParticipant();
+
+			encounterRepository.Save(encounter);
+			await encounterRepository.CommitAsync(cancellationToken);
+			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
+		}
 	}
 }

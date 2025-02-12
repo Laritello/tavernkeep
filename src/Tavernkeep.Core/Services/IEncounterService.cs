@@ -11,5 +11,6 @@ namespace Tavernkeep.Core.Services
 		public Task UpdateEncounterStatusAsync(Guid encounterId, EncounterStatus status, CancellationToken cancellationToken);
 		public Task AddParticipantAsync(Guid encounterId, EncounterParticipantType type, Guid entityId, CancellationToken cancellationToken);
 		public Task RemoveParticipantAsync(Guid encounterId, Guid participantId, CancellationToken cancellationToken);
+		public Task UpdateParticipantsOrdinalAsync(Guid encounterId, IList<Guid> ordinals, CancellationToken cancellationToken);
 	}
 }

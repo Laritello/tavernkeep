@@ -8,6 +8,12 @@ namespace Tavernkeep.Core.Entities.Encounters
 	[Table("Encounter")]
 	public class Encounter : GuidEntity
 	{
+		#region Private fields
+
+		private readonly IComparer<EncounterParticipant> _participantComparer = new OrdinalComparer();
+		
+		#endregion
+
 		#region Backing fields
 
 		private readonly List<EncounterParticipant> _participants = [];
@@ -44,6 +50,26 @@ namespace Tavernkeep.Core.Entities.Encounters
 			_participants.Remove(participant);
 		}
 
+		public void OrderParticipant()
+		{
+			_participants.Sort(_participantComparer);
+		}
+
 		#endregion
+	}
+
+	class OrdinalComparer : IComparer<EncounterParticipant>
+	{
+		public int Compare(EncounterParticipant? x, EncounterParticipant? y)
+		{
+			if (x == null && y == null)
+				return 0;
+			else if (x == null)
+				return -1;
+			else if (y == null)
+				return 1;
+
+			return x.Ordinal.CompareTo(y.Ordinal);
+		}
 	}
 }
