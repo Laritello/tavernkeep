@@ -9,7 +9,8 @@ namespace Tavernkeep.Application.Mapping.Profiles
 	{
 		public EncounterProfile() 
 		{
-			CreateMap<Encounter, EncounterDto>();
+			CreateMap<Encounter, EncounterDto>()
+				.ForMember(dest => dest.Participants, opt => opt.MapFrom(src => src.Participants.OrderBy(x => x.Ordinal)));
 
 			CreateMap<EncounterParticipant, EncounterParticipantDto>()
 				.Include<CharacterEncounterParticipant, CharacterEncounterParticipantDto>();
