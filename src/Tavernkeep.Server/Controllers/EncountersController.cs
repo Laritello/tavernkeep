@@ -12,6 +12,7 @@ using Tavernkeep.Application.UseCases.Encounters.Queries.GetAllEncounters;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetEncounter;
 using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Encounters.Dtos;
+using Tavernkeep.Core.Contracts.Encounters.Requests;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Server.Extensions;
 using Tavernkeep.Server.Middleware;
@@ -71,9 +72,9 @@ namespace Tavernkeep.Server.Controllers
 		[Authorize]
 		[RequiresRole(UserRole.Master)]
 		[HttpPost("{encounterId}/participant")]
-		public async Task AddToEncounterAsync([FromRoute] Guid encounterId, [FromQuery] EncounterParticipantType type, [FromQuery] Guid entityId)
+		public async Task AddToEncounterAsync([FromRoute] Guid encounterId, [FromBody] AddEncounterParticipantRequest request)
 		{
-			await mediator.Send(new AddEncounterParticipantCommand(encounterId, type, entityId));
+			await mediator.Send(new AddEncounterParticipantCommand(encounterId, request.Type, request.EntityId));
 		}
 
 		/// <summary>
@@ -81,8 +82,8 @@ namespace Tavernkeep.Server.Controllers
 		/// </summary>
 		[Authorize]
 		[RequiresRole(UserRole.Master)]
-		[HttpDelete("{encounterId}/participant")]
-		public async Task RemoveFromEncounterAsync([FromRoute] Guid encounterId, [FromQuery] Guid participantId)
+		[HttpDelete("{encounterId}/participant/{participantId}")]
+		public async Task RemoveFromEncounterAsync([FromRoute] Guid encounterId, [FromRoute] Guid participantId)
 		{
 			await mediator.Send(new RemoveEncounterParticipantCommand(encounterId, participantId));
 		}
