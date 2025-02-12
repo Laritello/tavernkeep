@@ -12,6 +12,8 @@ import { useCharacters } from '@/stores/characters.ts';
 import { useMessages } from '@/stores/messages.ts';
 import { useUsers } from '@/stores/users.ts';
 
+import EncounterHub from './api/hubs/EncounterHub';
+
 const router = useRouter();
 const session = useSession();
 const users = useUsers();
@@ -74,10 +76,11 @@ async function fetch() {
 async function startHubs() {
     await ChatHub.start();
     await CharacterHub.start();
+    await EncounterHub.start();
 }
 
 async function stopHubs() {
-    return Promise.all([ChatHub.stop(), CharacterHub.stop()]);
+    return Promise.all([ChatHub.stop(), CharacterHub.stop(), EncounterHub.stop()]);
 }
 </script>
 

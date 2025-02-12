@@ -109,6 +109,7 @@ app.MapControllers();
 
 app.MapHub<ChatHub>("/api/hubs/chat");
 app.MapHub<CharacterHub>("/api/hubs/character");
+app.MapHub<EncounterHub>("/api/hubs/encounter");
 
 app.MapFallbackToFile("/index.html");
 app.Run();
