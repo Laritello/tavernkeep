@@ -119,7 +119,7 @@ const routes: RouteRecordRaw[] = [
     },
     {
         name: 'CombatManager',
-        path: '/combat/manage',
+        path: '/combat/manager',
         component: EncounterManagerPage,
         meta: {
             layout: 'BlankLayout',
