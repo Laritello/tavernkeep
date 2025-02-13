@@ -3,7 +3,7 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import { UserRole } from '@/contracts/enums';
 import AdminPage from '@/pages/AdminPage.vue';
 import CharactersPage from '@/pages/CharactersPage.vue';
-import EncounterBuilderPage from '@/pages/EncounterBuilderPage.vue';
+import EncounterManagerPage from '@/pages/EncounterManagerPage.vue';
 import ErrorPage from '@/pages/ErrorPage.vue';
 import LoginPage from '@/pages/LoginPage.vue';
 import UploadPortraitPage from '@/pages/UploadPortraitPage.vue';
@@ -118,8 +118,9 @@ const routes: RouteRecordRaw[] = [
         },
     },
     {
-        path: '/combat/builder',
-        component: EncounterBuilderPage,
+        name: 'CombatManager',
+        path: '/combat/manage',
+        component: EncounterManagerPage,
         meta: {
             layout: 'BlankLayout',
             protected: true,
