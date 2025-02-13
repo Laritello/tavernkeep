@@ -16,7 +16,7 @@
 import EncounterBuilderHeader from '@/components/combat/EncounterBuilder/EncounterBuilderHeader.vue';
 import EncounterBuilderLeftPanel from '@/components/combat/EncounterBuilder/EncounterBuilderLeftPanel.vue';
 import InitiativeTracker from '@/components/combat/EncounterBuilder/InitiativeTracker/InitiativeTracker.vue';
-import { useEncountersStore } from '@/stores/encountersStore.ts';
+import { useEncountersStore } from '@/stores/useEncountersStore.ts';
 
 const encountersStore = useEncountersStore();
 </script>

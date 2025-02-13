@@ -3,10 +3,9 @@ import { reactive } from 'vue';
 
 import type { AxiosApiClient } from '@/api/axios/AxiosApiClient';
 import CharacterHub from '@/api/hubs/CharacterHub';
+import EncounterHub from '@/api/hubs/EncounterHub';
 import type { Character } from '@/entities/Character';
 import { ApiClientFactory } from '@/factories/ApiClientFactory';
-import EncounterHub from '@/api/hubs/EncounterHub';
-import type { Encounter } from '@/entities/Encounter';
 
 type Characters = Record<string, Character>;
 
@@ -24,23 +23,6 @@ export const useCharacters = defineStore('characters', () => {
 
     CharacterHub.connection.on('OnCharacterDeleted', (characterId: string) => {
         console.log(characterId);
-    });
-
-    // TODO: Move it to encounter store :)
-    EncounterHub.connection.on('OnEncounterCreated', (encounter: Encounter) => {
-        console.log(encounter);
-    });
-
-    EncounterHub.connection.on('OnEncounterUpdated', (encounter: Encounter) => {
-        console.log(encounter);
-    });
-
-    EncounterHub.connection.on('OnEncounterDeleted', (encounterId: string) => {
-        console.log(encounterId);
-    });
-
-    EncounterHub.connection.on('OnEncounterLaunched', (encounterId: string) => {
-        console.log(encounterId);
     });
 
     function get(id: string): Character {

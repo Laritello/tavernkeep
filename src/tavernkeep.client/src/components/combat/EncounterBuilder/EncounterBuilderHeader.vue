@@ -1,23 +1,23 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 
-import { useEncountersStore } from '@/stores/encountersStore.ts';
+import { useEncountersStore } from '@/stores/useEncountersStore.ts';
 
 const encountersStore = useEncountersStore();
 const { encounterList, currentEncounterId } = storeToRefs(encountersStore);
 
-let counter = 0;
+let counter = encounterList.value.length;
 
-function createEncounter() {
-    encountersStore.createNewEncounter({ name: `Encounter ${++counter}` });
+async function createEncounter() {
+    await encountersStore.createEncounter(`Encounter ${++counter}`);
 }
 
 function setActiveEncounter(encounterId: string) {
     encountersStore.switchEncounter(encounterId);
 }
 
-function deleteEncounter(encounterId: string) {
-    encountersStore.deleteEncounter(encounterId);
+async function deleteEncounter(encounterId: string) {
+    await encountersStore.deleteEncounter(encounterId);
 }
 </script>
 

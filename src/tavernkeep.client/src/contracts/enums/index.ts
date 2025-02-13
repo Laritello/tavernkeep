@@ -11,3 +11,4 @@ export { SkillType } from './SkillType.ts';
 export { AncestryType } from './AncestryType.ts';
 export { ClassType } from './ClassType.ts';
 export { SavingThrowType } from './SavingThrowType.ts';
+export { ParticipantType } from './ParticipantType.ts';

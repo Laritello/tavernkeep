@@ -1,18 +1,21 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
+import { ParticipantType } from '@/contracts/enums';
+import type { Character } from '@/entities';
+import { useCharacters } from '@/stores/characters.ts';
+import { useCurrentEncounterStore } from '@/stores/useCurrentEncounterStore.ts';
 
-import type { Participant } from '@/entities/Encounter.ts';
-import { useEncountersStore } from '@/stores/encountersStore.ts';
+const currentEncounterStore = useCurrentEncounterStore();
+const charactersStore = useCharacters();
 
-const encountersStore = useEncountersStore();
-const { characters, currentEncounter } = storeToRefs(encountersStore);
-
-function addInitiativeParticipant(player: Participant) {
-    if (!currentEncounter.value) {
+async function addPlayerCharacter(character: Character) {
+    if (!currentEncounterStore.isActive) {
         return;
     }
 
-    currentEncounter.value.addParticipant(player);
+    await currentEncounterStore.addParticipant({
+        type: ParticipantType.Character,
+        entityId: character.id,
+    });
 }
 </script>
 
@@ -21,12 +24,16 @@ function addInitiativeParticipant(player: Participant) {
         <div class="m-4">
             <h1 class="text-xl font-semibold">Characters</h1>
             <ul class="menu gap-2">
-                <li v-for="character in characters" :key="character.id" class="flex flex-row gap-2 items-baseline">
+                <li
+                    v-for="character in charactersStore.all"
+                    :key="character.id"
+                    class="flex flex-row gap-2 items-baseline"
+                >
                     <span class="text-lg">{{ character.name }}</span>
                     <span
                         class="btn btn-circle btn-sm mdi mdi-chevron-right"
-                        :class="{ 'btn-disabled': !currentEncounter }"
-                        @click="addInitiativeParticipant(character)"
+                        :class="{ 'btn-disabled': !currentEncounterStore.isActive }"
+                        @click="addPlayerCharacter(character)"
                     ></span>
                 </li>
             </ul>

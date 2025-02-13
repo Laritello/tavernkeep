@@ -1,27 +1,31 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
 import { nextTick, ref } from 'vue';
 import { VueDraggable } from 'vue-draggable-plus';
 
 import InitiativeParticipantCard from '@/components/InitiativeParticipantCard.vue';
-import type { Participant } from '@/entities/Encounter.ts';
-import { useEncountersStore } from '@/stores/encountersStore.ts';
+import type { Participant } from '@/contracts/encounter/Participant.ts';
+import { useCurrentEncounterStore } from '@/stores/useCurrentEncounterStore.ts';
 
+const currentEncounter = useCurrentEncounterStore();
 const drag = ref(false);
 
-const encountersStore = useEncountersStore();
-const { currentEncounter } = storeToRefs(encountersStore);
-
-function removeFromInitiative(participant: Participant) {
-    currentEncounter.value.removeParticipant(participant);
+async function removeParticipant(participant: Participant) {
+    await currentEncounter.removeParticipant(participant);
 }
 
 function prevTurn() {
-    currentEncounter.value.prevTurn();
+    console.log('Previous turn');
+    // currentEncounter.prevTurn();
 }
 
 function nextTurn() {
-    currentEncounter.value.nextTurn();
+    console.log('Next turn');
+    // currentEncounter.nextTurn();
+}
+
+async function onDragEnd() {
+    await currentEncounter.updateOrder();
+    await nextTick(() => (drag.value = false));
 }
 </script>
 
@@ -35,17 +39,17 @@ function nextTurn() {
                 class="flex flex-col gap-2 min-h-52"
                 :animation="150"
                 @start="drag = true"
-                @end="nextTick(() => (drag = false))"
+                @end="onDragEnd"
             >
                 <TransitionGroup :name="!drag ? 'fade' : undefined" type="transition">
                     <InitiativeParticipantCard
-                        v-for="creature in currentEncounter.participants"
-                        :key="creature.id"
+                        v-for="participant in currentEncounter.participants"
+                        :key="participant.id"
                         class="flex items-center justify-between cursor-pointer"
-                        :participant="creature"
-                        :active-turn="currentEncounter.getCurrentTurnParticipant()?.id === creature.id"
+                        :participant="participant"
+                        :active-turn="false"
                         @edit="console.log('edit participant card')"
-                        @remove="removeFromInitiative(creature)"
+                        @remove="removeParticipant(participant)"
                     />
                 </TransitionGroup>
             </VueDraggable>

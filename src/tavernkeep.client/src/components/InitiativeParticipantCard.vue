@@ -1,9 +1,23 @@
+<script setup lang="ts">
+import type { Participant } from '@/contracts/encounter/Participant.ts';
+
+const { participant, activeTurn } = defineProps<{
+    participant: Participant;
+    activeTurn: boolean;
+}>();
+
+defineEmits<{
+    (e: 'edit', participant: Participant): void;
+    (e: 'remove', id: string): void;
+}>();
+</script>
+
 <template>
     <div
         class="card card-compact"
         :class="[
             activeTurn ? 'border-2 border-accent animate-pulse' : 'border border-base-300',
-            participant.type === 'player' ? 'bg-primary bg-opacity-10' : 'bg-error bg-opacity-10',
+            participant.type === 'Character' ? 'bg-primary bg-opacity-10' : 'bg-error bg-opacity-10',
         ]"
     >
         <div class="card-body flex-row items-center gap-4">
@@ -14,18 +28,14 @@
 
             <!-- Participant Info -->
             <div class="flex-1">
-                <h3 class="font-bold">{{ participant.name }}</h3>
-                <div class="text-sm opacity-70">
-                    {{ participant.type === 'player' ? participant.character.class.name : participant.type }}
-                </div>
+                <h3 class="font-bold">{{ participant.id.slice(0, 6) }}</h3>
+                <div class="text-sm opacity-70">CLASS / TYPE</div>
             </div>
 
             <!-- HP Display -->
-            <div class="badge badge-lg" :class="participant.type === 'player' ? 'badge-primary' : 'badge-error'">
+            <div class="badge badge-lg" :class="participant.type === 'Character' ? 'badge-primary' : 'badge-error'">
                 HP:
-                {{ participant.type === 'player' ? participant.character.health.current : participant.stats }}
-                /
-                {{ participant.type === 'player' ? participant.character.health.max : participant.stats }}
+                {{ participant.type === 'Character' ? '92/100' : '79%' }}
             </div>
 
             <!-- Action Buttons -->
@@ -40,17 +50,3 @@
         </div>
     </div>
 </template>
-
-<script setup lang="ts">
-import type { Participant } from '@/entities/Encounter.ts';
-
-const { participant, activeTurn } = defineProps<{
-    participant: Participant;
-    activeTurn: boolean;
-}>();
-
-defineEmits<{
-    (e: 'edit', participant: Participant): void;
-    (e: 'remove', id: string): void;
-}>();
-</script>

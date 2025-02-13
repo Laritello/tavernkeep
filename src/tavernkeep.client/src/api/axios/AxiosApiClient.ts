@@ -4,6 +4,8 @@ import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResp
 import type { Health, Perception } from '@/contracts/character';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
 import type { CharacterInformationEditDto, SkillEditDto, SpeedEditDto } from '@/contracts/dtos';
+import type { Encounter } from '@/contracts/encounter/Encounter.ts';
+import type { Participant } from '@/contracts/encounter/Participant.ts';
 import { UserRole, Proficiency, RollType, ArmorType, SpeedType, SkillDataType } from '@/contracts/enums';
 import type { User, Message, Character, SkillRollMessage } from '@/entities';
 import type { Condition } from '@/entities/Condition';
@@ -319,6 +321,42 @@ export class AxiosApiClient {
             },
         });
 
+        return getPayloadOrThrow(response);
+    }
+
+    async getEncounters(): Promise<Record<string, Encounter>> {
+        const response = await this.client.get('encounters');
+        return getPayloadOrThrow(response);
+    }
+
+    async createEncounter(name: string): Promise<Encounter> {
+        const response = await this.client.post(`encounters?name=${name}`);
+        return getPayloadOrThrow(response);
+    }
+
+    async deleteEncounter(id: string): Promise<void> {
+        const response = await this.client.delete(`encounters/${id}`);
+        return getPayloadOrThrow(response);
+    }
+
+    async addEncounterParticipant(
+        encounterId: string,
+        participant: Pick<Participant, 'type' | 'entityId'>
+    ): Promise<Participant> {
+        const response = await this.client.post(`encounters/${encounterId}/participant`, {
+            type: participant.type,
+            entityId: participant.entityId,
+        });
+        return getPayloadOrThrow(response);
+    }
+
+    async removeEncounterParticipant(encounterId: string, participant: Pick<Participant, 'id'>): Promise<void> {
+        const response = await this.client.delete(`encounters/${encounterId}/participant/${participant.id}`);
+        return getPayloadOrThrow(response);
+    }
+
+    async updateEncounterParticipantsOrder(encounterId: string, ids: string[]): Promise<void> {
+        const response = await this.client.patch(`encounters/${encounterId}/ordinal`, ids);
         return getPayloadOrThrow(response);
     }
 }

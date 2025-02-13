@@ -10,6 +10,7 @@ import { useTheme } from '@/composables/useTheme.ts';
 import { useI18n } from '@/i18n/useI18n.ts';
 import { useCharacters } from '@/stores/characters.ts';
 import { useMessages } from '@/stores/messages.ts';
+import { useEncountersStore } from '@/stores/useEncountersStore.ts';
 import { useUsers } from '@/stores/users.ts';
 
 import EncounterHub from './api/hubs/EncounterHub';
@@ -19,6 +20,7 @@ const session = useSession();
 const users = useUsers();
 const characters = useCharacters();
 const messages = useMessages();
+const encounters = useEncountersStore();
 
 const isLoading = ref(false);
 
@@ -70,6 +72,7 @@ async function initialize() {
 async function fetch() {
     await users.fetch();
     await characters.fetch();
+    await encounters.fetch();
     await messages.fetch(0, 20);
 }
 
