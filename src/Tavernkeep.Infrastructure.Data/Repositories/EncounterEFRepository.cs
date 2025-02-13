@@ -11,7 +11,10 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 	{
 		public async Task<ICollection<Encounter>> GetAllEncountersAsync(CancellationToken cancellationToken = default)
 		{
-			return await AsQueryable().ToListAsync(cancellationToken);
+			return await AsQueryable()
+				.Include(x => x.Participants)
+				.ThenInclude(x => ((CharacterEncounterParticipant)x).Character)
+				.ToListAsync(cancellationToken);
 		}
 
 		public async Task<Encounter?> GetFullEncounterAsync(Guid id, CancellationToken cancellationToken = default)
