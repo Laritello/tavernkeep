@@ -13,9 +13,10 @@ namespace Tavernkeep.Application.Mapping.Profiles
 				.ForMember(dest => dest.Participants, opt => opt.MapFrom(src => src.Participants.OrderBy(x => x.Ordinal)));
 
 			CreateMap<EncounterParticipant, EncounterParticipantDto>()
-				.Include<CharacterEncounterParticipant, CharacterEncounterParticipantDto>();
+				.Include<CharacterEncounterParticipant, EncounterParticipantDto>();
 
-			CreateMap<CharacterEncounterParticipant, CharacterEncounterParticipantDto>();
+			CreateMap<CharacterEncounterParticipant, EncounterParticipantDto>()
+				.ForMember(dest => dest.EntityId, opt => opt.MapFrom(src => src.Character.Id));
 		}
 	}
 }
