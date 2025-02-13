@@ -118,7 +118,7 @@ const routes: RouteRecordRaw[] = [
         },
     },
     {
-        path: '/encounter/build',
+        path: '/combat/builder',
         component: EncounterBuilderPage,
         meta: {
             layout: 'BlankLayout',
