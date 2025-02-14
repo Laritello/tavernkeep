@@ -41,7 +41,7 @@ async function onDragEnd() {
                 @start="drag = true"
                 @end="onDragEnd"
             >
-                <TransitionGroup :name="!drag ? 'fade' : undefined" type="transition">
+                <TransitionGroup :name="drag ? undefined : 'slide'" type="transition">
                     <InitiativeParticipantCard
                         v-for="participant in currentEncounter.participants"
                         :key="participant.id"
@@ -63,13 +63,7 @@ async function onDragEnd() {
 
 <!--suppress CssUnusedSymbol -->
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.15s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
+.slide-move {
+    transition: all 0.15s ease;
 }
 </style>
