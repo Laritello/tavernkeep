@@ -12,7 +12,8 @@ namespace Tavernkeep.Core.Services
 		public Task AddParticipantAsync(Guid encounterId, EncounterParticipantType type, Guid entityId, CancellationToken cancellationToken);
 		public Task RemoveParticipantAsync(Guid encounterId, Guid participantId, CancellationToken cancellationToken);
 		public Task UpdateParticipantsOrdinalAsync(Guid encounterId, IList<Guid> ordinals, CancellationToken cancellationToken);
-		public Task RollInitiative(Guid encounterId, Guid userId, bool npcOnly, CancellationToken cancellationToken);
-		public Task RollInitiativeForParticipant(Guid encounterId, Guid userId, Guid participantId, string skillName, CancellationToken cancellationToken);
+		public Task RollInitiativeAsync(Guid encounterId, Guid userId, bool npcOnly, CancellationToken cancellationToken);
+		public Task RollInitiativeForParticipantAsync(Guid encounterId, Guid userId, Guid participantId, string skillName, CancellationToken cancellationToken);
+		public Task ClearInitiativeAsync(Guid encounterId, CancellationToken cancellationToken);
 	}
 }

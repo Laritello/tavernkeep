@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
 using Tavernkeep.Application.UseCases.Encounters.Commands.AddEncounterParticipant;
+using Tavernkeep.Application.UseCases.Encounters.Commands.ClearInitiative;
 using Tavernkeep.Application.UseCases.Encounters.Commands.CreateEncounter;
 using Tavernkeep.Application.UseCases.Encounters.Commands.EditEncounterStatus;
 using Tavernkeep.Application.UseCases.Encounters.Commands.RemoveEncounterParticipant;
@@ -126,6 +127,18 @@ namespace Tavernkeep.Server.Controllers
 		public async Task RollInitiativeAsync([FromRoute] Guid encounterId, [FromQuery] bool npcOnly)
 		{
 			await mediator.Send(new RollEncounterInitiativeCommand(HttpContext.GetUserId(), encounterId, npcOnly));
+		}
+
+		/// <summary>
+		/// Clear initiative for the encounter.
+		/// </summary>
+		/// <param name="encounterId">Encounter ID to roll initiative for.</param>
+		[Authorize]
+		[RequiresRole(UserRole.Master)]
+		[HttpDelete("{encounterId}/initiative")]
+		public async Task ClearInitiativeAsync([FromRoute] Guid encounterId)
+		{
+			await mediator.Send(new ClearInitiativeCommand(encounterId));
 		}
 
 		/// <summary>

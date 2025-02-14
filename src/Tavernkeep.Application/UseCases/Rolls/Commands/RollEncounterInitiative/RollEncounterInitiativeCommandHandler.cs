@@ -9,7 +9,7 @@ namespace Tavernkeep.Application.UseCases.Rolls.Commands.RollEncounterInitiative
 	{
 		public async Task Handle(RollEncounterInitiativeCommand request, CancellationToken cancellationToken)
 		{
-			await encounterService.RollInitiative(request.EncounterId, request.InitiatorId, request.NPCOnly, cancellationToken);
+			await encounterService.RollInitiativeAsync(request.EncounterId, request.InitiatorId, request.NPCOnly, cancellationToken);
 		}
 	}
 }
