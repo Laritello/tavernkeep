@@ -60,6 +60,6 @@ namespace Tavernkeep.Application.Interfaces
 		/// <param name="userId">The GUID of the user requesting the edit.</param>
 		/// <param name="cancellationToken">A token to cancel the operation.</param>
 		/// <returns>A task representing the character retrieved for editing.</returns>
-		public Task<Character> RetrieveCharacterForEdit(Guid characterId, Guid userId, CancellationToken cancellationToken);
+		public Task<Character> RetrieveCharacterForAction(Guid characterId, Guid userId, CancellationToken cancellationToken);
 	}
 }

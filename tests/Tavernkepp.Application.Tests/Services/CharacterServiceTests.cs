@@ -47,7 +47,7 @@ namespace Tavernkepp.Application.Tests.Services
 
 			var service = new CharacterService(mockCharacterRepository.Object, mockUserRepository.Object, mockNotificationService.Object);
 
-			Assert.ThatAsync(async () => await service.RetrieveCharacterForEdit(characterId, Guid.NewGuid(), CancellationToken.None),
+			Assert.ThatAsync(async () => await service.RetrieveCharacterForAction(characterId, Guid.NewGuid(), CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()
 				.With.Message.EqualTo("User with specified ID doesn't exist."));
 		}
@@ -65,7 +65,7 @@ namespace Tavernkepp.Application.Tests.Services
 
 			var service = new CharacterService(mockCharacterRepository.Object, mockUserRepository.Object, mockNotificationService.Object);
 
-			Assert.ThatAsync(async () => await service.RetrieveCharacterForEdit(characterId, owner.Id, CancellationToken.None),
+			Assert.ThatAsync(async () => await service.RetrieveCharacterForAction(characterId, owner.Id, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()
 				.With.Message.EqualTo("Character with specified ID doesn't exist."));
 		}
@@ -88,7 +88,7 @@ namespace Tavernkepp.Application.Tests.Services
 
 			var service = new CharacterService(mockCharacterRepository.Object, mockUserRepository.Object, mockNotificationService.Object);
 
-			Assert.ThatAsync(async () => await service.RetrieveCharacterForEdit(characterId, initiatorId, CancellationToken.None),
+			Assert.ThatAsync(async () => await service.RetrieveCharacterForAction(characterId, initiatorId, CancellationToken.None),
 				Throws.TypeOf<InsufficientPermissionException>()
 				.With.Message.EqualTo("You do not have the necessary permissions to perform this operation."));
 		}

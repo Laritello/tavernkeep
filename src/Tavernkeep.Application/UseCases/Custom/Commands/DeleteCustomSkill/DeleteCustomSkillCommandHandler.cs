@@ -9,7 +9,7 @@ namespace Tavernkeep.Application.UseCases.Custom.Commands.DeleteCustomSkill
 	{
 		public async Task Handle(DeleteCustomSkillCommand request, CancellationToken cancellationToken)
 		{
-			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
+			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			var skill = character.Skills.FirstOrDefault(s => s.Name == request.Name)
 				?? throw new BusinessLogicException("Character does not have a skill with this name.");

@@ -14,7 +14,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHealth
 			if (request.Temporary < 0)
 				throw new BusinessLogicException($"{nameof(request.Temporary)} can't be below zero.");
 
-			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
+			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			character.Health.Current = request.Current;
 			character.Health.Temporary = request.Temporary;

@@ -41,7 +41,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Custom.Commands
 			var mockCharacterService = new Mock<ICharacterService>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			int skillsAmount = character.Skills.Count;
@@ -64,7 +64,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Custom.Commands
 			var mockCharacterService = new Mock<ICharacterService>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, master.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			int skillsAmount = character.Skills.Count;
@@ -87,7 +87,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Custom.Commands
 			var mockCharacterService = new Mock<ICharacterService>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new DeleteCustomSkillCommand(owner.Id, characterId, "Wrong");
@@ -104,7 +104,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Custom.Commands
 			var mockCharacterService = new Mock<ICharacterService>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new DeleteCustomSkillCommand(owner.Id, characterId, "Arcana");

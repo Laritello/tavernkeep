@@ -328,7 +328,7 @@ namespace Tavernkeep.Application.Services
 			return character;
 		}
 
-		public async Task<Character> RetrieveCharacterForEdit(Guid characterId, Guid userId, CancellationToken cancellationToken)
+		public async Task<Character> RetrieveCharacterForAction(Guid characterId, Guid userId, CancellationToken cancellationToken)
 		{
 			var initiator = await userRepository.FindAsync(userId, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("User with specified ID doesn't exist.");

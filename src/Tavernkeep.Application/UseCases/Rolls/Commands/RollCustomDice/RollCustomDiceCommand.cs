@@ -2,7 +2,7 @@
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Messages;
 
-namespace Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice
+namespace Tavernkeep.Application.UseCases.Rolls.Commands.RollCustomDice
 {
 	public class RollCustomDiceCommand(Guid initiatorId, RollType rollType, string expression) : IRequest<RollMessage>
 	{

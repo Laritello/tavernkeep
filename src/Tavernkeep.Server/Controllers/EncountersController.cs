@@ -11,6 +11,8 @@ using Tavernkeep.Application.UseCases.Encounters.Commands.RemoveEncounterPartici
 using Tavernkeep.Application.UseCases.Encounters.Commands.UpdateParticipantsOrdinal;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetAllEncounters;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetEncounter;
+using Tavernkeep.Application.UseCases.Rolls.Commands.RollEncounterInitiative;
+using Tavernkeep.Application.UseCases.Rolls.Commands.RollEncounterParticipantInitiative;
 using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Encounters.Dtos;
 using Tavernkeep.Core.Contracts.Encounters.Requests;
@@ -103,12 +105,39 @@ namespace Tavernkeep.Server.Controllers
 		/// <summary>
 		/// Update encounter status
 		/// </summary>
+		/// <param name="encounterId">Encounter ID to update status for.</param>
+		/// <param name="status">New status of the encounter.</param>
 		[Authorize]
 		[RequiresRole(UserRole.Master)]
 		[HttpPatch("{encounterId}/status")]
 		public async Task UpdateEncounterStatusAsync([FromRoute] Guid encounterId, [FromQuery] EncounterStatus status)
 		{
 			await mediator.Send(new EditEncounterStatusCommand(encounterId, status));
+		}
+
+		/// <summary>
+		/// Roll initiative for encounter.
+		/// </summary>
+		/// <param name="encounterId">Encounter ID to roll initiative for.</param>
+		/// <param name="npcOnly">Roll initiative only for NPCs.</param>
+		[Authorize]
+		[HttpPatch("{encounterId}/initiative")]
+		public async Task RollInitiativeAsync([FromRoute] Guid encounterId, [FromQuery] bool npcOnly)
+		{
+			await mediator.Send(new RollEncounterInitiativeCommand(HttpContext.GetUserId(), encounterId, npcOnly));
+		}
+
+		/// <summary>
+		/// Roll initiative for specific participant
+		/// </summary>
+		/// <param name="encounterId">Encounter ID to roll initiative for.</param>
+		/// <param name="participantId">Participant ID</param>
+		/// <param name="initiativeSkill">Name of the skill used for initiative roll.</param>
+		[Authorize]
+		[HttpPatch("{encounterId}/initiative/{participantId}")]
+		public async Task RollInitiativeAsync([FromRoute] Guid encounterId, [FromRoute] Guid participantId, [FromQuery] string initiativeSkill)
+		{
+			await mediator.Send(new RollEncounterParticipantInitiativeCommand(HttpContext.GetUserId(), encounterId, participantId, initiativeSkill));
 		}
 	}
 }

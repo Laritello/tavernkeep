@@ -1,4 +1,5 @@
-﻿using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterCreated;
+﻿using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterCreated;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterLaunched;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterUpdated;
 using Tavernkeep.Core.Contracts.Enums;
@@ -14,8 +15,9 @@ namespace Tavernkeep.Application.Services
 {
 	public class EncounterService(
 		IEncounterRepository encounterRepository,
-		ICharacterRepository characterRepository,
-		INotificationService notificationService
+		ICharacterService characterService,
+		INotificationService notificationService,
+		IDiceService diceService
 		) : IEncounterService
 	{
 		public async Task<Encounter> CreateEncounterAsync(string name, CancellationToken cancellationToken)
@@ -36,8 +38,8 @@ namespace Tavernkeep.Application.Services
 
 		public async Task<Encounter> GetEncounterAsync(Guid encounterId, CancellationToken cancellationToken)
 		{
-			return await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken) ??
-				throw new BusinessLogicException("Encounter not found");
+			return await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken) 
+				?? throw new BusinessLogicException("Encounter not found");
 		}
 
 		public async Task UpdateEncounterStatusAsync(Guid encounterId, EncounterStatus status, CancellationToken cancellationToken)
@@ -89,7 +91,7 @@ namespace Tavernkeep.Application.Services
 
 		private async Task AddCharacterParticipantAsync(Encounter encounter, Guid characterId, CancellationToken cancellationToken)
 		{
-			var character = await characterRepository.GetFullCharacterAsync(characterId, cancellationToken)
+			var character = await characterService.GetCharacterAsync(characterId, cancellationToken)
 				?? throw new BusinessLogicException("Character not found");
 
 			CharacterEncounterParticipant participant = new()
@@ -115,11 +117,71 @@ namespace Tavernkeep.Application.Services
 				participant.Ordinal = ordinals.IndexOf(participant.Id);
 			}
 
-			encounter.OrderParticipant();
+			encounterRepository.Save(encounter);
+			await encounterRepository.CommitAsync(cancellationToken);
+			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
+		}
+
+		public async Task RollInitiative(Guid encounterId, Guid userId, bool npcOnly, CancellationToken cancellationToken)
+		{
+			var encounter = await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken) 
+				?? throw new BusinessLogicException("Encounter not found");
+
+			foreach (var participant in encounter.Participants)
+			{
+				switch (participant)
+				{
+					case CharacterEncounterParticipant characterParticipant:
+						if (!npcOnly)
+						{
+							await RollInitiative(characterParticipant, userId, cancellationToken);
+						}
+						break;
+				}
+			}
+
+			if (encounter.Status == EncounterStatus.Initiative)
+			{
+				encounter.OrderByInitiative();
+			}
 
 			encounterRepository.Save(encounter);
 			await encounterRepository.CommitAsync(cancellationToken);
 			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
+		}
+
+		public async Task RollInitiativeForParticipant(Guid encounterId, Guid userId, Guid participantId, string skillName, CancellationToken cancellationToken)
+		{
+			var encounter = await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken) 
+				?? throw new BusinessLogicException("Encounter not found");
+			var participant = encounter.Participants.First(x => x.Id == participantId)
+				?? throw new BusinessLogicException("Participant not found.");
+
+			switch (participant)
+			{
+				case CharacterEncounterParticipant characterParticipant:
+					await RollInitiative(characterParticipant, userId, cancellationToken);
+					break;
+			}
+
+			if (encounter.Status == EncounterStatus.Initiative)
+			{
+				encounter.OrderByInitiative();
+			}
+
+			encounterRepository.Save(encounter);
+			await encounterRepository.CommitAsync(cancellationToken);
+			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
+		}
+
+		private async Task RollInitiative(CharacterEncounterParticipant participant, Guid userId, CancellationToken cancellationToken, string skillName = "Perception")
+		{
+			var character = await characterService.RetrieveCharacterForAction(participant.Character.Id, userId, cancellationToken);
+
+			var skill = character.Skills[skillName] ?? throw new BusinessLogicException("Character doesn't have specified skill");
+			var roll = diceService.Roll(bonus: skill.Bonus);
+
+			participant.Initiative = roll.Value;
 		}
 	}
 }

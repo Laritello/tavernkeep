@@ -7,7 +7,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditPerception
 	{
 		public async Task Handle(EditPerceptionCommand request, CancellationToken cancellationToken)
 		{
-			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
+			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			var perception = character.Skills["Perception"];
 			perception.Proficiency = request.Proficiency;

@@ -43,7 +43,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockCharacterService = new Mock<ICharacterService>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditHeroPointsCommand(owner.Id, characterId, value);
@@ -60,7 +60,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockCharacterService = new Mock<ICharacterService>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, master.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditHeroPointsCommand(master.Id, characterId, 2);
@@ -77,7 +77,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockCharacterService = new Mock<ICharacterService>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditHeroPointsCommand(owner.Id, characterId, -1);
@@ -94,7 +94,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockCharacterService = new Mock<ICharacterService>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditHeroPointsCommand(owner.Id, characterId, 4);

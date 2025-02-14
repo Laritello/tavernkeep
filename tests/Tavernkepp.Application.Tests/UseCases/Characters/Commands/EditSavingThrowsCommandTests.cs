@@ -38,7 +38,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockCharacterService = new Mock<ICharacterService>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditSavingThrowsCommand(owner.Id, characterId, new() { { type, proficiency } });
@@ -55,7 +55,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockCharacterService = new Mock<ICharacterService>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, master.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			var request = new EditSavingThrowsCommand(master.Id, characterId, new() { { "Fortitude", proficiency } });

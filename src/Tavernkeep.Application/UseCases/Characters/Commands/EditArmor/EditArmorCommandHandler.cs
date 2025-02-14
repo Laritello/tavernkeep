@@ -7,7 +7,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditArmor
 	{
 		public async Task Handle(EditArmorCommand request, CancellationToken cancellationToken)
 		{
-			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
+			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			character.Armor.Equipped.Type = request.Type;
 			character.Armor.Equipped.Bonus = request.Bonus;

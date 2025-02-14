@@ -2,8 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice;
-using Tavernkeep.Application.UseCases.Roll.Commands.RollSkill;
+using Tavernkeep.Application.UseCases.Rolls.Commands.RollCustomDice;
+using Tavernkeep.Application.UseCases.Rolls.Commands.RollSkill;
 using Tavernkeep.Core.Contracts.Chat.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Roll;
