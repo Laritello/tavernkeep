@@ -121,6 +121,7 @@ namespace Tavernkeep.Server.Controllers
 		/// <param name="encounterId">Encounter ID to roll initiative for.</param>
 		/// <param name="npcOnly">Roll initiative only for NPCs.</param>
 		[Authorize]
+		[RequiresRole(UserRole.Master)]
 		[HttpPatch("{encounterId}/initiative")]
 		public async Task RollInitiativeAsync([FromRoute] Guid encounterId, [FromQuery] bool npcOnly)
 		{
