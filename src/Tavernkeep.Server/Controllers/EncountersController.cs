@@ -10,6 +10,7 @@ using Tavernkeep.Application.UseCases.Encounters.Commands.CreateEncounter;
 using Tavernkeep.Application.UseCases.Encounters.Commands.EditEncounterStatus;
 using Tavernkeep.Application.UseCases.Encounters.Commands.RemoveEncounterParticipant;
 using Tavernkeep.Application.UseCases.Encounters.Commands.UpdateParticipantsOrdinal;
+using Tavernkeep.Application.UseCases.Encounters.Commands.UpdateTurn;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetAllEncounters;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetEncounter;
 using Tavernkeep.Application.UseCases.Rolls.Commands.RollEncounterInitiative;
@@ -152,6 +153,30 @@ namespace Tavernkeep.Server.Controllers
 		public async Task RollInitiativeAsync([FromRoute] Guid encounterId, [FromRoute] Guid participantId, [FromQuery] string initiativeSkill)
 		{
 			await mediator.Send(new RollEncounterParticipantInitiativeCommand(HttpContext.GetUserId(), encounterId, participantId, initiativeSkill));
+		}
+
+		/// <summary>
+		/// Go to the next turn in initiative
+		/// </summary>
+		/// <param name="encounterId">ID of the encounter, which turn should be updated.</param>
+		[Authorize]
+		[RequiresRole(UserRole.Master)]
+		[HttpPatch("{encounterId}/next-turn")]
+		public async Task GoToNextTurnAsync([FromRoute] Guid encounterId)
+		{
+			await mediator.Send(new UpdateTurnCommand(encounterId, true));
+		}
+
+		/// <summary>
+		/// Go to the previous turn in initiative
+		/// </summary>
+		/// <param name="encounterId">ID of the encounter, which turn should be updated.</param>
+		[Authorize]
+		[RequiresRole(UserRole.Master)]
+		[HttpPatch("{encounterId}/previous-turn")]
+		public async Task GoToPreviousTurnAsync([FromRoute] Guid encounterId)
+		{
+			await mediator.Send(new UpdateTurnCommand(encounterId, false));
 		}
 	}
 }

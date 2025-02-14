@@ -15,5 +15,6 @@ namespace Tavernkeep.Core.Services
 		public Task RollInitiativeAsync(Guid encounterId, Guid userId, bool npcOnly, CancellationToken cancellationToken);
 		public Task RollInitiativeForParticipantAsync(Guid encounterId, Guid userId, Guid participantId, string skillName, CancellationToken cancellationToken);
 		public Task ClearInitiativeAsync(Guid encounterId, CancellationToken cancellationToken);
+		public Task UpdateTurnAsync(Guid encounterId, bool moveForward, CancellationToken cancellationToken);
 	}
 }

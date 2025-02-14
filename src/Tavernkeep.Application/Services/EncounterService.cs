@@ -1,4 +1,6 @@
-﻿using Tavernkeep.Application.Interfaces;
+﻿using System.Diagnostics.Metrics;
+using System.Threading;
+using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterCreated;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterLaunched;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterUpdated;
@@ -54,9 +56,7 @@ namespace Tavernkeep.Application.Services
 
 			encounter.Status = status;
 
-			encounterRepository.Save(encounter);
-			await encounterRepository.CommitAsync(cancellationToken);
-			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
+			await SaveEncounter(encounter, cancellationToken);
 
 			if (encounter.Status == EncounterStatus.Initiative)
 			{
@@ -85,10 +85,8 @@ namespace Tavernkeep.Application.Services
 				?? throw new BusinessLogicException("Encounter not found.");
 
 			encounter.RemoveParticipant(encounter.Participants.First(x => x.Id == participantId));
-			
-			encounterRepository.Save(encounter);
-			await encounterRepository.CommitAsync(cancellationToken);
-			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
+
+			await SaveEncounter(encounter, cancellationToken);
 		}
 
 		public async Task UpdateParticipantsOrdinalAsync(Guid encounterId, IList<Guid> ordinals, CancellationToken cancellationToken)
@@ -101,9 +99,7 @@ namespace Tavernkeep.Application.Services
 				participant.Ordinal = ordinals.IndexOf(participant.Id);
 			}
 
-			encounterRepository.Save(encounter);
-			await encounterRepository.CommitAsync(cancellationToken);
-			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
+			await SaveEncounter(encounter, cancellationToken);
 		}
 
 		public async Task RollInitiativeAsync(Guid encounterId, Guid userId, bool npcOnly, CancellationToken cancellationToken)
@@ -129,9 +125,7 @@ namespace Tavernkeep.Application.Services
 				encounter.OrderByInitiative();
 			}
 
-			encounterRepository.Save(encounter);
-			await encounterRepository.CommitAsync(cancellationToken);
-			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
+			await SaveEncounter(encounter, cancellationToken);
 		}
 
 		public async Task RollInitiativeForParticipantAsync(Guid encounterId, Guid userId, Guid participantId, string skillName, CancellationToken cancellationToken)
@@ -153,9 +147,7 @@ namespace Tavernkeep.Application.Services
 				encounter.OrderByInitiative();
 			}
 
-			encounterRepository.Save(encounter);
-			await encounterRepository.CommitAsync(cancellationToken);
-			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
+			await SaveEncounter(encounter, cancellationToken);
 		}
 
 		public async Task ClearInitiativeAsync(Guid encounterId, CancellationToken cancellationToken)
@@ -168,9 +160,24 @@ namespace Tavernkeep.Application.Services
 				participant.Initiative = null;
 			}
 
-			encounterRepository.Save(encounter);
-			await encounterRepository.CommitAsync(cancellationToken);
-			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
+			await SaveEncounter(encounter, cancellationToken);
+		}
+
+		public async Task UpdateTurnAsync(Guid encounterId, bool moveForward, CancellationToken cancellationToken)
+		{
+			var encounter = await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken)
+				?? throw new BusinessLogicException("Encounter not found");
+
+			if (moveForward)
+			{
+				encounter.NextTurn();
+			}
+			else
+			{
+				encounter.PreviousTurn();
+			}
+
+			await SaveEncounter(encounter, cancellationToken);
 		}
 
 		#endregion
@@ -203,6 +210,13 @@ namespace Tavernkeep.Application.Services
 			var roll = diceService.Roll(bonus: skill.Bonus);
 
 			participant.Initiative = roll.Value;
+		}
+
+		private async Task SaveEncounter(Encounter encounter, CancellationToken cancellationToken)
+		{
+			encounterRepository.Save(encounter);
+			await encounterRepository.CommitAsync(cancellationToken);
+			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
 		}
 
 		#endregion
