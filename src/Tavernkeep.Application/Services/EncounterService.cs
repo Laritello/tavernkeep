@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Metrics;
-using System.Threading;
-using Tavernkeep.Application.Interfaces;
+﻿using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterCreated;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterLaunched;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterUpdated;
@@ -119,6 +117,23 @@ namespace Tavernkeep.Application.Services
 						break;
 				}
 			}
+
+			if (encounter.Status == EncounterStatus.Initiative)
+			{
+				encounter.OrderByInitiative();
+			}
+
+			await SaveEncounter(encounter, cancellationToken);
+		}
+
+		public async Task SetInitiativeForParticipantAsync(Guid encounterId, Guid userId, Guid participantId, int initiative, CancellationToken cancellationToken)
+		{
+			var encounter = await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken)
+				?? throw new BusinessLogicException("Encounter not found");
+			var participant = encounter.Participants.First(x => x.Id == participantId)
+				?? throw new BusinessLogicException("Participant not found.");
+
+			participant.Initiative = initiative;
 
 			if (encounter.Status == EncounterStatus.Initiative)
 			{

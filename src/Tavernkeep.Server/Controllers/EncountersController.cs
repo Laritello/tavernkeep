@@ -9,6 +9,7 @@ using Tavernkeep.Application.UseCases.Encounters.Commands.ClearInitiative;
 using Tavernkeep.Application.UseCases.Encounters.Commands.CreateEncounter;
 using Tavernkeep.Application.UseCases.Encounters.Commands.EditEncounterStatus;
 using Tavernkeep.Application.UseCases.Encounters.Commands.RemoveEncounterParticipant;
+using Tavernkeep.Application.UseCases.Encounters.Commands.SetParticipantInitiative;
 using Tavernkeep.Application.UseCases.Encounters.Commands.UpdateParticipantsOrdinal;
 using Tavernkeep.Application.UseCases.Encounters.Commands.UpdateTurn;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetAllEncounters;
@@ -147,12 +148,20 @@ namespace Tavernkeep.Server.Controllers
 		/// </summary>
 		/// <param name="encounterId">Encounter ID to roll initiative for.</param>
 		/// <param name="participantId">Participant ID</param>
+		/// <param name="result">Result of initiative check.</param>
 		/// <param name="initiativeSkill">Name of the skill used for initiative roll.</param>
 		[Authorize]
 		[HttpPatch("{encounterId}/initiative/{participantId}")]
-		public async Task RollInitiativeAsync([FromRoute] Guid encounterId, [FromRoute] Guid participantId, [FromQuery] string initiativeSkill)
+		public async Task RollInitiativeAsync([FromRoute] Guid encounterId, [FromRoute] Guid participantId, [FromQuery] int? result, [FromQuery] string? initiativeSkill)
 		{
-			await mediator.Send(new RollEncounterParticipantInitiativeCommand(HttpContext.GetUserId(), encounterId, participantId, initiativeSkill));
+			if (result.HasValue)
+			{
+				await mediator.Send(new SetParticipantInitiativeCommand(HttpContext.GetUserId(), encounterId, participantId, result.Value));
+			}
+			else if (initiativeSkill is not null)
+			{
+				await mediator.Send(new RollEncounterParticipantInitiativeCommand(HttpContext.GetUserId(), encounterId, participantId, initiativeSkill));
+			}
 		}
 
 		/// <summary>
