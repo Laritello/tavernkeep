@@ -11,6 +11,7 @@
     <None Remove="Resources\Backgrounds.en-UK.json" />
     <None Remove="Resources\Classes.en-UK.json" />
     <None Remove="Resources\Conditions.en-UK.json" />
+    <None Remove="Resources\Creatures.en-UK.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +28,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Resources\Creatures.en-UK.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

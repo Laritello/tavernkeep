@@ -29,6 +29,7 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 			context
 				.SeedUsers()
 				.SeedConditions()
+				.SeedCreatures()
 				.SeedCharacter();
 
 			return provider;
@@ -63,6 +64,21 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 			}
 
 			context.SaveChanges();
+
+			return context;
+		}
+		private static SessionContext SeedCreatures(this SessionContext context)
+		{
+			if (!context.Set<Creature>().Any())
+			{
+				var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Creatures.en-UK.json");
+				using var sr = new StreamReader(filePath);
+
+				var json = sr.ReadToEnd();
+				var creatures = JsonSerializer.Deserialize<List<Creature>>(json, options) ?? [];
+
+				context.Set<Creature>().AddRange(creatures);
+			}
 
 			return context;
 		}
