@@ -15,7 +15,6 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 
 		public Task<ConditionTemplate> GetConditionAsync(string name, CancellationToken cancellationToken = default)
 		{
-			// TODO: Fix exceptions
 			return AsQueryable().Where(x => x.Name == name).FirstAsync(cancellationToken);
 		}
 	}

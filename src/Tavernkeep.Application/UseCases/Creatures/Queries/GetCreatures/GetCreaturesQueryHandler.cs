@@ -2,7 +2,7 @@
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Repositories;
 
-namespace Tavernkeep.Application.UseCases.Creatures.Queries
+namespace Tavernkeep.Application.UseCases.Creatures.Queries.GetCreatures
 {
 	public class GetCreaturesQueryHandler(ICreatureLibraryRepository creatureRepository) : IRequestHandler<GetCreaturesQuery, ICollection<Creature>>
 	{

@@ -9,6 +9,7 @@ namespace Tavernkeep.Application.Mapping.Profiles
 		public CreatureProfile()
 		{
 			CreateMap<Creature, CreatureDto>();
+			CreateMap<Creature, CreatureFullDto>();
 		}
 	}
 }

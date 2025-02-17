@@ -2,9 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Tavernkeep.Application.UseCases.Conditions.Queries.GetConditions;
-using Tavernkeep.Application.UseCases.Creatures.Queries;
-using Tavernkeep.Core.Contracts.Conditions.Dtos;
+using Tavernkeep.Application.UseCases.Creatures.Queries.GetCreature;
+using Tavernkeep.Application.UseCases.Creatures.Queries.GetCreatures;
 using Tavernkeep.Core.Contracts.Creatures;
 
 namespace Tavernkeep.Server.Controllers
@@ -19,7 +18,7 @@ namespace Tavernkeep.Server.Controllers
 	public class LibraryController(IMediator mediator, IMapper mapper) : ControllerBase
 	{
 		/// <summary>
-		/// Get all conditions.
+		/// Fetch all creatures.
 		/// </summary>
 		/// <returns>List containing all conditions.</returns>
 		[Authorize]
@@ -28,6 +27,19 @@ namespace Tavernkeep.Server.Controllers
 		{
 			var conditions = await mediator.Send(new GetCreaturesQuery());
 			return mapper.Map<ICollection<CreatureDto>>(conditions);
+		}
+
+		/// <summary>
+		/// Fetch creature by ID.
+		/// </summary>
+		/// <param name="creatureId">ID of the creature to fetch.</param>
+		/// <returns>List containing all conditions.</returns>
+		[Authorize]
+		[HttpGet("creatures/{creatureId}")]
+		public async Task<CreatureFullDto> GetAllCreatures([FromRoute] Guid creatureId)
+		{
+			var conditions = await mediator.Send(new GetCreatureQuery(creatureId));
+			return mapper.Map<CreatureFullDto>(conditions);
 		}
 	}
 }

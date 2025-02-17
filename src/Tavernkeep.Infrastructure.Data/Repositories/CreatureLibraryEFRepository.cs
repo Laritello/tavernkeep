@@ -12,5 +12,10 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 		{
 			return AsQueryable().ToListAsync(cancellationToken);
 		}
+
+		public Task<Creature> GetCreatureAsync(Guid id, CancellationToken cancellationToken = default)
+		{
+			return AsQueryable().Where(x => x.Id == id).FirstAsync(cancellationToken);
+		}
 	}
 }
