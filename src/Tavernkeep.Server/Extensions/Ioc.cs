@@ -84,6 +84,7 @@ namespace Tavernkeep.Server.Extensions
 			services.AddScoped<IConditionMetadataRepository, ConditionMetadataEFRepository>();
 			services.AddScoped<IPortraitRepository, PortraitEFRepository>();
 			services.AddScoped<IEncounterRepository, EncounterEFRepository>();
+			services.AddScoped<ICreatureLibraryRepository, CreatureLibraryEFRepository>();
 
 			return services;
 		}

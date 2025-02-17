@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UseCases\Conditions\Commands\**" />
+    <EmbeddedResource Remove="UseCases\Conditions\Commands\**" />
+    <None Remove="UseCases\Conditions\Commands\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="d20tek-dicenotation" Version="4.0.1" />
     <PackageReference Include="MediatR" Version="12.4.1" />
@@ -19,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Conditions\Commands\" />
     <Folder Include="UseCases\Portraits\Notifications\" />
   </ItemGroup>
 
