@@ -42,8 +42,8 @@ namespace Tavernkeep.Server.Controllers
 		[HttpGet]
 		public async Task<Dictionary<Guid, EncounterDto>> GetEncountersAsync()
 		{
-			var characters = await mediator.Send(new GetAllEncounterQuery());
-			return mapper.Map<Dictionary<Guid, EncounterDto>>(characters);
+			var encounters = await mediator.Send(new GetAllEncounterQuery());
+			return mapper.Map<Dictionary<Guid, EncounterDto>>(encounters);
 		}
 
 		/// <summary>
@@ -55,8 +55,8 @@ namespace Tavernkeep.Server.Controllers
 		[HttpGet("{encounterId}")]
 		public async Task<EncounterDto> GetEncounterAsync([FromRoute] Guid encounterId)
 		{
-			var character = await mediator.Send(new GetEncounterQuery(encounterId));
-			return mapper.Map<EncounterDto>(character);
+			var encounter = await mediator.Send(new GetEncounterQuery(encounterId));
+			return mapper.Map<EncounterDto>(encounter);
 		}
 
 		/// <summary>

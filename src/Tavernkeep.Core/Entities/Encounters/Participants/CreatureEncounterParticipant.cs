@@ -5,7 +5,8 @@ namespace Tavernkeep.Core.Entities.Encounters.Participants
 {
 	public class CreatureEncounterParticipant : EncounterParticipant
 	{
+		public Guid CreatureId { get; set; }
 		public required Creature Creature { get; set; }
-		public override EncounterParticipantType Type => EncounterParticipantType.Character;
+		public override EncounterParticipantType Type => EncounterParticipantType.Creature;
 	}
 }

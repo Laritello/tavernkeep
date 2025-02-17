@@ -36,13 +36,46 @@ namespace Tavernkeep.Application.Services
 
 		public async Task<ICollection<Encounter>> GetAllEncountersAsync(CancellationToken cancellationToken)
 		{
-			return await encounterRepository.GetAllEncountersAsync(cancellationToken);
+			var encounters = await encounterRepository.GetAllEncountersAsync(cancellationToken);
+
+			foreach (var encounter in encounters)
+			{
+				foreach (var participant in encounter.Participants)
+				{
+					switch (participant)
+					{
+						case CharacterEncounterParticipant characterParticipant:
+							characterParticipant.Character = await characterService.GetCharacterAsync(characterParticipant.CharacterId, cancellationToken);
+							break;
+						case CreatureEncounterParticipant creatureParticipant:
+							creatureParticipant.Creature = await creatureRepository.GetCreatureAsync(creatureParticipant.CreatureId, cancellationToken);
+							break;
+					}
+				}
+			}
+
+			return encounters;
 		}
 
 		public async Task<Encounter> GetEncounterAsync(Guid encounterId, CancellationToken cancellationToken)
 		{
-			return await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken) 
+			var encounter = await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken) 
 				?? throw new BusinessLogicException("Encounter not found");
+
+			foreach (var participant in encounter.Participants)
+			{
+				switch (participant)
+				{
+					case CharacterEncounterParticipant characterParticipant:
+						characterParticipant.Character = await characterService.GetCharacterAsync(characterParticipant.CharacterId, cancellationToken);
+						break;
+					case CreatureEncounterParticipant creatureParticipant:
+						creatureParticipant.Creature = await creatureRepository.GetCreatureAsync(creatureParticipant.CreatureId, cancellationToken);
+						break;
+				}
+			}
+
+			return encounter;
 		}
 
 		public async Task UpdateEncounterStatusAsync(Guid encounterId, EncounterStatus status, CancellationToken cancellationToken)

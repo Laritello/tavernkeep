@@ -40,7 +40,9 @@ namespace Tavernkeep.Application.Mapping.Profiles
 				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Skills.Where(skillsAreSavingThrows)))
 				.ForMember(dest => dest.Perception, opt => opt.MapFrom(src => src.Skills["Perception"]));
 
-			CreateMap<Character, CharacterEncounterDto>();
+			CreateMap<Character, CharacterEncounterDto>()
+				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Skills.Where(skillsAreSavingThrows)))
+				.ForMember(dest => dest.Perception, opt => opt.MapFrom(src => src.Skills["Perception"]));
 
 			CreateMap<Ability, AbilityDto>();
 

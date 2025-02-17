@@ -322,7 +322,7 @@ namespace Tavernkeep.Application.Services
 
 		public async Task<Character> GetCharacterAsync(Guid id, CancellationToken cancellationToken)
 		{
-			var character = await characterRepository.FindAsync(id, cancellationToken: cancellationToken)
+			var character = await characterRepository.GetFullCharacterAsync(id, cancellationToken: cancellationToken)
 				?? throw new BusinessLogicException("No character with provided ID found.");
 
 			return character;
