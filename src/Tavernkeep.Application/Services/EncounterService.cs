@@ -15,6 +15,7 @@ namespace Tavernkeep.Application.Services
 {
 	public class EncounterService(
 		IEncounterRepository encounterRepository,
+		ICreatureLibraryRepository creatureRepository,
 		ICharacterService characterService,
 		INotificationService notificationService,
 		IDiceService diceService
@@ -72,9 +73,14 @@ namespace Tavernkeep.Application.Services
 				case EncounterParticipantType.Character:
 					await AddCharacterParticipantAsync(encounter, entityId, cancellationToken);
 					break;
+				case EncounterParticipantType.Creature:
+					await AddCreatureParticipantAsync(encounter, entityId, cancellationToken);
+					break;
 				default:
 					throw new NotImplementedException();
 			}
+
+			await SaveEncounter(encounter, cancellationToken);
 		}
 
 		public async Task RemoveParticipantAsync(Guid encounterId, Guid participantId, CancellationToken cancellationToken)
@@ -202,7 +208,7 @@ namespace Tavernkeep.Application.Services
 		private async Task AddCharacterParticipantAsync(Encounter encounter, Guid characterId, CancellationToken cancellationToken)
 		{
 			var character = await characterService.GetCharacterAsync(characterId, cancellationToken)
-				?? throw new BusinessLogicException("Character not found");
+				?? throw new BusinessLogicException("Character with specified ID not found");
 
 			CharacterEncounterParticipant participant = new()
 			{
@@ -211,10 +217,20 @@ namespace Tavernkeep.Application.Services
 			};
 
 			encounter.AddParticipant(participant);
+		}
 
-			encounterRepository.Save(encounter);
-			await encounterRepository.CommitAsync(cancellationToken);
-			await notificationService.Publish(new EncounterUpdatedNotification(encounter), cancellationToken);
+		private async Task AddCreatureParticipantAsync(Encounter encounter, Guid creatureId, CancellationToken cancellationToken)
+		{
+			var creature = await creatureRepository.GetCreatureAsync(creatureId, cancellationToken)
+				?? throw new BusinessLogicException("Creature with specified ID not found");
+
+			CreatureEncounterParticipant participant = new()
+			{
+				Encounter = encounter,
+				Creature = creature,
+			};
+
+			encounter.AddParticipant(participant);
 		}
 
 		private async Task RollInitiative(CharacterEncounterParticipant participant, Guid userId, CancellationToken cancellationToken, string skillName = "Perception")

@@ -3,6 +3,6 @@
 	public enum EncounterParticipantType
 	{
 		Character,
-		Monster
+		Creature
 	}
 }
