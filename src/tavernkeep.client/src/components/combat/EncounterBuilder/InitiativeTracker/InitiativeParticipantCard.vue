@@ -14,17 +14,20 @@ defineEmits<{
 
 <template>
     <div
-        class="card card-compact"
+        class="flex flex-row items-center rounded-md"
         :class="[
             activeTurn ? 'border-2 border-accent animate-pulse' : 'border border-base-300',
             participant.type === 'Character' ? 'bg-primary bg-opacity-10' : 'bg-error bg-opacity-10',
         ]"
     >
-        <div class="card-body flex-row items-center gap-4">
+        <div class="drag-handle p-1 cursor-grab">
+            <span class="mdi mdi-drag text-xl"></span>
+        </div>
+        <div class="flex flex-row p-2 items-center gap-4">
             <!-- Initiative Value -->
-            <div class="text-3xl font-bold w-12 text-center">
-                {{ participant.initiative }}
-            </div>
+            <label class="input input-bordered flex items-center p-0 max-w-12">
+                <input type="text" value="--" class="text-center font-semibold text-lg w-full" />
+            </label>
 
             <!-- Participant Info -->
             <div class="flex-1">

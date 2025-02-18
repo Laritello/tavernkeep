@@ -2,7 +2,7 @@
 import { nextTick, ref } from 'vue';
 import { VueDraggable } from 'vue-draggable-plus';
 
-import InitiativeParticipantCard from '@/components/InitiativeParticipantCard.vue';
+import InitiativeParticipantCard from '@/components/combat/EncounterBuilder/InitiativeTracker/InitiativeParticipantCard.vue';
 import type { Participant } from '@/contracts/encounter/Participant.ts';
 import { useCurrentEncounterStore } from '@/stores/useCurrentEncounterStore.ts';
 
@@ -38,6 +38,7 @@ async function onDragEnd() {
                 v-model="currentEncounter.participants"
                 class="flex flex-col gap-2 min-h-52"
                 :animation="150"
+                handle=".drag-handle"
                 @start="drag = true"
                 @end="onDragEnd"
             >
@@ -45,7 +46,7 @@ async function onDragEnd() {
                     <InitiativeParticipantCard
                         v-for="participant in currentEncounter.participants"
                         :key="participant.id"
-                        class="flex items-center justify-between cursor-pointer"
+                        class=""
                         :participant="participant"
                         :active-turn="false"
                         @edit="console.log('edit participant card')"
@@ -64,6 +65,6 @@ async function onDragEnd() {
 <!--suppress CssUnusedSymbol -->
 <style scoped>
 .slide-move {
-    transition: all 0.15s ease;
+    transition: all 1s ease;
 }
 </style>
