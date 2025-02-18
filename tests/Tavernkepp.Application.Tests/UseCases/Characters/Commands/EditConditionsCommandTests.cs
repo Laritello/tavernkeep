@@ -16,7 +16,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		private readonly User owner;
 		private readonly User master;
 
-		private readonly List<ConditionTemplate> conditions =
+		private readonly List<ConditionInformation> conditions =
 		[
 			new()
 			{
@@ -57,19 +57,19 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		public async Task EditConditionsCommand_Success()
 		{
 			var mockCharacterService = new Mock<ICharacterService>();
-			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
+			var mockConditionLibraryRepository = new Mock<IConditionLibraryRepository>();
 
 			mockCharacterService
 				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
-			mockConditionMetadataRepository
+			mockConditionLibraryRepository
 				.Setup(repo => repo.GetConditionAsync("Blinded", It.IsAny<CancellationToken>()))
 				.ReturnsAsync(conditions[0]);
 
 			int basePerception = character.Skills["Perception"].Bonus;
 
 			var request = new EditConditionsCommand(owner.Id, characterId, [new() { Name = "Blinded" }]);
-			var handler = new EditConditionsCommandHandler(mockCharacterService.Object, mockConditionMetadataRepository.Object);
+			var handler = new EditConditionsCommandHandler(mockCharacterService.Object, mockConditionLibraryRepository.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 
@@ -85,19 +85,19 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		public async Task EditConditionsCommand_Success_Master()
 		{
 			var mockCharacterService = new Mock<ICharacterService>();
-			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
+			var mockConditionLibraryRepository = new Mock<IConditionLibraryRepository>();
 
 			mockCharacterService
 				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
-			mockConditionMetadataRepository
+			mockConditionLibraryRepository
 				.Setup(repo => repo.GetConditionAsync("Blinded", It.IsAny<CancellationToken>()))
 				.ReturnsAsync(conditions[0]);
 
 			int basePerception = character.Skills["Perception"].Bonus;
 
 			var request = new EditConditionsCommand(master.Id, characterId, [new() { Name = "Blinded" }]);
-			var handler = new EditConditionsCommandHandler(mockCharacterService.Object, mockConditionMetadataRepository.Object);
+			var handler = new EditConditionsCommandHandler(mockCharacterService.Object, mockConditionLibraryRepository.Object);
 
 			await handler.Handle(request, CancellationToken.None);
 

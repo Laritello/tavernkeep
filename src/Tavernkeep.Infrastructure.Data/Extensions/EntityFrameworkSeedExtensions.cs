@@ -51,15 +51,15 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 
 		private static SessionContext SeedConditions(this SessionContext context)
 		{
-			if (!context.Set<ConditionTemplate>().Any())
+			if (!context.Set<ConditionInformation>().Any())
 			{
 				var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Conditions.en-UK.json");
 				using var sr = new StreamReader(filePath);
 
 				var json = sr.ReadToEnd();
-				var conditions = JsonSerializer.Deserialize<List<ConditionTemplate>>(json, options) ?? [];
+				var conditions = JsonSerializer.Deserialize<List<ConditionInformation>>(json, options) ?? [];
 
-				context.Set<ConditionTemplate>().AddRange(conditions);
+				context.Set<ConditionInformation>().AddRange(conditions);
 			}
 
 			context.SaveChanges();

@@ -5,10 +5,10 @@ using Tavernkeep.Core.Repositories;
 namespace Tavernkeep.Application.UseCases.Conditions.Queries.GetConditions
 {
 	public class GetConditionsQueryHandler(
-		IConditionMetadataRepository conditionRepository
-		) : IRequestHandler<GetConditionsQuery, List<ConditionTemplate>>
+		IConditionLibraryRepository conditionRepository
+		) : IRequestHandler<GetConditionsQuery, List<ConditionInformation>>
 	{
-		public async Task<List<ConditionTemplate>> Handle(GetConditionsQuery request, CancellationToken cancellationToken)
+		public async Task<List<ConditionInformation>> Handle(GetConditionsQuery request, CancellationToken cancellationToken)
 		{
 			return await conditionRepository.GetAllConditionsAsync(cancellationToken);
 		}

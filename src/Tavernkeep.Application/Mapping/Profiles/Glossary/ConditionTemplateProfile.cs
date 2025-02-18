@@ -5,13 +5,13 @@ using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 namespace Tavernkeep.Application.Mapping.Profiles.Glossary
 {
 	/// <summary>
-	/// Mapping profile for the <see cref="ConditionTemplate"/> class.
+	/// Mapping profile for the <see cref="ConditionInformation"/> class.
 	/// </summary>
 	public class ConditionTemplateProfile : Profile
 	{
 		public ConditionTemplateProfile()
 		{
-			CreateMap<ConditionTemplate, ConditionTemplateDto>();
+			CreateMap<ConditionInformation, ConditionTemplateDto>();
 		}
 	}
 }
