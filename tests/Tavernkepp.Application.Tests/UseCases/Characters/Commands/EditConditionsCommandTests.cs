@@ -60,7 +60,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 			mockConditionMetadataRepository
 				.Setup(repo => repo.GetConditionAsync("Blinded", It.IsAny<CancellationToken>()))
@@ -88,7 +88,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockConditionMetadataRepository = new Mock<IConditionMetadataRepository>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, master.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 			mockConditionMetadataRepository
 				.Setup(repo => repo.GetConditionAsync("Blinded", It.IsAny<CancellationToken>()))

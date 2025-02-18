@@ -12,7 +12,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest
 	{
 		public async Task Handle(PerformLongRestCommand request, CancellationToken cancellationToken)
 		{
-			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
+			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			/*
 			 * The character regains Hit Points equal to their Constitution modifier (minimum 1) multiplied by their level. 

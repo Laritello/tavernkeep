@@ -43,7 +43,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockConditionRepository = new Mock<IConditionMetadataRepository>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			character.Level = level;
@@ -72,7 +72,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockConditionsRepository = new Mock<IConditionMetadataRepository>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			character.Level = 6;
@@ -99,7 +99,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockConditionsRepository = new Mock<IConditionMetadataRepository>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, owner.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			mockConditionsRepository
@@ -131,7 +131,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 			var mockConditionsRepository = new Mock<IConditionMetadataRepository>();
 
 			mockCharacterService
-				.Setup(s => s.RetrieveCharacterForEdit(characterId, master.Id, It.IsAny<CancellationToken>()))
+				.Setup(s => s.RetrieveCharacterForAction(characterId, master.Id, It.IsAny<CancellationToken>()))
 				.ReturnsAsync(character);
 
 			character.Level = 6;

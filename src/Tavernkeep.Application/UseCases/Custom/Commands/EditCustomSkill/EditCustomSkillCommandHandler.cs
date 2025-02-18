@@ -10,7 +10,7 @@ namespace Tavernkeep.Application.UseCases.Custom.Commands.EditCustomSkill
 	{
 		public async Task Handle(EditCustomSkillCommand request, CancellationToken cancellationToken)
 		{
-			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
+			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			var skill = character.Skills.FirstOrDefault(s => s.Name == request.OldName)
 				?? throw new BusinessLogicException("Character does not have a skill with this name.");

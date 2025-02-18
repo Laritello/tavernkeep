@@ -8,12 +8,6 @@ namespace Tavernkeep.Core.Entities.Encounters
 	[Table("Encounter")]
 	public class Encounter : GuidEntity
 	{
-		#region Private fields
-
-		private readonly IComparer<EncounterParticipant> _participantComparer = new OrdinalComparer();
-		
-		#endregion
-
 		#region Backing fields
 
 		private readonly List<EncounterParticipant> _participants = [];
@@ -26,6 +20,7 @@ namespace Tavernkeep.Core.Entities.Encounters
 		{
 			Name = name;
 			Status = status;
+			RoundNumber = 1;
 		}
 
 		#endregion
@@ -33,6 +28,8 @@ namespace Tavernkeep.Core.Entities.Encounters
 		#region Properties
 
 		public string Name { get; set; }
+		public int RoundNumber { get; private set; }
+		public int CurrentTurnIndex { get; private set; }
 		public EncounterStatus Status { get; set; }
 		public IReadOnlyCollection<EncounterParticipant> Participants => _participants.AsReadOnly();
 
@@ -40,12 +37,20 @@ namespace Tavernkeep.Core.Entities.Encounters
 
 		#region Methods
 
+		/// <summary>
+		/// Add participant to the encounter.
+		/// </summary>
+		/// <param name="participant">The participant that should be added to the encounter.</param>
 		public void AddParticipant(EncounterParticipant participant)
 		{
 			participant.Ordinal = _participants.Count;
 			_participants.Add(participant);
 		}
 
+		/// <summary>
+		/// Remove participant from the encounter.
+		/// </summary>
+		/// <param name="participant">The participant that should be removed from the encounter.</param>
 		public void RemoveParticipant(EncounterParticipant participant)
 		{
 			int indexOf = _participants.IndexOf(participant);
@@ -56,28 +61,73 @@ namespace Tavernkeep.Core.Entities.Encounters
 			{
 				_participants[i].Ordinal = indexOf;
 			}
+
+			/*
+			 * If we deleted the participant when our current turn pointer was on the last participant
+			 * move the pointer to the updated last index.
+			 */
+			if (CurrentTurnIndex >= _participants.Count)
+			{
+				CurrentTurnIndex = _participants.Count - 1;
+			}
 		}
 
-		public void OrderParticipant()
+		public void OrderByInitiative()
 		{
-			_participants.Sort(_participantComparer);
+			int ordinal = 0;
+
+			foreach (var participant in _participants.OrderByDescending(x => x.Initiative))
+			{
+				participant.Ordinal = ordinal++;
+			}
+		}
+
+		public void NextTurn()
+		{
+			// There is no next turn if we have no participants
+			if (Participants.Count == 0)
+			{
+				return;
+			}
+
+			/*
+			 * If we overflow, we should set index to the first participant
+			 * And increase round number by 1.
+			 */
+			if (CurrentTurnIndex >= Participants.Count - 1)
+			{
+				CurrentTurnIndex = 0;
+				RoundNumber++;
+			}
+			else
+			{
+				CurrentTurnIndex++;
+			}
+		}
+
+		public void PreviousTurn()
+		{
+			// If we have no participants or hit start of combat - there is no previous turn.
+			if (Participants.Count == 0 || (RoundNumber == 1 && CurrentTurnIndex == 0))
+			{
+				return;
+			}
+
+			/*
+			 * If we underflow, we should set index to the last participant
+			 * And decrease round number by 1.
+			 */
+			if (CurrentTurnIndex <= 0)
+			{
+				CurrentTurnIndex = Participants.Count - 1;
+				RoundNumber = Math.Max(1, RoundNumber - 1);
+			}
+			else
+			{
+				CurrentTurnIndex--;
+			}
 		}
 
 		#endregion
-	}
-
-	class OrdinalComparer : IComparer<EncounterParticipant>
-	{
-		public int Compare(EncounterParticipant? x, EncounterParticipant? y)
-		{
-			if (x == null && y == null)
-				return 0;
-			else if (x == null)
-				return -1;
-			else if (y == null)
-				return 1;
-
-			return x.Ordinal.CompareTo(y.Ordinal);
-		}
 	}
 }

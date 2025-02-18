@@ -7,7 +7,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.DeleteCharacter
 	{
 		public async Task Handle(DeleteCharacterCommand request, CancellationToken cancellationToken)
 		{
-			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
+			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
 			await characterService.DeleteCharacter(character, cancellationToken);
 		}
 	}

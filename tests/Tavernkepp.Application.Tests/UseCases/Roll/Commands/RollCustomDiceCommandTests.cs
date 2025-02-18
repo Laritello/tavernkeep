@@ -1,6 +1,6 @@
 ﻿using Moq;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Application.UseCases.Roll.Commands.RollCustomDice;
+using Tavernkeep.Application.UseCases.Rolls.Commands.RollCustomDice;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Exceptions;

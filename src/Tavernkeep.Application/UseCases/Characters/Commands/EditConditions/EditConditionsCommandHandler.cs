@@ -12,7 +12,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditConditions
 	{
 		public async Task Handle(EditConditionsCommand request, CancellationToken cancellationToken)
 		{
-			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
+			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			// TODO: Switch to dictionary under the hood
 			character.Conditions.RemoveAll(x => !request.Conditions.Any(c => c.Name == x.Name));

@@ -12,7 +12,7 @@ namespace Tavernkeep.Application.UseCases.Custom.Commands.AddCustomSkill
 			if (request.Type != SkillType.Custom && request.Type != SkillType.Lore)
 				throw new BusinessLogicException($"Invalid skill type: {nameof(request.Type)}");
 
-			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
+			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			if (character.Skills.Any(s => s.Name == request.Name))
 				throw new BusinessLogicException("Character already has a skill with this name.");

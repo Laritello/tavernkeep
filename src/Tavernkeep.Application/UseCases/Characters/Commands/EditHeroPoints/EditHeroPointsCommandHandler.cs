@@ -14,7 +14,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHeroPoints
 			if (request.Amount > 3)
 				throw new BusinessLogicException("Hero points amoint cannot be more than three.");
 
-			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
+			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			character.HeroPoints = request.Amount;
 

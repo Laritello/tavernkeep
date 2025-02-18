@@ -7,7 +7,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.ModifyHealth
 	{
 		public async Task Handle(ModifyHealthCommand request, CancellationToken cancellationToken)
 		{
-			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
+			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			if (request.Change > 0)
 				character.Health.Heal(request.Change);

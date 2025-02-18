@@ -7,7 +7,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditInformation
 	{
 		public async Task Handle(EditInformationCommand request, CancellationToken cancellationToken)
 		{
-			var character = await characterService.RetrieveCharacterForEdit(request.CharacterId, request.InitiatorId, cancellationToken);
+			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
 
 			character.Name = request.Information.Name;
 			character.Ancestry.Name = request.Information.Ancestry;

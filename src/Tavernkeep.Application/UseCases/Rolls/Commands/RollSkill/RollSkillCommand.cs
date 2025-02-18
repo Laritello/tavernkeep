@@ -2,7 +2,7 @@
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Messages;
 
-namespace Tavernkeep.Application.UseCases.Roll.Commands.RollSkill
+namespace Tavernkeep.Application.UseCases.Rolls.Commands.RollSkill
 {
 	public class RollSkillCommand(Guid initiatorId, Guid characterId, string skillType, RollType rollType) : IRequest<SkillRollMessage>
 	{

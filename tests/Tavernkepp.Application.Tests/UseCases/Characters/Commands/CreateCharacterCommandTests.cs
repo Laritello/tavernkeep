@@ -173,7 +173,6 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterService = new Mock<ICharacterService>();
-			var mockNotificationService = new Mock<INotificationService>();
 
 			mockUserRepository
 				.Setup(repo => repo.FindAsync(userId, It.IsAny<ISpecification<User>>(), It.IsAny<CancellationToken>()))
@@ -184,7 +183,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 				.ReturnsAsync(character);
 
 			var request = new CreateCharacterCommand(userId, template);
-			var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterService.Object, mockNotificationService.Object);
+			var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterService.Object);
 
 			var response = await handler.Handle(request, CancellationToken.None);
 
@@ -200,10 +199,9 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		{
 			var mockUserRepository = new Mock<IUserRepository>();
 			var mockCharacterService = new Mock<ICharacterService>();
-			var mockNotificationService = new Mock<INotificationService>();
 
 			var request = new CreateCharacterCommand(userId, template);
-			var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterService.Object, mockNotificationService.Object);
+			var handler = new CreateCharacterCommandHandler(mockUserRepository.Object, mockCharacterService.Object);
 
 			Assert.ThatAsync(async () => await handler.Handle(request, CancellationToken.None),
 				Throws.TypeOf<BusinessLogicException>()

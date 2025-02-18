@@ -23,11 +23,17 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("CurrentTurnIndex")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("New encounter");
+
+                    b.Property<int>("RoundNumber")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Status")
                         .HasColumnType("INTEGER");
@@ -157,6 +163,60 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.HasKey("Name");
 
                     b.ToTable("Conditions");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Creature", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Abilities")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ArmorClass")
+                        .HasColumnType("INTEGER");
+
+                    b.PrimitiveCollection<string>("Languages")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Perception")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Rarity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SavingThrows")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Skills")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("Traits")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LibraryCreature");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Portrait", b =>
@@ -348,6 +408,20 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("EncounterParticipant");
 
                     b.HasDiscriminator().HasValue("CharacterEncounterParticipant");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.CreatureEncounterParticipant", b =>
+                {
+                    b.HasBaseType("Tavernkeep.Core.Entities.Encounters.Participants.EncounterParticipant");
+
+                    b.Property<Guid>("CreatureId")
+                        .HasColumnType("TEXT");
+
+                    b.HasIndex("CreatureId");
+
+                    b.ToTable("EncounterParticipant");
+
+                    b.HasDiscriminator().HasValue("CreatureEncounterParticipant");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.RollMessage", b =>
@@ -830,6 +904,156 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Related");
                 });
 
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Creature", b =>
+                {
+                    b.OwnsOne("Tavernkeep.Core.Entities.Creatures.HealthInformation", "Health", b1 =>
+                        {
+                            b1.Property<Guid>("CreatureId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Max")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Temporary")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("CreatureId");
+
+                            b1.ToTable("LibraryCreature");
+
+                            b1.ToJson("Health");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CreatureId");
+                        });
+
+                    b.OwnsMany("Tavernkeep.Core.Entities.Creatures.SpeedInformation", "Speeds", b1 =>
+                        {
+                            b1.Property<Guid>("CreatureId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate()
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("Type")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int?>("Value")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("CreatureId", "__synthesizedOrdinal");
+
+                            b1.ToTable("LibraryCreature");
+
+                            b1.ToJson("Speeds");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CreatureId");
+                        });
+
+                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Properties.Resistance", "Resistances", b1 =>
+                        {
+                            b1.Property<Guid>("CreatureId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate()
+                                .HasColumnType("INTEGER");
+
+                            b1.PrimitiveCollection<string>("Doubled")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.PrimitiveCollection<string>("Exceptions")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("Type")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Value")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("CreatureId", "__synthesizedOrdinal");
+
+                            b1.ToTable("LibraryCreature");
+
+                            b1.ToJson("Resistances");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CreatureId");
+                        });
+
+                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Properties.Sense", "Senses", b1 =>
+                        {
+                            b1.Property<Guid>("CreatureId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate()
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("Acuity")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int?>("Range")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("CreatureId", "__synthesizedOrdinal");
+
+                            b1.ToTable("LibraryCreature");
+
+                            b1.ToJson("Senses");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CreatureId");
+                        });
+
+                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Properties.Weakness", "Weaknesses", b1 =>
+                        {
+                            b1.Property<Guid>("CreatureId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate()
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("Type")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Value")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("CreatureId", "__synthesizedOrdinal");
+
+                            b1.ToTable("LibraryCreature");
+
+                            b1.ToJson("Weaknesses");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CreatureId");
+                        });
+
+                    b.Navigation("Health")
+                        .IsRequired();
+
+                    b.Navigation("Resistances");
+
+                    b.Navigation("Senses");
+
+                    b.Navigation("Speeds");
+
+                    b.Navigation("Weaknesses");
+                });
+
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Portrait", b =>
                 {
                     b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Owner")
@@ -922,6 +1146,17 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Character");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.CreatureEncounterParticipant", b =>
+                {
+                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Creature", "Creature")
+                        .WithMany()
+                        .HasForeignKey("CreatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creature");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.RollMessage", b =>
