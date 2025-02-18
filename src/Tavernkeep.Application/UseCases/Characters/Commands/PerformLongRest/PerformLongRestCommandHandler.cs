@@ -7,7 +7,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest
 {
 	public class PerformLongRestCommandHandler(
 		ICharacterService characterService,
-		IConditionMetadataRepository conditionRepository
+		IConditionLibraryRepository conditionRepository
 		) : IRequestHandler<PerformLongRestCommand>
 	{
 		public async Task Handle(PerformLongRestCommand request, CancellationToken cancellationToken)
@@ -32,10 +32,10 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest
 			{
 				if (!character.Conditions.Any(x => x.Name == "Fatigued"))
 				{
-					var conditionMetadata = await conditionRepository.GetConditionAsync("Fatigued", cancellationToken)
+					var condition = await conditionRepository.GetConditionAsync("Fatigued", cancellationToken)
 						?? throw new BusinessLogicException("Condition with specified name doesn't exist.");
 
-					character.Conditions.Add(conditionMetadata.ToCondition());
+					character.Conditions.Add(condition.ToCondition());
 				}
 			}
 			else

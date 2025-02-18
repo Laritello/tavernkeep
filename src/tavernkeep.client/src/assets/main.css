@@ -2,21 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-    overflow: auto !important;
+:root {
+    --vsbs-background: oklch(var(--b1)); /* base-100 */
+    --vsbs-border-color: oklch(var(--b2)); /* base-200 */
+    --vsbs-handle-background: oklch(var(--bc)/0.5); /* base-content opacity 50% */
 }
 
 /* TODO: Add more toast styles */
 /* Toast style for skill checks */
-.Vue-Toastification__toast--default.skill-check-toast {
-    background-color: #128100;
-    border-radius: 20px;
-}
-
-/* Toast style for saving throws */
-.Vue-Toastification__toast--default.saving-throw-toast {
-    background-color: #006179;
-    border-radius: 20px;
+.Vue-Toastification__toast--default.roll-toast {
+    background-color: oklch(var(--su));
 }
 
 .Vue-Toastification__icon {

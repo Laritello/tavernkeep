@@ -2,11 +2,11 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 
-namespace Tavernkeep.Infrastructure.Data.Configuration.Templates
+namespace Tavernkeep.Infrastructure.Data.Configuration.Library
 {
-	public class ConditionTemplateConfiguration : IEntityTypeConfiguration<ConditionTemplate>
+	public class ConditionInformationConfiguration : IEntityTypeConfiguration<ConditionInformation>
 	{
-		public void Configure(EntityTypeBuilder<ConditionTemplate> builder)
+		public void Configure(EntityTypeBuilder<ConditionInformation> builder)
 		{
 			builder.HasKey(c => c.Name);
 			builder.Property(c => c.Name).IsRequired();

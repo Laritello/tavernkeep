@@ -7,7 +7,7 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditConditions
 {
 	public class EditConditionsCommandHandler(
 		ICharacterService characterService,
-		IConditionMetadataRepository conditionRepository
+		IConditionLibraryRepository conditionRepository
 		) : IRequestHandler<EditConditionsCommand>
 	{
 		public async Task Handle(EditConditionsCommand request, CancellationToken cancellationToken)
@@ -27,10 +27,10 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.EditConditions
 				}
 				else
 				{
-					var conditionMetadata = await conditionRepository.GetConditionAsync(condition.Name, cancellationToken)
+					var conditionInformation = await conditionRepository.GetConditionAsync(condition.Name, cancellationToken)
 						?? throw new BusinessLogicException("Condition with specified name doesn't exist.");
 
-					character.Conditions.Add(conditionMetadata.ToCondition(condition.Level));
+					character.Conditions.Add(conditionInformation.ToCondition(condition.Level));
 				}
 			}
 

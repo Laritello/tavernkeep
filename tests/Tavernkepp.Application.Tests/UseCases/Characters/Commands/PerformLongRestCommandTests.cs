@@ -40,7 +40,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		public async Task PerformLongRestCommand_Success(int level, int constitutionScore, int currentHealth)
 		{
 			var mockCharacterService = new Mock<ICharacterService>();
-			var mockConditionRepository = new Mock<IConditionMetadataRepository>();
+			var mockConditionRepository = new Mock<IConditionLibraryRepository>();
 
 			mockCharacterService
 				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
@@ -69,7 +69,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		public async Task PerformLongRestCommand_Success_NoComfort()
 		{
 			var mockCharacterService = new Mock<ICharacterService>();
-			var mockConditionsRepository = new Mock<IConditionMetadataRepository>();
+			var mockConditionsRepository = new Mock<IConditionLibraryRepository>();
 
 			mockCharacterService
 				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
@@ -96,7 +96,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		public async Task PerformLongRestCommand_Success_InArmor()
 		{
 			var mockCharacterService = new Mock<ICharacterService>();
-			var mockConditionsRepository = new Mock<IConditionMetadataRepository>();
+			var mockConditionsRepository = new Mock<IConditionLibraryRepository>();
 
 			mockCharacterService
 				.Setup(s => s.RetrieveCharacterForAction(characterId, owner.Id, It.IsAny<CancellationToken>()))
@@ -104,7 +104,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 
 			mockConditionsRepository
 				.Setup(repo => repo.GetConditionAsync("Fatigued", It.IsAny<CancellationToken>()))
-				.ReturnsAsync(new ConditionTemplate() { Name = "Fatigued" });
+				.ReturnsAsync(new ConditionInformation() { Name = "Fatigued" });
 
 			character.Level = 6;
 			character.Abilities["Constitution"].Score = 14;
@@ -128,7 +128,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		public async Task PerformLongRestCommand_Success_Master()
 		{
 			var mockCharacterService = new Mock<ICharacterService>();
-			var mockConditionsRepository = new Mock<IConditionMetadataRepository>();
+			var mockConditionsRepository = new Mock<IConditionLibraryRepository>();
 
 			mockCharacterService
 				.Setup(s => s.RetrieveCharacterForAction(characterId, master.Id, It.IsAny<CancellationToken>()))

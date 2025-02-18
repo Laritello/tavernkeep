@@ -5,11 +5,11 @@ using Tavernkeep.Core.Entities.Pathfinder.Modifiers;
 namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 {
 	[Table("Conditions")]
-	public class ConditionTemplate : StringEntity
+	public class ConditionInformation : StringEntity
 	{
 		#region Constructors
 
-		public ConditionTemplate() { }
+		public ConditionInformation() { }
 
 		#endregion
 
