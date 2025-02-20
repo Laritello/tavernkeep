@@ -1,11 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Infrastructure.Data.Context;
+using Tavernkeep.Infrastructure.Data.Seeding;
 
 namespace Tavernkeep.Infrastructure.Data.Extensions
 {
@@ -43,27 +44,54 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 				{
 					Id = Guid.Parse("6d3dcfcd-7d87-4b91-8245-c4dba656d2c2")
 				});
-			}
 
-			context.SaveChanges();
+				context.SaveChanges();
+			}
 
 			return context;
 		}
 
 		private static SessionContext SeedConditions(this SessionContext context)
 		{
-			if (!context.Set<ConditionInformation>().Any())
+			if (!context.Set<Condition>().Any())
 			{
 				var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Conditions.en-UK.json");
 				using var sr = new StreamReader(filePath);
 
 				var json = sr.ReadToEnd();
-				var conditions = JsonSerializer.Deserialize<List<ConditionInformation>>(json, options) ?? [];
+				var conditions = JsonSerializer.Deserialize<List<ConditionMetadata>>(json, options) ?? [];
 
-				context.Set<ConditionInformation>().AddRange(conditions);
+				context.Set<Condition>().AddRange(conditions.Select(x => new Condition
+				{
+					Name = x.Name,
+					Description = x.Description,
+					HasLevels = x.HasLevels,
+					Modifiers = x.Modifiers
+				}));
+
+				context.SaveChanges();
+
+				// Now add the friendships
+				foreach (var condition in conditions)
+				{
+					var databaseCondition = context.Set<Condition>().Include(c => c.Related).FirstOrDefault(c => c.Name == condition.Name);
+
+					if (databaseCondition != null)
+					{
+						foreach (var relatedConditionName in condition.Related)
+						{
+							var databaseRelatedCondition = context.Set<Condition>().FirstOrDefault(u => u.Name == relatedConditionName);
+
+							if (databaseRelatedCondition != null)
+							{
+								databaseCondition.Related.Add(databaseRelatedCondition);
+							}
+						}
+					}
+				}
+
+				context.SaveChanges();
 			}
-
-			context.SaveChanges();
 
 			return context;
 		}
@@ -78,6 +106,8 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 				var creatures = JsonSerializer.Deserialize<List<Creature>>(json, options) ?? [];
 
 				context.Set<Creature>().AddRange(creatures);
+
+				context.SaveChanges();
 			}
 
 			return context;

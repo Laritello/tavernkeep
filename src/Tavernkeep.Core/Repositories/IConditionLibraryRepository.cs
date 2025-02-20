@@ -1,10 +1,10 @@
-﻿using Tavernkeep.Core.Entities.Pathfinder.Conditions;
+﻿using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkeep.Core.Repositories
 {
-	public interface IConditionLibraryRepository : IStringRepositoryBase<ConditionInformation, string>
+	public interface IConditionLibraryRepository : IStringRepositoryBase<Condition, string>
 	{
-		public Task<List<ConditionInformation>> GetAllConditionsAsync(CancellationToken cancellationToken = default);
-		public Task<ConditionInformation> GetConditionAsync(string name, CancellationToken cancellationToken = default);
+		public Task<List<Condition>> GetAllConditionsAsync(CancellationToken cancellationToken = default);
+		public Task<Condition> GetConditionAsync(string name, CancellationToken cancellationToken = default);
 	}
 }

@@ -4,7 +4,6 @@ using Tavernkeep.Application.UseCases.Characters.Commands.EditConditions;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Repositories;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
@@ -16,7 +15,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 		private readonly User owner;
 		private readonly User master;
 
-		private readonly List<ConditionInformation> conditions =
+		private readonly List<Condition> conditions =
 		[
 			new()
 			{

@@ -1,12 +1,20 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 
 namespace Tavernkeep.Core.Entities.Encounters.Participants
 {
 	public class CreatureEncounterParticipant : EncounterParticipant
 	{
+		#region Backing fields
+
+		private readonly List<CreatureConditionRecord> _conditions = [];
+
+		#endregion
+
 		public Guid CreatureId { get; set; }
 		public required Creature Creature { get; set; }
 		public override EncounterParticipantType Type => EncounterParticipantType.Creature;
+		public override IReadOnlyCollection<CreatureConditionRecord> Conditions => _conditions.AsReadOnly();
 	}
 }

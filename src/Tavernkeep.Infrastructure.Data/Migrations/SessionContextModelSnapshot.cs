@@ -15,7 +15,22 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
+
+            modelBuilder.Entity("ConditionCondition", b =>
+                {
+                    b.Property<string>("ConditionName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RelatedName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ConditionName", "RelatedName");
+
+                    b.HasIndex("RelatedName");
+
+                    b.ToTable("LibraryConditionRelated", (string)null);
+                });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Encounter", b =>
                 {
@@ -142,7 +157,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Character");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionTemplate", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Condition", b =>
                 {
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
@@ -154,15 +169,47 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Property<bool>("HasLevels")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Id")
+                    b.Property<string>("Modifiers")
+                        .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Name");
 
-                    b.ToTable("Conditions");
+                    b.ToTable("LibraryCondition");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionRecord", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ConditionName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(34)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("EncounterParticipantId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("Level")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConditionName");
+
+                    b.HasIndex("EncounterParticipantId");
+
+                    b.ToTable("ConditionRecord");
+
+                    b.HasDiscriminator().HasValue("ConditionRecord");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Creature", b =>
@@ -459,6 +506,34 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.HasDiscriminator().HasValue("TextMessage");
                 });
 
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.CharacterConditionRecord", b =>
+                {
+                    b.HasBaseType("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionRecord");
+
+                    b.Property<Guid>("CharacterId")
+                        .HasColumnType("TEXT");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("ConditionRecord");
+
+                    b.HasDiscriminator().HasValue("CharacterConditionRecord");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.CreatureConditionRecord", b =>
+                {
+                    b.HasBaseType("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionRecord");
+
+                    b.Property<Guid>("CreatureId")
+                        .HasColumnType("TEXT");
+
+                    b.HasIndex("CreatureId");
+
+                    b.ToTable("ConditionRecord");
+
+                    b.HasDiscriminator().HasValue("CreatureConditionRecord");
+                });
+
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.SkillRollMessage", b =>
                 {
                     b.HasBaseType("Tavernkeep.Core.Entities.Messages.RollMessage");
@@ -466,6 +541,21 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Messages");
 
                     b.HasDiscriminator().HasValue("SkillRollMessage");
+                });
+
+            modelBuilder.Entity("ConditionCondition", b =>
+                {
+                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Condition", null)
+                        .WithMany()
+                        .HasForeignKey("ConditionName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Condition", null)
+                        .WithMany()
+                        .HasForeignKey("RelatedName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.EncounterParticipant", b =>
@@ -497,75 +587,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Conditions.Condition", "Conditions", b1 =>
-                        {
-                            b1.Property<Guid>("CharacterId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAddOrUpdate()
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<bool>("HasLevels")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Level")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.HasKey("CharacterId", "__synthesizedOrdinal");
-
-                            b1.ToTable("Character");
-
-                            b1.ToJson("Conditions");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CharacterId");
-
-                            b1.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Modifiers.Modifier", "Modifiers", b2 =>
-                                {
-                                    b2.Property<Guid>("ConditionCharacterId")
-                                        .HasColumnType("TEXT");
-
-                                    b2.Property<int>("Condition__synthesizedOrdinal")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.Property<int>("__synthesizedOrdinal")
-                                        .ValueGeneratedOnAddOrUpdate()
-                                        .HasColumnType("INTEGER");
-
-                                    b2.Property<bool>("IsBonus")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.Property<int>("Scaling")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.PrimitiveCollection<string>("Targets")
-                                        .IsRequired()
-                                        .HasColumnType("TEXT");
-
-                                    b2.Property<int>("Type")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.Property<int>("Value")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.HasKey("ConditionCharacterId", "Condition__synthesizedOrdinal", "__synthesizedOrdinal");
-
-                                    b2.ToTable("Character");
-
-                                    b2.ToJson("Modifiers");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("ConditionCharacterId", "Condition__synthesizedOrdinal");
-                                });
-
-                            b1.Navigation("Modifiers");
-                        });
 
                     b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Speed", "Burrow", b1 =>
                         {
@@ -779,8 +800,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Climb")
                         .IsRequired();
 
-                    b.Navigation("Conditions");
-
                     b.Navigation("Fly")
                         .IsRequired();
 
@@ -793,115 +812,19 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionTemplate", b =>
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionRecord", b =>
                 {
-                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Modifiers.Modifier", "Modifiers", b1 =>
-                        {
-                            b1.Property<string>("ConditionTemplateName")
-                                .HasColumnType("TEXT");
+                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Condition", "Condition")
+                        .WithMany()
+                        .HasForeignKey("ConditionName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                            b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAddOrUpdate()
-                                .HasColumnType("INTEGER");
+                    b.HasOne("Tavernkeep.Core.Entities.Encounters.Participants.EncounterParticipant", null)
+                        .WithMany("Conditions")
+                        .HasForeignKey("EncounterParticipantId");
 
-                            b1.Property<bool>("IsBonus")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Scaling")
-                                .HasColumnType("INTEGER");
-
-                            b1.PrimitiveCollection<string>("Targets")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Value")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("ConditionTemplateName", "__synthesizedOrdinal");
-
-                            b1.ToTable("Conditions");
-
-                            b1.ToJson("Modifiers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ConditionTemplateName");
-                        });
-
-                    b.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Conditions.Condition", "Related", b1 =>
-                        {
-                            b1.Property<string>("ConditionTemplateName")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAddOrUpdate()
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<bool>("HasLevels")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Level")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.HasKey("ConditionTemplateName", "__synthesizedOrdinal");
-
-                            b1.ToTable("Conditions");
-
-                            b1.ToJson("Related");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ConditionTemplateName");
-
-                            b1.OwnsMany("Tavernkeep.Core.Entities.Pathfinder.Modifiers.Modifier", "Modifiers", b2 =>
-                                {
-                                    b2.Property<string>("ConditionTemplateName")
-                                        .HasColumnType("TEXT");
-
-                                    b2.Property<int>("Condition__synthesizedOrdinal")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.Property<int>("__synthesizedOrdinal")
-                                        .ValueGeneratedOnAddOrUpdate()
-                                        .HasColumnType("INTEGER");
-
-                                    b2.Property<bool>("IsBonus")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.Property<int>("Scaling")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.PrimitiveCollection<string>("Targets")
-                                        .IsRequired()
-                                        .HasColumnType("TEXT");
-
-                                    b2.Property<int>("Type")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.Property<int>("Value")
-                                        .HasColumnType("INTEGER");
-
-                                    b2.HasKey("ConditionTemplateName", "Condition__synthesizedOrdinal", "__synthesizedOrdinal");
-
-                                    b2.ToTable("Conditions");
-
-                                    b2.ToJson("Modifiers");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("ConditionTemplateName", "Condition__synthesizedOrdinal");
-                                });
-
-                            b1.Navigation("Modifiers");
-                        });
-
-                    b.Navigation("Modifiers");
-
-                    b.Navigation("Related");
+                    b.Navigation("Condition");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Creature", b =>
@@ -1221,6 +1144,28 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Recipient");
                 });
 
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.CharacterConditionRecord", b =>
+                {
+                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Character")
+                        .WithMany("Conditions")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.CreatureConditionRecord", b =>
+                {
+                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Creature", "Creature")
+                        .WithMany()
+                        .HasForeignKey("CreatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creature");
+                });
+
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.SkillRollMessage", b =>
                 {
                     b.OwnsOne("Tavernkeep.Core.Entities.Snapshots.SkillSnapshot", "Skill", b1 =>
@@ -1260,6 +1205,11 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Participants");
                 });
 
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.EncounterParticipant", b =>
+                {
+                    b.Navigation("Conditions");
+                });
+
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Character", b =>
                 {
                     b.Navigation("Abilities");
@@ -1269,6 +1219,8 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.Navigation("Class")
                         .IsRequired();
+
+                    b.Navigation("Conditions");
 
                     b.Navigation("Health")
                         .IsRequired();

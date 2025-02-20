@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Tavernkeep.Core.Contracts.Character.Dtos;
+using Tavernkeep.Core.Contracts.Conditions.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
@@ -23,6 +24,7 @@ namespace Tavernkeep.Application.Mapping.Profiles
 				.ForMember(dest => dest.Skills, opt => opt.MapFrom(src => src.Skills.Where(skillsAreSkills).OrderByDescending(x => x.Pinned).ThenBy(x => x.Type).ThenBy(x => x.Name)))
 				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Skills.Where(skillsAreSavingThrows)))
 				.ForMember(dest => dest.Perception, opt => opt.MapFrom(src => src.Skills["Perception"]))
+				.ForMember(dest => dest.Conditions, opt => opt.MapFrom(src => src.Conditions.Select(x => new ConditionShortDto() { Name = x.Condition.Name, Level = x.Level })))
 				.ForMember(
 					dest => dest.Speeds,
 					opt => opt.MapFrom(src =>

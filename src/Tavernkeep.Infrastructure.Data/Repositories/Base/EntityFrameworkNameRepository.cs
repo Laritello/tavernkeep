@@ -24,7 +24,7 @@ namespace Tavernkeep.Infrastructure.Data.Repositories.Base
 			if (specification != null)
 				query = EntityFrameworkSpecificationEvaluator<T>.GetQuery(query, specification);
 
-			return await query.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+			return await query.FirstOrDefaultAsync(x => x.Name == id, cancellationToken);
 		}
 
 		public async Task<T?> FindAsync(ISpecification<T> specification = default!, CancellationToken cancellationToken = default)
@@ -40,7 +40,7 @@ namespace Tavernkeep.Infrastructure.Data.Repositories.Base
 
 		public async Task<IList<T>> GetAsync(IEnumerable<string> ids, ISpecification<T> specification = default!, CancellationToken cancellationToken = default)
 		{
-			var query = AsQueryable().Where(x => ids.Any(z => x.Id == z));
+			var query = AsQueryable().Where(x => ids.Any(z => x.Name == z));
 
 			if (specification != null)
 				query = EntityFrameworkSpecificationEvaluator<T>.GetQuery(query, specification);
@@ -56,7 +56,7 @@ namespace Tavernkeep.Infrastructure.Data.Repositories.Base
 
 		public async Task<IList<T>> GetAsync(IEnumerable<string> ids, CancellationToken cancellationToken)
 		{
-			var query = AsQueryable().Where(x => ids.Any(z => x.Id == z));
+			var query = AsQueryable().Where(x => ids.Any(z => x.Name == z));
 			return await query.ToListAsync(cancellationToken);
 		}
 

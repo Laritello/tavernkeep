@@ -1,4 +1,5 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
+﻿using Tavernkeep.Core.Contracts.Conditions.Dtos;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
@@ -23,6 +24,6 @@ namespace Tavernkeep.Core.Contracts.Character.Dtos
 		public required ICollection<SavingThrowDto> SavingThrows { get; set; }
 		public SkillShortDto Perception { get; set; } = default!;
 		public Dictionary<SpeedType, Speed> Speeds { get; set; } = default!;
-		public List<Condition> Conditions { get; set; } = default!;
+		public List<ConditionShortDto> Conditions { get; set; } = default!;
 	}
 }

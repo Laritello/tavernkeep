@@ -22,17 +22,15 @@ namespace Tavernkeep.Core.Evaluators.Modifiers
 
 			private int Calculate()
 			{
-				var conditionModifiers = _character.Conditions
-					.SelectMany(x => x.CollectModifiers(_character))
-					.Where(x => x.Targets.Contains(_target))
+				var modifiers = _character.Conditions
+					.Where(cr => cr.HasModifier(_target, _type))
+					.Select(cr => cr[_target])
 					.ToList();
 
-				var activeBonus = conditionModifiers.Where(x => x.Type == _type && x.IsBonus).MaxBy(x => x.Value);
-				var activePenalty = conditionModifiers.Where(x => x.Type == _type && x.IsPenalty).MaxBy(x => x.Value);
+				var penalty = modifiers.Count > 0 && modifiers.Min() < 0 ? modifiers.Min() : 0;
+				var bonus = modifiers.Count > 0 && modifiers.Max() > 0 ? modifiers.Max() : 0;
 
-				var totalBonus = (activeBonus != null ? activeBonus.Value : 0) - (activePenalty != null ? activePenalty.Value : 0);
-
-				return totalBonus;
+				return bonus + penalty;
 			}
 		}
 	}

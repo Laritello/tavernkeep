@@ -104,7 +104,7 @@ namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 
 			mockConditionsRepository
 				.Setup(repo => repo.GetConditionAsync("Fatigued", It.IsAny<CancellationToken>()))
-				.ReturnsAsync(new ConditionInformation() { Name = "Fatigued" });
+				.ReturnsAsync(new Condition() { Name = "Fatigued" });
 
 			character.Level = 6;
 			character.Abilities["Constitution"].Score = 14;

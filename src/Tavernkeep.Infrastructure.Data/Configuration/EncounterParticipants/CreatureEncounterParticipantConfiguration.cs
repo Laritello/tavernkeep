@@ -11,6 +11,8 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.EncounterParticipants
 			builder
 				.HasOne(c => c.Creature)
 				.WithMany();
+
+			builder.HasMany(c => c.Conditions);
 		}
 	}
 }

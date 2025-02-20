@@ -47,7 +47,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		public int Level { get; set; }
 		public Health Health { get; set; } = default!;
 		public Armor Armor { get; set; }
-		public List<Condition> Conditions { get; set; }
+		public List<CharacterConditionRecord> Conditions { get; set; }
 
 		public EntityCollection<Ability> Abilities { get; set; }
 		public EntityCollection<Skill> Skills { get; set; }
@@ -75,7 +75,7 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 			};
 		}
 
-		public void AddCondition(Condition condition)
+		public void AddCondition(CharacterConditionRecord condition)
 		{
 			Conditions.Add(condition);
 		}

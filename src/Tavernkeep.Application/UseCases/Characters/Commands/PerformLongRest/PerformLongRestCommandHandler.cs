@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Repositories;
 
@@ -30,23 +31,27 @@ namespace Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest
 
 			if (request.SleepInArmor)
 			{
-				if (!character.Conditions.Any(x => x.Name == "Fatigued"))
+				if (!character.Conditions.Any(x => x.Condition.Name == "Fatigued"))
 				{
 					var condition = await conditionRepository.GetConditionAsync("Fatigued", cancellationToken)
 						?? throw new BusinessLogicException("Condition with specified name doesn't exist.");
 
-					character.Conditions.Add(condition.ToCondition());
+					character.Conditions.Add(new CharacterConditionRecord
+					{
+						Condition = condition,
+						Character = character,
+					});
 				}
 			}
 			else
 			{
-				character.Conditions.RemoveAll(x => x.Name == "Fatigued");
+				character.Conditions.RemoveAll(x => x.Condition.Name == "Fatigued");
 			}
 
 			// Using to list call, because we might want to delete condition for the collection
 			// and this will lead to an error. Performance hit is negligible since rarely character has more than 2-3 conditions
 			// at once.
-			foreach (var condition in character.Conditions.Where(x => x.Name is "Doomed" or "Drained").ToList())
+			foreach (var condition in character.Conditions.Where(x => x.Condition.Name is "Doomed" or "Drained").ToList())
 			{
 				if (condition.Level == 1)
 				{

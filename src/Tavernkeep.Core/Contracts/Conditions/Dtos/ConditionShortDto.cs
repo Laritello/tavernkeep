@@ -6,6 +6,6 @@
 	public record ConditionShortDto
 	{
 		public string Name { get; set; } = default!;
-		public int Level { get; set; }
+		public int? Level { get; set; }
 	}
 }

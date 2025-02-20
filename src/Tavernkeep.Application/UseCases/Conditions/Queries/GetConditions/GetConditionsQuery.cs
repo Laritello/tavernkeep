@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Pathfinder.Conditions;
+using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkeep.Application.UseCases.Conditions.Queries.GetConditions
 {
-	public class GetConditionsQuery : IRequest<List<ConditionInformation>>
+	public class GetConditionsQuery : IRequest<List<Condition>>
 	{
 	}
 }
