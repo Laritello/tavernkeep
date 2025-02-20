@@ -4,18 +4,18 @@ using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkeep.Core.Evaluators.Modifiers
 {
-	public class ModifierEvaluator(Character character, string target) : IValueEvaluator<int>
+	public class ModifierEvaluator(Character character, params ICollection<string> target) : IValueEvaluator<int>
 	{
-		private readonly TypeModifierEvaluator _circumstanceModifierEvaluator = new(character, target, ModifierType.Circumstance);
-		private readonly TypeModifierEvaluator _statusModifierEvaluator = new(character, target, ModifierType.Status);
-		private readonly TypeModifierEvaluator _itemModifierEvaluator = new(character, target, ModifierType.Item);
+		private readonly TypeModifierEvaluator _circumstanceModifierEvaluator = new(character, ModifierType.Circumstance, target);
+		private readonly TypeModifierEvaluator _statusModifierEvaluator = new(character, ModifierType.Status, target);
+		private readonly TypeModifierEvaluator _itemModifierEvaluator = new(character, ModifierType.Item, target);
 
 		public int Value => _statusModifierEvaluator.Value + _circumstanceModifierEvaluator.Value + _itemModifierEvaluator.Value;
 
-		private class TypeModifierEvaluator(Character character, string target, ModifierType type) : IValueEvaluator<int>
+		private class TypeModifierEvaluator(Character character, ModifierType type, params ICollection<string> target) : IValueEvaluator<int>
 		{
 			private readonly Character _character = character;
-			private readonly string _target = target;
+			private readonly ICollection<string> _target = target;
 			private readonly ModifierType _type = type;
 
 			public int Value => Calculate();
@@ -23,7 +23,7 @@ namespace Tavernkeep.Core.Evaluators.Modifiers
 			private int Calculate()
 			{
 				var modifiers = _character.Conditions
-					.Where(cr => cr.HasModifier(_target, _type))
+					.Where(cr => cr.HasModifier(_type, _target))
 					.Select(cr => cr[_target])
 					.ToList();
 

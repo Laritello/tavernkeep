@@ -10,7 +10,7 @@ namespace Tavernkeep.Core.Evaluators.Properties
 	{
 		private readonly Armor _armorClass = armorClass;
 		private readonly Character _character = armorClass.Owner;
-		private readonly ModifierEvaluator _modifierEvaluator = new(armorClass.Owner, "ArmorClass");
+		private readonly ModifierEvaluator _modifierEvaluator = new(armorClass.Owner, "ArmorClass", "Dexterity", "AllChecks");
 		public int Value => Calculate();
 
 		public int Calculate()

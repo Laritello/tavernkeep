@@ -1,6 +1,7 @@
 ﻿using NCalc;
 using System.ComponentModel.DataAnnotations.Schema;
 using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Contracts.Structures;
 using Tavernkeep.Core.Entities.Base;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
@@ -23,10 +24,21 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 
 		#region Methods
 
-		public abstract int this[string targetName] { get; }
+		public abstract int this[ICollection<string> targetNames] { get; }
 
-		public bool HasModifier(string targetName, ModifierType type) =>
-			Condition.Modifiers.ContainsKey(targetName) && Condition.Modifiers[targetName].Type == type;
+		public bool HasModifier(ModifierType type, params ICollection<string> targetNames)
+		{
+			foreach(var targetName in targetNames)
+			{
+				if (Condition.Modifiers.TryGetValue(targetName, out Modifier value) && value.Type == type)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+			
 
 		#endregion
 	}

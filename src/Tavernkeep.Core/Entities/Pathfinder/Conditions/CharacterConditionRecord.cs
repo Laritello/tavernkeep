@@ -6,15 +6,23 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 	{
 		public required Character Character { get; set; }
 
-		public override int this[string targetName]
+		public override int this[ICollection<string> targetNames]
 		{
 			get
 			{
-				var expression = new Expression(Condition.Modifiers[targetName].Formula);
-				expression.Parameters["target_level"] = Character.Level;
-				expression.Parameters["condition_level"] = Level;
+				foreach (var name in targetNames)
+				{
+					if (Condition.Modifiers.TryGetValue(name, out var modifier))
+					{
+						var expression = new Expression(modifier.Formula);
+						expression.Parameters["target_level"] = Character.Level;
+						expression.Parameters["condition_level"] = Level;
 
-				return Convert.ToInt32(expression.Evaluate());
+						return Convert.ToInt32(expression.Evaluate());
+					}
+				}
+
+				return 0;
 			}
 		}
 	}

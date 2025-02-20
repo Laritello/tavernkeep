@@ -1,9 +1,11 @@
 ﻿namespace Tavernkeep.Core.Contracts.Conditions.Dtos
 {
-	public record ConditionShortDto
+	/// <summary>
+	/// Condition DTO used for transfering information about applied condition.
+	/// </summary>
+	public record ConditionEditDto
 	{
 		public string Name { get; set; } = default!;
-		public bool HasLevels { get; set; }
 		public int? Level { get; set; }
 	}
 }

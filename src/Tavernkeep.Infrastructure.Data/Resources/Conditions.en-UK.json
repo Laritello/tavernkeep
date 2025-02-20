@@ -4,7 +4,12 @@
     "Description": "You are compelled to focus your attention on something, distracting you from whatever else is going on around you. You take a –2 status penalty to Perception and skill checks, and you can’t use actions with the concentrate trait unless they or their intended consequences are related to the subject of your fascination (as determined by the GM). For instance, you might be able to Seek and Recall Knowledge about the subject, but you likely couldn’t cast a spell targeting a different creature. This condition ends if a creature uses hostile actions against you or any of your allies.",
     "HasLevels": false,
     "Related": [],
-    "Modifiers": {}
+    "Modifiers": {
+      "SkillChecks": {
+        "Type": "Status",
+        "Formula": "-2"
+      }
+    }
   },
   {
     "Name": "Dazzled",
@@ -18,7 +23,12 @@
     "Description": "You can’t see. All normal terrain is difficult terrain to you.\r\n\r\nYou can’t detect anything using vision. You automatically critically fail Perception checks that require you to be able to see, and if vision is your only precise sense, you take a –4 status penalty to Perception checks. You are immune to visual effects. Blinded overrides dazzled.",
     "HasLevels": false,
     "Related": [],
-    "Modifiers": {}
+    "Modifiers": {
+      "Perception": {
+        "Type": "Status",
+        "Formula": "-4"
+      }
+    }
   },
   {
     "Name": "Deafened",
@@ -28,22 +38,22 @@
     "Modifiers": {}
   },
   {
-    "Name": "Flat-footed",
-    "Description": "You’re distracted or otherwise unable to focus your full attention on defense. You take a –2 circumstance penalty to AC. Some effects give you the flat-footed condition only to certain creatures or against certain attacks. Others— especially conditions—can make you universally flatfooted against everything. If a rule doesn’t specify that the condition applies only to certain circumstances, it applies to all of them; for example, many effects simply say “The target is flat-footed.”",
+    "Name": "Off-guard",
+    "Description": "You’re distracted or otherwise unable to focus your full attention on defense. You take a –2 circumstance penalty to AC. Some effects give you the off-guard condition only to certain creatures or against certain attacks. Others— especially conditions—can make you universally flatfooted against everything. If a rule doesn’t specify that the condition applies only to certain circumstances, it applies to all of them; for example, many effects simply say “The target is off-guard.”",
     "HasLevels": false,
     "Related": [],
     "Modifiers": {
       "ArmorClass": {
-        "Type": "Status",
+        "Type": "Circumstance",
         "Formula": "-2"
       }
     }
   },
   {
     "Name": "Prone",
-    "Description": "You’re lying on the ground. You are flat-footed and take a –2 circumstance penalty to attack rolls. The only move actions you can use while you’re prone are Crawl and Stand. Standing up ends the prone condition. You can Take Cover while prone to hunker down and gain cover against ranged attacks, even if you don’t have an object to get behind, gaining a +4 circumstance bonus to AC against ranged attacks (but you remain flat-footed).\r\n\r\nIf you would be knocked prone while you’re Climbing or Flying, you fall (see rules on falling). You can’t be knocked prone when Swimming.",
+    "Description": "You’re lying on the ground. You are off-guard and take a –2 circumstance penalty to attack rolls. The only move actions you can use while you’re prone are Crawl and Stand. Standing up ends the prone condition. You can Take Cover while prone to hunker down and gain cover against ranged attacks, even if you don’t have an object to get behind, gaining a +4 circumstance bonus to AC against ranged attacks (but you remain off-guard).\r\n\r\nIf you would be knocked prone while you’re Climbing or Flying, you fall (see rules on falling). You can’t be knocked prone when Swimming.",
     "HasLevels": false,
-    "Related": [ "Flat-footed" ],
+    "Related": [ "Off-Guard" ],
     "Modifiers": {}
   },
   {
@@ -51,14 +61,28 @@
     "Description": "You’re tired and can’t summon much energy. You take a –1 status penalty to AC and saving throws. While exploring, you can’t choose an exploration activity.\r\n\r\nYou recover from fatigue after a full night’s rest.",
     "HasLevels": false,
     "Related": [],
-    "Modifiers": {}
+    "Modifiers": {
+      "ArmorClass": {
+        "Type": "Status",
+        "Formula": "-1"
+      },
+      "SavingThrows": {
+        "Type": "Status",
+        "Formula": "-1"
+      }
+    }
   },
   {
     "Name": "Encumbered",
     "Description": "You are carrying more weight than you can manage.\r\n\r\nWhile you’re encumbered, you’re clumsy 1 and take a 10-foot penalty to all your Speeds. As with all penalties to your Speed, this can’t reduce your Speed below 5 feet.",
     "HasLevels": false,
     "Related": [ "Clumsy" ],
-    "Modifiers": {}
+    "Modifiers": {
+      "Speed": {
+        "Type": "Status",
+        "Formula": "-10"
+      }
+    }
   },
   {
     "Name": "Slowed",
@@ -83,23 +107,23 @@
   },
   {
     "Name": "Grabbed",
-    "Description": "You’re held in place by another creature, giving you the flat-footed and immobilized conditions. If you attempt a manipulate action while grabbed, you must succeed at a DC 5 flat check or it is lost; roll the check after spending the action, but before any effects are applied.",
+    "Description": "You’re held in place by another creature, giving you the off-guard and immobilized conditions. If you attempt a manipulate action while grabbed, you must succeed at a DC 5 flat check or it is lost; roll the check after spending the action, but before any effects are applied.",
     "HasLevels": false,
-    "Related": [ "Flat-footed", "Immobilized" ],
+    "Related": [ "Off-guard", "Immobilized" ],
     "Modifiers": {}
   },
   {
     "Name": "Restrained",
-    "Description": "You’re tied up and can barely move, or a creature has you pinned. You have the flat-footed and immobilized conditions, and you can’t use any actions with the attack or manipulate traits except to attempt to Escape or Force Open your bonds. Restrained overrides grabbed.",
+    "Description": "You’re tied up and can barely move, or a creature has you pinned. You have the off-guard and immobilized conditions, and you can’t use any actions with the attack or manipulate traits except to attempt to Escape or Force Open your bonds. Restrained overrides grabbed.",
     "HasLevels": false,
-    "Related": [ "Flat-footed", "Immobilized" ],
+    "Related": [ "Off-guard", "Immobilized" ],
     "Modifiers": {}
   },
   {
     "Name": "Paralyzed",
-    "Description": "Your body is frozen in place. You have the flat-footed condition and can’t act except to Recall Knowledge and use actions that require only the use of your mind (as determined by the GM). Your senses still function, but only in the areas you can perceive without moving your body, so you can’t Seek while paralyzed.",
+    "Description": "Your body is frozen in place. You have the off-guard condition and can’t act except to Recall Knowledge and use actions that require only the use of your mind (as determined by the GM). Your senses still function, but only in the areas you can perceive without moving your body, so you can’t Seek while paralyzed.",
     "HasLevels": false,
-    "Related": [ "Flat-footed" ],
+    "Related": [ "Off-guard" ],
     "Modifiers": {}
   },
   {
@@ -114,7 +138,12 @@
     "Description": "You’re gripped by fear and struggle to control your nerves.\r\n\r\nThe frightened condition always includes a value. You take a status penalty equal to this value to all your checks and DCs. Unless specified otherwise, at the end of each of your turns, the value of your frightened condition decreases by 1.",
     "HasLevels": true,
     "Related": [],
-    "Modifiers": {}
+    "Modifiers": {
+      "AllChecks": {
+        "Type": "Status",
+        "Formula": "-condition_level"
+      }
+    }
   },
   {
     "Name": "Fleeing",
@@ -125,9 +154,9 @@
   },
   {
     "Name": "Confused",
-    "Description": "You don’t have your wits about you, and you attack wildly. You are flat-footed, you don’t treat anyone as your ally (though they might still treat you as theirs), and you can’t Delay, Ready, or use reactions.\r\n\r\nYou use all your actions to Strike or cast offensive cantrips, though the GM can have you use other actions to facilitate attack, such as draw a weapon, move so that a target is in reach, and so forth. Your targets are determined randomly by the GM. If you have no other viable targets, you target yourself, automatically hitting but not scoring a critical hit. If it’s impossible for you to attack or cast spells, you babble incoherently, wasting your actions.\r\n\r\nEach time you take damage from an attack or spell, you can attempt a DC 11 flat check to recover from your confusion and end the condition.",
+    "Description": "You don’t have your wits about you, and you attack wildly. You are off-guard, you don’t treat anyone as your ally (though they might still treat you as theirs), and you can’t Delay, Ready, or use reactions.\r\n\r\nYou use all your actions to Strike or cast offensive cantrips, though the GM can have you use other actions to facilitate attack, such as draw a weapon, move so that a target is in reach, and so forth. Your targets are determined randomly by the GM. If you have no other viable targets, you target yourself, automatically hitting but not scoring a critical hit. If it’s impossible for you to attack or cast spells, you babble incoherently, wasting your actions.\r\n\r\nEach time you take damage from an attack or spell, you can attempt a DC 11 flat check to recover from your confusion and end the condition.",
     "HasLevels": false,
-    "Related": [ "Flat-footed" ],
+    "Related": [ "Off-guard" ],
     "Modifiers": {}
   },
   {
@@ -142,34 +171,71 @@
     "Description": "Your movements become clumsy and inexact. Clumsy always includes a value. You take a status penalty equal to the condition value to Dexterity-based checks and DCs, including AC, Reflex saves, ranged attack rolls, and skill checks using Acrobatics, Stealth, and Thievery.",
     "HasLevels": true,
     "Related": [],
-    "Modifiers": {}
+    "Modifiers": {
+      "Dexterity": {
+        "Type": "Status",
+        "Formula": "-condition_level"
+      }
+    }
   },
   {
     "Name": "Drained",
     "Description": "When a creature successfully drains you of blood or life force, you become less healthy. Drained always includes a value. You take a status penalty equal to your drained value on Constitution-based checks, such as Fortitude saves. You also lose a number of Hit Points equal to your level (minimum 1) times the drained value, and your maximum Hit Points are reduced by the same amount.\r\n\r\nFor example, if you’re hit by an effect that inflicts drained 3 and you’re a 3rd-level character, you lose 9 Hit Points and reduce your maximum Hit Points by 9. Losing these Hit Points doesn’t count as taking damage.\r\n\r\nEach time you get a full night’s rest, your drained value decreases by 1. This increases your maximum Hit Points, but you don’t immediately recover the lost Hit Points.",
     "HasLevels": true,
     "Related": [],
-    "Modifiers": {}
+    "Modifiers": {
+      "Constitution": {
+        "Type": "Status",
+        "Formula": "-condition_level"
+      },
+      "MaxHealth": {
+        "Type": "Status",
+        "Formula": "-condition_level*target_level"
+      }
+    }
   },
   {
     "Name": "Enfeebled",
     "Description": "You’re physically weakened. Enfeebled always includes a value. When you are enfeebled, you take a status penalty equal to the condition value to Strength-based rolls and DCs, including Strength-based melee attack rolls, Strength-based damage rolls, and Athletics checks.",
     "HasLevels": true,
     "Related": [],
-    "Modifiers": {}
+    "Modifiers": {
+      "Strength": {
+        "Type": "Status",
+        "Formula": "-condition_level"
+      }
+    }
   },
   {
     "Name": "Stupefied",
     "Description": "Your thoughts and instincts are clouded. Stupefied always includes a value. You take a status penalty equal to this value on Intelligence -, Wisdom -, and Charisma-based checks and DCs, including Will saving throws, spell attack rolls, spell DCs, and skill checks that use these ability scores. Any time you attempt to Cast a Spell while stupefied, the spell is disrupted unless you succeed at a flat check with a DC equal to 5 + your stupefied value.",
     "HasLevels": true,
     "Related": [],
-    "Modifiers": {}
+    "Modifiers": {
+      "Intelligence": {
+        "Type": "Status",
+        "Formula": "-condition_level"
+      },
+      "Wisdom": {
+        "Type": "Status",
+        "Formula": "-condition_level"
+      },
+      "Charisma": {
+        "Type": "Status",
+        "Formula": "-condition_level"
+      }
+    }
   },
   {
     "Name": "Sickened",
     "Description": "You feel ill. Sickened always includes a value. You take a status penalty equal to this value on all your checks and DCs. You can’t willingly ingest anything—including elixirs and potions—while sickened.\r\n\r\nYou can spend a single action retching in an attempt to recover, which lets you immediately attempt a Fortitude save against the DC of the effect that made you sickened.\r\n\r\nOn a success, you reduce your sickened value by 1 (or by 2 on a critical success).",
     "HasLevels": true,
     "Related": [],
-    "Modifiers": {}
+    "Modifiers": {
+      "AllChecks": {
+        "Type": "Status",
+        "Formula": "-condition_level"
+      }
+    }
   }
 ]
