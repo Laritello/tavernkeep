@@ -3,6 +3,7 @@ import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 import type { AuthenticationResponse } from '@/contracts/auth/AuthenticationResponse';
 import type { Health, Perception } from '@/contracts/character';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto';
+import type { CreatureShort } from '@/contracts/creatures/CreatureShort.ts';
 import type { CharacterInformationEditDto, SkillEditDto, SpeedEditDto } from '@/contracts/dtos';
 import type { Encounter } from '@/contracts/encounter/Encounter.ts';
 import type { Participant } from '@/contracts/encounter/Participant.ts';
@@ -357,6 +358,11 @@ export class AxiosApiClient {
 
     async updateEncounterParticipantsOrder(encounterId: string, ids: string[]): Promise<void> {
         const response = await this.client.patch(`encounters/${encounterId}/ordinal`, ids);
+        return getPayloadOrThrow(response);
+    }
+
+    async getCreatureList(): Promise<CreatureShort[]> {
+        const response = await this.client.get('library/creatures');
         return getPayloadOrThrow(response);
     }
 }

@@ -12,6 +12,6 @@ namespace Tavernkeep.Core.Entities.Encounters.Participants
 		public override EncounterParticipantType Type => EncounterParticipantType.Character;
 
 		[NotMapped]
-		public override IReadOnlyCollection<ConditionRecord> Conditions => Character.Conditions.AsReadOnly();
+		public override IReadOnlyCollection<ConditionRecord> Conditions => Character is not null ? Character.Conditions.AsReadOnly() : [];
 	}
 }

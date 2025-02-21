@@ -1,4 +1,4 @@
 export enum ParticipantType {
     Character = 'Character',
-    Monster = 'Monster',
+    Creature = 'Creature',
 }
