@@ -1,14 +1,10 @@
 <template>
-    <div class="flex flex-col bg-base-200 h-dvh">
-        <EncounterBuilderHeader class="bg-base-100 shadow border-base-200 border-b-[1px]" />
-        <div class="flex flex-row grow">
-            <EncounterBuilderLeftPanel
-                class="min-w-72 bg-base-100 shadow border-base-200 border-r-[1px] hidden lg:flex"
-            />
-            <main class="container mx-auto p-4">
-                <InitiativeTracker v-if="!!encountersStore.currentEncounter" class="p-4" />
-            </main>
-        </div>
+    <div class="flex flex-col h-dvh">
+        <EncounterBuilderHeader class="header" />
+        <EncounterBuilderLeftPanel class="left-panel" />
+        <main class="content">
+            <InitiativeTracker v-if="!!encountersStore.currentEncounter" class="p-4" />
+        </main>
     </div>
 </template>
 
@@ -20,3 +16,40 @@ import { useEncountersStore } from '@/stores/useEncountersStore.ts';
 
 const encountersStore = useEncountersStore();
 </script>
+
+<style>
+:root {
+    --encounter-header-height: 4rem;
+    --encounter-left-panel-width: 22rem;
+}
+</style>
+
+<style scoped>
+.header {
+    position: fixed;
+    width: 100vw;
+    height: var(--encounter-header-height);
+    z-index: 3;
+    @apply bg-base-100 shadow border-base-200 border-b-[1px];
+}
+
+.left-panel {
+    position: fixed;
+    top: var(--encounter-header-height);
+    left: 0;
+    height: calc(100dvh - var(--encounter-header-height));
+    width: var(--encounter-left-panel-width);
+    z-index: 2;
+    @apply bg-base-200 shadow-lg border-base-300 border-r-[1px] hidden lg:flex;
+}
+
+.content {
+    position: fixed;
+    top: var(--encounter-header-height);
+    left: 0;
+    width: 100vw;
+    height: calc(100dvh - var(--encounter-header-height));
+    z-index: 1;
+    @apply bg-base-300 lg:left-[var(--encounter-left-panel-width)] lg:w-[calc(100vw-var(--encounter-left-panel-width))];
+}
+</style>
