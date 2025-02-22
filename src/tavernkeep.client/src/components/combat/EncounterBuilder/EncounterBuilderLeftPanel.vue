@@ -1,11 +1,17 @@
 <script setup lang="ts">
+import { computed, useTemplateRef } from 'vue';
+
+import EncounterCharacterList from '@/components/combat/EncounterBuilder/EncounterCharacterList.vue';
+import CreatureList from '@/components/library/CreatureList.vue';
+import TabMenu from '@/components/shared/TabMenu.vue';
+import type { CreatureShort } from '@/contracts/creatures/CreatureShort.ts';
 import { ParticipantType } from '@/contracts/enums';
 import type { Character } from '@/entities';
-import { useCharacters } from '@/stores/characters.ts';
 import { useCurrentEncounterStore } from '@/stores/useCurrentEncounterStore.ts';
 
 const currentEncounterStore = useCurrentEncounterStore();
-const charactersStore = useCharacters();
+const tabMenuRef = useTemplateRef<HTMLDivElement>('tab-menu');
+const tabMenuHeight = computed(() => (tabMenuRef.value?.offsetHeight ?? 300) - 40);
 
 async function addPlayerCharacter(character: Character) {
     if (!currentEncounterStore.isActive) {
@@ -17,26 +23,47 @@ async function addPlayerCharacter(character: Character) {
         entityId: character.id,
     });
 }
+
+async function addCreature(creature: CreatureShort) {
+    if (!currentEncounterStore.isActive) {
+        return;
+    }
+
+    await currentEncounterStore.addParticipant({
+        type: ParticipantType.Creature,
+        entityId: creature.id,
+    });
+}
 </script>
 
 <template>
     <aside class="bg-base-100">
-        <div class="m-4">
-            <h1 class="text-xl font-semibold">Characters</h1>
-            <ul class="menu gap-2">
-                <li
-                    v-for="character in charactersStore.all"
-                    :key="character.id"
-                    class="flex flex-row gap-2 items-baseline"
-                >
-                    <span class="text-lg">{{ character.name }}</span>
-                    <span
-                        class="btn btn-circle btn-sm mdi mdi-chevron-right"
-                        :class="{ 'btn-disabled': !currentEncounterStore.isActive }"
-                        @click="addPlayerCharacter(character)"
-                    ></span>
-                </li>
-            </ul>
+        <div ref="tab-menu" class="w-full h-full">
+            <TabMenu
+                :tabs="[
+                    { id: 'characters', label: 'Characters' },
+                    { id: 'creatures', label: 'Creatures' },
+                ]"
+                default-tab="characters"
+                variant="bordered"
+                class="h-full"
+            >
+                <template #characters>
+                    <EncounterCharacterList
+                        :disable-buttons="!currentEncounterStore.isActive"
+                        class="w-full h-[calc(100%_-_40px)]"
+                        @add-pressed="addPlayerCharacter"
+                    />
+                </template>
+
+                <template #creatures>
+                    <CreatureList
+                        :disable-buttons="!currentEncounterStore.isActive"
+                        class="w-full h-[calc(100%_-_40px)]"
+                        @add-pressed="addCreature"
+                    />
+                </template>
+            </TabMenu>
         </div>
     </aside>
 </template>

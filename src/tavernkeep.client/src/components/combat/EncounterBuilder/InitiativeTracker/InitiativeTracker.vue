@@ -46,7 +46,6 @@ async function onDragEnd() {
                     <InitiativeParticipantCard
                         v-for="participant in currentEncounter.participants"
                         :key="participant.id"
-                        class=""
                         :participant="participant"
                         :active-turn="false"
                         @edit="console.log('edit participant card')"

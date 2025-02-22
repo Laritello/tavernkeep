@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+[data-theme='dark'] {
+    --unique-color: #371835;
+    --rare-color: #192640;
+    --uncommon-color: #613513;
+}
+
+[data-theme='light'] {
+    --unique-color: #e65cda;
+    --rare-color: #5082e6;
+    --uncommon-color: #e66f15;
+}
+
 :root {
     --vsbs-background: oklch(var(--b1)); /* base-100 */
     --vsbs-border-color: oklch(var(--b2)); /* base-200 */

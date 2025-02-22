@@ -22,7 +22,7 @@ async function deleteEncounter(encounterId: string) {
 </script>
 
 <template>
-    <div class="navbar sticky top-0 bg-base-100">
+    <div class="navbar">
         <div class="flex-none lg:hidden">
             <button class="btn btn-square btn-ghost">
                 <svg
