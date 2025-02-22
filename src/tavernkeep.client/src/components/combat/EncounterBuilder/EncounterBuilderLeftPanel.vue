@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed, useTemplateRef } from 'vue';
-
 import EncounterCharacterList from '@/components/combat/EncounterBuilder/EncounterCharacterList.vue';
 import CreatureList from '@/components/library/CreatureList.vue';
 import TabMenu from '@/components/shared/TabMenu.vue';
@@ -10,8 +8,6 @@ import type { Character } from '@/entities';
 import { useCurrentEncounterStore } from '@/stores/useCurrentEncounterStore.ts';
 
 const currentEncounterStore = useCurrentEncounterStore();
-const tabMenuRef = useTemplateRef<HTMLDivElement>('tab-menu');
-const tabMenuHeight = computed(() => (tabMenuRef.value?.offsetHeight ?? 300) - 40);
 
 async function addPlayerCharacter(character: Character) {
     if (!currentEncounterStore.isActive) {

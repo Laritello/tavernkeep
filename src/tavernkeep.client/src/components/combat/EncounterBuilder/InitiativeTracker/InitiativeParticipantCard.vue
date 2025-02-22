@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import HealthBar from '@/components/character/HealthBar.vue';
 import type { Participant } from '@/contracts/encounter/Participant.ts';
 
 const { participant, activeTurn } = defineProps<{
@@ -36,10 +37,7 @@ defineEmits<{
             </div>
 
             <!-- HP Display -->
-            <div class="badge badge-lg" :class="participant.type === 'Character' ? 'badge-primary' : 'badge-error'">
-                HP:
-                {{ participant.type === 'Character' ? '92/100' : '79%' }}
-            </div>
+            <HealthBar :health="participant.health" width="10rem" :hidden="participant.type === 'Creature'" />
 
             <!-- Action Buttons -->
             <div class="flex gap-2">
