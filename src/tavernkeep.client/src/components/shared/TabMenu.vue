@@ -13,13 +13,15 @@
             </button>
         </div>
 
-        <div class="h-full relative mt-4">
-            <template v-for="tab in tabs" :key="tab.id">
-                <div v-show="activeTab === tab.id" role="tabpanel" class="h-full">
-                    <slot :name="tab.id"></slot>
-                </div>
-            </template>
-        </div>
+        <Teleport :to="teleportTarget" :disabled="!teleportTarget">
+            <div class="h-full relative mt-4">
+                <template v-for="tab in tabs" :key="tab.id">
+                    <div v-show="activeTab === tab.id" role="tabpanel" class="h-full">
+                        <slot :name="tab.id"></slot>
+                    </div>
+                </template>
+            </div>
+        </Teleport>
     </div>
 </template>
 
@@ -40,6 +42,7 @@ const props = withDefaults(
         defaultTab?: string;
         size?: TabSize;
         variant?: TabVariant;
+        teleportTarget?: string | HTMLElement;
     }>(),
     {
         size: 'md',
