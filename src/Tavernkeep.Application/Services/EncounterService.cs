@@ -77,7 +77,7 @@ namespace Tavernkeep.Application.Services
 			return encounter;
 		}
 
-		public async Task UpdateEncounterStatusAsync(Guid encounterId, EncounterStatus status, CancellationToken cancellationToken)
+		public async Task EditEncounterStatusAsync(Guid encounterId, EncounterStatus status, CancellationToken cancellationToken)
 		{
 			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
 
@@ -113,7 +113,7 @@ namespace Tavernkeep.Application.Services
 			await SaveEncounter(encounter, cancellationToken);
 		}
 
-		public async Task RemoveParticipantAsync(Guid encounterId, Guid participantId, CancellationToken cancellationToken)
+		public async Task DeleteParticipantAsync(Guid encounterId, Guid participantId, CancellationToken cancellationToken)
 		{
 			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
 
@@ -122,7 +122,7 @@ namespace Tavernkeep.Application.Services
 			await SaveEncounter(encounter, cancellationToken);
 		}
 
-		public async Task UpdateParticipantsOrdinalAsync(Guid encounterId, IList<Guid> ordinals, CancellationToken cancellationToken)
+		public async Task EditParticipantsOrdinalAsync(Guid encounterId, IList<Guid> ordinals, CancellationToken cancellationToken)
 		{
 			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
 

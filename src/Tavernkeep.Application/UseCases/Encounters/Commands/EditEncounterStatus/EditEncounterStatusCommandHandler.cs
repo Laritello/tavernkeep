@@ -9,7 +9,7 @@ namespace Tavernkeep.Application.UseCases.Encounters.Commands.EditEncounterStatu
 	{
 		public async Task Handle(EditEncounterStatusCommand request, CancellationToken cancellationToken)
 		{
-			await encounterService.UpdateEncounterStatusAsync(request.EncounterId, request.Status, cancellationToken);
+			await encounterService.EditEncounterStatusAsync(request.EncounterId, request.Status, cancellationToken);
 		}
 	}
 }
