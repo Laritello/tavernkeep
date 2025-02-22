@@ -234,6 +234,21 @@ namespace Tavernkeep.Application.Services
 			await SaveEncounter(encounter, cancellationToken);
 		}
 
+		public Task AddConditionToParticipantAsync(Guid encounterId, Guid participantId, string conditionName, CancellationToken cancellationToken)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task EditConditionOnParticipantAsync(Guid encounterId, Guid participantId, string conditionName, int? level, CancellationToken cancellationToken)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task DeleteConditionFormParticipantAsync(Guid encounterId, Guid participantId, string conditionName, CancellationToken cancellationToken)
+		{
+			throw new NotImplementedException();
+		}
+
 		#endregion
 
 		#region Private functions
