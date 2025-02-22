@@ -17,5 +17,8 @@ namespace Tavernkeep.Core.Services
 		public Task SetInitiativeForParticipantAsync(Guid encounterId, Guid userId, Guid participantId, int initiative, CancellationToken cancellationToken);
 		public Task ClearInitiativeAsync(Guid encounterId, CancellationToken cancellationToken);
 		public Task UpdateTurnAsync(Guid encounterId, bool moveForward, CancellationToken cancellationToken);
+		public Task AddConditionToParticipantAsync(Guid encounterId, Guid participantId, string conditionName, CancellationToken cancellationToken);
+		public Task EditConditionOnParticipantAsync(Guid encounterId, Guid participantId, string conditionName, int? level, CancellationToken cancellationToken);
+		public Task DeleteConditionFormParticipantAsync(Guid encounterId, Guid participantId, string conditionName, CancellationToken cancellationToken);
 	}
 }
