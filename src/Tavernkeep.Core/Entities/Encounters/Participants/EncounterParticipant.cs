@@ -13,6 +13,6 @@ namespace Tavernkeep.Core.Entities.Encounters.Participants
 		public string? GroupName { get; set; }
 		public int? Initiative { get; set; }
 		public int Ordinal { get; set; }
-		public abstract IReadOnlyCollection<ConditionRecord> Conditions { get; }
+		public virtual IReadOnlyCollection<ConditionRecord> Conditions { get; } = [];
 	}
 }

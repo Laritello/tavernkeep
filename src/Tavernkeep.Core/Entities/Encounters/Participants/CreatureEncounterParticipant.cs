@@ -13,6 +13,8 @@ namespace Tavernkeep.Core.Entities.Encounters.Participants
 		#endregion
 
 		public Guid CreatureId { get; set; }
+		public int CurrentHealth { get; set; }
+		public int TemporaryHealth { get; set; }
 		public required Creature Creature { get; set; }
 		public override EncounterParticipantType Type => EncounterParticipantType.Creature;
 		public override IReadOnlyCollection<CreatureConditionRecord> Conditions => _conditions.AsReadOnly();

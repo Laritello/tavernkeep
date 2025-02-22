@@ -261,6 +261,8 @@ namespace Tavernkeep.Application.Services
 			{
 				Encounter = encounter,
 				Creature = creature,
+				CurrentHealth = creature.Health.Max,
+				TemporaryHealth = creature.Health.Temporary,
 			};
 
 			encounter.AddParticipant(participant);
