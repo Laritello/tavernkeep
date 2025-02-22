@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
+using Tavernkeep.Application.UseCases.Encounters.Commands.AddConditionToParticipant;
 using Tavernkeep.Application.UseCases.Encounters.Commands.AddEncounterParticipant;
 using Tavernkeep.Application.UseCases.Encounters.Commands.ClearInitiative;
 using Tavernkeep.Application.UseCases.Encounters.Commands.CreateEncounter;
+using Tavernkeep.Application.UseCases.Encounters.Commands.DeleteConditionFromParticipant;
+using Tavernkeep.Application.UseCases.Encounters.Commands.EditConditionOnParticipant;
 using Tavernkeep.Application.UseCases.Encounters.Commands.EditEncounterStatus;
 using Tavernkeep.Application.UseCases.Encounters.Commands.RemoveEncounterParticipant;
 using Tavernkeep.Application.UseCases.Encounters.Commands.SetParticipantInitiative;
@@ -186,6 +189,48 @@ namespace Tavernkeep.Server.Controllers
 		public async Task GoToPreviousTurnAsync([FromRoute] Guid encounterId)
 		{
 			await mediator.Send(new UpdateTurnCommand(encounterId, false));
+		}
+
+		/// <summary>
+		/// Add condition to the participant
+		/// </summary>
+		/// <param name="encounterId">ID of the encounter.</param>
+		/// <param name="participantId">ID of the participant, to which condition should be added.</param>
+		/// <param name="request">Request with the name of the condition.</param>
+		[Authorize]
+		[RequiresRole(UserRole.Master)]
+		[HttpPost("{encounterId}/participant/{participantId}/conditions")]
+		public async Task AddConditionToParticipantAsync([FromRoute] Guid encounterId, [FromRoute] Guid participantId, [FromBody] AddConditionToParticipantRequest request)
+		{
+			await mediator.Send(new AddConditionToParticipantCommand(encounterId, participantId, request.Name));
+		}
+
+		/// <summary>
+		/// Edit condition on the participant
+		/// </summary>
+		/// <param name="encounterId">ID of the encounter.</param>
+		/// <param name="participantId">ID of the participant, to which condition should be added.</param>
+		/// <param name="request">Request with the name of the condition and its level (if needed).</param>
+		[Authorize]
+		[RequiresRole(UserRole.Master)]
+		[HttpPatch("{encounterId}/participant/{participantId}/conditions")]
+		public async Task EditConditionOnParticipantAsync([FromRoute] Guid encounterId, [FromRoute] Guid participantId, [FromBody] EditConditionOnParticipantRequest request)
+		{
+			await mediator.Send(new EditConditionOnParticipantCommand(encounterId, participantId, request.Name, request.Level));
+		}
+
+		/// <summary>
+		/// Remove condition from the participant
+		/// </summary>
+		/// <param name="encounterId">ID of the encounter.</param>
+		/// <param name="participantId">ID of the participant, to which condition should be added.</param>
+		/// <param name="name">Name of the condition that should be removed.</param>
+		[Authorize]
+		[RequiresRole(UserRole.Master)]
+		[HttpDelete("{encounterId}/participant/{participantId}/conditions")]
+		public async Task RemoveConditionFromParticipantAsync([FromRoute] Guid encounterId, [FromRoute] Guid participantId, [FromQuery] string name)
+		{
+			await mediator.Send(new DeleteConditionFromParticipantCommand(encounterId, participantId, name));
 		}
 	}
 }
