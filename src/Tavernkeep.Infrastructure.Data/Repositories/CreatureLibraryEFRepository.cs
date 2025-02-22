@@ -10,7 +10,7 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 	{
 		public Task<List<Creature>> GetAllCreaturesAsync(CancellationToken cancellationToken = default)
 		{
-			return AsQueryable().ToListAsync(cancellationToken);
+			return AsQueryable().OrderBy(x => x.Level).ThenBy(x => x.Name).ToListAsync(cancellationToken);
 		}
 
 		public Task<Creature> GetCreatureAsync(Guid id, CancellationToken cancellationToken = default)
