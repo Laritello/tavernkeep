@@ -32,12 +32,12 @@ defineEmits<{
 
             <!-- Participant Info -->
             <div class="flex-1">
-                <h3 class="font-bold">{{ participant.id.slice(0, 6) }}</h3>
-                <div class="text-sm opacity-70">CLASS / TYPE</div>
+                <h3 class="font-bold">{{ participant.name }}</h3>
+                <div class="text-sm opacity-70">{{ participant.type }}</div>
             </div>
 
             <!-- HP Display -->
-            <HealthBar :health="participant.health" width="10rem" :hidden="participant.type === 'Creature'" />
+            <HealthBar :health="participant.health" width="10rem" />
 
             <!-- Action Buttons -->
             <div class="flex gap-2">

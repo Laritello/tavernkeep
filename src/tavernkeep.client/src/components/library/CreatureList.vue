@@ -16,7 +16,7 @@ const emits = defineEmits<{
 }>();
 
 const creaturesStore = useCreaturesStore();
-const filteredList = computed(() => [...creaturesStore.creatures].sort((a, b) => a.level - b.level));
+const filteredList = computed(() => creaturesStore.creatures);
 const { list, containerProps, wrapperProps } = useVirtualList(filteredList, {
     itemHeight,
 });
