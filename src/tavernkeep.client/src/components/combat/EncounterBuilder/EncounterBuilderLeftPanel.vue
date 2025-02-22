@@ -42,7 +42,7 @@ async function addCreature(creature: CreatureShort) {
                 ]"
                 default-tab="characters"
                 variant="bordered"
-                class="h-full"
+                class="h-full w-full"
             >
                 <template #characters>
                     <EncounterCharacterList

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div role="tablist" class="tabs" :class="[`tabs-${variant}`, `tabs-${size}`]">
+        <div role="tablist" class="tabs w-full" :class="[`tabs-${variant}`, `tabs-${size}`]">
             <button
                 v-for="tab in tabs"
                 :key="tab.id"
@@ -9,7 +9,19 @@
                 :class="{ 'tab-active': activeTab === tab.id }"
                 @click="selectTab(tab.id)"
             >
-                {{ tab.label }}
+                <span class="flex flex-row w-full">
+                    <span class="grow">{{ tab.label }}</span>
+                    <span
+                        v-if="showEditButton"
+                        class="btn btn-xs btn-square btn-ghost mdi mdi-pencil"
+                        @click="emits('edit', tab.id)"
+                    ></span>
+                    <span
+                        v-if="showCloseButton"
+                        class="btn btn-xs btn-square btn-ghost mdi mdi-close"
+                        @click="emits('close', tab.id)"
+                    ></span>
+                </span>
             </button>
         </div>
 
@@ -43,13 +55,23 @@ const props = withDefaults(
         size?: TabSize;
         variant?: TabVariant;
         teleportTarget?: string | HTMLElement;
+        showEditButton?: boolean;
+        showCloseButton?: boolean;
     }>(),
     {
         size: 'md',
         variant: 'bordered',
         defaultTab: '',
+        teleportTarget: undefined,
+        showEditButton: false,
+        showCloseButton: false,
     }
 );
+
+const emits = defineEmits<{
+    close: [id: string];
+    edit: [id: string];
+}>();
 
 const activeTab = ref(props.defaultTab || props.tabs[0]?.id || '');
 
