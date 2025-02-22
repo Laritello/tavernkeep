@@ -9,7 +9,6 @@ using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Extensions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Services;
-using Tavernkeep.Core.Specifications.Encounters;
 
 namespace Tavernkeep.Application.Services
 {
@@ -80,8 +79,7 @@ namespace Tavernkeep.Application.Services
 
 		public async Task UpdateEncounterStatusAsync(Guid encounterId, EncounterStatus status, CancellationToken cancellationToken)
 		{
-			var encounter = await encounterRepository.FindAsync(encounterId, cancellationToken: cancellationToken)
-				?? throw new BusinessLogicException("Encounter not found.");
+			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
 
 			if (status.IsEarlierThan(encounter.Status))
 				throw new BusinessLogicException("Can't change encounter status to the previous status.");
@@ -98,8 +96,7 @@ namespace Tavernkeep.Application.Services
 
 		public async Task AddParticipantAsync(Guid encounterId, EncounterParticipantType type, Guid entityId, CancellationToken cancellationToken)
 		{
-			var encounter = await encounterRepository.FindAsync(new EncounterFullSpecification(encounterId), cancellationToken: cancellationToken)
-				?? throw new BusinessLogicException("Encounter not found.");
+			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
 
 			switch (type)
 			{
@@ -118,8 +115,7 @@ namespace Tavernkeep.Application.Services
 
 		public async Task RemoveParticipantAsync(Guid encounterId, Guid participantId, CancellationToken cancellationToken)
 		{
-			var encounter = await encounterRepository.FindAsync(new EncounterFullSpecification(encounterId), cancellationToken: cancellationToken)
-				?? throw new BusinessLogicException("Encounter not found.");
+			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
 
 			encounter.RemoveParticipant(encounter.Participants.First(x => x.Id == participantId));
 
@@ -128,10 +124,9 @@ namespace Tavernkeep.Application.Services
 
 		public async Task UpdateParticipantsOrdinalAsync(Guid encounterId, IList<Guid> ordinals, CancellationToken cancellationToken)
 		{
-			var encounter = await encounterRepository.FindAsync(new EncounterFullSpecification(encounterId), cancellationToken: cancellationToken)
-				?? throw new BusinessLogicException("Encounter not found.");
+			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
 
-			foreach(var participant in encounter.Participants)
+			foreach (var participant in encounter.Participants)
 			{
 				participant.Ordinal = ordinals.IndexOf(participant.Id);
 			}
@@ -141,8 +136,7 @@ namespace Tavernkeep.Application.Services
 
 		public async Task RollInitiativeAsync(Guid encounterId, Guid userId, bool npcOnly, CancellationToken cancellationToken)
 		{
-			var encounter = await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken) 
-				?? throw new BusinessLogicException("Encounter not found");
+			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
 
 			foreach (var participant in encounter.Participants)
 			{
@@ -167,8 +161,7 @@ namespace Tavernkeep.Application.Services
 
 		public async Task SetInitiativeForParticipantAsync(Guid encounterId, Guid userId, Guid participantId, int initiative, CancellationToken cancellationToken)
 		{
-			var encounter = await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken)
-				?? throw new BusinessLogicException("Encounter not found");
+			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
 			var participant = encounter.Participants.First(x => x.Id == participantId)
 				?? throw new BusinessLogicException("Participant not found.");
 
@@ -184,8 +177,7 @@ namespace Tavernkeep.Application.Services
 
 		public async Task RollInitiativeForParticipantAsync(Guid encounterId, Guid userId, Guid participantId, string skillName, CancellationToken cancellationToken)
 		{
-			var encounter = await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken) 
-				?? throw new BusinessLogicException("Encounter not found");
+			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
 			var participant = encounter.Participants.First(x => x.Id == participantId)
 				?? throw new BusinessLogicException("Participant not found.");
 
@@ -206,8 +198,7 @@ namespace Tavernkeep.Application.Services
 
 		public async Task ClearInitiativeAsync(Guid encounterId, CancellationToken cancellationToken)
 		{
-			var encounter = await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken)
-				?? throw new BusinessLogicException("Encounter not found");
+			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
 
 			foreach (var participant in encounter.Participants)
 			{
@@ -219,8 +210,7 @@ namespace Tavernkeep.Application.Services
 
 		public async Task UpdateTurnAsync(Guid encounterId, bool moveForward, CancellationToken cancellationToken)
 		{
-			var encounter = await encounterRepository.GetFullEncounterAsync(encounterId, cancellationToken)
-				?? throw new BusinessLogicException("Encounter not found");
+			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
 
 			if (moveForward)
 			{
