@@ -198,7 +198,7 @@ function toggleDetails() {
                     <div class="self-stretch px-2">
                         <HealthBar
                             :health="user.activeCharacter.value.health"
-                            class="h-6"
+                            height="1.5rem"
                             @click="showHealthEditDialog"
                         />
                     </div>
