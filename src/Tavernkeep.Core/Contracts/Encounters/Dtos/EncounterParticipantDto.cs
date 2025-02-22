@@ -12,7 +12,6 @@ namespace Tavernkeep.Core.Contracts.Encounters.Dtos
 		public Guid Id { get; set; }
 		public required string Name { get; set; }
 		public Guid EntityId { get; set; }
-		public EncounterParticipantType Type { get; set; }
 		public int? Initiative { get; set; }
 		public int ArmorClass { get; set; }
 		public int Perception { get; set; }
