@@ -129,6 +129,8 @@ namespace Tavernkeep.Core.Entities.Encounters
 			}
 		}
 
+		public bool InInitiativePhase => RoundNumber == 1 && CurrentTurnIndex == 0;
+
 		#endregion
 	}
 }

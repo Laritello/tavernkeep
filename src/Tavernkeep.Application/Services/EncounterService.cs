@@ -84,7 +84,7 @@ namespace Tavernkeep.Application.Services
 
 			await SaveEncounter(encounter, cancellationToken);
 
-			if (encounter.Status == EncounterStatus.Initiative)
+			if (encounter.Status == EncounterStatus.Active)
 			{
 				await notificationService.Publish(new EncounterLaunchedNotification(encounter), cancellationToken);
 			}
@@ -131,7 +131,7 @@ namespace Tavernkeep.Application.Services
 				}
 			}
 
-			if (encounter.Status == EncounterStatus.Initiative)
+			if (encounter.InInitiativePhase)
 			{
 				encounter.OrderByInitiative();
 			}
@@ -147,7 +147,7 @@ namespace Tavernkeep.Application.Services
 
 			participant.Initiative = initiative;
 
-			if (encounter.Status == EncounterStatus.Initiative)
+			if (encounter.InInitiativePhase)
 			{
 				encounter.OrderByInitiative();
 			}
@@ -163,7 +163,7 @@ namespace Tavernkeep.Application.Services
 
 			await strategies.RollParticipantInitiative[participant.Type].RollInitiative(participant, cancellationToken, skillName);
 
-			if (encounter.Status == EncounterStatus.Initiative)
+			if (encounter.InInitiativePhase)
 			{
 				encounter.OrderByInitiative();
 			}
@@ -178,6 +178,11 @@ namespace Tavernkeep.Application.Services
 			foreach (var participant in encounter.Participants)
 			{
 				participant.Initiative = null;
+			}
+
+			if (encounter.InInitiativePhase)
+			{
+				encounter.OrderByInitiative();
 			}
 
 			await SaveEncounter(encounter, cancellationToken);

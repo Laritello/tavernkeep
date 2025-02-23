@@ -3,7 +3,6 @@
 	public enum EncounterStatus
 	{
 		Draft,
-		Initiative,
 		Active,
 		Finished
 	}
