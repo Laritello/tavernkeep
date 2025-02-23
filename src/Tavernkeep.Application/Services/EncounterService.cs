@@ -10,6 +10,8 @@ using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Extensions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Services;
+using Tavernkeep.Core.Services.Encounters;
+using Tavernkeep.Core.Services.Encounters.Strategies;
 
 namespace Tavernkeep.Application.Services
 {
@@ -18,7 +20,8 @@ namespace Tavernkeep.Application.Services
 		ICreatureLibraryRepository creatureRepository,
 		ICharacterService characterService,
 		INotificationService notificationService,
-		IDiceService diceService
+		IDiceService diceService,
+		IEncounterServiceStrategies strategies
 		) : IEncounterService
 	{
 		#region Public API
@@ -111,18 +114,7 @@ namespace Tavernkeep.Application.Services
 		{
 			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
 
-			switch (type)
-			{
-				case EncounterParticipantType.Character:
-					await AddCharacterParticipantAsync(encounter, entityId, cancellationToken);
-					break;
-				case EncounterParticipantType.Creature:
-					await AddCreatureParticipantAsync(encounter, entityId, cancellationToken);
-					break;
-				default:
-					throw new NotImplementedException();
-			}
-
+			await strategies.AddParticipant[type].AddParticipantAsync(encounter, entityId, cancellationToken);
 			await SaveEncounter(encounter, cancellationToken);
 		}
 
@@ -255,36 +247,6 @@ namespace Tavernkeep.Application.Services
 		#endregion
 
 		#region Private functions
-
-		private async Task AddCharacterParticipantAsync(Encounter encounter, Guid characterId, CancellationToken cancellationToken)
-		{
-			var character = await characterService.GetCharacterAsync(characterId, cancellationToken)
-				?? throw new BusinessLogicException("Character with specified ID not found");
-
-			CharacterEncounterParticipant participant = new()
-			{
-				Encounter = encounter,
-				Character = character,
-			};
-
-			encounter.AddParticipant(participant);
-		}
-
-		private async Task AddCreatureParticipantAsync(Encounter encounter, Guid creatureId, CancellationToken cancellationToken)
-		{
-			var creature = await creatureRepository.GetCreatureAsync(creatureId, cancellationToken)
-				?? throw new BusinessLogicException("Creature with specified ID not found");
-
-			CreatureEncounterParticipant participant = new()
-			{
-				Encounter = encounter,
-				Creature = creature,
-				CurrentHealth = creature.Health.Max,
-				TemporaryHealth = creature.Health.Temporary,
-			};
-
-			encounter.AddParticipant(participant);
-		}
 
 		private async Task RollInitiative(CharacterEncounterParticipant participant, Guid userId, CancellationToken cancellationToken, string skillName = "Perception")
 		{

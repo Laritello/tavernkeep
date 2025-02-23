@@ -4,8 +4,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.Services;
+using Tavernkeep.Application.Strategies.Encounters;
+using Tavernkeep.Application.Strategies.Encounters.AddParticipant;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Services;
+using Tavernkeep.Core.Services.Encounters;
+using Tavernkeep.Core.Services.Encounters.Strategies;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Repositories;
 using Tavernkeep.Infrastructure.Data.Utility;
@@ -115,6 +119,11 @@ namespace Tavernkeep.Server.Extensions
 
 			services.AddScoped<ICharacterService, CharacterService>();
 			services.AddScoped<IPortaitService, PortraitService>();
+
+			services.AddTransient<IAddEncounterParticipantStrategy, AddCharacterEncounterParticipantStrategy>();
+			services.AddTransient<IAddEncounterParticipantStrategy, AddCreatureEncounterParticipantStrategy>();
+			services.AddScoped<IEncounterServiceStrategies, EncounterServiceStrategies>();
+
 			services.AddScoped<IEncounterService, EncounterService>();
 
 			services.AddSingleton<IUserConnectionStorage<Guid>, UserConnectionStorage<Guid>>();
