@@ -81,7 +81,7 @@ namespace Tavernkeep.Server.Controllers
 		/// </summary>
 		[Authorize]
 		[RequiresRole(UserRole.Master)]
-		[HttpPost]
+		[HttpDelete]
 		public async Task DeleteEncounterAsync([FromQuery] Guid encounterId)
 		{
 			await mediator.Send(new DeleteEncounterCommand(encounterId));
@@ -159,7 +159,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Roll initiative for specific participant
+		/// Roll initiative for specific participant.
 		/// </summary>
 		/// <param name="encounterId">Encounter ID to roll initiative for.</param>
 		/// <param name="participantId">Participant ID</param>
@@ -180,7 +180,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Go to the next turn in initiative
+		/// Go to the next turn in initiative.
 		/// </summary>
 		/// <param name="encounterId">ID of the encounter, which turn should be updated.</param>
 		[Authorize]
@@ -192,7 +192,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Go to the previous turn in initiative
+		/// Go to the previous turn in initiative.
 		/// </summary>
 		/// <param name="encounterId">ID of the encounter, which turn should be updated.</param>
 		[Authorize]
@@ -204,7 +204,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Add condition to the participant
+		/// Add condition to the participant.
 		/// </summary>
 		/// <param name="encounterId">ID of the encounter.</param>
 		/// <param name="participantId">ID of the participant to which the condition should be added.</param>
@@ -218,7 +218,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Edit condition on the participant
+		/// Edit condition on the participant.
 		/// </summary>
 		/// <param name="encounterId">ID of the encounter.</param>
 		/// <param name="participantId">ID of the participant whose condition should be edited.</param>
@@ -232,7 +232,7 @@ namespace Tavernkeep.Server.Controllers
 		}
 
 		/// <summary>
-		/// Delete condition from the participant
+		/// Delete condition from the participant.
 		/// </summary>
 		/// <param name="encounterId">ID of the encounter.</param>
 		/// <param name="participantId">ID of the participant whose condition should be removed.</param>
