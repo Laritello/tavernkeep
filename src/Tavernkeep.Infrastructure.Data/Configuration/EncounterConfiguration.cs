@@ -11,6 +11,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
 			builder.HasKey(x => x.Id);
 
 			builder.Property(e => e.Name).IsRequired().HasDefaultValue("New encounter");
+			builder.Property(e => e.Created).IsRequired().HasDefaultValue(new DateTimeOffset(new DateTime(2025, 1, 1), TimeSpan.Zero));
 
 			builder
 				.HasMany(e => e.Participants)

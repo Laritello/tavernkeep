@@ -30,6 +30,7 @@ namespace Tavernkeep.Core.Entities.Encounters
 		public string Name { get; set; }
 		public int RoundNumber { get; private set; }
 		public int CurrentTurnIndex { get; private set; }
+		public DateTimeOffset Created { get; set; }
 		public EncounterStatus Status { get; set; }
 		public IReadOnlyCollection<EncounterParticipant> Participants => _participants.AsReadOnly();
 

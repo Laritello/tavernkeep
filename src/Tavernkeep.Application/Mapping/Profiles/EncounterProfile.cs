@@ -15,6 +15,7 @@ namespace Tavernkeep.Application.Mapping.Profiles
 		public EncounterProfile() 
 		{
 			CreateMap<Encounter, EncounterDto>()
+				.ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.Created.ToUnixTimeSeconds()))
 				.ForMember(dest => dest.Participants, opt => opt.MapFrom(src => src.Participants.OrderBy(x => x.Ordinal)));
 
 			CreateMap<EncounterParticipant, EncounterParticipantDto>()

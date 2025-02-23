@@ -9,6 +9,7 @@ namespace Tavernkeep.Core.Contracts.Encounters.Dtos
 		public EncounterStatus Status { get; set; }
 		public int RoundNumber { get; set; }
 		public int CurrentTurnIndex { get; set; }
+		public long CreatedAt { get; set; }
 		public required ICollection<EncounterParticipantDto> Participants { get; set; }
 	}
 }
