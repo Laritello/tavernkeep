@@ -37,7 +37,7 @@ defineEmits<{
             </div>
 
             <!-- HP Display -->
-            <HealthBar :health="participant.health" width="10rem" />
+            <HealthBar :health="participant.health" width="10rem" height="1.25rem" />
 
             <!-- Action Buttons -->
             <div class="flex gap-2">
