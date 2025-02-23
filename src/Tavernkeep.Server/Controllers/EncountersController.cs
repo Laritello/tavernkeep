@@ -83,7 +83,7 @@ namespace Tavernkeep.Server.Controllers
 		[Authorize]
 		[RequiresRole(UserRole.Master)]
 		[HttpDelete("{encounterId}")]
-		public async Task DeleteEncounterAsync([FromBody] Guid encounterId)
+		public async Task DeleteEncounterAsync([FromRoute] Guid encounterId)
 		{
 			await mediator.Send(new DeleteEncounterCommand(encounterId));
 		}
