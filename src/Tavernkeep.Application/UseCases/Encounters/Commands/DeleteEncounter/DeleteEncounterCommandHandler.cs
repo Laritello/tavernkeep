@@ -1,12 +1,13 @@
 ﻿using MediatR;
+using Tavernkeep.Core.Services;
 
 namespace Tavernkeep.Application.UseCases.Encounters.Commands.DeleteEncounter
 {
-	public class DeleteEncounterCommandHandler : IRequestHandler<DeleteEncounterCommand>
+	public class DeleteEncounterCommandHandler(IEncounterService encounterService) : IRequestHandler<DeleteEncounterCommand>
 	{
-		public Task Handle(DeleteEncounterCommand request, CancellationToken cancellationToken)
+		public async Task Handle(DeleteEncounterCommand request, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			await encounterService.DeleteEncounterAsync(request.EncounterId, cancellationToken);
 		}
 	}
 }

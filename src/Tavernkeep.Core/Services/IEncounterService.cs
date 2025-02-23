@@ -8,6 +8,7 @@ namespace Tavernkeep.Core.Services
 		public Task<ICollection<Encounter>> GetAllEncountersAsync(CancellationToken cancellationToken);
 		public Task<Encounter> GetEncounterAsync(Guid encounterId, CancellationToken cancellationToken);
 		public Task<Encounter> CreateEncounterAsync(string name, CancellationToken cancellationToken);
+		public Task DeleteEncounterAsync(Guid encounterId, CancellationToken cancellationToken);
 		public Task EditEncounterStatusAsync(Guid encounterId, EncounterStatus status, CancellationToken cancellationToken);
 		public Task AddParticipantAsync(Guid encounterId, EncounterParticipantType type, Guid entityId, CancellationToken cancellationToken);
 		public Task DeleteParticipantAsync(Guid encounterId, Guid participantId, CancellationToken cancellationToken);

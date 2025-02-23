@@ -1,5 +1,6 @@
 ﻿using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterCreated;
+using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterDeleted;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterLaunched;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterUpdated;
 using Tavernkeep.Core.Contracts.Enums;
@@ -31,6 +32,15 @@ namespace Tavernkeep.Application.Services
 			await notificationService.Publish(new EncounterCreatedNotification(encounter), cancellationToken);
 
 			return encounter;
+		}
+
+		public async Task DeleteEncounterAsync(Guid encounterId, CancellationToken cancellationToken)
+		{
+			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
+
+			encounterRepository.Remove(encounter);
+			await encounterRepository.CommitAsync(cancellationToken);
+			await notificationService.Publish(new EncounterDeletedNotification(encounter), cancellationToken);
 		}
 
 		public async Task<ICollection<Encounter>> GetAllEncountersAsync(CancellationToken cancellationToken)

@@ -2,8 +2,8 @@
 
 namespace Tavernkeep.Application.UseCases.Encounters.Commands.DeleteEncounter
 {
-	public class DeleteEncounterCommand(Guid initiatorId) : IRequest
+	public class DeleteEncounterCommand(Guid encounterId) : IRequest
 	{
-		public Guid InitiatorId { get; set; } = initiatorId;
+		public Guid EncounterId { get; set; } = encounterId;
 	}
 }

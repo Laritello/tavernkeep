@@ -25,6 +25,7 @@ using Tavernkeep.Core.Contracts.Encounters.Requests;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Server.Extensions;
 using Tavernkeep.Server.Middleware;
+using Tavernkeep.Application.UseCases.Encounters.Commands.DeleteEncounter;
 
 namespace Tavernkeep.Server.Controllers
 {
@@ -73,6 +74,17 @@ namespace Tavernkeep.Server.Controllers
 		{
 			var encounter = await mediator.Send(new CreateEncounterCommand(name));
 			return mapper.Map<EncounterDto>(encounter);
+		}
+
+		/// <summary>
+		/// Delete an encounter.
+		/// </summary>
+		[Authorize]
+		[RequiresRole(UserRole.Master)]
+		[HttpPost]
+		public async Task DeleteEncounterAsync([FromQuery] Guid encounterId)
+		{
+			await mediator.Send(new DeleteEncounterCommand(encounterId));
 		}
 
 		/// <summary>
