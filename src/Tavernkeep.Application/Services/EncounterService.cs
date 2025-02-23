@@ -11,16 +11,12 @@ using Tavernkeep.Core.Extensions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Services;
 using Tavernkeep.Core.Services.Encounters;
-using Tavernkeep.Core.Services.Encounters.Strategies;
 
 namespace Tavernkeep.Application.Services
 {
 	public class EncounterService(
 		IEncounterRepository encounterRepository,
-		ICreatureLibraryRepository creatureRepository,
-		ICharacterService characterService,
 		INotificationService notificationService,
-		IDiceService diceService,
 		IEncounterServiceStrategies strategies
 		) : IEncounterService
 	{
@@ -57,15 +53,7 @@ namespace Tavernkeep.Application.Services
 			{
 				foreach (var participant in encounter.Participants)
 				{
-					switch (participant)
-					{
-						case CharacterEncounterParticipant characterParticipant:
-							characterParticipant.Character = await characterService.GetCharacterAsync(characterParticipant.CharacterId, cancellationToken);
-							break;
-						case CreatureEncounterParticipant creatureParticipant:
-							creatureParticipant.Creature = await creatureRepository.GetCreatureAsync(creatureParticipant.CreatureId, cancellationToken);
-							break;
-					}
+					await strategies.FillParticipant[participant.Type].FillParticipantAsync(participant, cancellationToken);
 				}
 			}
 
@@ -79,15 +67,7 @@ namespace Tavernkeep.Application.Services
 
 			foreach (var participant in encounter.Participants)
 			{
-				switch (participant)
-				{
-					case CharacterEncounterParticipant characterParticipant:
-						characterParticipant.Character = await characterService.GetCharacterAsync(characterParticipant.CharacterId, cancellationToken);
-						break;
-					case CreatureEncounterParticipant creatureParticipant:
-						creatureParticipant.Creature = await creatureRepository.GetCreatureAsync(creatureParticipant.CreatureId, cancellationToken);
-						break;
-				}
+				await strategies.FillParticipant[participant.Type].FillParticipantAsync(participant, cancellationToken);
 			}
 
 			return encounter;
@@ -145,14 +125,9 @@ namespace Tavernkeep.Application.Services
 
 			foreach (var participant in encounter.Participants)
 			{
-				switch (participant)
+				if (participant.Type != EncounterParticipantType.Character || !npcOnly)
 				{
-					case CharacterEncounterParticipant characterParticipant:
-						if (!npcOnly)
-						{
-							await RollInitiative(characterParticipant, userId, cancellationToken);
-						}
-						break;
+					await strategies.RollParticipantInitiative[participant.Type].RollInitiative(participant, cancellationToken);
 				}
 			}
 
@@ -186,12 +161,7 @@ namespace Tavernkeep.Application.Services
 			var participant = encounter.Participants.First(x => x.Id == participantId)
 				?? throw new BusinessLogicException("Participant not found.");
 
-			switch (participant)
-			{
-				case CharacterEncounterParticipant characterParticipant:
-					await RollInitiative(characterParticipant, userId, cancellationToken);
-					break;
-			}
+			await strategies.RollParticipantInitiative[participant.Type].RollInitiative(participant, cancellationToken, skillName);
 
 			if (encounter.Status == EncounterStatus.Initiative)
 			{
@@ -250,12 +220,7 @@ namespace Tavernkeep.Application.Services
 
 		private async Task RollInitiative(CharacterEncounterParticipant participant, Guid userId, CancellationToken cancellationToken, string skillName = "Perception")
 		{
-			var character = await characterService.RetrieveCharacterForAction(participant.Character.Id, userId, cancellationToken);
 
-			var skill = character.Skills[skillName] ?? throw new BusinessLogicException("Character doesn't have specified skill");
-			var roll = diceService.Roll(bonus: skill.Bonus);
-
-			participant.Initiative = roll.Value;
 		}
 
 		private async Task SaveEncounter(Encounter encounter, CancellationToken cancellationToken)
