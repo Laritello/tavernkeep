@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 
+import InitiativeTracker from '@/components/combat/EncounterBuilder/InitiativeTracker/InitiativeTracker.vue';
+import TabMenu from '@/components/shared/TabMenu.vue';
 import { useEncountersStore } from '@/stores/useEncountersStore.ts';
 
 const encountersStore = useEncountersStore();
-const { encounterList, currentEncounterId } = storeToRefs(encountersStore);
+const { encounterList, selectedEncounterId } = storeToRefs(encountersStore);
 
 let counter = encounterList.value.length;
 
@@ -13,10 +15,11 @@ async function createEncounter() {
 }
 
 function setActiveEncounter(encounterId: string) {
-    encountersStore.switchEncounter(encounterId);
+    selectedEncounterId.value = encounterId;
 }
 
 async function deleteEncounter(encounterId: string) {
+    console.log(encounterId);
     await encountersStore.deleteEncounter(encounterId);
 }
 </script>
@@ -44,23 +47,27 @@ async function deleteEncounter(encounterId: string) {
             <RouterLink to="/" class="btn btn-ghost text-xl">Tavernkeep</RouterLink>
         </div>
         <div class="grow gap-2">
-            <ul
-                v-if="encounterList.length > 0"
-                class="menu menu-xs menu-horizontal flex-nowrap gap-2 bg-base-200 rounded-box overflow-auto scroll-p-0 scroll-m-0"
+            <TabMenu
+                :tabs="encounterList.map((e) => ({ id: e.id, label: e.name, encounter: e }))"
+                :use-default-slot="true"
+                :show-close-button="true"
+                tab-max-width="9rem"
+                teleport-target="#encounter-tab-content"
+                variant="bordered"
+                size="md"
+                @tab-selected="setActiveEncounter"
+                @close="deleteEncounter"
             >
-                <li v-for="encounter in encounterList" :key="encounter.id" class="flex flex-row flex-nowrap">
-                    <span
-                        :class="{ active: encounter.id === currentEncounterId }"
-                        @click="setActiveEncounter(encounter.id)"
-                    >
-                        {{ encounter.name }}
-                    </span>
-                    <span class="btn btn-xs btn-circle mdi mdi-close" @click="deleteEncounter(encounter.id)"></span>
-                </li>
-            </ul>
-            <button class="btn btn-circle btn-xs" @click="createEncounter">
-                <span class="mdi mdi-plus"></span>
-            </button>
+                <template #default="{ props }">
+                    <InitiativeTracker
+                        :encounter="props.tab.encounter"
+                        @participants-updated="encountersStore.updateOrder(props.tab.id, $event)"
+                        @remove-participant="encountersStore.removeParticipant(props.tab.id, $event)"
+                        @next-turn="console.log('Next turn')"
+                        @prev-turn="console.log('Previous turn')"
+                    />
+                </template>
+            </TabMenu>
         </div>
     </div>
 </template>

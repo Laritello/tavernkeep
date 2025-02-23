@@ -5,27 +5,27 @@ import TabMenu from '@/components/shared/TabMenu.vue';
 import type { CreatureShort } from '@/contracts/creatures/CreatureShort.ts';
 import { ParticipantType } from '@/contracts/enums';
 import type { Character } from '@/entities';
-import { useCurrentEncounterStore } from '@/stores/useCurrentEncounterStore.ts';
+import { useEncountersStore } from '@/stores/useEncountersStore.ts';
 
-const currentEncounterStore = useCurrentEncounterStore();
+const encountersStore = useEncountersStore();
 
 async function addPlayerCharacter(character: Character) {
-    if (!currentEncounterStore.isActive) {
+    if (!encountersStore.selectedEncounterId) {
         return;
     }
 
-    await currentEncounterStore.addParticipant({
+    await encountersStore.addParticipant(encountersStore.selectedEncounterId, {
         type: ParticipantType.Character,
         entityId: character.id,
     });
 }
 
 async function addCreature(creature: CreatureShort) {
-    if (!currentEncounterStore.isActive) {
+    if (!encountersStore.selectedEncounterId) {
         return;
     }
 
-    await currentEncounterStore.addParticipant({
+    await encountersStore.addParticipant(encountersStore.selectedEncounterId, {
         type: ParticipantType.Creature,
         entityId: creature.id,
     });
@@ -46,7 +46,7 @@ async function addCreature(creature: CreatureShort) {
             >
                 <template #characters>
                     <EncounterCharacterList
-                        :disable-buttons="!currentEncounterStore.isActive"
+                        :disable-buttons="!encountersStore.selectedEncounterId"
                         class="w-full h-[calc(100%_-_40px)]"
                         @add-pressed="addPlayerCharacter"
                     />
@@ -54,7 +54,7 @@ async function addCreature(creature: CreatureShort) {
 
                 <template #creatures>
                     <CreatureList
-                        :disable-buttons="!currentEncounterStore.isActive"
+                        :disable-buttons="!encountersStore.selectedEncounterId"
                         class="w-full h-[calc(100%_-_40px)]"
                         @add-pressed="addCreature"
                     />

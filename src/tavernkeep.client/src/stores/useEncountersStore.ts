@@ -1,8 +1,9 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
-import { ref, computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 
 import EncounterHub from '@/api/hubs/EncounterHub.ts';
 import type { Encounter } from '@/contracts/encounter/Encounter.ts';
+import type { Participant } from '@/contracts/encounter/Participant.ts';
 import { ApiClientFactory } from '@/factories/ApiClientFactory.ts';
 
 export const useEncountersStore = defineStore('encounters', () => {
@@ -10,8 +11,7 @@ export const useEncountersStore = defineStore('encounters', () => {
 
     // region State
     const state = reactive({} as Record<string, Encounter>);
-    const currentEncounterId = ref<string | null>(null);
-    // const bestiary = ref<Participant[]>([]);
+    const selectedEncounterId = ref<string | null>(null);
     // endregion
 
     // region SignalR
@@ -33,7 +33,6 @@ export const useEncountersStore = defineStore('encounters', () => {
     // endregion
 
     // region Getters
-    const currentEncounter = computed(() => (!!currentEncounterId.value ? state[currentEncounterId.value] : null));
     const encounterList = computed(() => Object.values(state));
     // endregion
 
@@ -41,7 +40,6 @@ export const useEncountersStore = defineStore('encounters', () => {
     async function createEncounter(name = 'Encounter') {
         const encounter = await api.createEncounter(name);
         state[encounter.id] = encounter;
-        currentEncounterId.value = encounter.id;
         return encounter;
     }
 
@@ -49,27 +47,39 @@ export const useEncountersStore = defineStore('encounters', () => {
         await api.deleteEncounter(encounterId);
     }
 
-    function switchEncounter(encounterId: string) {
-        currentEncounterId.value = encounterId;
+    async function addParticipant(encounterId: string, participant: Pick<Participant, 'type' | 'entityId'>) {
+        await api.addEncounterParticipant(encounterId, participant);
+    }
+
+    async function removeParticipant(encounterId: string, participant: Participant) {
+        await api.removeEncounterParticipant(encounterId, participant);
+    }
+
+    async function updateOrder(encounterId: string, newOrder: Participant[]) {
+        await api.updateEncounterParticipantsOrder(
+            encounterId,
+            newOrder.map((p) => p.id)
+        );
     }
 
     async function fetch() {
         const encounters = await api.getEncounters();
         Object.assign(state, encounters);
     }
-
     // endregion
 
     return {
         encounters: state,
-        currentEncounterId,
-
-        currentEncounter,
+        selectedEncounterId,
         encounterList,
 
         createEncounter,
         deleteEncounter,
-        switchEncounter,
+
+        addParticipant,
+        removeParticipant,
+
+        updateOrder,
 
         fetch,
     };

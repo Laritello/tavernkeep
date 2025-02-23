@@ -1,30 +1,42 @@
 <script setup lang="ts">
-import { nextTick, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { VueDraggable } from 'vue-draggable-plus';
 
 import InitiativeParticipantCard from '@/components/combat/EncounterBuilder/InitiativeTracker/InitiativeParticipantCard.vue';
+import type { Encounter } from '@/contracts/encounter/Encounter.ts';
 import type { Participant } from '@/contracts/encounter/Participant.ts';
-import { useCurrentEncounterStore } from '@/stores/useCurrentEncounterStore.ts';
 
-const currentEncounter = useCurrentEncounterStore();
+const { encounter } = defineProps<{
+    encounter: Encounter;
+}>();
+
+const emits = defineEmits<{
+    'participants-updated': [value: Participant[]];
+    'remove-participant': [value: Participant];
+    'next-turn': [];
+    'prev-turn': [];
+}>();
+
 const drag = ref(false);
+const encounterRef = ref(encounter);
 
-async function removeParticipant(participant: Participant) {
-    await currentEncounter.removeParticipant(participant);
-}
+const participants = computed({
+    get: () => encounterRef.value.participants,
+    set: (value) => {
+        encounterRef.value.participants = value;
+        emits('participants-updated', value);
+    },
+});
 
 function prevTurn() {
-    console.log('Previous turn');
-    // currentEncounter.prevTurn();
+    emits('prev-turn');
 }
 
 function nextTurn() {
-    console.log('Next turn');
-    // currentEncounter.nextTurn();
+    emits('next-turn');
 }
 
 async function onDragEnd() {
-    await currentEncounter.updateOrder();
     await nextTick(() => (drag.value = false));
 }
 </script>
@@ -35,21 +47,21 @@ async function onDragEnd() {
             <h2 class="card-title">Initiative Tracker</h2>
             <div class="divider">Initiative Order</div>
             <VueDraggable
-                v-model="currentEncounter.participants"
-                class="flex flex-col gap-2 min-h-52"
+                v-model="participants"
                 :animation="150"
                 handle=".drag-handle"
-                @start="drag = true"
+                class="flex flex-col gap-2 min-h-52"
                 @end="onDragEnd"
+                @start="drag = true"
             >
                 <TransitionGroup :name="drag ? undefined : 'slide'" type="transition">
                     <InitiativeParticipantCard
-                        v-for="participant in currentEncounter.participants"
+                        v-for="participant in participants"
                         :key="participant.id"
                         :participant="participant"
                         :active-turn="false"
                         @edit="console.log('edit participant card')"
-                        @remove="removeParticipant(participant)"
+                        @remove="emits('remove-participant', participant)"
                     />
                 </TransitionGroup>
             </VueDraggable>
