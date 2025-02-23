@@ -8,10 +8,8 @@ import { useEncountersStore } from '@/stores/useEncountersStore.ts';
 const encountersStore = useEncountersStore();
 const { encounterList, selectedEncounterId } = storeToRefs(encountersStore);
 
-let counter = encounterList.value.length;
-
 async function createEncounter() {
-    await encountersStore.createEncounter(`Encounter ${++counter}`);
+    await encountersStore.createEncounter(`Encounter ${encounterList.value.length + 1}`);
 }
 
 function setActiveEncounter(encounterId: string) {
@@ -68,6 +66,9 @@ async function deleteEncounter(encounterId: string) {
                     />
                 </template>
             </TabMenu>
+            <button class="btn btn-circle btn-sm btn-ghost" @click="createEncounter">
+                <span class="mdi mdi-plus"></span>
+            </button>
         </div>
     </div>
 </template>
