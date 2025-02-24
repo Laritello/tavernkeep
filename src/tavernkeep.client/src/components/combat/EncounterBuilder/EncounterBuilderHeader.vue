@@ -1,29 +1,28 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
 
 import InitiativeTracker from '@/components/combat/EncounterBuilder/InitiativeTracker/InitiativeTracker.vue';
 import TabMenu from '@/components/shared/TabMenu.vue';
 import { useEncountersStore } from '@/stores/useEncountersStore.ts';
 
 const encountersStore = useEncountersStore();
-const { encounterList, selectedEncounterId } = storeToRefs(encountersStore);
+const tabs = computed(() => encountersStore.encountersList.map((e) => ({ id: e.id, label: e.name, encounter: e })));
 
 async function createEncounter() {
-    await encountersStore.createEncounter(`Encounter ${encounterList.value.length + 1}`);
+    await encountersStore.createEncounter(`Encounter ${tabs.value.length + 1}`);
 }
 
-function setActiveEncounter(encounterId: string) {
-    selectedEncounterId.value = encounterId;
+function setActiveEncounter(encounterId: string | undefined) {
+    encountersStore.selectedEncounterId = encounterId;
 }
 
 async function deleteEncounter(encounterId: string) {
-    console.log(encounterId);
     await encountersStore.deleteEncounter(encounterId);
 }
 </script>
 
 <template>
-    <div class="navbar">
+    <header class="navbar">
         <div class="flex-none lg:hidden">
             <button class="btn btn-square btn-ghost">
                 <svg
@@ -46,7 +45,7 @@ async function deleteEncounter(encounterId: string) {
         </div>
         <div class="grow gap-2">
             <TabMenu
-                :tabs="encounterList.map((e) => ({ id: e.id, label: e.name, encounter: e }))"
+                :tabs="tabs"
                 :use-default-slot="true"
                 :show-close-button="true"
                 tab-max-width="9rem"
@@ -70,5 +69,5 @@ async function deleteEncounter(encounterId: string) {
                 <span class="mdi mdi-plus"></span>
             </button>
         </div>
-    </div>
+    </header>
 </template>
