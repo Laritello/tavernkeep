@@ -27,11 +27,27 @@ namespace Tavernkeep.Application.Strategies.Encounters.Conditions
 
 				creatureParticipant.AddCondition(new CreatureConditionRecord()
 				{
+					Participant = creatureParticipant,
 					Condition = condition,
 					Creature = creatureParticipant.Creature,
 					Level = condition.HasLevels ? 1 : null,
 				});
 			}
+		}
+
+		public Task DeleteConditionFromParticipant(EncounterParticipant participant, string conditionName, CancellationToken cancellationToken)
+		{
+			if (participant is CreatureEncounterParticipant creatureParticipant)
+			{
+				var condition = creatureParticipant.Conditions.FirstOrDefault(x => x.Condition.Name == conditionName);
+
+				if (condition is not null)
+				{
+					creatureParticipant.RemoveCondition(condition);
+				}
+			}
+
+			return Task.CompletedTask;
 		}
 	}
 }

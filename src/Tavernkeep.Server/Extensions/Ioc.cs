@@ -131,7 +131,7 @@ namespace Tavernkeep.Server.Extensions
 			services.AddTransient<IRollEncounterParticipantInitiativeStrategy, RollCharacterEncounterParticipantInitiativeStrategy>();
 			services.AddTransient<IRollEncounterParticipantInitiativeStrategy, RollCreatureEncounterParticipantInitiativeStrategy>();
 
-			services.AddTransient<IEncounterParticipantConditionStrategy, CharacterEncounterParticipantConditionsStrrategy>();
+			services.AddTransient<IEncounterParticipantConditionStrategy, CharacterEncounterParticipantConditionsStrategy>();
 			services.AddTransient<IEncounterParticipantConditionStrategy, CreatureEncounterParticipantConditionsStrrategy>();
 
 			services.AddScoped<IEncounterServiceStrategies, EncounterServiceStrategies>();

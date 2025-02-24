@@ -320,8 +320,8 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Level = table.Column<int>(type: "INTEGER", nullable: true),
                     Discriminator = table.Column<string>(type: "TEXT", maxLength: 34, nullable: false),
                     CharacterId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatureId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatureEncounterParticipantId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    ParticipantId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    CreatureId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -333,10 +333,11 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ConditionRecord_EncounterParticipant_CreatureEncounterParticipantId",
-                        column: x => x.CreatureEncounterParticipantId,
+                        name: "FK_ConditionRecord_EncounterParticipant_ParticipantId",
+                        column: x => x.ParticipantId,
                         principalTable: "EncounterParticipant",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ConditionRecord_LibraryCondition_ConditionName",
                         column: x => x.ConditionName,
@@ -415,14 +416,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 column: "ConditionName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ConditionRecord_CreatureEncounterParticipantId",
-                table: "ConditionRecord",
-                column: "CreatureEncounterParticipantId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ConditionRecord_CreatureId",
                 table: "ConditionRecord",
                 column: "CreatureId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConditionRecord_ParticipantId",
+                table: "ConditionRecord",
+                column: "ParticipantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EncounterParticipant_CharacterId",

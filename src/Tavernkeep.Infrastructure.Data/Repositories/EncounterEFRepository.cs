@@ -14,6 +14,9 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 			return await AsQueryable()
 				.Include(x => x.Participants)
 				.ThenInclude(x => ((CreatureEncounterParticipant)x).Conditions)
+				.ThenInclude(x => x.Condition)
+				.Include(x => x.Participants)
+				.ThenInclude(x => ((CreatureEncounterParticipant)x).Conditions)
 				.ThenInclude(x => x.Creature)
 				.ToListAsync(cancellationToken);
 		}
@@ -22,6 +25,9 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 		{
 			return await AsQueryable()
 				.Where(x => x.Id == id)
+				.Include(x => x.Participants)
+				.ThenInclude(x => ((CreatureEncounterParticipant)x).Conditions)
+				.ThenInclude(x => x.Condition)
 				.Include(x => x.Participants)
 				.ThenInclude(x => ((CreatureEncounterParticipant)x).Conditions)
 				.ThenInclude(x => x.Creature)

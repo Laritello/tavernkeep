@@ -8,7 +8,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.ConditionRecords
 	{
 		public void Configure(EntityTypeBuilder<CreatureConditionRecord> builder)
 		{
-			builder.HasOne(c => c.Creature)
+			builder.HasOne(x => x.Creature)
 				.WithMany();
 		}
 	}

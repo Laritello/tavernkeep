@@ -80,6 +80,11 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 			Conditions.Add(condition);
 		}
 
+		public void RemoveCondition(CharacterConditionRecord condition)
+		{
+			Conditions.Remove(condition);
+		}
+
 		#endregion
 	}
 }

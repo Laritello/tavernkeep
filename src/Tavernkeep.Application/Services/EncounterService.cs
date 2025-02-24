@@ -217,9 +217,14 @@ namespace Tavernkeep.Application.Services
 			throw new NotImplementedException();
 		}
 
-		public Task DeleteConditionFormParticipantAsync(Guid encounterId, Guid participantId, string conditionName, CancellationToken cancellationToken)
+		public async Task DeleteConditionFormParticipantAsync(Guid encounterId, Guid participantId, string conditionName, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
+			var participant = encounter.Participants.First(x => x.Id == participantId)
+				?? throw new BusinessLogicException("Participant not found.");
+
+			await strategies.Conditions[participant.Type].DeleteConditionFromParticipant(participant, conditionName, cancellationToken);
+			await SaveEncounter(encounter, cancellationToken);
 		}
 
 		#endregion

@@ -23,5 +23,10 @@ namespace Tavernkeep.Core.Entities.Encounters.Participants
 		{
 			_conditions.Add(conditionRecord);
 		}
+
+		public void RemoveCondition(CreatureConditionRecord conditionRecord)
+		{
+			_conditions.Remove(conditionRecord);
+		}
 	}
 }

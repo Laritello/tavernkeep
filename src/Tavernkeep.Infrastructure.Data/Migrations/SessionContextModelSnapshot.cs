@@ -530,15 +530,15 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     b.HasBaseType("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionRecord");
 
-                    b.Property<Guid?>("CreatureEncounterParticipantId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("CreatureId")
                         .HasColumnType("TEXT");
 
-                    b.HasIndex("CreatureEncounterParticipantId");
+                    b.Property<Guid>("ParticipantId")
+                        .HasColumnType("TEXT");
 
                     b.HasIndex("CreatureId");
+
+                    b.HasIndex("ParticipantId");
 
                     b.ToTable("ConditionRecord");
 
@@ -1164,17 +1164,21 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.CreatureConditionRecord", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Encounters.Participants.CreatureEncounterParticipant", null)
-                        .WithMany("Conditions")
-                        .HasForeignKey("CreatureEncounterParticipantId");
-
                     b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Creature", "Creature")
                         .WithMany()
                         .HasForeignKey("CreatureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Tavernkeep.Core.Entities.Encounters.Participants.CreatureEncounterParticipant", "Participant")
+                        .WithMany("Conditions")
+                        .HasForeignKey("ParticipantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Creature");
+
+                    b.Navigation("Participant");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.SkillRollMessage", b =>

@@ -8,7 +8,7 @@ using Tavernkeep.Core.Strategies.Encounters;
 
 namespace Tavernkeep.Application.Strategies.Encounters.Conditions
 {
-	public class CharacterEncounterParticipantConditionsStrrategy(
+	public class CharacterEncounterParticipantConditionsStrategy(
 		ICharacterService characterService,
 		IConditionLibraryRepository conditionRepository
 		) : IEncounterParticipantConditionStrategy
@@ -33,6 +33,21 @@ namespace Tavernkeep.Application.Strategies.Encounters.Conditions
 					Character = characterParticipant.Character,
 					Level = condition.HasLevels ? 1 : null,
 				});
+
+				await characterService.SaveCharacter(characterParticipant.Character, cancellationToken);
+			}
+		}
+
+		public async Task DeleteConditionFromParticipant(EncounterParticipant participant, string conditionName, CancellationToken cancellationToken)
+		{
+			if (participant is CharacterEncounterParticipant characterParticipant)
+			{
+				var condition = characterParticipant.Character.Conditions.FirstOrDefault(x => x.Condition.Name == conditionName);
+
+				if (condition is not null)
+				{
+					characterParticipant.Character.RemoveCondition(condition);
+				}
 
 				await characterService.SaveCharacter(characterParticipant.Character, cancellationToken);
 			}
