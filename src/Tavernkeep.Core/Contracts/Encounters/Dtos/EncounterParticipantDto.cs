@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Character.Dtos;
+using Tavernkeep.Core.Contracts.Conditions.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Encounters.Participants;
 
@@ -18,5 +19,6 @@ namespace Tavernkeep.Core.Contracts.Encounters.Dtos
 		public int Perception { get; set; }
 		public required HealthDto Health { get; set; }
 		public required Dictionary<string, int> SavingThrows { get; set; }
+		public required ICollection<ConditionShortDto> Conditions { get; set; }
 	}
 }
