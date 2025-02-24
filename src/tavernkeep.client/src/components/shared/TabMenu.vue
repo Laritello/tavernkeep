@@ -24,7 +24,7 @@
                 <span
                     v-if="showCloseButton"
                     class="btn btn-xs btn-square btn-ghost mdi mdi-close"
-                    @click.stop="emits('close', tab.id)"
+                    @click.stop="onCloseTab(tab.id)"
                 ></span>
             </button>
         </div>
@@ -108,5 +108,19 @@ watch(
 const selectTab = (tabId: string | undefined) => {
     activeTab.value = tabId;
     emits('tab-selected', tabId);
+};
+
+const onCloseActiveTab = () => {
+    const closedTabIndex = props.tabs.findIndex((tab) => tab.id === activeTab.value);
+    const leftTabIndex = closedTabIndex - 1;
+    selectTab(props.tabs[leftTabIndex]?.id);
+};
+
+const onCloseTab = (tabId: string) => {
+    if (tabId === activeTab.value) {
+        onCloseActiveTab();
+    }
+
+    emits('close', tabId);
 };
 </script>
