@@ -11,7 +11,11 @@ export const useEncountersStore = defineStore('encounters', () => {
 
     // region State
     const state = reactive({} as Record<string, Encounter>);
-    const selectedEncounterId = ref<string | null>(null);
+    const selectedEncounterId = ref<string>();
+    // endregion
+
+    // region Getters
+    const encountersList = computed(() => Object.values(state).sort((a, b) => a.createdAt - b.createdAt));
     // endregion
 
     // region SignalR
@@ -32,15 +36,9 @@ export const useEncountersStore = defineStore('encounters', () => {
     });
     // endregion
 
-    // region Getters
-    const encounterList = computed(() => Object.values(state));
-    // endregion
-
     // region Actions
     async function createEncounter(name = 'Encounter') {
-        const encounter = await api.createEncounter(name);
-        state[encounter.id] = encounter;
-        return encounter;
+        await api.createEncounter(name);
     }
 
     async function deleteEncounter(encounterId: string) {
@@ -71,7 +69,7 @@ export const useEncountersStore = defineStore('encounters', () => {
     return {
         encounters: state,
         selectedEncounterId,
-        encounterList,
+        encountersList,
 
         createEncounter,
         deleteEncounter,

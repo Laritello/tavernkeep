@@ -68,7 +68,7 @@ const props = withDefaults(
     {
         size: 'md',
         variant: 'bordered',
-        defaultTab: '',
+        defaultTab: undefined,
         tabMaxWidth: '100%',
         teleportTarget: undefined,
         showEditButton: false,
@@ -80,21 +80,32 @@ const props = withDefaults(
 const emits = defineEmits<{
     close: [id: string];
     edit: [id: string];
-    'tab-selected': [id: string];
+    'tab-selected': [id: string | undefined];
 }>();
 
-const activeTab = ref(props.defaultTab || props.tabs[0]?.id || '');
+const activeTab = ref(props.defaultTab || props.tabs.at(0)?.id);
 
 watch(
     () => props.tabs,
-    (newTabs) => {
-        if (!newTabs.some((tab) => tab.id === activeTab.value)) {
-            activeTab.value = newTabs[0]?.id || '';
+    (current, previous) => {
+        if (current.length === 0) {
+            selectTab(undefined);
+            return;
+        }
+
+        if (!activeTab.value) {
+            selectTab(current[0].id);
+            return;
+        }
+
+        if (current.length > previous.length) {
+            selectTab(current[current.length - 1].id);
+            return;
         }
     }
 );
 
-const selectTab = (tabId: string) => {
+const selectTab = (tabId: string | undefined) => {
     activeTab.value = tabId;
     emits('tab-selected', tabId);
 };

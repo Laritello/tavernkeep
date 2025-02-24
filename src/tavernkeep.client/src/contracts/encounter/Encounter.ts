@@ -8,4 +8,5 @@ export interface Encounter {
     roundNumber: number;
     currentTurnIndex: number;
     participants: Participant[];
+    createdAt: number;
 }
