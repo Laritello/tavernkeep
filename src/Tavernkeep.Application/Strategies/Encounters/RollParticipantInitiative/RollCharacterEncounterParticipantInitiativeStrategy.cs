@@ -8,7 +8,7 @@ using Tavernkeep.Application.Services;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Encounters.Participants;
 using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Services.Encounters.Strategies;
+using Tavernkeep.Core.Strategies.Encounters;
 
 namespace Tavernkeep.Application.Strategies.Encounters.RollParticipantInitiative
 {

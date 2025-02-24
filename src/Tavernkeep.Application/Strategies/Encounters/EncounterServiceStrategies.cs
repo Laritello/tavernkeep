@@ -1,13 +1,13 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Services.Encounters;
-using Tavernkeep.Core.Services.Encounters.Strategies;
+using Tavernkeep.Core.Strategies.Encounters;
 
 namespace Tavernkeep.Application.Strategies.Encounters
 {
 	public class EncounterServiceStrategies(
 		IEnumerable<IAddEncounterParticipantStrategy> addParticipantStrategies,
 		IEnumerable<IFillEncounterParticipantStrategy> fillParticipantStrategies,
-		IEnumerable<IRollEncounterParticipantInitiativeStrategy> rollInitiativeStrategies
+		IEnumerable<IRollEncounterParticipantInitiativeStrategy> rollInitiativeStrategies,
+		IEnumerable<IEncounterParticipantConditionStrategy> conditionStrategies
 		) : IEncounterServiceStrategies
 	{
 		#region Backing fields
@@ -21,6 +21,9 @@ namespace Tavernkeep.Application.Strategies.Encounters
 		private readonly Dictionary<EncounterParticipantType, IRollEncounterParticipantInitiativeStrategy> _rollParticipantInitiative =
 			rollInitiativeStrategies.ToDictionary(x => x.Type);
 
+		private readonly Dictionary<EncounterParticipantType, IEncounterParticipantConditionStrategy> _conditions =
+			conditionStrategies.ToDictionary(x => x.Type);
+
 		#endregion
 
 		#region Properties
@@ -33,6 +36,9 @@ namespace Tavernkeep.Application.Strategies.Encounters
 
 		public IReadOnlyDictionary<EncounterParticipantType, IRollEncounterParticipantInitiativeStrategy> RollParticipantInitiative => 
 			_rollParticipantInitiative.AsReadOnly();
+
+		public IReadOnlyDictionary<EncounterParticipantType, IEncounterParticipantConditionStrategy> Conditions => 
+			_conditions.AsReadOnly();
 
 		#endregion
 	}

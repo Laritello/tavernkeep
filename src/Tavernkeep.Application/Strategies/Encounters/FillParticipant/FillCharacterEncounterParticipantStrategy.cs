@@ -1,7 +1,7 @@
 ﻿using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Encounters.Participants;
-using Tavernkeep.Core.Services.Encounters.Strategies;
+using Tavernkeep.Core.Strategies.Encounters;
 
 namespace Tavernkeep.Application.Strategies.Encounters.FillParticipant
 {

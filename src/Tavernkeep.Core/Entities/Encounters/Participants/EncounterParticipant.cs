@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Base;
-using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 
 namespace Tavernkeep.Core.Entities.Encounters.Participants
 {
@@ -13,6 +12,5 @@ namespace Tavernkeep.Core.Entities.Encounters.Participants
 		public string? GroupName { get; set; }
 		public int? Initiative { get; set; }
 		public int Ordinal { get; set; }
-		public virtual IReadOnlyCollection<ConditionRecord> Conditions { get; } = [];
 	}
 }

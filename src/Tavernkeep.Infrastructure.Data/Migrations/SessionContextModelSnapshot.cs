@@ -198,17 +198,12 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .HasMaxLength(34)
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("EncounterParticipantId")
-                        .HasColumnType("TEXT");
-
                     b.Property<int?>("Level")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ConditionName");
-
-                    b.HasIndex("EncounterParticipantId");
 
                     b.ToTable("ConditionRecord");
 
@@ -535,8 +530,13 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     b.HasBaseType("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionRecord");
 
+                    b.Property<Guid?>("CreatureEncounterParticipantId")
+                        .HasColumnType("TEXT");
+
                     b.Property<Guid>("CreatureId")
                         .HasColumnType("TEXT");
+
+                    b.HasIndex("CreatureEncounterParticipantId");
 
                     b.HasIndex("CreatureId");
 
@@ -830,10 +830,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .HasForeignKey("ConditionName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Tavernkeep.Core.Entities.Encounters.Participants.EncounterParticipant", null)
-                        .WithMany("Conditions")
-                        .HasForeignKey("EncounterParticipantId");
 
                     b.Navigation("Condition");
                 });
@@ -1168,6 +1164,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.CreatureConditionRecord", b =>
                 {
+                    b.HasOne("Tavernkeep.Core.Entities.Encounters.Participants.CreatureEncounterParticipant", null)
+                        .WithMany("Conditions")
+                        .HasForeignKey("CreatureEncounterParticipantId");
+
                     b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Creature", "Creature")
                         .WithMany()
                         .HasForeignKey("CreatureId")
@@ -1216,11 +1216,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Participants");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.EncounterParticipant", b =>
-                {
-                    b.Navigation("Conditions");
-                });
-
             modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Character", b =>
                 {
                     b.Navigation("Abilities");
@@ -1244,6 +1239,11 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
             modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
                 {
                     b.Navigation("Characters");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.CreatureEncounterParticipant", b =>
+                {
+                    b.Navigation("Conditions");
                 });
 #pragma warning restore 612, 618
         }

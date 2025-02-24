@@ -6,12 +6,12 @@ using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.Services;
 using Tavernkeep.Application.Strategies.Encounters;
 using Tavernkeep.Application.Strategies.Encounters.AddParticipant;
+using Tavernkeep.Application.Strategies.Encounters.Conditions;
 using Tavernkeep.Application.Strategies.Encounters.FillParticipant;
 using Tavernkeep.Application.Strategies.Encounters.RollParticipantInitiative;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Services;
-using Tavernkeep.Core.Services.Encounters;
-using Tavernkeep.Core.Services.Encounters.Strategies;
+using Tavernkeep.Core.Strategies.Encounters;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Repositories;
 using Tavernkeep.Infrastructure.Data.Utility;
@@ -130,6 +130,9 @@ namespace Tavernkeep.Server.Extensions
 
 			services.AddTransient<IRollEncounterParticipantInitiativeStrategy, RollCharacterEncounterParticipantInitiativeStrategy>();
 			services.AddTransient<IRollEncounterParticipantInitiativeStrategy, RollCreatureEncounterParticipantInitiativeStrategy>();
+
+			services.AddTransient<IEncounterParticipantConditionStrategy, CharacterEncounterParticipantConditionsStrrategy>();
+			services.AddTransient<IEncounterParticipantConditionStrategy, CreatureEncounterParticipantConditionsStrrategy>();
 
 			services.AddScoped<IEncounterServiceStrategies, EncounterServiceStrategies>();
 

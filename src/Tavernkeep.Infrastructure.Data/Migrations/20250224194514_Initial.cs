@@ -19,6 +19,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false, defaultValue: "New encounter"),
                     RoundNumber = table.Column<int>(type: "INTEGER", nullable: false),
                     CurrentTurnIndex = table.Column<int>(type: "INTEGER", nullable: false),
+                    Created = table.Column<DateTimeOffset>(type: "TEXT", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
                     Status = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -215,7 +216,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Ordinal = table.Column<int>(type: "INTEGER", nullable: false),
                     Discriminator = table.Column<string>(type: "TEXT", maxLength: 34, nullable: false),
                     CharacterId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatureId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    CreatureId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    CurrentHealth = table.Column<int>(type: "INTEGER", nullable: true),
+                    TemporaryHealth = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -316,9 +319,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     ConditionName = table.Column<string>(type: "TEXT", nullable: false),
                     Level = table.Column<int>(type: "INTEGER", nullable: true),
                     Discriminator = table.Column<string>(type: "TEXT", maxLength: 34, nullable: false),
-                    EncounterParticipantId = table.Column<Guid>(type: "TEXT", nullable: true),
                     CharacterId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatureId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    CreatureId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    CreatureEncounterParticipantId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -330,8 +333,8 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ConditionRecord_EncounterParticipant_EncounterParticipantId",
-                        column: x => x.EncounterParticipantId,
+                        name: "FK_ConditionRecord_EncounterParticipant_CreatureEncounterParticipantId",
+                        column: x => x.CreatureEncounterParticipantId,
                         principalTable: "EncounterParticipant",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -412,14 +415,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 column: "ConditionName");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ConditionRecord_CreatureEncounterParticipantId",
+                table: "ConditionRecord",
+                column: "CreatureEncounterParticipantId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ConditionRecord_CreatureId",
                 table: "ConditionRecord",
                 column: "CreatureId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ConditionRecord_EncounterParticipantId",
-                table: "ConditionRecord",
-                column: "EncounterParticipantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EncounterParticipant_CharacterId",

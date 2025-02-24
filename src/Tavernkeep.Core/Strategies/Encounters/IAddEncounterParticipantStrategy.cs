@@ -1,7 +1,7 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Encounters;
 
-namespace Tavernkeep.Core.Services.Encounters.Strategies
+namespace Tavernkeep.Core.Strategies.Encounters
 {
 	public interface IAddEncounterParticipantStrategy
 	{

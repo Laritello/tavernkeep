@@ -1,16 +1,14 @@
-﻿using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterCreated;
+﻿using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterCreated;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterDeleted;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterLaunched;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterUpdated;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Encounters;
-using Tavernkeep.Core.Entities.Encounters.Participants;
 using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Extensions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Services;
-using Tavernkeep.Core.Services.Encounters;
+using Tavernkeep.Core.Strategies.Encounters;
 
 namespace Tavernkeep.Application.Services
 {
@@ -204,9 +202,14 @@ namespace Tavernkeep.Application.Services
 			await SaveEncounter(encounter, cancellationToken);
 		}
 
-		public Task AddConditionToParticipantAsync(Guid encounterId, Guid participantId, string conditionName, CancellationToken cancellationToken)
+		public async Task AddConditionToParticipantAsync(Guid encounterId, Guid participantId, string conditionName, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
+			var participant = encounter.Participants.First(x => x.Id == participantId)
+				?? throw new BusinessLogicException("Participant not found.");
+
+			await strategies.Conditions[participant.Type].AddConditionToParticipant(participant, conditionName, cancellationToken);
+			await SaveEncounter(encounter, cancellationToken);
 		}
 
 		public Task EditConditionOnParticipantAsync(Guid encounterId, Guid participantId, string conditionName, int? level, CancellationToken cancellationToken)
@@ -222,11 +225,6 @@ namespace Tavernkeep.Application.Services
 		#endregion
 
 		#region Private functions
-
-		private async Task RollInitiative(CharacterEncounterParticipant participant, Guid userId, CancellationToken cancellationToken, string skillName = "Perception")
-		{
-
-		}
 
 		private async Task SaveEncounter(Encounter encounter, CancellationToken cancellationToken)
 		{
