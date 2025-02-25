@@ -14,10 +14,11 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		#endregion
 
 		#region Properties
+		
 		public required string Description { get; set; }
 		public bool HasLevels { get; set; }
 
-		public List<Condition> Related { get; set; } = [];
+		public ICollection<RelatedCondition> Related { get; set; } = [];
 		public Dictionary<string, Modifier> Modifiers { get; set; } = [];
 
 		#endregion

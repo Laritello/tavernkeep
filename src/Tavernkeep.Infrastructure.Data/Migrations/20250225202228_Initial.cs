@@ -84,27 +84,28 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LibraryConditionRelated",
+                name: "ConditionRelated",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    OwnerName = table.Column<string>(type: "TEXT", nullable: true),
                     ConditionName = table.Column<string>(type: "TEXT", nullable: false),
-                    RelatedName = table.Column<string>(type: "TEXT", nullable: false)
+                    Level = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LibraryConditionRelated", x => new { x.ConditionName, x.RelatedName });
+                    table.PrimaryKey("PK_ConditionRelated", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LibraryConditionRelated_LibraryCondition_ConditionName",
+                        name: "FK_ConditionRelated_LibraryCondition_ConditionName",
                         column: x => x.ConditionName,
                         principalTable: "LibraryCondition",
                         principalColumn: "Name",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LibraryConditionRelated_LibraryCondition_RelatedName",
-                        column: x => x.RelatedName,
+                        name: "FK_ConditionRelated_LibraryCondition_OwnerName",
+                        column: x => x.OwnerName,
                         principalTable: "LibraryCondition",
-                        principalColumn: "Name",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Name");
                 });
 
             migrationBuilder.CreateTable(
@@ -426,6 +427,16 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 column: "ParticipantId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ConditionRelated_ConditionName",
+                table: "ConditionRelated",
+                column: "ConditionName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConditionRelated_OwnerName",
+                table: "ConditionRelated",
+                column: "OwnerName");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EncounterParticipant_CharacterId",
                 table: "EncounterParticipant",
                 column: "CharacterId");
@@ -439,11 +450,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 name: "IX_EncounterParticipant_EncounterId",
                 table: "EncounterParticipant",
                 column: "EncounterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LibraryConditionRelated_RelatedName",
-                table: "LibraryConditionRelated",
-                column: "RelatedName");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_RecipientId",
@@ -498,7 +504,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 name: "ConditionRecord");
 
             migrationBuilder.DropTable(
-                name: "LibraryConditionRelated");
+                name: "ConditionRelated");
 
             migrationBuilder.DropTable(
                 name: "Messages");

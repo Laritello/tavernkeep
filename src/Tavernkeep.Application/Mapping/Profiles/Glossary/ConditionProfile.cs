@@ -12,6 +12,12 @@ namespace Tavernkeep.Application.Mapping.Profiles.Glossary
 		public ConditionProfile()
 		{
 			CreateMap<Condition, ConditionDto>();
+
+			CreateMap<RelatedCondition, ConditionDto>()
+				.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Condition.Name))
+				.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Condition.Description))
+				.ForMember(dest => dest.HasLevels, opt => opt.MapFrom(src => src.Condition.HasLevels))
+				.ForMember(dest => dest.Level, opt => opt.MapFrom(src => src.Level));
 		}
 	}
 }

@@ -10,12 +10,16 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 	{
 		public Task<List<Condition>> GetAllConditionsAsync(CancellationToken cancellationToken = default)
 		{
-			return AsQueryable().ToListAsync(cancellationToken);
+			return AsQueryable()
+				.Include(x => x.Related).ThenInclude(x => x.Condition)
+				.ToListAsync(cancellationToken);
 		}
 
 		public Task<Condition> GetConditionAsync(string name, CancellationToken cancellationToken = default)
 		{
-			return AsQueryable().Where(x => x.Name == name).FirstAsync(cancellationToken);
+			return AsQueryable().Where(x => x.Name == name)
+				.Include(x => x.Related).ThenInclude(x => x.Condition)
+				.FirstAsync(cancellationToken);
 		}
 	}
 }

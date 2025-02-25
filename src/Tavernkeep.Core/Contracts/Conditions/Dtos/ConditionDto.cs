@@ -1,7 +1,4 @@
-﻿using Tavernkeep.Core.Contracts.Structures;
-using Tavernkeep.Core.Entities.Pathfinder.Conditions;
-
-namespace Tavernkeep.Core.Contracts.Conditions.Dtos
+﻿namespace Tavernkeep.Core.Contracts.Conditions.Dtos
 {
 	public record ConditionDto
 	{

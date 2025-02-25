@@ -22,10 +22,7 @@ namespace Tavernkeep.Core.Evaluators.Modifiers
 
 			private int Calculate()
 			{
-				var modifiers = _character.Conditions
-					.Where(cr => cr.HasModifier(_type, _target))
-					.Select(cr => cr[_target])
-					.ToList();
+				var modifiers = _character.Conditions.SelectMany(x => x.Collect(_target, _type)).ToList();
 
 				var penalty = modifiers.Count > 0 && modifiers.Min() < 0 ? modifiers.Min() : 0;
 				var bonus = modifiers.Count > 0 && modifiers.Max() > 0 ? modifiers.Max() : 0;

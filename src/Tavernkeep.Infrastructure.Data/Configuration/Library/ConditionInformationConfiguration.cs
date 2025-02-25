@@ -22,8 +22,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.Library
 			);
 
 			builder.HasMany(c => c.Related)
-				.WithMany()
-				.UsingEntity(join => join.ToTable("LibraryConditionRelated")); ;
+				.WithOne(r => r.Owner);
 		}
 	}
 }

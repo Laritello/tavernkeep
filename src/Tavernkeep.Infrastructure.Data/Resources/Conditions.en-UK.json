@@ -53,7 +53,7 @@
     "Name": "Prone",
     "Description": "You’re lying on the ground. You are off-guard and take a –2 circumstance penalty to attack rolls. The only move actions you can use while you’re prone are Crawl and Stand. Standing up ends the prone condition. You can Take Cover while prone to hunker down and gain cover against ranged attacks, even if you don’t have an object to get behind, gaining a +4 circumstance bonus to AC against ranged attacks (but you remain off-guard).\r\n\r\nIf you would be knocked prone while you’re Climbing or Flying, you fall (see rules on falling). You can’t be knocked prone when Swimming.",
     "HasLevels": false,
-    "Related": [ "Off-Guard" ],
+    "Related": [ { "Name": "Off-Guard" } ],
     "Modifiers": {}
   },
   {
@@ -76,7 +76,12 @@
     "Name": "Encumbered",
     "Description": "You are carrying more weight than you can manage.\r\n\r\nWhile you’re encumbered, you’re clumsy 1 and take a 10-foot penalty to all your Speeds. As with all penalties to your Speed, this can’t reduce your Speed below 5 feet.",
     "HasLevels": false,
-    "Related": [ "Clumsy" ],
+    "Related": [
+      {
+        "Name": "Clumsy",
+        "Level": 1
+      }
+    ],
     "Modifiers": {
       "Speed": {
         "Type": "Status",
@@ -109,21 +114,27 @@
     "Name": "Grabbed",
     "Description": "You’re held in place by another creature, giving you the off-guard and immobilized conditions. If you attempt a manipulate action while grabbed, you must succeed at a DC 5 flat check or it is lost; roll the check after spending the action, but before any effects are applied.",
     "HasLevels": false,
-    "Related": [ "Off-guard", "Immobilized" ],
+    "Related": [
+      { "Name": "Off-guard" },
+      { "Name": "Immobilized" }
+    ],
     "Modifiers": {}
   },
   {
     "Name": "Restrained",
     "Description": "You’re tied up and can barely move, or a creature has you pinned. You have the off-guard and immobilized conditions, and you can’t use any actions with the attack or manipulate traits except to attempt to Escape or Force Open your bonds. Restrained overrides grabbed.",
     "HasLevels": false,
-    "Related": [ "Off-guard", "Immobilized" ],
+    "Related": [
+      { "Name": "Off-guard" },
+      { "Name": "Immobilized" }
+    ],
     "Modifiers": {}
   },
   {
     "Name": "Paralyzed",
     "Description": "Your body is frozen in place. You have the off-guard condition and can’t act except to Recall Knowledge and use actions that require only the use of your mind (as determined by the GM). Your senses still function, but only in the areas you can perceive without moving your body, so you can’t Seek while paralyzed.",
     "HasLevels": false,
-    "Related": [ "Off-guard" ],
+    "Related": [ { "Name": "Off-guard" } ],
     "Modifiers": {}
   },
   {
@@ -156,7 +167,7 @@
     "Name": "Confused",
     "Description": "You don’t have your wits about you, and you attack wildly. You are off-guard, you don’t treat anyone as your ally (though they might still treat you as theirs), and you can’t Delay, Ready, or use reactions.\r\n\r\nYou use all your actions to Strike or cast offensive cantrips, though the GM can have you use other actions to facilitate attack, such as draw a weapon, move so that a target is in reach, and so forth. Your targets are determined randomly by the GM. If you have no other viable targets, you target yourself, automatically hitting but not scoring a critical hit. If it’s impossible for you to attack or cast spells, you babble incoherently, wasting your actions.\r\n\r\nEach time you take damage from an attack or spell, you can attempt a DC 11 flat check to recover from your confusion and end the condition.",
     "HasLevels": false,
-    "Related": [ "Off-guard" ],
+    "Related": [ { "Name": "Off-guard" } ],
     "Modifiers": {}
   },
   {

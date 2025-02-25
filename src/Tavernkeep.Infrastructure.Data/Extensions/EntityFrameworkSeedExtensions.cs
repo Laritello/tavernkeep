@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
 using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Seeding;
 
@@ -78,13 +79,18 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 
 					if (databaseCondition != null)
 					{
-						foreach (var relatedConditionName in condition.Related)
+						foreach (var relatedCondition in condition.Related)
 						{
-							var databaseRelatedCondition = context.Set<Condition>().FirstOrDefault(u => u.Name == relatedConditionName);
+							var databaseRelatedCondition = context.Set<Condition>().FirstOrDefault(u => u.Name == relatedCondition.Name);
 
 							if (databaseRelatedCondition != null)
 							{
-								databaseCondition.Related.Add(databaseRelatedCondition);
+								databaseCondition.Related.Add(new RelatedCondition()
+								{
+									Owner = databaseCondition,
+									Condition = databaseRelatedCondition,
+									Level = relatedCondition.Level,
+								});
 							}
 						}
 					}

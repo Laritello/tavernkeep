@@ -1,5 +1,4 @@
-﻿using NCalc;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Structures;
 using Tavernkeep.Core.Entities.Base;
@@ -24,21 +23,17 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 
 		#region Methods
 
-		public abstract int this[ICollection<string> targetNames] { get; }
-
-		public bool HasModifier(ModifierType type, params ICollection<string> targetNames)
+		public ICollection<int> Collect(ICollection<string> targets, ModifierType type)
 		{
-			foreach(var targetName in targetNames)
-			{
-				if (Condition.Modifiers.TryGetValue(targetName, out Modifier value) && value.Type == type)
-				{
-					return true;
-				}
-			}
+			var modifiers = Condition.Modifiers
+				.Where(x => targets.Contains(x.Key) && x.Value.Type == type)
+				.Select(x => x.Value);
+			var related = Condition.Related.SelectMany(x => x.Collect(targets, type));
 
-			return false;
+			return [.. Calculate(modifiers), .. related];
 		}
-			
+
+		protected abstract ICollection<int> Calculate(IEnumerable<Modifier> modifiers);
 
 		#endregion
 	}

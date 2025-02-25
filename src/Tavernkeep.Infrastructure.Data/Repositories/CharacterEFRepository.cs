@@ -17,7 +17,7 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 				.Include(x => x.Health)
 				.Include(x => x.Abilities)
 				.Include(x => x.Skills).ThenInclude(x => x.Ability)
-				.Include(x => x.Conditions).ThenInclude(x => x.Condition)
+				.Include(x => x.Conditions).ThenInclude(x => x.Condition).ThenInclude(x => x.Related).ThenInclude(x => x.Condition)
 				.ToListAsync(cancellationToken);
 		}
 		public async Task<Character?> GetFullCharacterAsync(Guid id, CancellationToken cancellationToken = default)
@@ -29,7 +29,7 @@ namespace Tavernkeep.Infrastructure.Data.Repositories
 				.Include(x => x.Health)
 				.Include(x => x.Abilities)
 				.Include(x => x.Skills).ThenInclude(x => x.Ability)
-				.Include(x => x.Conditions).ThenInclude(x => x.Condition)
+				.Include(x => x.Conditions).ThenInclude(x => x.Condition).ThenInclude(x => x.Related).ThenInclude(x => x.Condition)
 				.FirstOrDefaultAsync(cancellationToken);
 		}
 	}

@@ -17,21 +17,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
 
-            modelBuilder.Entity("ConditionCondition", b =>
-                {
-                    b.Property<string>("ConditionName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RelatedName")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ConditionName", "RelatedName");
-
-                    b.HasIndex("RelatedName");
-
-                    b.ToTable("LibraryConditionRelated", (string)null);
-                });
-
             modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Encounter", b =>
                 {
                     b.Property<Guid>("Id")
@@ -391,6 +376,31 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("CharacterSkill");
                 });
 
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.RelatedCondition", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ConditionName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("Level")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("OwnerName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConditionName");
+
+                    b.HasIndex("OwnerName");
+
+                    b.ToTable("ConditionRelated");
+                });
+
             modelBuilder.Entity("Tavernkeep.Core.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -552,21 +562,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.ToTable("Messages");
 
                     b.HasDiscriminator().HasValue("SkillRollMessage");
-                });
-
-            modelBuilder.Entity("ConditionCondition", b =>
-                {
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Condition", null)
-                        .WithMany()
-                        .HasForeignKey("ConditionName")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Condition", null)
-                        .WithMany()
-                        .HasForeignKey("RelatedName")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.EncounterParticipant", b =>
@@ -1058,6 +1053,23 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Owner");
                 });
 
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.RelatedCondition", b =>
+                {
+                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Condition", "Condition")
+                        .WithMany()
+                        .HasForeignKey("ConditionName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Condition", "Owner")
+                        .WithMany("Related")
+                        .HasForeignKey("OwnerName");
+
+                    b.Navigation("Condition");
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
                 {
                     b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "ActiveCharacter")
@@ -1238,6 +1250,11 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Portrait");
 
                     b.Navigation("Skills");
+                });
+
+            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Condition", b =>
+                {
+                    b.Navigation("Related");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>

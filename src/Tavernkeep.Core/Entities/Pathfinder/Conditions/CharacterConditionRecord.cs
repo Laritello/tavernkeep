@@ -1,4 +1,5 @@
 ﻿using NCalc;
+using Tavernkeep.Core.Contracts.Structures;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 {
@@ -6,24 +7,20 @@ namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 	{
 		public required Character Character { get; set; }
 
-		public override int this[ICollection<string> targetNames]
+		#region Methods
+
+		protected override ICollection<int> Calculate(IEnumerable<Modifier> modifiers)
 		{
-			get
+			return modifiers.Select(x =>
 			{
-				foreach (var name in targetNames)
-				{
-					if (Condition.Modifiers.TryGetValue(name, out var modifier))
-					{
-						var expression = new Expression(modifier.Formula);
-						expression.Parameters["target_level"] = Character.Level;
-						expression.Parameters["condition_level"] = Level;
+				var expression = new Expression(x.Formula);
+				expression.Parameters["target_level"] = Character.Level;
+				expression.Parameters["condition_level"] = Level;
 
-						return Convert.ToInt32(expression.Evaluate());
-					}
-				}
-
-				return 0;
-			}
+				return Convert.ToInt32(expression.Evaluate());
+			}).ToList();
 		}
+
+		#endregion
 	}
 }
