@@ -2,30 +2,27 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
-using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
 using Tavernkeep.Application.UseCases.Encounters.Commands.AddConditionToParticipant;
 using Tavernkeep.Application.UseCases.Encounters.Commands.AddEncounterParticipant;
 using Tavernkeep.Application.UseCases.Encounters.Commands.ClearInitiative;
 using Tavernkeep.Application.UseCases.Encounters.Commands.CreateEncounter;
 using Tavernkeep.Application.UseCases.Encounters.Commands.DeleteConditionFromParticipant;
+using Tavernkeep.Application.UseCases.Encounters.Commands.DeleteEncounter;
+using Tavernkeep.Application.UseCases.Encounters.Commands.DeleteEncounterParticipant;
 using Tavernkeep.Application.UseCases.Encounters.Commands.EditConditionOnParticipant;
 using Tavernkeep.Application.UseCases.Encounters.Commands.EditEncounterStatus;
-using Tavernkeep.Application.UseCases.Encounters.Commands.DeleteEncounterParticipant;
-using Tavernkeep.Application.UseCases.Encounters.Commands.SetParticipantInitiative;
 using Tavernkeep.Application.UseCases.Encounters.Commands.EditParticipantsOrdinal;
+using Tavernkeep.Application.UseCases.Encounters.Commands.SetParticipantInitiative;
 using Tavernkeep.Application.UseCases.Encounters.Commands.UpdateTurn;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetAllEncounters;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetEncounter;
 using Tavernkeep.Application.UseCases.Rolls.Commands.RollEncounterInitiative;
 using Tavernkeep.Application.UseCases.Rolls.Commands.RollEncounterParticipantInitiative;
-using Tavernkeep.Core.Contracts.Character.Dtos;
 using Tavernkeep.Core.Contracts.Encounters.Dtos;
 using Tavernkeep.Core.Contracts.Encounters.Requests;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Server.Extensions;
 using Tavernkeep.Server.Middleware;
-using Tavernkeep.Application.UseCases.Encounters.Commands.DeleteEncounter;
 
 namespace Tavernkeep.Server.Controllers
 {

@@ -1,8 +1,8 @@
 ﻿using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Entities.Encounters.Participants;
-using Tavernkeep.Core.Entities.Encounters;
-using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Core.Entities.Encounters;
+using Tavernkeep.Core.Entities.Encounters.Participants;
+using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Strategies.Encounters;
 
 namespace Tavernkeep.Application.Strategies.Encounters.AddParticipant

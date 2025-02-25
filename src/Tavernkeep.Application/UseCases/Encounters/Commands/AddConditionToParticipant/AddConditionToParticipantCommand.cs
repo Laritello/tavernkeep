@@ -5,7 +5,7 @@ namespace Tavernkeep.Application.UseCases.Encounters.Commands.AddConditionToPart
 	public class AddConditionToParticipantCommand(Guid encounterId, Guid participantId, string name) : IRequest
 	{
 		public Guid EncounterId { get; set; } = encounterId;
-		public Guid ParticipantId { get; set;} = participantId;
+		public Guid ParticipantId { get; set; } = participantId;
 		public string Name { get; set; } = name;
 	}
 }

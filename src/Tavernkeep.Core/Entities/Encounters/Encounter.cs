@@ -16,7 +16,7 @@ namespace Tavernkeep.Core.Entities.Encounters
 
 		#region Constructors
 
-		public Encounter(string name, EncounterStatus status = EncounterStatus.Draft) 
+		public Encounter(string name, EncounterStatus status = EncounterStatus.Draft)
 		{
 			Name = name;
 			Status = status;
@@ -58,7 +58,7 @@ namespace Tavernkeep.Core.Entities.Encounters
 			_participants.Remove(participant);
 
 			// Update ordinal for all the participants after the deleted one
-			for (int i = indexOf; i< _participants.Count; i++)
+			for (int i = indexOf; i < _participants.Count; i++)
 			{
 				_participants[i].Ordinal = indexOf;
 			}

@@ -5,7 +5,7 @@ namespace Tavernkeep.Application.UseCases.Encounters.Commands.AddEncounterPartic
 {
 	public class AddEncounterParticipantCommandHandler(
 		IEncounterService encounterService
-		): IRequestHandler<AddEncounterParticipantCommand>
+		) : IRequestHandler<AddEncounterParticipantCommand>
 	{
 		public async Task Handle(AddEncounterParticipantCommand request, CancellationToken cancellationToken)
 		{

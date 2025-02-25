@@ -1,6 +1,5 @@
 ﻿using Tavernkeep.Core.Contracts.Conditions.Dtos;
 using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
 namespace Tavernkeep.Core.Contracts.Character.Dtos

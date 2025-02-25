@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System.Reflection;
 using Tavernkeep.Application.Extensions;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Chat.Notifications.RollMessageSent;

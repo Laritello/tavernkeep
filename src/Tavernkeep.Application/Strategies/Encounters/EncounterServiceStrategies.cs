@@ -12,7 +12,7 @@ namespace Tavernkeep.Application.Strategies.Encounters
 	{
 		#region Backing fields
 
-		private readonly Dictionary<EncounterParticipantType, IAddEncounterParticipantStrategy> _addParticipant = 
+		private readonly Dictionary<EncounterParticipantType, IAddEncounterParticipantStrategy> _addParticipant =
 			addParticipantStrategies.ToDictionary(x => x.Type);
 
 		private readonly Dictionary<EncounterParticipantType, IFillEncounterParticipantStrategy> _fillParticipant =
@@ -28,16 +28,16 @@ namespace Tavernkeep.Application.Strategies.Encounters
 
 		#region Properties
 
-		public IReadOnlyDictionary<EncounterParticipantType, IAddEncounterParticipantStrategy> AddParticipant => 
+		public IReadOnlyDictionary<EncounterParticipantType, IAddEncounterParticipantStrategy> AddParticipant =>
 			_addParticipant.AsReadOnly();
 
-		public IReadOnlyDictionary<EncounterParticipantType, IFillEncounterParticipantStrategy> FillParticipant => 
+		public IReadOnlyDictionary<EncounterParticipantType, IFillEncounterParticipantStrategy> FillParticipant =>
 			_fillParticipant.AsReadOnly();
 
-		public IReadOnlyDictionary<EncounterParticipantType, IRollEncounterParticipantInitiativeStrategy> RollParticipantInitiative => 
+		public IReadOnlyDictionary<EncounterParticipantType, IRollEncounterParticipantInitiativeStrategy> RollParticipantInitiative =>
 			_rollParticipantInitiative.AsReadOnly();
 
-		public IReadOnlyDictionary<EncounterParticipantType, IEncounterParticipantConditionStrategy> Conditions => 
+		public IReadOnlyDictionary<EncounterParticipantType, IEncounterParticipantConditionStrategy> Conditions =>
 			_conditions.AsReadOnly();
 
 		#endregion

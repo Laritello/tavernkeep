@@ -6,7 +6,7 @@ namespace Tavernkeep.Core.Extensions
 	{
 		public static bool IsEarlierThan(this EncounterStatus source, EncounterStatus destination)
 		{
-			return (int) source < (int) destination;
+			return (int)source < (int)destination;
 		}
 	}
 }
