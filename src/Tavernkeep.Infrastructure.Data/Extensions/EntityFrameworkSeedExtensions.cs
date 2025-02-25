@@ -4,6 +4,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Library;
+using Tavernkeep.Core.Entities.Library.Conditions;
+using Tavernkeep.Core.Entities.Library.Creatures;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Infrastructure.Data.Context;
@@ -85,7 +88,7 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 
 							if (databaseRelatedCondition != null)
 							{
-								databaseCondition.Related.Add(new RelatedCondition()
+								databaseCondition.Related.Add(new ConditionRelated()
 								{
 									Owner = databaseCondition,
 									Condition = databaseRelatedCondition,

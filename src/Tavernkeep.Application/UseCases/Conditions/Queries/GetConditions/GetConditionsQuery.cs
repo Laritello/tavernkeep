@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Library.Conditions;
 
 namespace Tavernkeep.Application.UseCases.Conditions.Queries.GetConditions
 {

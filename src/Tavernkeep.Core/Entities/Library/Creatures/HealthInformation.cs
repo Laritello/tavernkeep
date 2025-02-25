@@ -1,4 +1,4 @@
-﻿namespace Tavernkeep.Core.Entities.Creatures
+﻿namespace Tavernkeep.Core.Entities.Library.Creatures
 {
 	public class HealthInformation
 	{

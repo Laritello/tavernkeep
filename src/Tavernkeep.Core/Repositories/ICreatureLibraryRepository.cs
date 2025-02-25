@@ -1,4 +1,4 @@
-﻿using Tavernkeep.Core.Entities.Pathfinder;
+﻿using Tavernkeep.Core.Entities.Library.Creatures;
 
 namespace Tavernkeep.Core.Repositories
 {

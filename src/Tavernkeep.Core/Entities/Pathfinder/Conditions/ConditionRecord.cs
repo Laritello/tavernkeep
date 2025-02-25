@@ -2,6 +2,7 @@
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Structures;
 using Tavernkeep.Core.Entities.Base;
+using Tavernkeep.Core.Entities.Library.Conditions;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 {

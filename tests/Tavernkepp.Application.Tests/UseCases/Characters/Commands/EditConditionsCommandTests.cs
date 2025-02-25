@@ -3,6 +3,7 @@ using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditConditions;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities;
+using Tavernkeep.Core.Entities.Library.Conditions;
 using Tavernkeep.Core.Entities.Pathfinder;
 using Tavernkeep.Core.Repositories;
 

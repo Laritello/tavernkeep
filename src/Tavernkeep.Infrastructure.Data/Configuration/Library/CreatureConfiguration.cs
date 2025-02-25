@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Text.Json;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Library.Creatures;
 
-namespace Tavernkeep.Infrastructure.Data.Configuration
+namespace Tavernkeep.Infrastructure.Data.Configuration.Library
 {
 	public class CreatureConfiguration : IEntityTypeConfiguration<Creature>
 	{
@@ -12,10 +12,10 @@ namespace Tavernkeep.Infrastructure.Data.Configuration
 			builder.HasKey(c => c.Id);
 
 			builder.OwnsOne(c => c.Health, b => b.ToJson());
-			
+
 			builder.Property(c => c.Abilities)
 				.HasConversion(
-					v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default), 
+					v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
 					v => JsonSerializer.Deserialize<Dictionary<string, int>>(v, JsonSerializerOptions.Default) ?? new Dictionary<string, int>()
 				);
 

@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Base;
-using Tavernkeep.Core.Entities.Creatures;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
-namespace Tavernkeep.Core.Entities.Pathfinder
+namespace Tavernkeep.Core.Entities.Library.Creatures
 {
-	[Table("LibraryCreature")]
+	[Table("Creature")]
 	public class Creature : GuidEntity
 	{
 		public required string Name { get; set; }

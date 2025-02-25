@@ -1,6 +1,7 @@
 ﻿using NCalc;
 using Tavernkeep.Core.Contracts.Structures;
 using Tavernkeep.Core.Entities.Encounters.Participants;
+using Tavernkeep.Core.Entities.Library.Creatures;
 
 namespace Tavernkeep.Core.Entities.Pathfinder.Conditions
 {

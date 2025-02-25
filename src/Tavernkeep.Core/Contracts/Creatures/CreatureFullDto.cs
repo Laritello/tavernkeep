@@ -1,5 +1,5 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Creatures;
+using Tavernkeep.Core.Entities.Library.Creatures;
 using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
 namespace Tavernkeep.Core.Contracts.Creatures

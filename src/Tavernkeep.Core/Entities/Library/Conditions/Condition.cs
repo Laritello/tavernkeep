@@ -2,9 +2,9 @@
 using Tavernkeep.Core.Contracts.Structures;
 using Tavernkeep.Core.Entities.Base;
 
-namespace Tavernkeep.Core.Entities.Pathfinder
+namespace Tavernkeep.Core.Entities.Library.Conditions
 {
-	[Table("LibraryCondition")]
+	[Table("Condition")]
 	public class Condition : StringEntity
 	{
 		#region Constructors
@@ -14,11 +14,11 @@ namespace Tavernkeep.Core.Entities.Pathfinder
 		#endregion
 
 		#region Properties
-		
+
 		public required string Description { get; set; }
 		public bool HasLevels { get; set; }
 
-		public ICollection<RelatedCondition> Related { get; set; } = [];
+		public ICollection<ConditionRelated> Related { get; set; } = [];
 		public Dictionary<string, Modifier> Modifiers { get; set; } = [];
 
 		#endregion

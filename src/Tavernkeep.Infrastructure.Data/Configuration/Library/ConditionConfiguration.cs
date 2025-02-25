@@ -2,11 +2,11 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Text.Json;
 using Tavernkeep.Core.Contracts.Structures;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Library.Conditions;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration.Library
 {
-	public class ConditionInformationConfiguration : IEntityTypeConfiguration<Condition>
+	public class ConditionConfiguration : IEntityTypeConfiguration<Condition>
 	{
 		public void Configure(EntityTypeBuilder<Condition> builder)
 		{

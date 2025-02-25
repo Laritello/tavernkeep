@@ -12,23 +12,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Encounter",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false, defaultValue: "New encounter"),
-                    RoundNumber = table.Column<int>(type: "INTEGER", nullable: false),
-                    CurrentTurnIndex = table.Column<int>(type: "INTEGER", nullable: false),
-                    Created = table.Column<DateTimeOffset>(type: "TEXT", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Encounter", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LibraryCondition",
+                name: "Condition",
                 columns: table => new
                 {
                     Name = table.Column<string>(type: "TEXT", nullable: false),
@@ -38,11 +22,11 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LibraryCondition", x => x.Name);
+                    table.PrimaryKey("PK_Condition", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
-                name: "LibraryCreature",
+                name: "Creature",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -66,7 +50,23 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LibraryCreature", x => x.Id);
+                    table.PrimaryKey("PK_Creature", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Encounter",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false, defaultValue: "New encounter"),
+                    RoundNumber = table.Column<int>(type: "INTEGER", nullable: false),
+                    CurrentTurnIndex = table.Column<int>(type: "INTEGER", nullable: false),
+                    Created = table.Column<DateTimeOffset>(type: "TEXT", nullable: false, defaultValue: new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
+                    Status = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Encounter", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,15 +96,15 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     table.PrimaryKey("PK_ConditionRelated", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ConditionRelated_LibraryCondition_ConditionName",
+                        name: "FK_ConditionRelated_Condition_ConditionName",
                         column: x => x.ConditionName,
-                        principalTable: "LibraryCondition",
+                        principalTable: "Condition",
                         principalColumn: "Name",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ConditionRelated_LibraryCondition_OwnerName",
+                        name: "FK_ConditionRelated_Condition_OwnerName",
                         column: x => x.OwnerName,
-                        principalTable: "LibraryCondition",
+                        principalTable: "Condition",
                         principalColumn: "Name");
                 });
 
@@ -231,15 +231,15 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EncounterParticipant_Encounter_EncounterId",
-                        column: x => x.EncounterId,
-                        principalTable: "Encounter",
+                        name: "FK_EncounterParticipant_Creature_CreatureId",
+                        column: x => x.CreatureId,
+                        principalTable: "Creature",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EncounterParticipant_LibraryCreature_CreatureId",
-                        column: x => x.CreatureId,
-                        principalTable: "LibraryCreature",
+                        name: "FK_EncounterParticipant_Encounter_EncounterId",
+                        column: x => x.EncounterId,
+                        principalTable: "Encounter",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -334,21 +334,21 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ConditionRecord_EncounterParticipant_ParticipantId",
-                        column: x => x.ParticipantId,
-                        principalTable: "EncounterParticipant",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ConditionRecord_LibraryCondition_ConditionName",
+                        name: "FK_ConditionRecord_Condition_ConditionName",
                         column: x => x.ConditionName,
-                        principalTable: "LibraryCondition",
+                        principalTable: "Condition",
                         principalColumn: "Name",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ConditionRecord_LibraryCreature_CreatureId",
+                        name: "FK_ConditionRecord_Creature_CreatureId",
                         column: x => x.CreatureId,
-                        principalTable: "LibraryCreature",
+                        principalTable: "Creature",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ConditionRecord_EncounterParticipant_ParticipantId",
+                        column: x => x.ParticipantId,
+                        principalTable: "EncounterParticipant",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -522,13 +522,13 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 name: "EncounterParticipant");
 
             migrationBuilder.DropTable(
-                name: "LibraryCondition");
+                name: "Condition");
+
+            migrationBuilder.DropTable(
+                name: "Creature");
 
             migrationBuilder.DropTable(
                 name: "Encounter");
-
-            migrationBuilder.DropTable(
-                name: "LibraryCreature");
 
             migrationBuilder.DropTable(
                 name: "Users");

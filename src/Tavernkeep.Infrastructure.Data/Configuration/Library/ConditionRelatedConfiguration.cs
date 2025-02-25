@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Core.Entities.Library.Conditions;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration.Library
 {
-	public class RelatedConditionConfiguration : IEntityTypeConfiguration<RelatedCondition>
+	public class ConditionRelatedConfiguration : IEntityTypeConfiguration<ConditionRelated>
 	{
-		public void Configure(EntityTypeBuilder<RelatedCondition> builder)
+		public void Configure(EntityTypeBuilder<ConditionRelated> builder)
 		{
 			builder.HasKey(x => x.Id);
 
