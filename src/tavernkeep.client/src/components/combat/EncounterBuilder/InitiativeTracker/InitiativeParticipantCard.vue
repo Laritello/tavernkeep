@@ -26,9 +26,13 @@ defineEmits<{
         </div>
         <div class="flex flex-row p-2 items-center gap-4">
             <!-- Initiative Value -->
-            <label class="input input-bordered flex items-center p-0 max-w-12">
-                <input type="text" value="--" class="text-center font-semibold text-lg w-full" />
-            </label>
+            <div
+                class="flex input input-bordered justify-center items-center size-12 p-0 cursor-default hover:border-2"
+            >
+                <span class="text-center font-semibold text-lg">
+                    {{ participant.initiative ?? '--' }}
+                </span>
+            </div>
 
             <!-- Participant Info -->
             <div class="flex-1">
@@ -39,8 +43,27 @@ defineEmits<{
             <!-- HP Display -->
             <HealthBar :health="participant.health" width="10rem" height="1.25rem" />
 
+            <!-- Saves -->
+            <div class="bg-base-100 rounded-md p-2">
+                <div v-for="[name, value] in Object.entries(participant.savingThrows)" :key="name">
+                    {{ name }}: {{ value }}
+                </div>
+            </div>
+
+            <!-- Perception -->
+            <div class="bg-base-100 rounded-md p-2 text-center">
+                <div class="mdi mdi-eye"></div>
+                {{ participant.perception }}
+            </div>
+
+            <!-- Armor -->
+            <div class="bg-base-100 rounded-md p-2 text-center">
+                <div class="mdi mdi-shield"></div>
+                {{ participant.armorClass }}
+            </div>
+
             <!-- Action Buttons -->
-            <div class="flex gap-2">
+            <div class="flex gap-2 justify-self-end">
                 <button class="btn btn-circle btn-sm btn-ghost" @click="$emit('edit', participant)">
                     <span class="mdi mdi-pencil"></span>
                 </button>
