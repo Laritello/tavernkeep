@@ -38,6 +38,21 @@ namespace Tavernkeep.Application.Strategies.Encounters.Conditions
 			}
 		}
 
+		public async Task EditConditionOnParticipant(EncounterParticipant participant, string conditionName, int level, CancellationToken cancellationToken)
+		{
+			if (participant is CharacterEncounterParticipant characterParticipant)
+			{
+				var condition = characterParticipant.Character.Conditions.FirstOrDefault(x => x.Condition.Name == conditionName);
+
+				if (condition is not null && condition.Condition.HasLevels)
+				{
+					condition.Level = level;
+				}
+
+				await characterService.SaveCharacter(characterParticipant.Character, cancellationToken);
+			}
+		}
+
 		public async Task DeleteConditionFromParticipant(EncounterParticipant participant, string conditionName, CancellationToken cancellationToken)
 		{
 			if (participant is CharacterEncounterParticipant characterParticipant)

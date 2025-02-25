@@ -7,6 +7,7 @@ namespace Tavernkeep.Core.Strategies.Encounters
 	{
 		public EncounterParticipantType Type { get; }
 		Task AddConditionToParticipant(EncounterParticipant participant, string conditionName, CancellationToken cancellationToken);
+		Task EditConditionOnParticipant(EncounterParticipant participant, string conditionName, int level, CancellationToken cancellationToken);
 		Task DeleteConditionFromParticipant(EncounterParticipant participant, string conditionName, CancellationToken cancellationToken);
 	}
 }

@@ -212,9 +212,14 @@ namespace Tavernkeep.Application.Services
 			await SaveEncounter(encounter, cancellationToken);
 		}
 
-		public Task EditConditionOnParticipantAsync(Guid encounterId, Guid participantId, string conditionName, int? level, CancellationToken cancellationToken)
+		public async Task EditConditionOnParticipantAsync(Guid encounterId, Guid participantId, string conditionName, int level, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
+			var participant = encounter.Participants.First(x => x.Id == participantId)
+				?? throw new BusinessLogicException("Participant not found.");
+
+			await strategies.Conditions[participant.Type].EditConditionOnParticipant(participant, conditionName, level, cancellationToken);
+			await SaveEncounter(encounter, cancellationToken);
 		}
 
 		public async Task DeleteConditionFormParticipantAsync(Guid encounterId, Guid participantId, string conditionName, CancellationToken cancellationToken)

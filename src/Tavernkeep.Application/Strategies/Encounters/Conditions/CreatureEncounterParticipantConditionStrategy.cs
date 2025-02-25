@@ -1,4 +1,5 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
+﻿using Tavernkeep.Application.Services;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Encounters.Participants;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Exceptions;
@@ -33,6 +34,21 @@ namespace Tavernkeep.Application.Strategies.Encounters.Conditions
 					Level = condition.HasLevels ? 1 : null,
 				});
 			}
+		}
+
+		public Task EditConditionOnParticipant(EncounterParticipant participant, string conditionName, int level, CancellationToken cancellationToken)
+		{
+			if (participant is CreatureEncounterParticipant creatureParticipant)
+			{
+				var condition = creatureParticipant.Conditions.FirstOrDefault(x => x.Condition.Name == conditionName);
+
+				if (condition is not null && condition.Condition.HasLevels)
+				{
+					condition.Level = level;
+				}
+			}
+
+			return Task.CompletedTask;
 		}
 
 		public Task DeleteConditionFromParticipant(EncounterParticipant participant, string conditionName, CancellationToken cancellationToken)
