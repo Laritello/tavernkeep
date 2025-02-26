@@ -5,7 +5,6 @@ using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterUpdated;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Encounters;
 using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Extensions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Services;
 using Tavernkeep.Core.Strategies.Encounters;
@@ -74,9 +73,6 @@ namespace Tavernkeep.Application.Services
 		public async Task EditEncounterStatusAsync(Guid encounterId, EncounterStatus status, CancellationToken cancellationToken)
 		{
 			var encounter = await GetEncounterAsync(encounterId, cancellationToken);
-
-			if (status.IsEarlierThan(encounter.Status))
-				throw new BusinessLogicException("Can't change encounter status to the previous status.");
 
 			encounter.Status = status;
 
