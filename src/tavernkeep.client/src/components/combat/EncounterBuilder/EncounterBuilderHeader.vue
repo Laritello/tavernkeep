@@ -60,8 +60,12 @@ async function deleteEncounter(encounterId: string) {
                         :encounter="props.tab.encounter"
                         @participants-updated="encountersStore.updateOrder(props.tab.id, $event)"
                         @remove-participant="encountersStore.removeParticipant(props.tab.id, $event)"
-                        @next-turn="console.log('Next turn')"
-                        @prev-turn="console.log('Previous turn')"
+                        @next-turn="encountersStore.nextTurn(props.tab.id)"
+                        @prev-turn="encountersStore.previousTurn(props.tab.id)"
+                        @roll-initiative="encountersStore.rollInitiative(props.tab.id, $event)"
+                        @reset-initiative="encountersStore.resetInitiative(props.tab.id)"
+                        @begin-encounter="encountersStore.beginEncounter(props.tab.id)"
+                        @end-encounter="encountersStore.endEncounter(props.tab.id)"
                     />
                 </template>
             </TabMenu>

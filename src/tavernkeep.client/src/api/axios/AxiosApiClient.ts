@@ -6,6 +6,7 @@ import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto
 import type { CreatureShort } from '@/contracts/creatures/CreatureShort.ts';
 import type { CharacterInformationEditDto, SkillEditDto, SpeedEditDto } from '@/contracts/dtos';
 import type { Encounter } from '@/contracts/encounter/Encounter.ts';
+import type { EncounterStateType } from '@/contracts/encounter/EncounterStateType.ts';
 import type { Participant } from '@/contracts/encounter/Participant.ts';
 import { UserRole, Proficiency, RollType, ArmorType, SpeedType, SkillDataType } from '@/contracts/enums';
 import type { User, Message, Character, SkillRollMessage } from '@/entities';
@@ -358,6 +359,30 @@ export class AxiosApiClient {
 
     async updateEncounterParticipantsOrder(encounterId: string, ids: string[]): Promise<void> {
         const response = await this.client.patch(`encounters/${encounterId}/ordinal`, ids);
+        return getPayloadOrThrow(response);
+    }
+
+    async encounterNextTurn(encounterId: string): Promise<void> {
+        const response = await this.client.patch(`encounters/${encounterId}/next-turn`);
+        return getPayloadOrThrow(response);
+    }
+
+    async encounterPreviousTurn(encounterId: string): Promise<void> {
+        const response = await this.client.patch(`encounters/${encounterId}/previous-turn`);
+        return getPayloadOrThrow(response);
+    }
+    async encounterRollInitiative(encounterId: string, onlyNpc: boolean): Promise<void> {
+        const response = await this.client.patch(`encounters/${encounterId}/initiative?npcOnly=${onlyNpc}`);
+        return getPayloadOrThrow(response);
+    }
+
+    async encounterResetInitiative(encounterId: string) {
+        const response = await this.client.delete(`encounters/${encounterId}/initiative`);
+        return getPayloadOrThrow(response);
+    }
+
+    async updateEncounterState(encounterId: string, status: EncounterStateType) {
+        const response = await this.client.patch(`encounters/${encounterId}/status?status=${status}`);
         return getPayloadOrThrow(response);
     }
 

@@ -3,6 +3,7 @@ import { computed, reactive, ref } from 'vue';
 
 import EncounterHub from '@/api/hubs/EncounterHub.ts';
 import type { Encounter } from '@/contracts/encounter/Encounter.ts';
+import { EncounterStateType } from '@/contracts/encounter/EncounterStateType.ts';
 import type { Participant } from '@/contracts/encounter/Participant.ts';
 import { ApiClientFactory } from '@/factories/ApiClientFactory.ts';
 
@@ -60,6 +61,30 @@ export const useEncountersStore = defineStore('encounters', () => {
         );
     }
 
+    async function nextTurn(encounterId: string) {
+        await api.encounterNextTurn(encounterId);
+    }
+
+    async function previousTurn(encounterId: string) {
+        await api.encounterPreviousTurn(encounterId);
+    }
+
+    async function rollInitiative(encounterId: string, onlyNpc: boolean) {
+        await api.encounterRollInitiative(encounterId, onlyNpc);
+    }
+
+    async function resetInitiative(encounterId: string) {
+        await api.encounterResetInitiative(encounterId);
+    }
+
+    async function beginEncounter(encounterId: string) {
+        await api.updateEncounterState(encounterId, EncounterStateType.Active);
+    }
+
+    async function endEncounter(encounterId: string) {
+        await api.updateEncounterState(encounterId, EncounterStateType.Finished);
+    }
+
     async function fetch() {
         const encounters = await api.getEncounters();
         Object.assign(state, encounters);
@@ -73,9 +98,16 @@ export const useEncountersStore = defineStore('encounters', () => {
 
         createEncounter,
         deleteEncounter,
+        beginEncounter,
+        endEncounter,
 
         addParticipant,
         removeParticipant,
+
+        nextTurn,
+        previousTurn,
+        rollInitiative,
+        resetInitiative,
 
         updateOrder,
 

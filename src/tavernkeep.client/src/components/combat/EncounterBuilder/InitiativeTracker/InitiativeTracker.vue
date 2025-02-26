@@ -4,6 +4,7 @@ import { VueDraggable } from 'vue-draggable-plus';
 
 import InitiativeParticipantCard from '@/components/combat/EncounterBuilder/InitiativeTracker/InitiativeParticipantCard.vue';
 import type { Encounter } from '@/contracts/encounter/Encounter.ts';
+import { EncounterStateType } from '@/contracts/encounter/EncounterStateType.ts';
 import type { Participant } from '@/contracts/encounter/Participant.ts';
 
 const { encounter } = defineProps<{
@@ -15,6 +16,10 @@ const emits = defineEmits<{
     'remove-participant': [value: Participant];
     'next-turn': [];
     'prev-turn': [];
+    'begin-encounter': [];
+    'end-encounter': [];
+    'roll-initiative': [value: boolean];
+    'reset-initiative': [];
 }>();
 
 const drag = ref(false);
@@ -42,40 +47,88 @@ async function onDragEnd() {
 </script>
 
 <template>
-    <div class="card bg-base-300 shadow-xl">
-        <div class="card-body">
-            <h2 class="card-title">Initiative Tracker</h2>
-            <div class="divider">Initiative Order</div>
-            <VueDraggable
-                v-model="participants"
-                :animation="150"
-                handle=".drag-handle"
-                class="flex flex-col gap-2 min-h-52"
-                @end="onDragEnd"
-                @start="drag = true"
-            >
-                <TransitionGroup :name="drag ? undefined : 'slide'" type="transition">
-                    <InitiativeParticipantCard
-                        v-for="participant in participants"
-                        :key="participant.id"
-                        :participant="participant"
-                        :active-turn="false"
-                        @edit="console.log('edit participant card')"
-                        @remove="emits('remove-participant', participant)"
-                    />
-                </TransitionGroup>
-            </VueDraggable>
-            <div class="card-actions justify-between mt-4">
-                <button class="btn btn-accent" @click="prevTurn">Prev Turn</button>
-                <button class="btn btn-accent" @click="nextTurn">Next Turn</button>
+    <div class="mx-4">
+        <div class="flex flex-col bg-base-200 rounded-md shadow-xl gap-4">
+            <div class="flex flex-row justify-between p-2 border-b-[1px] border-base-300">
+                <h1 class="text-lg font-semibold">Initiative Tracker</h1>
+                <div class="flex gap-1 justify-self-end">
+                    <div class="join">
+                        <button class="join-item btn btn-sm btn-primary" @click="emits('roll-initiative', true)">
+                            <span class="mdi mdi-dice-d20"></span>
+                            Roll initiative
+                        </button>
+                        <div class="dropdown dropdown-end">
+                            <div tabindex="0" role="button" class="join-item btn btn-sm btn-neutral">
+                                <span class="mdi mdi-chevron-down"></span>
+                            </div>
+                            <ul
+                                tabindex="0"
+                                class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                            >
+                                <li><a @click="emits('roll-initiative', false)">Roll for all</a></li>
+                                <li><a @click="emits('reset-initiative')">Reset initiative</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-neutral" @click="emits('begin-encounter')">
+                        <span class="mdi mdi-restore"></span>
+                        Reset
+                    </button>
+                    <button
+                        v-if="encounterRef.status === EncounterStateType.Draft"
+                        class="btn btn-sm btn-primary"
+                        @click="emits('begin-encounter')"
+                    >
+                        <span class="mdi mdi-flag"></span>
+                        Start
+                    </button>
+                    <button
+                        v-else-if="encounterRef.status === EncounterStateType.Active"
+                        class="btn btn-sm btn-primary"
+                        @click="emits('end-encounter')"
+                    >
+                        <span class="mdi mdi-flag-checkered"></span>
+                        Finish
+                    </button>
+                    <button v-else class="btn btn-sm btn-primary" @click="emits('begin-encounter')">
+                        <span class="mdi mdi-restart"></span>
+                        Restart
+                    </button>
+                </div>
+            </div>
+            <div class="p-2">
+                <VueDraggable
+                    v-model="participants"
+                    :animation="150"
+                    handle=".drag-handle"
+                    class="flex flex-col gap-2 min-h-52"
+                    @end="onDragEnd"
+                    @start="drag = true"
+                >
+                    <TransitionGroup :name="drag ? undefined : 'slide'" type="transition">
+                        <InitiativeParticipantCard
+                            v-for="participant in participants"
+                            :key="participant.id"
+                            :participant="participant"
+                            :active-turn="false"
+                            @edit="console.log('edit participant card')"
+                            @remove="emits('remove-participant', participant)"
+                        />
+                    </TransitionGroup>
+                </VueDraggable>
+                <div class="flex items-center justify-between mt-4">
+                    <button class="btn btn-accent" @click="prevTurn">Prev Turn</button>
+                    <h1 class="text-xl font-semibold">Round {{ encounterRef.roundNumber }}</h1>
+                    <button class="btn btn-accent" @click="nextTurn">Next Turn</button>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <!--suppress CssUnusedSymbol -->
-<style scoped>
+<style>
 .slide-move {
-    transition: all 1s ease;
+    transition: all 0.5s ease;
 }
 </style>
