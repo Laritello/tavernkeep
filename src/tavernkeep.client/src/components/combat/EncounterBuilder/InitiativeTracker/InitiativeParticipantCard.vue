@@ -17,7 +17,7 @@ defineEmits<{
     <div
         class="flex flex-row items-center rounded-md"
         :class="[
-            activeTurn ? 'border-2 border-accent animate-pulse' : 'border p-[1px] border-base-300',
+            activeTurn ? 'border-2 border-accent' : 'border p-[1px] border-base-300',
             participant.type === 'Character' ? 'bg-primary bg-opacity-10' : 'bg-error bg-opacity-10',
         ]"
     >
