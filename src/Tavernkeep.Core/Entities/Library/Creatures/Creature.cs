@@ -32,6 +32,7 @@ namespace Tavernkeep.Core.Entities.Library.Creatures
 		{
 			return new Creature
 			{
+				Id = Id,
 				Name = Name,
 				Level = Level,
 				Size = Size,
