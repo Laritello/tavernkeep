@@ -20,6 +20,5 @@ namespace Tavernkeep.Core.Contracts.Encounters.Dtos
 		public required HealthDto Health { get; set; }
 		public required Dictionary<string, int> SavingThrows { get; set; }
 		public required ICollection<ConditionShortDto> Conditions { get; set; }
-		public bool IsActiveTurn { get; set; }
 	}
 }

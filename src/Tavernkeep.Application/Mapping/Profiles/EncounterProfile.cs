@@ -17,17 +17,7 @@ namespace Tavernkeep.Application.Mapping.Profiles
 		{
 			CreateMap<Encounter, EncounterDto>()
 				.ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.Created.ToUnixTimeSeconds()))
-				.ForMember(dest => dest.Participants, opt => opt.MapFrom(src => src.Participants.OrderBy(x => x.Ordinal)))
-				.AfterMap((src, dest) =>
-				{
-					int currentIndex = 0;
-
-					foreach (var participant in dest.Participants)
-					{
-						participant.IsActiveTurn = currentIndex == dest.CurrentTurnIndex;
-						currentIndex++;
-					}
-				});
+				.ForMember(dest => dest.Participants, opt => opt.MapFrom(src => src.Participants.OrderBy(x => x.Ordinal)));
 
 			CreateMap<EncounterParticipant, EncounterParticipantDto>()
 				.Include<CharacterEncounterParticipant, CharacterEncounterParticipantDto>()

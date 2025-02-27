@@ -5,7 +5,6 @@ export interface Participant {
     type: ParticipantType;
     id: string;
     name: string;
-    isActiveTurn: boolean;
     entityId: string;
     initiative: number | null;
     armorClass: number;
