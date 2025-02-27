@@ -29,7 +29,7 @@ namespace Tavernkeep.Application.Strategies.Encounters.Conditions
 				{
 					Participant = creatureParticipant,
 					Condition = condition,
-					Creature = creatureParticipant.Creature,
+					Creature = creatureParticipant.Origin,
 					Level = condition.HasLevels ? 1 : null,
 				});
 			}

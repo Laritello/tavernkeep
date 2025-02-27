@@ -217,7 +217,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Ordinal = table.Column<int>(type: "INTEGER", nullable: false),
                     Discriminator = table.Column<string>(type: "TEXT", maxLength: 34, nullable: false),
                     CharacterId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatureId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    OriginId = table.Column<Guid>(type: "TEXT", nullable: true),
                     CurrentHealth = table.Column<int>(type: "INTEGER", nullable: true),
                     TemporaryHealth = table.Column<int>(type: "INTEGER", nullable: true)
                 },
@@ -231,8 +231,8 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EncounterParticipant_Creature_CreatureId",
-                        column: x => x.CreatureId,
+                        name: "FK_EncounterParticipant_Creature_OriginId",
+                        column: x => x.OriginId,
                         principalTable: "Creature",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -442,14 +442,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 column: "CharacterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EncounterParticipant_CreatureId",
-                table: "EncounterParticipant",
-                column: "CreatureId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_EncounterParticipant_EncounterId",
                 table: "EncounterParticipant",
                 column: "EncounterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EncounterParticipant_OriginId",
+                table: "EncounterParticipant",
+                column: "OriginId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_RecipientId",

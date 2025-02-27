@@ -40,12 +40,12 @@ namespace Tavernkeep.Application.Mapping.Profiles
 				)));
 
 			CreateMap<CreatureEncounterParticipant, CreatureEncounterParticipantDto>()
-				.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Creature.Name))
-				.ForMember(dest => dest.Perception, opt => opt.MapFrom(src => src.Creature.Perception))
-				.ForMember(dest => dest.ArmorClass, opt => opt.MapFrom(src => src.Creature.ArmorClass))
-				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Creature.SavingThrows))
-				.ForMember(dest => dest.Health, opt => opt.MapFrom(src => new HealthDto() { Max = src.Creature.Health.Max, Current = src.CurrentHealth, Temporary = src.TemporaryHealth }))
-				.ForMember(dest => dest.EntityId, opt => opt.MapFrom(src => src.Creature.Id))
+				.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Origin.Name))
+				.ForMember(dest => dest.Perception, opt => opt.MapFrom(src => src.Origin.Perception))
+				.ForMember(dest => dest.ArmorClass, opt => opt.MapFrom(src => src.Origin.ArmorClass))
+				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Origin.SavingThrows))
+				.ForMember(dest => dest.Health, opt => opt.MapFrom(src => new HealthDto() { Max = src.Origin.Health.Max, Current = src.CurrentHealth, Temporary = src.TemporaryHealth }))
+				.ForMember(dest => dest.EntityId, opt => opt.MapFrom(src => src.Origin.Id))
 				.ForMember(dest => dest.Conditions, opt => opt.MapFrom(src => src.Conditions.Select(x =>
 					new ConditionShortDto()
 					{

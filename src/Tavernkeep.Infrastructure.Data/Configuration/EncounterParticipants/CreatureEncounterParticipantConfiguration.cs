@@ -9,7 +9,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.EncounterParticipants
 		public void Configure(EntityTypeBuilder<CreatureEncounterParticipant> builder)
 		{
 			builder
-				.HasOne(c => c.Creature)
+				.HasOne(c => c.Origin)
 				.WithMany();
 
 			builder.HasMany(c => c.Conditions)

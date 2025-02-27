@@ -16,10 +16,10 @@ namespace Tavernkeep.Application.Strategies.Encounters.RollParticipantInitiative
 			{
 				if (skillName is "Perception")
 				{
-					var roll = diceService.Roll(bonus: creatureParticipant.Creature.Perception);
+					var roll = diceService.Roll(bonus: creatureParticipant.Origin.Perception);
 					participant.Initiative = roll.Value;
 				}
-				else if (creatureParticipant.Creature.Skills.TryGetValue(skillName, out var bonus))
+				else if (creatureParticipant.Origin.Skills.TryGetValue(skillName, out var bonus))
 				{
 					var roll = diceService.Roll(bonus: bonus);
 					participant.Initiative = roll.Value;

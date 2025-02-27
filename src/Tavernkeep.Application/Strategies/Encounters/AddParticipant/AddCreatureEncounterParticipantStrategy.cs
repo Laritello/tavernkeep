@@ -18,7 +18,7 @@ namespace Tavernkeep.Application.Strategies.Encounters.AddParticipant
 			CreatureEncounterParticipant participant = new()
 			{
 				Encounter = encounter,
-				Creature = creature,
+				Origin = creature,
 				CurrentHealth = creature.Health.Max,
 				TemporaryHealth = creature.Health.Temporary,
 			};

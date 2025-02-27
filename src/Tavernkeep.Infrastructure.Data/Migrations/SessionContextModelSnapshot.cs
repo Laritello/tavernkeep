@@ -471,16 +471,16 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 {
                     b.HasBaseType("Tavernkeep.Core.Entities.Encounters.Participants.EncounterParticipant");
 
-                    b.Property<Guid>("CreatureId")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("CurrentHealth")
                         .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("OriginId")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("TemporaryHealth")
                         .HasColumnType("INTEGER");
 
-                    b.HasIndex("CreatureId");
+                    b.HasIndex("OriginId");
 
                     b.ToTable("EncounterParticipant");
 
@@ -1092,13 +1092,13 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.CreatureEncounterParticipant", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Library.Creatures.Creature", "Creature")
+                    b.HasOne("Tavernkeep.Core.Entities.Library.Creatures.Creature", "Origin")
                         .WithMany()
-                        .HasForeignKey("CreatureId")
+                        .HasForeignKey("OriginId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Creature");
+                    b.Navigation("Origin");
                 });
 
             modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.RollMessage", b =>

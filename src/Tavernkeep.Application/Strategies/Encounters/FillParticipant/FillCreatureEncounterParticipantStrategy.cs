@@ -13,7 +13,7 @@ namespace Tavernkeep.Application.Strategies.Encounters.FillParticipant
 		{
 			if (participant is CreatureEncounterParticipant creatureParticipant)
 			{
-				creatureParticipant.Creature = await creatureRepository.GetCreatureAsync(creatureParticipant.CreatureId, cancellationToken);
+				creatureParticipant.Origin = await creatureRepository.GetCreatureAsync(creatureParticipant.OriginId, cancellationToken);
 			}
 		}
 	}
