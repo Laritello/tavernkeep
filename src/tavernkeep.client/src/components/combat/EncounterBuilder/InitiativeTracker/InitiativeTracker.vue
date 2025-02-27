@@ -107,10 +107,10 @@ async function onDragEnd() {
                 >
                     <TransitionGroup :name="drag ? undefined : 'slide'" type="transition">
                         <InitiativeParticipantCard
-                            v-for="participant in participants"
+                            v-for="(participant, index) in participants"
                             :key="participant.id"
                             :participant="participant"
-                            :active-turn="false"
+                            :active-turn="encounter.currentTurnIndex === index"
                             @edit="console.log('edit participant card')"
                             @remove="emits('remove-participant', participant)"
                         />
