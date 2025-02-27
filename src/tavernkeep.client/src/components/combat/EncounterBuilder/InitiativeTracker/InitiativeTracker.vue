@@ -110,7 +110,7 @@ async function onDragEnd() {
                             v-for="participant in participants"
                             :key="participant.id"
                             :participant="participant"
-                            :active-turn="false"
+                            :active-turn="participant.isActiveTurn"
                             @edit="console.log('edit participant card')"
                             @remove="emits('remove-participant', participant)"
                         />
