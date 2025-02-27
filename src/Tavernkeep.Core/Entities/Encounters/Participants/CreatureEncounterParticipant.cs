@@ -19,6 +19,8 @@ namespace Tavernkeep.Core.Entities.Encounters.Participants
 		public override EncounterParticipantType Type => EncounterParticipantType.Creature;
 		public IReadOnlyCollection<CreatureConditionRecord> Conditions => _conditions.AsReadOnly();
 
+		public Creature Creature => Origin.Copy().ApplyConditions(_conditions);
+
 		public void AddCondition(CreatureConditionRecord conditionRecord)
 		{
 			_conditions.Add(conditionRecord);

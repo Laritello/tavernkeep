@@ -8,7 +8,7 @@ namespace Tavernkeep.Core.Evaluators.Properties
 	public class MaxHealthPropertyEvaluator(Health health) : IValueEvaluator<int>
 	{
 		private readonly Character _character = health.Owner;
-		private readonly ModifierEvaluator _modifierEvaluator = new(health.Owner, "MaxHealth");
+		private readonly CharacterModifierEvaluator _modifierEvaluator = new(health.Owner, "MaxHealth");
 
 		public int Value => Calculate();
 

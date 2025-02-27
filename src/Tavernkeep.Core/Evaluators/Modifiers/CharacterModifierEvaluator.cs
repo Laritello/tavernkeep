@@ -4,7 +4,7 @@ using Tavernkeep.Core.Entities.Pathfinder;
 
 namespace Tavernkeep.Core.Evaluators.Modifiers
 {
-	public class ModifierEvaluator(Character character, params ICollection<string> target) : IValueEvaluator<int>
+	public class CharacterModifierEvaluator(Character character, params ICollection<string> target) : IValueEvaluator<int>
 	{
 		private readonly TypeModifierEvaluator _circumstanceModifierEvaluator = new(character, ModifierType.Circumstance, target);
 		private readonly TypeModifierEvaluator _statusModifierEvaluator = new(character, ModifierType.Status, target);

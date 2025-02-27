@@ -7,7 +7,7 @@ namespace Tavernkeep.Core.Evaluators.Properties
 	public class SpeedPropertyEvaluator(Speed speed) : IValueEvaluator<int>
 	{
 		private readonly Speed _speed = speed;
-		private readonly ModifierEvaluator _modifierEvaluator = new(speed.Owner, "Speed");
+		private readonly CharacterModifierEvaluator _modifierEvaluator = new(speed.Owner, "Speed");
 		public int Value => Calculate();
 
 		private int Calculate()
