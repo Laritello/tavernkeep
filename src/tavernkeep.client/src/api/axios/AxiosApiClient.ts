@@ -376,18 +376,53 @@ export class AxiosApiClient {
         return getPayloadOrThrow(response);
     }
 
-    async encounterResetInitiative(encounterId: string) {
+    async encounterResetInitiative(encounterId: string): Promise<void> {
         const response = await this.client.delete(`encounters/${encounterId}/initiative`);
         return getPayloadOrThrow(response);
     }
 
-    async updateEncounterState(encounterId: string, status: EncounterStateType) {
+    async updateEncounterState(encounterId: string, status: EncounterStateType): Promise<void> {
         const response = await this.client.patch(`encounters/${encounterId}/status?status=${status}`);
         return getPayloadOrThrow(response);
     }
 
     async getCreatureList(): Promise<CreatureShort[]> {
         const response = await this.client.get('library/creatures');
+        return getPayloadOrThrow(response);
+    }
+
+    async applyConditionToParticipant(
+        encounterId: string,
+        participantId: string,
+        conditionName: string
+    ): Promise<void> {
+        const response = await this.client.post(`encounters/${encounterId}/participant/${participantId}/conditions`, {
+            name: conditionName,
+        });
+        return getPayloadOrThrow(response);
+    }
+
+    async removeConditionFromParticipant(
+        encounterId: string,
+        participantId: string,
+        conditionName: string
+    ): Promise<void> {
+        const response = await this.client.delete(
+            `encounters/${encounterId}/participant/${participantId}/conditions?name=${conditionName}`
+        );
+        return getPayloadOrThrow(response);
+    }
+
+    async editConditionOnParticipant(
+        encounterId: string,
+        participantId: string,
+        conditionName: string,
+        conditionLevel: number
+    ): Promise<void> {
+        const response = await this.client.patch(`encounters/${encounterId}/participant/${participantId}/conditions`, {
+            name: conditionName,
+            level: conditionLevel,
+        });
         return getPayloadOrThrow(response);
     }
 }

@@ -1,4 +1,4 @@
-﻿import { defineStore } from 'pinia';
+﻿import { acceptHMRUpdate, defineStore } from 'pinia';
 import { ref } from 'vue';
 
 import type { CreatureShort } from '@/contracts/creatures/CreatureShort.ts';
@@ -13,3 +13,7 @@ export const useCreaturesStore = defineStore('creatures', () => {
 
     return { creatures, fetch };
 });
+
+if (import.meta.hot) {
+    import.meta.hot.accept(acceptHMRUpdate(useCreaturesStore, import.meta.hot));
+}

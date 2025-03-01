@@ -1,4 +1,5 @@
 import type { Health } from '@/contracts/character';
+import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto.ts';
 import { ParticipantType, SavingThrowType } from '@/contracts/enums';
 
 export interface Participant {
@@ -11,4 +12,5 @@ export interface Participant {
     perception: number;
     health: Health;
     savingThrows: Record<SavingThrowType, number>;
+    conditions: ConditionShortDto[];
 }

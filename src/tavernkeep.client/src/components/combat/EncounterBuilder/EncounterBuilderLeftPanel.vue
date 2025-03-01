@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import EncounterCharacterList from '@/components/combat/EncounterBuilder/EncounterCharacterList.vue';
+import EncounterConditionsList from '@/components/combat/EncounterBuilder/EncounterConditionsList.vue';
 import CreatureList from '@/components/library/CreatureList.vue';
 import TabMenu from '@/components/shared/TabMenu.vue';
 import type { CreatureShort } from '@/contracts/creatures/CreatureShort.ts';
@@ -39,6 +40,7 @@ async function addCreature(creature: CreatureShort) {
                 :tabs="[
                     { id: 'characters', label: 'Characters' },
                     { id: 'creatures', label: 'Creatures' },
+                    { id: 'conditions', label: 'Conditions' },
                 ]"
                 default-tab="characters"
                 variant="bordered"
@@ -57,6 +59,13 @@ async function addCreature(creature: CreatureShort) {
                         :disable-buttons="!encountersStore.selectedEncounterId"
                         class="w-full h-[calc(100%_-_40px)]"
                         @add-pressed="addCreature"
+                    />
+                </template>
+
+                <template #conditions>
+                    <EncounterConditionsList
+                        :disable-buttons="!encountersStore.selectedEncounterId"
+                        class="w-full h-[calc(100%_-_40px)] py-2"
                     />
                 </template>
             </TabMenu>

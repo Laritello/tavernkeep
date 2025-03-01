@@ -6,6 +6,9 @@ import InitiativeParticipantCard from '@/components/combat/EncounterBuilder/Init
 import type { Encounter } from '@/contracts/encounter/Encounter.ts';
 import { EncounterStateType } from '@/contracts/encounter/EncounterStateType.ts';
 import type { Participant } from '@/contracts/encounter/Participant.ts';
+import { ApiClientFactory } from '@/factories/ApiClientFactory.ts';
+
+const api = ApiClientFactory.createApiClient();
 
 const { encounter } = defineProps<{
     encounter: Encounter;
@@ -44,6 +47,18 @@ function nextTurn() {
 async function onDragEnd() {
     await nextTick(() => (drag.value = false));
 }
+
+async function onAddCondition(targetId: string, conditionName: string) {
+    await api.applyConditionToParticipant(encounter.id, targetId, conditionName);
+}
+
+async function onRemoveCondition(targetId: string, conditionName: string) {
+    await api.removeConditionFromParticipant(encounter.id, targetId, conditionName);
+}
+
+async function onEditCondition(targetId: string, conditionName: string, conditionLevel: number) {
+    await api.editConditionOnParticipant(encounter.id, targetId, conditionName, conditionLevel);
+}
 </script>
 
 <template>
@@ -70,10 +85,6 @@ async function onDragEnd() {
                             </ul>
                         </div>
                     </div>
-                    <button class="btn btn-sm btn-neutral" @click="emits('begin-encounter')">
-                        <span class="mdi mdi-restore"></span>
-                        Reset
-                    </button>
                     <button
                         v-if="encounterRef.status === EncounterStateType.Draft"
                         class="btn btn-sm btn-primary"
@@ -113,6 +124,9 @@ async function onDragEnd() {
                             :active-turn="encounter.currentTurnIndex === index"
                             @edit="console.log('edit participant card')"
                             @remove="emits('remove-participant', participant)"
+                            @add-condition="onAddCondition"
+                            @remove-condition="onRemoveCondition"
+                            @edit-condition="onEditCondition"
                         />
                     </TransitionGroup>
                 </VueDraggable>

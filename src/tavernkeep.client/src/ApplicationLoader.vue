@@ -10,6 +10,7 @@ import { useTheme } from '@/composables/useTheme.ts';
 import { useI18n } from '@/i18n/useI18n.ts';
 import { useCharacters } from '@/stores/characters.ts';
 import { useMessages } from '@/stores/messages.ts';
+import { useConditionsStore } from '@/stores/useConditionsStore.ts';
 import { useCreaturesStore } from '@/stores/useCreaturesStore.ts';
 import { useEncountersStore } from '@/stores/useEncountersStore.ts';
 import { useUsers } from '@/stores/users.ts';
@@ -23,6 +24,7 @@ const characters = useCharacters();
 const messages = useMessages();
 const encounters = useEncountersStore();
 const creatures = useCreaturesStore();
+const conditions = useConditionsStore();
 
 const isLoading = ref(false);
 
@@ -77,6 +79,7 @@ async function fetch() {
     await encounters.fetch();
     await messages.fetch(0, 20);
     await creatures.fetch();
+    await conditions.fetch();
 }
 
 async function startHubs() {
