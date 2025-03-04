@@ -2,6 +2,8 @@
 {
 	public enum DamageType
 	{
+		Untyped,
+
 		// Physical Damage Types
 		Bludgeoning,
 		Piercing,
@@ -13,18 +15,15 @@
 		Electricity,
 		Fire,
 		Sonic,
-
-		// Alignment Damage Types
-		Chaotic,
-		Evil,
-		Good,
-		Lawful,
+		Void,
+		Vitality,
+		Force,
 
 		// Other Damage Types
-		Force,
 		Mental,
-		Negative,
-		Positive,
-		Poison
+		Spirit,
+		Poison,
+		Bleed,
+		Precision
 	}
 }
