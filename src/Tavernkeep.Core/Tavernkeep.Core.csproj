@@ -21,6 +21,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.2" />
     <PackageReference Include="NCalcSync" Version="5.4.1" />
+    <PackageReference Include="Scriban" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
