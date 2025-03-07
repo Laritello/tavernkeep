@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import HealthBar from '@/components/character/HealthBar.vue';
+import StatblockDialog from '@/components/dialogs/StatblockDialog.vue';
+import { useModal } from '@/composables/useModal';
 import type { ConditionShortDto } from '@/contracts/conditions/ConditionShortDto.ts';
 import type { Participant } from '@/contracts/encounter/Participant.ts';
 
@@ -34,6 +36,12 @@ function onEditCondition(condition: ConditionShortDto, delta: number) {
     }
     emits('edit-condition', participant.id, condition.name, conditionLevel);
 }
+
+async function showStatblock() {
+    const modal = useModal();
+    const result = await modal.show(StatblockDialog, { data: participant.statblock });
+    console.log(result);
+}
 </script>
 
 <template>
@@ -66,7 +74,7 @@ function onEditCondition(condition: ConditionShortDto, delta: number) {
                     <!-- Participant Info -->
                     <div class="flex flex-col">
                         <div class="flex flex-row">
-                            <h3 class="font-bold">{{ participant.name }}</h3>
+                            <h3 class="font-bold" @click="showStatblock">{{ participant.name }}</h3>
                             <button class="btn btn-circle btn-sm btn-ghost" @click="emits('edit', participant)">
                                 <span class="mdi mdi-pencil"></span>
                             </button>

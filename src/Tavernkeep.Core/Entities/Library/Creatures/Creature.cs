@@ -30,7 +30,8 @@ namespace Tavernkeep.Core.Entities.Library.Creatures
 			}
 
 			var html = sb.ToString();
-			return html;
+
+			return $"<div class='flex flex-col p-2 text-pf w-full'>{html}</div>";
 		}
 	}
 }

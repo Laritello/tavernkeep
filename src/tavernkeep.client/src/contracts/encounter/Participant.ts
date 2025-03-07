@@ -13,4 +13,5 @@ export interface Participant {
     health: Health;
     savingThrows: Record<SavingThrowType, number>;
     conditions: ConditionShortDto[];
+    statblock: string; // TODO: Move to a separate class
 }
