@@ -105,10 +105,6 @@ defineProps<{
     font-size: 15px;
 }
 
-input[type='file'] {
-    display: none !important;
-}
-
 :deep(body) {
     font-family: 'Open Sans Condensed', sans-serif;
     font-weight: 400;
