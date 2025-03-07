@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 using Tavernkeep.Core.Entities.Base;
 
 namespace Tavernkeep.Core.Entities.Library.Creatures
@@ -18,5 +19,18 @@ namespace Tavernkeep.Core.Entities.Library.Creatures
 		public Dictionary<string, int> SavingThrows = [];
 
 		public int GetSkillBonus(string skillName) => 0;
+
+		public string GetStatBlock()
+		{
+			StringBuilder sb = new();
+
+			foreach (var block in Blocks)
+			{
+				sb.AppendLine(block.HTML);
+			}
+
+			var html = sb.ToString();
+			return html;
+		}
 	}
 }

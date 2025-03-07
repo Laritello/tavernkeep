@@ -5,6 +5,7 @@ namespace Tavernkeep.Core.Entities.Library.Creatures.Statblocks
 {
 	public sealed class TraitsStatblock(ICollection<string> traits) : IStatblock
 	{
+		private readonly string html_template = @"<div class='flex flex-row flex-wrap pt-1 max-w-full'>{{ for trait in traits }}<div class='pf-trait {{ if trait.size }} pf-trait-size {{ end }}'>{{ trait.name }}</div>{{ end }}</div>";
 		public ICollection<string> Traits { get; set; } = traits;
 		public bool IsDividerEnabled { get; set; }
 
@@ -13,14 +14,15 @@ namespace Tavernkeep.Core.Entities.Library.Creatures.Statblocks
 
 		private string GenerateHTML()
 		{
-			var template = Template.Parse(@"
-			<div class='flex flex-row flex-wrap pt-1 max-w-full'>
-				{{ for trait in traits }}
-				<div class='pf-trait {{ if trait.size }} pf-trait-size {{ end }}'>{{ trait.name }}</div>
-				{{ end }}
-			</div>
-			");
+			//var template = Template.Parse(@"
+			//<div class='flex flex-row flex-wrap pt-1 max-w-full'>
+			//	{{ for trait in traits }}
+			//	<div class='pf-trait {{ if trait.size }} pf-trait-size {{ end }}'>{{ trait.name }}</div>
+			//	{{ end }}
+			//</div>
+			//");
 
+			var template = Template.Parse(html_template);
 			var html = template.Render(new { Traits = Traits.Select(x => new { Name = x, Size = IsSize(x) }) });
 
 			if (IsDividerEnabled)

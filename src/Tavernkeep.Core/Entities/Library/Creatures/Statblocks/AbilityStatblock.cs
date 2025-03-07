@@ -5,6 +5,7 @@ namespace Tavernkeep.Core.Entities.Library.Creatures.Statblocks
 {
 	public sealed class AbilityStatblock(List<StatblockSection> sections) : IStatblock
 	{
+		private string html_template = @"<p class='hang'>{{ for section in sections }}<strong>{{ section.header }}</strong>{{ for span in section.spans }} {{ span.html }} {{ end }} {{ for subsection in section.subsections }}<p class='hang-nested''><strong>{{ subsection.header }}</strong>{{ for span in subsection.spans }} {{ span.html }} {{ end }}</p>{{ end }} {{ end }}</p>";
 		public List<StatblockSection> Sections { get; set; } = sections;
 		public bool IsDividerEnabled { get; set; }
 
@@ -19,24 +20,27 @@ namespace Tavernkeep.Core.Entities.Library.Creatures.Statblocks
 			 * So we're gonna use modified offest with hang-nested class
 			 * to emulate as if they were nested
 			 */
-			var template = Template.Parse(@"
-				<p class='hang'>
-					{{ for section in sections }}
-						<strong>{{ section.header }}</strong>
-						{{ for span in section.spans }}
-							{{ span.html }}
-						{{ end }}
-						{{ for subsection in section.subsections }}
-							<p class='hang-nested'>
-								<strong>{{ subsection.header }}</strong>
-								{{ for span in subsection.spans }}
-									{{ span.html }}
-								{{ end }}
-							</p>
-						{{ end }}
-					{{ end }}
-				</p>
-				");
+
+			//var template = Template.Parse(@"
+			//	<p class='hang'>
+			//		{{ for section in sections }}
+			//			<strong>{{ section.header }}</strong>
+			//			{{ for span in section.spans }}
+			//				{{ span.html }}
+			//			{{ end }}
+			//			{{ for subsection in section.subsections }}
+			//				<p class='hang-nested'>
+			//					<strong>{{ subsection.header }}</strong>
+			//					{{ for span in subsection.spans }}
+			//						{{ span.html }}
+			//					{{ end }}
+			//				</p>
+			//			{{ end }}
+			//		{{ end }}
+			//	</p>
+			//	");
+
+			var template = Template.Parse(html_template);
 
 			var html = template.Render(new { Sections });
 
