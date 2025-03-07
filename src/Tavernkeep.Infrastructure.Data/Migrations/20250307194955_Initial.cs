@@ -35,7 +35,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     Level = table.Column<int>(type: "INTEGER", nullable: false),
                     Health = table.Column<int>(type: "INTEGER", nullable: false),
                     Traits = table.Column<string>(type: "TEXT", nullable: false),
-                    Statblocks = table.Column<string>(type: "TEXT", nullable: false)
+                    Blocks = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

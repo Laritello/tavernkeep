@@ -134,6 +134,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Blocks")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Health")
                         .HasColumnType("INTEGER");
 
@@ -141,10 +145,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Statblocks")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

@@ -11,7 +11,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.Library
 		{
 			builder.HasKey(c => c.Id);
 
-			builder.Property(c => c.Statblocks)
+			builder.Property(c => c.Blocks)
 				.HasConversion(
 				v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
 				v => JsonSerializer.Deserialize<List<IStatblock>>(v, JsonSerializerOptions.Default) ?? new List<IStatblock>()

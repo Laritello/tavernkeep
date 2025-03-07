@@ -11,7 +11,7 @@ using Tavernkeep.Infrastructure.Data.Context;
 namespace Tavernkeep.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SessionContext))]
-    [Migration("20250307194246_Initial")]
+    [Migration("20250307194955_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -137,6 +137,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Blocks")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Health")
                         .HasColumnType("INTEGER");
 
@@ -144,10 +148,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Statblocks")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

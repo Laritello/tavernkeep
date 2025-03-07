@@ -11,7 +11,7 @@ namespace Tavernkeep.Core.Entities.Library.Creatures
 		public int Level { get; set; }
 		public int Health { get; set; }
 		public ICollection<string> Traits { get; set; } = [];
-		public ICollection<IStatblock> Statblocks { get; set; } = [];
+		public ICollection<IStatblock> Blocks { get; set; } = [];
 
 		public int Perception => 0;
 		public int ArmorClass => 0;
