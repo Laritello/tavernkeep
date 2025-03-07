@@ -46,6 +46,7 @@ namespace Tavernkeep.Application.Mapping.Profiles
 				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Creature.SavingThrows))
 				.ForMember(dest => dest.Health, opt => opt.MapFrom(src => new HealthDto() { Max = src.Creature.Health, Current = src.CurrentHealth, Temporary = src.TemporaryHealth }))
 				.ForMember(dest => dest.EntityId, opt => opt.MapFrom(src => src.Creature.Id))
+				.ForMember(dest => dest.Statblock, opt => opt.MapFrom(src => src.Origin.GetStatBlock()))
 				.ForMember(dest => dest.Conditions, opt => opt.MapFrom(src => src.Conditions.Select(x =>
 					new ConditionShortDto()
 					{
