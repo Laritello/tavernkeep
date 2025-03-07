@@ -11,36 +11,11 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.Library
 		{
 			builder.HasKey(c => c.Id);
 
-			builder.OwnsOne(c => c.Health, b => b.ToJson());
-
-			builder.Property(c => c.Abilities)
+			builder.Property(c => c.Statblocks)
 				.HasConversion(
-					v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
-					v => JsonSerializer.Deserialize<Dictionary<string, int>>(v, JsonSerializerOptions.Default) ?? new Dictionary<string, int>()
-				);
-
-			builder.Property(c => c.Skills)
-				.HasConversion(
-					v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
-					v => JsonSerializer.Deserialize<Dictionary<string, int>>(v, JsonSerializerOptions.Default) ?? new Dictionary<string, int>()
-				);
-
-			builder.Property(c => c.SavingThrows)
-				.HasConversion(
-					v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
-					v => JsonSerializer.Deserialize<Dictionary<string, int>>(v, JsonSerializerOptions.Default) ?? new Dictionary<string, int>()
-				);
-
-			builder.Property(c => c.Notes)
-				.HasConversion(
-					v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
-					v => JsonSerializer.Deserialize<Dictionary<string, string>>(v, JsonSerializerOptions.Default) ?? new Dictionary<string, string>()
-				);
-
-			builder.OwnsMany(c => c.Senses, b => b.ToJson());
-			builder.OwnsMany(c => c.Resistances, b => b.ToJson());
-			builder.OwnsMany(c => c.Weaknesses, b => b.ToJson());
-			builder.OwnsMany(c => c.Speeds, b => b.ToJson());
+				v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
+				v => JsonSerializer.Deserialize<List<IStatblock>>(v, JsonSerializerOptions.Default) ?? new List<IStatblock>()
+			);
 		}
 	}
 }

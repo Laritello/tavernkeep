@@ -19,14 +19,11 @@ namespace Tavernkeep.Application.Strategies.Encounters.RollParticipantInitiative
 					var roll = diceService.Roll(bonus: creatureParticipant.Origin.Perception);
 					participant.Initiative = roll.Value;
 				}
-				else if (creatureParticipant.Origin.Skills.TryGetValue(skillName, out var bonus))
-				{
-					var roll = diceService.Roll(bonus: bonus);
-					participant.Initiative = roll.Value;
-				}
 				else
 				{
-					throw new BusinessLogicException("Creature doesn't have specified skill");
+					var bonus = creatureParticipant.Origin.GetSkillBonus(skillName);
+					var roll = diceService.Roll(bonus: bonus);
+					participant.Initiative = roll.Value;
 				}
 			}
 

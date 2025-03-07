@@ -1,18 +1,20 @@
 ﻿using Scriban;
+using System.Text.Json.Serialization;
 
 namespace Tavernkeep.Core.Entities.Library.Creatures.Statblocks
 {
 	public sealed class TraitsStatblock(ICollection<string> traits) : IStatblock
 	{
 		public ICollection<string> Traits { get; set; } = traits;
-
 		public bool IsDividerEnabled { get; set; }
+
+		[JsonIgnore]
 		public string HTML => GenerateHTML();
 
 		private string GenerateHTML()
 		{
 			var template = Template.Parse(@"
-			<div class='flex flex-row pt-1'>
+			<div class='flex flex-row flex-wrap pt-1 max-w-full'>
 				{{ for trait in traits }}
 				<div class='pf-trait {{ if trait.size }} pf-trait-size {{ end }}'>{{ trait.name }}</div>
 				{{ end }}

@@ -1,9 +1,5 @@
 ﻿using Scriban;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Tavernkeep.Core.Entities.Library.Creatures.Statblocks
 {
@@ -12,8 +8,9 @@ namespace Tavernkeep.Core.Entities.Library.Creatures.Statblocks
 		public string Name { get; set; } = name;
 		public string Type { get; set; } = type;
 		public int Level { get; set; } = level;
-
 		public bool IsDividerEnabled { get; set; }
+
+		[JsonIgnore]
 		public string HTML => GenerateHTML();
 
 		private string GenerateHTML()

@@ -1,17 +1,14 @@
 ﻿using Scriban;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Tavernkeep.Core.Entities.Library.Creatures.Statblocks
 {
-	public class DefenseStatblock(List<StatblockSection> sections) : IStatblock
+	public sealed class DefenseStatblock(List<StatblockSection> sections) : IStatblock
 	{
 		public List<StatblockSection> Sections { get; set; } = sections;
 		public bool IsDividerEnabled { get; set; }
 
+		[JsonIgnore]
 		public string HTML => GenerateHTML();
 
 		private string GenerateHTML()

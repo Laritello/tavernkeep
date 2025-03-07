@@ -9,7 +9,14 @@ namespace Tavernkeep.Core.Entities.Library.Creatures
 		public required string Name { get; set; }
 		public required string Type { get; set; }
 		public int Level { get; set; }
+		public int Health { get; set; }
 		public ICollection<string> Traits { get; set; } = [];
 		public ICollection<IStatblock> Statblocks { get; set; } = [];
+
+		public int Perception => 0;
+		public int ArmorClass => 0;
+		public Dictionary<string, int> SavingThrows = [];
+
+		public int GetSkillBonus(string skillName) => 0;
 	}
 }
