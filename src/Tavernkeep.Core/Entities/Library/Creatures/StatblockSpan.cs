@@ -1,11 +1,15 @@
-﻿namespace Tavernkeep.Core.Entities.Library.Creatures
+﻿using System.Text.Json.Serialization;
+
+namespace Tavernkeep.Core.Entities.Library.Creatures
 {
-	public struct StatblockSpan
+	public class StatblockSpan
 	{
-		public string Text { get; set; }
-		public bool IsBold { get; set; }
-		public bool IsItalic { get; set; }
-		public readonly string HTML
+		public required string Text { get; set; }
+		public required bool IsBold { get; set; }
+		public required bool IsItalic { get; set; }
+
+		[JsonIgnore]
+		public string HTML
 		{
 			get
 			{
@@ -25,10 +29,12 @@
 			}
 		}
 
+		public bool SameStyle(bool isBold, bool isItalic) => isBold == IsBold && isItalic == IsItalic;
+
 		private static string WrapIn(string text, string container) => $"<{container}>{text}</{container}>";
 		private static string ProcessImages(string text)
 		{
-			return text.Replace("[free]", "<img src='./resources/pf-action-free.png' class='text-img'></img>")
+			return text.Replace("[free-action]", "<img src='./resources/pf-action-free.png' class='text-img'></img>")
 				.Replace("[reaction]", "<img src='./resources/pf-action-reaction.png' class='text-img'></img>")
 				.Replace("[one-action]", "<img src='./resources/pf-action-1.png' class='text-img'></img>")
 				.Replace("[two-actions]", "<img src='./resources/pf-action-2.png' class='text-img'></img>")
