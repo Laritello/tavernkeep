@@ -263,4 +263,22 @@ defineProps<{
     height: 2px;
     margin: 0px 0px 0.2rem;
 }
+
+:deep(ul) {
+    margin: 0;
+    padding-left: 2rem;
+
+    display: block;
+    list-style-type: disc;
+    unicode-bidi: isolate;
+}
+
+:deep(::marker) {
+    unicode-bidi: isolate;
+    font-variant-numeric: tabular-nums;
+    text-transform: none;
+    text-indent: 0px !important;
+    text-align: start !important;
+    text-align-last: start !important;
+}
 </style>
