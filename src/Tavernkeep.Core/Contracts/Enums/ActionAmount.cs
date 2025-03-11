@@ -2,13 +2,13 @@
 {
 	public enum ActionAmount
 	{
-		None,
-		Reaction,
 		Free,
+		Reaction,
 		One,
 		Two,
 		Three,
 		OneToThree,
-		TwoToThree
+		OneToThwo,
+		TwoToThree,
 	}
 }
