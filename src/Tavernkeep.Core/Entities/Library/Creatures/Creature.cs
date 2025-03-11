@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Tavernkeep.Core.Entities.Base;
+using Tavernkeep.Core.Statblocks.Abstractions;
 
 namespace Tavernkeep.Core.Entities.Library.Creatures
 {
@@ -12,7 +13,7 @@ namespace Tavernkeep.Core.Entities.Library.Creatures
 		public int Level { get; set; }
 		public int Health { get; set; }
 		public ICollection<string> Traits { get; set; } = [];
-		public ICollection<IStatblock> Blocks { get; set; } = [];
+		public ICollection<IStatblockComponent> Blocks { get; set; } = [];
 
 		public int Perception => 0;
 		public int ArmorClass => 0;

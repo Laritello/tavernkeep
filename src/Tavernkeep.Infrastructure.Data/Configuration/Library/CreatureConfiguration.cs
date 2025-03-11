@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Text.Json;
 using Tavernkeep.Core.Entities.Library.Creatures;
+using Tavernkeep.Core.Statblocks.Abstractions;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration.Library
 {
@@ -14,7 +15,7 @@ namespace Tavernkeep.Infrastructure.Data.Configuration.Library
 			builder.Property(c => c.Blocks)
 				.HasConversion(
 				v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
-				v => JsonSerializer.Deserialize<List<IStatblock>>(v, JsonSerializerOptions.Default) ?? new List<IStatblock>()
+				v => JsonSerializer.Deserialize<List<IStatblockComponent>>(v, JsonSerializerOptions.Default) ?? new List<IStatblockComponent>()
 			);
 		}
 	}
