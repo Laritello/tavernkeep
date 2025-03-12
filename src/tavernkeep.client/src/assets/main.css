@@ -6,18 +6,29 @@
     --unique-color: #371835;
     --rare-color: #192640;
     --uncommon-color: #613513;
+    --pf-action-free: url('/assets/images/pf-action-free-light.png');
+    --pf-action-reaction: url('/assets/images/pf-action-reaction-light.png');
+    --pf-action-one: url('/assets/images/pf-action-1-light.png');
+    --pf-action-two: url('/assets/images/pf-action-2-light.png');
+    --pf-action-three: url('/assets/images/pf-action-3-light.png');
 }
 
 [data-theme='light'] {
     --unique-color: #e65cda;
     --rare-color: #5082e6;
     --uncommon-color: #e66f15;
+    --action-icon-color: #000000;
+    --pf-action-free: url('/assets/images/pf-action-free.png');
+    --pf-action-reaction: url('/assets/images/pf-action-reaction.png');
+    --pf-action-one: url('/assets/images/pf-action-1.png');
+    --pf-action-two: url('/assets/images/pf-action-2.png');
+    --pf-action-three: url('/assets/images/pf-action-3.png');
 }
 
 :root {
     --vsbs-background: oklch(var(--b1)); /* base-100 */
     --vsbs-border-color: oklch(var(--b2)); /* base-200 */
-    --vsbs-handle-background: oklch(var(--bc)/0.5); /* base-content opacity 50% */
+    --vsbs-handle-background: oklch(var(--bc) / 0.5); /* base-content opacity 50% */
 }
 
 /* TODO: Add more toast styles */

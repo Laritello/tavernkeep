@@ -240,6 +240,26 @@ defineProps<{
     transform: translateY(0.15em);
 }
 
+:deep(.pf-action-free) {
+    content: var(--pf-action-free);
+}
+
+:deep(.pf-action-reaction) {
+    content: var(--pf-action-reaction);
+}
+
+:deep(.pf-action-one) {
+    content: var(--pf-action-one);
+}
+
+:deep(.pf-action-two) {
+    content: var(--pf-action-two);
+}
+
+:deep(.pf-action-three) {
+    content: var(--pf-action-three);
+}
+
 :deep(.hang) {
     padding-left: 1em;
     text-indent: -1em;
