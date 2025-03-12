@@ -7,8 +7,20 @@ namespace Tavernkeep.Core.Statblocks.Components
 {
 	public sealed class GeneralStatblockComponent(List<IToken> tokens) : IStatblockComponent
 	{
+		#region Backing fields
+
+		private string? _name;
+		private string? _type;
+		private int? _level;
+
+		#endregion
+
 		public List<IToken> Tokens { get; set; } = tokens;
 		public bool IsDividerEnabled { get; set; }
+
+		public string Name => _name ??= GetName();
+		public string Type => _type ??= GetCreatureType();
+		public int Level => _level ??= GetLevel();
 
 		[JsonIgnore]
 		public string HTML => GenerateHTML();
@@ -38,6 +50,39 @@ namespace Tavernkeep.Core.Statblocks.Components
 			}
 
 			return parent.OuterHtml;
+		}
+
+		private string GetName()
+		{
+			if (Tokens.Count == 0 || Tokens[0] is not ITextToken text)
+			{
+				return string.Empty;
+			}
+
+			var result = StatblockRegexes.GeneralInfromation().Match(text.Text);
+			return result.Groups["creatureName"].Value.Trim();
+		}
+
+		private string GetCreatureType()
+		{
+			if (Tokens.Count == 0 || Tokens[0] is not ITextToken text)
+			{
+				return string.Empty;
+			}
+
+			var result = StatblockRegexes.GeneralInfromation().Match(text.Text);
+			return result.Groups["creatureType"].Value;
+		}
+
+		private int GetLevel()
+		{
+			if (Tokens.Count == 0 || Tokens[0] is not ITextToken text)
+			{
+				return 0;
+			}
+
+			var result = StatblockRegexes.GeneralInfromation().Match(text.Text);
+			return int.Parse(result.Groups["creatureLevel"].Value.Replace('–', '-'));
 		}
 	}
 }

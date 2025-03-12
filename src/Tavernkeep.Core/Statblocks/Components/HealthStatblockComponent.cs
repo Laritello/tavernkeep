@@ -9,6 +9,7 @@ namespace Tavernkeep.Core.Statblocks.Components
 	{
 		public List<IToken> Tokens { get; set; } = tokens;
 		public bool IsDividerEnabled { get; set; }
+		public int Health => 0;
 
 		[JsonIgnore]
 		public string HTML => DefaultStatblockTemplate.BuildFromTemplate(Tokens, IsDividerEnabled);
