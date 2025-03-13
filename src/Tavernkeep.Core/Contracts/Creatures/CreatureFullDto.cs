@@ -12,7 +12,7 @@ namespace Tavernkeep.Core.Contracts.Creatures
 		public Rarity Rarity { get; set; }
 		public int Perception { get; set; }
 		public int ArmorClass { get; set; }
-		public required HealthInformation Health { get; set; }
+		//public required HealthInformation Health { get; set; }
 		public required Dictionary<string, int> Abilities { get; set; }
 		public required Dictionary<string, int> Skills { get; set; }
 		public required Dictionary<string, int> SavingThrows { get; set; }
@@ -21,7 +21,7 @@ namespace Tavernkeep.Core.Contracts.Creatures
 		public required List<string> Traits { get; set; }
 		public required List<Resistance> Resistances { get; set; }
 		public required List<Weakness> Weaknesses { get; set; }
-		public required List<SpeedInformation> Speeds { get; set; }
+		//public required List<SpeedInformation> Speeds { get; set; }
 		public required Dictionary<string, string> Notes { get; set; }
 	}
 }
