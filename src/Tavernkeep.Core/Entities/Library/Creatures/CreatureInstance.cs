@@ -45,7 +45,13 @@ namespace Tavernkeep.Core.Entities.Library.Creatures
 				Level = creature.Level,
 				Health = creature.Health,
 				Traits = creature.Traits,
+				Blocks = creature.Blocks.Select(x => x.Copy()).ToList(),
 			};
+
+			foreach (var block in instance.Blocks)
+			{
+				block.ApplyConditions(records);
+			}
 
 			return instance;
 		}

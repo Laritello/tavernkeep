@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Statblocks.Components;
 
 namespace Tavernkeep.Core.Statblocks.Abstractions
@@ -22,5 +23,8 @@ namespace Tavernkeep.Core.Statblocks.Abstractions
 
 		[JsonIgnore]
 		public string HTML { get; }
+
+		public IStatblockComponent Copy();
+		public void ApplyConditions(ICollection<ConditionRecord> records);
 	}
 }
