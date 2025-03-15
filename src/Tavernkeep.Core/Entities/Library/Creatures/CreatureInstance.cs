@@ -48,6 +48,9 @@ namespace Tavernkeep.Core.Entities.Library.Creatures
 				Blocks = creature.Blocks.Select(x => x.Copy()).ToList(),
 			};
 
+			// Alternative is just to have untracable field 
+			// that says if value is decreased or increased on all modifiers.
+			// Requires to track what is modifier.
 			foreach (var block in instance.Blocks)
 			{
 				block.ApplyConditions(records);
