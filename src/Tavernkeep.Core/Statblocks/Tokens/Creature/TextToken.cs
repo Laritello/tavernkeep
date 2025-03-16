@@ -48,5 +48,10 @@ namespace Tavernkeep.Core.Statblocks.Tokens
 
 			Text += $" {textToken.Text}";
 		}
+
+		public IToken Copy()
+		{
+			return new TextToken(Text, IsBold, IsItalic);
+		}
 	}
 }

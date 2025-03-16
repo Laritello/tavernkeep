@@ -22,5 +22,10 @@ namespace Tavernkeep.Core.Statblocks.Tokens
 				};
 			}
 		}
+
+		public IToken Copy()
+		{
+			return new ActionToken() { Amount = Amount };
+		}
 	}
 }

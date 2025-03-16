@@ -7,5 +7,10 @@ namespace Tavernkeep.Core.Statblocks.Tokens
 		public bool IsStart { get; set; }
 
 		public string Html => IsStart ? "<ul>" : "</ul>";
+
+		public IToken Copy()
+		{
+			return new ListToken() { IsStart = IsStart };
+		}
 	}
 }

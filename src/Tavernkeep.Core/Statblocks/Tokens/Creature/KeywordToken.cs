@@ -27,6 +27,11 @@ namespace Tavernkeep.Core.Statblocks.Tokens
 			Name += $" {keywordToken.Name}";
 		}
 
+		public IToken Copy()
+		{
+			return new KeywordToken() { Name = Name };
+		}
+
 		public bool IsAttachable(IToken token)
 		{
 			return token is IKeywordToken;
