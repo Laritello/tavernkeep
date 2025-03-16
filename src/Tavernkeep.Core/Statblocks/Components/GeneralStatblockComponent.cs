@@ -88,7 +88,10 @@ namespace Tavernkeep.Core.Statblocks.Components
 
 		public IStatblockComponent Copy()
 		{
-			throw new NotImplementedException();
+			return new GeneralStatblockComponent(Tokens.Select(x => x.Copy()).ToList())
+			{
+				IsDividerEnabled = IsDividerEnabled,
+			};
 		}
 
 		public void ApplyConditions(ICollection<ConditionRecord> records)

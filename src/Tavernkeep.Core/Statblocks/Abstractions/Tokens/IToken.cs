@@ -11,5 +11,6 @@ namespace Tavernkeep.Core.Statblocks.Abstractions.Tokens
 	public interface IToken
 	{
 		public string Html { get; }
+		public IToken Copy();
 	}
 }

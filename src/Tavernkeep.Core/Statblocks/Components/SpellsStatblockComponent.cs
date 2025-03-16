@@ -21,7 +21,10 @@ namespace Tavernkeep.Core.Statblocks.Components
 
 		public IStatblockComponent Copy()
 		{
-			throw new NotImplementedException();
+			return new SpellsStatblockComponent(Tokens.Select(x => x.Copy()).ToList())
+			{
+				IsDividerEnabled = IsDividerEnabled,
+			};
 		}
 	}
 }
