@@ -2,15 +2,15 @@
 
 namespace Tavernkeep.Core.Statblocks.Tokens
 {
-	public class ListItemToken : IListItemToken
+	public class ListItemToken(bool isStart) : IListItemToken
 	{
-		public bool IsStart { get; set; }
+		public bool IsStart { get; set; } = isStart;
 
 		public string Html => IsStart ? "<li>" : "</li>";
 
 		public IToken Copy()
 		{
-			return new ListItemToken() { IsStart = IsStart };
+			return new ListItemToken(IsStart);
 		}
 	}
 }

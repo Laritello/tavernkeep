@@ -3,9 +3,9 @@ using Tavernkeep.Core.Statblocks.Abstractions.Tokens;
 
 namespace Tavernkeep.Core.Statblocks.Tokens
 {
-	public class ActionToken : IActionToken
+	public class ActionToken(ActionAmount amount) : IActionToken
 	{
-		public required ActionAmount Amount { get; set; }
+		public ActionAmount Amount { get; set; } = amount;
 
 		public string Html
 		{
@@ -25,7 +25,7 @@ namespace Tavernkeep.Core.Statblocks.Tokens
 
 		public IToken Copy()
 		{
-			return new ActionToken() { Amount = Amount };
+			return new ActionToken(Amount);
 		}
 	}
 }

@@ -4,11 +4,13 @@ using Tavernkeep.Core.Statblocks.Abstractions.Tokens;
 
 namespace Tavernkeep.Core.Statblocks.Tokens
 {
-	public class KeywordToken : IKeywordToken
+	public class KeywordToken(string name) : IKeywordToken
 	{
-		public required string Name { get; set; }
+		public string Name { get; set; } = name;
+
 		[JsonIgnore]
 		public bool IsCheckResult => Name is "Critical Success" or "Critical Failure" or "Success" or "Failure";
+
 		public string Html
 		{
 			get
@@ -29,7 +31,7 @@ namespace Tavernkeep.Core.Statblocks.Tokens
 
 		public IToken Copy()
 		{
-			return new KeywordToken() { Name = Name };
+			return new KeywordToken(Name);
 		}
 
 		public bool IsAttachable(IToken token)
