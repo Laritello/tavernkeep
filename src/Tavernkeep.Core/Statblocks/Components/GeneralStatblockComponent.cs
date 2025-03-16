@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using System.Text.Json.Serialization;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Statblocks.Abstractions;
 using Tavernkeep.Core.Statblocks.Abstractions.Tokens;
 
@@ -83,6 +84,16 @@ namespace Tavernkeep.Core.Statblocks.Components
 
 			var result = StatblockRegexes.GeneralInfromation().Match(text.Text);
 			return int.Parse(result.Groups["creatureLevel"].Value.Replace('–', '-'));
+		}
+
+		public IStatblockComponent Copy()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void ApplyConditions(ICollection<ConditionRecord> records)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

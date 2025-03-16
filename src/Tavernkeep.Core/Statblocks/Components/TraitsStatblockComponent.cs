@@ -1,5 +1,6 @@
 ﻿using Scriban;
 using System.Text.Json.Serialization;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Statblocks.Abstractions;
 using Tavernkeep.Core.Statblocks.Abstractions.Tokens;
 
@@ -45,6 +46,16 @@ namespace Tavernkeep.Core.Statblocks.Components
 				"unique" => "pf-trait-unique",
 				_ => string.Empty
 			};
+		}
+
+		public IStatblockComponent Copy()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void ApplyConditions(ICollection<ConditionRecord> records)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

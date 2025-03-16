@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Tavernkeep.Core.Entities.Base;
+using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Statblocks.Abstractions;
 
 namespace Tavernkeep.Core.Entities.Library.Creatures
@@ -33,6 +34,21 @@ namespace Tavernkeep.Core.Entities.Library.Creatures
 			var html = sb.ToString();
 
 			return $"<div class='flex flex-col p-2 text-pf w-full'>{html}</div>";
+		}
+
+		public Creature Copy()
+		{
+			Creature instance = new()
+			{
+				Name = Name,
+				Type = Type,
+				Level = Level,
+				Health = Health,
+				Traits = Traits,
+				Blocks = Blocks.Select(x => x.Copy()).ToList(),
+			};
+
+			return instance;
 		}
 	}
 }
