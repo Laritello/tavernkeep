@@ -1,4 +1,5 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Library.Creatures;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 
@@ -19,7 +20,8 @@ namespace Tavernkeep.Core.Entities.Encounters.Participants
 		public override EncounterParticipantType Type => EncounterParticipantType.Creature;
 		public IReadOnlyCollection<CreatureConditionRecord> Conditions => _conditions.AsReadOnly();
 
-		public Creature Creature => Origin;
+		[NotMapped]
+		public Creature Creature => Origin.Copy();
 
 		public void AddCondition(CreatureConditionRecord conditionRecord)
 		{

@@ -16,6 +16,12 @@ namespace Tavernkeep.Core.Statblocks.Components
 
 		public void ApplyConditions(ICollection<ConditionRecord> records)
 		{
+			/* Algorithm:
+			 * 1) Detect the applicable conditions
+			 * 2) If resulting modifier is zero, stop.
+			 * 3) Find all modifiable values
+			 * 4) Change them and set flag for them to Buffed or Debuffed
+			 */
 			throw new NotImplementedException();
 		}
 

@@ -4,6 +4,9 @@ using Tavernkeep.Core.Statblocks.Components;
 
 namespace Tavernkeep.Core.Statblocks.Abstractions
 {
+	/* Note:
+	 * Extend interface to ModifiableStatblockComponent?
+	 */
 	[JsonDerivedType(typeof(AbilityStatblockComponent), nameof(AbilityStatblockComponent))]
 	[JsonDerivedType(typeof(AttackStatblockComponent), nameof(AttackStatblockComponent))]
 	[JsonDerivedType(typeof(AttributesStatblockComponent), nameof(AttributesStatblockComponent))]

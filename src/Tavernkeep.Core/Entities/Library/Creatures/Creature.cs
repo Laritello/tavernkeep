@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Tavernkeep.Core.Entities.Base;
-using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Statblocks.Abstractions;
 
 namespace Tavernkeep.Core.Entities.Library.Creatures
