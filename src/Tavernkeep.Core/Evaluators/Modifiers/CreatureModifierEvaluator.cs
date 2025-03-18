@@ -1,25 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tavernkeep.Core.Contracts.Enums;
+﻿using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 
 namespace Tavernkeep.Core.Evaluators.Modifiers
 {
-	public class CreatureModifierEvaluator(ICollection<CreatureConditionRecord> conditions, params ICollection<string> target) : IValueEvaluator<int>
+	public class CreatureModifierEvaluator(IEnumerable<CreatureConditionRecord> conditions, string target) : IValueEvaluator<int>
 	{
-		private readonly TypeModifierEvaluator _circumstanceModifierEvaluator = new(conditions, ModifierType.Circumstance, target);
-		private readonly TypeModifierEvaluator _statusModifierEvaluator = new(conditions, ModifierType.Status, target);
-		private readonly TypeModifierEvaluator _itemModifierEvaluator = new(conditions, ModifierType.Item, target);
+		private static readonly Dictionary<string, List<string>> targets = new()
+		{
+			{ "Acrobatics", ["Acrobatics", "Dexterity", "SkillChecks", "AllChecks"] },
+			{ "Arcana", ["Arcana", "Intelligence", "SkillChecks", "AllChecks"] },
+			{ "Athletics", ["Athletics", "Strength", "SkillChecks", "AllChecks"] },
+			{ "Crafting", ["Crafting", "Intelligence", "SkillChecks", "AllChecks"] },
+			{ "Deception", ["Deception", "Charisma", "SkillChecks", "AllChecks"] },
+			{ "Diplomacy", ["Diplomacy", "Charisma", "SkillChecks", "AllChecks"] },
+			{ "Intimidation", ["Intimidation", "Charisma", "SkillChecks", "AllChecks"] },
+			{ "Medicine", ["Medicine", "Wisdom", "SkillChecks", "AllChecks"] },
+			{ "Nature", ["Nature", "Wisdom", "SkillChecks", "AllChecks"] },
+			{ "Occultism", ["Occultism", "Intelligence", "SkillChecks", "AllChecks"] },
+			{ "Performance", ["Performance", "Charisma", "SkillChecks", "AllChecks"] },
+			{ "Religion", ["Religion", "Wisdom", "SkillChecks", "AllChecks"] },
+			{ "Society", ["Society", "Intelligence", "SkillChecks", "AllChecks"] },
+			{ "Stealth", ["Stealth", "Dexterity", "SkillChecks", "AllChecks"] },
+			{ "Survival", ["Survival", "Wisdom", "SkillChecks", "AllChecks"] },
+			{ "Thievery", ["Thievery", "Dexterity", "SkillChecks", "AllChecks"] },
+		};
+
+		private readonly TypeModifierEvaluator _circumstanceModifierEvaluator = new(conditions, ModifierType.Circumstance, targets[target]);
+		private readonly TypeModifierEvaluator _statusModifierEvaluator = new(conditions, ModifierType.Status, targets[target]);
+		private readonly TypeModifierEvaluator _itemModifierEvaluator = new(conditions, ModifierType.Item, targets[target]);
 
 		public int Value => _statusModifierEvaluator.Value + _circumstanceModifierEvaluator.Value + _itemModifierEvaluator.Value;
 
-		private class TypeModifierEvaluator(ICollection<CreatureConditionRecord> conditions, ModifierType type, params ICollection<string> target) : IValueEvaluator<int>
+		private class TypeModifierEvaluator(IEnumerable<CreatureConditionRecord> conditions, ModifierType type, params ICollection<string> target) : IValueEvaluator<int>
 		{
-			private readonly ICollection<CreatureConditionRecord> _conditions = conditions;
+			private readonly IEnumerable<CreatureConditionRecord> _conditions = conditions;
 			private readonly ICollection<string> _target = target;
 			private readonly ModifierType _type = type;
 

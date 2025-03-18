@@ -1,4 +1,5 @@
-﻿using Tavernkeep.Core.Statblocks.Abstractions.Tokens;
+﻿using System.Text.Json.Serialization;
+using Tavernkeep.Core.Statblocks.Abstractions.Tokens;
 
 namespace Tavernkeep.Core.Statblocks.Tokens
 {
@@ -6,6 +7,7 @@ namespace Tavernkeep.Core.Statblocks.Tokens
 	{
 		public bool IsStart { get; set; } = isStart;
 
+		[JsonIgnore]
 		public string Html => IsStart ? "<li>" : "</li>";
 
 		public IToken Copy()

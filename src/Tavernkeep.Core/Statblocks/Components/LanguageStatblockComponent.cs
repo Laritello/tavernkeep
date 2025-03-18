@@ -14,14 +14,14 @@ namespace Tavernkeep.Core.Statblocks.Components
 		[JsonIgnore]
 		public string HTML => DefaultStatblockTemplate.BuildFromTemplate(Tokens, IsDividerEnabled);
 
-		public void ApplyConditions(ICollection<ConditionRecord> records)
+		public void ApplyConditions(IEnumerable<CreatureConditionRecord> records)
 		{
 			throw new NotImplementedException();
 		}
 
-		public IStatblockComponent Copy()
+		public IStatblockComponent ToModifiable()
 		{
-			return new LanguagesStatblockComponent(Tokens.Select(x => x.Copy()).ToList())
+			return new LanguagesStatblockComponent(Tokens.Select(x => x is IModifiableOriginToken origin ? origin.ToModifable() : x.Copy()).ToList())
 			{
 				IsDividerEnabled = IsDividerEnabled,
 			};

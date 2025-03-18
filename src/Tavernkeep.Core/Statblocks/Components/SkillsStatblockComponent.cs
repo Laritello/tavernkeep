@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
+using Tavernkeep.Core.Evaluators.Modifiers;
 using Tavernkeep.Core.Statblocks.Abstractions;
 using Tavernkeep.Core.Statblocks.Abstractions.Tokens;
 using Tavernkeep.Core.Statblocks.Templates;
@@ -14,14 +15,18 @@ namespace Tavernkeep.Core.Statblocks.Components
 		[JsonIgnore]
 		public string HTML => DefaultStatblockTemplate.BuildFromTemplate(Tokens, IsDividerEnabled);
 
-		public void ApplyConditions(ICollection<ConditionRecord> records)
+		public void ApplyConditions(IEnumerable<CreatureConditionRecord> records)
 		{
-			throw new NotImplementedException();
+			foreach (var skill in Tokens.Where(x => x is IModifiableSkillToken).Cast<IModifiableSkillToken>())
+			{
+				var evaluator = new CreatureModifierEvaluator(records, skill.Name);
+				skill.Modifier = evaluator.Value;
+			}
 		}
 
-		public IStatblockComponent Copy()
+		public IStatblockComponent ToModifiable()
 		{
-			return new SkillsStatblockComponent(Tokens.Select(x => x.Copy()).ToList())
+			return new SkillsStatblockComponent(Tokens.Select(x => x is IModifiableOriginToken origin ? origin.ToModifable() : x.Copy()).ToList())
 			{
 				IsDividerEnabled = IsDividerEnabled,
 			};

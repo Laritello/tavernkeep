@@ -15,11 +15,11 @@ namespace Tavernkeep.Core.Statblocks.Abstractions
 	[JsonDerivedType(typeof(HealthStatblockComponent), nameof(HealthStatblockComponent))]
 	[JsonDerivedType(typeof(LanguagesStatblockComponent), nameof(LanguagesStatblockComponent))]
 	[JsonDerivedType(typeof(PerceptionStatblockComponent), nameof(PerceptionStatblockComponent))]
+	[JsonDerivedType(typeof(RitualsStatblockComponent), nameof(RitualsStatblockComponent))]
 	[JsonDerivedType(typeof(SkillsStatblockComponent), nameof(SkillsStatblockComponent))]
 	[JsonDerivedType(typeof(SpeedStatblockComponent), nameof(SpeedStatblockComponent))]
 	[JsonDerivedType(typeof(SpellsStatblockComponent), nameof(SpellsStatblockComponent))]
 	[JsonDerivedType(typeof(TraitsStatblockComponent), nameof(TraitsStatblockComponent))]
-	[JsonDerivedType(typeof(RitualsStatblockComponent), nameof(RitualsStatblockComponent))]
 	public interface IStatblockComponent
 	{
 		public bool IsDividerEnabled { get; set; }
@@ -27,7 +27,7 @@ namespace Tavernkeep.Core.Statblocks.Abstractions
 		[JsonIgnore]
 		public string HTML { get; }
 
-		public IStatblockComponent Copy();
-		public void ApplyConditions(ICollection<ConditionRecord> records);
+		public IStatblockComponent ToModifiable();
+		public void ApplyConditions(IEnumerable<CreatureConditionRecord> records);
 	}
 }

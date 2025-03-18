@@ -1,4 +1,5 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
+﻿using System.Text.Json.Serialization;
+using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Statblocks.Abstractions.Tokens;
 
 namespace Tavernkeep.Core.Statblocks.Tokens
@@ -7,6 +8,7 @@ namespace Tavernkeep.Core.Statblocks.Tokens
 	{
 		public ActionAmount Amount { get; set; } = amount;
 
+		[JsonIgnore]
 		public string Html
 		{
 			get

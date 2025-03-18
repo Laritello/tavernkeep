@@ -14,20 +14,14 @@ namespace Tavernkeep.Core.Statblocks.Components
 		[JsonIgnore]
 		public string HTML => DefaultStatblockTemplate.BuildFromTemplate(Tokens, IsDividerEnabled);
 
-		public void ApplyConditions(ICollection<ConditionRecord> records)
+		public void ApplyConditions(IEnumerable<CreatureConditionRecord> records)
 		{
-			/* Algorithm:
-			 * 1) Detect the applicable conditions
-			 * 2) If resulting modifier is zero, stop.
-			 * 3) Find all modifiable values
-			 * 4) Change them and set flag for them to Buffed or Debuffed
-			 */
-			throw new NotImplementedException();
+			// Do nothing
 		}
 
-		public IStatblockComponent Copy()
+		public IStatblockComponent ToModifiable()
 		{
-			return new AttackStatblockComponent(Tokens.Select(x => x.Copy()).ToList())
+			return new AttackStatblockComponent(Tokens.Select(x => x is IModifiableOriginToken origin ? origin.ToModifable() : x.Copy()).ToList())
 			{
 				IsDividerEnabled = IsDividerEnabled
 			};

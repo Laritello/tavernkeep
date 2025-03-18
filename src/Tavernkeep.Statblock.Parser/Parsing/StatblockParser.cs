@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommandLine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -55,6 +56,11 @@ namespace Tavernkeep.Statblock.Parser.Parsing
 			/** Note: Hydra health case
 			 * It has multiple health values
 			 */
+
+			creature.Name = creature.Blocks.First(x => x is GeneralStatblockComponent).Cast<GeneralStatblockComponent>().Name;
+			creature.Type = creature.Blocks.First(x => x is GeneralStatblockComponent).Cast<GeneralStatblockComponent>().Type;
+			creature.Level = creature.Blocks.First(x => x is GeneralStatblockComponent).Cast<GeneralStatblockComponent>().Level;
+			creature.Traits = creature.Blocks.First(x => x is TraitsStatblockComponent).Cast<TraitsStatblockComponent>().Traits;
 
 			return creature;
 		}

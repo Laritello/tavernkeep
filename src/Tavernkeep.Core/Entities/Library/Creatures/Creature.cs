@@ -2,6 +2,7 @@
 using System.Text;
 using Tavernkeep.Core.Entities.Base;
 using Tavernkeep.Core.Statblocks.Abstractions;
+using Tavernkeep.Core.Statblocks.Abstractions.Tokens;
 using Tavernkeep.Core.Statblocks.Components;
 
 namespace Tavernkeep.Core.Entities.Library.Creatures
@@ -51,7 +52,7 @@ namespace Tavernkeep.Core.Entities.Library.Creatures
 			return (T)Blocks.First(x => x is T);
 		}
 
-		public Creature Copy()
+		public Creature AsModifiable()
 		{
 			Creature instance = new()
 			{
@@ -60,7 +61,7 @@ namespace Tavernkeep.Core.Entities.Library.Creatures
 				Level = Level,
 				Health = Health,
 				Traits = Traits,
-				Blocks = Blocks.Select(x => x.Copy()).ToList(),
+				Blocks = Blocks.Select(x => x.ToModifiable()).ToList(),
 			};
 
 			return instance;

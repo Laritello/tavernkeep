@@ -1,4 +1,5 @@
-﻿using Tavernkeep.Core.Extensions;
+﻿using System.Text.Json.Serialization;
+using Tavernkeep.Core.Extensions;
 using Tavernkeep.Core.Statblocks.Abstractions.Tokens;
 
 namespace Tavernkeep.Core.Statblocks.Tokens
@@ -9,6 +10,7 @@ namespace Tavernkeep.Core.Statblocks.Tokens
 		public bool IsBold { get; set; } = isBold;
 		public bool IsItalic { get; set; } = isItalic;
 
+		[JsonIgnore]
 		public string Html
 		{
 			get

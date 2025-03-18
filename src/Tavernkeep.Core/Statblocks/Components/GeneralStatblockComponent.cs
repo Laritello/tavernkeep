@@ -86,17 +86,17 @@ namespace Tavernkeep.Core.Statblocks.Components
 			return int.Parse(result.Groups["creatureLevel"].Value.Replace('–', '-'));
 		}
 
-		public IStatblockComponent Copy()
+		public IStatblockComponent ToModifiable()
 		{
-			return new GeneralStatblockComponent(Tokens.Select(x => x.Copy()).ToList())
+			return new GeneralStatblockComponent(Tokens.Select(x => x is IModifiableOriginToken origin ? origin.ToModifable() : x.Copy()).ToList())
 			{
 				IsDividerEnabled = IsDividerEnabled,
 			};
 		}
 
-		public void ApplyConditions(ICollection<ConditionRecord> records)
+		public void ApplyConditions(IEnumerable<CreatureConditionRecord> records)
 		{
-			throw new NotImplementedException();
+			// Do nothing
 		}
 	}
 }

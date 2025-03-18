@@ -301,4 +301,12 @@ defineProps<{
     text-align: start !important;
     text-align-last: start !important;
 }
+
+:deep(.positive){
+    color: green;
+}
+
+:deep(.negative){
+    color: red;
+}
 </style>

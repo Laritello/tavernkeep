@@ -1,4 +1,5 @@
-﻿using Scriban;
+﻿using CommandLine;
+using Scriban;
 using System.Text.Json.Serialization;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
 using Tavernkeep.Core.Statblocks.Abstractions;
@@ -13,6 +14,9 @@ namespace Tavernkeep.Core.Statblocks.Components
 		public bool IsDividerEnabled { get; set; }
 
 		[JsonIgnore]
+		public ICollection<string> Traits => GetTraits();
+
+		[JsonIgnore]
 		public string HTML => GenerateHTML();
 
 		private string GenerateHTML()
@@ -22,7 +26,7 @@ namespace Tavernkeep.Core.Statblocks.Components
 				return string.Empty;
 			}
 
-			var traits = Tokens.Cast<ITextToken>().First().Text.Split(' ');
+			var traits = Tokens.First().Cast<ITextToken>().Text.Split(' ');
 
 			var template = Template.Parse(html_template);
 			var html = template.Render(new { Traits = traits.Select(x => new { Name = x, Bonus = GetBonusStyleClass(x) }) });
@@ -48,17 +52,27 @@ namespace Tavernkeep.Core.Statblocks.Components
 			};
 		}
 
-		public IStatblockComponent Copy()
+		public IStatblockComponent ToModifiable()
 		{
-			return new TraitsStatblockComponent(Tokens.Select(x => x.Copy()).ToList())
+			return new TraitsStatblockComponent(Tokens.Select(x => x is IModifiableOriginToken origin ? origin.ToModifable() : x.Copy()).ToList())
 			{
 				IsDividerEnabled = IsDividerEnabled,
 			};
 		}
 
-		public void ApplyConditions(ICollection<ConditionRecord> records)
+		public void ApplyConditions(IEnumerable<CreatureConditionRecord> records)
 		{
-			throw new NotImplementedException();
+			// Do nothing
+		}
+
+		private ICollection<string> GetTraits()
+		{
+			if (Tokens.Count == 0 || Tokens[0] is not ITextToken text)
+			{
+				return [];
+			}
+
+			return Tokens.First().Cast<ITextToken>().Text.Split(' ');
 		}
 	}
 }
