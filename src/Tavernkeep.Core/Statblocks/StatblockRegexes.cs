@@ -5,7 +5,7 @@ namespace Tavernkeep.Core.Statblocks
 	public partial class StatblockRegexes
 	{
 
-		[GeneratedRegex("((?:Arcane|Divine|Elemental|Occult|Primal|Champion) (?:Innate|Spontaneous|Prepared|Devotion) Spells)")]
+		[GeneratedRegex("((?:Arcane|Divine|Elemental|Occult|Primal|Champion|Bard) (?:Innate|Spontaneous|Prepared|Devotion|Spells|Composition) (?:Spells|Known))")]
 		public static partial Regex SpellsHeader();
 
 		[GeneratedRegex("\\d+(?:th|rd|nd|st)")]
@@ -38,5 +38,8 @@ namespace Tavernkeep.Core.Statblocks
 
 		[GeneratedRegex("(?<creatureName>.*)(?=CREATURE)(?<creatureType>CREATURE)(?<creatureLevel>.*)")]
 		public static partial Regex GeneralInfromation();
+
+		[GeneratedRegex(@"^(?<skillName>Acrobatics|Arcana|Athletics|Crafting|Deception|Diplomacy|Intimidation|Lore|Medicine|Nature|Occultism|Performance|Religion|Society|Stealth|Survival|Thievery)$")]
+		public static partial Regex SkillName();
 	}
 }

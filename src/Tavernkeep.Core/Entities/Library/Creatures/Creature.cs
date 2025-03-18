@@ -2,6 +2,7 @@
 using System.Text;
 using Tavernkeep.Core.Entities.Base;
 using Tavernkeep.Core.Statblocks.Abstractions;
+using Tavernkeep.Core.Statblocks.Components;
 
 namespace Tavernkeep.Core.Entities.Library.Creatures
 {
@@ -33,6 +34,21 @@ namespace Tavernkeep.Core.Entities.Library.Creatures
 			var html = sb.ToString();
 
 			return $"<div class='flex flex-col p-2 text-pf w-full'>{html}</div>";
+		}
+
+		public void AddBlock(IStatblockComponent block)
+		{
+			if (Blocks.Count > 0 && block is TraitsStatblockComponent or SpeedStatblockComponent or DefenseStatblockComponent)
+			{
+				Blocks.Last().IsDividerEnabled = true;
+			}
+
+			Blocks.Add(block);
+		}
+
+		public T GetBlock<T>() where T : IStatblockComponent
+		{
+			return (T)Blocks.First(x => x is T);
 		}
 
 		public Creature Copy()

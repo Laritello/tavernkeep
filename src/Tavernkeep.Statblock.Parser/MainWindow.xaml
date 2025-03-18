@@ -1,0 +1,46 @@
+﻿<Window x:Class="Tavernkeep.Statblock.Parser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        xmlns:local="clr-namespace:Tavernkeep.Statblock.Parser"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="EditorColumn" Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Header="Flow Document" Grid.ColumnSpan="2" Margin="3">
+            <StackPanel Orientation="Horizontal" >
+                <ComboBox x:Name="FlowDocumentsList" Width="250" Margin="0 0 5 0"/>
+                <Button Content="Load" Click="LoadFlowDocument_Click" Padding="5 0 5 0" Margin="0 0 5 0"/>
+                <Button Content="←" Click="PreviousFlowDocument_Click" Padding="5 0 5 0" Margin="0 0 5 0"/>
+                <Button Content="→" Click="NextFlowDocument_Click" Padding="5 0 5 0" Margin="0 0 5 0"/>
+                <Button Content="Save" Click="Save_Click" Padding="5 0 5 0" Margin="0 0 5 0"/>
+                <Button Content="Parse" Click="Parse_Click" Padding="5 0 5 0" Margin="0 0 5 0"/>
+                <Button Content="JSON" Click="Json_Click" Padding="5 0 5 0" Margin="0 0 5 0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="Pathbuilder" Grid.Row="1" Grid.ColumnSpan="2" Margin="3">
+            <StackPanel Orientation="Horizontal" >
+                <ComboBox x:Name="PathbuilderList" Width="250" Margin="0 0 5 0"/>
+                <Button Content="Load" Click="LoadPathbuilder_Click" Padding="5 0 5 0" Margin="0 0 5 0"/>
+                <Button Content="←" Click="PreviousPathbuilder_Click" Padding="5 0 5 0" Margin="0 0 5 0"/>
+                <Button Content="→" Click="NextPathbuilder_Click" Padding="5 0 5 0" Margin="0 0 5 0"/>
+                <Button Content="JSON" Click="JsonPathbuilder_Click" Padding="5 0 5 0" Margin="0 0 5 0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <RichTextBox x:Name="UserInputBox" Grid.Row="2" AcceptsReturn="True" AcceptsTab="True" Margin="3"/>
+        <wv2:WebView2 Name="PreviewBrowser" Grid.Row="2" Grid.Column="1" Source="https://www.google.com"/>
+    </Grid>
+</Window>
