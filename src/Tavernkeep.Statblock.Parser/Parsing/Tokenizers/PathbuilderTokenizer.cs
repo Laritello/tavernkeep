@@ -9,6 +9,8 @@ using AngleSharp.Html.Dom;
 using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
 using Tavernkeep.Statblock.Parser.Extensions;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Tavernkeep.Statblock.Parser.Parsing.Tokenizers
 {
@@ -90,7 +92,7 @@ namespace Tavernkeep.Statblock.Parser.Parsing.Tokenizers
 						IToken token = tokenType switch
 						{
 							TokenType.Text => new TextToken(currentTokenText, IsBold(childNode.ParentElement), IsItalic(childNode.ParentElement)),
-							TokenType.Skill => new SkillToken(currentTokenText, int.Parse(nextTokenText)),
+							TokenType.Skill => new SkillToken(currentTokenText, GetSkillModifier(nextTokenText)),
 							TokenType.Action => new ActionToken(currentTokenText.ToActionAmount()),
 							TokenType.Keyword => new KeywordToken(currentTokenText),
 							TokenType.Bonus => new BonusToken(int.Parse(currentTokenText)),
@@ -104,6 +106,12 @@ namespace Tavernkeep.Statblock.Parser.Parsing.Tokenizers
 						else
 						{
 							tokens.Add(token);
+						}
+
+						// Handle cases where modifier ends with a comma
+						if (tokenType is TokenType.Skill && GetSkillLeftText(nextTokenText, out string skillText))
+						{
+							tokens.Add(new TextToken(skillText));
 						}
 
 						switch (tokenType)
@@ -129,12 +137,24 @@ namespace Tavernkeep.Statblock.Parser.Parsing.Tokenizers
 		{
 			return (current, next, isBold) switch
 			{
-				(string t, string n, _) when StatblockRegexes.SkillName().IsMatch(t) && StatblockRegexes.Modifier().IsMatch(n) => TokenType.Skill,
+				(string t, string n, _) when StatblockRegexes.SkillName().IsMatch(t) && StatblockRegexes.ModifierWithText().IsMatch(n) => TokenType.Skill,
 				(string t, _, _) when StatblockRegexes.ActionsKeywords().IsMatch(t) => TokenType.Action,
 				(string t, _, _) when StatblockRegexes.Modifier().IsMatch(t) => TokenType.Bonus,
 				(_, _, bool b) when b => TokenType.Keyword,
 				_ => TokenType.Text
 			};
+		}
+
+		private static int GetSkillModifier(string t)
+		{
+			var text = StatblockRegexes.ModifierWithText().Match(t).Groups["modifier"].Value;
+			return int.Parse(text);
+		}
+
+		private static bool GetSkillLeftText(string t, out string text)
+		{
+			text = StatblockRegexes.ModifierWithText().Match(t).Groups["text"].Value;
+			return !string.IsNullOrWhiteSpace(text);
 		}
 
 		private static bool IsBold(IElement? element)

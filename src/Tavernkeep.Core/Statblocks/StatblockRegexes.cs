@@ -23,6 +23,9 @@ namespace Tavernkeep.Core.Statblocks
 		[GeneratedRegex(@"^((?:\+|-)\d+)$")]
 		public static partial Regex Modifier();
 
+		[GeneratedRegex(@"^(?<modifier>(?:\+|-)\d+)(?<text>.+)")]
+		public static partial Regex ModifierWithText();
+
 		[GeneratedRegex(@"^(?:Trigger|Effect|Requirement|Requirements|Frequency|Critical|Success|Failure|Critical Success|Critical Failure|
 			Saving|Throw|Saving Throw|Maximum|Duration|Maximum Duration|Stage \d+)$")]
 		public static partial Regex AbilitySubKeywords();
