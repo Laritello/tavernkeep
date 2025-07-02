@@ -1,7 +1,6 @@
 ﻿using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Encounters.Participants;
-using Tavernkeep.Core.Exceptions;
 using Tavernkeep.Core.Strategies.Encounters;
 
 namespace Tavernkeep.Application.Strategies.Encounters.RollParticipantInitiative
@@ -16,12 +15,12 @@ namespace Tavernkeep.Application.Strategies.Encounters.RollParticipantInitiative
 			{
 				if (skillName is "Perception")
 				{
-					var roll = diceService.Roll(bonus: creatureParticipant.Origin.Perception);
+					var roll = diceService.Roll(bonus: 0);
 					participant.Initiative = roll.Value;
 				}
 				else
 				{
-					var bonus = creatureParticipant.Origin.GetSkillBonus(skillName);
+					var bonus = 0;
 					var roll = diceService.Roll(bonus: bonus);
 					participant.Initiative = roll.Value;
 				}

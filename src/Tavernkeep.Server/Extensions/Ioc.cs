@@ -153,7 +153,7 @@ namespace Tavernkeep.Server.Extensions
 		/// <returns>The <see cref="IServiceProvider"/> so that additional calls can be chained.</returns>
 		public static IServiceProvider ApplyDatabaseMigrations(this IServiceProvider provider)
 		{
-			var scope = provider.CreateScope();
+			using var scope = provider.CreateScope();
 			var context = scope.ServiceProvider.GetRequiredService<SessionContext>();
 			context.Database.Migrate();
 

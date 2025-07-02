@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>warnings</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
     <SpaRoot>..\tavernkeep.client</SpaRoot>
@@ -37,4 +37,12 @@
     <ProjectReference Include="..\Tavernkeep.Shared\Tavernkeep.Shared.csproj" />
   </ItemGroup>
 
+  <Target Name="GenerateCreatureJson" AfterTargets="Build">
+    <PropertyGroup>
+      <ParserName>Tavernkeep.Utility.Parser</ParserName>
+      <ParserPath>$(SolutionDir)src\$(ParserName)\bin\$(Configuration)\$(TargetFramework)\$(ParserName).exe</ParserPath>
+    </PropertyGroup>
+
+    <Exec Command="&quot;$(ParserPath)&quot; &quot;$(TargetDir)Creatures.en-UK.json&quot;" />
+  </Target>
 </Project>

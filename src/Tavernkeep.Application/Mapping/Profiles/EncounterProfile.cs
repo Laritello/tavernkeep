@@ -41,12 +41,12 @@ namespace Tavernkeep.Application.Mapping.Profiles
 
 			CreateMap<CreatureEncounterParticipant, CreatureEncounterParticipantDto>()
 				.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Creature.Name))
-				.ForMember(dest => dest.Perception, opt => opt.MapFrom(src => src.Creature.Perception))
-				.ForMember(dest => dest.ArmorClass, opt => opt.MapFrom(src => src.Creature.ArmorClass))
-				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => src.Creature.SavingThrows))
+				.ForMember(dest => dest.Perception, opt => opt.MapFrom(src => 0))
+				.ForMember(dest => dest.ArmorClass, opt => opt.MapFrom(src => 0))
+				.ForMember(dest => dest.SavingThrows, opt => opt.MapFrom(src => new Dictionary<string, int>()))
 				.ForMember(dest => dest.Health, opt => opt.MapFrom(src => new HealthDto() { Max = src.Creature.Health, Current = src.CurrentHealth, Temporary = src.TemporaryHealth }))
 				.ForMember(dest => dest.EntityId, opt => opt.MapFrom(src => src.Creature.Id))
-				.ForMember(dest => dest.Statblock, opt => opt.MapFrom(src => src.Creature.GetStatBlock()))
+				.ForMember(dest => dest.Statblock, opt => opt.MapFrom(src => src.Creature.Statblock))
 				.ForMember(dest => dest.Conditions, opt => opt.MapFrom(src => src.Conditions.Select(x =>
 					new ConditionShortDto()
 					{

@@ -33,82 +33,8 @@ defineProps<{
     --dark: #2c2831;
 }
 
-@font-face {
-    font-family: 'ff-good-web-pro';
-    src: url('/assets/fonts/ff-good-pro-bold.woff2') format('woff2');
-    font-display: auto;
-    font-style: normal;
-    font-weight: 700;
-}
-
-@font-face {
-    font-family: 'ff-good-web-pro';
-    src: url('/assets/fonts/ff-good-pro-bold-italic.woff2') format('woff2');
-    font-display: auto;
-    font-style: italic;
-    font-weight: 700;
-}
-
-@font-face {
-    font-family: 'ff-good-web-pro';
-    src: url('/assets/fonts/ff-good-pro-regular.woff2') format('woff2');
-    font-display: auto;
-    font-style: normal;
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: 'ff-good-web-pro';
-    src: url('/assets/fonts/ff-good-pro-regular-italic.woff2') format('woff2');
-    font-display: auto;
-    font-style: italic;
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: 'ff-good-web-pro-condensed';
-    src: url('/assets/fonts/ff-good-pro-condensed-bold.woff2') format('woff2');
-    font-display: auto;
-    font-style: normal;
-    font-weight: 700;
-}
-
-@font-face {
-    font-family: 'ff-good-web-pro-condensed';
-    src: url('/assets/fonts/ff-good-pro-condensed-bold-italic.woff2') format('woff2');
-    font-display: auto;
-    font-style: italic;
-    font-weight: 700;
-}
-
-@font-face {
-    font-family: 'ff-good-web-pro-condensed';
-    src: url('/assets/fonts/ff-good-pro-condensed-regular.woff2') format('woff2');
-    font-display: auto;
-    font-style: normal;
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: 'ff-good-web-pro-condensed';
-    src: url('/assets/fonts/ff-good-pro-condensed-regular-italic.woff2') format('woff2');
-    font-display: auto;
-    font-style: italic;
-    font-weight: 400;
-}
-
 @-ms-viewport {
     width: device-width;
-}
-
-:deep(html) {
-    font-size: 15px;
-}
-
-:deep(body) {
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-weight: 400;
-    background: transparent !important;
 }
 
 :deep(h1),
@@ -147,6 +73,12 @@ defineProps<{
 
 :deep(h6) {
     font-size: 1.05rem;
+}
+
+:deep(.statblock) {
+    font-family: 'ff-good-web-pro', 'Open Sans Condensed', sans-serif;
+    font-weight: 400;
+    background: transparent !important;
 }
 
 :deep(.pf-trait) {
@@ -302,11 +234,31 @@ defineProps<{
     text-align-last: start !important;
 }
 
-:deep(.positive){
+:deep(.positive) {
     color: green;
 }
 
-:deep(.negative){
+:deep(.negative) {
     color: red;
+}
+
+:deep(.rollable) {
+    display: inline-flex;
+    align-items: center;
+}
+
+:deep(.rollable::after) {
+    font-family: 'Font Awesome 5 Free';
+    content: '\f6cf'; /* Font Awesome dice icon code */
+
+    font-size: 14px;
+    font-weight: 900;
+
+    padding-left: 0.15em;
+    padding-right: 0.15em;
+
+    align-self: center;
+
+    cursor: pointer;
 }
 </style>

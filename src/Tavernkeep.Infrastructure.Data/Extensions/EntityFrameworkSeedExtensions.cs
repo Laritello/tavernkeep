@@ -29,8 +29,7 @@ namespace Tavernkeep.Infrastructure.Data.Extensions
 			var scope = provider.CreateScope();
 			var context = scope.ServiceProvider.GetRequiredService<SessionContext>();
 
-			context
-				.SeedUsers()
+			context.SeedUsers()
 				.SeedConditions()
 				.SeedCreatures()
 				.SeedCharacter();
