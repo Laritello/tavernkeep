@@ -1,11 +1,35 @@
 <script setup lang="ts">
-defineProps<{
+import { onMounted, useTemplateRef } from 'vue';
+
+const { statblock } = defineProps<{
     statblock: string;
 }>();
+
+const emit = defineEmits<{
+    rolled: [type: string, name: string, value: string];
+}>();
+
+const container = useTemplateRef('container');
+
+onMounted(() => {
+    const buttons = container.value!.querySelectorAll('.rollable');
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            if (button instanceof HTMLElement) {
+                handleAction(button.dataset.type ?? '', button.dataset.name ?? '', button.textContent ?? '');
+            }
+        });
+    });
+});
+
+function handleAction(type: string, name: string, value: string) {
+    emit('rolled', type, name, value);
+}
 </script>
 
 <template>
-    <div v-html="statblock"></div>
+    <!--eslint-disable-next-line vue/no-v-html-->
+    <div ref="container" v-html="statblock"></div>
 </template>
 
 <style scoped>
@@ -249,7 +273,7 @@ defineProps<{
 
 :deep(.rollable::after) {
     font-family: 'Font Awesome 5 Free';
-    content: '\f6cf'; /* Font Awesome dice icon code */
+    content: '\f6cf';
 
     font-size: 14px;
     font-weight: 900;
