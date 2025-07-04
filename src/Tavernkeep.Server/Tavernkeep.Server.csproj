@@ -37,12 +37,12 @@
     <ProjectReference Include="..\Tavernkeep.Shared\Tavernkeep.Shared.csproj" />
   </ItemGroup>
 
-  <Target Name="GenerateCreatureJson" AfterTargets="Build">
+  <!-- <Target Name="GenerateCreatureJson" AfterTargets="Build">
     <PropertyGroup>
       <ParserName>Tavernkeep.Utility.Parser</ParserName>
       <ParserPath>$(SolutionDir)src\$(ParserName)\bin\$(Configuration)\$(TargetFramework)\$(ParserName).exe</ParserPath>
     </PropertyGroup>
 
     <Exec Command="&quot;$(ParserPath)&quot; &quot;$(TargetDir)Creatures.en-UK.json&quot;" />
-  </Target>
+  </Target> -->
 </Project>
