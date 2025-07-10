@@ -14,7 +14,7 @@ namespace Tavernkeep.Core.Entities.Library.Conditions
 
 		public ICollection<int> Collect(ICollection<string> targets, ModifierType type)
 		{
-			return Condition.Modifiers
+			return [.. Condition.Modifiers
 				.Where(x => targets.Contains(x.Key) && x.Value.Type == type)
 				.Select(x =>
 				{
@@ -22,7 +22,7 @@ namespace Tavernkeep.Core.Entities.Library.Conditions
 					expression.Parameters["condition_level"] = Level;
 
 					return Convert.ToInt32(expression.Evaluate());
-				}).ToList();
+				})];
 		}
 	}
 }

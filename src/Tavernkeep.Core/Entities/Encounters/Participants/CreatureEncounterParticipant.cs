@@ -21,7 +21,7 @@ namespace Tavernkeep.Core.Entities.Encounters.Participants
 		public IReadOnlyCollection<CreatureConditionRecord> Conditions => _conditions.AsReadOnly();
 
 		[NotMapped]
-		public Creature Creature => Origin;
+		public Creature Creature { get; set; }
 
 		public void AddCondition(CreatureConditionRecord conditionRecord)
 		{

@@ -16,13 +16,12 @@ namespace Tavernkeep.Core.Entities.Encounters
 
 		#region Constructors
 
-		public Encounter(string name, EncounterStatus status = EncounterStatus.Draft)
+		private Encounter(string name, EncounterStatus status)
 		{
 			Name = name;
 			Status = status;
 			RoundNumber = 1;
 		}
-
 		#endregion
 
 		#region Properties
@@ -132,5 +131,10 @@ namespace Tavernkeep.Core.Entities.Encounters
 		public bool InInitiativePhase => RoundNumber == 1 && CurrentTurnIndex == 0;
 
 		#endregion
+
+		public static Encounter Create(string name, EncounterStatus status)
+		{
+			return new(name, status);
+		}
 	}
 }

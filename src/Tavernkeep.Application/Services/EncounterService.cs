@@ -21,10 +21,7 @@ namespace Tavernkeep.Application.Services
 
 		public async Task<Encounter> CreateEncounterAsync(string name, CancellationToken cancellationToken)
 		{
-			Encounter encounter = new(name, EncounterStatus.Draft)
-			{
-				Created = DateTimeOffset.UtcNow
-			};
+			Encounter encounter = Encounter.Create(name, EncounterStatus.Draft);
 
 			encounterRepository.Save(encounter);
 			await encounterRepository.CommitAsync(cancellationToken);

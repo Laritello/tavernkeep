@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="1.3.0" />
     <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="d20tek-dicenotation" Version="4.0.1" />
     <PackageReference Include="MediatR" Version="12.4.1" />
