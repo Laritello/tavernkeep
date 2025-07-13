@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Tavernkeep.Utility.Parser.Html.Processors;
 
-internal partial class RollableProcessor : IHtmlProcessor
+internal partial class StatblockItemProcessor : IHtmlProcessor
 {
 	public string Process(string html)
 	{
@@ -35,6 +35,16 @@ internal partial class RollableProcessor : IHtmlProcessor
 		html = ArmorClass().Replace(html, match =>
 		{
 			return Number().Replace(match.Value, m => $"<span class=\"statblock-item\" data-type=\"armor\">{m.Groups[1].Value}</span>");
+		});
+
+		html = Health().Replace(html, match =>
+		{
+			return Number().Replace(match.Value, m => $"<span class=\"statblock-item\" data-type=\"health\">{m.Groups[1].Value}</span>");
+		});
+
+		html = Speed().Replace(html, match =>
+		{
+			return Number().Replace(match.Value, m => $"<span class=\"statblock-item\" data-type=\"speed\">{m.Groups[1].Value}</span>");
 		});
 
 		return html;
@@ -71,6 +81,12 @@ internal partial class RollableProcessor : IHtmlProcessor
 
 	[GeneratedRegex(@"<b>AC<\/b>(.*?);")]
 	private static partial Regex ArmorClass();
+
+	[GeneratedRegex(@"<b>HP<\/b>(.*?)(?:;|<br>)")]
+	private static partial Regex Health();
+
+	[GeneratedRegex(@"<b>Speed<\/b>(.*?)<br>")]
+	private static partial Regex Speed();
 
 	[GeneratedRegex(@"<b>(Str|Dex|Con|Int|Wis|Cha)<\/b>\s*([+-]\d+)")]
 	private static partial Regex Abilities();

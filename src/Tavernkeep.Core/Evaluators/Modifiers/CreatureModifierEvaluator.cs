@@ -24,10 +24,12 @@ namespace Tavernkeep.Core.Evaluators.Modifiers
 			{ "Stealth", ["Stealth", "Dexterity", "SkillChecks", "AllChecks"] },
 			{ "Survival", ["Survival", "Wisdom", "SkillChecks", "AllChecks"] },
 			{ "Thievery", ["Thievery", "Dexterity", "SkillChecks", "AllChecks"] },
+			{ "Lore", ["Intelligence", "SkillChecks", "AllChecks"] },
 			{ "Fortitude", ["Fortitude", "Constitution", "SkillChecks", "AllChecks"] },
 			{ "Reflex", ["Reflex", "Dexterity", "SkillChecks", "AllChecks"] },
 			{ "Will", ["Will", "Wisdom", "SkillChecks", "AllChecks"] },
-			{ "Lore", [] }
+			{ "Ranged", ["Dexterity", "SkillChecks", "AllChecks"] },
+			{ "Melee", ["Strength", "SkillChecks", "AllChecks"] }
 		};
 
 		private readonly TypeModifierEvaluator _circumstanceModifierEvaluator = new(conditions, ModifierType.Circumstance, targets[target]);

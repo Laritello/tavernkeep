@@ -15,7 +15,7 @@ internal partial class BodyEnricher : BasePathbuilderEnricher
 		[
 			new SanitizeProcessor(),
 			new DividerProcessor(),
-			new RollableProcessor(),
+			new StatblockItemProcessor(),
 			new ActionProcessor()
 		];
 

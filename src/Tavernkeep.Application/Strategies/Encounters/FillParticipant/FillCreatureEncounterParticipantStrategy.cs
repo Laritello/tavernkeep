@@ -4,6 +4,7 @@ using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Entities.Encounters.Participants;
 using Tavernkeep.Core.Entities.Library.Creatures;
 using Tavernkeep.Core.Evaluators.Modifiers;
+using Tavernkeep.Core.Extensions;
 using Tavernkeep.Core.Repositories;
 using Tavernkeep.Core.Strategies.Encounters;
 
@@ -26,7 +27,7 @@ namespace Tavernkeep.Application.Strategies.Encounters.FillParticipant
 		{
 			var origin = creature.Origin;
 
-			return new Creature
+			var result =  new Creature
 			{
 				Id = origin.Id,
 				Type = origin.Type,
@@ -34,41 +35,105 @@ namespace Tavernkeep.Application.Strategies.Encounters.FillParticipant
 				Level = origin.Level,
 				Health = origin.Health,
 				Traits = origin.Traits,
-				Statblock = GenerateStatblock(creature),
+				Statblock = string.Empty
 			};
+
+			GenerateStatblock(creature, result);
+
+			return result;
 		}
 
-		private string GenerateStatblock(CreatureEncounterParticipant creature)
+		private void GenerateStatblock(CreatureEncounterParticipant creature, Creature target)
 		{
 			var parser = new HtmlParser();
 			var document = parser.ParseDocument(creature.Origin.Statblock);
 
-			var spans = document.QuerySelectorAll("span.rollable").OfType<IHtmlSpanElement>();
+			var spans = document.QuerySelectorAll("span").OfType<IHtmlSpanElement>().ToList();
+			var rollable = spans.Where(x => x.ClassList.Contains("rollable")).ToList();
 
-			foreach(var span in spans)
+			foreach(var span in rollable)
 			{
-				if (span.Dataset["name"] is string name && span.Dataset["type"] is not ("ability" or "melee" or "ranged"))
+				var type = span.Dataset["type"];
+
+				switch (type)
 				{
-					if (int.TryParse(span.TextContent, out var total))
-					{
-						var evaluator = new CreatureModifierEvaluator(creature.Conditions, name);
-						var bonus = evaluator.Value;
-						total += bonus;
-						span.TextContent = $"{(total >= 0 ? "+" : "")}{total}";
-						
-						if (bonus > 0)
-						{
-							span.ClassList.Add("positive");
-						}
-						else if (bonus < 0)
-						{
-							span.ClassList.Add("negative");
-						}
-					}
+					case "melee" or "ranged":
+						ApplyAttackModifiers(span, type.Capitalize(), creature);
+						break;
+					case "save" or "skill":
+						ApplyDefaultModifiers(span, creature);
+						break;
 				}
 			}
 
-			return document.Body!.InnerHtml;
+			target.ArmorClass = FindProperty<int>(spans, "armor");
+			target.Perception = FindProperty<int>(spans, "perception");
+			target.SavingThrows = new Dictionary<string, int>
+			{
+				{ "Fortitude", FindProperty<int>(spans, "fortitude") },
+				{ "Will", FindProperty<int>(spans, "will") },
+				{ "Reflex", FindProperty<int>(spans, "reflex") },
+			};
+
+			target.Statblock = document.Body!.InnerHtml;
+		}
+
+		private static T? FindProperty<T>(IReadOnlyCollection<IHtmlSpanElement> spans, string propertyName) where T: IParsable<T>
+		{
+			var text = spans.Where(x => x.Dataset["type"] == propertyName).FirstOrDefault()?.TextContent;
+			
+			if (T.TryParse(text, null, out var result))
+			{
+				return result;
+			}
+			else
+			{
+				return default;
+			}
+		}
+
+		private void ApplyDefaultModifiers(IHtmlSpanElement span, CreatureEncounterParticipant creature)
+		{
+			// TODO: Invert braces and add logging.
+			if (int.TryParse(span.TextContent, out var total) && span.Dataset["name"] is string name)
+			{
+				var evaluator = new CreatureModifierEvaluator(creature.Conditions, name);
+				var bonus = evaluator.Value;
+
+				if (bonus > 0)
+				{
+					span.ClassList.Add("positive");
+				}
+				else if (bonus < 0)
+				{
+					span.ClassList.Add("negative");
+				}
+
+				total += bonus;
+				span.TextContent = $"{(total >= 0 ? "+" : "")}{total}";
+			}
+		}
+
+		private void ApplyAttackModifiers(IHtmlSpanElement span, string type, CreatureEncounterParticipant creature)
+		{
+			// TODO: Invert braces and add logging.
+			if (int.TryParse(span.TextContent, out var total))
+			{
+				var evaluator = new CreatureModifierEvaluator(creature.Conditions, type);
+				var bonus = evaluator.Value;
+
+				if (bonus > 0)
+				{
+					span.ClassList.Add("positive");
+				}
+				else if (bonus < 0)
+				{
+					span.ClassList.Add("negative");
+				}
+
+				total += bonus;
+				span.TextContent = $"{(total >= 0 ? "+" : "")}{total}";
+			}
 		}
 	}
 }

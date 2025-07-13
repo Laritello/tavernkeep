@@ -25,6 +25,7 @@ export const useEncountersStore = defineStore('encounters', () => {
     });
 
     EncounterHub.connection.on('OnEncounterUpdated', (encounter: Encounter) => {
+        console.log(encounter);
         Object.assign(state[encounter.id], encounter);
     });
 

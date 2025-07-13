@@ -1,4 +1,7 @@
 ﻿using AngleSharp;
+using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
+using System.Reflection.Metadata;
 using Tavernkeep.Core.Entities.Library.Creatures;
 using Tavernkeep.Utility.Parser.Html;
 using Tavernkeep.Utility.Parser.Html.Enrichers;
@@ -20,20 +23,29 @@ namespace Tavernkeep.Utility.Parser
 
 		public Creature Parse(PathbuilderRecord record)
 		{
+			var statblock = CreateStatblock(record);
+			var health = statblock.QuerySelectorAll("span.statblock-item")
+				.OfType<IHtmlSpanElement>()
+				.Where(x => x.Dataset["type"] is "health")
+				.First()
+				.TextContent;
+
+
 			return new Creature()
 			{
 				Name = record.Name,
 				Level = int.Parse(record.Level),
 				Traits = record.Traits.Split(","),
 				Type = "Creature",
-				Statblock = CreateStatblock(record)
+				Statblock = statblock.InnerHtml,
+				Health = int.Parse(health)
 			};
 		}
 
-		private string CreateStatblock(PathbuilderRecord record)
+		private IElement CreateStatblock(PathbuilderRecord record)
 		{
 			var document = BrowsingContext.New().OpenNewAsync().Result;
-			return _pipeline.Enrich(document, record).Body?.InnerHtml ?? throw new Exception("Error parsing statblock.");
+			return _pipeline.Enrich(document, record).Body ?? throw new Exception("Error parsing statblock.");
 		}
 	}
 }
