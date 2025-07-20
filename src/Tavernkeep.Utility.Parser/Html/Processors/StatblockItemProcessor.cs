@@ -54,20 +54,20 @@ internal partial class StatblockItemProcessor : IHtmlProcessor
 
 	private static string ToAbilityName(string shortVersion) => shortVersion switch
 	{
-		"str" => "Strength",
-		"dex" => "Dexterity",
-		"int" => "Intelligence",
-		"con" => "Constitution",
-		"wis" => "Wisdom",
-		"cha" => "Charisma",
+		"str" => "strength",
+		"dex" => "dexterity",
+		"int" => "intelligence",
+		"con" => "constitution",
+		"wis" => "wisdom",
+		"cha" => "charisma",
 		_ => throw new SwitchExpressionException(shortVersion)
 	};
 
 	private static string ToSaveName(string shortVersion) => shortVersion switch
 	{
-		"fort" => "Fortitude",
-		"ref" => "Reflex",
-		"will" => "Will",
+		"fort" => "fortitude",
+		"ref" => "reflex",
+		"will" => "will",
 		_ => throw new SwitchExpressionException(shortVersion)
 	};
 

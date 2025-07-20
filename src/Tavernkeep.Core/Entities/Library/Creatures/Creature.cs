@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Tavernkeep.Core.Entities.Base;
-using Tavernkeep.Core.Entities.Pathfinder.Properties;
 
 namespace Tavernkeep.Core.Entities.Library.Creatures
 {

@@ -1,6 +1,7 @@
 ﻿using Tavernkeep.Core.Contracts.Enums;
 using Tavernkeep.Core.Contracts.Interfaces;
 using Tavernkeep.Core.Entities.Pathfinder.Conditions;
+using Tavernkeep.Core.Extensions;
 
 namespace Tavernkeep.Core.Evaluators.Modifiers
 {
@@ -32,9 +33,9 @@ namespace Tavernkeep.Core.Evaluators.Modifiers
 			{ "Melee", ["Strength", "SkillChecks", "AllChecks"] }
 		};
 
-		private readonly TypeModifierEvaluator _circumstanceModifierEvaluator = new(conditions, ModifierType.Circumstance, targets[target]);
-		private readonly TypeModifierEvaluator _statusModifierEvaluator = new(conditions, ModifierType.Status, targets[target]);
-		private readonly TypeModifierEvaluator _itemModifierEvaluator = new(conditions, ModifierType.Item, targets[target]);
+		private readonly TypeModifierEvaluator _circumstanceModifierEvaluator = new(conditions, ModifierType.Circumstance, targets[target.Capitalize()]);
+		private readonly TypeModifierEvaluator _statusModifierEvaluator = new(conditions, ModifierType.Status, targets[target.Capitalize()]);
+		private readonly TypeModifierEvaluator _itemModifierEvaluator = new(conditions, ModifierType.Item, targets[target.Capitalize()]);
 
 		public int Value => _statusModifierEvaluator.Value + _circumstanceModifierEvaluator.Value + _itemModifierEvaluator.Value;
 

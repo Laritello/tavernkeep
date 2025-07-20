@@ -70,9 +70,9 @@ namespace Tavernkeep.Application.Strategies.Encounters.FillParticipant
 			target.Perception = FindProperty<int>(spans, "perception");
 			target.SavingThrows = new Dictionary<string, int>
 			{
-				{ "Fortitude", FindProperty<int>(spans, "fortitude") },
-				{ "Will", FindProperty<int>(spans, "will") },
-				{ "Reflex", FindProperty<int>(spans, "reflex") },
+				{ "Fortitude", FindProperty<int>(spans, "save", "fortitude") },
+				{ "Will", FindProperty<int>(spans, "save", "will") },
+				{ "Reflex", FindProperty<int>(spans, "save", "reflex") },
 			};
 
 			target.Statblock = document.Body!.InnerHtml;
@@ -82,6 +82,20 @@ namespace Tavernkeep.Application.Strategies.Encounters.FillParticipant
 		{
 			var text = spans.Where(x => x.Dataset["type"] == propertyName).FirstOrDefault()?.TextContent;
 			
+			if (T.TryParse(text, null, out var result))
+			{
+				return result;
+			}
+			else
+			{
+				return default;
+			}
+		}
+
+		private static T? FindProperty<T>(IReadOnlyCollection<IHtmlSpanElement> spans, string type, string name) where T : IParsable<T>
+		{
+			var text = spans.Where(x => x.Dataset["type"] == type && x.Dataset["name"] == name).FirstOrDefault()?.TextContent;
+
 			if (T.TryParse(text, null, out var result))
 			{
 				return result;
