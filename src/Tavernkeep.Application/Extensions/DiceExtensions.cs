@@ -1,5 +1,5 @@
 ﻿using d20Tek.DiceNotation.Results;
-using Tavernkeep.Core.Entities.Rolls;
+using Tavernkeep.Domain.Entities.Rolls;
 
 namespace Tavernkeep.Application.Extensions
 {

@@ -18,9 +18,9 @@ using Tavernkeep.Application.UseCases.Encounters.Queries.GetAllEncounters;
 using Tavernkeep.Application.UseCases.Encounters.Queries.GetEncounter;
 using Tavernkeep.Application.UseCases.Rolls.Commands.RollEncounterInitiative;
 using Tavernkeep.Application.UseCases.Rolls.Commands.RollEncounterParticipantInitiative;
-using Tavernkeep.Core.Contracts.Encounters.Dtos;
-using Tavernkeep.Core.Contracts.Encounters.Requests;
-using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Domain.Contracts.Encounters.Dtos;
+using Tavernkeep.Domain.Contracts.Encounters.Requests;
+using Tavernkeep.Domain.Contracts.Enums;
 using Tavernkeep.Server.Extensions;
 using Tavernkeep.Server.Middleware;
 

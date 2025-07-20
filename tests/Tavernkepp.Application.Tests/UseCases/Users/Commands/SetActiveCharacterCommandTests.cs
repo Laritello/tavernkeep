@@ -1,11 +1,11 @@
 ﻿using Moq;
 using Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Specifications;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Entities.Pathfinder;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
+using Tavernkeep.Domain.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 {

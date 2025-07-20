@@ -43,7 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tavernkeep.Core\Tavernkeep.Core.csproj" />
+    <ProjectReference Include="..\Tavernkeep.Domain\Tavernkeep.Domain.csproj" />
     <ProjectReference Include="..\Tavernkeep.Shared\Tavernkeep.Shared.csproj" />
   </ItemGroup>
 

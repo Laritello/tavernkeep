@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Tavernkeep.Core.Repositories;
+using Tavernkeep.Domain.Repositories;
 
 namespace Tavernkeep.Application.Services
 {

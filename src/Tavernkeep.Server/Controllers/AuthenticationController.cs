@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Authentication.Commands.CreateAuthenticationToken;
 using Tavernkeep.Application.UseCases.Authentication.Commands.RefreshAuthenticationToken;
-using Tavernkeep.Core.Contracts.Authentication.Requests;
-using Tavernkeep.Core.Contracts.Authentication.Responses;
+using Tavernkeep.Domain.Contracts.Authentication.Requests;
+using Tavernkeep.Domain.Contracts.Authentication.Responses;
 
 namespace Tavernkeep.Server.Controllers
 {

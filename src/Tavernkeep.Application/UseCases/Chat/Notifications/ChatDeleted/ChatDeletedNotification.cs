@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Notifications;
+using Tavernkeep.Domain.Notifications;
 
 namespace Tavernkeep.Application.UseCases.Chat.Notifications.ChatDeleted
 {

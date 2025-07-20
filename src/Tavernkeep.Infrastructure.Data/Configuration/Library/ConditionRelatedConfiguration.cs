@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Tavernkeep.Core.Entities.Library.Conditions;
+using Tavernkeep.Domain.Entities.Library.Conditions;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration.Library
 {

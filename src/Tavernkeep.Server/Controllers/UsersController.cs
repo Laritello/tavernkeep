@@ -9,10 +9,10 @@ using Tavernkeep.Application.UseCases.Users.Commands.EditUser;
 using Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter;
 using Tavernkeep.Application.UseCases.Users.Queries.GetUser;
 using Tavernkeep.Application.UseCases.Users.Queries.GetUsers;
-using Tavernkeep.Core.Contracts.Character.Dtos;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Contracts.Users.Dtos;
-using Tavernkeep.Core.Contracts.Users.Requests;
+using Tavernkeep.Domain.Contracts.Character.Dtos;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Contracts.Users.Dtos;
+using Tavernkeep.Domain.Contracts.Users.Requests;
 using Tavernkeep.Server.Extensions;
 using Tavernkeep.Server.Middleware;
 

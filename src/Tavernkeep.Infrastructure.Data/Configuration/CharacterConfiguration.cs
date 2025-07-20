@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Entities.Pathfinder.Properties;
+using Tavernkeep.Domain.Entities.Pathfinder;
+using Tavernkeep.Domain.Entities.Pathfinder.Properties;
 using Tavernkeep.Infrastructure.Data.Extensions;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration

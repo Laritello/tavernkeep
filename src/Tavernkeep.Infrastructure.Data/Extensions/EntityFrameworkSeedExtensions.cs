@@ -2,11 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Entities.Library.Conditions;
-using Tavernkeep.Core.Entities.Library.Creatures;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Entities.Library.Conditions;
+using Tavernkeep.Domain.Entities.Library.Creatures;
+using Tavernkeep.Domain.Entities.Pathfinder;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Seeding;
 

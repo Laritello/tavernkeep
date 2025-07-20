@@ -1,9 +1,9 @@
 ﻿using Moq;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Repositories;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities.Pathfinder;
+using Tavernkeep.Domain.Repositories;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Queries
 {

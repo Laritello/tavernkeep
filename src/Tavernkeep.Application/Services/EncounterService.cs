@@ -2,12 +2,12 @@
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterDeleted;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterLaunched;
 using Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterUpdated;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Encounters;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Services;
-using Tavernkeep.Core.Strategies.Encounters;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities.Encounters;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
+using Tavernkeep.Domain.Services;
+using Tavernkeep.Domain.Strategies.Encounters;
 
 namespace Tavernkeep.Application.Services
 {

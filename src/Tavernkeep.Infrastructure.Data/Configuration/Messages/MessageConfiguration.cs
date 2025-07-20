@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Tavernkeep.Core.Entities.Messages;
+using Tavernkeep.Domain.Entities.Messages;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration.Messages
 {

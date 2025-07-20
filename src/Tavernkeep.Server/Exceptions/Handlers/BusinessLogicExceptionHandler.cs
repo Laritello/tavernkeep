@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Tavernkeep.Core.Exceptions;
+using Tavernkeep.Domain.Exceptions;
 
 namespace Tavernkeep.Server.Exceptions.Handlers
 {

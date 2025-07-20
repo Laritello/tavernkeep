@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Encounters;
-using Tavernkeep.Core.Services;
+using Tavernkeep.Domain.Entities.Encounters;
+using Tavernkeep.Domain.Services;
 
 namespace Tavernkeep.Application.UseCases.Encounters.Commands.CreateEncounter
 {

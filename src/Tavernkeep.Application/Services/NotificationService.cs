@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Channels;
-using Tavernkeep.Core.Notifications;
-using Tavernkeep.Core.Services;
+using Tavernkeep.Domain.Notifications;
+using Tavernkeep.Domain.Services;
 
 namespace Tavernkeep.Application.Services
 {

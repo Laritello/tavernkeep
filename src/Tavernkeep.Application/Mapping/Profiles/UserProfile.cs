@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Tavernkeep.Core.Contracts.Users.Dtos;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Domain.Contracts.Users.Dtos;
+using Tavernkeep.Domain.Entities;
 
 namespace Tavernkeep.Application.Mapping.Profiles
 {

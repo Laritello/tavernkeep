@@ -2,12 +2,12 @@
 using System.Security.Claims;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Authentication.Commands.RefreshAuthenticationToken;
-using Tavernkeep.Core.Contracts.Authentication;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Specifications;
+using Tavernkeep.Domain.Contracts.Authentication;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
+using Tavernkeep.Domain.Specifications;
 
 namespace Tavernkepp.Application.Tests.UseCases.Authentication.Commands
 {

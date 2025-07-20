@@ -5,8 +5,8 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Authentication;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Domain.Contracts.Authentication;
+using Tavernkeep.Domain.Entities;
 
 namespace Tavernkeep.Application.Services
 {

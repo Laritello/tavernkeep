@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Library.Creatures;
+using Tavernkeep.Domain.Entities.Library.Creatures;
 
 namespace Tavernkeep.Application.UseCases.Creatures.Queries.GetCreature
 {

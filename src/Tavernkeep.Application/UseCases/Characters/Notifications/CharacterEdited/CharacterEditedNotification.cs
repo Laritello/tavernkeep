@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Notifications;
+using Tavernkeep.Domain.Entities.Pathfinder;
+using Tavernkeep.Domain.Notifications;
 
 namespace Tavernkeep.Application.UseCases.Characters.Notifications.CharacterEdited
 {

@@ -19,8 +19,8 @@ using Tavernkeep.Application.UseCases.Characters.Commands.PerformLongRest;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacter;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacters;
 using Tavernkeep.Application.UseCases.Characters.Queries.GetCharacterTemplate;
-using Tavernkeep.Core.Contracts.Character.Dtos;
-using Tavernkeep.Core.Contracts.Character.Requests;
+using Tavernkeep.Domain.Contracts.Character.Dtos;
+using Tavernkeep.Domain.Contracts.Character.Requests;
 using Tavernkeep.Server.Extensions;
 
 namespace Tavernkeep.Server.Controllers

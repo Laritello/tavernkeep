@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities;
 
 namespace Tavernkeep.Application.UseCases.Users.Commands.CreateUser
 {

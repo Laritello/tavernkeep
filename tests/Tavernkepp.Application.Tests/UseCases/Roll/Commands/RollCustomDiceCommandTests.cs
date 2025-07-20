@@ -1,11 +1,11 @@
 ﻿using Moq;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Rolls.Commands.RollCustomDice;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Services;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
+using Tavernkeep.Domain.Services;
 
 namespace Tavernkepp.Application.Tests.UseCases.Roll.Commands
 {

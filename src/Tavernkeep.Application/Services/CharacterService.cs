@@ -2,14 +2,14 @@
 using Tavernkeep.Application.UseCases.Characters.Notifications.CharacterCreated;
 using Tavernkeep.Application.UseCases.Characters.Notifications.CharacterDeleted;
 using Tavernkeep.Application.UseCases.Characters.Notifications.CharacterEdited;
-using Tavernkeep.Core.Contracts.Character.Dtos;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Entities.Pathfinder.Properties;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Services;
+using Tavernkeep.Domain.Contracts.Character.Dtos;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Entities.Pathfinder;
+using Tavernkeep.Domain.Entities.Pathfinder.Properties;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
+using Tavernkeep.Domain.Services;
 
 namespace Tavernkeep.Application.Services
 {

@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Tavernkeep.Application.UseCases.Chat.Notifications.MessageDeleted;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Services;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
+using Tavernkeep.Domain.Services;
 
 namespace Tavernkeep.Application.UseCases.Chat.Commands.DeleteMessage
 {

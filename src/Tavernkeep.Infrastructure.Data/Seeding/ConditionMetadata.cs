@@ -1,4 +1,4 @@
-﻿using Tavernkeep.Core.Contracts.Structures;
+﻿using Tavernkeep.Domain.Contracts.Structures;
 
 namespace Tavernkeep.Infrastructure.Data.Seeding
 {

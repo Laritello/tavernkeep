@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using Tavernkeep.Core.Contracts.Authentication;
+using Tavernkeep.Domain.Contracts.Authentication;
 
 namespace Tavernkeep.Infrastructure.Notifications.Providers
 {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Character.Dtos;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Domain.Contracts.Character.Dtos;
+using Tavernkeep.Domain.Entities.Pathfinder;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.CreateCharacter
 {

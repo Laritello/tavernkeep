@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Library.Creatures;
-using Tavernkeep.Core.Repositories;
+using Tavernkeep.Domain.Entities.Library.Creatures;
+using Tavernkeep.Domain.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Creatures.Queries.GetCreatures
 {

@@ -1,7 +1,7 @@
 ﻿using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using Tavernkeep.Core.Entities.Library.Creatures;
+using Tavernkeep.Domain.Entities.Library.Creatures;
 using Tavernkeep.Utility.Parser.Html;
 using Tavernkeep.Utility.Parser.Html.Enrichers;
 using Tavernkeep.Utility.Parser.Json;

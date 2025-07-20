@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder.Properties;
-using Tavernkeep.Core.Exceptions;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities.Pathfinder.Properties;
+using Tavernkeep.Domain.Exceptions;
 
 namespace Tavernkeep.Application.UseCases.Custom.Commands.EditCustomSkill
 {

@@ -1,4 +1,4 @@
-﻿using Tavernkeep.Core.Entities.Pathfinder;
+﻿using Tavernkeep.Domain.Entities.Pathfinder;
 
 namespace Tavernkepp.Application.Tests.Utility
 {

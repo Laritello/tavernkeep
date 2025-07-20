@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Tavernkeep.Core.Contracts.Conditions.Dtos;
-using Tavernkeep.Core.Entities.Library.Conditions;
+using Tavernkeep.Domain.Contracts.Conditions.Dtos;
+using Tavernkeep.Domain.Entities.Library.Conditions;
 
 namespace Tavernkeep.Application.Mapping.Profiles.Glossary
 {

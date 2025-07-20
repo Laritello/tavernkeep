@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
-using Tavernkeep.Core.Contracts.Chat.Dtos;
+using Tavernkeep.Domain.Contracts.Chat.Dtos;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
 
 namespace Tavernkeep.Application.UseCases.Chat.Notifications.TextMessageSent

@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Library.Conditions;
-using Tavernkeep.Core.Repositories;
+using Tavernkeep.Domain.Entities.Library.Conditions;
+using Tavernkeep.Domain.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Conditions.Queries.GetCondition
 {

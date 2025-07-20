@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Tavernkeep.Core.Contracts.Authentication;
-using Tavernkeep.Core.Exceptions;
+using Tavernkeep.Domain.Contracts.Authentication;
+using Tavernkeep.Domain.Exceptions;
 using Tavernkeep.Infrastructure.Notifications.Storage;
 
 namespace Tavernkeep.Infrastructure.Notifications.Hubs

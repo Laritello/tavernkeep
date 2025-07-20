@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Authentication.Responses;
+using Tavernkeep.Domain.Contracts.Authentication.Responses;
 
 namespace Tavernkeep.Application.UseCases.Authentication.Commands.RefreshAuthenticationToken
 {

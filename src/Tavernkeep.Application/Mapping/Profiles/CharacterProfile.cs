@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Tavernkeep.Core.Contracts.Character.Dtos;
-using Tavernkeep.Core.Contracts.Conditions.Dtos;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Entities.Pathfinder.Properties;
+using Tavernkeep.Domain.Contracts.Character.Dtos;
+using Tavernkeep.Domain.Contracts.Conditions.Dtos;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities.Pathfinder;
+using Tavernkeep.Domain.Entities.Pathfinder.Properties;
 
 namespace Tavernkeep.Application.Mapping.Profiles
 {

@@ -1,12 +1,12 @@
 ﻿using Moq;
 using Tavernkeep.Application.Services;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Services;
-using Tavernkeep.Core.Specifications;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Entities.Pathfinder;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
+using Tavernkeep.Domain.Services;
+using Tavernkeep.Domain.Specifications;
 
 namespace Tavernkepp.Application.Tests.Services
 {

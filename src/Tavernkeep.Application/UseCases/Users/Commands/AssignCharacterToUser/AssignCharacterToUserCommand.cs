@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Pathfinder;
+using Tavernkeep.Domain.Entities.Pathfinder;
 
 namespace Tavernkeep.Application.UseCases.Users.Commands.AssignCharacterToUser
 {

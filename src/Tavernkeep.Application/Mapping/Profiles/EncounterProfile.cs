@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Tavernkeep.Core.Contracts.Character.Dtos;
-using Tavernkeep.Core.Contracts.Conditions.Dtos;
-using Tavernkeep.Core.Contracts.Encounters.Dtos;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Encounters;
-using Tavernkeep.Core.Entities.Encounters.Participants;
-using Tavernkeep.Core.Entities.Pathfinder.Properties;
+using Tavernkeep.Domain.Contracts.Character.Dtos;
+using Tavernkeep.Domain.Contracts.Conditions.Dtos;
+using Tavernkeep.Domain.Contracts.Encounters.Dtos;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities.Encounters;
+using Tavernkeep.Domain.Entities.Encounters.Participants;
+using Tavernkeep.Domain.Entities.Pathfinder.Properties;
 
 namespace Tavernkeep.Application.Mapping.Profiles
 {

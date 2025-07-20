@@ -1,5 +1,5 @@
-﻿using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Repositories;
+﻿using Tavernkeep.Domain.Entities.Pathfinder;
+using Tavernkeep.Domain.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Repositories.Base;
 

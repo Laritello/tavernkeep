@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
-using Tavernkeep.Core.Contracts.Chat.Dtos;
-using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Domain.Contracts.Chat.Dtos;
+using Tavernkeep.Domain.Contracts.Enums;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
 using Tavernkeep.Infrastructure.Notifications.Storage;
 

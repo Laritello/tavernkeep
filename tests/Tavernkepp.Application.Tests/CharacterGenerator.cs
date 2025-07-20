@@ -1,6 +1,6 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Entities.Pathfinder;
+﻿using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Entities.Pathfinder;
 
 namespace Tavernkepp.Application.Tests
 {

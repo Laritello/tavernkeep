@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
-using Tavernkeep.Core.Contracts.Character.Dtos;
+using Tavernkeep.Domain.Contracts.Character.Dtos;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
 
 namespace Tavernkeep.Application.UseCases.Characters.Notifications.CharacterEdited

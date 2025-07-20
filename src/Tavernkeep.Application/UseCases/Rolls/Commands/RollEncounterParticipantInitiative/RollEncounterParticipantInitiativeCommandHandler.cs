@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Services;
+using Tavernkeep.Domain.Services;
 
 namespace Tavernkeep.Application.UseCases.Rolls.Commands.RollEncounterParticipantInitiative
 {

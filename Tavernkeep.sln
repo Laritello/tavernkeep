@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Server", "src\Ta
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "tavernkeep.client", "src\tavernkeep.client\tavernkeep.client.esproj", "{2A192FE0-95CE-4B5C-A8A4-31421A625C9C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Core", "src\Tavernkeep.Core\Tavernkeep.Core.csproj", "{CC9C9F69-E6E3-4367-86E0-B59CA8781074}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Domain", "src\Tavernkeep.Domain\Tavernkeep.Domain.csproj", "{CC9C9F69-E6E3-4367-86E0-B59CA8781074}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Shared", "src\Tavernkeep.Shared\Tavernkeep.Shared.csproj", "{478B80A1-665E-4E6C-B1F7-C47E6C285743}"
 EndProject
@@ -21,12 +21,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{6D460CE0-1DD6-48D5-AC8A-98A3D4B62F6E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkeep.Infrastructure.Notifications", "src\Tavernkeep.Infrastructure.Notifications\Tavernkeep.Infrastructure.Notifications.csproj", "{26886077-D0EE-44C2-B129-FE2CEB67E31D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tavernkepp.Application.Tests", "tests\Tavernkepp.Application.Tests\Tavernkepp.Application.Tests.csproj", "{526B4DEB-DAF5-40F7-9DC3-B917E326F6F8}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3D31C5BB-2405-46CD-9DF2-A1AA7CC9EC98}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tavernkeep.Core.Tests", "tests\Tavernkeep.Core.Tests\Tavernkeep.Core.Tests.csproj", "{D985E821-BEBD-49DB-AEA8-F92223E092BB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utility", "Utility", "{A3476F1C-5DBF-4973-8EEE-35C066B118CC}"
 EndProject
@@ -68,14 +62,6 @@ Global
 		{26886077-D0EE-44C2-B129-FE2CEB67E31D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26886077-D0EE-44C2-B129-FE2CEB67E31D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26886077-D0EE-44C2-B129-FE2CEB67E31D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{526B4DEB-DAF5-40F7-9DC3-B917E326F6F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{526B4DEB-DAF5-40F7-9DC3-B917E326F6F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{526B4DEB-DAF5-40F7-9DC3-B917E326F6F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{526B4DEB-DAF5-40F7-9DC3-B917E326F6F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D985E821-BEBD-49DB-AEA8-F92223E092BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D985E821-BEBD-49DB-AEA8-F92223E092BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D985E821-BEBD-49DB-AEA8-F92223E092BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D985E821-BEBD-49DB-AEA8-F92223E092BB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4934DF85-3BA5-4A74-9B76-0AC45F869D4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4934DF85-3BA5-4A74-9B76-0AC45F869D4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4934DF85-3BA5-4A74-9B76-0AC45F869D4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -91,8 +77,6 @@ Global
 		{BAA42B02-88FA-4A8B-A18A-E5320DE382C2} = {6D460CE0-1DD6-48D5-AC8A-98A3D4B62F6E}
 		{87EA772B-B7CA-4C88-8CDC-AEAAF19E7D45} = {6D460CE0-1DD6-48D5-AC8A-98A3D4B62F6E}
 		{26886077-D0EE-44C2-B129-FE2CEB67E31D} = {6D460CE0-1DD6-48D5-AC8A-98A3D4B62F6E}
-		{526B4DEB-DAF5-40F7-9DC3-B917E326F6F8} = {3D31C5BB-2405-46CD-9DF2-A1AA7CC9EC98}
-		{D985E821-BEBD-49DB-AEA8-F92223E092BB} = {3D31C5BB-2405-46CD-9DF2-A1AA7CC9EC98}
 		{4934DF85-3BA5-4A74-9B76-0AC45F869D4E} = {A3476F1C-5DBF-4973-8EEE-35C066B118CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

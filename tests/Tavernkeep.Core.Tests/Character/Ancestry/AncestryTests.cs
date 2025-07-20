@@ -1,4 +1,4 @@
-﻿namespace Tavernkeep.Core.Tests.Character.Ancestry
+﻿namespace Tavernkeep.Domain.Tests.Character.Ancestry
 {
 	public class AncestryTests
 	{

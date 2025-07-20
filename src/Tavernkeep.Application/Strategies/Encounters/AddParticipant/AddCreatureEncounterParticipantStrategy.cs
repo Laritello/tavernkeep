@@ -1,14 +1,14 @@
 ﻿using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Encounters;
-using Tavernkeep.Core.Entities.Encounters.Participants;
-using Tavernkeep.Core.Entities.Library.Creatures;
-using Tavernkeep.Core.Evaluators.Modifiers;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Extensions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Strategies.Encounters;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities.Encounters;
+using Tavernkeep.Domain.Entities.Encounters.Participants;
+using Tavernkeep.Domain.Entities.Library.Creatures;
+using Tavernkeep.Domain.Evaluators.Modifiers;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Extensions;
+using Tavernkeep.Domain.Repositories;
+using Tavernkeep.Domain.Strategies.Encounters;
 
 namespace Tavernkeep.Application.Strategies.Encounters.AddParticipant
 {

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Exceptions;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Exceptions;
 
 namespace Tavernkeep.Application.UseCases.Custom.Commands.DeleteCustomSkill
 {

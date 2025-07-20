@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Services;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Services;
 
 namespace Tavernkeep.Application.UseCases.Portraits.Commands.UpdatePortrait
 {

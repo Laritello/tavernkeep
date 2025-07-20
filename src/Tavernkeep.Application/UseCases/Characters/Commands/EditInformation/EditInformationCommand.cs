@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Character.Dtos;
+using Tavernkeep.Domain.Contracts.Character.Dtos;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.EditInformation
 {

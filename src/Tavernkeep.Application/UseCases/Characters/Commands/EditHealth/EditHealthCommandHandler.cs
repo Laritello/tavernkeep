@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Exceptions;
+using Tavernkeep.Domain.Exceptions;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.EditHealth
 {

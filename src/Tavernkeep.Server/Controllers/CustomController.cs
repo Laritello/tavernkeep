@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Custom.Commands.AddCustomSkill;
 using Tavernkeep.Application.UseCases.Custom.Commands.DeleteCustomSkill;
 using Tavernkeep.Application.UseCases.Custom.Commands.EditCustomSkill;
-using Tavernkeep.Core.Contracts.Character.Requests;
+using Tavernkeep.Domain.Contracts.Character.Requests;
 using Tavernkeep.Server.Extensions;
 
 namespace Tavernkeep.Server.Controllers

@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Encounters;
+using Tavernkeep.Domain.Entities.Encounters;
 
 namespace Tavernkeep.Application.UseCases.Encounters.Queries.GetEncounter
 {

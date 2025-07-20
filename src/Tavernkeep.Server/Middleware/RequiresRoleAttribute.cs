@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Tavernkeep.Application.Extensions;
-using Tavernkeep.Core.Contracts.Authentication;
-using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Domain.Contracts.Authentication;
+using Tavernkeep.Domain.Contracts.Enums;
 
 namespace Tavernkeep.Server.Middleware
 {

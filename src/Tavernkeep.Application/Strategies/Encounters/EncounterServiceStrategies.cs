@@ -1,5 +1,5 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Strategies.Encounters;
+﻿using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Strategies.Encounters;
 
 namespace Tavernkeep.Application.Strategies.Encounters
 {

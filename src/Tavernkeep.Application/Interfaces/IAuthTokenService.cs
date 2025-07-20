@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Domain.Entities;
 
 namespace Tavernkeep.Application.Interfaces
 {

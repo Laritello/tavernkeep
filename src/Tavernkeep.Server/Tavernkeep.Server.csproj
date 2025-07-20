@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <Nullable>warnings</Nullable>
+    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
     <SpaRoot>..\tavernkeep.client</SpaRoot>
@@ -32,7 +32,7 @@
     <ProjectReference Include="..\tavernkeep.client\tavernkeep.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\Tavernkeep.Core\Tavernkeep.Core.csproj" />
+    <ProjectReference Include="..\Tavernkeep.Domain\Tavernkeep.Domain.csproj" />
     <ProjectReference Include="..\Tavernkeep.Infrastructure.Data\Tavernkeep.Infrastructure.Data.csproj" />
     <ProjectReference Include="..\Tavernkeep.Shared\Tavernkeep.Shared.csproj" />
   </ItemGroup>

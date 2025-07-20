@@ -17,7 +17,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Encounter", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Encounters.Encounter", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,10 +45,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Encounter", (string)null);
+                    b.ToTable("Encounter");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.EncounterParticipant", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Encounters.Participants.EncounterParticipant", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -75,14 +75,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasIndex("EncounterId");
 
-                    b.ToTable("EncounterParticipant", (string)null);
+                    b.ToTable("EncounterParticipant");
 
                     b.HasDiscriminator().HasValue("EncounterParticipant");
 
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Library.Conditions.Condition", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Library.Conditions.Condition", b =>
                 {
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
@@ -100,10 +100,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasKey("Name");
 
-                    b.ToTable("Condition", (string)null);
+                    b.ToTable("Condition");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Library.Conditions.ConditionRelated", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Library.Conditions.ConditionRelated", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -125,10 +125,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasIndex("OwnerName");
 
-                    b.ToTable("ConditionRelated", (string)null);
+                    b.ToTable("ConditionRelated");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Library.Creatures.Creature", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Library.Creatures.Creature", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -158,10 +158,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Creature", (string)null);
+                    b.ToTable("Creature");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.Message", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Messages.Message", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,14 +189,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
 
                     b.HasDiscriminator().HasValue("Message");
 
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Character", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Character", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -223,10 +223,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Character", (string)null);
+                    b.ToTable("Character");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionRecord", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Conditions.ConditionRecord", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -248,14 +248,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasIndex("ConditionName");
 
-                    b.ToTable("ConditionRecord", (string)null);
+                    b.ToTable("ConditionRecord");
 
                     b.HasDiscriminator().HasValue("ConditionRecord");
 
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Portrait", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Portrait", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("TEXT");
@@ -270,10 +270,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Portrait", (string)null);
+                    b.ToTable("Portrait");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Properties.Ability", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -293,10 +293,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("CharacterAbility", (string)null);
+                    b.ToTable("CharacterAbility");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Ancestry", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Properties.Ancestry", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("TEXT");
@@ -310,10 +310,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CharacterAncestry", (string)null);
+                    b.ToTable("CharacterAncestry");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Class", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Properties.Class", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("TEXT");
@@ -327,10 +327,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CharacterClass", (string)null);
+                    b.ToTable("CharacterClass");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Health", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Properties.Health", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("TEXT");
@@ -343,10 +343,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CharacterHealth", (string)null);
+                    b.ToTable("CharacterHealth");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Properties.Skill", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -377,10 +377,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("CharacterSkill", (string)null);
+                    b.ToTable("CharacterSkill");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.RefreshToken", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -398,10 +398,10 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RefreshTokens", (string)null);
+                    b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -429,26 +429,26 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.HasIndex("Login")
                         .IsUnique();
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.CharacterEncounterParticipant", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Encounters.Participants.CharacterEncounterParticipant", b =>
                 {
-                    b.HasBaseType("Tavernkeep.Core.Entities.Encounters.Participants.EncounterParticipant");
+                    b.HasBaseType("Tavernkeep.Domain.Entities.Encounters.Participants.EncounterParticipant");
 
                     b.Property<Guid>("CharacterId")
                         .HasColumnType("TEXT");
 
                     b.HasIndex("CharacterId");
 
-                    b.ToTable("EncounterParticipant", (string)null);
+                    b.ToTable("EncounterParticipant");
 
                     b.HasDiscriminator().HasValue("CharacterEncounterParticipant");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.CreatureEncounterParticipant", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Encounters.Participants.CreatureEncounterParticipant", b =>
                 {
-                    b.HasBaseType("Tavernkeep.Core.Entities.Encounters.Participants.EncounterParticipant");
+                    b.HasBaseType("Tavernkeep.Domain.Entities.Encounters.Participants.EncounterParticipant");
 
                     b.Property<int>("CurrentHealth")
                         .HasColumnType("INTEGER");
@@ -461,14 +461,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasIndex("OriginId");
 
-                    b.ToTable("EncounterParticipant", (string)null);
+                    b.ToTable("EncounterParticipant");
 
                     b.HasDiscriminator().HasValue("CreatureEncounterParticipant");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.RollMessage", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Messages.RollMessage", b =>
                 {
-                    b.HasBaseType("Tavernkeep.Core.Entities.Messages.Message");
+                    b.HasBaseType("Tavernkeep.Domain.Entities.Messages.Message");
 
                     b.Property<string>("Expression")
                         .IsRequired()
@@ -478,14 +478,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
 
                     b.HasDiscriminator().HasValue("RollMessage");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.TextMessage", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Messages.TextMessage", b =>
                 {
-                    b.HasBaseType("Tavernkeep.Core.Entities.Messages.Message");
+                    b.HasBaseType("Tavernkeep.Domain.Entities.Messages.Message");
 
                     b.Property<Guid?>("RecipientId")
                         .HasColumnType("TEXT");
@@ -496,28 +496,28 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasIndex("RecipientId");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
 
                     b.HasDiscriminator().HasValue("TextMessage");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.CharacterConditionRecord", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Conditions.CharacterConditionRecord", b =>
                 {
-                    b.HasBaseType("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionRecord");
+                    b.HasBaseType("Tavernkeep.Domain.Entities.Pathfinder.Conditions.ConditionRecord");
 
                     b.Property<Guid>("CharacterId")
                         .HasColumnType("TEXT");
 
                     b.HasIndex("CharacterId");
 
-                    b.ToTable("ConditionRecord", (string)null);
+                    b.ToTable("ConditionRecord");
 
                     b.HasDiscriminator().HasValue("CharacterConditionRecord");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.CreatureConditionRecord", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Conditions.CreatureConditionRecord", b =>
                 {
-                    b.HasBaseType("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionRecord");
+                    b.HasBaseType("Tavernkeep.Domain.Entities.Pathfinder.Conditions.ConditionRecord");
 
                     b.Property<Guid>("CreatureId")
                         .HasColumnType("TEXT");
@@ -529,23 +529,23 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                     b.HasIndex("ParticipantId");
 
-                    b.ToTable("ConditionRecord", (string)null);
+                    b.ToTable("ConditionRecord");
 
                     b.HasDiscriminator().HasValue("CreatureConditionRecord");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.SkillRollMessage", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Messages.SkillRollMessage", b =>
                 {
-                    b.HasBaseType("Tavernkeep.Core.Entities.Messages.RollMessage");
+                    b.HasBaseType("Tavernkeep.Domain.Entities.Messages.RollMessage");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
 
                     b.HasDiscriminator().HasValue("SkillRollMessage");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.EncounterParticipant", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Encounters.Participants.EncounterParticipant", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Encounters.Encounter", "Encounter")
+                    b.HasOne("Tavernkeep.Domain.Entities.Encounters.Encounter", "Encounter")
                         .WithMany("Participants")
                         .HasForeignKey("EncounterId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -554,15 +554,15 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Encounter");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Library.Conditions.ConditionRelated", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Library.Conditions.ConditionRelated", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Library.Conditions.Condition", "Condition")
+                    b.HasOne("Tavernkeep.Domain.Entities.Library.Conditions.Condition", "Condition")
                         .WithMany()
                         .HasForeignKey("ConditionName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tavernkeep.Core.Entities.Library.Conditions.Condition", "Owner")
+                    b.HasOne("Tavernkeep.Domain.Entities.Library.Conditions.Condition", "Owner")
                         .WithMany("Related")
                         .HasForeignKey("OwnerName");
 
@@ -571,9 +571,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.Message", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Messages.Message", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.User", "Sender")
+                    b.HasOne("Tavernkeep.Domain.Entities.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -582,29 +582,159 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Character", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Character", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.User", "Owner")
+                    b.HasOne("Tavernkeep.Domain.Entities.User", "Owner")
                         .WithMany("Characters")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Armor", "Armor", b1 =>
+                    b.OwnsOne("Tavernkeep.Domain.Entities.Pathfinder.Properties.Speed", "Burrow", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<bool>("Active")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Base")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Character");
+
+                            b1.ToJson("Burrow");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Domain.Entities.Pathfinder.Properties.Speed", "Climb", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<bool>("Active")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Base")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Character");
+
+                            b1.ToJson("Climb");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Domain.Entities.Pathfinder.Properties.Speed", "Fly", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<bool>("Active")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Base")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Character");
+
+                            b1.ToJson("Fly");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Domain.Entities.Pathfinder.Properties.Speed", "Swim", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<bool>("Active")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Base")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Character");
+
+                            b1.ToJson("Swim");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Domain.Entities.Pathfinder.Properties.Speed", "Walk", b1 =>
+                        {
+                            b1.Property<Guid>("OwnerId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<bool>("Active")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Base")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("OwnerId");
+
+                            b1.ToTable("Character");
+
+                            b1.ToJson("Walk");
+
+                            b1.WithOwner("Owner")
+                                .HasForeignKey("OwnerId");
+
+                            b1.Navigation("Owner");
+                        });
+
+                    b.OwnsOne("Tavernkeep.Domain.Entities.Pathfinder.Properties.Armor", "Armor", b1 =>
                         {
                             b1.Property<Guid>("OwnerId")
                                 .HasColumnType("TEXT");
 
                             b1.HasKey("OwnerId");
 
-                            b1.ToTable("Character", (string)null);
+                            b1.ToTable("Character");
 
                             b1.ToJson("Armor");
 
                             b1.WithOwner("Owner")
                                 .HasForeignKey("OwnerId");
 
-                            b1.OwnsOne("Tavernkeep.Core.Contracts.Structures.EquippedArmor", "Equipped", b2 =>
+                            b1.OwnsOne("Tavernkeep.Domain.Contracts.Structures.EquippedArmor", "Equipped", b2 =>
                                 {
                                     b2.Property<Guid>("ArmorOwnerId")
                                         .HasColumnType("TEXT");
@@ -623,13 +753,13 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                                     b2.HasKey("ArmorOwnerId");
 
-                                    b2.ToTable("Character", (string)null);
+                                    b2.ToTable("Character");
 
                                     b2.WithOwner()
                                         .HasForeignKey("ArmorOwnerId");
                                 });
 
-                            b1.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.ArmorProficiencies", "Proficiencies", b2 =>
+                            b1.OwnsOne("Tavernkeep.Domain.Entities.Pathfinder.Properties.ArmorProficiencies", "Proficiencies", b2 =>
                                 {
                                     b2.Property<Guid>("ArmorOwnerId")
                                         .HasColumnType("TEXT");
@@ -648,7 +778,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                                     b2.HasKey("ArmorOwnerId");
 
-                                    b2.ToTable("Character", (string)null);
+                                    b2.ToTable("Character");
 
                                     b2.WithOwner()
                                         .HasForeignKey("ArmorOwnerId");
@@ -661,136 +791,6 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                             b1.Navigation("Proficiencies")
                                 .IsRequired();
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Speed", "Burrow", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<bool>("Active")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Base")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Character", (string)null);
-
-                            b1.ToJson("Burrow");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Speed", "Climb", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<bool>("Active")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Base")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Character", (string)null);
-
-                            b1.ToJson("Climb");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Speed", "Fly", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<bool>("Active")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Base")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Character", (string)null);
-
-                            b1.ToJson("Fly");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Speed", "Swim", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<bool>("Active")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Base")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Character", (string)null);
-
-                            b1.ToJson("Swim");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
-                        });
-
-                    b.OwnsOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Speed", "Walk", b1 =>
-                        {
-                            b1.Property<Guid>("OwnerId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<bool>("Active")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Base")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("OwnerId");
-
-                            b1.ToTable("Character", (string)null);
-
-                            b1.ToJson("Walk");
-
-                            b1.WithOwner("Owner")
-                                .HasForeignKey("OwnerId");
-
-                            b1.Navigation("Owner");
                         });
 
                     b.Navigation("Armor")
@@ -814,9 +814,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.ConditionRecord", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Conditions.ConditionRecord", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Library.Conditions.Condition", "Condition")
+                    b.HasOne("Tavernkeep.Domain.Entities.Library.Conditions.Condition", "Condition")
                         .WithMany()
                         .HasForeignKey("ConditionName")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -825,20 +825,20 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Condition");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Portrait", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Portrait", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Owner")
+                    b.HasOne("Tavernkeep.Domain.Entities.Pathfinder.Character", "Owner")
                         .WithOne("Portrait")
-                        .HasForeignKey("Tavernkeep.Core.Entities.Pathfinder.Portrait", "Id")
+                        .HasForeignKey("Tavernkeep.Domain.Entities.Pathfinder.Portrait", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Properties.Ability", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Owner")
+                    b.HasOne("Tavernkeep.Domain.Entities.Pathfinder.Character", "Owner")
                         .WithMany("Abilities")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -847,48 +847,48 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Ancestry", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Properties.Ancestry", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Owner")
+                    b.HasOne("Tavernkeep.Domain.Entities.Pathfinder.Character", "Owner")
                         .WithOne("Ancestry")
-                        .HasForeignKey("Tavernkeep.Core.Entities.Pathfinder.Properties.Ancestry", "Id")
+                        .HasForeignKey("Tavernkeep.Domain.Entities.Pathfinder.Properties.Ancestry", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Class", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Properties.Class", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Owner")
+                    b.HasOne("Tavernkeep.Domain.Entities.Pathfinder.Character", "Owner")
                         .WithOne("Class")
-                        .HasForeignKey("Tavernkeep.Core.Entities.Pathfinder.Properties.Class", "Id")
+                        .HasForeignKey("Tavernkeep.Domain.Entities.Pathfinder.Properties.Class", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Health", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Properties.Health", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Owner")
+                    b.HasOne("Tavernkeep.Domain.Entities.Pathfinder.Character", "Owner")
                         .WithOne("Health")
-                        .HasForeignKey("Tavernkeep.Core.Entities.Pathfinder.Properties.Health", "Id")
+                        .HasForeignKey("Tavernkeep.Domain.Entities.Pathfinder.Properties.Health", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Properties.Skill", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Properties.Skill", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Properties.Ability", "Ability")
+                    b.HasOne("Tavernkeep.Domain.Entities.Pathfinder.Properties.Ability", "Ability")
                         .WithMany()
                         .HasForeignKey("AbilityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Owner")
+                    b.HasOne("Tavernkeep.Domain.Entities.Pathfinder.Character", "Owner")
                         .WithMany("Skills")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -899,18 +899,18 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.User", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "ActiveCharacter")
+                    b.HasOne("Tavernkeep.Domain.Entities.Pathfinder.Character", "ActiveCharacter")
                         .WithMany()
                         .HasForeignKey("ActiveCharacterId");
 
                     b.Navigation("ActiveCharacter");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.CharacterEncounterParticipant", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Encounters.Participants.CharacterEncounterParticipant", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Character")
+                    b.HasOne("Tavernkeep.Domain.Entities.Pathfinder.Character", "Character")
                         .WithMany()
                         .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -919,9 +919,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Character");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.CreatureEncounterParticipant", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Encounters.Participants.CreatureEncounterParticipant", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Library.Creatures.Creature", "Origin")
+                    b.HasOne("Tavernkeep.Domain.Entities.Library.Creatures.Creature", "Origin")
                         .WithMany()
                         .HasForeignKey("OriginId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -930,9 +930,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Origin");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.RollMessage", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Messages.RollMessage", b =>
                 {
-                    b.OwnsOne("Tavernkeep.Core.Entities.Rolls.RollResult", "Result", b1 =>
+                    b.OwnsOne("Tavernkeep.Domain.Entities.Rolls.RollResult", "Result", b1 =>
                         {
                             b1.Property<Guid>("RollMessageId")
                                 .HasColumnType("TEXT");
@@ -945,14 +945,14 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                             b1.HasKey("RollMessageId");
 
-                            b1.ToTable("Messages", (string)null);
+                            b1.ToTable("Messages");
 
                             b1.ToJson("Result");
 
                             b1.WithOwner()
                                 .HasForeignKey("RollMessageId");
 
-                            b1.OwnsMany("Tavernkeep.Core.Entities.Rolls.ThrowResult", "Results", b2 =>
+                            b1.OwnsMany("Tavernkeep.Domain.Entities.Rolls.ThrowResult", "Results", b2 =>
                                 {
                                     b2.Property<Guid>("RollResultRollMessageId")
                                         .HasColumnType("TEXT");
@@ -970,7 +970,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                                     b2.HasKey("RollResultRollMessageId", "__synthesizedOrdinal");
 
-                                    b2.ToTable("Messages", (string)null);
+                                    b2.ToTable("Messages");
 
                                     b2.WithOwner()
                                         .HasForeignKey("RollResultRollMessageId");
@@ -983,18 +983,18 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.TextMessage", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Messages.TextMessage", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.User", "Recipient")
+                    b.HasOne("Tavernkeep.Domain.Entities.User", "Recipient")
                         .WithMany()
                         .HasForeignKey("RecipientId");
 
                     b.Navigation("Recipient");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.CharacterConditionRecord", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Conditions.CharacterConditionRecord", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Pathfinder.Character", "Character")
+                    b.HasOne("Tavernkeep.Domain.Entities.Pathfinder.Character", "Character")
                         .WithMany("Conditions")
                         .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1003,15 +1003,15 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Character");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Conditions.CreatureConditionRecord", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Conditions.CreatureConditionRecord", b =>
                 {
-                    b.HasOne("Tavernkeep.Core.Entities.Library.Creatures.Creature", "Creature")
+                    b.HasOne("Tavernkeep.Domain.Entities.Library.Creatures.Creature", "Creature")
                         .WithMany()
                         .HasForeignKey("CreatureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tavernkeep.Core.Entities.Encounters.Participants.CreatureEncounterParticipant", "Participant")
+                    b.HasOne("Tavernkeep.Domain.Entities.Encounters.Participants.CreatureEncounterParticipant", "Participant")
                         .WithMany("Conditions")
                         .HasForeignKey("ParticipantId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1022,9 +1022,9 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Participant");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Messages.SkillRollMessage", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Messages.SkillRollMessage", b =>
                 {
-                    b.OwnsOne("Tavernkeep.Core.Entities.Snapshots.SkillSnapshot", "Skill", b1 =>
+                    b.OwnsOne("Tavernkeep.Domain.Entities.Snapshots.SkillSnapshot", "Skill", b1 =>
                         {
                             b1.Property<Guid>("SkillRollMessageId")
                                 .HasColumnType("TEXT");
@@ -1044,7 +1044,7 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 
                             b1.HasKey("SkillRollMessageId");
 
-                            b1.ToTable("Messages", (string)null);
+                            b1.ToTable("Messages");
 
                             b1.ToJson("Skill");
 
@@ -1056,17 +1056,17 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Encounter", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Encounters.Encounter", b =>
                 {
                     b.Navigation("Participants");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Library.Conditions.Condition", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Library.Conditions.Condition", b =>
                 {
                     b.Navigation("Related");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Pathfinder.Character", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Pathfinder.Character", b =>
                 {
                     b.Navigation("Abilities");
 
@@ -1086,12 +1086,12 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                     b.Navigation("Skills");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.User", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.User", b =>
                 {
                     b.Navigation("Characters");
                 });
 
-            modelBuilder.Entity("Tavernkeep.Core.Entities.Encounters.Participants.CreatureEncounterParticipant", b =>
+            modelBuilder.Entity("Tavernkeep.Domain.Entities.Encounters.Participants.CreatureEncounterParticipant", b =>
                 {
                     b.Navigation("Conditions");
                 });

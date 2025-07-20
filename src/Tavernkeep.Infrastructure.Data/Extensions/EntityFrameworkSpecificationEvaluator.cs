@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tavernkeep.Core.Specifications;
+using Tavernkeep.Domain.Specifications;
 
 namespace Tavernkeep.Infrastructure.Data.Extensions
 {

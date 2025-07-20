@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Conditions.Queries.GetCondition;
 using Tavernkeep.Application.UseCases.Conditions.Queries.GetConditions;
-using Tavernkeep.Core.Contracts.Conditions.Dtos;
+using Tavernkeep.Domain.Contracts.Conditions.Dtos;
 
 namespace Tavernkeep.Server.Controllers
 {

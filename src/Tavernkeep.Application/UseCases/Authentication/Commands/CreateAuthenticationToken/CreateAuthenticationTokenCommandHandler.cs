@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Authentication.Responses;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
+using Tavernkeep.Domain.Contracts.Authentication.Responses;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Authentication.Commands.CreateAuthenticationToken
 {

@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Tavernkeep.Application.UseCases.Chat.Notifications.TextMessageSent;
-using Tavernkeep.Core.Entities.Messages;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Services;
+using Tavernkeep.Domain.Entities.Messages;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
+using Tavernkeep.Domain.Services;
 
 namespace Tavernkeep.Application.UseCases.Chat.Commands.SendMessage
 {

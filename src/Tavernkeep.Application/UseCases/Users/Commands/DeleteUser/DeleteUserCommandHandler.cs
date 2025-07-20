@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Users.Commands.DeleteUser
 {

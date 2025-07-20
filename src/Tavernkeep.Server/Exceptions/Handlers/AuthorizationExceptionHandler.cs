@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
-using Tavernkeep.Core.Exceptions;
+using Tavernkeep.Domain.Exceptions;
 
 namespace Tavernkeep.Server.Exceptions.Handlers
 {

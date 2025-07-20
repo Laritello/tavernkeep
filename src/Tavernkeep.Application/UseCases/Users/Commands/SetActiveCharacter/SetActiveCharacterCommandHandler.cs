@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter
 {

@@ -1,8 +1,8 @@
 ﻿using Moq;
 using Tavernkeep.Application.UseCases.Users.Commands.CreateUser;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
 
 namespace Tavernkepp.Application.Tests.UseCases.Users.Commands
 {

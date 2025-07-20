@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Services;
+using Tavernkeep.Domain.Entities.Pathfinder;
+using Tavernkeep.Domain.Services;
 
 namespace Tavernkeep.Application.UseCases.Portraits.Queries.GetPortrait
 {

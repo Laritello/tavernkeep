@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Character.Dtos;
-using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Domain.Contracts.Character.Dtos;
+using Tavernkeep.Domain.Contracts.Enums;
 
 namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSpeeds
 {

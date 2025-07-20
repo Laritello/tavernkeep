@@ -1,11 +1,11 @@
 ﻿using Moq;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditConditions;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Entities.Library.Conditions;
-using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Repositories;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Entities.Library.Conditions;
+using Tavernkeep.Domain.Entities.Pathfinder;
+using Tavernkeep.Domain.Repositories;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {

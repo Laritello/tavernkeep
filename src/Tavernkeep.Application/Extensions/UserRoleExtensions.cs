@@ -1,4 +1,4 @@
-﻿using Tavernkeep.Core.Contracts.Enums;
+﻿using Tavernkeep.Domain.Contracts.Enums;
 
 namespace Tavernkeep.Application.Extensions
 {

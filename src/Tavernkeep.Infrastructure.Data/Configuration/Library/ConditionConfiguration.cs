@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Text.Json;
-using Tavernkeep.Core.Contracts.Structures;
-using Tavernkeep.Core.Entities.Library.Conditions;
+using Tavernkeep.Domain.Contracts.Structures;
+using Tavernkeep.Domain.Entities.Library.Conditions;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration.Library
 {

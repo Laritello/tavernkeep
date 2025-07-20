@@ -1,10 +1,10 @@
 ﻿using Moq;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Characters.Commands.EditHealth;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Exceptions;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Entities.Pathfinder;
+using Tavernkeep.Domain.Exceptions;
 
 namespace Tavernkepp.Application.Tests.UseCases.Characters.Commands
 {

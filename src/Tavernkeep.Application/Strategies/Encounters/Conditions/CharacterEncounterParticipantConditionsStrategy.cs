@@ -1,10 +1,10 @@
 ﻿using Tavernkeep.Application.Interfaces;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Encounters.Participants;
-using Tavernkeep.Core.Entities.Pathfinder.Conditions;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Strategies.Encounters;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities.Encounters.Participants;
+using Tavernkeep.Domain.Entities.Pathfinder.Conditions;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
+using Tavernkeep.Domain.Strategies.Encounters;
 
 namespace Tavernkeep.Application.Strategies.Encounters.Conditions
 {

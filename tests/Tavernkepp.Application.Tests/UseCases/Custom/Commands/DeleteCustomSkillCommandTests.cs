@@ -1,10 +1,10 @@
 ﻿using Moq;
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Application.UseCases.Custom.Commands.DeleteCustomSkill;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Entities.Pathfinder;
-using Tavernkeep.Core.Exceptions;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Entities.Pathfinder;
+using Tavernkeep.Domain.Exceptions;
 
 namespace Tavernkepp.Application.Tests.UseCases.Custom.Commands
 {

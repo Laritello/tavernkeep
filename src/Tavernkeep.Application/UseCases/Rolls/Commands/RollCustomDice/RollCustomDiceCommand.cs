@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Messages;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities.Messages;
 
 namespace Tavernkeep.Application.UseCases.Rolls.Commands.RollCustomDice
 {

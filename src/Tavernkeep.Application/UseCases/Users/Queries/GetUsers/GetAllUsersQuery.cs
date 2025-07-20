@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities;
+using Tavernkeep.Domain.Entities;
 
 namespace Tavernkeep.Application.UseCases.Users.Queries.GetUsers
 {

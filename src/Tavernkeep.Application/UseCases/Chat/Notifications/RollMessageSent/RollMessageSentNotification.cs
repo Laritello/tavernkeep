@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Messages;
-using Tavernkeep.Core.Notifications;
+using Tavernkeep.Domain.Entities.Messages;
+using Tavernkeep.Domain.Notifications;
 
 namespace Tavernkeep.Application.UseCases.Chat.Notifications.RollMessageSent
 {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Tavernkeep.Core.Contracts.Enums;
-using Tavernkeep.Core.Entities.Messages;
+using Tavernkeep.Domain.Contracts.Enums;
+using Tavernkeep.Domain.Entities.Messages;
 using Tavernkeep.Infrastructure.Data.Extensions;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration.Messages

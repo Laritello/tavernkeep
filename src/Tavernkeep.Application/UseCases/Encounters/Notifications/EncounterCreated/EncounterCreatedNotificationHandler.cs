@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
-using Tavernkeep.Core.Contracts.Encounters.Dtos;
+using Tavernkeep.Domain.Contracts.Encounters.Dtos;
 using Tavernkeep.Infrastructure.Notifications.Hubs;
 
 namespace Tavernkeep.Application.UseCases.Encounters.Notifications.EncounterCreated

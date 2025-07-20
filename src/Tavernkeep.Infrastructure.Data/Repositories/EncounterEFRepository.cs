@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tavernkeep.Core.Entities.Encounters;
-using Tavernkeep.Core.Entities.Encounters.Participants;
-using Tavernkeep.Core.Repositories;
+using Tavernkeep.Domain.Entities.Encounters;
+using Tavernkeep.Domain.Entities.Encounters.Participants;
+using Tavernkeep.Domain.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Repositories.Base;
 

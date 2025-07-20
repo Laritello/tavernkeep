@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities.Messages;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
-using Tavernkeep.Core.Specifications;
-using Tavernkeep.Core.Specifications.Chat;
+using Tavernkeep.Domain.Entities.Messages;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
+using Tavernkeep.Domain.Specifications;
+using Tavernkeep.Domain.Specifications.Chat;
 
 namespace Tavernkeep.Application.UseCases.Chat.Queries.GetMessages
 {

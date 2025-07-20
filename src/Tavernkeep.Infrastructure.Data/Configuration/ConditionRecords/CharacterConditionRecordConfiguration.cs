@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Tavernkeep.Core.Entities.Pathfinder.Conditions;
+using Tavernkeep.Domain.Entities.Pathfinder.Conditions;
 
 namespace Tavernkeep.Infrastructure.Data.Configuration.ConditionRecords
 {

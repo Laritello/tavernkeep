@@ -6,9 +6,9 @@ using Tavernkeep.Application.UseCases.Chat.Commands.DeleteChat;
 using Tavernkeep.Application.UseCases.Chat.Commands.DeleteMessage;
 using Tavernkeep.Application.UseCases.Chat.Commands.SendMessage;
 using Tavernkeep.Application.UseCases.Chat.Queries.GetMessages;
-using Tavernkeep.Core.Contracts.Chat.Dtos;
-using Tavernkeep.Core.Contracts.Chat.Requests;
-using Tavernkeep.Core.Contracts.Enums;
+using Tavernkeep.Domain.Contracts.Chat.Dtos;
+using Tavernkeep.Domain.Contracts.Chat.Requests;
+using Tavernkeep.Domain.Contracts.Enums;
 using Tavernkeep.Server.Extensions;
 using Tavernkeep.Server.Middleware;
 

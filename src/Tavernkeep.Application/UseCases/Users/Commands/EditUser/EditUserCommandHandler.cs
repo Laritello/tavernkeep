@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Exceptions;
-using Tavernkeep.Core.Repositories;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Exceptions;
+using Tavernkeep.Domain.Repositories;
 
 namespace Tavernkeep.Application.UseCases.Users.Commands.EditUser
 {

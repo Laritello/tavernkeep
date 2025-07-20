@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tavernkeep.Application.UseCases.Creatures.Queries.GetCreature;
 using Tavernkeep.Application.UseCases.Creatures.Queries.GetCreatures;
-using Tavernkeep.Core.Contracts.Creatures;
+using Tavernkeep.Domain.Contracts.Creatures;
 
 namespace Tavernkeep.Server.Controllers
 {

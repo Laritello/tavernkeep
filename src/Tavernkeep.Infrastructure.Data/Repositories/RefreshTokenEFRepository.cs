@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tavernkeep.Core.Entities;
-using Tavernkeep.Core.Repositories;
+using Tavernkeep.Domain.Entities;
+using Tavernkeep.Domain.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Repositories.Base;
 

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Tavernkeep.Core.Contracts.Chat.Dtos;
-using Tavernkeep.Core.Entities.Messages;
+using Tavernkeep.Domain.Contracts.Chat.Dtos;
+using Tavernkeep.Domain.Entities.Messages;
 
 namespace Tavernkeep.Application.Mapping.Profiles
 {

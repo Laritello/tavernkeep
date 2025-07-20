@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Tavernkeep.Core.Contracts.Chat.Dtos;
+using Tavernkeep.Domain.Contracts.Chat.Dtos;
 using Tavernkeep.Infrastructure.Notifications.Storage;
 
 namespace Tavernkeep.Infrastructure.Notifications.Hubs

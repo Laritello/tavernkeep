@@ -1,5 +1,5 @@
-﻿using Tavernkeep.Core.Contracts.Authentication;
-using Tavernkeep.Core.Exceptions;
+﻿using Tavernkeep.Domain.Contracts.Authentication;
+using Tavernkeep.Domain.Exceptions;
 
 namespace Tavernkeep.Server.Extensions
 {

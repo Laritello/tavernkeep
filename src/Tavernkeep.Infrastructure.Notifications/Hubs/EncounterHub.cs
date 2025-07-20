@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using Tavernkeep.Core.Contracts.Encounters.Dtos;
+using Tavernkeep.Domain.Contracts.Encounters.Dtos;
 
 namespace Tavernkeep.Infrastructure.Notifications.Hubs
 {

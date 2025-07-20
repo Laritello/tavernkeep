@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Tavernkeep.Core.Contracts.Creatures;
-using Tavernkeep.Core.Entities.Library.Creatures;
+using Tavernkeep.Domain.Contracts.Creatures;
+using Tavernkeep.Domain.Entities.Library.Creatures;
 
 namespace Tavernkeep.Application.Mapping.Profiles
 {
