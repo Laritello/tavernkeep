@@ -1,10 +1,9 @@
-﻿namespace Tavernkeep.Domain.Contracts.Enums
+﻿namespace Tavernkeep.Domain.Contracts.Enums;
+
+public enum Rarity
 {
-	public enum Rarity
-	{
-		Common,
-		Uncommon,
-		Rare,
-		Unique
-	}
+	Common,
+	Uncommon,
+	Rare,
+	Unique
 }

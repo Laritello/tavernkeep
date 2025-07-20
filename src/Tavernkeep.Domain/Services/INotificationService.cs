@@ -1,9 +1,8 @@
 ﻿using Tavernkeep.Domain.Notifications;
 
-namespace Tavernkeep.Domain.Services
+namespace Tavernkeep.Domain.Services;
+
+public interface INotificationService
 {
-	public interface INotificationService
-	{
-		ValueTask Publish<T>(T notification, CancellationToken cancellationToken) where T : IBaseNotification;
-	}
+	ValueTask Publish<T>(T notification, CancellationToken cancellationToken) where T : IBaseNotification;
 }

@@ -1,15 +1,14 @@
 ﻿using MediatR;
 using Tavernkeep.Domain.Services;
 
-namespace Tavernkeep.Application.UseCases.Encounters.Commands.UpdateTurn
+namespace Tavernkeep.Application.UseCases.Encounters.Commands.UpdateTurn;
+
+public class UpdateTurnCommandHandler(
+	IEncounterService encounterService
+	) : IRequestHandler<UpdateTurnCommand>
 {
-	public class UpdateTurnCommandHandler(
-		IEncounterService encounterService
-		) : IRequestHandler<UpdateTurnCommand>
+	public async Task Handle(UpdateTurnCommand request, CancellationToken cancellationToken)
 	{
-		public async Task Handle(UpdateTurnCommand request, CancellationToken cancellationToken)
-		{
-			await encounterService.UpdateTurnAsync(request.EncounterId, request.MoveForward, cancellationToken);
-		}
+		await encounterService.UpdateTurnAsync(request.EncounterId, request.MoveForward, cancellationToken);
 	}
 }

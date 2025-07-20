@@ -3,24 +3,23 @@ using Tavernkeep.Domain.Entities;
 using Tavernkeep.Domain.Exceptions;
 using Tavernkeep.Domain.Repositories;
 
-namespace Tavernkeep.Application.UseCases.Users.Commands.CreateUser
+namespace Tavernkeep.Application.UseCases.Users.Commands.CreateUser;
+
+public class CreateUserCommandHandler(IUserRepository repository) : IRequestHandler<CreateUserCommand, User>
 {
-	public class CreateUserCommandHandler(IUserRepository repository) : IRequestHandler<CreateUserCommand, User>
+	public async Task<User> Handle(CreateUserCommand request, CancellationToken cancellationToken)
 	{
-		public async Task<User> Handle(CreateUserCommand request, CancellationToken cancellationToken)
-		{
-			if (string.IsNullOrWhiteSpace(request.Login))
-				throw new BusinessLogicException("User can't have an empty login.");
+		if (string.IsNullOrWhiteSpace(request.Login))
+			throw new BusinessLogicException("User can't have an empty login.");
 
-			if (string.IsNullOrWhiteSpace(request.Password))
-				throw new BusinessLogicException("User can't have an empty password.");
+		if (string.IsNullOrWhiteSpace(request.Password))
+			throw new BusinessLogicException("User can't have an empty password.");
 
-			User user = new(request.Login, request.Password, request.Role);
+		User user = new(request.Login, request.Password, request.Role);
 
-			repository.Save(user);
-			await repository.CommitAsync(cancellationToken);
+		repository.Save(user);
+		await repository.CommitAsync(cancellationToken);
 
-			return user;
-		}
+		return user;
 	}
 }

@@ -7,45 +7,44 @@ using Tavernkeep.Domain.Exceptions;
 using Tavernkeep.Domain.Repositories;
 using Tavernkeep.Domain.Services;
 
-namespace Tavernkeep.Application.UseCases.Rolls.Commands.RollSkill
+namespace Tavernkeep.Application.UseCases.Rolls.Commands.RollSkill;
+
+public class RollSkillCommandHandler(
+	IDiceService diceService,
+	IUserRepository userRepository,
+	ICharacterRepository characterRepository,
+	IMessageRepository messageRepository,
+	INotificationService notificationService
+	) : IRequestHandler<RollSkillCommand, SkillRollMessage>
 {
-	public class RollSkillCommandHandler(
-		IDiceService diceService,
-		IUserRepository userRepository,
-		ICharacterRepository characterRepository,
-		IMessageRepository messageRepository,
-		INotificationService notificationService
-		) : IRequestHandler<RollSkillCommand, SkillRollMessage>
+	public async Task<SkillRollMessage> Handle(RollSkillCommand request, CancellationToken cancellationToken)
 	{
-		public async Task<SkillRollMessage> Handle(RollSkillCommand request, CancellationToken cancellationToken)
+		var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
+			?? throw new BusinessLogicException("Initiator with specified ID doesn't exist.");
+
+		var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
+			?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
+
+		var skill = character.Skills[request.SkillType];
+		var roll = diceService.Roll(bonus: skill.Bonus);
+
+		SkillRollMessage message = new()
 		{
-			var initiator = await userRepository.FindAsync(request.InitiatorId, cancellationToken: cancellationToken)
-				?? throw new BusinessLogicException("Initiator with specified ID doesn't exist.");
+			CharacterId = character.Id,
+			DisplayName = initiator.ActiveCharacter is not null ? initiator.ActiveCharacter.Name : initiator.Login,
+			Sender = initiator,
+			Created = DateTime.UtcNow,
+			RollType = request.RollType,
+			Expression = roll.DiceExpression,
+			Result = roll.ToRollResult(),
+			Skill = skill.AsSnapshot()
+		};
 
-			var character = await characterRepository.GetFullCharacterAsync(request.CharacterId, cancellationToken)
-				?? throw new BusinessLogicException("Character with specified ID doesn't exist.");
+		messageRepository.Save(message);
 
-			var skill = character.Skills[request.SkillType];
-			var roll = diceService.Roll(bonus: skill.Bonus);
+		await messageRepository.CommitAsync(cancellationToken);
+		await notificationService.Publish(new RollMessageSentNotification(message), cancellationToken);
 
-			SkillRollMessage message = new()
-			{
-				CharacterId = character.Id,
-				DisplayName = initiator.ActiveCharacter is not null ? initiator.ActiveCharacter.Name : initiator.Login,
-				Sender = initiator,
-				Created = DateTime.UtcNow,
-				RollType = request.RollType,
-				Expression = roll.DiceExpression,
-				Result = roll.ToRollResult(),
-				Skill = skill.AsSnapshot()
-			};
-
-			messageRepository.Save(message);
-
-			await messageRepository.CommitAsync(cancellationToken);
-			await notificationService.Publish(new RollMessageSentNotification(message), cancellationToken);
-
-			return message;
-		}
+		return message;
 	}
 }

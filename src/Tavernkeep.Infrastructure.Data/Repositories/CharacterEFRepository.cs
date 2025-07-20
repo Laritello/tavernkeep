@@ -4,33 +4,32 @@ using Tavernkeep.Domain.Repositories;
 using Tavernkeep.Infrastructure.Data.Context;
 using Tavernkeep.Infrastructure.Data.Repositories.Base;
 
-namespace Tavernkeep.Infrastructure.Data.Repositories
+namespace Tavernkeep.Infrastructure.Data.Repositories;
+
+public class CharacterEFRepository(SessionContext context) : EntityFrameworkGuidRepository<Character>(context), ICharacterRepository
 {
-	public class CharacterEFRepository(SessionContext context) : EntityFrameworkGuidRepository<Character>(context), ICharacterRepository
+	public async Task<List<Character>> GetAllCharactersAsync(CancellationToken cancellationToken = default)
 	{
-		public async Task<List<Character>> GetAllCharactersAsync(CancellationToken cancellationToken = default)
-		{
-			return await AsQueryable()
-				.Include(x => x.Owner)
-				.Include(x => x.Ancestry)
-				.Include(x => x.Class)
-				.Include(x => x.Health)
-				.Include(x => x.Abilities)
-				.Include(x => x.Skills).ThenInclude(x => x.Ability)
-				.Include(x => x.Conditions).ThenInclude(x => x.Condition).ThenInclude(x => x.Related).ThenInclude(x => x.Condition)
-				.ToListAsync(cancellationToken);
-		}
-		public async Task<Character?> GetFullCharacterAsync(Guid id, CancellationToken cancellationToken = default)
-		{
-			return await AsQueryable().Where(x => x.Id == id)
-				.Include(x => x.Owner)
-				.Include(x => x.Ancestry)
-				.Include(x => x.Class)
-				.Include(x => x.Health)
-				.Include(x => x.Abilities)
-				.Include(x => x.Skills).ThenInclude(x => x.Ability)
-				.Include(x => x.Conditions).ThenInclude(x => x.Condition).ThenInclude(x => x.Related).ThenInclude(x => x.Condition)
-				.FirstOrDefaultAsync(cancellationToken);
-		}
+		return await AsQueryable()
+			.Include(x => x.Owner)
+			.Include(x => x.Ancestry)
+			.Include(x => x.Class)
+			.Include(x => x.Health)
+			.Include(x => x.Abilities)
+			.Include(x => x.Skills).ThenInclude(x => x.Ability)
+			.Include(x => x.Conditions).ThenInclude(x => x.Condition).ThenInclude(x => x.Related).ThenInclude(x => x.Condition)
+			.ToListAsync(cancellationToken);
+	}
+	public async Task<Character?> GetFullCharacterAsync(Guid id, CancellationToken cancellationToken = default)
+	{
+		return await AsQueryable().Where(x => x.Id == id)
+			.Include(x => x.Owner)
+			.Include(x => x.Ancestry)
+			.Include(x => x.Class)
+			.Include(x => x.Health)
+			.Include(x => x.Abilities)
+			.Include(x => x.Skills).ThenInclude(x => x.Ability)
+			.Include(x => x.Conditions).ThenInclude(x => x.Condition).ThenInclude(x => x.Related).ThenInclude(x => x.Condition)
+			.FirstOrDefaultAsync(cancellationToken);
 	}
 }

@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Tavernkeep.Domain.Contracts.Character.Dtos;
 
-namespace Tavernkeep.Infrastructure.Notifications.Hubs
-{
-	public interface ICharacterHub
-	{
-		Task OnCharacterCreated(CharacterDto character);
-		Task OnCharacterEdited(CharacterDto character);
-		Task OnCharacterDeleted(Guid characterId);
-	}
+namespace Tavernkeep.Infrastructure.Notifications.Hubs;
 
-	public class CharacterHub : Hub<ICharacterHub> { }
+public interface ICharacterHub
+{
+	Task OnCharacterCreated(CharacterDto character);
+	Task OnCharacterEdited(CharacterDto character);
+	Task OnCharacterDeleted(Guid characterId);
 }
+
+public class CharacterHub : Hub<ICharacterHub> { }

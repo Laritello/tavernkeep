@@ -1,8 +1,7 @@
-﻿namespace Tavernkeep.Domain.Exceptions
+﻿namespace Tavernkeep.Domain.Exceptions;
+
+public class InsufficientPermissionException : Exception
 {
-	public class InsufficientPermissionException : Exception
-	{
-		public InsufficientPermissionException(string message) : base(message) { }
-		public InsufficientPermissionException(string message, Exception innerException) : base(message, innerException) { }
-	}
+	public InsufficientPermissionException(string message) : base(message) { }
+	public InsufficientPermissionException(string message, Exception innerException) : base(message, innerException) { }
 }

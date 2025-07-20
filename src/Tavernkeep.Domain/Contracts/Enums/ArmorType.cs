@@ -1,10 +1,9 @@
-﻿namespace Tavernkeep.Domain.Contracts.Enums
+﻿namespace Tavernkeep.Domain.Contracts.Enums;
+
+public enum ArmorType
 {
-	public enum ArmorType
-	{
-		Unarmored,
-		Light,
-		Medium,
-		Heavy
-	}
+	Unarmored,
+	Light,
+	Medium,
+	Heavy
 }

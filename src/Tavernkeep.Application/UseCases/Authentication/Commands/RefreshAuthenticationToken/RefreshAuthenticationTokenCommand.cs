@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using Tavernkeep.Domain.Contracts.Authentication.Responses;
 
-namespace Tavernkeep.Application.UseCases.Authentication.Commands.RefreshAuthenticationToken
+namespace Tavernkeep.Application.UseCases.Authentication.Commands.RefreshAuthenticationToken;
+
+public class RefreshAuthenticationTokenCommand(string token, string refreshToken) : IRequest<AuthenticationResponse>
 {
-	public class RefreshAuthenticationTokenCommand(string token, string refreshToken) : IRequest<AuthenticationResponse>
-	{
-		public string AccessToken { get; set; } = token;
-		public string RefreshToken { get; set; } = refreshToken;
-	}
+	public string AccessToken { get; set; } = token;
+	public string RefreshToken { get; set; } = refreshToken;
 }

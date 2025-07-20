@@ -1,9 +1,8 @@
 ﻿using Tavernkeep.Domain.Contracts.Conditions.Dtos;
 
-namespace Tavernkeep.Domain.Contracts.Character.Requests
+namespace Tavernkeep.Domain.Contracts.Character.Requests;
+
+public class EditConditionsRequest
 {
-	public class EditConditionsRequest
-	{
-		public List<ConditionEditDto> Conditions { get; set; } = [];
-	}
+	public List<ConditionEditDto> Conditions { get; set; } = [];
 }

@@ -4,25 +4,24 @@ using System.Text.Json;
 using Tavernkeep.Domain.Contracts.Structures;
 using Tavernkeep.Domain.Entities.Library.Conditions;
 
-namespace Tavernkeep.Infrastructure.Data.Configuration.Library
+namespace Tavernkeep.Infrastructure.Data.Configuration.Library;
+
+public class ConditionConfiguration : IEntityTypeConfiguration<Condition>
 {
-	public class ConditionConfiguration : IEntityTypeConfiguration<Condition>
+	public void Configure(EntityTypeBuilder<Condition> builder)
 	{
-		public void Configure(EntityTypeBuilder<Condition> builder)
-		{
-			builder.HasKey(c => c.Name);
-			builder.Property(c => c.Name).IsRequired();
-			builder.Property(c => c.Description).IsRequired();
-			builder.Property(c => c.HasLevels).IsRequired();
+		builder.HasKey(c => c.Name);
+		builder.Property(c => c.Name).IsRequired();
+		builder.Property(c => c.Description).IsRequired();
+		builder.Property(c => c.HasLevels).IsRequired();
 
-			builder.Property(c => c.Modifiers)
-				.HasConversion(
-				v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
-				v => JsonSerializer.Deserialize<Dictionary<string, Modifier>>(v, JsonSerializerOptions.Default) ?? new Dictionary<string, Modifier>()
-			);
+		builder.Property(c => c.Modifiers)
+			.HasConversion(
+			v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
+			v => JsonSerializer.Deserialize<Dictionary<string, Modifier>>(v, JsonSerializerOptions.Default) ?? new Dictionary<string, Modifier>()
+		);
 
-			builder.HasMany(c => c.Related)
-				.WithOne(r => r.Owner);
-		}
+		builder.HasMany(c => c.Related)
+			.WithOne(r => r.Owner);
 	}
 }

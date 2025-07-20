@@ -1,8 +1,7 @@
-﻿namespace Tavernkeep.Domain.Contracts.Authentication.Requests
+﻿namespace Tavernkeep.Domain.Contracts.Authentication.Requests;
+
+public class RefreshTokenRequest
 {
-	public class RefreshTokenRequest
-	{
-		public string AccessToken { get; set; } = default!;
-		public string RefreshToken { get; set; } = default!;
-	}
+	public string AccessToken { get; set; } = default!;
+	public string RefreshToken { get; set; } = default!;
 }

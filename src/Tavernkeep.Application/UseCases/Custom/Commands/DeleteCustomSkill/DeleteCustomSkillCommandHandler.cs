@@ -3,23 +3,22 @@ using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Domain.Contracts.Enums;
 using Tavernkeep.Domain.Exceptions;
 
-namespace Tavernkeep.Application.UseCases.Custom.Commands.DeleteCustomSkill
+namespace Tavernkeep.Application.UseCases.Custom.Commands.DeleteCustomSkill;
+
+public class DeleteCustomSkillCommandHandler(ICharacterService characterService) : IRequestHandler<DeleteCustomSkillCommand>
 {
-	public class DeleteCustomSkillCommandHandler(ICharacterService characterService) : IRequestHandler<DeleteCustomSkillCommand>
+	public async Task Handle(DeleteCustomSkillCommand request, CancellationToken cancellationToken)
 	{
-		public async Task Handle(DeleteCustomSkillCommand request, CancellationToken cancellationToken)
-		{
-			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
+		var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
 
-			var skill = character.Skills.FirstOrDefault(s => s.Name == request.Name)
-				?? throw new BusinessLogicException("Character does not have a skill with this name.");
+		var skill = character.Skills.FirstOrDefault(s => s.Name == request.Name)
+			?? throw new BusinessLogicException("Character does not have a skill with this name.");
 
-			if (skill.Type != SkillType.Custom && skill.Type != SkillType.Lore)
-				throw new BusinessLogicException("Deteled skill must either have custom or lore type.");
+		if (skill.Type != SkillType.Custom && skill.Type != SkillType.Lore)
+			throw new BusinessLogicException("Deteled skill must either have custom or lore type.");
 
-			character.Skills.Remove(skill);
+		character.Skills.Remove(skill);
 
-			await characterService.SaveCharacter(character, cancellationToken);
-		}
+		await characterService.SaveCharacter(character, cancellationToken);
 	}
 }

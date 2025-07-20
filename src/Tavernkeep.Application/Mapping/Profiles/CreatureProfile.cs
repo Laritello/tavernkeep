@@ -2,14 +2,13 @@
 using Tavernkeep.Domain.Contracts.Creatures;
 using Tavernkeep.Domain.Entities.Library.Creatures;
 
-namespace Tavernkeep.Application.Mapping.Profiles
+namespace Tavernkeep.Application.Mapping.Profiles;
+
+public class CreatureProfile : Profile
 {
-	public class CreatureProfile : Profile
+	public CreatureProfile()
 	{
-		public CreatureProfile()
-		{
-			CreateMap<Creature, CreatureDto>();
-			CreateMap<Creature, CreatureFullDto>();
-		}
+		CreateMap<Creature, CreatureDto>();
+		CreateMap<Creature, CreatureFullDto>();
 	}
 }

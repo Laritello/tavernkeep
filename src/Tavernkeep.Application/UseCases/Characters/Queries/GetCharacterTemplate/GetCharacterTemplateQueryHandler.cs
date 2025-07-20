@@ -2,13 +2,12 @@
 using Tavernkeep.Application.Interfaces;
 using Tavernkeep.Domain.Entities.Pathfinder;
 
-namespace Tavernkeep.Application.UseCases.Characters.Queries.GetCharacterTemplate
+namespace Tavernkeep.Application.UseCases.Characters.Queries.GetCharacterTemplate;
+
+public class GetCharacterTemplateQueryHandler(ICharacterService characterService) : IRequestHandler<GetCharacterTemplateQuery, Character>
 {
-	public class GetCharacterTemplateQueryHandler(ICharacterService characterService) : IRequestHandler<GetCharacterTemplateQuery, Character>
+	public Task<Character> Handle(GetCharacterTemplateQuery request, CancellationToken cancellationToken)
 	{
-		public Task<Character> Handle(GetCharacterTemplateQuery request, CancellationToken cancellationToken)
-		{
-			return characterService.CreateCharacterTemplateAsync(cancellationToken);
-		}
+		return characterService.CreateCharacterTemplateAsync(cancellationToken);
 	}
 }

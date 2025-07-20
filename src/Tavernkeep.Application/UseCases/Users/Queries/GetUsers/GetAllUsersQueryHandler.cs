@@ -2,14 +2,13 @@
 using Tavernkeep.Domain.Entities;
 using Tavernkeep.Domain.Repositories;
 
-namespace Tavernkeep.Application.UseCases.Users.Queries.GetUsers
+namespace Tavernkeep.Application.UseCases.Users.Queries.GetUsers;
+
+public class GetAllUsersQueryHandler(IUserRepository repository) : IRequestHandler<GetAllUsersQuery, Dictionary<Guid, User>>
 {
-	public class GetAllUsersQueryHandler(IUserRepository repository) : IRequestHandler<GetAllUsersQuery, Dictionary<Guid, User>>
+	public async Task<Dictionary<Guid, User>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
 	{
-		public async Task<Dictionary<Guid, User>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
-		{
-			var users = await repository.GetAllUsersAsync(cancellationToken);
-			return users.ToDictionary(x => x.Id);
-		}
+		var users = await repository.GetAllUsersAsync(cancellationToken);
+		return users.ToDictionary(x => x.Id);
 	}
 }

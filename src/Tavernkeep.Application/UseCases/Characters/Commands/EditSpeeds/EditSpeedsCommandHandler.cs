@@ -1,23 +1,22 @@
 ﻿using MediatR;
 using Tavernkeep.Application.Interfaces;
 
-namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSpeeds
+namespace Tavernkeep.Application.UseCases.Characters.Commands.EditSpeeds;
+
+public class EditSpeedsCommandHandler(ICharacterService characterService) : IRequestHandler<EditSpeedsCommand>
 {
-	public class EditSpeedsCommandHandler(ICharacterService characterService) : IRequestHandler<EditSpeedsCommand>
+	public async Task Handle(EditSpeedsCommand request, CancellationToken cancellationToken)
 	{
-		public async Task Handle(EditSpeedsCommand request, CancellationToken cancellationToken)
+		var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
+
+		foreach (var key in request.Speeds.Keys)
 		{
-			var character = await characterService.RetrieveCharacterForAction(request.CharacterId, request.InitiatorId, cancellationToken);
+			var speed = character.GetSpeed(key);
 
-			foreach (var key in request.Speeds.Keys)
-			{
-				var speed = character.GetSpeed(key);
-
-				speed.Active = request.Speeds[key].Active;
-				speed.Base = request.Speeds[key].Base;
-			}
-
-			await characterService.SaveCharacter(character, cancellationToken);
+			speed.Active = request.Speeds[key].Active;
+			speed.Base = request.Speeds[key].Base;
 		}
+
+		await characterService.SaveCharacter(character, cancellationToken);
 	}
 }

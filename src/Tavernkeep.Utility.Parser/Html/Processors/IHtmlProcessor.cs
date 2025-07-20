@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tavernkeep.Utility.Parser.Html.Processors
+namespace Tavernkeep.Utility.Parser.Html.Processors;
+
+public interface IHtmlProcessor
 {
-	public interface IHtmlProcessor
-	{
-		string Process(string html);
-	}
+	string Process(string html);
 }

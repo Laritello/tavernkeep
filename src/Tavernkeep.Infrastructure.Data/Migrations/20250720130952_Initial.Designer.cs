@@ -8,8 +8,8 @@ using Tavernkeep.Infrastructure.Data.Context;
 
 #nullable disable
 
-namespace Tavernkeep.Infrastructure.Data.Migrations
-{
+namespace Tavernkeep.Infrastructure.Data.Migrations;
+
     [DbContext(typeof(SessionContext))]
     [Migration("20250720130952_Initial")]
     partial class Initial
@@ -1101,4 +1101,3 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 #pragma warning restore 612, 618
         }
     }
-}

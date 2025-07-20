@@ -1,7 +1,6 @@
-﻿namespace Tavernkeep.Domain.Contracts.Interfaces
+﻿namespace Tavernkeep.Domain.Contracts.Interfaces;
+
+public interface IValueEvaluator<T>
 {
-	public interface IValueEvaluator<T>
-	{
-		public T Value { get; }
-	}
+	public T Value { get; }
 }

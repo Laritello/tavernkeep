@@ -1,61 +1,60 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Tavernkeep.Domain.Contracts.Enums
+namespace Tavernkeep.Domain.Contracts.Enums;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum ModifierTarget
 {
-	[JsonConverter(typeof(JsonStringEnumConverter))]
-	public enum ModifierTarget
-	{
-		// Skills
-		Acrobatics,
-		Arcana,
-		Athletics,
-		Crafting,
-		Deception,
-		Diplomacy,
-		Intimidation,
-		Medicine,
-		Nature,
-		Occultism,
-		Performance,
-		Religion,
-		Society,
-		Stealth,
-		Survival,
-		Thievery,
+	// Skills
+	Acrobatics,
+	Arcana,
+	Athletics,
+	Crafting,
+	Deception,
+	Diplomacy,
+	Intimidation,
+	Medicine,
+	Nature,
+	Occultism,
+	Performance,
+	Religion,
+	Society,
+	Stealth,
+	Survival,
+	Thievery,
 
-		// Custom Skill
-		Lore,
+	// Custom Skill
+	Lore,
 
-		// Saves
-		Fortitude,
-		Reflex,
-		Will,
+	// Saves
+	Fortitude,
+	Reflex,
+	Will,
 
-		// Senses
-		Perception,
+	// Senses
+	Perception,
 
-		// Defenses
-		ArmorClass,
+	// Defenses
+	ArmorClass,
 
-		// Offenses
-		MeleeAttack,
-		RangedAttack,
-		SpellAttack,
-		DifficultyClass,
+	// Offenses
+	MeleeAttack,
+	RangedAttack,
+	SpellAttack,
+	DifficultyClass,
 
-		// Speeds
-		WalkSpeed,
-		BurrowSpeed,
-		ClimbSpeed,
-		FlySpeed,
-		SwimSpeed,
+	// Speeds
+	WalkSpeed,
+	BurrowSpeed,
+	ClimbSpeed,
+	FlySpeed,
+	SwimSpeed,
 
-		// Initiative
-		InitiativePerception,
-		InitiativeStealth,
+	// Initiative
+	InitiativePerception,
+	InitiativeStealth,
 
-		// Health
-		CurrentHealth,
-		TotalHealth,
-	}
+	// Health
+	CurrentHealth,
+	TotalHealth,
 }

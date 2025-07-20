@@ -5,64 +5,63 @@ using Tavernkeep.Domain.Exceptions;
 using Tavernkeep.Domain.Repositories;
 using Tavernkeep.Domain.Strategies.Encounters;
 
-namespace Tavernkeep.Application.Strategies.Encounters.Conditions
+namespace Tavernkeep.Application.Strategies.Encounters.Conditions;
+
+public class CreatureEncounterParticipantConditionsStrrategy(
+		IConditionLibraryRepository conditionRepository
+		) : IEncounterParticipantConditionStrategy
 {
-	public class CreatureEncounterParticipantConditionsStrrategy(
-			IConditionLibraryRepository conditionRepository
-			) : IEncounterParticipantConditionStrategy
+	public EncounterParticipantType Type => EncounterParticipantType.Creature;
+
+	public async Task AddConditionToParticipant(EncounterParticipant participant, string conditionName, CancellationToken cancellationToken)
 	{
-		public EncounterParticipantType Type => EncounterParticipantType.Creature;
-
-		public async Task AddConditionToParticipant(EncounterParticipant participant, string conditionName, CancellationToken cancellationToken)
+		if (participant is CreatureEncounterParticipant creatureParticipant)
 		{
-			if (participant is CreatureEncounterParticipant creatureParticipant)
+			if (creatureParticipant.Conditions.Any(x => x.Condition.Name == conditionName))
 			{
-				if (creatureParticipant.Conditions.Any(x => x.Condition.Name == conditionName))
-				{
-					return;
-				}
+				return;
+			}
 
-				var condition = await conditionRepository.GetConditionAsync(conditionName, cancellationToken) ??
-					throw new BusinessLogicException("Condition with provided name does not exist.");
+			var condition = await conditionRepository.GetConditionAsync(conditionName, cancellationToken) ??
+				throw new BusinessLogicException("Condition with provided name does not exist.");
 
-				creatureParticipant.AddCondition(new CreatureConditionRecord()
-				{
-					Participant = creatureParticipant,
-					Condition = condition,
-					Creature = creatureParticipant.Origin,
-					Level = condition.HasLevels ? 1 : null,
-				});
+			creatureParticipant.AddCondition(new CreatureConditionRecord()
+			{
+				Participant = creatureParticipant,
+				Condition = condition,
+				Creature = creatureParticipant.Origin,
+				Level = condition.HasLevels ? 1 : null,
+			});
+		}
+	}
+
+	public Task EditConditionOnParticipant(EncounterParticipant participant, string conditionName, int level, CancellationToken cancellationToken)
+	{
+		if (participant is CreatureEncounterParticipant creatureParticipant)
+		{
+			var condition = creatureParticipant.Conditions.FirstOrDefault(x => x.Condition.Name == conditionName);
+
+			if (condition is not null && condition.Condition.HasLevels)
+			{
+				condition.Level = level;
 			}
 		}
 
-		public Task EditConditionOnParticipant(EncounterParticipant participant, string conditionName, int level, CancellationToken cancellationToken)
+		return Task.CompletedTask;
+	}
+
+	public Task DeleteConditionFromParticipant(EncounterParticipant participant, string conditionName, CancellationToken cancellationToken)
+	{
+		if (participant is CreatureEncounterParticipant creatureParticipant)
 		{
-			if (participant is CreatureEncounterParticipant creatureParticipant)
+			var condition = creatureParticipant.Conditions.FirstOrDefault(x => x.Condition.Name == conditionName);
+
+			if (condition is not null)
 			{
-				var condition = creatureParticipant.Conditions.FirstOrDefault(x => x.Condition.Name == conditionName);
-
-				if (condition is not null && condition.Condition.HasLevels)
-				{
-					condition.Level = level;
-				}
+				creatureParticipant.RemoveCondition(condition);
 			}
-
-			return Task.CompletedTask;
 		}
 
-		public Task DeleteConditionFromParticipant(EncounterParticipant participant, string conditionName, CancellationToken cancellationToken)
-		{
-			if (participant is CreatureEncounterParticipant creatureParticipant)
-			{
-				var condition = creatureParticipant.Conditions.FirstOrDefault(x => x.Condition.Name == conditionName);
-
-				if (condition is not null)
-				{
-					creatureParticipant.RemoveCondition(condition);
-				}
-			}
-
-			return Task.CompletedTask;
-		}
+		return Task.CompletedTask;
 	}
 }

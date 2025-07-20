@@ -1,10 +1,9 @@
-﻿namespace Tavernkeep.Domain.Contracts.Character.Dtos
+﻿namespace Tavernkeep.Domain.Contracts.Character.Dtos;
+
+public class CharacterInformationEditDto
 {
-	public class CharacterInformationEditDto
-	{
-		public string Name { get; set; }
-		public string Ancestry { get; set; }
-		public string Class { get; set; }
-		public int Level { get; set; }
-	}
+	public string Name { get; set; }
+	public string Ancestry { get; set; }
+	public string Class { get; set; }
+	public int Level { get; set; }
 }

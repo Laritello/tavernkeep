@@ -2,13 +2,12 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tavernkeep.Domain.Entities.Messages;
 
-namespace Tavernkeep.Infrastructure.Data.Configuration.Messages
+namespace Tavernkeep.Infrastructure.Data.Configuration.Messages;
+
+public class SkillRollMessageConfiguration : IEntityTypeConfiguration<SkillRollMessage>
 {
-	public class SkillRollMessageConfiguration : IEntityTypeConfiguration<SkillRollMessage>
+	public void Configure(EntityTypeBuilder<SkillRollMessage> builder)
 	{
-		public void Configure(EntityTypeBuilder<SkillRollMessage> builder)
-		{
-			builder.OwnsOne(m => m.Skill, b => b.ToJson());
-		}
+		builder.OwnsOne(m => m.Skill, b => b.ToJson());
 	}
 }

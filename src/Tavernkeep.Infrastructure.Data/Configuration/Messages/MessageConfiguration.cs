@@ -2,18 +2,17 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tavernkeep.Domain.Entities.Messages;
 
-namespace Tavernkeep.Infrastructure.Data.Configuration.Messages
+namespace Tavernkeep.Infrastructure.Data.Configuration.Messages;
+
+internal class MessageConfiguration : IEntityTypeConfiguration<Message>
 {
-	internal class MessageConfiguration : IEntityTypeConfiguration<Message>
+	public void Configure(EntityTypeBuilder<Message> builder)
 	{
-		public void Configure(EntityTypeBuilder<Message> builder)
-		{
-			builder.UseTphMappingStrategy();
+		builder.UseTphMappingStrategy();
 
-			builder.HasKey(m => m.Id);
+		builder.HasKey(m => m.Id);
 
-			builder.Property(m => m.Created).IsRequired();
-			builder.HasOne(m => m.Sender).WithMany().HasForeignKey(x => x.SenderId).IsRequired();
-		}
+		builder.Property(m => m.Created).IsRequired();
+		builder.HasOne(m => m.Sender).WithMany().HasForeignKey(x => x.SenderId).IsRequired();
 	}
 }

@@ -1,12 +1,11 @@
 ﻿using MediatR;
 using Tavernkeep.Domain.Entities;
 
-namespace Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter
+namespace Tavernkeep.Application.UseCases.Users.Commands.SetActiveCharacter;
+
+public class SetActiveCharacterCommand(Guid initiatorId, Guid userId, Guid characterId) : IRequest<User>
 {
-	public class SetActiveCharacterCommand(Guid initiatorId, Guid userId, Guid characterId) : IRequest<User>
-	{
-		public Guid InitiatorId { get; set; } = initiatorId;
-		public Guid UserId { get; set; } = userId;
-		public Guid CharacterId { get; set; } = characterId;
-	}
+	public Guid InitiatorId { get; set; } = initiatorId;
+	public Guid UserId { get; set; } = userId;
+	public Guid CharacterId { get; set; } = characterId;
 }

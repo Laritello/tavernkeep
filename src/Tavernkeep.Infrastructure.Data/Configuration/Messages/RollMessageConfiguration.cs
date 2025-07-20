@@ -5,23 +5,22 @@ using Tavernkeep.Domain.Contracts.Enums;
 using Tavernkeep.Domain.Entities.Messages;
 using Tavernkeep.Infrastructure.Data.Extensions;
 
-namespace Tavernkeep.Infrastructure.Data.Configuration.Messages
+namespace Tavernkeep.Infrastructure.Data.Configuration.Messages;
+
+public class RollMessageConfiguration : IEntityTypeConfiguration<RollMessage>
 {
-	public class RollMessageConfiguration : IEntityTypeConfiguration<RollMessage>
+	public void Configure(EntityTypeBuilder<RollMessage> builder)
 	{
-		public void Configure(EntityTypeBuilder<RollMessage> builder)
+		builder.Property(m => m.RollType)
+			.IsRequired()
+			.HasConversion(new EnumToStringConverter<RollType>());
+
+		builder.Property(m => m.Expression).IsRequired();
+
+		builder.OwnsJson(m => m.Result, b =>
 		{
-			builder.Property(m => m.RollType)
-				.IsRequired()
-				.HasConversion(new EnumToStringConverter<RollType>());
-
-			builder.Property(m => m.Expression).IsRequired();
-
-			builder.OwnsJson(m => m.Result, b =>
-			{
-				b.ToJson();
-				b.OwnsMany(x => x.Results);
-			});
-		}
+			b.ToJson();
+			b.OwnsMany(x => x.Results);
+		});
 	}
 }

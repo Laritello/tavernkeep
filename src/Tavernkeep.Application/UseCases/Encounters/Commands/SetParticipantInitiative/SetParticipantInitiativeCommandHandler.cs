@@ -1,15 +1,14 @@
 ﻿using MediatR;
 using Tavernkeep.Domain.Services;
 
-namespace Tavernkeep.Application.UseCases.Encounters.Commands.SetParticipantInitiative
+namespace Tavernkeep.Application.UseCases.Encounters.Commands.SetParticipantInitiative;
+
+public class SetParticipantInitiativeCommandHandler(
+	IEncounterService encounterService
+	) : IRequestHandler<SetParticipantInitiativeCommand>
 {
-	public class SetParticipantInitiativeCommandHandler(
-		IEncounterService encounterService
-		) : IRequestHandler<SetParticipantInitiativeCommand>
+	public async Task Handle(SetParticipantInitiativeCommand request, CancellationToken cancellationToken)
 	{
-		public async Task Handle(SetParticipantInitiativeCommand request, CancellationToken cancellationToken)
-		{
-			await encounterService.SetInitiativeForParticipantAsync(request.EncounterId, request.InitiatorId, request.ParticipantId, request.Result, cancellationToken);
-		}
+		await encounterService.SetInitiativeForParticipantAsync(request.EncounterId, request.InitiatorId, request.ParticipantId, request.Result, cancellationToken);
 	}
 }

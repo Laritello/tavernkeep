@@ -1,8 +1,7 @@
-﻿namespace Tavernkeep.Domain.Contracts.Enums
+﻿namespace Tavernkeep.Domain.Contracts.Enums;
+
+public enum MessageType
 {
-	public enum MessageType
-	{
-		Text,
-		Roll
-	}
+	Text,
+	Roll
 }

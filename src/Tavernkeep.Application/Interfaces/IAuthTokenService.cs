@@ -1,12 +1,11 @@
 ﻿using System.Security.Claims;
 using Tavernkeep.Domain.Entities;
 
-namespace Tavernkeep.Application.Interfaces
+namespace Tavernkeep.Application.Interfaces;
+
+public interface IAuthTokenService
 {
-	public interface IAuthTokenService
-	{
-		string GenerateAccessToken(User user);
-		string GenerateRefreshToken();
-		Task<ClaimsIdentity> GetUserIdentityFromExpiredTokenAsync(string token);
-	}
+	string GenerateAccessToken(User user);
+	string GenerateRefreshToken();
+	Task<ClaimsIdentity> GetUserIdentityFromExpiredTokenAsync(string token);
 }

@@ -1,7 +1,6 @@
-﻿namespace Tavernkeep.Domain.Entities.Base
+﻿namespace Tavernkeep.Domain.Entities.Base;
+
+public class StringEntity : Entity
 {
-	public class StringEntity : Entity
-	{
-		public required string Name { get; set; }
-	}
+	public required string Name { get; set; }
 }

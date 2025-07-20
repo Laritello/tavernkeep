@@ -1,9 +1,8 @@
-﻿namespace Tavernkeep.Domain.Contracts.Enums
+﻿namespace Tavernkeep.Domain.Contracts.Enums;
+
+public enum ModifierType
 {
-	public enum ModifierType
-	{
-		Circumstance,
-		Status,
-		Item
-	}
+	Circumstance,
+	Status,
+	Item
 }

@@ -1,8 +1,7 @@
-﻿namespace Tavernkeep.Domain.Contracts.Enums
+﻿namespace Tavernkeep.Domain.Contracts.Enums;
+
+public enum AttackType
 {
-	public enum AttackType
-	{
-		Melee,
-		Ranged
-	}
+	Melee,
+	Ranged
 }

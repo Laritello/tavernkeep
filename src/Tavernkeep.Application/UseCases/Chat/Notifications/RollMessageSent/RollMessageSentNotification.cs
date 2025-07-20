@@ -2,10 +2,9 @@
 using Tavernkeep.Domain.Entities.Messages;
 using Tavernkeep.Domain.Notifications;
 
-namespace Tavernkeep.Application.UseCases.Chat.Notifications.RollMessageSent
+namespace Tavernkeep.Application.UseCases.Chat.Notifications.RollMessageSent;
+
+public class RollMessageSentNotification(RollMessage message) : INotification, IMessageNotification
 {
-	public class RollMessageSentNotification(RollMessage message) : INotification, IMessageNotification
-	{
-		public RollMessage Message { get; set; } = message;
-	}
+	public RollMessage Message { get; set; } = message;
 }

@@ -19,145 +19,144 @@ using Tavernkeep.Infrastructure.Notifications.Storage;
 using Tavernkeep.Server.Exceptions.Handlers;
 using Tavernkeep.Shared.Options;
 
-namespace Tavernkeep.Server.Extensions
+namespace Tavernkeep.Server.Extensions;
+
+/// <summary>
+/// Provides convenient way to implement dependency injection.
+/// </summary>
+public static class Ioc
 {
 	/// <summary>
-	/// Provides convenient way to implement dependency injection.
+	/// Initializes required services for authentication and authorization.
 	/// </summary>
-	public static class Ioc
+	/// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+	/// <param name="key">The key used to sign JWT.</param>
+	/// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+	public static IServiceCollection AddSecurity(this IServiceCollection services, string? key)
 	{
-		/// <summary>
-		/// Initializes required services for authentication and authorization.
-		/// </summary>
-		/// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
-		/// <param name="key">The key used to sign JWT.</param>
-		/// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-		public static IServiceCollection AddSecurity(this IServiceCollection services, string? key)
+		services.AddTransient<IAuthTokenService, AuthTokenService>();
+
+		services.AddAuthentication(o =>
 		{
-			services.AddTransient<IAuthTokenService, AuthTokenService>();
-
-			services.AddAuthentication(o =>
+			o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+			o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+		}).AddJwtBearer(o =>
+		{
+			o.TokenValidationParameters = new()
 			{
-				o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-				o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-				o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-			}).AddJwtBearer(o =>
-			{
-				o.TokenValidationParameters = new()
-				{
-					ValidateIssuer = false,
-					ValidateAudience = false,
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key ?? string.Empty)),
-				};
+				ValidateIssuer = false,
+				ValidateAudience = false,
+				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key ?? string.Empty)),
+			};
 
-				o.Events = new JwtBearerEvents
+			o.Events = new JwtBearerEvents
+			{
+				OnMessageReceived = context =>
 				{
-					OnMessageReceived = context =>
+					var accessToken = context.Request.Query["access_token"];
+
+					// If the request is for our hub...
+					var path = context.HttpContext.Request.Path;
+					if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/api/hubs"))
 					{
-						var accessToken = context.Request.Query["access_token"];
-
-						// If the request is for our hub...
-						var path = context.HttpContext.Request.Path;
-						if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/api/hubs"))
-						{
-							// Read the token out of the query string
-							context.Token = accessToken;
-						}
-						return Task.CompletedTask;
+						// Read the token out of the query string
+						context.Token = accessToken;
 					}
-				};
-			});
+					return Task.CompletedTask;
+				}
+			};
+		});
 
-			services.AddAuthorization();
-			return services;
-		}
+		services.AddAuthorization();
+		return services;
+	}
 
-		/// <summary>
-		/// Initializes database context and configures repository dependencies.
-		/// </summary>
-		/// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
-		/// <param name="options">The launch options for application.</param>
-		/// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-		public static IServiceCollection AddDatabaseContext(this IServiceCollection services, LaunchOptions options)
-		{
-			var connectionString = DatabaseContextUtility.GetConnectionString(options.CampaignName);
-			services.AddDbContext<SessionContext>(options => options.UseSqlite(connectionString));
+	/// <summary>
+	/// Initializes database context and configures repository dependencies.
+	/// </summary>
+	/// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+	/// <param name="options">The launch options for application.</param>
+	/// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+	public static IServiceCollection AddDatabaseContext(this IServiceCollection services, LaunchOptions options)
+	{
+		var connectionString = DatabaseContextUtility.GetConnectionString(options.CampaignName);
+		services.AddDbContext<SessionContext>(options => options.UseSqlite(connectionString));
 
-			services.AddScoped<IUserRepository, UserEFRepository>();
-			services.AddScoped<ICharacterRepository, CharacterEFRepository>();
-			services.AddScoped<IMessageRepository, MessageEFRepository>();
-			services.AddScoped<IRefreshTokenRepository, RefreshTokenEFRepository>();
-			services.AddScoped<IConditionLibraryRepository, ConditionLibraryEFRepository>();
-			services.AddScoped<IPortraitRepository, PortraitEFRepository>();
-			services.AddScoped<IEncounterRepository, EncounterEFRepository>();
-			services.AddScoped<ICreatureLibraryRepository, CreatureLibraryEFRepository>();
+		services.AddScoped<IUserRepository, UserEFRepository>();
+		services.AddScoped<ICharacterRepository, CharacterEFRepository>();
+		services.AddScoped<IMessageRepository, MessageEFRepository>();
+		services.AddScoped<IRefreshTokenRepository, RefreshTokenEFRepository>();
+		services.AddScoped<IConditionLibraryRepository, ConditionLibraryEFRepository>();
+		services.AddScoped<IPortraitRepository, PortraitEFRepository>();
+		services.AddScoped<IEncounterRepository, EncounterEFRepository>();
+		services.AddScoped<ICreatureLibraryRepository, CreatureLibraryEFRepository>();
 
-			return services;
-		}
+		return services;
+	}
 
-		/// <summary>
-		/// Adds excpetion handlers to the service collection.
-		/// </summary>
-		/// <param name="services">The <see cref="IServiceCollection"/> to add the error middleware to.</param>
-		/// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-		public static IServiceCollection AddExceptionHandling(this IServiceCollection services)
-		{
-			services.AddExceptionHandler<BusinessLogicExceptionHandler>();
-			services.AddExceptionHandler<AuthorizationExceptionHandler>();
-			services.AddExceptionHandler<GenericExceptionHandler>();
+	/// <summary>
+	/// Adds excpetion handlers to the service collection.
+	/// </summary>
+	/// <param name="services">The <see cref="IServiceCollection"/> to add the error middleware to.</param>
+	/// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+	public static IServiceCollection AddExceptionHandling(this IServiceCollection services)
+	{
+		services.AddExceptionHandler<BusinessLogicExceptionHandler>();
+		services.AddExceptionHandler<AuthorizationExceptionHandler>();
+		services.AddExceptionHandler<GenericExceptionHandler>();
 
-			return services;
-		}
+		return services;
+	}
 
-		/// <summary>
-		/// Adds application services to the service collection.
-		/// </summary>
-		/// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
-		/// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-		public static IServiceCollection AddApplicationServices(this IServiceCollection services)
-		{
-			services.AddSingleton<IDiceService, DiceService>();
-			services.AddSingleton<INotificationService, NotificationService>();
+	/// <summary>
+	/// Adds application services to the service collection.
+	/// </summary>
+	/// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+	/// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+	public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+	{
+		services.AddSingleton<IDiceService, DiceService>();
+		services.AddSingleton<INotificationService, NotificationService>();
 
-			services.AddScoped<ICharacterService, CharacterService>();
-			services.AddScoped<IPortaitService, PortraitService>();
+		services.AddScoped<ICharacterService, CharacterService>();
+		services.AddScoped<IPortaitService, PortraitService>();
 
-			services.AddTransient<IAddEncounterParticipantStrategy, AddCharacterEncounterParticipantStrategy>();
-			services.AddTransient<IAddEncounterParticipantStrategy, AddCreatureEncounterParticipantStrategy>();
+		services.AddTransient<IAddEncounterParticipantStrategy, AddCharacterEncounterParticipantStrategy>();
+		services.AddTransient<IAddEncounterParticipantStrategy, AddCreatureEncounterParticipantStrategy>();
 
-			services.AddTransient<IFillEncounterParticipantStrategy, FillCharacterEncounterParticipantStrategy>();
-			services.AddTransient<IFillEncounterParticipantStrategy, FillCreatureEncounterParticipantStrategy>();
+		services.AddTransient<IFillEncounterParticipantStrategy, FillCharacterEncounterParticipantStrategy>();
+		services.AddTransient<IFillEncounterParticipantStrategy, FillCreatureEncounterParticipantStrategy>();
 
-			services.AddTransient<IRollEncounterParticipantInitiativeStrategy, RollCharacterEncounterParticipantInitiativeStrategy>();
-			services.AddTransient<IRollEncounterParticipantInitiativeStrategy, RollCreatureEncounterParticipantInitiativeStrategy>();
+		services.AddTransient<IRollEncounterParticipantInitiativeStrategy, RollCharacterEncounterParticipantInitiativeStrategy>();
+		services.AddTransient<IRollEncounterParticipantInitiativeStrategy, RollCreatureEncounterParticipantInitiativeStrategy>();
 
-			services.AddTransient<IEncounterParticipantConditionStrategy, CharacterEncounterParticipantConditionsStrategy>();
-			services.AddTransient<IEncounterParticipantConditionStrategy, CreatureEncounterParticipantConditionsStrrategy>();
+		services.AddTransient<IEncounterParticipantConditionStrategy, CharacterEncounterParticipantConditionsStrategy>();
+		services.AddTransient<IEncounterParticipantConditionStrategy, CreatureEncounterParticipantConditionsStrrategy>();
 
-			services.AddScoped<IEncounterServiceStrategies, EncounterServiceStrategies>();
+		services.AddScoped<IEncounterServiceStrategies, EncounterServiceStrategies>();
 
-			services.AddScoped<IEncounterService, EncounterService>();
+		services.AddScoped<IEncounterService, EncounterService>();
 
-			services.AddSingleton<IUserConnectionStorage<Guid>, UserConnectionStorage<Guid>>();
+		services.AddSingleton<IUserConnectionStorage<Guid>, UserConnectionStorage<Guid>>();
 
-			services.AddHostedService(sp => (NotificationService)sp.GetRequiredService<INotificationService>());
-			services.AddHostedService<RefreshTokenService>();
+		services.AddHostedService(sp => (NotificationService)sp.GetRequiredService<INotificationService>());
+		services.AddHostedService<RefreshTokenService>();
 
-			return services;
-		}
+		return services;
+	}
 
-		/// <summary>
-		/// Applies migrations to the database.
-		/// </summary>
-		/// <param name="provider">The <see cref="IServiceProvider"/> that contains the database context.</param>
-		/// <returns>The <see cref="IServiceProvider"/> so that additional calls can be chained.</returns>
-		public static IServiceProvider ApplyDatabaseMigrations(this IServiceProvider provider)
-		{
-			using var scope = provider.CreateScope();
-			var context = scope.ServiceProvider.GetRequiredService<SessionContext>();
-			context.Database.Migrate();
+	/// <summary>
+	/// Applies migrations to the database.
+	/// </summary>
+	/// <param name="provider">The <see cref="IServiceProvider"/> that contains the database context.</param>
+	/// <returns>The <see cref="IServiceProvider"/> so that additional calls can be chained.</returns>
+	public static IServiceProvider ApplyDatabaseMigrations(this IServiceProvider provider)
+	{
+		using var scope = provider.CreateScope();
+		var context = scope.ServiceProvider.GetRequiredService<SessionContext>();
+		context.Database.Migrate();
 
-			return provider;
-		}
+		return provider;
 	}
 }

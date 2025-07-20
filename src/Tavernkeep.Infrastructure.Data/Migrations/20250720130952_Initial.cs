@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Tavernkeep.Infrastructure.Data.Migrations
-{
+namespace Tavernkeep.Infrastructure.Data.Migrations;
+
     /// <inheritdoc />
     public partial class Initial : Migration
     {
@@ -526,4 +526,3 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
                 name: "Character");
         }
     }
-}

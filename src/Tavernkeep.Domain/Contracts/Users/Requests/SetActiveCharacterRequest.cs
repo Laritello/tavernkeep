@@ -1,8 +1,7 @@
-﻿namespace Tavernkeep.Domain.Contracts.Users.Requests
+﻿namespace Tavernkeep.Domain.Contracts.Users.Requests;
+
+public class SetActiveCharacterRequest
 {
-	public class SetActiveCharacterRequest
-	{
-		public Guid UserId { get; set; }
-		public Guid CharacterId { get; set; }
-	}
+	public Guid UserId { get; set; }
+	public Guid CharacterId { get; set; }
 }

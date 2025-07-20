@@ -1,14 +1,13 @@
-﻿namespace Tavernkeep.Domain.Contracts.Enums
+﻿namespace Tavernkeep.Domain.Contracts.Enums;
+
+public enum ActionAmount
 {
-	public enum ActionAmount
-	{
-		Free,
-		Reaction,
-		One,
-		Two,
-		Three,
-		OneToThree,
-		OneToThwo,
-		TwoToThree,
-	}
+	Free,
+	Reaction,
+	One,
+	Two,
+	Three,
+	OneToThree,
+	OneToThwo,
+	TwoToThree,
 }

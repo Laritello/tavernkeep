@@ -1,9 +1,8 @@
 ﻿using MediatR;
 
-namespace Tavernkeep.Application.UseCases.Encounters.Commands.ClearInitiative
+namespace Tavernkeep.Application.UseCases.Encounters.Commands.ClearInitiative;
+
+public class ClearInitiativeCommand(Guid encounterId) : IRequest
 {
-	public class ClearInitiativeCommand(Guid encounterId) : IRequest
-	{
-		public Guid EncounterId { get; set; } = encounterId;
-	}
+	public Guid EncounterId { get; set; } = encounterId;
 }

@@ -1,7 +1,6 @@
-﻿namespace Tavernkeep.Domain.Entities.Base
+﻿namespace Tavernkeep.Domain.Entities.Base;
+
+public abstract class GuidEntity : Entity
 {
-	public abstract class GuidEntity : Entity
-	{
-		public Guid Id { get; set; }
-	}
+	public Guid Id { get; set; }
 }

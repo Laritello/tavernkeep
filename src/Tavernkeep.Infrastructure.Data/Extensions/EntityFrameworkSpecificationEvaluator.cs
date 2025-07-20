@@ -1,20 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tavernkeep.Domain.Specifications;
 
-namespace Tavernkeep.Infrastructure.Data.Extensions
+namespace Tavernkeep.Infrastructure.Data.Extensions;
+
+public static class EntityFrameworkSpecificationEvaluator<TEntity> where TEntity : class
 {
-	public static class EntityFrameworkSpecificationEvaluator<TEntity> where TEntity : class
+	public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> inputQuery, ISpecification<TEntity> specification)
 	{
-		public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> inputQuery, ISpecification<TEntity> specification)
-		{
-			var query = inputQuery;
+		var query = inputQuery;
 
-			if (specification.Criteria != null)
-				query = query.Where(specification.Criteria);
+		if (specification.Criteria != null)
+			query = query.Where(specification.Criteria);
 
-			query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
+		query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
 
-			return query;
-		}
+		return query;
 	}
 }

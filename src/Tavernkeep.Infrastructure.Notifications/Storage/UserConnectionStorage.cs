@@ -1,62 +1,61 @@
-﻿namespace Tavernkeep.Infrastructure.Notifications.Storage
+﻿namespace Tavernkeep.Infrastructure.Notifications.Storage;
+
+public interface IUserConnectionStorage<T> where T : notnull
 {
-	public interface IUserConnectionStorage<T> where T : notnull
+	public void Add(T key, string connectionId);
+	public IEnumerable<string> GetConnections(T key);
+	public void Remove(T key, string connectionId);
+}
+
+public class UserConnectionStorage<T> : IUserConnectionStorage<T> where T : notnull
+{
+	private readonly Dictionary<T, HashSet<string>> _connections = [];
+
+	public int Count => _connections.Count;
+
+	public void Add(T key, string connectionId)
 	{
-		public void Add(T key, string connectionId);
-		public IEnumerable<string> GetConnections(T key);
-		public void Remove(T key, string connectionId);
+		lock (_connections)
+		{
+			if (!_connections.TryGetValue(key, out var connections))
+			{
+				connections = [];
+				_connections.Add(key, connections);
+			}
+
+			lock (connections)
+			{
+				connections.Add(connectionId);
+			}
+		}
 	}
 
-	public class UserConnectionStorage<T> : IUserConnectionStorage<T> where T : notnull
+	public IEnumerable<string> GetConnections(T key)
 	{
-		private readonly Dictionary<T, HashSet<string>> _connections = [];
-
-		public int Count => _connections.Count;
-
-		public void Add(T key, string connectionId)
+		if (_connections.TryGetValue(key, out var connections))
 		{
-			lock (_connections)
-			{
-				if (!_connections.TryGetValue(key, out var connections))
-				{
-					connections = [];
-					_connections.Add(key, connections);
-				}
-
-				lock (connections)
-				{
-					connections.Add(connectionId);
-				}
-			}
+			return connections;
 		}
 
-		public IEnumerable<string> GetConnections(T key)
+		return [];
+	}
+
+	public void Remove(T key, string connectionId)
+	{
+		lock (_connections)
 		{
-			if (_connections.TryGetValue(key, out var connections))
+			if (!_connections.TryGetValue(key, out var connections))
 			{
-				return connections;
+				return;
 			}
 
-			return [];
-		}
-
-		public void Remove(T key, string connectionId)
-		{
-			lock (_connections)
+			lock (connections)
 			{
-				if (!_connections.TryGetValue(key, out var connections))
-				{
-					return;
-				}
+				connections.Remove(connectionId);
 
-				lock (connections)
+				if (connections.Count == 0)
 				{
-					connections.Remove(connectionId);
-
-					if (connections.Count == 0)
-					{
-						_connections.Remove(key);
-					}
+					_connections.Remove(key);
 				}
 			}
 		}

@@ -6,48 +6,47 @@ using Tavernkeep.Domain.Entities;
 using Tavernkeep.Domain.Exceptions;
 using Tavernkeep.Domain.Repositories;
 
-namespace Tavernkeep.Application.UseCases.Authentication.Commands.RefreshAuthenticationToken
+namespace Tavernkeep.Application.UseCases.Authentication.Commands.RefreshAuthenticationToken;
+
+public class RefreshAuthenticationTokenCommandHandler(IUserRepository userRepository, IRefreshTokenRepository tokenRepository, IAuthTokenService tokenService) : IRequestHandler<RefreshAuthenticationTokenCommand, AuthenticationResponse>
 {
-	public class RefreshAuthenticationTokenCommandHandler(IUserRepository userRepository, IRefreshTokenRepository tokenRepository, IAuthTokenService tokenService) : IRequestHandler<RefreshAuthenticationTokenCommand, AuthenticationResponse>
+	public async Task<AuthenticationResponse> Handle(RefreshAuthenticationTokenCommand request, CancellationToken cancellationToken)
 	{
-		public async Task<AuthenticationResponse> Handle(RefreshAuthenticationTokenCommand request, CancellationToken cancellationToken)
+		string accessToken = request.AccessToken;
+		string refreshToken = request.RefreshToken;
+
+		var principal = await tokenService.GetUserIdentityFromExpiredTokenAsync(accessToken);
+		var id = principal.FindFirst(JwtCustomClaimNames.UserId)!.Value;
+
+		var user = await userRepository.FindAsync(new Guid(id), cancellationToken: cancellationToken)
+			?? throw new BusinessLogicException("User with specified ID doesn't exist.");
+
+		var tokens = await tokenRepository.GetTokensForUserAsync(user.Id, cancellationToken);
+
+		if (!tokens.Any(x => x.Token == refreshToken))
+			throw new BusinessLogicException("Specified refresh token isn't registered.");
+
+		var token = tokens.First(x => x.Token == refreshToken);
+
+		if (DateTime.UtcNow.CompareTo(token.Expires) > 0)
+			throw new BusinessLogicException("Expired refresh token provided.");
+
+		var newAccessToken = tokenService.GenerateAccessToken(user);
+		var newRefreshToken = tokenService.GenerateRefreshToken();
+
+		tokenRepository.Save(new RefreshToken()
 		{
-			string accessToken = request.AccessToken;
-			string refreshToken = request.RefreshToken;
+			UserId = user.Id,
+			Token = newRefreshToken,
+			Expires = DateTime.UtcNow.AddDays(7)
+		});
 
-			var principal = await tokenService.GetUserIdentityFromExpiredTokenAsync(accessToken);
-			var id = principal.FindFirst(JwtCustomClaimNames.UserId)!.Value;
+		await tokenRepository.CommitAsync(cancellationToken);
 
-			var user = await userRepository.FindAsync(new Guid(id), cancellationToken: cancellationToken)
-				?? throw new BusinessLogicException("User with specified ID doesn't exist.");
-
-			var tokens = await tokenRepository.GetTokensForUserAsync(user.Id, cancellationToken);
-
-			if (!tokens.Any(x => x.Token == refreshToken))
-				throw new BusinessLogicException("Specified refresh token isn't registered.");
-
-			var token = tokens.First(x => x.Token == refreshToken);
-
-			if (DateTime.UtcNow.CompareTo(token.Expires) > 0)
-				throw new BusinessLogicException("Expired refresh token provided.");
-
-			var newAccessToken = tokenService.GenerateAccessToken(user);
-			var newRefreshToken = tokenService.GenerateRefreshToken();
-
-			tokenRepository.Save(new RefreshToken()
-			{
-				UserId = user.Id,
-				Token = newRefreshToken,
-				Expires = DateTime.UtcNow.AddDays(7)
-			});
-
-			await tokenRepository.CommitAsync(cancellationToken);
-
-			return new AuthenticationResponse()
-			{
-				AccessToken = newAccessToken,
-				RefreshToken = newRefreshToken
-			};
-		}
+		return new AuthenticationResponse()
+		{
+			AccessToken = newAccessToken,
+			RefreshToken = newRefreshToken
+		};
 	}
 }

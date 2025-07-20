@@ -1,9 +1,8 @@
-﻿namespace Tavernkeep.Domain.Contracts.Enums
+﻿namespace Tavernkeep.Domain.Contracts.Enums;
+
+public enum EncounterStatus
 {
-	public enum EncounterStatus
-	{
-		Draft,
-		Active,
-		Finished
-	}
+	Draft,
+	Active,
+	Finished
 }

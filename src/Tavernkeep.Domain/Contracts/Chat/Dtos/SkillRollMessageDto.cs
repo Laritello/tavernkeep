@@ -1,9 +1,8 @@
 ﻿using Tavernkeep.Domain.Entities.Snapshots;
 
-namespace Tavernkeep.Domain.Contracts.Chat.Dtos
+namespace Tavernkeep.Domain.Contracts.Chat.Dtos;
+
+public class SkillRollMessageDto : RollMessageDto
 {
-	public class SkillRollMessageDto : RollMessageDto
-	{
-		public SkillSnapshot Skill { get; set; } = default!;
-	}
+	public SkillSnapshot Skill { get; set; } = default!;
 }

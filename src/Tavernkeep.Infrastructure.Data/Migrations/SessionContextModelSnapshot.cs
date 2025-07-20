@@ -7,8 +7,8 @@ using Tavernkeep.Infrastructure.Data.Context;
 
 #nullable disable
 
-namespace Tavernkeep.Infrastructure.Data.Migrations
-{
+namespace Tavernkeep.Infrastructure.Data.Migrations;
+
     [DbContext(typeof(SessionContext))]
     partial class SessionContextModelSnapshot : ModelSnapshot
     {
@@ -1098,4 +1098,3 @@ namespace Tavernkeep.Infrastructure.Data.Migrations
 #pragma warning restore 612, 618
         }
     }
-}

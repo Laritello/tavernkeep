@@ -1,11 +1,10 @@
-﻿namespace Tavernkeep.Domain.Contracts.Enums
+﻿namespace Tavernkeep.Domain.Contracts.Enums;
+
+public enum SpeedType
 {
-	public enum SpeedType
-	{
-		Walk,
-		Burrow,
-		Climb,
-		Fly,
-		Swim,
-	}
+	Walk,
+	Burrow,
+	Climb,
+	Fly,
+	Swim,
 }

@@ -1,23 +1,22 @@
-﻿namespace Tavernkeep.Domain.Contracts.Enums
+﻿namespace Tavernkeep.Domain.Contracts.Enums;
+
+/// <summary>
+/// Describes the scaling of a modifier.
+/// </summary>
+public enum ModifierScaling
 {
 	/// <summary>
-	/// Describes the scaling of a modifier.
+	/// Modifier value doesn't change.
 	/// </summary>
-	public enum ModifierScaling
-	{
-		/// <summary>
-		/// Modifier value doesn't change.
-		/// </summary>
-		Constant,
+	Constant,
 
-		/// <summary>
-		/// Modifier value changes based on condition level.
-		/// </summary>
-		ConditionLeveled,
+	/// <summary>
+	/// Modifier value changes based on condition level.
+	/// </summary>
+	ConditionLeveled,
 
-		/// <summary>
-		/// Modifier value changes based on character level.
-		/// </summary>
-		CharacterLeveled
-	}
+	/// <summary>
+	/// Modifier value changes based on character level.
+	/// </summary>
+	CharacterLeveled
 }

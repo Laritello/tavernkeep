@@ -1,29 +1,28 @@
 ﻿using Tavernkeep.Domain.Contracts.Structures;
 
-namespace Tavernkeep.Infrastructure.Data.Seeding
+namespace Tavernkeep.Infrastructure.Data.Seeding;
+
+internal class ConditionMetadata
 {
-	internal class ConditionMetadata
-	{
-		#region Constructors
+	#region Constructors
 
-		public ConditionMetadata() { }
+	public ConditionMetadata() { }
 
-		#endregion
+	#endregion
 
-		#region Properties
-		public required string Name { get; set; }
-		public required string Description { get; set; }
-		public bool HasLevels { get; set; }
+	#region Properties
+	public required string Name { get; set; }
+	public required string Description { get; set; }
+	public bool HasLevels { get; set; }
 
-		public List<RelatedConditionMetadata> Related { get; set; } = [];
-		public Dictionary<string, Modifier> Modifiers { get; set; } = [];
+	public List<RelatedConditionMetadata> Related { get; set; } = [];
+	public Dictionary<string, Modifier> Modifiers { get; set; } = [];
 
-		#endregion
-	}
+	#endregion
+}
 
-	internal class RelatedConditionMetadata
-	{
-		public required string Name { get; set; }
-		public int? Level { get; set; }
-	}
+internal class RelatedConditionMetadata
+{
+	public required string Name { get; set; }
+	public int? Level { get; set; }
 }

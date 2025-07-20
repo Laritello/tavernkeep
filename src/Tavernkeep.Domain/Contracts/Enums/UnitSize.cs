@@ -1,12 +1,11 @@
-﻿namespace Tavernkeep.Domain.Contracts.Enums
+﻿namespace Tavernkeep.Domain.Contracts.Enums;
+
+public enum UnitSize
 {
-	public enum UnitSize
-	{
-		Tiny,
-		Small,
-		Medium,
-		Large,
-		Huge,
-		Gargantuan
-	}
+	Tiny,
+	Small,
+	Medium,
+	Large,
+	Huge,
+	Gargantuan
 }

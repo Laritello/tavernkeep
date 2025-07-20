@@ -7,39 +7,38 @@ using Tavernkeep.Domain.Exceptions;
 using Tavernkeep.Domain.Repositories;
 using Tavernkeep.Domain.Services;
 
-namespace Tavernkeep.Application.UseCases.Rolls.Commands.RollCustomDice
+namespace Tavernkeep.Application.UseCases.Rolls.Commands.RollCustomDice;
+
+public class RollCustomDiceCommandHandler(
+	IDiceService diceService,
+	IUserRepository userRepository,
+	IMessageRepository messageRepository,
+	INotificationService notificationService
+	) : IRequestHandler<RollCustomDiceCommand, RollMessage>
 {
-	public class RollCustomDiceCommandHandler(
-		IDiceService diceService,
-		IUserRepository userRepository,
-		IMessageRepository messageRepository,
-		INotificationService notificationService
-		) : IRequestHandler<RollCustomDiceCommand, RollMessage>
+	public async Task<RollMessage> Handle(RollCustomDiceCommand request, CancellationToken cancellationToken)
 	{
-		public async Task<RollMessage> Handle(RollCustomDiceCommand request, CancellationToken cancellationToken)
+		var initiator = await userRepository.GetDetailsAsync(request.InitiatorId, cancellationToken: cancellationToken)
+			?? throw new BusinessLogicException("Initiator with specified ID doesn't exist.");
+
+		var roll = diceService.Roll(request.Expression);
+
+		RollMessage message = new()
 		{
-			var initiator = await userRepository.GetDetailsAsync(request.InitiatorId, cancellationToken: cancellationToken)
-				?? throw new BusinessLogicException("Initiator with specified ID doesn't exist.");
+			CharacterId = initiator.ActiveCharacter?.Id,
+			DisplayName = initiator.ActiveCharacter is not null ? initiator.ActiveCharacter.Name : initiator.Login,
+			Sender = initiator,
+			Created = DateTime.UtcNow,
+			RollType = request.RollType,
+			Expression = roll.DiceExpression,
+			Result = roll.ToRollResult()
+		};
 
-			var roll = diceService.Roll(request.Expression);
+		messageRepository.Save(message);
 
-			RollMessage message = new()
-			{
-				CharacterId = initiator.ActiveCharacter?.Id,
-				DisplayName = initiator.ActiveCharacter is not null ? initiator.ActiveCharacter.Name : initiator.Login,
-				Sender = initiator,
-				Created = DateTime.UtcNow,
-				RollType = request.RollType,
-				Expression = roll.DiceExpression,
-				Result = roll.ToRollResult()
-			};
+		await messageRepository.CommitAsync(cancellationToken);
+		await notificationService.Publish(new RollMessageSentNotification(message), cancellationToken);
 
-			messageRepository.Save(message);
-
-			await messageRepository.CommitAsync(cancellationToken);
-			await notificationService.Publish(new RollMessageSentNotification(message), cancellationToken);
-
-			return message;
-		}
+		return message;
 	}
 }

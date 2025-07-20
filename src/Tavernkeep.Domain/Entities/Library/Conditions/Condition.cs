@@ -2,25 +2,24 @@
 using Tavernkeep.Domain.Contracts.Structures;
 using Tavernkeep.Domain.Entities.Base;
 
-namespace Tavernkeep.Domain.Entities.Library.Conditions
+namespace Tavernkeep.Domain.Entities.Library.Conditions;
+
+[Table("Condition")]
+public class Condition : StringEntity
 {
-	[Table("Condition")]
-	public class Condition : StringEntity
-	{
-		#region Constructors
+	#region Constructors
 
-		public Condition() { }
+	public Condition() { }
 
-		#endregion
+	#endregion
 
-		#region Properties
+	#region Properties
 
-		public required string Description { get; set; }
-		public bool HasLevels { get; set; }
+	public required string Description { get; set; }
+	public bool HasLevels { get; set; }
 
-		public ICollection<ConditionRelated> Related { get; set; } = [];
-		public Dictionary<string, Modifier> Modifiers { get; set; } = [];
+	public ICollection<ConditionRelated> Related { get; set; } = [];
+	public Dictionary<string, Modifier> Modifiers { get; set; } = [];
 
-		#endregion
-	}
+	#endregion
 }

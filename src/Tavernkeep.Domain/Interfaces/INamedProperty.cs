@@ -1,7 +1,6 @@
-﻿namespace Tavernkeep.Domain.Interfaces
+﻿namespace Tavernkeep.Domain.Interfaces;
+
+public interface INamedProperty
 {
-	public interface INamedProperty
-	{
-		public string Name { get; set; }
-	}
+	public string Name { get; set; }
 }

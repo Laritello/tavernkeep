@@ -2,13 +2,12 @@
 using Tavernkeep.Domain.Entities.Library.Creatures;
 using Tavernkeep.Domain.Repositories;
 
-namespace Tavernkeep.Application.UseCases.Creatures.Queries.GetCreature
+namespace Tavernkeep.Application.UseCases.Creatures.Queries.GetCreature;
+
+public class GetCreatureQueryHandler(ICreatureLibraryRepository creatureRepository) : IRequestHandler<GetCreatureQuery, Creature>
 {
-	public class GetCreatureQueryHandler(ICreatureLibraryRepository creatureRepository) : IRequestHandler<GetCreatureQuery, Creature>
+	public async Task<Creature> Handle(GetCreatureQuery request, CancellationToken cancellationToken)
 	{
-		public async Task<Creature> Handle(GetCreatureQuery request, CancellationToken cancellationToken)
-		{
-			return await creatureRepository.GetCreatureAsync(request.Id, cancellationToken);
-		}
+		return await creatureRepository.GetCreatureAsync(request.Id, cancellationToken);
 	}
 }

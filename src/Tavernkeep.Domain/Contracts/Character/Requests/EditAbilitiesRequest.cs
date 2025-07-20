@@ -1,13 +1,12 @@
-﻿namespace Tavernkeep.Domain.Contracts.Character.Requests
+﻿namespace Tavernkeep.Domain.Contracts.Character.Requests;
+
+/// <summary>
+/// Represents a request to edit the ability of a character.
+/// </summary>
+public class EditAbilitiesRequest
 {
 	/// <summary>
-	/// Represents a request to edit the ability of a character.
+	/// The updated scores.
 	/// </summary>
-	public class EditAbilitiesRequest
-	{
-		/// <summary>
-		/// The updated scores.
-		/// </summary>
-		public Dictionary<string, int> Scores { get; set; } = default!;
-	}
+	public Dictionary<string, int> Scores { get; set; } = default!;
 }

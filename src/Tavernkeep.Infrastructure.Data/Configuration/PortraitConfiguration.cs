@@ -2,15 +2,14 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tavernkeep.Domain.Entities.Pathfinder;
 
-namespace Tavernkeep.Infrastructure.Data.Configuration
-{
-	public class PortraitConfiguration : IEntityTypeConfiguration<Portrait>
-	{
-		public void Configure(EntityTypeBuilder<Portrait> builder)
-		{
-			builder.HasKey(p => p.Id);
+namespace Tavernkeep.Infrastructure.Data.Configuration;
 
-			builder.Property(p => p.Bytes).IsRequired();
-		}
+public class PortraitConfiguration : IEntityTypeConfiguration<Portrait>
+{
+	public void Configure(EntityTypeBuilder<Portrait> builder)
+	{
+		builder.HasKey(p => p.Id);
+
+		builder.Property(p => p.Bytes).IsRequired();
 	}
 }

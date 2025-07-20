@@ -1,9 +1,6 @@
-﻿using Tavernkeep.Domain.Contracts.Creatures;
+﻿namespace Tavernkeep.Domain.Contracts.Encounters.Dtos;
 
-namespace Tavernkeep.Domain.Contracts.Encounters.Dtos
+public class CreatureEncounterParticipantDto : EncounterParticipantDto
 {
-	public class CreatureEncounterParticipantDto : EncounterParticipantDto
-	{
-		public required string Statblock { get; set; }
-	}
+	public required string Statblock { get; set; }
 }

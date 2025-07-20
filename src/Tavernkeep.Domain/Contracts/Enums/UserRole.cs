@@ -1,9 +1,8 @@
-﻿namespace Tavernkeep.Domain.Contracts.Enums
+﻿namespace Tavernkeep.Domain.Contracts.Enums;
+
+public enum UserRole
 {
-	public enum UserRole
-	{
-		Player,
-		Moderator,
-		Master
-	}
+	Player,
+	Moderator,
+	Master
 }

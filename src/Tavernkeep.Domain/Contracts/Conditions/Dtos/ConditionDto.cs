@@ -1,12 +1,11 @@
-﻿namespace Tavernkeep.Domain.Contracts.Conditions.Dtos
-{
-	public record ConditionDto
-	{
-		public string Name { get; set; } = default!;
-		public string Description { get; set; } = default!;
-		public bool HasLevels { get; set; }
-		public int Level { get; set; }
+﻿namespace Tavernkeep.Domain.Contracts.Conditions.Dtos;
 
-		public List<ConditionDto> Related { get; set; } = [];
-	}
+public record ConditionDto
+{
+	public string Name { get; set; } = default!;
+	public string Description { get; set; } = default!;
+	public bool HasLevels { get; set; }
+	public int Level { get; set; }
+
+	public List<ConditionDto> Related { get; set; } = [];
 }

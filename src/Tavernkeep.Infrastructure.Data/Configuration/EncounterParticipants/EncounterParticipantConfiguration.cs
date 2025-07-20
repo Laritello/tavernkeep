@@ -2,15 +2,14 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tavernkeep.Domain.Entities.Encounters.Participants;
 
-namespace Tavernkeep.Infrastructure.Data.Configuration.EncounterParticipants
-{
-	internal class EncounterParticipantConfiguration : IEntityTypeConfiguration<EncounterParticipant>
-	{
-		public void Configure(EntityTypeBuilder<EncounterParticipant> builder)
-		{
-			builder.UseTphMappingStrategy();
+namespace Tavernkeep.Infrastructure.Data.Configuration.EncounterParticipants;
 
-			builder.HasKey(m => m.Id);
-		}
+internal class EncounterParticipantConfiguration : IEntityTypeConfiguration<EncounterParticipant>
+{
+	public void Configure(EntityTypeBuilder<EncounterParticipant> builder)
+	{
+		builder.UseTphMappingStrategy();
+
+		builder.HasKey(m => m.Id);
 	}
 }

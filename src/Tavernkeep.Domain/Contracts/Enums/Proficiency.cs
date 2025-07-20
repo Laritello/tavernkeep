@@ -1,11 +1,10 @@
-﻿namespace Tavernkeep.Domain.Contracts.Enums
+﻿namespace Tavernkeep.Domain.Contracts.Enums;
+
+public enum Proficiency
 {
-	public enum Proficiency
-	{
-		Untrained = 0,
-		Trained = 2,
-		Expert = 4,
-		Master = 6,
-		Legendary = 8
-	}
+	Untrained = 0,
+	Trained = 2,
+	Expert = 4,
+	Master = 6,
+	Legendary = 8
 }

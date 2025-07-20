@@ -2,15 +2,14 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tavernkeep.Domain.Entities.Encounters.Participants;
 
-namespace Tavernkeep.Infrastructure.Data.Configuration.EncounterParticipants
+namespace Tavernkeep.Infrastructure.Data.Configuration.EncounterParticipants;
+
+internal class CharacterEncounterParticipantConfiguration : IEntityTypeConfiguration<CharacterEncounterParticipant>
 {
-	internal class CharacterEncounterParticipantConfiguration : IEntityTypeConfiguration<CharacterEncounterParticipant>
+	public void Configure(EntityTypeBuilder<CharacterEncounterParticipant> builder)
 	{
-		public void Configure(EntityTypeBuilder<CharacterEncounterParticipant> builder)
-		{
-			builder
-				.HasOne(c => c.Character)
-				.WithMany();
-		}
+		builder
+			.HasOne(c => c.Character)
+			.WithMany();
 	}
 }

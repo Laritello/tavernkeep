@@ -1,19 +1,18 @@
 ﻿using Tavernkeep.Domain.Entities.Snapshots;
 
-namespace Tavernkeep.Domain.Entities.Messages
+namespace Tavernkeep.Domain.Entities.Messages;
+
+public class SkillRollMessage : RollMessage
 {
-	public class SkillRollMessage : RollMessage
-	{
-		#region Constructors
+	#region Constructors
 
-		public SkillRollMessage() { }
+	public SkillRollMessage() { }
 
-		#endregion
+	#endregion
 
-		#region Properties
+	#region Properties
 
-		public SkillSnapshot Skill { get; set; } = default!;
+	public SkillSnapshot Skill { get; set; } = default!;
 
-		#endregion
-	}
+	#endregion
 }

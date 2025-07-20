@@ -1,8 +1,7 @@
-﻿namespace Tavernkeep.Domain.Exceptions
+﻿namespace Tavernkeep.Domain.Exceptions;
+
+public class BusinessLogicException : Exception
 {
-	public class BusinessLogicException : Exception
-	{
-		public BusinessLogicException(string message) : base(message) { }
-		public BusinessLogicException(string message, Exception innerException) : base(message, innerException) { }
-	}
+	public BusinessLogicException(string message) : base(message) { }
+	public BusinessLogicException(string message, Exception innerException) : base(message, innerException) { }
 }

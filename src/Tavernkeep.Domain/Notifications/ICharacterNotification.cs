@@ -1,9 +1,8 @@
 ﻿using Tavernkeep.Domain.Entities.Pathfinder;
 
-namespace Tavernkeep.Domain.Notifications
+namespace Tavernkeep.Domain.Notifications;
+
+public interface ICharacterNotification : IBaseNotification
 {
-	public interface ICharacterNotification : IBaseNotification
-	{
-		public Character Character { get; }
-	}
+	public Character Character { get; }
 }

@@ -2,17 +2,16 @@
 using Tavernkeep.Domain.Contracts.Users.Dtos;
 using Tavernkeep.Domain.Entities.Messages;
 
-namespace Tavernkeep.Domain.Contracts.Chat.Dtos
+namespace Tavernkeep.Domain.Contracts.Chat.Dtos;
+
+[JsonDerivedType(typeof(TextMessageDto), typeDiscriminator: nameof(TextMessage))]
+[JsonDerivedType(typeof(RollMessageDto), typeDiscriminator: nameof(RollMessage))]
+[JsonDerivedType(typeof(SkillRollMessageDto), typeDiscriminator: nameof(SkillRollMessage))]
+public abstract class MessageDto
 {
-	[JsonDerivedType(typeof(TextMessageDto), typeDiscriminator: nameof(TextMessage))]
-	[JsonDerivedType(typeof(RollMessageDto), typeDiscriminator: nameof(RollMessage))]
-	[JsonDerivedType(typeof(SkillRollMessageDto), typeDiscriminator: nameof(SkillRollMessage))]
-	public abstract class MessageDto
-	{
-		public Guid Id { get; set; }
-		public Guid? CharacterId { get; set; }
-		public string DisplayName { get; set; } = default!;
-		public UserDto Sender { get; set; } = default!;
-		public DateTime Created { get; set; }
-	}
+	public Guid Id { get; set; }
+	public Guid? CharacterId { get; set; }
+	public string DisplayName { get; set; } = default!;
+	public UserDto Sender { get; set; } = default!;
+	public DateTime Created { get; set; }
 }

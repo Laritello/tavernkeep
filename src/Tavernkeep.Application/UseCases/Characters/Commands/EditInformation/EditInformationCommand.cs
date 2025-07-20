@@ -1,12 +1,11 @@
 ﻿using MediatR;
 using Tavernkeep.Domain.Contracts.Character.Dtos;
 
-namespace Tavernkeep.Application.UseCases.Characters.Commands.EditInformation
+namespace Tavernkeep.Application.UseCases.Characters.Commands.EditInformation;
+
+public class EditInformationCommand(Guid initiatorId, Guid characterId, CharacterInformationEditDto information) : IRequest
 {
-	public class EditInformationCommand(Guid initiatorId, Guid characterId, CharacterInformationEditDto information) : IRequest
-	{
-		public Guid InitiatorId { get; set; } = initiatorId;
-		public Guid CharacterId { get; set; } = characterId;
-		public CharacterInformationEditDto Information { get; set; } = information;
-	}
+	public Guid InitiatorId { get; set; } = initiatorId;
+	public Guid CharacterId { get; set; } = characterId;
+	public CharacterInformationEditDto Information { get; set; } = information;
 }

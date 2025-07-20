@@ -1,8 +1,7 @@
-﻿namespace Tavernkeep.Domain.Contracts.Character.Dtos
+﻿namespace Tavernkeep.Domain.Contracts.Character.Dtos;
+
+public class ClassDto
 {
-	public class ClassDto
-	{
-		public required string Name { get; set; }
-		public int HealthPerLevel { get; set; }
-	}
+	public required string Name { get; set; }
+	public int HealthPerLevel { get; set; }
 }

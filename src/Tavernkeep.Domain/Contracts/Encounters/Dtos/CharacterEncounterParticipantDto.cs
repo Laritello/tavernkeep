@@ -1,9 +1,8 @@
 ﻿using Tavernkeep.Domain.Contracts.Character.Dtos;
 
-namespace Tavernkeep.Domain.Contracts.Encounters.Dtos
+namespace Tavernkeep.Domain.Contracts.Encounters.Dtos;
+
+public class CharacterEncounterParticipantDto : EncounterParticipantDto
 {
-	public class CharacterEncounterParticipantDto : EncounterParticipantDto
-	{
-		public required CharacterEncounterDto Character { get; set; }
-	}
+	public required CharacterEncounterDto Character { get; set; }
 }

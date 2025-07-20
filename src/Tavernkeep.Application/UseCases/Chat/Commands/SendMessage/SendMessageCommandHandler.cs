@@ -5,45 +5,44 @@ using Tavernkeep.Domain.Exceptions;
 using Tavernkeep.Domain.Repositories;
 using Tavernkeep.Domain.Services;
 
-namespace Tavernkeep.Application.UseCases.Chat.Commands.SendMessage
+namespace Tavernkeep.Application.UseCases.Chat.Commands.SendMessage;
+
+public class SendMessageCommandHandler(
+	IMessageRepository messageRepository,
+	IUserRepository userRepository,
+	INotificationService notificationService
+	)
+	: IRequestHandler<SendMessageCommand, Message>
 {
-	public class SendMessageCommandHandler(
-		IMessageRepository messageRepository,
-		IUserRepository userRepository,
-		INotificationService notificationService
-		)
-		: IRequestHandler<SendMessageCommand, Message>
+	public async Task<Message> Handle(SendMessageCommand request, CancellationToken cancellationToken)
 	{
-		public async Task<Message> Handle(SendMessageCommand request, CancellationToken cancellationToken)
+		if (string.IsNullOrEmpty(request.Text))
+			throw new BusinessLogicException("Text of the message cannot be empty.");
+
+		var sender = await userRepository.GetDetailsAsync(request.SenderId, cancellationToken: cancellationToken)
+			?? throw new BusinessLogicException("Sender with specified ID not found.");
+
+		var recipient = request.RecipientId != null
+			? await userRepository.FindAsync(request.RecipientId.Value, cancellationToken: cancellationToken) ?? throw new BusinessLogicException("Recipient with specified id not found.")
+			: null;
+
+		TextMessage message = new()
 		{
-			if (string.IsNullOrEmpty(request.Text))
-				throw new BusinessLogicException("Text of the message cannot be empty.");
+			CharacterId = sender.ActiveCharacter?.Id,
+			DisplayName = sender.ActiveCharacter is not null ? sender.ActiveCharacter.Name : sender.Login,
+			SenderId = sender.Id,
+			Sender = sender,
+			RecipientId = recipient?.Id,
+			Recipient = recipient,
+			Created = DateTime.UtcNow,
+			Text = request.Text,
+		};
 
-			var sender = await userRepository.GetDetailsAsync(request.SenderId, cancellationToken: cancellationToken)
-				?? throw new BusinessLogicException("Sender with specified ID not found.");
+		messageRepository.Save(message);
 
-			var recipient = request.RecipientId != null
-				? await userRepository.FindAsync(request.RecipientId.Value, cancellationToken: cancellationToken) ?? throw new BusinessLogicException("Recipient with specified id not found.")
-				: null;
+		await messageRepository.CommitAsync(cancellationToken);
+		await notificationService.Publish(new TextMessageSentNotification(message), cancellationToken);
 
-			TextMessage message = new()
-			{
-				CharacterId = sender.ActiveCharacter?.Id,
-				DisplayName = sender.ActiveCharacter is not null ? sender.ActiveCharacter.Name : sender.Login,
-				SenderId = sender.Id,
-				Sender = sender,
-				RecipientId = recipient?.Id,
-				Recipient = recipient,
-				Created = DateTime.UtcNow,
-				Text = request.Text,
-			};
-
-			messageRepository.Save(message);
-
-			await messageRepository.CommitAsync(cancellationToken);
-			await notificationService.Publish(new TextMessageSentNotification(message), cancellationToken);
-
-			return message;
-		}
+		return message;
 	}
 }

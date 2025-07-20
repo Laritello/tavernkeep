@@ -1,8 +1,7 @@
-﻿namespace Tavernkeep.Domain.Contracts.Enums
+﻿namespace Tavernkeep.Domain.Contracts.Enums;
+
+public enum EncounterParticipantType
 {
-	public enum EncounterParticipantType
-	{
-		Character,
-		Creature
-	}
+	Character,
+	Creature
 }
